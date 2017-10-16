@@ -1,0 +1,29 @@
+#/bin/sh
+stty cbreak
+cat >~/.listener.r12 << 'EOF'
+~~~
+{{
+  :banner (-)
+    'RETRO_12_(rx- puts @Version #100 /mod putn $. putc putn $) putc nl
+    EOM putn '_MAX,_TIB_@_1025,_Heap_@_ puts @Heap putn nl ;
+  :getc (-c) `1001 ;
+  :eol? (c-f)
+    [ ASCII:CR eq? ] [ ASCII:LF eq? ] [ ASCII:SPACE eq? ] tri or or ;
+  :gets (-a)
+    #1025 buffer:set
+    [ getc dup buffer:add eol? ] until buffer:start s:chop ;
+  :valid? (s-sf)
+    dup s:length n:-zero? ;
+---reveal---
+  :bye    (-) `26 ;
+  :listen (-)
+    banner
+    repeat gets valid? [ interpret ] [ drop ] choose again ;
+}}
+
+listen
+~~~
+EOF
+./bin/rre ~/.listener.r12
+rm -f ~/.listener.r12
+stty -cbreak

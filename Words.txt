@@ -1,0 +1,130 @@
+Global:
+
+    -                    ,                    ;
+    /                    [                    ]
+    {{                   }}                   *
+    +                    0;                   again
+    allot                and                  bi
+    bi@                  bi*                  call
+    case                 choose               Compiler
+    compiling?           const                copy
+    curry                data                 depth
+    Dictionary           dip                  does
+    drop                 drop-pair            dup
+    ?dup                 dup-pair             EOM
+    -eq?                 eq?                  FALSE
+    fetch                fetch-next           gt?
+    gteq?                Heap                 here
+    if                  -if                   immediate
+    interpret            lt?                  lteq?
+    mod                  /mod                 nip
+    nl                   not                  or
+    over                 pop                  push
+    putc                 putn                 puts
+    reclass              reorder              repeat
+    reset                ---reveal---         RewriteUnderscores
+    rot                  s,                   ScopeList
+    shift                sip                  sp
+    store                store-next           STRINGS
+    swap                 tab                  TempStringMax
+    TempStrings          times                tors
+    tri                  tri@                 tri*
+    TRUE                 tuck                 until
+    var                  var<n>               Version
+    while                words                xor
+    i                    d                    r
+    as{                  }as
+
+ASCII:
+
+    ASCII:ACK            ASCII:BEL            ASCII:BS
+    ASCII:CAN            ASCII:CR             ASCII:DC1
+    ASCII:DC2            ASCII:DC3            ASCII:DC4
+    ASCII:DEL            ASCII:DLE            ASCII:EM
+    ASCII:ENQ            ASCII:EOT            ASCII:ESC
+    ASCII:ETB            ASCII:ETX            ASCII:FF
+    ASCII:FS             ASCII:GS             ASCII:HT
+    ASCII:LF             ASCII:NAK            ASCII:NUL
+    ASCII:RS             ASCII:SI             ASCII:SO
+    ASCII:SOH            ASCII:SPACE          ASCII:STX
+    ASCII:SUB            ASCII:SYN            ASCII:US
+    ASCII:VT
+
+buffer:
+
+    buffer:add           buffer:empty         buffer:end
+    buffer:get           buffer:preserve      buffer:set
+    buffer:size          buffer:start
+
+c:
+
+    c:-consonant?        c:consonant?         c:-digit?
+    c:digit?             c:letter?            c:-lowercase?
+    c:lowercase?         c:toggle-case        c:to-lower
+    c:to-string          c:to-upper           c:-uppercase?
+    c:uppercase?         c:-visible?          c:visible?
+    c:-vowel?            c:vowel?             c:-whitespace?
+    c:whitespace?
+
+class:
+
+    class:data           class:macro          class:primitive
+    class:word
+
+compile:
+
+    compile:call         compile:jump         compile:lit
+    compile:ret
+
+d:
+
+    d:add-header         d:class              d:create
+    d:last               d:last<class>        d:last<name>
+    d:last<xt>           d:link               d:lookup
+    d:name               d:xt                 d:for-each
+
+err:
+
+    err:notfound
+
+n:
+
+    n:abs                n:between?           n:dec
+    n:even?              n:inc                n:limit
+    n:max                n:min                n:negate
+    n:negative?          n:odd?               n:positive?
+    n:pow                n:sqrt               n:square
+    n:to-string          n:-zero?             n:zero?
+    n:strictly-positive?
+
+prefix:
+
+    prefix:`             prefix::             prefix:'
+    prefix:(             prefix:$             prefix:&
+    prefix:#             prefix:@             prefix:!
+
+s:
+
+    s:append             s:chop               s:empty
+    s:eq?                s:filter             s:for-each
+    s:hash               s:index-of           s:split
+    s:keep               s:length             s:map
+    s:prepend            s:reverse            s:skip
+    s:substr             s:temp               s:to-lower
+    s:to-number          s:to-upper           s:trim
+    s:trim-left          s:trim-right         s:with-format
+    s:case               s:left               s:right
+    s:contains-char?     s:contains-string?
+
+set:
+
+    set:contains?        set:contains-string? set:dup
+    set:filter           set:from-results     set:from-string
+    set:for-each         set:length           set:map
+    set:nth              set:reverse
+
+v:
+
+    v:dec                v:dec-by             v:inc
+    v:inc-by             v:limit              v:off
+    v:on                 v:update-using       v:preserve

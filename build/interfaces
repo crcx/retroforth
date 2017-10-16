@@ -1,0 +1,11 @@
+#!/bin/sh
+cd source
+rm Makefile
+touch Makefile
+../build/generate-makefile.forth extend >>Makefile
+../build/generate-makefile.forth embedimage >>Makefile
+../build/generate-makefile.forth rre >>Makefile
+../build/generate-makefile.forth repl >>Makefile
+../build/generate-makefile.forth kanga >>Makefile
+
+
