@@ -13,7 +13,7 @@ all: clean tools update_sources image interfaces finally
 #test
 
 clean:
-	rm -f bin/rre bin/nga bin/embedimage bin/extend bin/unu bin/muri bin/kanga bin/repl bin/tanu
+	rm -f bin/rre bin/nga bin/embedimage bin/extend bin/unu bin/muri bin/kanga bin/repl bin/tanu bin/build
 
 tools:
 	cd source && $(CC) $(CFLAGS) unu.c -o ../bin/unu
@@ -41,8 +41,6 @@ image:
 
 interfaces:
 	cd source && make rre
-	cd source && make repl
-	cd source && make kanga
 
 finally:
 	rm source/*.o
