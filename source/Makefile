@@ -48,23 +48,3 @@ repl:
 	clang -c bridge.c $(REPLFLAGS) -o bridge.o
 	clang $(REPLLIBS) repl.o nga.o bridge.o  -o repl
 	mv repl ../bin
-#SRC: kanga
-#LIB: m
-#LIB: curses
-#SRC: nga
-#SRC: cursed-bridge
-#FLG:  -Wall
-#FLG:  -O3
-#FLG:  -DFPU
-#FLG:  -DPOSIX_FILES
-#FLG:  -DPOSIX_ARGS
-#FLG:  -DARGV
-#FLG:  -DGOPHER
-KANGALIBS = -lm -lcurses 
-KANGAFLAGS =  -Wall  -O3  -DFPU  -DPOSIX_FILES  -DPOSIX_ARGS  -DARGV  -DGOPHER 
-kanga:
-	clang -c kanga.c $(KANGAFLAGS) -o kanga.o
-	clang -c nga.c $(KANGAFLAGS) -o nga.o
-	clang -c cursed-bridge.c $(KANGAFLAGS) -o cursed-bridge.o
-	clang $(KANGALIBS) kanga.o nga.o cursed-bridge.o  -o kanga
-	mv kanga ../bin
