@@ -15,8 +15,30 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
+#include <stdint.h>
 
-#include "nga.c"
+#define CELL         int32_t
+CELL memory[128*1024];
+
+CELL ngaLoadImage(char *imageFile) {
+  FILE *fp;
+  CELL imageSize;
+  long fileLen;
+  if ((fp = fopen(imageFile, "rb")) != NULL) {
+    /* Determine length (in cells) */
+    fseek(fp, 0, SEEK_END);
+    fileLen = ftell(fp) / sizeof(CELL);
+    rewind(fp);
+    /* Read the file into memory */
+    imageSize = fread(&memory, sizeof(CELL), fileLen, fp);
+    fclose(fp);
+  }
+  else {
+    printf("Unable to find the ngaImage!\n");
+    exit(1);
+  }
+  return imageSize;
+}
 
 void output_header(int size) {
   printf("#include <stdint.h>\n");
@@ -25,7 +47,6 @@ void output_header(int size) {
 }
 
 int main(int argc, char **argv) {
-  ngaPrepare();
   int32_t size = 0;
   if (argc == 2)
       size = ngaLoadImage(argv[1]);

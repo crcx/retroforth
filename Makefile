@@ -12,12 +12,13 @@ clean:
 	rm -f bin/tanu
 
 first:
-	cd source && make essentials
+	cd tools && make
 
 then:
-	./bin/unu literate/Unu.md >source/unu.c
+	cd source && make
+	./bin/unu literate/Unu.md >tools/unu.c
 	./bin/unu literate/Nga.md >source/nga.c
-	./bin/unu literate/Muri.md >source/muri.c
+	./bin/unu literate/Muri.md >tools/muri.c
 	./bin/unu source/io/posix-files.forth   | ./bin/tanu posix_files >source/io/posix_files.c
 	./bin/unu source/io/posix-args.forth    | ./bin/tanu posix_args >source/io/posix_args.c
 	./bin/unu source/io/getc.forth          | ./bin/tanu posix_getc >source/io/getc.c
