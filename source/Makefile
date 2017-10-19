@@ -13,7 +13,7 @@ objects:
 	$(CC) $(OPTS) -c image.c -o image.o
 
 link:
-	$(CC) $(LIBS) extend.o bridge.o nga.o -o extend
+	$(CC) $(LIBS) extend.o -o extend
 	$(CC) $(LIBS) rre.o bridge.o nga.o image.o -o rre
 	$(CC) $(LIBS) repl.o bridge.o nga.o -o repl
 
