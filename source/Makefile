@@ -6,19 +6,16 @@ all: objects link finish
 
 objects:
 	$(CC) $(OPTS) -c bridge.c -o bridge.o
-	$(CC) $(OPTS) -c extend.c -o extend.o
 	$(CC) $(OPTS) -c rre.c -o rre.o
 	$(CC) $(OPTS) -c repl.c -o repl.o
 	$(CC) $(OPTS) -c nga.c -o nga.o
 	$(CC) $(OPTS) -c image.c -o image.o
 
 link:
-	$(CC) $(LIBS) extend.o -o extend
 	$(CC) $(LIBS) rre.o bridge.o nga.o image.o -o rre
 	$(CC) $(LIBS) repl.o bridge.o nga.o -o repl
 
 finish:
-	mv extend ../bin
 	mv rre ../bin
 	mv repl ../bin
 	rm *.o

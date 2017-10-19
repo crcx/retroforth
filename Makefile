@@ -15,7 +15,6 @@ first:
 	cd tools && make
 
 then:
-	cd source && make
 	./bin/unu literate/Unu.md >tools/unu.c
 	./bin/unu literate/Nga.md >source/nga.c
 	./bin/unu literate/Muri.md >tools/muri.c
