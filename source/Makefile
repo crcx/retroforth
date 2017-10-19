@@ -13,7 +13,7 @@ objects:
 
 link:
 	$(CC) $(LIBS) rre.o bridge.o nga.o image.o -o rre
-	$(CC) $(LIBS) repl.o bridge.o nga.o -o repl
+	$(CC) $(LIBS) repl.o -o repl
 
 finish:
 	mv rre ../bin
