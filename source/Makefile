@@ -1,50 +1,39 @@
-#SRC: extend
-#SRC: nga
-#SRC: bridge
-EXTENDLIBS = 
-EXTENDFLAGS = 
-extend:
-	clang -c extend.c $(EXTENDFLAGS) -o extend.o
-	clang -c nga.c $(EXTENDFLAGS) -o nga.o
-	clang -c bridge.c $(EXTENDFLAGS) -o bridge.o
-	clang $(EXTENDLIBS) extend.o nga.o bridge.o  -o extend
+RRE_FLAGS = -DFPU -DPOSIX_FILES -DPOSIX_ARGS -DARGV -DGOPHER
+LIBS = -lm
+OPTS = -O3
+
+all: objects link finish
+
+essentials: objects
+	$(CC) $(LIBS) extend.o bridge.o nga.o -o extend
+	$(CC) $(LIBS) unu.o -o unu
+	$(CC) $(LIBS) muri.o -o muri
+	$(CC) $(LIBS) tanu.o -o tanu
+	$(CC) $(LIBS) embedimage.o -o embedimage
 	mv extend ../bin
-#SRC: embedimage
-EMBEDIMAGELIBS = 
-EMBEDIMAGEFLAGS = 
-embedimage:
-	clang -c embedimage.c $(EMBEDIMAGEFLAGS) -o embedimage.o
-	clang $(EMBEDIMAGELIBS) embedimage.o  -o embedimage
 	mv embedimage ../bin
-#SRC: rre
-#LIB: m
-#SRC: nga
-#SRC: bridge
-#SRC: image
-#FLG:  -Wall
-#FLG:  -O3
-#FLG:  -DFPU
-#FLG:  -DPOSIX_FILES
-#FLG:  -DPOSIX_ARGS
-#FLG:  -DARGV
-#FLG:  -DGOPHER
-RRELIBS = -lm 
-RREFLAGS =  -Wall  -O3  -DFPU  -DPOSIX_FILES  -DPOSIX_ARGS  -DARGV  -DGOPHER 
-rre:
-	clang -c rre.c $(RREFLAGS) -o rre.o
-	clang -c nga.c $(RREFLAGS) -o nga.o
-	clang -c bridge.c $(RREFLAGS) -o bridge.o
-	clang -c image.c $(RREFLAGS) -o image.o
-	clang $(RRELIBS) rre.o nga.o bridge.o image.o  -o rre
+	mv unu ../bin
+	mv muri ../bin
+	mv tanu ../bin
+	rm *.o
+
+objects:
+	$(CC) $(OPTS) -c embedimage.c -o embedimage.o
+	$(CC) $(OPTS) -c unu.c -o unu.o
+	$(CC) $(OPTS) -c muri.c -o muri.o
+	$(CC) $(OPTS) -c tanu.c -o tanu.o
+	$(CC) $(OPTS) -c bridge.c -o bridge.o
+	$(CC) $(OPTS) -c extend.c -o extend.o
+	$(CC) $(OPTS) -c rre.c -o rre.o
+	$(CC) $(OPTS) -c repl.c -o repl.o
+	$(CC) $(OPTS) -c nga.c -o nga.o
+	$(CC) $(OPTS) -c image.c -o image.o
+
+link:
+	$(CC) $(LIBS) rre.o bridge.o nga.o image.o -o rre
+	$(CC) $(LIBS) repl.o bridge.o nga.o -o repl
+
+finish:
 	mv rre ../bin
-#SRC: repl
-#SRC: nga
-#SRC: bridge
-REPLLIBS = 
-REPLFLAGS = 
-repl:
-	clang -c repl.c $(REPLFLAGS) -o repl.o
-	clang -c nga.c $(REPLFLAGS) -o nga.o
-	clang -c bridge.c $(REPLFLAGS) -o bridge.o
-	clang $(REPLLIBS) repl.o nga.o bridge.o  -o repl
 	mv repl ../bin
+	rm *.o
