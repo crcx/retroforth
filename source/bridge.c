@@ -33,17 +33,17 @@ int sys_argc;
 /* Some I/O Parameters */
 
 #define MAX_OPEN_FILES   128
-#define NGURA_TTY_PUTC  1000
-#define NGURA_TTY_GETC  1001
-#define NGURA_FS_OPEN    118
-#define NGURA_FS_CLOSE   119
-#define NGURA_FS_READ    120
-#define NGURA_FS_WRITE   121
-#define NGURA_FS_TELL    122
-#define NGURA_FS_SEEK    123
-#define NGURA_FS_SIZE    124
-#define NGURA_FS_DELETE  125
-#define NGURA_FS_FLUSH   126
+#define IO_TTY_PUTC  1000
+#define IO_TTY_GETC  1001
+#define IO_FS_OPEN    118
+#define IO_FS_CLOSE   119
+#define IO_FS_READ    120
+#define IO_FS_WRITE   121
+#define IO_FS_TELL    122
+#define IO_FS_SEEK    123
+#define IO_FS_SIZE    124
+#define IO_FS_DELETE  125
+#define IO_FS_FLUSH   126
 
 
 /* First, a couple of functions to simplify interacting with
@@ -143,97 +143,97 @@ CELL d_class_for(char *Name, CELL Dictionary) {
 /* Now for File I/O functions. These are adapted from
    Ngaro on Retro 11. */
 
-FILE *nguraFileHandles[MAX_OPEN_FILES];
+FILE *ioFileHandles[MAX_OPEN_FILES];
 
-CELL nguraGetFileHandle() {
+CELL ioGetFileHandle() {
   CELL i;
   for(i = 1; i < MAX_OPEN_FILES; i++)
-    if (nguraFileHandles[i] == 0)
+    if (ioFileHandles[i] == 0)
       return i;
   return 0;
 }
 
-CELL nguraOpenFile() {
+CELL ioOpenFile() {
   CELL slot, mode, name;
-  slot = nguraGetFileHandle();
+  slot = ioGetFileHandle();
   mode = data[sp]; sp--;
   name = data[sp]; sp--;
   char *request = string_extract(name);
   if (slot > 0) {
-    if (mode == 0)  nguraFileHandles[slot] = fopen(request, "rb");
-    if (mode == 1)  nguraFileHandles[slot] = fopen(request, "w");
-    if (mode == 2)  nguraFileHandles[slot] = fopen(request, "a");
-    if (mode == 3)  nguraFileHandles[slot] = fopen(request, "rb+");
+    if (mode == 0)  ioFileHandles[slot] = fopen(request, "rb");
+    if (mode == 1)  ioFileHandles[slot] = fopen(request, "w");
+    if (mode == 2)  ioFileHandles[slot] = fopen(request, "a");
+    if (mode == 3)  ioFileHandles[slot] = fopen(request, "rb+");
   }
-  if (nguraFileHandles[slot] == NULL) {
-    nguraFileHandles[slot] = 0;
+  if (ioFileHandles[slot] == NULL) {
+    ioFileHandles[slot] = 0;
     slot = 0;
   }
   stack_push(slot);
   return slot;
 }
 
-CELL nguraReadFile() {
+CELL ioReadFile() {
   CELL slot = stack_pop();
-  CELL c = fgetc(nguraFileHandles[slot]);
-  return feof(nguraFileHandles[slot]) ? 0 : c;
+  CELL c = fgetc(ioFileHandles[slot]);
+  return feof(ioFileHandles[slot]) ? 0 : c;
 }
 
-CELL nguraWriteFile() {
+CELL ioWriteFile() {
   CELL slot, c, r;
   slot = data[sp]; sp--;
   c = data[sp]; sp--;
-  r = fputc(c, nguraFileHandles[slot]);
+  r = fputc(c, ioFileHandles[slot]);
   return (r == EOF) ? 0 : 1;
 }
 
-CELL nguraCloseFile() {
-  fclose(nguraFileHandles[data[sp]]);
-  nguraFileHandles[data[sp]] = 0;
+CELL ioCloseFile() {
+  fclose(ioFileHandles[data[sp]]);
+  ioFileHandles[data[sp]] = 0;
   sp--;
   return 0;
 }
 
-CELL nguraGetFilePosition() {
+CELL ioGetFilePosition() {
   CELL slot = data[sp]; sp--;
-  return (CELL) ftell(nguraFileHandles[slot]);
+  return (CELL) ftell(ioFileHandles[slot]);
 }
 
-CELL nguraSetFilePosition() {
+CELL ioSetFilePosition() {
   CELL slot, pos, r;
   slot = data[sp]; sp--;
   pos  = data[sp]; sp--;
-  r = fseek(nguraFileHandles[slot], pos, SEEK_SET);
+  r = fseek(ioFileHandles[slot], pos, SEEK_SET);
   return r;
 }
 
-CELL nguraGetFileSize() {
+CELL ioGetFileSize() {
   CELL slot, current, r, size;
   slot = data[sp]; sp--;
   struct stat buffer;
   int    status;
-  status = fstat(fileno(nguraFileHandles[slot]), &buffer);
+  status = fstat(fileno(ioFileHandles[slot]), &buffer);
   if (!S_ISDIR(buffer.st_mode)) {
-    current = ftell(nguraFileHandles[slot]);
-    r = fseek(nguraFileHandles[slot], 0, SEEK_END);
-    size = ftell(nguraFileHandles[slot]);
-    fseek(nguraFileHandles[slot], current, SEEK_SET);
+    current = ftell(ioFileHandles[slot]);
+    r = fseek(ioFileHandles[slot], 0, SEEK_END);
+    size = ftell(ioFileHandles[slot]);
+    fseek(ioFileHandles[slot], current, SEEK_SET);
   } else {
     r = -1;
   }
   return (r == 0) ? size : 0;
 }
 
-CELL nguraDeleteFile() {
+CELL ioDeleteFile() {
   CELL name = data[sp]; sp--;
   char *request = string_extract(name);
   return (unlink(request) == 0) ? -1 : 0;
 }
 
-void nguraFlushFile() {
+void ioFlushFile() {
   CELL slot;
   slot = data[sp]; sp--;
-  fflush(nguraFileHandles[slot]);
+  fflush(ioFileHandles[slot]);
 }
 
 
@@ -268,17 +268,17 @@ void execute(int cell) {
       ngaProcessOpcode(opcode);
     } else {
       switch (opcode) {
-        case NGURA_TTY_PUTC:  putc(stack_pop(), stdout); fflush(stdout); break;
-        case NGURA_TTY_GETC:  stack_push(getc(stdin));                   break;
-        case NGURA_FS_OPEN:   nguraOpenFile();                           break;
-        case NGURA_FS_CLOSE:  nguraCloseFile();                          break;
-        case NGURA_FS_READ:   stack_push(nguraReadFile());               break;
-        case NGURA_FS_WRITE:  nguraWriteFile();                          break;
-        case NGURA_FS_TELL:   stack_push(nguraGetFilePosition());        break;
-        case NGURA_FS_SEEK:   nguraSetFilePosition();                    break;
-        case NGURA_FS_SIZE:   stack_push(nguraGetFileSize());            break;
-        case NGURA_FS_DELETE: nguraDeleteFile();                         break;
-        case NGURA_FS_FLUSH:  nguraFlushFile();                          break;
+        case IO_TTY_PUTC:  putc(stack_pop(), stdout); fflush(stdout); break;
+        case IO_TTY_GETC:  stack_push(getc(stdin));                   break;
+        case IO_FS_OPEN:   ioOpenFile();                              break;
+        case IO_FS_CLOSE:  ioCloseFile();                             break;
+        case IO_FS_READ:   stack_push(ioReadFile());                  break;
+        case IO_FS_WRITE:  ioWriteFile();                             break;
+        case IO_FS_TELL:   stack_push(ioGetFilePosition());           break;
+        case IO_FS_SEEK:   ioSetFilePosition();                       break;
+        case IO_FS_SIZE:   stack_push(ioGetFileSize());               break;
+        case IO_FS_DELETE: ioDeleteFile();                            break;
+        case IO_FS_FLUSH:  ioFlushFile();                             break;
 #ifdef FPU
         case -6000: ngaFloatingPointUnit(); break;
 #endif
