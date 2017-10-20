@@ -68,16 +68,6 @@ int d_name(CELL dt);
 int d_lookup(CELL Dictionary, char *name);
 CELL d_xt_for(char *Name, CELL Dictionary);
 CELL d_class_for(char *Name, CELL Dictionary);
-CELL ioGetFileHandle();
-CELL ioOpenFile();
-CELL ioReadFile();
-CELL ioWriteFile();
-CELL ioCloseFile();
-CELL ioGetFilePosition();
-CELL ioSetFilePosition();
-CELL ioGetFileSize();
-CELL ioDeleteFile();
-void ioFlushFile();
 void update_rx();
 void execute(int cell);
 void evaluate(char *s);
@@ -110,7 +100,7 @@ int include_file(char *fname) {
   while (!feof(fp))
   {
     read_token(fp, source, 0);
-    if (strcmp(source, "````") == 0) {
+    if (strcmp(source, "~~~") == 0) {
       if (inBlock == 0)
         inBlock = 1;
       else

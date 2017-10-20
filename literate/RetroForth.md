@@ -78,9 +78,9 @@ I provide a word, `EOM`, which returns the last addressable location.
 This will be used by the words in the `s:` namespace to allocate the
 temporary string buffers at the end of memory.
 
-````
+~~~
 :EOM  (-n)  #-3 fetch ;
-````
+~~~
 
 ... stack comments ...
 
@@ -100,12 +100,12 @@ I next define a few words in the `d:` namespace to make it easier
 to operate on the most recent header in the dictionary. These return
 pointers to specific fields in the header.
 
-````
+~~~
 :d:last        (-d) &Dictionary fetch ;
 :d:last<xt>    (-a) d:last d:xt fetch ;
 :d:last<class> (-a) d:last d:class fetch ;
 :d:last<name>  (-s) d:last d:name ;
-````
+~~~
 
 ... reclass ...
 
@@ -113,58 +113,58 @@ This is used to change the class from `class:word` to `class:macro`.
 Doing this is ugly and not very readable. I implement `reclass` to
 change the class of the most recent word.
 
-````
+~~~
 :reclass    (a-) d:last d:class store ;
-````
+~~~
 
 With this I can then define `immediate` (for state-smart words) and
 `data` to tag data words.
 
-````
+~~~
 :immediate  (-)  &class:macro reclass ;
 :data       (-)  &class:data reclass ;
-````
+~~~
 
-````
+~~~
 :depth  (-n) #-1 fetch ;
-````
+~~~
 
-````
+~~~
 :prefix:@  (s-n) d:lookup d:xt fetch class:data &fetch class:word ; immediate
 :prefix:!  (s-n) d:lookup d:xt fetch class:data &store class:word ; immediate
-````
+~~~
 
 I have a `compile` namespace for some low level words that compile
 Nga bytecode.
 
-````
+~~~
 :compile:lit  (a-) #1 , , ;
 :compile:jump (a-) #1793 , , ;
 :compile:call (a-) #2049 , , ;
 :compile:ret  (-)  #10 , ;
-````
+~~~
 
 The compiler state is stored in a value named `Compiler`. I have an
 accessor word that aids in readability.
 
-````
+~~~
 :compiling?  (-f)  @Compiler ;
-````
+~~~
 
 It's sometimes useful to inline values directly. I use a backtick
 prefix for this.
 
-````
+~~~
 :prefix:`  (s-)
   compiling? [ s:to-number , ] [ drop ] choose ; immediate
-````
+~~~
 
 It's traditional to have a word named `here` which returns the next
 free address in memory.
 
-````
+~~~
 :here  (-a) @Heap ;
-````
+~~~
 
 The next few words aren't useful until the `s:` namespace is defined.
 With strings and the `'` prefix they allow creation of variables and
@@ -179,19 +179,19 @@ constants.
 The first word creates a new header pointing to `here`. This is used
 to build other data structures without invoking the `:` compiler.
 
-````
+~~~
 :d:create (s-)
   (s-) &class:data #0 d:add-header
   here d:last d:xt store ;
-````
+~~~
 
 And then the others are trivial.
 
-````
+~~~
 :var    (s-)  d:create #0 , ;
 :var<n> (ns-) d:create , ;
 :const  (ns-) d:create d:last d:xt store ;
-````
+~~~
 
 The `const` word bears a tiny bit of explaination. It takes advantage
 of Retro's word class model. It creates a header, with a class of
@@ -204,14 +204,14 @@ The core Rx language provides a few basic stack shuffling words: `push`,
 `pop`, `drop`, `swap`, and `dup`. There are quite a few more that are
 useful. Some of these are provided here.
 
-````
+~~~
 :tuck      (xy-yxy)   dup push swap pop ;
 :over      (xy-xyx)   push dup pop swap ;
 :dup-pair  (xy-xyxy)  over over ;
 :nip       (xy-y)     swap drop ;
 :drop-pair (nn-)      drop drop ;
 :?dup      (n-nn||n-n) dup 0; ;
-````
+~~~
 
 Retro makes use of anonymous functions called *quotations* for much of
 the execution flow and stack control. The words that operate on these
@@ -223,9 +223,9 @@ value is restored after execution completes. These are equivilent:
     #10 #12 [ #3 - ] dip
     #10 #12 push #3 - pop
 
-````
+~~~
 :dip  (nq-n)  swap push call pop ;
-````
+~~~
 
 `sip` is similar to dip, but leaves a copy of the value on the stack
 while the quotation is executed. These are equivilent:
@@ -233,88 +233,88 @@ while the quotation is executed. These are equivilent:
     #10 [ #3 * ] sip
     #10 dup push #3 * pop
 
-````
+~~~
 :sip  (nq-n)  push dup pop swap &call dip ;
-````
+~~~
 
 Apply each quote to a copy of x
 
-````
+~~~
 :bi  (xqq-)  &sip dip call ;
-````
+~~~
 
 Apply q1 to x and q2 to y
 
-````
+~~~
 :bi*  (xyqq-) &dip dip call ;
-````
+~~~
 
 Apply q to x and y
 
-````
+~~~
 :bi@  (xyq-)  dup bi* ;
-````
+~~~
 
 Apply each quote to a copy of x
 
-````
+~~~
 :tri  (xqqq-)  [ &sip dip sip ] dip call ;
-````
+~~~
 
 Apply q1 to x, q2 to y, and q3 to z
 
-````
+~~~
 :tri*  (xyzqqq-)  [ [ swap &dip dip ] dip dip ] dip call ;
-````
+~~~
 
 Apply q to x, y, and z
 
-````
+~~~
 :tri@ dup dup tri* ;
-````
+~~~
 
 ## Flow
 
 Execute quote until quote returns a flag of 0.
 
-````
+~~~
 :while  (q-)
   [ repeat dup dip swap 0; drop again ] call drop ;
-````
+~~~
 
 Execute quote until quote returns a flag of -1.
 
-````
+~~~
 :until  (q-)
   [ repeat dup dip swap #-1 xor 0; drop again ] call drop ;
-````
+~~~
 
 The `times` combinator runs a quote (n) times.
 
-````
+~~~
 :times  (q-)
   swap [ repeat 0; #1 - push &call sip pop again ] call drop ;
-````
+~~~
 
 Taking a break from combinators for a bit, I turn to some words for
 comparing things. First, constants for TRUE and FALSE.
 
-````
+~~~
 :TRUE  (-n) #-1 ;
 :FALSE (-n)  #0 ;
-````
+~~~
 
 The basic Rx kernel doesn't provide two useful forms which I'll
 provide here.
 
-````
+~~~
 :lteq?  (nn-f)  dup-pair eq? [ lt? ] dip or ;
 :gteq?  (nn-f)  dup-pair eq? [ gt? ] dip or ;
-````
+~~~
 
 And then some numeric comparators.
 
-````
+~~~
 :n:MAX        (-n)    #2147483647 ;
 :n:MIN        (-n)    #−2147483648 ;
 :n:zero?      (n-f)   #0 eq? ;
@@ -324,7 +324,7 @@ And then some numeric comparators.
 :n:strictly-positive?  (n-f)  #0 gt? ;
 :n:even?      (n-f)  #2 /mod drop n:zero? ;
 :n:odd?       (n-f)  #2 /mod drop n:-zero? ;
-````
+~~~
 
 And now back to combinators.
 
@@ -344,35 +344,35 @@ Example:
       $u [ TRUE ] case
       drop FALSE ;
 
-````
+~~~
 :case
   [ over eq? ] dip swap
   [ nip call TRUE ] [ drop FALSE ] choose 0; pop drop drop ;
 :s:case
   [ over s:eq? ] dip swap
   [ nip call TRUE ] [ drop FALSE ] choose 0; pop drop drop ;
-````
+~~~
 
 Two more stack shufflers.
 
 `rot` rotates the top three values.
 
-````
+~~~
 :rot  (abc-bca)   [ swap ] dip swap ;
-````
+~~~
 
 Next is `tors`. Short for *top of return stack*, this returns the top
 item on the address stack. As an analog to traditional Forth, this is
 equivilent to `R@`.
 
-````
+~~~
 :tors (-n)  pop pop dup push swap push ;
-````
+~~~
 
 The core Rx language provides addition, subtraction, multiplication,
 and a combined division/remainder. Retro expands on this.
 
-````
+~~~
 :/         (nq-d)  /mod swap drop ;
 :mod       (nq-r)  /mod drop ;
 :not       (n-n)   #-1 xor ;
@@ -387,7 +387,7 @@ and a combined division/remainder. Retro expands on this.
 :n:inc     (n-n)   #1 + ;
 :n:dec     (n-n)   #1 - ;
 :n:between? (nul-) rot [ rot rot n:limit ] sip eq? ;
-````
+~~~
 
 Some of the above, like `n:inc`, are useful with variables. But it's
 messy to execute sequences like:
@@ -399,7 +399,7 @@ of variables. With this, the above can become simply:
 
   &foo v:inc
 
-````
+~~~
 :v:inc-by  (na-)   [ fetch + ] sip store ;
 :v:dec-by  (na-)   [ fetch swap - ] sip store ;
 :v:inc     (n-n)   #1 swap v:inc-by ;
@@ -409,7 +409,7 @@ of variables. With this, the above can become simply:
 :v:off     (a-)    FALSE swap store ;
 :v:preserve (aq-)  swap dup fetch [ [ call ] dip ] dip swap store ;
 :allot     (n-)    &Heap v:inc-by ;
-````
+~~~
 
 If you need to update a stored variable there are two typical forms:
 
@@ -429,15 +429,15 @@ The `v:update-using` replaces this with:
 It takes care of preserving the variable address, fetching the stored
 value, and updating with the resulting value.
 
-````
+~~~
 :v:update-using (aq-) swap [ fetch swap call ] sip store ;
-````
+~~~
 
 I have a simple word `copy` which copies memory to another location.
 
-````
+~~~
 :copy   (aan-) [ &fetch-next dip store-next ] times drop drop ;
-````
+~~~
 
 Now for something tricky: a system for lexical scoping.
 
@@ -456,7 +456,7 @@ As an example:
 Only the `next-number` function will remain visible once `}}` is
 executed. 
 
-````
+~~~
 :ScopeList `0 `0 ;
 :{{            (-)
   d:last dup &ScopeList store-next store ;
@@ -466,7 +466,7 @@ executed.
   &ScopeList fetch-next swap fetch eq?
   [ @ScopeList !Dictionary ]
   [ @ScopeList [ &Dictionary repeat fetch dup fetch &ScopeList n:inc fetch -eq? 0; drop again ] call store ] choose ;
-````
+~~~
 
 --> The scoping code is a bit messy. I'd like to simplify it.
 
@@ -474,7 +474,7 @@ executed.
 A buffer is a linear memory buffer. Retro provides a `buffer:`
 namespace for working with them.
 
-````
+~~~
 {{
   :Buffer `0 ; data
   :Ptr    `0 ; data
@@ -490,7 +490,7 @@ namespace for working with them.
   :buffer:preserve (q-)
     @Buffer @Ptr [ [ call ] dip !Buffer ] dip !Ptr ;
 }}
-````
+~~~
 
 And now for strings. Traditional Forth systems have a messy mix of
 strings. You have counted strings, address/length pairs, and sometimes
@@ -502,7 +502,7 @@ workable approach.
 
 Temporary strings are allocated in a circular pool (at STRINGS).
 
-````
+~~~
 :TempStrings ;   &class:data reclass  #12 !TempStrings
 :TempStringMax ; &class:data reclass #512 !TempStringMax
 :STRINGS   EOM @TempStrings @TempStringMax * - ;
@@ -519,7 +519,7 @@ Temporary strings are allocated in a circular pool (at STRINGS).
   :s:temp (s-s) dup s:length n:inc s:pointer swap copy s:pointer s:next ;
   :s:empty (-s) s:pointer s:next ;
 }}
-````
+~~~
 
 Permanent strings are compiled into memory. To skip over them a helper
 function is used. When compiled into a definition this will look like:
@@ -536,10 +536,10 @@ function is used. When compiled into a definition this will look like:
 The `s:skip` adjusts the Nga instruction pointer to skip to the code
 following the stored string.
 
-````
+~~~
 :s:skip (-) pop [ fetch-next n:-zero? ] while n:dec push ;
 :s:keep (s-s) compiling? [ &s:skip class:word ] if here [ s, ] dip class:data ;
-````
+~~~
 
 And now a quick `'` prefix. (This will be replaced later). What this
 does is either move the string token to the temporary buffer or compile
@@ -552,48 +552,48 @@ This doesn't support spaces. I use underscores instead. E.g.,
 Later in the code I'll add a better implementation which can handle
 conversion of _ into spaces.
 
-````
+~~~
 :prefix:' compiling? [ s:keep ] [ s:temp ] choose ; immediate
-````
+~~~
 
 `s:chop` removes the last character from a string.
 
-````
+~~~
 :s:chop (s-s) s:temp dup s:length over + n:dec #0 swap store ;
-````
+~~~
 
 `s:reverse` reverses the order of a string. E.g.,
 
     'hello'  ->  'olleh'
 
-````
+~~~
 :s:reverse (s-s)
   [ dup s:temp buffer:set &s:length [ dup s:length + n:dec ] bi swap
     [ dup fetch buffer:add n:dec ] times drop buffer:start s:temp ]
   buffer:preserve ;
-````
+~~~
 
 Trimming removes leading (`s:trim-left`) or trailing (`s:trim-right`)
 spaces from a string. `s:trim` removes both leading and trailing spaces.
 
-````
+~~~
 :s:trim-left (s-s) s:temp [ fetch-next [ #32 eq? ] [ n:zero? ] bi and ] while n:dec ;
 :s:trim-right (s-s) s:temp s:reverse s:trim-left s:reverse ;
 :s:trim (s-s) s:trim-right s:trim-left ;
-````
+~~~
 
 `s:prepend` and `s:append` for concatenating strings together.
 
-````
+~~~
 :s:prepend (ss-s)
   s:temp [ dup s:length + [ dup s:length n:inc ] dip swap copy ] sip ;
 :s:append (ss-s) swap s:prepend ;
-````
+~~~
 
 `s:for-each` executes a quote once for each cell in string. It is
 a key part of building the other high-level string operations.
 
-````
+~~~
 :s:for-each (sq-)
   [ repeat
       over fetch 0; drop
@@ -602,14 +602,14 @@ a key part of building the other high-level string operations.
       [ n:inc ] dip
     again
   ] call drop-pair ;
-````
+~~~
 
 `s:filter` returns a new string, consisting of the characters from
 another string that are filtered by a quotation.
 
     'This_is_a_test [ c:-vowel? ] s:filter
 
-````
+~~~
 :s:filter (sq-s)
   [ s:empty buffer:set swap
     [ dup-pair swap call
@@ -617,58 +617,58 @@ another string that are filtered by a quotation.
         [ drop       ] choose
     ] s:for-each drop buffer:start
   ] buffer:preserve ;
-````
+~~~
 
 `s:map` Return a new string resulting from applying a quotation to each
 character in a source string.
 
     'This_is_a_test [ $_ [ ASCII:SPACE ] case ] s:map
 
-````
+~~~
 :s:map (sq-s)
   [ s:empty buffer:set swap
     [ over call buffer:add ]
     s:for-each drop buffer:start
   ] buffer:preserve ;
-````
+~~~
 
 `s:substr` returns a subset of a string. Provide it with a string,
 a starting offset, and a length.
 
-````
+~~~
 :s:substr (sfl-s)
   [ + s:empty ] dip [ over [ copy ] dip ] sip
   over [ + #0 swap store ] dip ;
-````
+~~~
 
 `s:right` and `s:left` are similar to `s:substr`, but operate
 from fixed ends of the string.
 
-````
+~~~
 :s:right (sn-s) over s:length over - swap s:substr ;
 :s:left  (sn-s) #0 swap s:substr ;
-````
+~~~
 
 Hash (using DJB2)
 
-````
+~~~
 :s:hash (s-n) #5381 swap [ swap #33 * + ] s:for-each ;
-````
+~~~
 
 Copy a string, including the terminator.
 
-````
+~~~
 :s:copy (ss-) over s:length n:inc copy ;
-````
+~~~
 
-````
+~~~
 :s:DIGITS          (-s)  '0123456789 ;
 :s:ASCII-LOWERCASE (-s)  'abcdefghijklmnopqrstuvwxyz ;
 :s:ASCII-UPPERCASE (-s)  'ABCDEFGHIJKLMNOPQRSTUVWXYZ ;
 :s:ASCII-LETTERS   (-s)  'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ ;
 :s:PUNCTUATION     (-s)  '_!"#$%&'()*+,-./:;<=>?@[\]^`{|}~ $_ over store ;
 's:WHITESPACE d:create  #32, #9 , #10 , #13 , #0 ,
-````
+~~~
 
 Not all characters can be obtained via the $ prefix. ASCII has many
 characters that aren't really intended to be printable. Retro has an
@@ -676,7 +676,7 @@ characters that aren't really intended to be printable. Retro has an
 
 Note that `ASCII:HT` is the horizontal tab character.
 
-````
+~~~
 :ASCII:NUL     (-c)  #0 ;    :ASCII:SOH     (-c)  #1 ;
 :ASCII:STX     (-c)  #2 ;    :ASCII:ETX     (-c)  #3 ;
 :ASCII:EOT     (-c)  #4 ;    :ASCII:ENQ     (-c)  #5 ;
@@ -694,7 +694,7 @@ Note that `ASCII:HT` is the horizontal tab character.
 :ASCII:FS      (-c)  #28 ;   :ASCII:GS      (-c)  #29 ;
 :ASCII:RS      (-c)  #30 ;   :ASCII:US      (-c)  #31 ;
 :ASCII:SPACE   (-c)  #32 ;   :ASCII:DEL     (-c)  #127 ;
-````
+~~~
 
 These words operate on character values. Retro currently deals with
 ASCII, though cells are 32 bits in length, so Unicode values can be
@@ -702,7 +702,7 @@ stored.
 
 First are a bunch of words to help identify character values.
 
-````
+~~~
 :c:letter?      (c-f) $A $z n:between? ;
 :c:lowercase?   (c-f) $a $z n:between? ;
 :c:uppercase?   (c-f) $A $Z n:between? ;
@@ -728,12 +728,12 @@ First are a bunch of words to help identify character values.
   drop FALSE ;
 :c:consonant?   (c-f)
   dup c:letter? [ c:vowel? not ] [ drop FALSE ] choose ;
-````
+~~~
 
 And the inverse forms. (These are included for readability and
 orthiginal completion).
 
-````
+~~~
 :c:-lowercase?  (c-f) c:lowercase? not ;
 :c:-uppercase?  (c-f) c:uppercase? not ;
 :c:-digit?      (c-f) c:digit? not ;
@@ -741,28 +741,28 @@ orthiginal completion).
 :c:-visible?    (c-f) c:visible? not ;
 :c:-vowel?      (c-f)  c:vowel? not ;
 :c:-consonant?  (c-f)  c:consonant? not ;
-````
+~~~
 
 The next few words perform simple transformations.
 
-````
+~~~
 :c:to-upper     (c-c) dup c:lowercase? 0; drop ASCII:SPACE - ;
 :c:to-lower     (c-c) dup c:uppercase? 0; drop ASCII:SPACE + ;
 :c:toggle-case  (c-c) dup c:lowercase? [ c:to-upper ] [ c:to-lower ] choose ;
 :c:to-string    (c-s) '. s:temp [ store ] sip ;
-````
+~~~
 
 With the character transformations a few more string words are
 possible.
 
-````
+~~~
 :s:to-upper  (s-s)  [ c:to-upper ] s:map ;
 :s:to-lower  (s-s)  [ c:to-lower ] s:map ;
-````
+~~~
 
 Convert a decimal (base 10) number to a string.
 
-````
+~~~
 {{
   :Value `0 ;
   :correct (c-c)
@@ -774,12 +774,12 @@ Convert a decimal (base 10) number to a string.
       @Value n:negative? [ $- buffer:add ] if
       buffer:start s:reverse s:temp ] buffer:preserve ;
 }}
-````
+~~~
 
 Now replace the old prefix:' with this one that can optionally turn
 underscores into spaces.
 
-````
+~~~
 TRUE 'RewriteUnderscores var<n>
 
 {{
@@ -789,12 +789,12 @@ TRUE 'RewriteUnderscores var<n>
 ---reveal---
   :prefix:' rewrite ; immediate
 }}
-````
+~~~
 
 Building on `s:for-each`, I am able to implement `s:index-of`, which
 finds the first instance of a character in a string.
 
-````
+~~~
 :s:index-of (sc-n)
   swap [ repeat
            fetch-next 0; swap
@@ -804,19 +804,19 @@ finds the first instance of a character in a string.
        ] sip
   [ - n:dec nip ] sip
   s:length over eq? [ drop #-1 ] if ;
-````
+~~~
 
 `s:contains-char?` returns a flag indicating whether or not a given
 character is in a string.
 
-````
+~~~
 :s:contains-char? (sc-f) s:index-of #-1 -eq? ;
-````
+~~~
 
 `s:contains-string?` returns a flag indicating whether or not a given
 substring is in a string.
 
-````
+~~~
 {{
   'Src var
   'Tar var
@@ -842,16 +842,16 @@ substring is in a string.
     [ extract terminate compare next ] times
     @F ;
 }}
-````
+~~~
 
 The `s:split` splits a string on the first instance of a given
 character. Results are undefined if the character can not be
 located.
 
-````
+~~~
 :s:split (sc-ss)
   dup-pair s:index-of nip dup-pair s:left [ + ] dip ;
-````
+~~~
 
 Ok, This is a bit of a hack, but very useful at times.
 
@@ -868,7 +868,7 @@ Rather than using a lot of shufflers, `reorder` simplfies this into:
     #3 #1 #2 #5
     'abcd  'baddcb reorder
 
-````
+~~~
 {{
   'Values var #27 allot
   :from s:length dup [ [ &Values + store ] sip n:dec ] times drop ;
@@ -876,25 +876,25 @@ Rather than using a lot of shufflers, `reorder` simplfies this into:
 ---reveal---
   :reorder (...ss-?) [ from ] dip to ;
 }}
-````
+~~~
 
 I need to describe these and provide some examples of where they are
 useful.
 
-````
+~~~
 :curry (vp-p) here [ swap compile:lit compile:call compile:ret ] dip ;
 :does  (q-)   d:last<xt> swap curry d:last d:xt store &class:word reclass ;
-````
+~~~
 
 `d:for-each` is a combinator which runs a quote once for each header in
 the dictionary. A pointer to each header will be passed to the quote as
 it is run.
 
-````
+~~~
 :d:for-each (q-)
   &Dictionary [ repeat fetch 0;
  dup-pair [ [ swap call ] dip ] dip again ] call drop ;
-````
+~~~
 
 Use `s:with-format` to construct a string from multiple items. This
 can be illustrated with:
@@ -910,7 +910,7 @@ The format language is simple:
 | %s | Replace with a string on the stack        |
 | %n | Replace with the next number on the stack |
 
-````
+~~~
 {{
   :char (c-)
     $n [ ASCII:LF buffer:add ] case
@@ -936,7 +936,7 @@ The format language is simple:
       [ repeat fetch-next 0; handle again ]
       call drop ] sip ] buffer:preserve ;
 }}
-````
+~~~
 
 ## Sets
 
@@ -951,34 +951,34 @@ Since the count comes first, a simple `fetch` will suffice to get it,
 but for completeness (and to allow for future changes), we wrap this
 as `set:length`:
 
-````
+~~~
 :set:length (a-n) fetch ;
-````
+~~~
 
 The first couple of words are used to create sets. The first,
 `set:from-results` executes a quote and constructs a set from the
 returned values.
 
-````
+~~~
 :set:from-results (q-a)
   depth [ call ] dip depth swap -
   here [ dup , [ , ] times ] dip ;
-````
+~~~
 
 The second, `set:from-string`, creates a new string with the characters
 in given a string.
 
-````
+~~~
 :set:from-string (s-a)
   s:reverse [ [ ] s:for-each ] curry
   set:from-results ;
-````
+~~~
 
 A very crucial piece is `set:for-each`. This runs a quote once against
 each value in a set. This will be leveraged to implement additional
 combinators.
 
-````
+~~~
 {{
   'Q var
 ---reveal---
@@ -987,14 +987,14 @@ combinators.
          [ fetch-next swap [ @Q call ] dip ] times drop
        ] dip !Q ;
 }}
-````
+~~~
 
 With this I can easily define `set:dup` to make a copy of a set.
 
-````
+~~~
 :set:dup (a-a)
   here [ dup fetch , [ , ] set:for-each ] dip ;
-````
+~~~
 
 Next is `set:filter`, which is extracts matching values from a set. This
 is used like:
@@ -1005,16 +1005,16 @@ is used like:
 It returns a new set with the values that the quote returned a `TRUE`
 flag for.
 
-````
+~~~
 :set:filter (aq-)
   [ over [ call ] dip swap [ , ] [ drop ] choose ] curry
   here [ over fetch , set:for-each ] dip here over - n:dec over store ;
-````
+~~~
 
 Next are `set:contains?` and `set:contains-string?` which compare a given
 value to each item in the array and returns a flag.
 
-````
+~~~
 {{
   'F var
 ---reveal---
@@ -1028,7 +1028,7 @@ value to each item in the array and returns a flag.
     [ over s:eq? @F or !F ] set:for-each
     drop @F ;
 }}
-````
+~~~
 
 I implemented `set:map` to apply a quotation to each item in a set and
 construct a new set from the returned values.
@@ -1038,38 +1038,38 @@ Example:
     [ #1 #2 #3 ] set:from-results
     [ #10 * ] set:map
 
-````
+~~~
 :set:map (aq-a)
   [ call , ] curry
   here [ over fetch , set:for-each ] dip ;
-````
+~~~
 
 You can use `set:reverse` to make a copy of a set with the values
 reversed. This can be useful after a `set:from-results`.
 
-````
+~~~
 :set:reverse (a-a)
   here [ fetch-next [ + n:dec ] sip dup ,
          [ dup fetch , n:dec ] times drop
        ] dip ;
-````
+~~~
 
 `set:nth` provides a quick means of adjusting a set and offset into an
 address for use with `fetch` and `store`.
 
-````
+~~~
 :set:nth (an-a)
   + n:inc ;
-````
+~~~
 
 `set:reduce` takes a set, a starting value, and a quote. It executes
 the quote once for each item in the set, passing the item and the value
 to the quote. The quote should consume both and return a new value.
 
-````
+~~~
 :set:reduce (pnp-n)
   [ swap ] dip set:for-each ;
-````
+~~~
 
 ## Muri: an assembler
 
@@ -1079,24 +1079,24 @@ implement something similar in Retro.
 This is kept in the global namespace, but several portions are
 kept private.
 
-````
+~~~
 {{
-````
+~~~
 
 I allocate a small buffer for each portion of an instruction
 bundle.
 
-````
+~~~
 'I0 d:create #3 allot
 'I1 d:create #3 allot
 'I2 d:create #3 allot
 'I3 d:create #3 allot
-````
+~~~
 
 The `opcode` word maps a two character instruction to an opcode
 number.
 
-````
+~~~
 :opcode (s-n)
   '.. [ #0  ] s:case  'li [ #1  ] s:case
   'du [ #2  ] s:case  'dr [ #3  ] s:case
@@ -1112,12 +1112,12 @@ number.
   'or [ #22 ] s:case  'xo [ #23 ] s:case
   'sh [ #24 ] s:case  'zr [ #25 ] s:case
   'en [ #26 ] s:case  drop #0 ;
-````
+~~~
 
 I use `pack` to combine the individual parts of the instruction
 bundle into a single cell.
 
-````
+~~~
 :pack (-n)
   &I0 opcode
   &I1 opcode
@@ -1126,13 +1126,13 @@ bundle into a single cell.
   #-24 shift  swap
   #-16 shift + swap
   #-8  shift + swap + ;
-````
+~~~
 
 Switch to the public portion of the code.
 
-````
+~~~
 ---reveal---
-````
+~~~
 
 With this it's pretty easy to implement the instruction bundle
 handler. Named `i`, this takes a string with four instruction
@@ -1140,46 +1140,46 @@ names, splits it into each part, calls `opcode` on each and
 then `pack` to combine them before using `,` to write them into
 the `Heap`.
 
-````
+~~~
 :i (s-)
   dup &I0 #2 copy #2 +
   dup &I1 #2 copy #2 +
   dup &I2 #2 copy #2 +
       &I3 #2 copy
   pack , ;
-````
+~~~
 
 The `d` word inlines a data item.
 
-````
+~~~
 :d (n-)
   , ;
-````
+~~~
 
 And `r` inlines a reference (pointer).
 
-````
+~~~
 :r (s-)
   d:lookup d:xt fetch , ;
-````
+~~~
 
 The final bits are `as{` and `}as`, which start and stop the
 assembler. (Basically, they just turn the `Compiler` on and
 off, restoring its state as needed).
 
-````
+~~~
 :as{ (-f)
   @Compiler &Compiler v:off ; immediate
 
 :}as (f-?)
   !Compiler ; immediate
-````
+~~~
 
 This finishes by sealing off the private words.
 
-````
+~~~
 }}
-````
+~~~
 
 ## Evaluating Source
 
@@ -1188,65 +1188,65 @@ dealing with user input. Sometimes though it'd be nicer to have a
 way of evaluating code from within RETRO itself. This provides an
 `evaluate` word.
 
-````
+~~~
 {{
-````
+~~~
 
 First, create a buffer for the string to be evaluated. This is sized
 to allow for a standard FORTH block to fit, or to easily fit a RETRO
 style 512 character block. It's also long enough for most source lines
 I expect to encounter when working with files.
 
-````
+~~~
   'Current-Line d:create
     #1025 allot
-````
+~~~
 
 To make use of this, we need to know how many tokens are in the input
 string. The `count-tokens` word will do this, by filtering out anything
 other than spaces and getting the size of the remaining string.
 
-````
+~~~
   :count-tokens (s-n)
     [ ASCII:SPACE eq? ] s:filter s:length ;
-````
+~~~
 
 The `next-token` word splits the remainimg string on SPACE and returns
 both parts.
 
-````
+~~~
   :next-token (s-ss)
     ASCII:SPACE s:split ;
-````
+~~~
 
 And then the `process-tokens` uses `next-token` and `interpret` to go
 through the string, processing each token in turn. Using the standard
 `interpret` word allows for proper handling of the prefixes and classes
 so everything works just as if entered directly.
 
-````
+~~~
   :process-tokens (sn-)
     [ next-token swap
       [ dup s:length n:-zero? [ interpret ] [ drop ] choose ] dip n:inc
     ] times interpret ;
-````
+~~~
 
-````
+~~~
 ---reveal---
-````
+~~~
 
 And finally, tie it all together into the single exposed word
 `evaluate`.
 
-````
+~~~
   :s:evaluate (s-...)
     &Current-Line s:copy
     &Current-Line dup count-tokens process-tokens ;
-````
+~~~
 
-````
+~~~
 }}
-````
+~~~
 
 
 ## I/O
@@ -1254,19 +1254,19 @@ And finally, tie it all together into the single exposed word
 Retro really only provides one I/O function in the standard interface:
 pushing a character to the output log.
 
-````
+~~~
 :putc (c-) `1000 ;
-````
+~~~
 
 This can be used to implement words that push other item to the log.
 
-````
+~~~
 :nl   (-)  ASCII:LF putc ;
 :sp   (-)  ASCII:SPACE putc ;
 :tab  (-)  ASCII:HT putc ;
 :puts (s-) [ putc ] s:for-each ;
 :putn (n-) n:to-string puts ;
-````
+~~~
 
 Different inteface layers may provide additional I/O words.
 
@@ -1274,11 +1274,11 @@ Different inteface layers may provide additional I/O words.
 
 I provide just a few debugging aids.
 
-````
+~~~
 :words      (-)  [ d:name puts sp ] d:for-each ;
 :reset      (...-) depth repeat 0; push drop pop #1 - again ;
 :dump-stack (-)  depth 0; drop push dump-stack pop dup putn sp ;
-````
+~~~
 
 ## The End
 
