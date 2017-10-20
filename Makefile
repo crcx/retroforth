@@ -9,7 +9,6 @@ clean:
 	rm -f bin/repl
 	rm -f bin/extend
 	rm -f bin/muri
-	rm -f bin/tanu
 
 first:
 	cd tools && make
@@ -21,10 +20,11 @@ then:
 image:
 	./bin/muri literate/Rx.md
 	./bin/extend literate/RetroForth.md
-	cp ngaImage source
-	cd source && ../bin/extend rre.forth
-	cd source && ../bin/embedimage >image.c
-	rm source/ngaImage
+	cp ngaImage interfaces
+	cd interfaces && ../bin/extend rre.forth
+	cd interfaces && ../bin/embedimage >image.c
+	rm interfaces/ngaImage
 
 finally:
-	cd source && make
+	cd interfaces && make
+
