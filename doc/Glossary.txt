@@ -1,0 +1,2645 @@
+This is a reference to the words and their
+usage. It includes stack comments, a brief
+description, and some examples.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+-
+
+  nm-o
+
+Subtract `m` from `n` and return the
+difference.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+,
+
+  n-
+
+Store the specified value into the memory at
+`here` and increment `Heap` by 1.
+
+See also:
+
+  heap
+  Here
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+;
+
+  -
+
+End the current definition.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+/
+
+  nm-o
+
+Divide `n` by `m` and return the result.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+[
+
+  -
+
+Begin a quotation.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+]
+
+  -
+
+End the current quotation.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+{{
+
+  -
+
+Begin a lexically scoped namespace.
+
+See also:
+
+  ---reveal---
+  ScopeList
+  }}
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+}}
+
+  -
+
+End a lexically scoped namespace.
+
+See also:
+
+  {{
+  ---reveal---
+  ScopeList
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+*
+
+  nm-o
+
+Multiply `n` by `m` and return the product.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
++
+
+  nm-o
+
+Add `m` to `n` and return the result.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+0;
+
+  n-
+  n-n
+
+If `n` is zero, drop `n` and exit the current
+word. If non-zero, leave `n` alone and allow
+execution to continue.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+again
+
+  -
+
+Close an unconditional loop. Branches back to
+the prior `repeat`.
+
+See also:
+
+  repeat
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+allot
+
+  n-
+
+Increment `Heap` by the specified amount.
+
+Example:
+
+  'Buffer d:create
+    #33 allot
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+and
+
+  nm-o
+
+Perform a bitwise AND operation between the
+two provided values.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+as{
+
+  -f
+
+Start an assembly segment of code.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+}as
+
+  f-
+
+End the current assembly segment.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+ASCII:ACK
+
+  -n
+
+Constant. Refers to specific ASCII code.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+ASCII:BEL
+
+  -n
+
+Constant. Refers to specific ASCII code.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+ASCII:BS
+
+  -n
+
+Constant. Refers to specific ASCII code.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+ASCII:CAN
+
+  -n
+
+Constant. Refers to specific ASCII code.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+ASCII:CR
+
+  -n
+
+Constant. Refers to specific ASCII code.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+ASCII:DC1
+
+  -n
+
+Constant. Refers to specific ASCII code.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+ASCII:DC2
+
+  -n
+
+Constant. Refers to specific ASCII code.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+ASCII:DC3
+
+  -n
+
+Constant. Refers to specific ASCII code.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+ASCII:DC4
+
+  -n
+
+Constant. Refers to specific ASCII code.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+ASCII:DEL
+
+  -n
+
+Constant. Refers to specific ASCII code.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+ASCII:DLE
+
+  -n
+
+Constant. Refers to specific ASCII code.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+ASCII:EM
+
+  -n
+
+Constant. Refers to specific ASCII code.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+ASCII:ENQ
+
+  -n
+
+Constant. Refers to specific ASCII code.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+ASCII:EOT
+
+  -n
+
+Constant. Refers to specific ASCII code.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+ASCII:ESC
+
+  -n
+
+Constant. Refers to specific ASCII code.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+ASCII:ETB
+
+  -n
+
+Constant. Refers to specific ASCII code.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+ASCII:ETX
+
+  -n
+
+Constant. Refers to specific ASCII code.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+ASCII:FF
+
+  -n
+
+Constant. Refers to specific ASCII code.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+ASCII:FS
+
+  -n
+
+Constant. Refers to specific ASCII code.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+ASCII:GS
+
+  -n
+
+Constant. Refers to specific ASCII code.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+ASCII:HT
+
+  -n
+
+Constant. Refers to specific ASCII code.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+ASCII:LF
+
+  -n
+
+Constant. Refers to specific ASCII code.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+ASCII:NAK
+
+  -n
+
+Constant. Refers to specific ASCII code.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+ASCII:NUL
+
+  -n
+
+Constant. Refers to specific ASCII code.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+ASCII:RS
+
+  -n
+
+Constant. Refers to specific ASCII code.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+ASCII:SI
+
+  -n
+
+Constant. Refers to specific ASCII code.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+ASCII:SO
+
+  -n
+
+Constant. Refers to specific ASCII code.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+ASCII:SOH
+
+  -n
+
+Constant. Refers to specific ASCII code.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+ASCII:SPACE
+
+  -n
+
+Constant. Refers to specific ASCII code.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+ASCII:STX
+
+  -n
+
+Constant. Refers to specific ASCII code.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+ASCII:SUB
+
+  -n
+
+Constant. Refers to specific ASCII code.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+ASCII:SYN
+
+  -n
+
+Constant. Refers to specific ASCII code.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+ASCII:US
+
+  -n
+
+Constant. Refers to specific ASCII code.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+ASCII:VT
+
+  -n
+
+Constant. Refers to specific ASCII code.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+bi
+
+  xqq-?
+
+Execute q1 against x, then execute q2 against
+a copy of x.
+
+Example:
+
+  #100 [ #10 * ] [ #10 / ] bi
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+bi@
+
+  xyq-?
+
+Execute q1 against value x, then execute it
+against value y.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+bi*
+
+  xyqq-
+
+Execute q1 against x and q2 against y.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+buffer:add
+
+  n-
+
+Append a value to the current buffer.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+buffer:empty
+
+  -
+
+Reset the current buffer to an empty state.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+buffer:end
+
+  -
+
+Return a pointer to the current end of the
+active buffer.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+buffer:get
+
+  -n
+
+Remove the last value from the current
+buffer.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+buffer:preserve
+
+  q-
+
+Save and restore the current buffer before
+and after executing the specified quote.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+buffer:set
+
+  a-
+
+Assign a new buffer as the current one.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+buffer:size
+
+  -
+
+Return the number of cells in the buffer.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+buffer:start
+
+  -a
+
+Return the start address of the current
+buffer.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+call
+
+  a-
+
+Call the function at the specified address.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+case
+
+  nmq-
+  nmq-n
+
+If `n` is equal to `m`, drop both and execute
+the specified quote before exiting the calling
+word. If not equal, leave `n` on the stack and
+let execution continue.
+
+Example:
+
+  :vowel? (c-f)
+    $a [ TRUE ] case
+    $e [ TRUE ] case
+    $i [ TRUE ] case
+    $o [ TRUE ] case
+    $u [ TRUE ] case
+    drop FALSE ;
+
+See also:
+
+  s:case
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+c:-consonant?
+
+  c-f
+
+Return `TRUE` if character is not a consonant
+or `FALSE` otherwise.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+c:consonant?
+
+  c-f
+
+Return `TRUE` if character is a consonant or
+`FALSE` otherwise.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+c:-digit?
+
+  c-f
+
+Return `TRUE` if the character is not a
+numeric digit or `FALSE` otherwise.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+c:digit?
+
+  c-f
+
+Return `TRUE` if the character is a numeric
+digit or `FALSE` otherwise.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+choose
+
+  fqq-
+
+Execute q1 if the flag is `TRUE` or q2 if
+the flag is `FALSE`.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+class:data
+
+  v-v
+  v-
+
+Class handler for data structures.
+
+When compiling:    compile the code to push
+                   the value to the stack
+
+When interpreting: leave the value on the
+                   stack
+
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+class:macro
+
+  a-
+
+Class handler for compiler macros.
+
+When compiling:    call the word
+
+When interpreting: call the word
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+class:primitive
+
+  a-
+
+Class handler for words that correspond to
+VM instructions.
+
+When compiling:    inline the VM instruction
+
+When interpreting: call the word
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+class:word
+
+  a-
+
+Class handler for most words.
+
+When compiling:    compile a call to the word
+
+When interpreting: call the word
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+c:letter?
+
+  c-f
+
+Return `TRUE` if the character is a letter
+or `FALSE` otherwise.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+c:-lowercase?
+
+  c-f
+
+Return `TRUE` if the character is not
+lowercase or `FALSE` otherwise.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+c:lowercase?
+
+  c-f
+
+Return `TRUE` if the character is lowercase
+or `FALSE` otherwise.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+compile:call
+
+  a-
+
+Compile a call to the specified address.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+compile:jump
+
+  a-
+
+Compile a jump to the specified address.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+compile:lit
+
+  n-
+
+Compile code to push the specified value to
+the stack.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+Compiler
+
+  -a
+
+Variable. Set to TRUE when compiler is on or
+          FALSE when the compiler is off.
+
+          This will be set by `prefix::`,
+          `[` and `]`.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+compile:ret
+
+  -
+
+Compile the code needed to return from a
+function call.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+compiling?
+
+  -f
+
+Return a flag indicating the contents of the
+`Compiler` variable.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+const
+
+  ns-
+
+Crete a numeric constant.
+
+Example:
+
+  #-1 'TRUE const
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+copy
+
+  sdl-
+
+Copy `l` cells from memory at `s` to the
+memory at `d`. These should not overlap.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+c:toggle-case
+
+  c-C
+
+Invert the case of a character.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+c:to-lower
+
+  c-C
+
+Convert an ASCII letter to its lowercase form.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+c:to-string
+
+  c-s
+
+Convert a character into a string.
+
+Example:
+
+  $e c:to-string
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+c:to-upper
+
+  c-C
+
+Convert an ASCII character to its uppercase
+form.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+c:-uppercase?
+
+  c-f
+
+Return `TRUE` if character is not uppercase
+or `FALSE` otherwise.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+c:uppercase?
+
+  c-f
+
+Return `TRUE` if character is uppercase or
+`FALSE` otherwise.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+curry
+
+  vp-p
+
+Bind a value to a function and return a new
+quote that calls the bound action.
+
+Example:
+
+  #100
+  #10 [ * ] curry call
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+c:-visible?
+
+  c-f
+
+Return `TRUE` if the character is not
+printable or `FALSE` otherwise.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+c:visible?
+
+  c-f
+
+
+Return `TRUE` if the character is printable
+or `FALSE` otherwise.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+c:-vowel?
+
+  c-f
+
+Return `TRUE` if the character is not a
+vowel or `FALSE` otherwise.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+c:vowel?
+
+  c-f
+
+Return `TRUE` if the character is a vowel
+or `FALSE` otherwise.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+c:-whitespace?
+
+  c-f
+
+Return `TRUE` if the character is not
+whitespace or `FALSE` otherwise.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+c:whitespace?
+
+  c-f
+
+Return `TRUE` if the character is whitespace
+or `FALSE` otherwise.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+d
+
+  n-
+
+Inline a numeric value to the current
+assembly segment.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+d:add-header
+
+  saa-
+
+Create a new header. Provide a string for
+the name, a pointer to the class handler, and
+a pointer to the word definition.
+
+Generally you won't use this directly.
+
+See also:
+
+  d:create
+  prefix::
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+data
+
+  -
+
+Change the class of the most recent word to
+`class:data`.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+d:class
+
+  d-a
+
+Given a dictionary header, return the class
+field.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+d:create
+
+  s-
+
+Create a new dictionary entry pointing to
+`here`.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+depth
+
+  -n
+
+Return the number of items on the data stack.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+d:for-each
+
+  q-
+
+Execute the specified quote once for each
+header in the dictionary. Before running the
+quote, this also pushes a pointer to the
+header onto the stack.
+
+Examples:
+
+  :words (-)  [ d:name puts sp ] d:for-each ;
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+Dictionary
+
+  -a
+
+Variable. Holds a pointer to the most recent
+          dictionary header.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+dip
+
+  nq-n
+
+Move n off the stack. Execute quote, then
+restore the value.
+
+Note:
+
+In traditional Forth, this would be similar
+to:
+
+  >r ... r>
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+d:last
+
+  -d
+
+Return the most recent dictionary header.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+d:last<class>
+
+  -a
+
+Return a pointer to the class field of the
+most recent dictionary header.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+d:last<name>
+
+  -s
+
+Return a pointer to the name field of the
+most recent dictionary header.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+d:last<xt>
+
+  -a
+
+Return a pointer to the xt field of the
+most recent dictionary header.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+d:link
+
+  d-a
+
+Given a dictionary header, return the link
+field.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+d:lookup
+
+  s-d
+
+Lookup the specified name in the dictionary
+and return a pointer to its dictionary header.
+This returns zero if the word is not found.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+d:name
+
+  d-s
+
+Given a dictionary header, return the name
+field.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+does
+
+  q-
+
+Attach an action to the most recently created
+word. This is used in a manner similar to
+CREATE/DOES> in traditional Forth.
+
+Example:
+
+  :constant (ns-) d:create , [ fetch ] does ; 
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+drop
+
+  n-
+
+Remove the top value from the stack.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+drop-pair
+
+  nn-
+
+Remove the top two values from the stack.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+dup
+
+  n-nn
+
+Duplicate the top value on the stack.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+?dup
+
+  n-n
+  n-nn
+
+Duplicate the top value on the stack if it
+is not zero.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+dup-pair
+
+  nm-nmnm
+
+Duplicate the top two values on the stack.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+d:xt
+
+  d-a
+
+Given a dictionary header, return the xt
+field.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+EOM
+
+  -n
+
+Return the total number of cells in memory.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+-eq?
+
+  nm-f
+
+Return `TRUE` if the values are not equal or
+`FALSE` otherwise.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+eq?
+
+  nm-f
+
+Return `TRUE` if the values are equal or
+`FALSE` otherwise.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+err:notfound
+
+  -
+
+Error handler. Called when a word is not
+found by `interpret`.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+FALSE
+
+  -n
+
+Constant. Will always return 0.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+fetch
+
+  a-n
+
+Return the value stored at the address
+provided.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+fetch-next
+
+  a-An
+
+Return the next address after the specified
+one and the value stored at the specified
+address.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+gt?
+
+  nm-f
+
+Return TRUE if `n` is greater than `m` or
+FALSE otherwise.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+gteq?
+
+  nm-f
+
+Return TRUE if `n` is greater than or equal to
+`m` or FALSE otherwise.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+Heap
+
+  -a
+
+Variable. This holds the next free address in
+          memory.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+here
+
+  -a
+
+Return the next free address in memory.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+i
+
+  s-
+
+Pack an instruction bundle and inline it into
+the current assembly segment.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+if
+
+  fq-
+
+Execute the quote if the flag is `TRUE` or
+do nothing if `FALSE`.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+-if
+
+  fq-
+
+Execute the quote if the flag is `FALSE` or
+do nothing if `TRUE`.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+immediate
+
+  -
+
+Change the class of the most recent word to
+`class:macro`.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+interpret
+
+  s-
+
+Interpret a single token. This accounts for
+prefixes and other language features.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+lt?
+
+  nm-q
+
+Return TRUE if `n` is less than `m` or FALSE
+otherwise.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+lteq?
+
+  nm-q
+
+Return TRUE if `n` is less than or equal to
+`m` or FALSE otherwise.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+mod
+
+  nm-o
+
+Divide `n` by `m` and return the remainder.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+/mod
+
+  nm-op
+
+Divide `n` by `m` and return the result and
+remainder.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+n:abs
+
+  n-N
+
+Return the absolute value of a number.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+n:between?
+
+  nlu-f
+
+Return `TRUE` if n is between the upper and
+lower limits. Inclusive.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+n:dec
+
+  n-m
+
+Decrease a value by 1.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+n:even?
+
+  n-f
+
+Return TRUE if the number is even or FALSE
+otherwise.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+n:inc
+
+  n-m
+
+Increment the specified number by 1.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+nip
+
+  nm-m
+
+Remove the second item from the stack.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+nl
+
+  -
+
+Display a newline.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+n:limit
+
+  nlu-m
+
+Return n if it is within the upper and lower
+limits, or the closest boundary value if not.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+n:max
+
+  nn-n
+
+Return the greater of two values.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+n:MAX
+
+  -n
+
+Return the maximum value of a number.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+n:min
+
+  nn-n
+
+Return the lesser of two values.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+n:MIN
+
+  -n
+
+Return the minimum value of a number.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+n:negate
+
+  n-m
+
+Invert the sign of the specified number.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+n:negative?
+
+  n-f
+
+Return `TRUE` if the number is negative or
+`FALSE` otherwise.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+n:odd?
+
+  n-f
+
+Return `TRUE` if the number is odd or `FALSE`
+otherwise.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+not
+
+  n-m
+
+Perform a logical NOT operation.
+
+Example:
+
+  #12 #3 eq? not
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+n:positive?
+
+  n-f
+
+Return `TRUE` if the number is positive or
+`FALSE` if not.
+
+See also:
+
+  n:strictly-positive?
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+n:pow
+
+  bp-n
+
+Return base to the power of p.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+n:sqrt
+
+  n-m
+
+Return the square root of a number.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+n:square
+
+  n-m
+
+Return the square of a number.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+n:strictly-positive?
+
+Return `TRUE` if the number is positive or
+`FALSE` if not. This differs from the
+`n:positive?` in that it only considers a
+number to be positive if greater than zero.
+
+See also:
+
+  n:positive?
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+n:to-string
+
+  n-s
+
+Convert a number into the corresponding string
+representation.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+n:-zero?
+
+  n-f
+
+Return `TRUE` if number is not zero or `FALSE`
+if not.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+n:zero?
+
+  n-f
+
+Return `TRUE` if number is zero or `FALSE` if
+not.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+or
+
+  nm-o
+
+Perform a bitwise OR operation between the
+two provided values.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+over
+
+  nm-nmn
+
+Put a copy of the second item on the stack to
+the top of the stack.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+pop
+
+  -n
+
+Pop a value off of the return stack and put
+it on the data stack.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+prefix:`
+
+  s-
+
+Convert the string into a number and inline
+it into the current defintion. This is used
+mainly to inline Nga instructions.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+prefix::
+
+  s-
+
+Create a new header pointing to `here` and
+start the compiler. The new word will have
+the name specified by the string.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+prefix:!
+
+  s-
+
+Lookup the word named by the string and setup
+a store operation.
+
+If compiling:    compile the code to store a
+                 value into the variable.
+
+If interpreting: store a value into the
+                 variable
+
+Example:
+
+  'Foo var
+  #100 !Foo
+
+Notes:
+
+This is a shorthand notation. There is no
+functional difference between these:
+
+  #100 !Foo
+  #100 &Foo store
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+prefix:'
+
+  s-s
+
+If compiling, compile the string into the
+definition. If interpreting, use `s:temp` to
+move it into the temporary buffers.
+
+Example:
+
+  'hello_world!
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+prefix:(
+
+  s-
+
+Drop the string. This is used for comments.
+
+Example:
+
+  (Hello_World!)
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+prefix:@
+
+  s-
+
+Lookup the word named by the string and setup
+a fetch operation.
+
+If compiling:    compile the code to fetch a
+                 value from the variable.
+
+If interpreting: fetch a value from the
+                 variable
+
+Example:
+
+  #100 'Foo var<n>
+  @Foo
+
+Notes:
+
+This is a shorthand notation. There is no
+functional difference between these:
+
+  #100 @Foo
+  #100 &Foo fetch
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+prefix:$
+
+  s-c
+
+Return the ASCII character code for the first
+character in the string and call `class:data`
+
+Example:
+
+  $r
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+prefix:&
+
+  s-a
+
+Return a pointer to the named word and call
+`class:data`.
+
+Example:
+
+  &words call
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+prefix:#
+
+  s-n
+
+Convert string into a number and call the
+`class:data`.
+
+Example:
+
+  #100
+  #-100
+
+Notes:
+
+This only supports decimal (base 10) numbers.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+push
+
+  n-
+
+Push a value to the return stack. It must be
+removed before execution of the word ends.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+putc
+
+  c-
+
+Write a single character to the output device.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+putn
+
+  n-
+
+Write a number to the output device.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+puts
+
+  s-
+
+Send the string to the output device.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+r
+
+  s-
+
+Lookup a reference by name and inline its
+pointer to the current assembly segment.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+reclass
+
+  a-
+
+Change the class of the most recently defined
+word to the specified one.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+reorder
+
+  ...ss-...
+
+Reorder stack items.
+
+Example:
+
+  (a__b__c)
+  #1 #2 #3  'abc 'caac reorder
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+repeat
+
+  -
+
+Begin an unconditional loop.
+
+See also:
+
+  again
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+reset
+
+  ...-
+
+Remove all values from the stack.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+---reveal---
+
+  -
+
+Switch to the public part of a lexical scoped
+namespace.
+
+See also:
+
+  {{
+  ScopeList
+  }}
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+RewriteUnderscores
+
+  -a
+
+Variable. When set to `TRUE`, the `prefix:'`
+          will convert underscores in a new
+          string to spaces. When `FALSE`, it
+          will cause the prefix handler to
+          leave the string alone.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+rot
+
+  abc-bca
+
+Rotate the top three values.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+s,
+
+  s-
+
+Compile the code needed to push a string to
+the stack and inline the string data into the
+definition.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+s:append
+
+  ss-s
+
+Append the second string to the first, returns
+a new string.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+s:case
+
+  sSq-
+  sSq-s
+
+If the `s` matches `S`, discard `s` and run
+the quote before exiting the caller. If they
+do not match, discard the quote and leave `s`
+on the stack.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+s:chop
+
+  s-S
+
+Remove the last character from the string.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+s:contains-char?
+
+  sc-f
+
+Return `TRUE` if the character is present in
+the string or `FALSE` otherwise.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+s:contains-string?
+
+  ss-f
+
+Return `TRUE` if the second string is present
+in the first string or `FALSE` otherwise.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+ScopeList
+
+  -a
+
+Variable. Used by the lexical scope words.
+
+See also:
+
+  {{
+  ---reveal---
+  }}
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+s:empty
+
+  -s
+
+Return a new, empty string.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+set:contains?
+
+  na-f
+
+Return `TRUE` if the value is in the set or
+`FALSE` otherwise.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+set:contains-string?
+
+  as-f
+
+Return `TRUE` if the string value is in the
+set or`FALSE` otherwise.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+set:dup
+
+  a-b
+
+Make a copy of a set. Return the address of
+the copy.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+set:filter
+
+  aq-b
+
+For each item in the initial set, run the
+specified quote. If the quote returns `TRUE`,
+copy the item into a new set. If `FALSE`,
+discard it. Returns a pointer to the new set.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+set:from-results
+
+  q-a
+
+Execute quote. Return a new set containing
+the values the quote leaves on the stack.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+set:from-string
+
+  s-a
+
+Create a new set with the characters in the
+source string.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+set:for-each
+
+  aq-?
+
+Execute the quote once for each item in the
+set.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+set:length
+
+  a-s
+
+Return the length of a set.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+set:map
+
+  aq-a
+
+Execute quote once for each item in the set.
+Constructs a new set from the value returned
+by the quote.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+set:nth
+
+  an-b
+
+Return the actual address of the nth item in
+the set.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+set:reverse
+
+  a-b
+
+Reverse the order of items in a set. This will
+return a new set.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+set:reduce
+
+  pnq-n
+
+Takes a set, a starting value, and a quote.
+This will apply the quote to each item in the
+set; the quote should consume two values and
+return one.
+
+Example:
+
+    [ #1 #2 #3 ] set:from-results
+    #0 [ + ] set:reduce
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+s:eq?
+
+  ss-f
+
+Return `TRUE` if the two strings are identical
+or `FALSE` otherwise.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+s:filter
+
+  sq-s
+
+Execite the quote once for each value in the
+string. If the quote returns `TRUE`, append
+the value into a new string. If `FALSE` the
+value will be discarded.
+
+Example:
+
+  'hello_world [ s:-vowel? ] s:filter
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+s:for-each
+
+  sq-
+
+Execute the quote once for each value in the
+string.
+
+Example:
+
+  'hello_world! [ putc ] s:for-each
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+s:hash
+
+  s-n
+
+Calculate a hash value for the string using
+the DJB2 algo.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+s:copy
+
+  sa-
+
+Copy a string (s) to a destination (a). This
+will include the terminator character when
+copying.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+s:DIGITS
+
+  -s
+
+Return a string containing all valid decimal
+digits.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+s:ASCII-LOWERCASE
+
+  -s
+
+Return a string containing all valid ASCII
+lowercase letters.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+s:ASCII-UPPERCASE
+
+  -s
+
+Return a string containing all valid ASCII
+uppercase letters.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+s:ASCII-LETTERS
+
+  -s
+
+Return a string containing all valid ASCII
+letters.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+s:PUNCTUATION
+
+  -s
+
+Return a string containing all valid ASCII
+punctuation characters. This includes things
+like +, *, \, etc.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+s:WHITESPACE
+
+  -s
+
+Return a string containing all valid ASCII
+characters considered to be whitespace.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+shift
+
+  nm-o
+
+Perform a bitwise shift of n by m bits.
+If m is positive, shift right. If negative,
+the shift will be to the left.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+s:index-of
+
+  sc-n
+
+Return the location of the first instance of
+the specified character in the string.
+
+Example:
+
+  'hello_world $w s:index-of
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+sip
+
+  nq-n
+
+Make a copy of value n and move it off the
+stack. Execute quote, then restore the value.
+
+Note:
+
+In traditional Forth, this would be similar
+to:
+
+  dup >r ... r>
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+s:keep
+
+  s-S
+
+Move a string from the temporary buffers into
+permament memory.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+s:left
+
+  sn-S
+
+Return a new string containing the first `n`
+characters from the source string.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+s:length
+
+  s-n
+
+Return the length of the string.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+s:map
+
+  sq-S
+
+Execute the specified quote once for each
+character in the string. Builds a new string
+from the return value of the quote. The quote
+should return only one value.
+
+Example:
+
+  'hello_world [ c:to-upper ] s:map
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+sp
+
+  -
+
+Display a space.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+s:prepend
+
+  ss-S
+
+Return a new string formed by putting the
+second string before the first and merging
+them.
+
+Example:
+
+  'charles 'hello_ s:prepend
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+s:reverse
+
+  s-S
+
+Reverse the order of characters in the string.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+s:right
+
+  sn-
+
+Return a new string containing the specified
+number of characters from the right side of
+the string.
+
+Example:
+
+  'hello_world #5 s:right
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+s:skip
+
+  -
+
+Internal helper function used to skip over a
+string in a definition.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+s:split
+
+  sc-ss
+
+Split a string on the first occurrance of the
+specified character.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+s:substr
+
+  sfl-S
+
+Extract a substring from the specified string.
+This will take the characters starting at
+`f` and extend `l` characters in length.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+s:temp
+
+  s-S
+
+Move a string to the temporary string buffers.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+s:to-lower
+
+  s-S
+
+Convert the ASCII letters in a string into
+lowercase.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+s:to-number
+
+  s-n
+
+Convert a string into a number.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+store
+
+  na-
+
+Store value `n` into the address `a`.
+
+See also:
+
+  prefix:@
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+store-next
+
+  na-A
+
+Store the value into address. Return the next
+address.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+s:to-upper
+
+  s-S
+
+Convert all ASCII letters in a string to the
+uppercase form.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+s:trim
+
+  s-S
+
+Remove leading and trailing whitespace from
+a string.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+s:trim-left
+
+  s-S
+
+Remove leading whitespace from a string.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+s:trim-right
+
+  s-S
+
+Remove trailing whitespace from a string.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+STRINGS
+
+  -a
+
+Return the address of the start of the
+temporary string pool.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+swap
+
+  nm-mn
+
+Switch the position of the top two items on
+the stack.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+s:with-format
+
+  ...s-s
+
+Construct a new string using the template
+passed and items from the stack.
+
+Formatting:
+
+  \n   Newline
+  \t   Tab
+  \\   Backslash
+  \%   Percent sign
+  %c   Insert character (from stack)
+  %n   Insert number (from stack)
+  %s   Insert string (from stack)
+
+All others will be inserted unchanged into
+the new string.
+
+Example:
+
+  #3 #2 #1 '%n_+_%n_=_%n s:with-format
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+s:evaluate
+
+  s-?
+
+Evaluate string `s` as if it was passed in to
+`interpret` token by token.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+tab
+
+  -
+
+Display a tab.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+TempStringMax
+
+  -a
+
+Variable. Holds the max length of a string
+          in the temporary pool.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+TempStrings
+
+  -a
+
+Variable. Holds the max number of temporary
+          strings in the pool.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+times
+
+  nq-
+
+Run the specified quote a specific number of
+times.
+
+Example:
+
+    #5 [ $_ putc ] times
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+tors
+
+  -n
+
+Push a copy of the top item on the return
+stack to the data stack.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+tri
+
+  xqqq-
+
+Apply q1 against x, q2 against x, and q3
+against x.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+tri@
+
+  xyzq-
+
+Apply quote to x, quote to y, and quote to z.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+tri*
+
+  xyzqqq-
+
+Apply q1 to x, q2 to y, and q3 to z.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+TRUE
+
+  -n
+
+Constant. Will always return -1.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+tuck
+
+  nm-mnm
+
+Put a copy of the top stack item under the
+second stack item.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+until
+
+  q-
+
+Execute quote repeatedly while the quote
+returns a value of `FALSE`.
+
+The quote must return a flag of either `TRUE`
+or `FALSE` to be used with this.
+
+See also:
+
+  while
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+var
+
+  s-
+
+Create a variable with an initial value of 0.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+var<n>
+
+  ns-
+
+Create a variable with an initial value.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+v:dec
+
+  a-
+
+Decrement a variable by 1.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+v:dec-by
+
+  na-
+
+Decrement a variable by the specified amount.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+Version
+
+  -a
+
+Variable. The stored value indicates the Rx
+          kernel version.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+v:inc
+
+  a-
+
+Increment a variable by 1.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+v:inc-by
+
+  na-
+
+Increment a variable by the specified amount.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+v:limit
+
+  alu-
+
+Fetch value from address. Run `n:limit`
+against this and store the result in the
+address.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+v:off
+
+  a-
+
+Set the contents of the variable to zero.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+v:on
+
+  a-
+
+Set the contents of the variable to -1.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+v:preserve
+
+  aq-
+
+Execute quote, preserving contents of the
+variable.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+v:update-using
+
+  aq-
+
+Fetch a value from the specified address, then
+run the quotation. Afterwards, store the
+returned value at the original address.
+
+Example:
+
+  #1 'Next var<n>
+  &Next [ #10 * ] v:update-using
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+while
+
+  q-
+
+Execute quote repeatedly while the quote
+returns a value of `TRUE`.
+
+The quote must return a flag of either `TRUE`
+or `FALSE` to be used with this.
+
+See also:
+
+  until
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+words
+
+  -
+
+Display a list of all names in the dictionary.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+xor
+
+  nm-o
+
+Perform a bitwise XOR operation between the
+two provided values.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-

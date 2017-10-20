@@ -1,0 +1,331 @@
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+s:to-float
+
+Stack:
+
+  s-
+
+Floating Stack:
+
+  -f
+
+Convert a string into a floating point value.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+n:to-float
+
+Stack:
+
+  n-
+
+Floating Stack:
+
+  -f
+
+Convert a number into a floating point value.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+f:to-string
+
+Stack:
+
+  -s
+
+Floating Stack:
+
+  f-
+
+Convert a floating point value into a string.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+f:+
+
+Floating Stack:
+
+  ab-c
+
+Add two floating point values.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+f:-
+
+Floating Stack:
+
+  ab-c
+
+Subtract floating point value b from a.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+f:*
+
+Floating Stack:
+
+  ab-c
+
+Multiply two floating point values.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+f:/
+
+Floating Stack:
+
+  ab-c
+
+Divide floating point value a by b.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+f:floor
+
+Floating Stack:
+
+  a-b
+
+Perform a mathmatical floor operation on the
+floating point value a.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+f:dup
+
+Floating Stack:
+
+  a-aa
+
+Duplicate a floating point value.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+f:drop
+
+Floating Stack:
+
+  a-
+
+Discard a floating point value.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+f:swap
+
+
+Floating Stack:
+
+  ab-ba
+
+Swap the position of the top two floating
+point values.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+f:depth
+
+Stack:
+
+  -n
+
+Floating Stack:
+
+  -
+
+Push the current depth of the floating point
+stack to the data stack.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+f:tuck
+
+Floating Stack:
+
+  ab-bab
+
+Tuck a copy of the top floating point value
+under the second one.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+f:over
+
+Floating Stack:
+
+  ab-aba
+
+Put a copy of the second floating point value
+over the top one.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+f:eq?
+
+Stack:
+
+  -f
+
+Floating Stack:
+
+  ab-
+
+Compare two floating point values for
+equality.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+f:-eq?
+
+Stack:
+
+  -f
+
+Floating Stack:
+
+  ab-
+
+Compare two floating point values for
+inequality.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+f:lt?
+
+Stack:
+
+  -f
+
+Floating Stack:
+
+  ab-
+
+Compare two floating point values for less
+than.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+f:gt?
+
+Stack:
+
+  -f
+
+Floating Stack:
+
+  ab-
+
+Compare two floating point values for greater
+than.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+f:negate
+
+Floating Stack:
+
+  a-b
+
+Invert the sign of the floating point value.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+f:negative?
+
+Stack:
+
+  -f
+
+Floating Stack:
+
+  a-
+
+Return `TRUE` if floating point value is
+negative or `FALSE` if not.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+f:positive?
+
+Stack:
+
+  -f
+
+Floating Stack:
+
+  a-
+
+Return `TRUE` if floating point value is
+positive or `FALSE` if not.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+f:abs
+
+Floating Stack:
+
+  a-b
+
+Return the absolute value for a floating
+point value.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+f:to-number
+
+Stack:
+
+  -n
+
+Floating Stack:
+
+  n-
+
+Convert a floating point value into a number.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+f:log
+
+Floating Stack:
+
+  ab-c
+
+Return log(a) for base b for floating point
+values.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+f:power
+
+Floating Stack:
+
+  ab-c
+
+Return a^b for floating point values.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+prefix:.
+
+Floating Stack:
+
+  -a
+
+Parse token as a floating point value and
+push to floating stack or compile code to
+do so.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+putf
+
+Floating Stack:
+
+  f-
+
+Display a floating point value.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
