@@ -24,3 +24,4 @@
 | sort-on-stack.forth        | Sort numbers on the stack               |
 | accumulator.forth          | Sample use of `does`                    |
 | Parse-UPS.forth            | Break a UPS Tracking # apart            |
+| rot13.forth                | ROT13 "encryption"                      |
