@@ -938,6 +938,10 @@ The format language is simple:
 }}
 ~~~
 
+~~~
+:s:const (ss-)  [ s:keep ] dip const ;
+~~~
+
 ## Sets
 
 Sets are statically sized arrays. They are represented in memory as:

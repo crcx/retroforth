@@ -349,6 +349,7 @@ s:
   s:append
   s:case
   s:chop
+  s:const
   s:contains-char?
   s:contains-string?
   s:copy

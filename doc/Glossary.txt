@@ -2389,6 +2389,18 @@ Example:
 
 -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
 
+s:const
+
+  ss-
+
+Create a string constant.
+
+Example:
+
+  'Test_String 'HELLO s:const
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
 s:evaluate
 
   s-?
