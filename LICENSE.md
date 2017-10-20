@@ -1,8 +1,5 @@
-    ____   ____ ______ ____    ___
-    || \\ ||    | || | || \\  // \\
-    ||_// ||==    ||   ||_// ((   ))
-    || \\ ||___   ||   || \\  \\_//
-    a personal, minimalistic forth
+RETRO
+a personal, minimalistic forth
 
 ## Legalities
 

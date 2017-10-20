@@ -15,27 +15,27 @@ Declare module constant (prevents reloading when using `import`):
 'bottles d:create
   , , ,
 
-:.bottles
+:display-bottles
   dup #2 n:min bottles + fetch call ;
 
-:.beer
-  .bottles '_of_beer putsf ;
+:display-beer
+  display-bottles '_of_beer puts ;
 
-:.wall
-  .beer '_on_the_wall putsf ;
+:display-wall
+  display-beer '_on_the_wall puts ;
 
-:.take
-  'Take_one_down,_pass_it_around  putsf ;
+:display-take
+  'Take_one_down,_pass_it_around  puts ;
 
-:.verse
-  .wall nl .beer nl
-  n:dec .take nl .wall nl ;
+:display-verse
+  display-wall nl display-beer nl
+  n:dec display-take nl display-wall nl ;
 
 :?dup
   dup 0; ;
 
 :verses
-  [ nl .verse dup n:-zero? ] while drop ;
+  [ nl display-verse dup n:-zero? ] while drop ;
  
 #99 verses
 ````
