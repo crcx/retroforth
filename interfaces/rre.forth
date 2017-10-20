@@ -1,3 +1,17 @@
+# RETRO
+
+This is a set of extensions for RRE.
+
+# Console Input
+
+~~~
+:getc (-c) `1001 ;
+~~~
+
+---------------------------------------------------------------
+
+# Floating Point
+
 ~~~
 :n:to-float  (n-_f:-n)   #0 `-6000 ;
 :s:to-float  (s-_f:-n)   #1 `-6000 ;
@@ -29,11 +43,11 @@
 :putf (f:-) f:to-string puts ;
 ~~~
 
-~~~
-:getc (-c) `1001 ;
-~~~
+---------------------------------------------------------------
 
-RETRO now has Gopher support via `gopher:get`.
+# Gopher
+
+RETRO has Gopher support via `gopher:get`.
 
 Takes:
 
@@ -50,10 +64,18 @@ Returns:
 :gopher:get `-6200 ;
 ~~~
 
+---------------------------------------------------------------
+
+# Scripting: Command Line Arguments
+
 ~~~
 :sys:argc (-n) `-6100 ;
 :sys:argv (n-s) s:empty swap `-6101 ;
 ~~~
+
+---------------------------------------------------------------
+
+# File I/O
 
 This implements words for interfacing with the POSIX file I/O words if
 you are using an interface supporting them. All of these are in the
