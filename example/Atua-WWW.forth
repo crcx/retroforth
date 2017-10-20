@@ -35,10 +35,10 @@ Atua needs to know:
 - The maximum file size
 
 ````
-'/home/crc/atua s:keep 'PATH const
-'/gophermap     s:keep 'DEFAULT-INDEX const
+'/home/crc/atua 'PATH          s:const
+'/gophermap     'DEFAULT-INDEX s:const
 #1024  'MAX-SELECTOR-LENGTH const
-#65535 #4 * 'MAX-FILE-SIZE const
+#65535 #8 * 'MAX-FILE-SIZE const
 ````
 
 # I/O Words
