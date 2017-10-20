@@ -1,11 +1,13 @@
-/*  ____   ____ ______ ____    ___
-    || \\ ||    | || | || \\  // \\
-    ||_// ||==    ||   ||_// ((   ))
-    || \\ ||___   ||   || \\  \\_//
-    a personal, minimalistic forth
+/* RETRO ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   a personal, pragmatic, minimalistic forth
+   Copyright (c) 2016, 2017 Charles Childers
 
-    Copyright (c) 2016, 2017 Charles Childers
-*/
+   This is `rre`, short for `run retro and exit`. It's the basic
+   interface layer for Retro on FreeBSD, Linux and macOS.
+
+   rre embeds the image file into the binary, so the compiled version
+   of this is all you need to have a functional system.
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -18,27 +20,11 @@
 #include <netinet/in.h>
 #include <netdb.h>
 
-void ngaGopherUnit();
-void ngaFloatingPointUnit();
-
+/* Configure Nga (the VM) Limitations */
 #define CELL         int32_t
 #define IMAGE_SIZE   524288 * 16
 #define ADDRESSES    2048
 #define STACK_DEPTH  512
-enum vm_opcode {
-  VM_NOP,  VM_LIT,    VM_DUP,   VM_DROP,    VM_SWAP,   VM_PUSH,  VM_POP,
-  VM_JUMP, VM_CALL,   VM_CCALL, VM_RETURN,  VM_EQ,     VM_NEQ,   VM_LT,
-  VM_GT,   VM_FETCH,  VM_STORE, VM_ADD,     VM_SUB,    VM_MUL,   VM_DIVMOD,
-  VM_AND,  VM_OR,     VM_XOR,   VM_SHIFT,   VM_ZRET,   VM_END
-};
-#define NUM_OPS VM_END + 1
-CELL sp, rp, ip;
-CELL data[STACK_DEPTH];
-CELL address[ADDRESSES];
-CELL memory[IMAGE_SIZE + 1];
-#define TOS  data[sp]
-#define NOS  data[sp-1]
-#define TORS address[rp]
 
 /* This assumes some knowledge of the ngaImage format for the
    Retro language. If things change there, these will need to
@@ -49,6 +35,26 @@ CELL memory[IMAGE_SIZE + 1];
 #define D_OFFSET_XT       1
 #define D_OFFSET_CLASS    2
 #define D_OFFSET_NAME     3
+
+/* More Nga bits. You shouldn't need to alter these */
+
+enum vm_opcode {
+  VM_NOP,  VM_LIT,    VM_DUP,   VM_DROP,    VM_SWAP,   VM_PUSH,  VM_POP,
+  VM_JUMP, VM_CALL,   VM_CCALL, VM_RETURN,  VM_EQ,     VM_NEQ,   VM_LT,
+  VM_GT,   VM_FETCH,  VM_STORE, VM_ADD,     VM_SUB,    VM_MUL,   VM_DIVMOD,
+  VM_AND,  VM_OR,     VM_XOR,   VM_SHIFT,   VM_ZRET,   VM_END
+};
+#define NUM_OPS VM_END + 1
+
+CELL sp, rp, ip;
+CELL data[STACK_DEPTH];
+CELL address[ADDRESSES];
+CELL memory[IMAGE_SIZE + 1];
+#define TOS  data[sp]
+#define NOS  data[sp-1]
+#define TORS address[rp]
+
+/* Function Prototypes */
 
 CELL stack_pop();
 void stack_push(CELL value);
@@ -77,15 +83,17 @@ void evaluate(char *s);
 int not_eol(int ch);
 void read_token(FILE *file, char *token_buffer, int echo);
 char *read_token_str(char *s, char *token_buffer, int echo);
-
-void inst_add();
+void ngaGopherUnit();
+void ngaFloatingPointUnit();
 CELL ngaLoadImage(char *imageFile);
 void ngaPrepare();
 void ngaProcessOpcode(CELL opcode);
 void ngaProcessPackedOpcodes(int opcode);
 int ngaValidatePackedOpcodes(CELL opcode);
 
-CELL Dictionary, Heap, Compiler;
+
+
+CELL Dictionary, Compiler;
 CELL notfound;
 
 char **sys_argv;
@@ -188,8 +196,7 @@ CELL d_class_for(char *Name, CELL Dictionary) {
 }
 
 
-/* Now for File I/O functions. These are adapted from
-   Ngaro on Retro 11. */
+/* Now for File I/O functions. These were adapted from the Ngaro VM. */
 
 FILE *ioFileHandles[MAX_OPEN_FILES];
 
@@ -284,14 +291,12 @@ void ioFlushFile() {
   fflush(ioFileHandles[slot]);
 }
 
-
 /* Retro needs to track a few variables. This function is
    called as necessary to ensure that the interface stays
    in sync with the image state. */
 
 void update_rx() {
   Dictionary = memory[2];
-  Heap = memory[3];
   Compiler = d_xt_for("Compiler", Dictionary);
   notfound = d_xt_for("err:notfound", Dictionary);
 }
@@ -656,21 +661,6 @@ void ngaGopherUnit() {
   dest = stack_pop();
   gopher_fetch(server, port, selector, dest);
 }
-/*  ____   ____ ______ ____    ___
-    || \\ ||    | || | || \\  // \\
-    ||_// ||==    ||   ||_// ((   ))
-    || \\ ||___   ||   || \\  \\_//
-    a personal, minimalistic forth
-
-    This is `rre`, short for `run retro and exit`. It's the
-    basic interface layer for Retro on Linux and macOS.
-
-    `rre` embeds the image file into the binary, so the
-    compiled version of this is all you need to have a
-    functional system.
-
-    Copyright (c) 2016, 2017 Charles Childers
-*/
 
 /* Compile image.c and link against the image.o */
 #include "image.c"
@@ -702,7 +692,7 @@ int fenced(char *s)
 
 void include_file(char *fname) {
   int inBlock = 0;
-  char source[64000];
+  char source[64 * 1024];
   char fence[4];
   FILE *fp;
   fp = fopen(fname, "r");
@@ -726,15 +716,6 @@ void include_file(char *fname) {
   fclose(fp);
 }
 
-
-void evaluate_string(char *s) {
-  char source[64000];
-  char *x = s;
-  while (x < strlen(s) + s) {
-    x = read_token_str(x, (char *)source, 0);
-    evaluate(source);
-  }
-}
 
 int main(int argc, char **argv) {
   int i;
