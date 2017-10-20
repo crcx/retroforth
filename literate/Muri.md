@@ -1,9 +1,3 @@
-                          _
-     _ __ ___  _   _ _ __(_)
-    | '_ ` _ \| | | | '__| |
-    | | | | | | |_| | |  | |
-    |_| |_| |_|\__,_|_|  |_|
-
 Muri is a minimalistic assembler for Nga.
 
 The standard assembler for Nga is Naje. This is an attempt at making a
@@ -60,44 +54,44 @@ pointer. These are: ju, ca, cc, re, and zr.
 
 The code begins with the necessary C headers.
 
-````
+~~~
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
 #include <string.h>
-````
+~~~
 
 And then a couple of constants that determine overall memory usage.
 
-````
+~~~
 #define KiB * 1024
 #define MAX_NAMES 1024
 #define STRING_LEN 64
 #define IMAGE_SIZE 128 KiB
-````
+~~~
 
 Next, define the arrays for the reference handling.
 
-````
+~~~
 char    Labels[MAX_NAMES][STRING_LEN];
 int32_t Pointers[MAX_NAMES];
 int32_t np;
-````
+~~~
 
 And then the variables and array for the target memory and source
 buffer:
 
-````
+~~~
 char source[1 KiB];
 int32_t target[IMAGE_SIZE];
 int32_t here;
-````
+~~~
 
 And that's the end of the data part. Now on to routines.
 
 First up, something to save the generated image file.
 
-````
+~~~
 void save() {
   FILE *fp;
   if ((fp = fopen("ngaImage", "wb")) == NULL) {
@@ -107,13 +101,13 @@ void save() {
   fwrite(&target, sizeof(int32_t), here, fp);
   fclose(fp);
 }
-````
+~~~
 
 Next, functions related to the reference tables. We have two. The
 `lookup()` searches the tables for a name and returns either -1 (if not
 found) or the address that corresponds to it.
 
-````
+~~~
 int32_t lookup(char *name) {
   int32_t slice = -1;
   int32_t n = np;
@@ -124,12 +118,12 @@ int32_t lookup(char *name) {
   }
   return slice;
 }
-````
+~~~
 
 The second, `add_label()` handles adding a new label to the table. It
 also terminates the build if the label already exists.
 
-````
+~~~
 void add_label(char *name, int32_t slice) {
   if (lookup(name) == -1) {
     strcpy(Labels[np], name);
@@ -140,11 +134,11 @@ void add_label(char *name, int32_t slice) {
     exit(0);
   }
 }
-````
+~~~
 
 This next routine reads a line from a file into the input buffer.
 
-````
+~~~
 void read_line(FILE *file, char *line_buffer) {
   int ch = getc(file);
   int count = 0;
@@ -155,13 +149,13 @@ void read_line(FILE *file, char *line_buffer) {
   }
   line_buffer[count] = '\0';
 }
-````
+~~~
 
 This one is a little messy. It just checks a source string against the
 list of instructions and returns the corresponding opcode. It returns 0
 (nop) for anything unrecognized.
 
-````
+~~~
 int32_t opcode_for(char *s) {
   if (strcmp(s, "..") == 0) return 0;  if (strcmp(s, "li") == 0) return 1;
   if (strcmp(s, "du") == 0) return 2;  if (strcmp(s, "dr") == 0) return 3;
@@ -179,12 +173,12 @@ int32_t opcode_for(char *s) {
   if (strcmp(s, "en") == 0) return 26;
   return 0;
 }
-````
+~~~
 
 Now for the first pass. This lays down code, with dummy values for the
 references. They will be resolved in pass2().
 
-````
+~~~
 void pass1(char *fname) {
   int inBlock = 0;
   char *buffer = (char *)source;
@@ -200,7 +194,7 @@ void pass1(char *fname) {
   }
   while (!feof(fp)) {
     read_line(fp, buffer);
-    if (strcmp(buffer, "````") == 0) {
+    if (strcmp(buffer, "~~~") == 0) {
       if (inBlock == 0)
         inBlock = 1;
       else
@@ -242,13 +236,13 @@ void pass1(char *fname) {
   }
   fclose(fp);
 }
-````
+~~~
 
 The second pass skips over any instructions or data, but replaces the
 dummy values for each reference with the actual address (recorded as
 part of pass1()).
 
-````
+~~~
 void pass2(char *fname) {
   char *buffer = (char *)source;
   FILE *fp;
@@ -257,7 +251,7 @@ void pass2(char *fname) {
   fp = fopen(fname, "r");
   while (!feof(fp)) {
     read_line(fp, buffer);
-    if (strcmp(buffer, "````") == 0) {
+    if (strcmp(buffer, "~~~") == 0) {
       if (inBlock == 0)
         inBlock = 1;
       else
@@ -280,11 +274,11 @@ void pass2(char *fname) {
   }
   fclose(fp);
 }
-````
+~~~
 
 And then the top level wrapper.
 
-````
+~~~
 int main(int argc, char **argv) {
   np = 0;
   if (argc > 1) {
@@ -297,4 +291,4 @@ int main(int argc, char **argv) {
     printf("muri\n(c) 2017 charles childers\n\n%s filename\n", argv[0]);
   return 0;
 }
-````
+~~~

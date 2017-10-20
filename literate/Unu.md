@@ -11,23 +11,23 @@ I always found documenting my projects to be annoying. Eventually I decided to s
 
 ### Headers
 
-````
+~~~
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-````
+~~~
 
 I use this for readability purposes.
 
-````
+~~~
 #define KiB * 1024
-````
+~~~
 
 
 ### read_line(FILE *file, char *line_buffer)
 
-````
+~~~
 void read_line(FILE *file, char *line_buffer) {
   if (file == NULL || line_buffer == NULL)
   {
@@ -46,17 +46,17 @@ void read_line(FILE *file, char *line_buffer) {
 
   line_buffer[count] = '\0';
 }
-````
+~~~
 
 ### extract(char *fname)
 
 The line buffer needs to be big enough for the longest lines in your source files. Here it's capped at 16KiB, which is sufficient for everything I've used Unu with so far.
 
-````
+~~~
 char source[16 KiB];
-````
+~~~
 
-````
+~~~
 int fenced(char *s)
 {
   int a = strcmp(s, "```");
@@ -91,11 +91,11 @@ void extract(char *fname) {
   }
   fclose(fp);
 }
-````
+~~~
 
 ### main(int argc, char **argv)
 
-````
+~~~
 int main(int argc, char **argv) {
   int i = 1;
   if (argc > 1) {
@@ -107,4 +107,4 @@ int main(int argc, char **argv) {
     printf("unu\n(c) 2013-2017 charles childers\n\nTry:\n  %s filename\n", argv[0]);
   return 0;
 }
-````
+~~~

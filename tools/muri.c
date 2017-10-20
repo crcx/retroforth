@@ -83,7 +83,7 @@ void pass1(char *fname) {
   }
   while (!feof(fp)) {
     read_line(fp, buffer);
-    if (strcmp(buffer, "````") == 0) {
+    if (strcmp(buffer, "~~~") == 0) {
       if (inBlock == 0)
         inBlock = 1;
       else
@@ -133,7 +133,7 @@ void pass2(char *fname) {
   fp = fopen(fname, "r");
   while (!feof(fp)) {
     read_line(fp, buffer);
-    if (strcmp(buffer, "````") == 0) {
+    if (strcmp(buffer, "~~~") == 0) {
       if (inBlock == 0)
         inBlock = 1;
       else

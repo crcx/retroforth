@@ -40,14 +40,14 @@ Here's the initial memory map:
 Naje, the Nga assembler, compiles the initial instructions automatically.
 Muri does not, so provide this here.
 
-````
+~~~
 i liju....
 d -1
-````
+~~~
 
 The two variables need to be declared next, so:
 
-````
+~~~
 : Dictionary
 r 9999
 
@@ -56,7 +56,7 @@ d 1536
 
 : Version
 d 201710
-````
+~~~
 
 Both of these are pointers. `Dictionary` points to the most recent
 dictionary entry. (See the *Dictionary* section at the end of this
@@ -73,7 +73,7 @@ use; in Rx the compiler will fetch the opcode values to use from these
 functions when compiling. Some of them will also be wrapped in normal
 functions later.
 
-````
+~~~
 : _nop
 d 0
 i re......
@@ -155,7 +155,7 @@ i re......
 : _end
 d 26
 i re......
-````
+~~~
 
 Nga also allows for multiple instructions to be packed into a single
 memory location (called a *cell*). Rx doesn't take advantage of this
@@ -171,18 +171,18 @@ lit/call combination can be fit into a single cell. We define the
 opcode for this here so that the compiler can take advantage of the
 space savings.
 
-````
+~~~
 : _packedcall
 d 2049
 i re......
-````
+~~~
 
 ## Stack Shufflers
 
 These add additional operations on the stack elements that'll keep
 later code much more readable.
 
-````
+~~~
 : over
 i puduposw
 i re......
@@ -192,7 +192,7 @@ r over
 i lica....
 r over
 i re......
-````
+~~~
 
 ## Memory
 
@@ -202,22 +202,22 @@ two functions provide slightly easier access to linear sequences of data.
 `fetch-next` takes an address and fetches the stored value. It returns
 the next address and the stored value.
 
-````
+~~~
 : fetch-next
 i duliadsw
 d 1
 i fere....
-````
+~~~
 
 `store-next` takes a value and an address. It stores the value to the
 address and returns the next address.
 
-````
+~~~
 : store-next
 i duliadpu
 d 1
 i stpore..
-````
+~~~
 
 ## Strings
 
@@ -238,7 +238,7 @@ First up, string length. The process here is trivial:
 * When done subtract the original address from the current one
 * Then subtract one (to account for the zero terminator)
 
-````
+~~~
 : count
 i lica....
 r fetch-next
@@ -251,11 +251,11 @@ r count
 i lisuswsu
 d 1
 i re......
-````
+~~~
 
 String comparisons are harder.
 
-````
+~~~
 : get-set
 i feswfere
 : next-set
@@ -297,7 +297,7 @@ d -1
 r compare
 i pudrdrpo
 i re......
-````
+~~~
 
 ## Conditionals
 
@@ -313,7 +313,7 @@ a little hack here. Store the pointers into a jump table with two
 fields, and use the flag as the index. Default to the *false* entry,
 since a *true* flag is -1.
 
-````
+~~~
 : choice:true
 d 0
 : choice:false
@@ -325,19 +325,19 @@ r choice:true
 i liadfeca
 r choice:false
 i re......
-````
+~~~
 
 Next the two *if* forms. Note that I allow *-if* to fall through
 into *if*. This saves two cells of memory.
 
-````
+~~~
 : -if
 i pulieqpo
 d 0
 : if
 i cc......
 i re......
-````
+~~~
 
 ## Interpreter & Compiler
 
@@ -347,14 +347,14 @@ The heart of the compiler is `comma` which stores a value into memory
 and increments a variable (`Heap`) pointing to the next free address.
 `here` is a helper function that returns the address stored in `Heap`.
 
-````
+~~~
 : comma
 i lifelica
 r Heap
 r store-next
 i listre..
 r Heap
-````
+~~~
 
 With these we can add a couple of additional forms. `comma:opcode` is
 used to compile VM instructions into the current defintion. This is
@@ -365,17 +365,17 @@ opcodes.
 This performs a jump to the `comma` word instead of using a `call/ret`
 to save a cell and slightly improve performance.
 
-````
+~~~
 : comma:opcode
 i feliju..
 r comma
-````
+~~~
 
 `comma:string` is used to compile a string into the current definition.
 As with `comma:opcode`, this uses a `jump` to eliminate the final tail
 call.
 
-````
+~~~
 : ($)
 i lica....
 r fetch-next
@@ -390,7 +390,7 @@ r ($)
 i drliliju
 d 0
 r comma
-````
+~~~
 
 With the core functions above it's now possible to setup a few more
 things that make compilation at runtime more practical.
@@ -398,12 +398,12 @@ things that make compilation at runtime more practical.
 First, a variable indicating whether we should compile or run a function.
 This will be used by the *word classes*.
 
-````
+~~~
 : Compiler
 d 0
-````
+~~~
 
-````
+~~~
 : t-;
 i lilica..
 r _ret
@@ -411,7 +411,7 @@ r comma:opcode
 i lilistre
 d 0
 r Compiler
-````
+~~~
 
 ### Word Classes
 
@@ -429,7 +429,7 @@ with differing behaviors:
 | -------------------- | ----------------------------- |
 | leave value on stack | compile value into definition |
 
-````
+~~~
 : class:data
 i lifezr..
 r Compiler
@@ -438,7 +438,7 @@ r _lit
 r comma:opcode
 i liju....
 r comma
-````
+~~~
 
 `class:word` handles most functions.
 
@@ -446,7 +446,7 @@ r comma
 | -------------------- | ----------------------------- |
 | call a function      | compile a call to a function  |
 
-````
+~~~
 : class:word:interpret
 i ju......
 : class:word:compile
@@ -462,7 +462,7 @@ r class:word:compile
 r class:word:interpret
 i liju....
 r choose
-````
+~~~
 
 `class:primitive` is a special class handler for functions that
 correspond to Nga instructions.
@@ -471,7 +471,7 @@ correspond to Nga instructions.
 | -------------------- | ------------------------------------------- |
 | call the function    | compile the instruction into the definition |
 
-````
+~~~
 : class:primitive
 i lifelili
 r Compiler
@@ -479,7 +479,7 @@ r comma:opcode
 r class:word:interpret
 i liju....
 r choose
-````
+~~~
 
 `class:macro` is the class handler for *compiler macros*. These are
 functions that always get called. They can be used to extend the
@@ -489,10 +489,10 @@ language in interesting ways.
 | -------------------- | ----------------------------- |
 | call the function    | call the function             |
 
-````
+~~~
 : class:macro
 i ju......
-````
+~~~
 
 The class mechanism is not limited to these classes. You can write
 custom classes at any time. On entry the custom handler should take the
@@ -543,7 +543,7 @@ Rx provides accessor functions for each field. Since the number of
 fields (or their ordering) may change over time, using these reduces
 the number of places where field offsets are hard coded.
 
-````
+~~~
 : d:link
 i re......
 : d:xt
@@ -555,7 +555,7 @@ d 2
 : d:name
 i liadre..
 d 3
-````
+~~~
 
 A traditional Forth has `create` to make a new dictionary entry
 pointing to the next free location in `Heap`. Rx has `newentry` which
@@ -563,7 +563,7 @@ serves as a slightly more flexible base. You provide a string for the
 name, a pointer to the class handler, and a pointer to the start of
 the function. Rx does the rest.
 
-````
+~~~
 : newentry
 i lifepuli
 r Heap
@@ -578,7 +578,7 @@ i lica....
 r comma:string
 i polistre
 r Dictionary
-````
+~~~
 
 Rx doesn't provide a traditional create as it's designed to avoid
 assuming a normal input stream and prefers to take its data from the
@@ -586,7 +586,7 @@ stack.
 
 ### Dictionary Search
 
-````
+~~~
 : Which
 d 0
 : Needle
@@ -618,7 +618,7 @@ r Needle
 r find
 i lifere..
 r Which
-````
+~~~
 
 ### Number Conversion
 
@@ -640,7 +640,7 @@ is very simple:
 
 At this time Rx only supports decimal numbers.
 
-````
+~~~
 : next
 i lica....
 r fetch-next
@@ -669,7 +669,7 @@ i liswlica
 d 0
 r next
 i drmure..
-````
+~~~
 
 ### Token Processing
 
@@ -695,7 +695,7 @@ variable (`prefix:handler`) to the dictionary entry for the handler
 function. If not found, `prefix:handler` is set to zero. The check,
 done by `prefix?`, also returns a flag.
 
-````
+~~~
 : prefix:no
 d 32
 d 0
@@ -727,7 +727,7 @@ i dulistli
 r prefix:handler
 d 0
 i nere....
-````
+~~~
 
 Rx uses prefixes for important bits of functionality including parsing
 numbers (prefix with `#`), obtaining pointers (prefix with `&`), and
@@ -743,7 +743,7 @@ I use `jump` for tail call eliminations here.
 | :      | definitions       | :foo    |
 | (      | Comments          | (n-)    |
 
-````
+~~~
 : prefix:(
 i drre....
 : prefix:#
@@ -776,7 +776,7 @@ i lica....
 r d:xt
 i feliju..
 r class:data
-````
+~~~
 
 ### Quotations
 
@@ -789,7 +789,7 @@ form like:
 
 Begin a quotation with `[` and end it with `]`.
 
-````
+~~~
 : t-[
 i lifeliad
 r Heap
@@ -827,7 +827,7 @@ r Compiler
 i lifezr..
 r Compiler
 i drdrre..
-````
+~~~
 
 ## Lightweight Control Structures
 
@@ -840,7 +840,7 @@ using them:
 These can only be used within a definition or quotation. If you need
 to use them interactively, wrap them in a quote and `call` it.
 
-````
+~~~
 : repeat
 i lifere..
 r Heap
@@ -871,7 +871,7 @@ r Compiler
 i drliliju
 r _pop
 r comma:opcode
-````
+~~~
 
 ## Interpreter
 
@@ -897,25 +897,25 @@ for strings and output:
     [ $? putc space 'word not found' puts ]
     &err:notfound #1 + store
 
-````
+~~~
 : err:notfound
 i liju....
 r _nop
-````
+~~~
 
 `call:dt` takes a dictionary token and pushes the contents of the `d:xt`
 field to the stack. It then calls the class handler stored in `d:class`.
 
-````
+~~~
 : call:dt
 i dulica..
 r d:xt
 i feswlica
 r d:class
 i feju....
-````
+~~~
 
-````
+~~~
 : input:source
 d 0
 : interpret:prefix
@@ -949,7 +949,7 @@ i lililiju
 r interpret:prefix
 r interpret:noprefix
 r choose
-````
+~~~
 
 ## The Initial Dictionary
 
@@ -958,7 +958,7 @@ Maintenance of this bit is annoying, but it generally shouldn't be
 necessary to change this unless you are adding new functions to the
 Rx kernel. 
 
-````
+~~~
 : 0000
 d 0
 r _dup
@@ -1244,7 +1244,7 @@ r 0055
 r err:notfound
 r class:word
 s err:notfound
-````
+~~~
 
 ## Appendix: Words, Stack Effects, and Usage
 
