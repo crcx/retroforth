@@ -23,7 +23,7 @@ For FreeBSD, macOS, Linux:
 Binaries will be found in the `bin` directory. The ones of interest
 are:
 
-   rre
+    rre
 
 Short for `run retro and exit`, this is the primary interface for RETRO.
 The `rre` interface is used to run the examples and Atua Gopher and HTTP
@@ -32,15 +32,16 @@ servers that power forthworks.com.
 `rre` embeds the RETRO image into the binary, making it trivial to copy
 and deploy.
 
-   repl
+    repl
 
 This is a basic `read-evaluate-print-loop` for interactive use. It's
 intended for quick tests and as an easy starting point for new interfaces.
 The `repl` interface requires the RETRO image (`ngaImage`) in the current
 working directory to operate.
 
-   listener
+    listener
 
 Wrapping a shell script, some RETRO code, and using the `rre` interface,
 this is a slightly nicer alternative to the basic `repl` for interactive
 use.
+
