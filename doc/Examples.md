@@ -22,3 +22,5 @@
 | Tuporo.forth               | Block storage via Gopher protocol       |
 | VT100.forth                | Example VT100 namespace                 |
 | sort-on-stack.forth        | Sort numbers on the stack               |
+| accumulator.forth          | Sample use of `does`                    |
+| Parse-UPS.forth            | Break a UPS Tracking # apart            |
