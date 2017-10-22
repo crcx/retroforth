@@ -46,3 +46,26 @@ here is:
     #0 !Number check-sign [ convert ] s:for-each @Number @Mod * ;
 }}
 ~~~
+
+Going the other way, back to a string, follows a similar process.
+
+- Take a value
+- Repeat:
+  - Divide by `Base`
+  - Convert result to character and append to a buffer
+  - If remainder is not zero, repeat
+- If number is negative, append the '-' symbol to the buffer
+- Reverse the buffer contents to return a string in the correct order
+
+~~~
+{{
+  'String d:create   #12 allot
+  :check-sign (n-)   n:negative? [ $- buffer:add ] if ;
+  : n->digit  (n-c)  &DIGITS + fetch ;
+  :convert    (n-)   [ @Base /mod swap n->digit buffer:add dup n:zero? ] until drop ;
+---reveal---
+  :n:to-string<with-base> (n-s)
+    [ &String buffer:set dup n:abs convert check-sign ] buffer:preserve
+    &String s:reverse ;
+}}
+~~~
