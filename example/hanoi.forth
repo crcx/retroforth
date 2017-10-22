@@ -1,20 +1,20 @@
 ~~~
-'a var
-'b var
-'c var
-'n var
+'Num  var
+'From var
+'To   var
+'Via  var
 
-:vars !c !b !a !n ;
+:set-vars !Via !To !From !Num ;
 :hanoi (num,from,to,via-)
-  vars
-  @n n:-zero?
+  set-vars
+  @Num n:-zero?
   [
-    @n @a @b @c
-    @n n:dec @a @c @b hanoi
-    vars
-    @b @a '\nMove_a_ring_from_%n_to_%n s:with-format puts
-    @n n:dec @c @b @a hanoi
+    @Num @From @To @Via
+    @Num n:dec @From @Via @To hanoi
+    set-vars
+    @To @From '\nMove_a_ring_from_%n_to_%n s:with-format puts
+    @Num n:dec @Via @To @From hanoi
   ] if ;
 
-#5 #1 #3 #2 hanoi nl
+#3 #1 #3 #2 hanoi nl
 ~~~
