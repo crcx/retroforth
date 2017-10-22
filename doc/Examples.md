@@ -29,3 +29,5 @@
 | StringToNumberWithBase.forth | Numbers in misc. bases                  |
 | DictionaryStats.forth        | Use of `d:for-each` to find info about  |
 |                              | word names                              |
+| TokenizeString.forth         | Tokenize a string into a set            |
+| unicode.forth                | Example showing Unicode (UTF-8)         |

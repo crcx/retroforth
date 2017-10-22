@@ -61,7 +61,7 @@ Going the other way, back to a string, follows a similar process.
 {{
   'String d:create   #12 allot
   :check-sign (n-)   n:negative? [ $- buffer:add ] if ;
-  : n->digit  (n-c)  &DIGITS + fetch ;
+  :n->digit   (n-c)  &DIGITS + fetch ;
   :convert    (n-)   [ @Base /mod swap n->digit buffer:add dup n:zero? ] until drop ;
 ---reveal---
   :n:to-string<with-base> (n-s)
