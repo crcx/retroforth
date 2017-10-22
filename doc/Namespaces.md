@@ -1,6 +1,7 @@
 # Namespaces
 
-Retro organizes words into *namespaces*. These are short prefix strings at the start of a word name.
+Retro organizes words into *namespaces*. These are short prefix
+strings at the start of a word name.
 
 The primary namespaces are:
 

@@ -1,12 +1,15 @@
 # Syntax
 
-RETRO code consists of a series of whitespace delimited tokens. Each of these can have an optional prefix telling RETRO how to treat the token. If the token lacks a valid prefix, it will be treated as a word name.
+RETRO code consists of a series of whitespace delimited tokens. Each of
+these can have an optional prefix telling RETRO how to treat the token.
+If the token lacks a valid prefix, it will be treated as a word name.
 
 So:
 
     [prefix][token]
 
-Prefixes are single character modifiers. They are similar to colors in ColorForth, but are handled via words in the `prefix:` namespace.
+Prefixes are single character modifiers. They are similar to colors in
+ColorForth, but are handled via words in the `prefix:` namespace.
 
 The major prefixes are:
 

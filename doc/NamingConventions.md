@@ -25,14 +25,17 @@ These are UPPERCASE, with a dash separating compound names.
 
 # Words
 
-Most named items are words. As such, most of the conventions are under this category.
+Most named items are words. As such, most of the conventions are under
+this category.
 
 Word names are lowercase, with a dash between compound names.
 
     drop
     drop-pair
 
-Use a namespace prefix to group related words. This is a short string, separated from the rest of the name by a colon. See doc|Namespaces.md for a list of the major namespaces in RETRO.
+Use a namespace prefix to group related words. This is a short string,
+separated from the rest of the name by a colon. See Namespaces.md for a
+list of the major namespaces in RETRO.
 
     d:for-each
     s:to-upper
