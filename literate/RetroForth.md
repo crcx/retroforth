@@ -1080,6 +1080,68 @@ to the quote. The quote should consume both and return a new value.
 Muri is my minimalist assembler for Nga. This is an attempt to
 implement something similar in Retro.
 
+This requires some knowledge of the Nga architecture to be
+useful. The major elements are:
+
+**Instruction Set**
+
+Nga has 27 instructions. These are:
+
+    0  nop        7  jump      14  gt        21  and
+    1  lit <v>    8  call      15  fetch     22  or
+    2  dup        9  ccall     16  store     23  xor
+    3  drop      10  return    17  add       24  shift
+    4  swap      11  eq        18  sub       25  zret
+    5  push      12  neq       19  mul       26  end
+    6  pop       13  lt        20  divmod
+
+The mnemonics allow for each name to be reduced to just two
+characters. In the same order as above:
+
+    no  ju  gt  an
+    li  ca  fe  or
+    du  cc  st  xo
+    dr  re  ad  sh
+    sw  eq  su  zr
+    pu  ne  mu  en
+    po  lt  di
+
+Up to four instructions can be packed into a single memory
+location. (You can only use *no*p after a *ju*mp, *ca*ll,
+*cc*all, *re*t, or *zr*et as these alter the instruction
+pointer.)
+
+So a bundled sequence like:
+
+    lit 100
+    lit 200
+    add
+    ret
+
+Would look like:
+
+    'liliadre i
+    100       d
+    200       d
+
+And:
+
+    lit s:eq?
+    call
+
+Would become:
+
+    'lica.... i
+    's:eq?    r
+
+Note the use of `..` instead of `no` for the nop's; this is
+done to improve readability a little.
+
+Instruction bundles are specified as strings, and are converted
+to actual instructions by the `i` word. As in the standard Muri
+assembler, the RETRO version uses `d` for decimal values and `r`
+for references to named functions.
+
 This is kept in the global namespace, but several portions are
 kept private.
 
