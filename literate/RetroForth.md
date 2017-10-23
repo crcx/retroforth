@@ -519,15 +519,14 @@ workable approach.
 Temporary strings are allocated in a circular pool (at STRINGS).
 
 ~~~
-:TempStrings ;   &class:data reclass  #12 !TempStrings
+:TempStrings ;   &class:data reclass  #32 !TempStrings
 :TempStringMax ; &class:data reclass #512 !TempStringMax
 :STRINGS   EOM @TempStrings @TempStringMax * - ;
 
 {{
-  :MAX-LENGTH #512 ;
   :s:Current `0 ; data
 
-  :s:pointer (-p)  @s:Current MAX-LENGTH * STRINGS + ;
+  :s:pointer (-p)  @s:Current @TempStringMax * STRINGS + ;
   :s:next    (-)
     &s:Current v:inc
     @s:Current @TempStrings eq? [ #0 !s:Current ] if ;
