@@ -23,6 +23,7 @@ Global:
   Dictionary
   EOM
   FALSE
+  FREE
   Heap
   RewriteUnderscores
   STRINGS

@@ -1185,6 +1185,17 @@ address.
 
 -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
 
+FREE
+
+  -n
+
+Return the number of cells available in the
+Heap. (Excludes temporary buffers at end of
+memory that the RETRO system allocates for
+its own use).
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
 gt?
 
   nm-f

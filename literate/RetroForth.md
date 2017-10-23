@@ -64,14 +64,16 @@ token.
 
 Memory Map
 
-This assumes that the VM defines an image as being 524287 cells.
+This assumes that the VM defines an image as being 524288 cells.
 
 | range           | contains                     |
 | --------------- | ---------------------------- |
 | 0 - 1024        | rx kernel                    |
 | 1025 - 1535     | token input buffer           |
 | 1536 +          | start of heap space          |
-| 522751          | temporary strings (12 * 128) |
+| ............... | free memory for your use     |
+| 506879          | buffer for string evaluate   |
+| 507904          | temporary strings (32 * 512) |
 | 524287          | end of memory                |
 
 I provide a word, `EOM`, which returns the last addressable location.
@@ -1283,9 +1285,10 @@ to allow for a standard FORTH block to fit, or to easily fit a RETRO
 style 512 character block. It's also long enough for most source lines
 I expect to encounter when working with files.
 
+I allocate this immediately prior to the temporary string buffers.
+
 ~~~
-  'Current-Line d:create
-    #1025 allot
+  :current-line (-a) STRINGS #1025 - ;
 ~~~
 
 To make use of this, we need to know how many tokens are in the input
@@ -1326,8 +1329,8 @@ And finally, tie it all together into the single exposed word
 
 ~~~
   :s:evaluate (s-...)
-    &Current-Line s:copy
-    &Current-Line dup count-tokens process-tokens ;
+    current-line s:copy
+    current-line dup count-tokens process-tokens ;
 ~~~
 
 ~~~
@@ -1364,6 +1367,10 @@ I provide just a few debugging aids.
 :words      (-)  [ d:name puts sp ] d:for-each ;
 :reset      (...-) depth repeat 0; push drop pop #1 - again ;
 :dump-stack (-)  depth 0; drop push dump-stack pop dup putn sp ;
+~~~
+
+~~~
+:FREE (-n) STRINGS #1025 - here - ;
 ~~~
 
 ## The End
