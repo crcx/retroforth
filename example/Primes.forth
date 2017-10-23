@@ -2,23 +2,23 @@ This is a quick and dirty way to find prime numbers in a set.
 
 ````
 {{
-  #2 'last var<n>
+  #2 'NextPrime var<n>
   :extract (s-s)
-    [ @last dup-pair eq?
+    [ @NextPrime dup-pair eq?
       [ drop-pair TRUE ]
       [ mod n:-zero? ] choose ] set:filter ;
 ---reveal---
   :get-primes (s-s)
-    #2 !last
-    dup fetch [ extract &last v:inc ] times ;
+    #2 !NextPrime
+    dup fetch [ extract &NextPrime v:inc ] times ;
 }}
 ````
 
 And a test:
 
 ````
-  here
-  #7500 ,
-  #2 #7502 [ dup , n:inc ] times drop
-  get-primes [ putn sp ] set:for-each
+:create-set (-a)
+  here #7000 , #2 #7002 [ dup , n:inc ] times drop ;
+
+create-set get-primes [ putn sp ] set:for-each
 ````
