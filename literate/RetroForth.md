@@ -125,9 +125,25 @@ With this I can then define `immediate` (for state-smart words) and
 :data       (-)  &class:data reclass ;
 ~~~
 
+`depth` returns the number of items on the data stack. This is
+provided by the VM upon reading from address *-1*.
+
 ~~~
 :depth  (-n) #-1 fetch ;
 ~~~
+
+The next two are additional prefixes to make working with variables
+a bit less painful. By default you have to do things like:
+
+    &Name fetch #10 * &Name store
+
+Or use combinators:
+
+    &Name [ fetch #10 * ] sip store
+
+With the @ and ! prefixes this can become:
+
+    @Name #10 * !Name
 
 ~~~
 :prefix:@  (s-n) d:lookup d:xt fetch class:data &fetch class:word ; immediate
@@ -135,7 +151,7 @@ With this I can then define `immediate` (for state-smart words) and
 ~~~
 
 I have a `compile` namespace for some low level words that compile
-Nga bytecode.
+specific Nga bytecode.
 
 ~~~
 :compile:lit  (a-) #1 , , ;
@@ -650,6 +666,11 @@ from fixed ends of the string.
 ~~~
 
 Hash (using DJB2)
+
+I use the djb2 hash algorithm for computing hashes from strings.
+There are certainly better hashes out there, but this is pretty
+simple and works well for my limited hash needs. The implementation
+was adapted from the C example at http://www.cse.yorku.ca/~oz/hash.html
 
 ~~~
 :s:hash (s-n) #5381 swap [ swap #33 * + ] s:for-each ;
