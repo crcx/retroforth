@@ -157,10 +157,17 @@ With the @ and ! prefixes this can become:
 
     @Name #10 * !Name
 
+When compiling, these will generate packed Nga instructions
+corresponding to:
+
+    lit + fetch + nop + nop    'life....   #3841
+    lit + store + nop + nop    'list....   #4097
+
 ~~~
 :prefix:@  (s-n)
   d:lookup d:xt fetch
   &Compiler fetch [ #3841 , , ] [ fetch ] choose ; immediate
+
 :prefix:!  (s-n)
   d:lookup d:xt fetch
   &Compiler fetch [ #4097 , , ] [ store ] choose ; immediate
