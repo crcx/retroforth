@@ -134,6 +134,16 @@ provided by the VM upon reading from address *-1*.
 :depth  (-n) #-1 fetch ;
 ~~~
 
+I have a `compile` namespace for some low level words that compile
+specific Nga bytecode.
+
+~~~
+:compile:lit  (a-) #1 , , ;
+:compile:jump (a-) #1793 , , ;
+:compile:call (a-) #2049 , , ;
+:compile:ret  (-)  #10 , ;
+~~~
+
 The next two are additional prefixes to make working with variables
 a bit less painful. By default you have to do things like:
 
@@ -148,19 +158,15 @@ With the @ and ! prefixes this can become:
     @Name #10 * !Name
 
 ~~~
-:prefix:@  (s-n) d:lookup d:xt fetch class:data &fetch class:word ; immediate
-:prefix:!  (s-n) d:lookup d:xt fetch class:data &store class:word ; immediate
+:prefix:@  (s-n)
+  d:lookup d:xt fetch
+  &Compiler fetch [ #3841 , , ] [ fetch ] choose ; immediate
+:prefix:!  (s-n)
+  d:lookup d:xt fetch
+  &Compiler fetch [ #4097 , , ] [ store ] choose ; immediate
 ~~~
 
-I have a `compile` namespace for some low level words that compile
-specific Nga bytecode.
 
-~~~
-:compile:lit  (a-) #1 , , ;
-:compile:jump (a-) #1793 , , ;
-:compile:call (a-) #2049 , , ;
-:compile:ret  (-)  #10 , ;
-~~~
 
 The compiler state is stored in a value named `Compiler`. I have an
 accessor word that aids in readability.
