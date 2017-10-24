@@ -15,6 +15,13 @@ Determine the average length of a word name.
 / 'Average_name_length:_%n\n s:with-format puts
 ~~~
 
+And without the prefixes...
+
+~~~
+#0 #0 [ d:name dup $: s:index-of n:inc + s:length + [ n:inc ] dip ] d:for-each swap /
+'Average_name_without_namespace:_%n\n s:with-format puts
+~~~
+
 Longest name are...
 
 ~~~
