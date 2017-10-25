@@ -403,7 +403,7 @@ The core Rx language provides addition, subtraction, multiplication,
 and a combined division/remainder. Retro expands on this.
 
 ~~~
-:/         (nq-d)  /mod swap drop ;
+:/         (nq-d)  /mod nip ;
 :mod       (nq-r)  /mod drop ;
 :not       (n-n)   #-1 xor ;
 :n:pow     (bp-n)  #1 swap [ over * ] times nip ;
