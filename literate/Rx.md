@@ -175,6 +175,10 @@ space savings.
 : _packedcall
 d 2049
 i re......
+
+: _packedjump
+d 1793
+i re......
 ~~~
 
 ## Stack Shufflers
@@ -793,24 +797,22 @@ Begin a quotation with `[` and end it with `]`.
 : t-[
 i lifeliad
 r Heap
-d 3
+d 2
 i lifelili
 r Compiler
 d -1
 r Compiler
 i stlilica
-r _lit
+r _packedjump
 r comma:opcode
 i lifelili
 r Heap
 d 0
 r comma
 i ca......
-i lilica..
-r _jump
-r comma:opcode
 i lifere..
 r Heap
+
 : t-]
 i lilica..
 r _ret
