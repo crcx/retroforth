@@ -125,7 +125,7 @@ With this I can then define `immediate` (for state-smart words) and
 
 ~~~
 :immediate  (-)  &class:macro reclass ;
-:data       (-)  &class:data reclass ;
+:data       (-)  &class:data  reclass ;
 ~~~
 
 `depth` returns the number of items on the data stack. This is
@@ -346,7 +346,7 @@ And then some numeric comparators.
 
 ~~~
 :n:MAX        (-n)    #2147483647 ;
-:n:MIN        (-n)    #−2147483648 ;
+:n:MIN        (-n)    #-2147483648 ;
 :n:zero?      (n-f)   #0 eq? ;
 :n:-zero?     (n-f)   #0 -eq? ;
 :n:negative?  (n-f)   #0 lt? ;
