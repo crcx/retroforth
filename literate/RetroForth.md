@@ -771,13 +771,13 @@ And the inverse forms. (These are included for readability and
 orthiginal completion).
 
 ~~~
-:c:-lowercase?  (c-f) c:lowercase? not ;
-:c:-uppercase?  (c-f) c:uppercase? not ;
-:c:-digit?      (c-f) c:digit? not ;
-:c:-whitespace? (c-f) c:whitespace? not ;
-:c:-visible?    (c-f) c:visible? not ;
-:c:-vowel?      (c-f)  c:vowel? not ;
-:c:-consonant?  (c-f)  c:consonant? not ;
+:c:-lowercase?  (c-f)  c:lowercase?  not ;
+:c:-uppercase?  (c-f)  c:uppercase?  not ;
+:c:-digit?      (c-f)  c:digit?      not ;
+:c:-whitespace? (c-f)  c:whitespace? not ;
+:c:-visible?    (c-f)  c:visible?    not ;
+:c:-vowel?      (c-f)  c:vowel?      not ;
+:c:-consonant?  (c-f)  c:consonant?  not ;
 ~~~
 
 The next few words perform simple transformations.
@@ -801,7 +801,7 @@ Convert a decimal (base 10) number to a string.
 
 ~~~
 {{
-  :Value `0 ;
+  'Value var
   :correct (c-c)
     dup $0 lt? [ $0 over - #2 * + ] if ; 
 ---reveal---
