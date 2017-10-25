@@ -1,19 +1,6 @@
-# example|Autopsy
+# Autopsy
 
 Autopsy is a debugging tool for Retro.
-
-Declare module constant (prevents reloading with multiple `import` statements)
-
-````
-:example|Autopsy ;
-````
-
-Import dependencies:
-
-````
-'FormattedStringOutput import:module
-'Strings import:module
-````
 
 ----
 
@@ -24,13 +11,13 @@ This module provides words to aid in debugging your code.
   here #128 allot 'NEEDLE const
 ---reveal---
   :words<in-namespace> (s-)
-    dup '\n%s_contains:\n putsf
+    dup '\n%s_contains:\n s:with-format puts
     NEEDLE over s:length n:inc copy
     &Dictionary
     repeat
       fetch 0;
       dup d:name #0 NEEDLE s:length s:substr
-      NEEDLE s:eq? [ dup d:name NEEDLE s:length + '__%s\n putsf ] if
+      NEEDLE s:eq? [ dup d:name NEEDLE s:length + '__%s\n s:with-format puts ] if
     again ;
 }}
 ````
@@ -43,7 +30,7 @@ A simple binary dump is pretty easy:
 
 ````
 :dump (an-)
-  [ fetch-next over '%n_%n\n putsf ] times drop ;
+  [ fetch-next over '%n_%n\n s:with-format puts ] times drop ;
 ````
 
 This can be useful, but the output doesn't help a lot. Consider an example:
@@ -130,3 +117,8 @@ And tying together:
     putn nl                          (opcode)
   ] times drop ;
 ````
+
+~~~
+:test #2 #2 + ;
+&test here over - disassemble
+~~~
