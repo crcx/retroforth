@@ -144,6 +144,13 @@ specific Nga bytecode.
 :compile:ret  (-)  #10 , ;
 ~~~
 
+The compiler state is stored in a value named `Compiler`. I have an
+accessor word that aids in readability.
+
+~~~
+:compiling?  (-f)  &Compiler fetch ;
+~~~
+
 The next two are additional prefixes to make working with variables
 a bit less painful. By default you have to do things like:
 
@@ -166,20 +173,11 @@ corresponding to:
 ~~~
 :prefix:@  (s-n)
   d:lookup d:xt fetch
-  &Compiler fetch [ #3841 , , ] [ fetch ] choose ; immediate
+  compiling? [ (life....) #3841 , , ] [ fetch ] choose ; immediate
 
 :prefix:!  (s-n)
   d:lookup d:xt fetch
-  &Compiler fetch [ #4097 , , ] [ store ] choose ; immediate
-~~~
-
-
-
-The compiler state is stored in a value named `Compiler`. I have an
-accessor word that aids in readability.
-
-~~~
-:compiling?  (-f)  @Compiler ;
+  compiling? [ (list....) #4097 , , ] [ store ] choose ; immediate
 ~~~
 
 It's sometimes useful to inline values directly. I use a backtick
