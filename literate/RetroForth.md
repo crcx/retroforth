@@ -532,8 +532,8 @@ workable approach.
 Temporary strings are allocated in a circular pool (at STRINGS).
 
 ~~~
-:TempStrings ;   &class:data reclass  #32 !TempStrings
-:TempStringMax ; &class:data reclass #512 !TempStringMax
+:TempStrings ;   data  #32 !TempStrings
+:TempStringMax ; data #512 !TempStringMax
 :STRINGS   EOM @TempStrings @TempStringMax * - ;
 
 {{
@@ -693,6 +693,9 @@ Copy a string, including the terminator.
 ~~~
 :s:copy (ss-) over s:length n:inc copy ;
 ~~~
+
+RETRO provides string constants for several ranges of characters that
+are of some general interest.
 
 ~~~
 :s:DIGITS          (-s)  '0123456789 ;
@@ -911,8 +914,12 @@ Rather than using a lot of shufflers, `reorder` simplfies this into:
 }}
 ~~~
 
-I need to describe these and provide some examples of where they are
-useful.
+`does` is intended to be paired with `d:create` to attach an action to a
+newwly created data structure. An example use might be something like:
+
+    :constant (ns-)  d:create , [ fetch ] does ;
+
+In a traditional Forth this is similar in spirit to DOES>.
 
 ~~~
 :curry (vp-p) here [ swap compile:lit compile:call compile:ret ] dip ;
