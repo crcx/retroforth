@@ -29,6 +29,7 @@ of using a namespace prefix for grouping related words.
 | err        | error handlers     |
 | n          | numbers            |
 | s          | strings            |
+| set        | sets (arrays)      |
 | v          | variables          |
 
 ### Prefixes
@@ -477,7 +478,7 @@ As an example:
 
     {{
       :increment dup fetch n:inc swap store ;
-      :Value `0 ;
+      :Value `0 ; data
     ---reveal---
       :next-number @Value &Value increment ;
     }}
@@ -930,6 +931,17 @@ In a traditional Forth this is similar in spirit to DOES>.
 the dictionary. A pointer to each header will be passed to the quote as
 it is run.
 
+This can be used for implementing `words`:
+
+    [ d:name puts sp ] d:for-each
+
+Or finding the length of the longest name in the dictionary:
+
+    #0 [ d:name s:length n:max ] d:for-each
+
+It's a handy combinator that lets me quickly walk though the entire
+dictionary in a very clean manner.
+
 ~~~
 :d:for-each (q-)
   &Dictionary [ repeat fetch 0;
@@ -1027,9 +1039,9 @@ combinators.
   'Q var
 ---reveal---
   :set:for-each (aq-)
-    @Q [ !Q fetch-next
+    &Q [ !Q fetch-next
          [ fetch-next swap [ @Q call ] dip ] times drop
-       ] dip !Q ;
+       ] v:preserve ;
 }}
 ~~~
 
