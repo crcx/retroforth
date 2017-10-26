@@ -77,7 +77,22 @@ long as instruction bundle strings (8 characters).
 
 ~~~
 :pad (s-)
-  s:length #8 swap - #0 n:max [ sp ] times ;
+  s:length #30 swap - #0 n:max [ sp ] times ;
+~~~
+
+As I was working I decided I wanted a way to see the names that went
+along with calls, jumps, etc. So I wrote a quick word to find the DT
+that goes along with an XT. If none is found, it returns zero.
+
+~~~
+{{
+  'Matching var
+---reveal---
+  :d:lookup-xt (a-d)
+    #0 !Matching
+    [ [ d:xt fetch over eq? ] sip swap [ !Matching ] [ drop ] choose ] d:for-each drop
+    @Matching ;
+}}
 ~~~
 
 I split out each type (instruction, reference/raw, and data) into a
@@ -85,13 +100,15 @@ separate handler.
 
 ~~~
 :render-inst (n-)
-  $' putc unpack #4 [ name-for putc putc ] times sp $i putc ;
-
-:render-ref  (n-)
-  $# putc n:to-string dup puts pad sp $d putc ;
+  $' putc unpack #4 [ name-for putc putc ] times sp '________ pad $i putc ;
 
 :render-data (n-)
-  $# putc n:to-string dup puts pad &LitCount v:dec sp $d putc ;
+  $# putc n:to-string dup puts pad sp $d putc ;
+
+:render-ref  (n-)
+  dup d:lookup-xt n:-zero?
+    [ dup render-data sp $( putc d:lookup-xt d:name puts ]
+    [     render-data ] choose ;
 ~~~
 
 Then I use these and my `valid?` checker to implement a single word to
@@ -101,9 +118,9 @@ render the packed cell in a meaningful manner.
 :render-packed (n-)
   @LitCount n:zero?
   [ dup valid?
-    [ render-inst ]
+    [ render-inst  ]
     [ render-ref ] choose ]
-  [ render-data ] choose ;
+  [ render-ref &LitCount v:dec ] choose ;
 ~~~
 
 And now to tie it all together:
@@ -118,3 +135,4 @@ And now to tie it all together:
 
 ~~~
 &disassemble here over - disassemble
+~~~
