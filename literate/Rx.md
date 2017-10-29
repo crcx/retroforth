@@ -175,7 +175,13 @@ space savings.
 : _packedcall
 d 2049
 i re......
+~~~
 
+Likewise, I define a packed jump for use with quotations. This saves
+several hundred cells (and thus fetch/decode cycles) when loading the
+standard library.
+
+~~~
 : _packedjump
 d 1793
 i re......
@@ -184,17 +190,18 @@ i re......
 ## Stack Shufflers
 
 These add additional operations on the stack elements that'll keep
-later code much more readable.
+later code much more readable. The `dup-pair` is the same as `over
+over`, but I inline the machine code as it's smaller and faster in
+this case.
 
 ~~~
 : over
 i puduposw
 i re......
+
 : dup-pair
-i lica....
-r over
-i lica....
-r over
+i puduposw
+i puduposw
 i re......
 ~~~
 
