@@ -524,19 +524,27 @@ The initial dictionary is constructed at the end of this file. It'll
 take a form like this:
 
     : 0000
-    r 0
-    r _add
-    r class:word
-    s +
+    d 0
+    r _dup
+    r class:primitive
+    s dup
+
     : 0001
     r 0000
-    r _sub
-    r class:word
-    s -
+    r _drop
+    r class:primitive
+    s drop
 
-Each label will contain a reference to the prior one, the internal
-function name, its class, and a string indicating the name to expose
-to the Rx interpreter.
+    : 0002
+    r 0001
+    r _swap
+    r class:primitive
+    s swap
+
+Each entry starts with a pointer to the prior entry (with a pointer
+to zero marking the first entry in the dictionary), a pointer to
+the start of the function, a pointer to the class handler, and a nul
+terminated string indicating the name exposed to the Rx interpreter.
 
 Rx will store the pointer to the most recent entry in a variable
 called `Dictionary`. For simplicity, we just assign the last entry
