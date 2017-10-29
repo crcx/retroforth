@@ -80,21 +80,6 @@ long as instruction bundle strings (8 characters).
   s:length #30 swap - #0 n:max [ sp ] times ;
 ~~~
 
-As I was working I decided I wanted a way to see the names that went
-along with calls, jumps, etc. So I wrote a quick word to find the DT
-that goes along with an XT. If none is found, it returns zero.
-
-~~~
-{{
-  'Matching var
----reveal---
-  :d:lookup-xt (a-d)
-    #0 !Matching
-    [ [ d:xt fetch over eq? ] sip swap [ !Matching ] [ drop ] choose ] d:for-each drop
-    @Matching ;
-}}
-~~~
-
 I split out each type (instruction, reference/raw, and data) into a
 separate handler.
 

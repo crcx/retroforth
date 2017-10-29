@@ -1049,6 +1049,16 @@ This returns zero if the word is not found.
 
 -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
 
+d:lookup-xt
+
+  a-d
+
+Lookup the specified address in the dictionary
+and return a pointer to its dictionary header.
+This returns zero if the word is not found.
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
 d:name
 
   d-s

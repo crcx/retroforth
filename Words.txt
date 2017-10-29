@@ -222,6 +222,7 @@ compile:
   d:last<xt>
   d:link
   d:lookup
+  d:lookup-xt
   d:name
   d:xt
 

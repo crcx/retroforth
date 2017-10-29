@@ -948,6 +948,15 @@ dictionary in a very clean manner.
  dup-pair [ [ swap call ] dip ] dip again ] call drop ;
 ~~~
 
+Using `d:for-each`, I implement a means of looking up a dictionary
+header by the `d:xt` field.
+
+~~~
+:d:lookup-xt (a-d)
+ #0 swap [ dup-pair d:xt fetch eq?
+           [ swap [ nip ] dip ] [ drop ] choose ] d:for-each drop ;
+~~~
+
 Use `s:with-format` to construct a string from multiple items. This
 can be illustrated with:
 
