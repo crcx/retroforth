@@ -256,6 +256,7 @@ r fetch-next
 i zr......
 i drliju..
 r count
+
 : s:length
 i dulica..
 r count
@@ -269,11 +270,13 @@ String comparisons are harder.
 ~~~
 : get-set
 i feswfere
+
 : next-set
 i liadswli
 d 1
 d 1
 i adre....
+
 : compare
 i pupulica
 r dup-pair
@@ -287,10 +290,12 @@ d 1
 i zr......
 i liju....
 r compare
+
 : s:compare:mismatched
 i drdrlidu
 d 0
 i re......
+
 : s:eq
 i lica....
 r dup-pair
@@ -395,6 +400,7 @@ i lica....
 r comma
 i liju....
 r ($)
+
 : comma:string
 i lica....
 r ($)
@@ -460,12 +466,14 @@ r comma
 ~~~
 : class:word:interpret
 i ju......
+
 : class:word:compile
 i lilica..
 r _packedcall
 r comma:opcode
 i liju....
 r comma
+
 : class:word
 i lifelili
 r Compiler
@@ -565,12 +573,15 @@ the number of places where field offsets are hard coded.
 ~~~
 : d:link
 i re......
+
 : d:xt
 i liadre..
 d 1
+
 : d:class
 i liadre..
 d 2
+
 : d:name
 i liadre..
 d 3
@@ -608,18 +619,22 @@ stack.
 ~~~
 : Which
 d 0
+
 : Needle
 d 0
+
 : found
 i listlire
 r Which
 r _nop
+
 : find
 i lilistli
 d 0
 r Which
 r Dictionary
 i fe......
+
 : find_next
 i zr......
 i dulica..
@@ -631,6 +646,7 @@ i licc....
 r found
 i feliju..
 r find_next
+
 : d:lookup
 i listlica
 r Needle
