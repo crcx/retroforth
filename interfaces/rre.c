@@ -19,6 +19,7 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <netdb.h>
+#include <errno.h>
 
 /* Configure Nga (the VM) Limitations */
 #define CELL         int32_t
@@ -305,9 +306,21 @@ void update_rx() {
 /* The `execute` function runs a word in the Retro image.
    It also handles the additional I/O instructions. */
 
+#define UNIX_SYSTEM -8000
+#define UNIX_FORK   -8001
+#define UNIX_EXIT   -8002
+#define UNIX_GETPID -8003
+#define UNIX_EXEC0  -8004	
+#define UNIX_EXEC1  -8005
+#define UNIX_EXEC2  -8006
+#define UNIX_EXEC3  -8007
+
 void execute(int cell) {
   CELL a, b;
   CELL opcode;
+  char path[1024];
+  char arg0[1024], arg1[1024], arg2[1024];
+  char arg3[1024], arg4[1024], arg5[1024];
   rp = 1;
   ip = cell;
   while (ip < IMAGE_SIZE) {
@@ -339,7 +352,28 @@ void execute(int cell) {
                     stack_push(string_inject(sys_argv[a + 2], b));
                     break;
         case -6200: ngaGopherUnit(); break;
-        case -8000: system(string_extract(stack_pop())); break;
+        case UNIX_SYSTEM: system(string_extract(stack_pop()));        break;
+        case UNIX_FORK:   stack_push(fork());                         break;
+        case UNIX_EXEC0:  strcpy(path, string_extract(stack_pop()));
+                          execl(path, path, (char *)0);
+                          stack_push(errno);                          break;
+        case UNIX_EXEC1:  strcpy(arg0, string_extract(stack_pop()));
+                          strcpy(path, string_extract(stack_pop()));
+                          execl(path, path, arg0, (char *)0);
+                          stack_push(errno);                          break;
+        case UNIX_EXEC2:  strcpy(arg1, string_extract(stack_pop()));
+                          strcpy(arg0, string_extract(stack_pop()));
+                          strcpy(path, string_extract(stack_pop()));
+                          execl(path, path, arg0, arg1, (char *)0);
+                          stack_push(errno);                          break;
+        case UNIX_EXEC3:  strcpy(arg2, string_extract(stack_pop()));
+                          strcpy(arg1, string_extract(stack_pop()));
+                          strcpy(arg0, string_extract(stack_pop()));
+                          strcpy(path, string_extract(stack_pop()));
+                          execl(path, path, arg0, arg1, arg2, (char *)0);
+                          stack_push(errno);                          break;
+        case UNIX_EXIT:   exit(stack_pop()); break;
+        case UNIX_GETPID: stack_push(getpid()); break;
         default:   printf("Invalid instruction!\n");
                    printf("At %d, opcode %d\n", ip, opcode);
                    exit(1);

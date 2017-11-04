@@ -75,8 +75,18 @@ Returns:
 
 # System Interaction
 
+The `unix:` namespace contains words for interacting with the
+host operating system.
+
 ~~~
-:sys:system (s-) `-8000 ;
+:unix:system (s-) `-8000 ;
+:unix:fork   (-n) `-8001 ;
+:unix:exit   (n-) `-8002 ;
+:unix:getpid (-n) `-8003 ;
+:unix:exec0  (s-)    `-8004 ;
+:unix:exec1  (ss-)   `-8005 ;
+:unix:exec2  (sss-)  `-8006 ;
+:unix:exec3  (ssss-) `-8007 ;
 ~~~
 
 ---------------------------------------------------------------
