@@ -339,6 +339,7 @@ void execute(int cell) {
                     stack_push(string_inject(sys_argv[a + 2], b));
                     break;
         case -6200: ngaGopherUnit(); break;
+        case -8000: system(string_extract(stack_pop())); break;
         default:   printf("Invalid instruction!\n");
                    printf("At %d, opcode %d\n", ip, opcode);
                    exit(1);

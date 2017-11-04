@@ -73,6 +73,12 @@ Returns:
 :sys:argv (n-s) s:empty swap `-6101 ;
 ~~~
 
+# System Interaction
+
+~~~
+:sys:system (s-) `-8000 ;
+~~~
+
 ---------------------------------------------------------------
 
 # File I/O
