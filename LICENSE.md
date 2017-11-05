@@ -1,5 +1,5 @@
-RETRO
-a personal, minimalistic forth
+RETRO  
+a personal, minimalistic Forth
 
 ## Legalities
 
