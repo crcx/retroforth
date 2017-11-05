@@ -21,6 +21,7 @@
 #include <netdb.h>
 #include <errno.h>
 #include <sys/wait.h>
+#include <signal.h>
 
 /* Configure Nga (the VM) Limitations */
 #define CELL         int32_t
@@ -316,6 +317,7 @@ void update_rx() {
 #define UNIX_EXEC2  -8006
 #define UNIX_EXEC3  -8007
 #define UNIX_WAIT   -8008
+#define UNIX_KILL   -8009
 
 void execute(int cell) {
   CELL a, b;
@@ -377,6 +379,9 @@ void execute(int cell) {
         case UNIX_EXIT:   exit(stack_pop()); break;
         case UNIX_GETPID: stack_push(getpid()); break;
         case UNIX_WAIT:   stack_push(wait(&a)); break;
+        case UNIX_KILL:   a = stack_pop();
+                          kill(stack_pop(), a);
+                          break;
         default:   printf("Invalid instruction!\n");
                    printf("At %d, opcode %d\n", ip, opcode);
                    exit(1);

@@ -127,6 +127,13 @@ the wait() system call.
 :unix:wait   (-n)    `-8008 ;
 ~~~
 
+`unix:kill` terminates a process. Takes a process and a signal
+to send.
+
+~~~
+:unix:kill (nn-)  `-8009 ;
+~~~
+
 ---------------------------------------------------------------
 
 # File I/O
