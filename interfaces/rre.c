@@ -318,6 +318,35 @@ void update_rx() {
 #define UNIX_EXEC3  -8007
 #define UNIX_WAIT   -8008
 #define UNIX_KILL   -8009
+#define UNIX_POPEN  -8010
+#define UNIX_PCLOSE -8011
+
+CELL unixOpenPipe() {
+  CELL slot, mode, name;
+  slot = ioGetFileHandle();
+  mode = data[sp]; sp--;
+  name = data[sp]; sp--;
+  char *request = string_extract(name);
+  if (slot > 0) {
+    if (mode == 0)  ioFileHandles[slot] = popen(request, "r");
+    if (mode == 1)  ioFileHandles[slot] = popen(request, "w");
+    if (mode == 3)  ioFileHandles[slot] = popen(request, "r+");
+  }
+  if (ioFileHandles[slot] == NULL) {
+    ioFileHandles[slot] = 0;
+    slot = 0;
+  }
+  stack_push(slot);
+  return slot;
+}
+
+CELL unixClosePipe() {
+  pclose(ioFileHandles[data[sp]]);
+  ioFileHandles[data[sp]] = 0;
+  sp--;
+  return 0;
+}
+
 
 void execute(int cell) {
   CELL a, b;
@@ -382,6 +411,8 @@ void execute(int cell) {
         case UNIX_KILL:   a = stack_pop();
                           kill(stack_pop(), a);
                           break;
+        case UNIX_POPEN:  unixOpenPipe(); break;
+        case UNIX_PCLOSE: unixClosePipe(); break;
         default:   printf("Invalid instruction!\n");
                    printf("At %d, opcode %d\n", ip, opcode);
                    exit(1);
