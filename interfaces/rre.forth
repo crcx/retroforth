@@ -78,15 +78,53 @@ Returns:
 The `unix:` namespace contains words for interacting with the
 host operating system.
 
+`unix:system` runs another application using the system shell
+and returns after execution is completed.
+
 ~~~
-:unix:system (s-) `-8000 ;
-:unix:fork   (-n) `-8001 ;
-:unix:exit   (n-) `-8002 ;
-:unix:getpid (-n) `-8003 ;
+:unix:system (s-)    `-8000 ;
+~~~
+
+`unix:fork` forks the current process and returns a process
+identifier.
+
+~~~
+:unix:fork   (-n)    `-8001 ;
+~~~
+
+`unix:exit` takes a return code and exits RRE, returning the
+specified code.
+
+~~~
+:unix:exit   (n-)    `-8002 ;
+~~~
+
+`unix:getpid` returns the current process identifier.
+
+~~~
+:unix:getpid (-n)    `-8003 ;
+~~~
+
+This group is used to execute a new process in place of the
+current one. These take a program and optionally 1-3 arguments.
+They map to the execl() system call.
+
+Example:
+
+    '/usr/bin/cal '2 '2019 unix:exec2
+
+~~~
 :unix:exec0  (s-)    `-8004 ;
 :unix:exec1  (ss-)   `-8005 ;
 :unix:exec2  (sss-)  `-8006 ;
 :unix:exec3  (ssss-) `-8007 ;
+~~~
+
+`unix:wait` waits for a child process to complete. This maps to
+the wait() system call.
+
+~~~
+:unix:wait   (-n)    `-8008 ;
 ~~~
 
 ---------------------------------------------------------------
