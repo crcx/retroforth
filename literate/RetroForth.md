@@ -966,7 +966,8 @@ The format language is simple:
 
 | \n | Replace with a LF                         |
 | \t | Replace with a TAB                        |
-[ \\ | Replace with a single \                   |
+| \\ | Replace with a single \                   |
+| \  | Replace with an underscore (_)            |
 | %c | Replace with a character on the stack     |
 | %s | Replace with a string on the stack        |
 | %n | Replace with the next number on the stack |
@@ -974,6 +975,7 @@ The format language is simple:
 ~~~
 {{
   :char (c-)
+    ASCII:SPACE [ $_ buffer:add ] case
     $n [ ASCII:LF buffer:add ] case
     $t [ ASCII:HT buffer:add ] case
     buffer:add ;
