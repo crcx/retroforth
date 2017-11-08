@@ -1,10 +1,16 @@
 # Building RETRO
 
-To rebuild the core binaries, a simple `make` should suffice. This will
-leave you with `bin/rre` and `bin/repl`, as well as the `bin/listener`
-(wrapper for rre).
+Requirements:
 
-If you make changes to the image sources (in `literate`) or to
-`interfaces/rre.forth`, you'll need to do a full build
-(toolchain + image + interfaces). This can be done by issuing a
-`make all` command.
+- a generic shell in `/bin/sh`
+- standard unix tools (cp, rm, mv, cd)
+- a c compiler (as `cc`)
+- a standard libc and libm
+- a unix-style host
+
+You can either use `make` or just run `./build.sh` directly.
+
+RETRO is known to build out of the box on FreeBSD, macOS, and
+Linux. It'll also build fine under Cygwin if you are using a
+Windows system.
+
