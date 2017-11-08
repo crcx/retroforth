@@ -8,8 +8,8 @@ objects:
 	$(CC) $(OPTS) -c repl.c -o repl.o
 
 link:
-	$(CC) $(LIBS) rre.o -o rre
-	$(CC) $(LIBS) repl.o -o repl
+	$(CC) rre.o $(LIBS) -o rre
+	$(CC) repl.o $(LIBS) -o repl
 
 finish:
 	mv rre ../bin

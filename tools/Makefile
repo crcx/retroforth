@@ -10,10 +10,10 @@ objects:
 	$(CC) $(OPTS) -c muri.c -o muri.o
 
 link:
-	$(CC) $(LIBS) unu.o -o unu
-	$(CC) $(LIBS) muri.o -o muri
-	$(CC) $(LIBS) embedimage.o -o embedimage
-	$(CC) $(LIBS) extend.o -o extend
+	$(CC) unu.o        $(LIBS) -o unu
+	$(CC) muri.o       $(LIBS) -o muri
+	$(CC) embedimage.o $(LIBS) -o embedimage
+	$(CC) extend.o     $(LIBS) -o extend
 
 finish:
 	mv embedimage ../bin
