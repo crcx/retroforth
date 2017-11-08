@@ -1,6 +1,8 @@
 LIBS = -lm
 OPTS = -Wall -O3
 
+default: clean finally
+
 all: clean first then image finally
 
 clean:
