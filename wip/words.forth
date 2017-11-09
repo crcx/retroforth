@@ -63,22 +63,22 @@ tab separated data.
                    ASCII:HT s:split nip ;
 
 :field:descr  (-s) @SourceLine #4 skip
-                   ASCII:HT s:split nip s:with-format ;
+                   ASCII:HT s:split nip ;
 
 :field:itime  (-s) @SourceLine #5 skip
-                   ASCII:HT s:split nip s:with-format ;
+                   ASCII:HT s:split nip ;
 
 :field:ctime  (-s) @SourceLine #6 skip
-                   ASCII:HT s:split nip s:with-format ;
+                   ASCII:HT s:split nip ;
 
 :field:class  (-s) @SourceLine #7 skip
                    ASCII:HT s:split nip ;
 
 :field:ex1    (-s) @SourceLine #8 skip
-                   ASCII:HT s:split nip s:with-format ;
+                   ASCII:HT s:split nip ;
 
 :field:ex2    (-s) @SourceLine #9 skip
-                   ASCII:HT s:split nip s:with-format ;
+                   ASCII:HT s:split nip ;
 
 :field:namespace (-s) @SourceLine #10 skip
                       ASCII:HT s:split nip ;
@@ -93,12 +93,14 @@ tab separated data.
   field:dstack '__Data:__%s\n s:with-format puts
   field:astack '__Addr:__%s\n s:with-format puts
   field:fstack '__Float:_%s\n s:with-format puts nl
-  field:descr puts nl nl
+  field:descr s:with-format puts nl nl
+  field:itime s:length n:zero? [ 'Interpret_Time:\n__ s:with-format puts field:itime s:with-format puts nl nl ] -if
+  field:ctime s:length n:zero? [ 'Compile_Time:\n__ s:with-format puts field:ctime s:with-format puts nl nl ] -if
   field:interface field:namespace field:class
   'Class_Handler:_%s_|_Namespace:_%s_|_Interface_Layer:_%s\n\n
   s:with-format puts
-  field:ex1 '{n/a} s:eq? [ 'Example_#1: puts nl field:ex1 puts nl nl ] -if
-  field:ex2 '{n/a} s:eq? [ 'Example_#2: puts nl field:ex2 puts nl nl ] -if ;
+  field:ex1 '{n/a} s:eq? [ 'Example_#1: puts nl field:ex1 s:with-format puts nl nl ] -if
+  field:ex2 '{n/a} s:eq? [ 'Example_#2: puts nl field:ex2 s:with-format puts nl nl ] -if ;
 ~~~
 
 ~~~
@@ -110,6 +112,28 @@ QUERY 'describe s:eq?
 QUERY 'export s:eq? 'glossary TARGET s:eq? and
 [ 'words.tsv
   [ s:keep !SourceLine display-result #64 [ $- putc ] times nl nl ] file:for-each-line
+] if
+~~~
+
+~~~
+:display-fields
+  field:name puts tab
+  field:dstack puts tab
+  field:astack puts tab
+  field:fstack puts tab
+  field:descr puts tab
+  field:itime puts tab
+  field:ctime puts tab
+  field:class puts tab
+  field:ex1 puts tab
+  field:ex2 puts tab
+  field:namespace puts tab
+  field:interface puts tab
+  nl ;
+
+QUERY 'export s:eq? 'tsv TARGET s:eq? and
+[ 'words.tsv
+  [ s:keep !SourceLine display-fields ] file:for-each-line
 ] if
 
 ~~~
