@@ -289,6 +289,8 @@ s:reverse	s-s	-	-	Reverse the order of ASCII characters in a string.			class:wor
 s:right	sn-s	-	-	Return a new string containing the specified number of characters from the right side of the string.			class:word	{n/a}	{n/a}	s	all	
 s:skip	-	-	-	Internal helper function used to skip over a string in a definition.			class:word	{n/a}	{n/a}	s	all	
 s:split	sc-ss	-	-	Split a string on the first occurrance of the specified character.			class:word	{n/a}	{n/a}	s	all	
+s:split-on-string	ss-ss	-	-	Split a string on the first occurrance of the specified string.			class:word	{n/a}	{n/a}	s	all	
+s:replace	sss-s	-	-	Replace the first instance of s2 in s1 with s3.			class:word	{n/a}	{n/a}	s	all	
 s:substr	sfl-s	-	-	Extract a substring from the specified string. This will take the characters starting at `f` and extend `l` characters in length.			class:word	{n/a}	{n/a}	s	all	
 s:temp	s-s	-	-	Move a string into the temporary string buffers.			class:word	{n/a}	{n/a}	s	all	
 s:to-float	s-	-	-F	Convert a string representation into a floating point value.			class:word	{n/a}	{n/a}	s	rre	

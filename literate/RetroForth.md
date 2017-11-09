@@ -895,6 +895,16 @@ located.
 ~~~
 :s:split (sc-ss)
   dup-pair s:index-of nip dup-pair s:left [ + ] dip ;
+
+:s:split-on-string (ss-ss)
+  dup-pair s:index-of-string n:inc nip dup-pair s:left [ + ] dip ;
+
+{{
+  'L var
+---reveal---
+  :s:replace (sss-s)
+    over s:length !L [ s:split-on-string swap @L + ] dip s:prepend s:append ;
+}}
 ~~~
 
 Ok, This is a bit of a hack, but very useful at times.
