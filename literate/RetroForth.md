@@ -860,6 +860,7 @@ substring is in a string.
   'Pad var
   'I   var
   'F   var
+  'At  var
 
   :terminate (-)
     #0 @Pad @Tar s:length + store ;
@@ -868,7 +869,7 @@ substring is in a string.
     @Src @I + @Pad @Tar s:length copy ;
 
   :compare (-)
-    @Pad @Tar s:eq? @F or !F ;
+    @Pad @Tar s:eq? @F or !F @F [ @I !At ] -if ;
 
   :next (-)
     &I v:inc ;
@@ -878,6 +879,12 @@ substring is in a string.
     @Src s:length
     [ extract terminate compare next ] times
     @F ;
+
+  :s:index-of-string (ss-a)
+    !Tar !Src s:empty !Pad #0 !I #0 !F #-1 !At
+    @Src s:length
+    [ extract terminate compare next ] times
+    @F [ @At ] [ #-1 ] choose ;
 }}
 ~~~
 
