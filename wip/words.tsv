@@ -279,6 +279,7 @@ s:filter	sq-s	-	-	Execite the quote once for each value in the string. If the qu
 s:for-each	sq-	-	-	Execute the quote once for each value in the string.			class:word	{n/a}	{n/a}	s	all	
 s:hash	s-n	-	-	Calculate a hash value for a string. This uses the djb2 algorithim.			class:word	{n/a}	{n/a}	s	all	
 s:index-of	sc-n	-	-	Return the location of the first instance of the specified character in the string.			class:word	{n/a}	{n/a}	s	all	
+s:index-of-string	ss-n	-	-	Return the location of the first instance of the specified substring (s2) in the string (s1). Returns -1 if not found.			class:word	{n/a}	{n/a}	s	all	
 s:keep	s-s	-	-	Store a string into the heap and return a pointer to the start of it.			class:word	{n/a}	{n/a}	s	all	
 s:left	sn-s	-	-	Return a new string containing the first `n` characters from the source string.			class:word	{n/a}	{n/a}	s	all	
 s:length	s-n	-	-	Return the number of characters in a string, excluding the NULL terminator.			class:word	{n/a}	{n/a}	s	all	
@@ -333,3 +334,4 @@ unix:getpid	-n	-	-	Return the PID of the current process.			class:word	{n/a}	{n/
 unix:system	s-	-	-	Runs another application using the system shell and returns after execution is completed.			class:word	{n/a}	{n/a}	unix	rre	
 unix:exit	n-	-	-	Exit the current process, returning the specified return code.			class:word	{n/a}	{n/a}	unix	rre	
 unix:wait	-n	-	-	Waits for a child process to complete. This maps to the wait() system call.			class:word	{n/a}	{n/a}	unix	rre	
+unix:write	sh-	-	-	Write a string to the specified file handle.			class:word	{n/a}	{n/a}	unix	rre	

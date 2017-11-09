@@ -320,6 +320,7 @@ void update_rx() {
 #define UNIX_KILL   -8009
 #define UNIX_POPEN  -8010
 #define UNIX_PCLOSE -8011
+#define UNIX_WRITE  -8012
 
 CELL unixOpenPipe() {
   CELL slot, mode, name;
@@ -349,7 +350,7 @@ CELL unixClosePipe() {
 
 
 void execute(int cell) {
-  CELL a, b;
+  CELL a, b, c;
   CELL opcode;
   char path[1024];
   char arg0[1024], arg1[1024], arg2[1024];
@@ -413,6 +414,11 @@ void execute(int cell) {
                           break;
         case UNIX_POPEN:  unixOpenPipe(); break;
         case UNIX_PCLOSE: unixClosePipe(); break;
+        case UNIX_WRITE:  c = stack_pop();
+                          b = stack_pop();
+                          a = stack_pop();
+                          write(fileno(ioFileHandles[c]), string_extract(a), b);
+                          break;
         default:   printf("Invalid instruction!\n");
                    printf("At %d, opcode %d\n", ip, opcode);
                    exit(1);
