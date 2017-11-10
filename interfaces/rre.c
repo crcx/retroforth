@@ -321,6 +321,8 @@ void update_rx() {
 #define UNIX_POPEN  -8010
 #define UNIX_PCLOSE -8011
 #define UNIX_WRITE  -8012
+#define UNIX_CHDIR  -8013
+#define UNIX_GETENV -8014
 
 CELL unixOpenPipe() {
   CELL slot, mode, name;
@@ -418,6 +420,12 @@ void execute(int cell) {
                           b = stack_pop();
                           a = stack_pop();
                           write(fileno(ioFileHandles[c]), string_extract(a), b);
+                          break;
+        case UNIX_CHDIR:  chdir(string_extract(stack_pop()));
+                          break;
+        case UNIX_GETENV: a = stack_pop();
+                          b = stack_pop();
+                          string_inject(getenv(string_extract(b)), a);
                           break;
         default:   printf("Invalid instruction!\n");
                    printf("At %d, opcode %d\n", ip, opcode);
