@@ -137,3 +137,17 @@ QUERY 'export s:eq? 'tsv TARGET s:eq? and
 ] if
 
 ~~~
+
+~~~
+'EDITOR here [ unix:getenv ] sip s:temp 'EDITOR s:const
+'FID var
+
+QUERY 'edit:descr s:eq?
+[ 'words.tsv
+  [ s:keep !SourceLine field:name TARGET s:eq?
+    [ '/tmp/glossary.descr file:W file:open !FID
+      field:descr [ @FID file:write ] s:for-each @FID file:close
+      '/tmp/glossary.descr EDITOR '%s_%s s:with-format unix:system ] if ] file:for-each-line
+] if
+
+~~~
