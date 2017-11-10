@@ -1,0 +1,4180 @@
+*
+
+  Data:  nn-n
+  Addr:  -
+  Float: -
+
+Multiply `n1` by `n2` and return the result.
+
+Class Handler: class:primitive | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
++
+
+  Data:  nn-n
+  Addr:  -
+  Float: -
+
+Add `n1` to `n2` and return the result.
+
+Class Handler: class:primitive | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+,
+
+  Data:  n-
+  Addr:  -
+  Float: -
+
+Store the specified value into the memory at `here` and increment `Heap` by 1.
+
+Class Handler: class:word | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+-
+
+  Data:  nn-n
+  Addr:  -
+  Float: -
+
+Subtract `n1` from `n2` and return the difference.
+
+Class Handler: class:primitive | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+---reveal---
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Switch to the exposed (public) portion of a lexical namespace.
+
+Class Handler: class:word | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+-eq?
+
+  Data:  nn-f
+  Addr:  -
+  Float: -
+
+Compare two values for inequality. Returns `TRUE` if they are not equal or `FALSE` otherwise.
+
+Class Handler: class:primitive | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+-if
+
+  Data:  fq-
+  Addr:  -
+  Float: -
+
+Execute the quotation if the flag is `FALSE`.
+
+Class Handler: class:word | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+/
+
+  Data:  mn-o
+  Addr:  -
+  Float: -
+
+Divide `m` by `n` and return the result.
+
+Class Handler: class:word | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+/mod
+
+  Data:  nm-op
+  Addr:  -
+  Float: -
+
+Divide `n` by `m` and return the result and remainder.
+
+Class Handler: class:primitive | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+0;
+
+  Data:  n-n || n-
+  Addr:  -
+  Float: -
+
+If `n` is zero, drop `n` and exit the current word. If non-zero, leave `n` alone and allow execution to continue.
+
+Class Handler: {n/a} | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+;
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+End the current definition.
+
+Class Handler: class:macro | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+?dup
+
+  Data:  n-nn || n-n
+  Addr:  -
+  Float: -
+
+Duplicate top value on stack if not zero. If zero, do nothing.
+
+Class Handler: class:word | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+ASCII:ACK
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Constant. Refers to specific ASCII code.
+
+Class Handler: class:data | Namespace: ASCII | Interface Layer: all
+
+----------------------------------------------------------------
+
+ASCII:BEL
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Constant. Refers to specific ASCII code.
+
+Class Handler: class:data | Namespace: ASCII | Interface Layer: all
+
+----------------------------------------------------------------
+
+ASCII:BS
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Constant. Refers to specific ASCII code.
+
+Class Handler: class:data | Namespace: ASCII | Interface Layer: all
+
+----------------------------------------------------------------
+
+ASCII:CAN
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Constant. Refers to specific ASCII code.
+
+Class Handler: class:data | Namespace: ASCII | Interface Layer: all
+
+----------------------------------------------------------------
+
+ASCII:CR
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Constant. Refers to specific ASCII code.
+
+Class Handler: class:data | Namespace: ASCII | Interface Layer: all
+
+----------------------------------------------------------------
+
+ASCII:DC1
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Constant. Refers to specific ASCII code.
+
+Class Handler: class:data | Namespace: ASCII | Interface Layer: all
+
+----------------------------------------------------------------
+
+ASCII:DC2
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Constant. Refers to specific ASCII code.
+
+Class Handler: class:data | Namespace: ASCII | Interface Layer: all
+
+----------------------------------------------------------------
+
+ASCII:DC3
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Constant. Refers to specific ASCII code.
+
+Class Handler: class:data | Namespace: ASCII | Interface Layer: all
+
+----------------------------------------------------------------
+
+ASCII:DC4
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Constant. Refers to specific ASCII code.
+
+Class Handler: class:data | Namespace: ASCII | Interface Layer: all
+
+----------------------------------------------------------------
+
+ASCII:DEL
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Constant. Refers to specific ASCII code.
+
+Class Handler: class:data | Namespace: ASCII | Interface Layer: all
+
+----------------------------------------------------------------
+
+ASCII:DLE
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Constant. Refers to specific ASCII code.
+
+Class Handler: class:data | Namespace: ASCII | Interface Layer: all
+
+----------------------------------------------------------------
+
+ASCII:EM
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Constant. Refers to specific ASCII code.
+
+Class Handler: class:data | Namespace: ASCII | Interface Layer: all
+
+----------------------------------------------------------------
+
+ASCII:ENQ
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Constant. Refers to specific ASCII code.
+
+Class Handler: class:data | Namespace: ASCII | Interface Layer: all
+
+----------------------------------------------------------------
+
+ASCII:EOT
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Constant. Refers to specific ASCII code.
+
+Class Handler: class:data | Namespace: ASCII | Interface Layer: all
+
+----------------------------------------------------------------
+
+ASCII:ESC
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Constant. Refers to specific ASCII code.
+
+Class Handler: class:data | Namespace: ASCII | Interface Layer: all
+
+----------------------------------------------------------------
+
+ASCII:ETB
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Constant. Refers to specific ASCII code.
+
+Class Handler: class:data | Namespace: ASCII | Interface Layer: all
+
+----------------------------------------------------------------
+
+ASCII:ETX
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Constant. Refers to specific ASCII code.
+
+Class Handler: class:data | Namespace: ASCII | Interface Layer: all
+
+----------------------------------------------------------------
+
+ASCII:FF
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Constant. Refers to specific ASCII code.
+
+Class Handler: class:data | Namespace: ASCII | Interface Layer: all
+
+----------------------------------------------------------------
+
+ASCII:FS
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Constant. Refers to specific ASCII code.
+
+Class Handler: class:data | Namespace: ASCII | Interface Layer: all
+
+----------------------------------------------------------------
+
+ASCII:GS
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Constant. Refers to specific ASCII code.
+
+Class Handler: class:data | Namespace: ASCII | Interface Layer: all
+
+----------------------------------------------------------------
+
+ASCII:HT
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Constant. Refers to specific ASCII code.
+
+Class Handler: class:data | Namespace: ASCII | Interface Layer: all
+
+----------------------------------------------------------------
+
+ASCII:LF
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Constant. Refers to specific ASCII code.
+
+Class Handler: class:data | Namespace: ASCII | Interface Layer: all
+
+----------------------------------------------------------------
+
+ASCII:NAK
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Constant. Refers to specific ASCII code.
+
+Class Handler: class:data | Namespace: ASCII | Interface Layer: all
+
+----------------------------------------------------------------
+
+ASCII:NUL
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Constant. Refers to specific ASCII code.
+
+Class Handler: class:data | Namespace: ASCII | Interface Layer: all
+
+----------------------------------------------------------------
+
+ASCII:RS
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Constant. Refers to specific ASCII code.
+
+Class Handler: class:data | Namespace: ASCII | Interface Layer: all
+
+----------------------------------------------------------------
+
+ASCII:SI
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Constant. Refers to specific ASCII code.
+
+Class Handler: class:data | Namespace: ASCII | Interface Layer: all
+
+----------------------------------------------------------------
+
+ASCII:SO
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Constant. Refers to specific ASCII code.
+
+Class Handler: class:data | Namespace: ASCII | Interface Layer: all
+
+----------------------------------------------------------------
+
+ASCII:SOH
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Constant. Refers to specific ASCII code.
+
+Class Handler: class:data | Namespace: ASCII | Interface Layer: all
+
+----------------------------------------------------------------
+
+ASCII:SPACE
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Constant. Refers to specific ASCII code.
+
+Class Handler: class:data | Namespace: ASCII | Interface Layer: all
+
+----------------------------------------------------------------
+
+ASCII:STX
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Constant. Refers to specific ASCII code.
+
+Class Handler: class:data | Namespace: ASCII | Interface Layer: all
+
+----------------------------------------------------------------
+
+ASCII:SUB
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Constant. Refers to specific ASCII code.
+
+Class Handler: class:data | Namespace: ASCII | Interface Layer: all
+
+----------------------------------------------------------------
+
+ASCII:SYN
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Constant. Refers to specific ASCII code.
+
+Class Handler: class:data | Namespace: ASCII | Interface Layer: all
+
+----------------------------------------------------------------
+
+ASCII:US
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Constant. Refers to specific ASCII code.
+
+Class Handler: class:data | Namespace: ASCII | Interface Layer: all
+
+----------------------------------------------------------------
+
+ASCII:VT
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Constant. Refers to specific ASCII code.
+
+Class Handler: class:data | Namespace: ASCII | Interface Layer: all
+
+----------------------------------------------------------------
+
+Compiler
+
+  Data:  -a
+  Addr:  -
+  Float: -
+
+Variable. Holds the compiler state. If TRUE, the compiler is active. If FALSE, it is not.
+
+Class Handler: class:data | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+Dictionary
+
+  Data:  -a
+  Addr:  -
+  Float: -
+
+Variable. Holds a pointer to the most recent dictionary header.
+
+Class Handler: class:data | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+EOM
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Constant. Returns the last addressable memory address.
+
+Class Handler: {n/a} | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+FALSE
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Constant. Returns `0`, the value used to indicate a FALSE result.
+
+Class Handler: {n/a} | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+FREE
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Returns the number of cells available to your application. This is the amount of memory, less the already consumed portion and buffers mapped for RETRO's internal use.
+
+Class Handler: {n/a} | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+Heap
+
+  Data:  -a
+  Addr:  -
+  Float: -
+
+Variable. Holds the address of the next available cell.
+
+Class Handler: class:data | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+RewriteUnderscores
+
+  Data:  -a
+  Addr:  -
+  Float: -
+
+Variable. When set to `TRUE`, RETRO will replace underscores in strings with spaces. When `FALSE`, RETRO does not.
+
+Class Handler: class:data | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+STRINGS
+
+  Data:  -a
+  Addr:  -
+  Float: -
+
+Return the address of the start of the temporary string pool.
+
+Class Handler: {n/a} | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+ScopeList
+
+  Data:  -a
+  Addr:  -
+  Float: -
+
+Variable. This holds some information used by `{{` and `}}`.
+
+Class Handler: class:data | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+TRUE
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Constant. Returns `-1`, the value used to indicate a TRUE result.
+
+Class Handler: {n/a} | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+TempStringMax
+
+  Data:  -a
+  Addr:  -
+  Float: -
+
+Variable. Holds the maximum length of a temporary string.
+
+Class Handler: class:data | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+TempStrings
+
+  Data:  -a
+  Addr:  -
+  Float: -
+
+Variable. Holds the number of temporary strings.
+
+Class Handler: class:data | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+Version
+
+  Data:  -a
+  Addr:  -
+  Float: -
+
+Variable. This stores the version number.
+
+Class Handler: class:data | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+[
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Begin a quotation.
+
+Class Handler: class:macro | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+]
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+End a quotation.
+
+Class Handler: class:macro | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+again
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Close an unconditional loop. Branches back to the prior `repeat`.
+
+Class Handler: class:macro | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+allot
+
+  Data:  n-
+  Addr:  -
+  Float: -
+
+Allocate the specified number of cells from the `Heap`.
+
+Class Handler: class:word | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+and
+
+  Data:  nm-o
+  Addr:  -
+  Float: -
+
+Perform a bitwise AND operation between the two provided values.
+
+Class Handler: {n/a} | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+as{
+
+  Data:  -f
+  Addr:  -
+  Float: -
+
+Begin an assembly section.
+
+Class Handler: {n/a} | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+bi
+
+  Data:  xqq-?
+  Addr:  -
+  Float: -
+
+Execute q1 against x, then execute q2 against a copy of x.
+
+Class Handler: class:word | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+bi*
+
+  Data:  xyqq-?
+  Addr:  -
+  Float: -
+
+Execute q1 against x and q2 against y.
+
+Class Handler: class:word | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+bi@
+
+  Data:  xyq-?
+  Addr:  -
+  Float: -
+
+Execute q against x, then execute q against y.
+
+Class Handler: class:word | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+buffer:add
+
+  Data:  n-
+  Addr:  -
+  Float: -
+
+Append a value to the current buffer.
+
+Class Handler: class:word | Namespace: buffer | Interface Layer: all
+
+----------------------------------------------------------------
+
+buffer:empty
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Reset the current buffer to an empty state.
+
+Class Handler: class:word | Namespace: buffer | Interface Layer: all
+
+----------------------------------------------------------------
+
+buffer:end
+
+  Data:  -a
+  Addr:  -
+  Float: -
+
+Return a pointer to the current end of the active buffer.
+
+Class Handler: class:word | Namespace: buffer | Interface Layer: all
+
+----------------------------------------------------------------
+
+buffer:get
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Remove the last value from the current buffer.
+
+Class Handler: class:word | Namespace: buffer | Interface Layer: all
+
+----------------------------------------------------------------
+
+buffer:preserve
+
+  Data:  q-
+  Addr:  -
+  Float: -
+
+Save and restore the current buffer before and after executing the specified quote.
+
+Class Handler: class:word | Namespace: buffer | Interface Layer: all
+
+----------------------------------------------------------------
+
+buffer:set
+
+  Data:  a-
+  Addr:  -
+  Float: -
+
+Assign a new buffer as the current one.
+
+Class Handler: class:word | Namespace: buffer | Interface Layer: all
+
+----------------------------------------------------------------
+
+buffer:size
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Return the number of cells in the buffer.
+
+Class Handler: class:word | Namespace: buffer | Interface Layer: all
+
+----------------------------------------------------------------
+
+buffer:start
+
+  Data:  -a
+  Addr:  -
+  Float: -
+
+Return the start address of the current buffer.
+
+Class Handler: class:word | Namespace: buffer | Interface Layer: all
+
+----------------------------------------------------------------
+
+c:-consonant?
+
+  Data:  c-f
+  Addr:  -
+  Float: -
+
+Return TRUE if character is a not consonant or FALSE otherwise.
+
+Class Handler: class:word | Namespace: c | Interface Layer: all
+
+----------------------------------------------------------------
+
+c:-digit?
+
+  Data:  c-f
+  Addr:  -
+  Float: -
+
+Return TRUE if character is a not numeric digit or FALSE otherwise.
+
+Class Handler: class:word | Namespace: c | Interface Layer: all
+
+----------------------------------------------------------------
+
+c:-lowercase?
+
+  Data:  c-f
+  Addr:  -
+  Float: -
+
+Return TRUE if character is not lowercase or FALSE otherwise.
+
+Class Handler: class:word | Namespace: c | Interface Layer: all
+
+----------------------------------------------------------------
+
+c:-uppercase?
+
+  Data:  c-f
+  Addr:  -
+  Float: -
+
+Return TRUE if character is not uppercase or FALSE otherwise.
+
+Class Handler: class:word | Namespace: c | Interface Layer: all
+
+----------------------------------------------------------------
+
+c:-visible?
+
+  Data:  c-f
+  Addr:  -
+  Float: -
+
+Return TRUE if character is not printable or FALSE otherwise.
+
+Class Handler: class:word | Namespace: c | Interface Layer: all
+
+----------------------------------------------------------------
+
+c:-vowel?
+
+  Data:  c-f
+  Addr:  -
+  Float: -
+
+Return TRUE if character is not a vowel or FALSE otherwise.
+
+Class Handler: class:word | Namespace: c | Interface Layer: all
+
+----------------------------------------------------------------
+
+c:-whitespace?
+
+  Data:  c-f
+  Addr:  -
+  Float: -
+
+Return TRUE if character is not whitespace, or FALSE otherwise.
+
+Class Handler: class:word | Namespace: c | Interface Layer: all
+
+----------------------------------------------------------------
+
+c:consonant?
+
+  Data:  c-f
+  Addr:  -
+  Float: -
+
+Return TRUE if character is a consonant or FALSE otherwise.
+
+Class Handler: class:word | Namespace: c | Interface Layer: all
+
+----------------------------------------------------------------
+
+c:digit?
+
+  Data:  c-f
+  Addr:  -
+  Float: -
+
+Return TRUE if character is a numeric digit or FALSE otherwise.
+
+Class Handler: class:word | Namespace: c | Interface Layer: all
+
+----------------------------------------------------------------
+
+c:letter?
+
+  Data:  c-f
+  Addr:  -
+  Float: -
+
+Return TRUE if character is an ASCII letter or FALSE otherwise.
+
+Class Handler: class:word | Namespace: c | Interface Layer: all
+
+----------------------------------------------------------------
+
+c:lowercase?
+
+  Data:  c-f
+  Addr:  -
+  Float: -
+
+Return TRUE if character is lowercase or FALSE otherwise.
+
+Class Handler: class:word | Namespace: c | Interface Layer: all
+
+----------------------------------------------------------------
+
+c:to-lower
+
+  Data:  c-c
+  Addr:  -
+  Float: -
+
+Convert character to lowercase equivalent.
+
+Class Handler: class:word | Namespace: c | Interface Layer: all
+
+----------------------------------------------------------------
+
+c:to-string
+
+  Data:  c-s
+  Addr:  -
+  Float: -
+
+Convert character into a string.
+
+Class Handler: class:word | Namespace: c | Interface Layer: all
+
+----------------------------------------------------------------
+
+c:to-upper
+
+  Data:  c-c
+  Addr:  -
+  Float: -
+
+Convert character to uppercase equivalent.
+
+Class Handler: class:word | Namespace: c | Interface Layer: all
+
+----------------------------------------------------------------
+
+c:toggle-case
+
+  Data:  c-c
+  Addr:  -
+  Float: -
+
+Convert an ASCII character to the opposite case.
+
+Class Handler: class:word | Namespace: c | Interface Layer: all
+
+----------------------------------------------------------------
+
+c:uppercase?
+
+  Data:  c-f
+  Addr:  -
+  Float: -
+
+Return TRUE if character is uppercase or FALSE otherwise.
+
+Class Handler: class:word | Namespace: c | Interface Layer: all
+
+----------------------------------------------------------------
+
+c:visible?
+
+  Data:  c-f
+  Addr:  -
+  Float: -
+
+Return TRUE if character is printable or FALSE otherwise.
+
+Class Handler: class:word | Namespace: c | Interface Layer: all
+
+----------------------------------------------------------------
+
+c:vowel?
+
+  Data:  c-f
+  Addr:  -
+  Float: -
+
+Return TRUE if character is a vowel or FALSE otherwise.
+
+Class Handler: class:word | Namespace: c | Interface Layer: all
+
+----------------------------------------------------------------
+
+c:whitespace?
+
+  Data:  c-f
+  Addr:  -
+  Float: -
+
+Return TRUE if character is whitespace, or FALSE otherwise.
+
+Class Handler: class:word | Namespace: c | Interface Layer: all
+
+----------------------------------------------------------------
+
+call
+
+  Data:  a-
+  Addr:  -
+  Float: -
+
+Call a function.
+
+Class Handler: {n/a} | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+case
+
+  Data:  nmq- || nmq-n
+  Addr:  -
+  Float: -
+
+If `n` is equal to `m`, drop both and execute the specified quote before exiting the calling word. If not equal, leave `n` on the stack and let execution continue.
+
+Class Handler: class:word | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+choose
+
+  Data:  fqq-
+  Addr:  -
+  Float: -
+
+Execute q1 if the flag is `TRUE` or q2 if it is not.
+
+Class Handler: class:word | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+class:data
+
+  Data:  n- || n-n
+  Addr:  -
+  Float: -
+
+Class handler for data structures.
+
+Interpret Time:
+  Keep the address or value on the stack.
+
+Compile Time:
+  Compile the value or address as a literal into the current definition.
+
+Class Handler: {n/a} | Namespace: class | Interface Layer: all
+
+----------------------------------------------------------------
+
+class:macro
+
+  Data:  a-
+  Addr:  -
+  Float: -
+
+Class handler for compiler macros (immediate words)
+
+Interpret Time:
+  Execute the function at the provided address.
+
+Compile Time:
+  Execute the function at the provided address.
+
+Class Handler: {n/a} | Namespace: class | Interface Layer: all
+
+----------------------------------------------------------------
+
+class:primitive
+
+  Data:  a-
+  Addr:  -
+  Float: -
+
+Class handler for primitive words (words which map to Nga instructions)
+
+Interpret Time:
+  Execute the function.
+
+Compile Time:
+  Compile the machine code in the definiton into the current definition.
+
+Class Handler: {n/a} | Namespace: class | Interface Layer: all
+
+----------------------------------------------------------------
+
+class:word
+
+  Data:  a-
+  Addr:  -
+  Float: -
+
+Class handler for normal words.
+
+Interpret Time:
+  Execute the function at the provided address.
+
+Compile Time:
+  Compile a call to the specified address into the current definition.
+
+Class Handler: {n/a} | Namespace: class | Interface Layer: all
+
+----------------------------------------------------------------
+
+compile:call
+
+  Data:  a-
+  Addr:  -
+  Float: -
+
+Compile a call to the specified address into the current definition.
+
+Class Handler: class:word | Namespace: compile | Interface Layer: all
+
+----------------------------------------------------------------
+
+compile:jump
+
+  Data:  a-
+  Addr:  -
+  Float: -
+
+Compile a jump to the specified address into the current definition.
+
+Class Handler: class:word | Namespace: compile | Interface Layer: all
+
+----------------------------------------------------------------
+
+compile:lit
+
+  Data:  n-
+  Addr:  -
+  Float: -
+
+Compile the code to push a number to the stack into the current definition.
+
+Class Handler: class:word | Namespace: compile | Interface Layer: all
+
+----------------------------------------------------------------
+
+compile:ret
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Compile a return instruction into the current definition.
+
+Class Handler: class:word | Namespace: compile | Interface Layer: all
+
+----------------------------------------------------------------
+
+compiling?
+
+  Data:  -f
+  Addr:  -
+  Float: -
+
+Return `TRUE` if compiler is on or `FALSE` otherwise.
+
+Class Handler: class:word | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+const
+
+  Data:  ns-
+  Addr:  -
+  Float: -
+
+Create a constant returning the specified value.
+
+Class Handler: class:word | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+copy
+
+  Data:  sdl-
+  Addr:  -
+  Float: -
+
+Copy `l` cells from memory at `s` to the memory at `d`. These should not overlap.
+
+Class Handler: class:word | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+curry
+
+  Data:  nq-q
+  Addr:  -
+  Float: -
+
+Bind a value to a function and return a new quote that calls the bound action.
+
+Class Handler: class:word | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+d
+
+  Data:  n-
+  Addr:  -
+  Float: -
+
+Inline a numeric value to the current assembly segment.
+
+Class Handler: {n/a} | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+d:add-header
+
+  Data:  saa-
+  Addr:  -
+  Float: -
+
+Create a header. Provide a string (s) for the name, a pointer to the class handler (a1) and a pointer to the word definition (a2) Generally this won't be used directly.
+
+Class Handler: class:word | Namespace: d | Interface Layer: all
+
+----------------------------------------------------------------
+
+d:class
+
+  Data:  d-a
+  Addr:  -
+  Float: -
+
+Given a dictionary header, return the class field.
+
+Class Handler: class:word | Namespace: d | Interface Layer: all
+
+----------------------------------------------------------------
+
+d:create
+
+  Data:  s-
+  Addr:  -
+  Float: -
+
+Create a new dictionary header named the specified string. The new header will point to `here` and have a class of `class:data`.
+
+Class Handler: class:word | Namespace: d | Interface Layer: all
+
+----------------------------------------------------------------
+
+d:for-each
+
+  Data:  q-
+  Addr:  -
+  Float: -
+
+Execute the specified quote once for each header in the dictionary. Before running the quote, this also pushes a pointer to the header onto the stack.
+
+Class Handler: class:word | Namespace: d | Interface Layer: all
+
+----------------------------------------------------------------
+
+d:last
+
+  Data:  -d
+  Addr:  -
+  Float: -
+
+Return the most recent dictionary header.
+
+Class Handler: class:word | Namespace: d | Interface Layer: all
+
+----------------------------------------------------------------
+
+d:last<class>
+
+  Data:  -a
+  Addr:  -
+  Float: -
+
+Return a pointer to the class field of the most recent dictionary header.
+
+Class Handler: class:word | Namespace: d | Interface Layer: all
+
+----------------------------------------------------------------
+
+d:last<name>
+
+  Data:  -s
+  Addr:  -
+  Float: -
+
+Return a pointer to the name field of the most recent dictionary header.
+
+Class Handler: class:word | Namespace: d | Interface Layer: all
+
+----------------------------------------------------------------
+
+d:last<xt>
+
+  Data:  -a
+  Addr:  -
+  Float: -
+
+Return a pointer to the xt field of the most recent dictionary header.
+
+Class Handler: class:word | Namespace: d | Interface Layer: all
+
+----------------------------------------------------------------
+
+d:link
+
+  Data:  d-a
+  Addr:  -
+  Float: -
+
+Given a dictionary header, return the link field.
+
+Class Handler: class:word | Namespace: d | Interface Layer: all
+
+----------------------------------------------------------------
+
+d:lookup
+
+  Data:  s-d
+  Addr:  -
+  Float: -
+
+Lookup the specified name in the dictionary and return a pointer to its dictionary header. This returns zero if the word is not found.
+
+Class Handler: class:word | Namespace: d | Interface Layer: all
+
+----------------------------------------------------------------
+
+d:lookup-xt
+
+  Data:  a-d
+  Addr:  -
+  Float: -
+
+Lookup the specified address in the dictionary and return a pointer to its dictionary header. This returns zero if the word is not found.
+
+Class Handler: class:word | Namespace: d | Interface Layer: all
+
+----------------------------------------------------------------
+
+d:name
+
+  Data:  d-s
+  Addr:  -
+  Float: -
+
+Given a dictionary header, return the name field.
+
+Class Handler: class:word | Namespace: d | Interface Layer: all
+
+----------------------------------------------------------------
+
+d:xt
+
+  Data:  d-a
+  Addr:  -
+  Float: -
+
+Given a dictionary header, return the xt field.
+
+Class Handler: class:word | Namespace: d | Interface Layer: all
+
+----------------------------------------------------------------
+
+data
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Change the class of the most recently defined word to `class:data`.
+
+Class Handler: class:word | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+depth
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Return the number of items on the stack.
+
+Class Handler: class:word | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+dip
+
+  Data:  nq-n
+  Addr:  -
+  Float: -
+
+Temporarily remove n from the stack, execute the quotation, and then restore n to the stack.
+
+Class Handler: class:word | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+does
+
+  Data:  q-
+  Addr:  -
+  Float: -
+
+Attach an action to the most recently created word. This is used in a manner similar to CREATE/DOES> in traditional Forth.
+
+Class Handler: class:word | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+drop
+
+  Data:  n-
+  Addr:  -
+  Float: -
+
+Discard the top value on the stack.
+
+Class Handler: class:primitive | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+drop-pair
+
+  Data:  nn-
+  Addr:  -
+  Float: -
+
+Remove top two items on the stack.
+
+Class Handler: class:word | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+dump-stack
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Display the items on the data stack.
+
+Class Handler: class:word | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+dup
+
+  Data:  n-nn
+  Addr:  -
+  Float: -
+
+Duplicate the top item on the stack.
+
+Class Handler: class:primitive | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+dup-pair
+
+  Data:  nm-nmnm
+  Addr:  -
+  Float: -
+
+Duplicate the top two items on the stack.
+
+Class Handler: class:word | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+eq?
+
+  Data:  nn-f
+  Addr:  -
+  Float: -
+
+Compare two values for equality. Returns `TRUE` if they are equal or `FALSE` otherwise.
+
+Class Handler: class:primitive | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+err:notfound
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Error handler. Called when a word is not found by `interpret`.
+
+Class Handler: class:word | Namespace: err | Interface Layer: all
+
+----------------------------------------------------------------
+
+f:*
+
+  Data:  -
+  Addr:  -
+  Float: FF-F
+
+Multiply two floating point numbers, returning the result.
+
+Class Handler: class:word | Namespace: f | Interface Layer: rre
+
+----------------------------------------------------------------
+
+f:+
+
+  Data:  -
+  Addr:  -
+  Float: FF-F
+
+Add two floating point numbers, returning the result.
+
+Class Handler: class:word | Namespace: f | Interface Layer: rre
+
+----------------------------------------------------------------
+
+f:-
+
+  Data:  -
+  Addr:  -
+  Float: FF-F
+
+Subtract F2 from F1 returing the result.
+
+Class Handler: class:word | Namespace: f | Interface Layer: rre
+
+----------------------------------------------------------------
+
+f:-eq?
+
+  Data:  -f
+  Addr:  -
+  Float: FF-
+
+Compare two floating point values for inequality. Returns `TRUE` if they are not equal or `FALSE` otherwise.
+
+Class Handler: class:word | Namespace: f | Interface Layer: rre
+
+----------------------------------------------------------------
+
+f:/
+
+  Data:  -
+  Addr:  -
+  Float: FF-F
+
+Divide floating point value F1 by F2.
+
+Class Handler: class:word | Namespace: f | Interface Layer: rre
+
+----------------------------------------------------------------
+
+f:abs
+
+  Data:  -
+  Addr:  -
+  Float: F-F
+
+Return the absolute value for a floating point value.
+
+Class Handler: class:word | Namespace: f | Interface Layer: rre
+
+----------------------------------------------------------------
+
+f:depth
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Return the number of items on the floating point stack.
+
+Class Handler: class:word | Namespace: f | Interface Layer: rre
+
+----------------------------------------------------------------
+
+f:drop
+
+  Data:  -
+  Addr:  -
+  Float: F-
+
+Discard the top item on the floating point stack.
+
+Class Handler: class:word | Namespace: f | Interface Layer: rre
+
+----------------------------------------------------------------
+
+f:dup
+
+  Data:  -
+  Addr:  -
+  Float: F-FF
+
+Duplicate the top item on the floating point stack.
+
+Class Handler: class:word | Namespace: f | Interface Layer: rre
+
+----------------------------------------------------------------
+
+f:eq?
+
+  Data:  -f
+  Addr:  -
+  Float: FF-
+
+Compare two floating point values for equality. Returns `TRUE` if they are equal or `FALSE` otherwise.
+
+Class Handler: class:word | Namespace: f | Interface Layer: rre
+
+----------------------------------------------------------------
+
+f:floor
+
+  Data:  -
+  Addr:  -
+  Float: F-F
+
+Perform a mathmatical floor operation on the floating point value.
+
+Class Handler: class:word | Namespace: f | Interface Layer: rre
+
+----------------------------------------------------------------
+
+f:gt?
+
+  Data:  -f
+  Addr:  -
+  Float: FF-
+
+Compare two floating point values for greater than.
+
+Class Handler: class:word | Namespace: f | Interface Layer: rre
+
+----------------------------------------------------------------
+
+f:log
+
+  Data:  -
+  Addr:  -
+  Float: FF-F
+
+Return log(F1) for base F2 for floating point values.
+
+Class Handler: class:word | Namespace: f | Interface Layer: rre
+
+----------------------------------------------------------------
+
+f:lt?
+
+  Data:  -f
+  Addr:  -
+  Float: FF-
+
+Compare two floating point values for less than.
+
+Class Handler: class:word | Namespace: f | Interface Layer: rre
+
+----------------------------------------------------------------
+
+f:negate
+
+  Data:  -
+  Addr:  -
+  Float: F-F
+
+Invert the sign of the floating point value.
+
+Class Handler: class:word | Namespace: f | Interface Layer: rre
+
+----------------------------------------------------------------
+
+f:negative?
+
+  Data:  -f
+  Addr:  -
+  Float: F-
+
+Return `TRUE` if floating point value is negative or `FALSE` if not.
+
+Class Handler: class:word | Namespace: f | Interface Layer: rre
+
+----------------------------------------------------------------
+
+f:over
+
+  Data:  -
+  Addr:  -
+  Float: FG-FGF
+
+Put a copy of the second floating point value over the top one.
+
+Class Handler: class:word | Namespace: f | Interface Layer: rre
+
+----------------------------------------------------------------
+
+f:positive?
+
+  Data:  -f
+  Addr:  -
+  Float: F-
+
+Return `TRUE` if floating point value is positive or `FALSE` otherwise.
+
+Class Handler: class:word | Namespace: f | Interface Layer: rre
+
+----------------------------------------------------------------
+
+f:power
+
+  Data:  -
+  Addr:  -
+  Float: FF-F
+
+Return F1^F2 for floating point values.
+
+Class Handler: class:word | Namespace: f | Interface Layer: rre
+
+----------------------------------------------------------------
+
+f:swap
+
+  Data:  -
+  Addr:  -
+  Float: FG-GF
+
+Exchange the top and second items on the floating point stack.
+
+Class Handler: class:word | Namespace: f | Interface Layer: rre
+
+----------------------------------------------------------------
+
+f:to-number
+
+  Data:  -n
+  Addr:  -
+  Float: F-
+
+Convert a floating point value into a number.
+
+Class Handler: class:word | Namespace: f | Interface Layer: rre
+
+----------------------------------------------------------------
+
+f:to-string
+
+  Data:  -s
+  Addr:  -
+  Float: F-
+
+Convert a floating point value into a string.
+
+Class Handler: class:word | Namespace: f | Interface Layer: rre
+
+----------------------------------------------------------------
+
+f:tuck
+
+  Data:  -
+  Addr:  -
+  Float: FG-GFG
+
+Tuck a copy of the top floating point value under the second one.
+
+Class Handler: class:word | Namespace: f | Interface Layer: rre
+
+----------------------------------------------------------------
+
+fetch
+
+  Data:  a-n
+  Addr:  -
+  Float: -
+
+Fetch the value stored at the specified address.
+
+Class Handler: class:primitive | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+fetch-next
+
+  Data:  a-an
+  Addr:  -
+  Float: -
+
+Fetch the value stored at the specified address. Returns the next address and the value.
+
+Class Handler: class:word | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+file:A
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Constant for opening a file in APPEND mode.
+
+Class Handler: class:data | Namespace: file | Interface Layer: rre
+
+----------------------------------------------------------------
+
+file:R
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Constant for opening a file in READ mode.
+
+Class Handler: class:data | Namespace: file | Interface Layer: rre
+
+----------------------------------------------------------------
+
+file:R+
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Constant for opening a file in READ & WRITE mode.
+
+Class Handler: class:data | Namespace: file | Interface Layer: rre
+
+----------------------------------------------------------------
+
+file:W
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Constant for opening a file in WRITE mode.
+
+Class Handler: class:data | Namespace: file | Interface Layer: rre
+
+----------------------------------------------------------------
+
+file:close
+
+  Data:  h-
+  Addr:  -
+  Float: -
+
+Given a file handle, close the file.
+
+Class Handler: class:word | Namespace: file | Interface Layer: rre
+
+----------------------------------------------------------------
+
+file:delete
+
+  Data:  s-
+  Addr:  -
+  Float: -
+
+Delete the named file.
+
+Class Handler: class:word | Namespace: file | Interface Layer: rre
+
+----------------------------------------------------------------
+
+file:exists?
+
+  Data:  s-f
+  Addr:  -
+  Float: -
+
+Given a file name, return `TRUE` if it exists or `FALSE` if it does not.
+
+Class Handler: class:word | Namespace: file | Interface Layer: rre
+
+----------------------------------------------------------------
+
+file:flush
+
+  Data:  h-
+  Addr:  -
+  Float: -
+
+Given a file handle, flush any pending writes to disk.
+
+Class Handler: class:word | Namespace: file | Interface Layer: rre
+
+----------------------------------------------------------------
+
+file:for-each-line
+
+  Data:  sq-
+  Addr:  -
+  Float: -
+
+Given a file name, open it and run the quote once for each line in the file.
+
+Class Handler: class:word | Namespace: file | Interface Layer: rre
+
+----------------------------------------------------------------
+
+file:open
+
+  Data:  sm-h
+  Addr:  -
+  Float: -
+
+Open a named file (s) with the given mode (m). Returns a handle identifying the file.
+
+Class Handler: class:word | Namespace: file | Interface Layer: rre
+
+----------------------------------------------------------------
+
+file:read
+
+  Data:  h-c
+  Addr:  -
+  Float: -
+
+Given a file handle, read and return the next character in it.
+
+Class Handler: class:word | Namespace: file | Interface Layer: rre
+
+----------------------------------------------------------------
+
+file:read-line
+
+  Data:  f-s
+  Addr:  -
+  Float: -
+
+Given a file handle, read a line and return a pointer to it.
+
+Class Handler: class:word | Namespace: file | Interface Layer: rre
+
+----------------------------------------------------------------
+
+file:seek
+
+  Data:  nh-
+  Addr:  -
+  Float: -
+
+Move the current offset into a file to the specified one.
+
+Class Handler: class:word | Namespace: file | Interface Layer: rre
+
+----------------------------------------------------------------
+
+file:size
+
+  Data:  h-n
+  Addr:  -
+  Float: -
+
+Given a file handle, return the size of the file (in bytes).
+
+Class Handler: class:word | Namespace: file | Interface Layer: rre
+
+----------------------------------------------------------------
+
+file:slurp
+
+  Data:  as-
+  Addr:  -
+  Float: -
+
+Given an address and a file name, read the file contents into memory starting at the address.
+
+Class Handler: class:word | Namespace: file | Interface Layer: rre
+
+----------------------------------------------------------------
+
+file:tell
+
+  Data:  h-n
+  Addr:  -
+  Float: -
+
+Given a file handle, return the current offset in the file.
+
+Class Handler: class:word | Namespace: file | Interface Layer: rre
+
+----------------------------------------------------------------
+
+file:write
+
+  Data:  ch-
+  Addr:  -
+  Float: -
+
+Write a character to the file represented by the handle.
+
+Class Handler: class:word | Namespace: file | Interface Layer: rre
+
+----------------------------------------------------------------
+
+getc
+
+  Data:  -c
+  Addr:  -
+  Float: -
+
+Read a single keypress.
+
+Class Handler: class:word | Namespace: global | Interface Layer: rre
+
+----------------------------------------------------------------
+
+gopher:get
+
+  Data:  asns-n
+  Addr:  -
+  Float: -
+
+Takes an address, a server, a port, and a selector. Fetch the resource and store it at address. Return the number of bytes received.
+
+Class Handler: class:word | Namespace: gopher | Interface Layer: rre
+
+----------------------------------------------------------------
+
+gt?
+
+  Data:  nn-f
+  Addr:  -
+  Float: -
+
+Compare n1 and n2. Return `TRUE` if n1 is greater than n2, or `FALSE` otherwise.
+
+Class Handler: class:primitive | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+gteq?
+
+  Data:  nn-f
+  Addr:  -
+  Float: -
+
+Compare n1 and n2. Return `TRUE` if n1 is greater than or equal to n2, or `FALSE` otherwise.
+
+Class Handler: class:word | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+here
+
+  Data:  -a
+  Addr:  -
+  Float: -
+
+Return the next free address in memory.
+
+Class Handler: class:word | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+i
+
+  Data:  s-
+  Addr:  -
+  Float: -
+
+Assemble the instructions specified by the string into the current assembly scope.
+
+Class Handler: class:word | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+if
+
+  Data:  fq-
+  Addr:  -
+  Float: -
+
+Execute the quote if the flag is `TRUE`.
+
+Class Handler: class:word | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+immediate
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Change the class of the most recently defined word to `class:macro`.
+
+Class Handler: class:word | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+interpret
+
+  Data:  s-
+  Addr:  -
+  Float: -
+
+Interpret a single input token.
+
+Class Handler: class:word | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+lt?
+
+  Data:  nn-f
+  Addr:  -
+  Float: -
+
+Compare n1 and n2. Return `TRUE` if n1 is less than n2, or `FALSE` otherwise.
+
+Class Handler: class:primitive | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+lteq?
+
+  Data:  nn-f
+  Addr:  -
+  Float: -
+
+Compare n1 and n2. Return `TRUE` if n1 is less than or equal to n2, or `FALSE` otherwise.
+
+Class Handler: class:word | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+mod
+
+  Data:  nm-o
+  Addr:  -
+  Float: -
+
+Divide `n` by `m` and return the remainder.
+
+Class Handler: class:word | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+n:-zero?
+
+  Data:  n-f
+  Addr:  -
+  Float: -
+
+Return `TRUE` if number is not zero, or `FALSE` otherwise.
+
+Class Handler: class:word | Namespace: n | Interface Layer: all
+
+----------------------------------------------------------------
+
+n:MAX
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Return the maximum value that will fit in a cell.
+
+Class Handler: class:word | Namespace: n | Interface Layer: all
+
+----------------------------------------------------------------
+
+n:MIN
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Return the minimum value that will fit in a cell.
+
+Class Handler: class:word | Namespace: n | Interface Layer: all
+
+----------------------------------------------------------------
+
+n:abs
+
+  Data:  n-n
+  Addr:  -
+  Float: -
+
+Return the absolute value of a number.
+
+Class Handler: class:word | Namespace: n | Interface Layer: all
+
+----------------------------------------------------------------
+
+n:between?
+
+  Data:  nlu-f
+  Addr:  -
+  Float: -
+
+Return TRUE if number is between the lower (l) and upper (u) bounds. If not, return FALSE. This is inclusive of the limits.
+
+Class Handler: class:word | Namespace: n | Interface Layer: all
+
+----------------------------------------------------------------
+
+n:dec
+
+  Data:  n-m
+  Addr:  -
+  Float: -
+
+Decrement n by one.
+
+Class Handler: class:word | Namespace: n | Interface Layer: all
+
+----------------------------------------------------------------
+
+n:even?
+
+  Data:  n-f
+  Addr:  -
+  Float: -
+
+Return `TRUE` if number is even, or `FALSE` if not.
+
+Class Handler: class:word | Namespace: n | Interface Layer: all
+
+----------------------------------------------------------------
+
+n:inc
+
+  Data:  n-m
+  Addr:  -
+  Float: -
+
+Increment n by one.
+
+Class Handler: class:word | Namespace: n | Interface Layer: all
+
+----------------------------------------------------------------
+
+n:limit
+
+  Data:  nlu-m
+  Addr:  -
+  Float: -
+
+Return n if it is within the lower (l) and upper (u) bounds. If outside the bounds, return the closes boundary value.
+
+Class Handler: class:word | Namespace: n | Interface Layer: all
+
+----------------------------------------------------------------
+
+n:max
+
+  Data:  mn-o
+  Addr:  -
+  Float: -
+
+Return the greater of two values.
+
+Class Handler: class:word | Namespace: n | Interface Layer: all
+
+----------------------------------------------------------------
+
+n:min
+
+  Data:  mn-o
+  Addr:  -
+  Float: -
+
+Return the lesser of two values.
+
+Class Handler: class:word | Namespace: n | Interface Layer: all
+
+----------------------------------------------------------------
+
+n:negate
+
+  Data:  n-n
+  Addr:  -
+  Float: -
+
+Invert the sign of a number.
+
+Class Handler: class:word | Namespace: n | Interface Layer: all
+
+----------------------------------------------------------------
+
+n:negative?
+
+  Data:  n-f
+  Addr:  -
+  Float: -
+
+Return `TRUE` if number is negative, or `FALSE` if not.
+
+Class Handler: class:word | Namespace: n | Interface Layer: all
+
+----------------------------------------------------------------
+
+n:odd?
+
+  Data:  n-f
+  Addr:  -
+  Float: -
+
+Return `TRUE` if number is odd, or `FALSE` if not.
+
+Class Handler: class:word | Namespace: n | Interface Layer: all
+
+----------------------------------------------------------------
+
+n:positive?
+
+  Data:  n-f
+  Addr:  -
+  Float: -
+
+Return `TRUE` if number is positive, or `FALSE` if not.
+
+Class Handler: class:word | Namespace: n | Interface Layer: all
+
+----------------------------------------------------------------
+
+n:pow
+
+  Data:  bp-n
+  Addr:  -
+  Float: -
+
+Return base (b) to power (p).
+
+Class Handler: class:word | Namespace: n | Interface Layer: all
+
+----------------------------------------------------------------
+
+n:sqrt
+
+  Data:  n-m
+  Addr:  -
+  Float: -
+
+Return the square root of a number.
+
+Class Handler: class:word | Namespace: n | Interface Layer: all
+
+----------------------------------------------------------------
+
+n:square
+
+  Data:  n-m
+  Addr:  -
+  Float: -
+
+Return the square of a number.
+
+Class Handler: class:word | Namespace: n | Interface Layer: all
+
+----------------------------------------------------------------
+
+n:strictly-positive?
+
+  Data:  n-f
+  Addr:  -
+  Float: -
+
+Return TRUE if number is greater than zero or FALSE if it is zero or less.
+
+Class Handler: class:word | Namespace: n | Interface Layer: all
+
+----------------------------------------------------------------
+
+n:to-float
+
+  Data:  n-
+  Addr:  -
+  Float: -F
+
+Convert a number into a floating point value.
+
+Class Handler: class:word | Namespace: n | Interface Layer: rre
+
+----------------------------------------------------------------
+
+n:to-string
+
+  Data:  n-s
+  Addr:  -
+  Float: -
+
+Convert a number into a string.
+
+Class Handler: class:word | Namespace: n | Interface Layer: all
+
+----------------------------------------------------------------
+
+n:zero?
+
+  Data:  n-f
+  Addr:  -
+  Float: -
+
+Return `TRUE` if number is zero, or `FALSE` otherwise.
+
+Class Handler: class:word | Namespace: n | Interface Layer: all
+
+----------------------------------------------------------------
+
+nip
+
+  Data:  nm-m
+  Addr:  -
+  Float: -
+
+Remove the second item from the stack.
+
+Class Handler: class:word | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+nl
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Display a newline.
+
+Class Handler: class:word | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+not
+
+  Data:  n-m
+  Addr:  -
+  Float: -
+
+Perform a logical NOT operation.
+
+Class Handler: class:word | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+or
+
+  Data:  mn-o
+  Addr:  -
+  Float: -
+
+Perform a bitwise OR between the provided values.
+
+Class Handler: class:primitive | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+over
+
+  Data:  nm-nmn
+  Addr:  -
+  Float: -
+
+Put a copy of n over m.
+
+Class Handler: class:word | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+pop
+
+  Data:  -n
+  Addr:  n-
+  Float: -
+
+Move a value from the return stack to the data stack.
+
+Class Handler: {n/a} | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+prefix:!
+
+  Data:  ns-
+  Addr:  -
+  Float: -
+
+Store a value into a variable.
+
+Interpret Time:
+  Store a value into the named variable.
+
+Compile Time:
+  Compile the code to store a value into a named variable.
+
+Class Handler: {n/a} | Namespace: prefix | Interface Layer: all
+
+----------------------------------------------------------------
+
+prefix:#
+
+  Data:  s-n
+  Addr:  -
+  Float: -
+
+Process token as a number.
+
+Interpret Time:
+  Convert the string into a number and leave on the stack.
+
+Compile Time:
+  Convert the string into a number and compile into the current definition as a literal.
+
+Class Handler: {n/a} | Namespace: prefix | Interface Layer: all
+
+----------------------------------------------------------------
+
+prefix:$
+
+  Data:  s-c
+  Addr:  -
+  Float: -
+
+Process token as an ASCII character.
+
+Interpret Time:
+  Fetch first character from string. Leave on stack.
+
+Compile Time:
+  Fetch first character from the string. Compile into the current definition as  literal.
+
+Class Handler: {n/a} | Namespace: prefix | Interface Layer: all
+
+----------------------------------------------------------------
+
+prefix:&
+
+  Data:  s-a
+  Addr:  -
+  Float: -
+
+Return a pointer to a named item.
+
+Interpret Time:
+  Lookup name in dictionary, return contents of the xt field on the stack.
+
+Compile Time:
+  Lookup name in dictionary, compile code to push the contents of the xt field into the current definition.
+
+Class Handler: {n/a} | Namespace: prefix | Interface Layer: all
+
+----------------------------------------------------------------
+
+prefix:'
+
+  Data:  s-s
+  Addr:  -
+  Float: -
+
+Process token as a string.
+
+Interpret Time:
+  Move string into temporary buffer. If `RewriteUnderscores` is `TRUE`, replace all instances of _ with space.
+
+Compile Time:
+  Move string into temporary buffer. If `RewriteUnderscores` is `TRUE`, replace all instances of _ with space. Then compile the string into the current definition.
+
+Class Handler: {n/a} | Namespace: prefix | Interface Layer: all
+
+----------------------------------------------------------------
+
+prefix:(
+
+  Data:  s-
+  Addr:  -
+  Float: -
+
+Process token as a comment.
+
+Interpret Time:
+  Discard the string.
+
+Compile Time:
+  Discard the string.
+
+Class Handler: {n/a} | Namespace: prefix | Interface Layer: all
+
+----------------------------------------------------------------
+
+prefix:.
+
+  Data:  s-
+  Addr:  -
+  Float: -F
+
+Interpret time: convert string to a floating point value.
+Compile time: convert string to a floating point value and compile code to push this value to the float stack.
+
+Class Handler: {n/a} | Namespace: prefix | Interface Layer: rre
+
+----------------------------------------------------------------
+
+prefix::
+
+  Data:  s-
+  Addr:  -
+  Float: -
+
+Process token as a new definition.
+
+Interpret Time:
+  Create a header pointing to `here` with the provided string as the name. Sets class to `class:word`.
+
+Class Handler: @Compiler | Namespace: prefix | Interface Layer: all
+
+----------------------------------------------------------------
+
+prefix:@
+
+  Data:  s-n
+  Addr:  -
+  Float: -
+
+Fetch from a stored variable.
+
+Interpret Time:
+  Fetch a value from a named variable.
+
+Compile Time:
+  Compile the code to fetch a value from a named variable into the current definition.
+
+Class Handler: {n/a} | Namespace: prefix | Interface Layer: all
+
+----------------------------------------------------------------
+
+prefix:`
+
+  Data:  s-
+  Addr:  -
+  Float: -
+
+Process token as a bytecode.
+
+Interpret Time:
+  Discard the string.
+
+Compile Time:
+  Convert the string to a number and use `,` to inline it into the current definition.
+
+Class Handler: {n/a} | Namespace: prefix | Interface Layer: all
+
+----------------------------------------------------------------
+
+push
+
+  Data:  n-
+  Addr:  -n
+  Float: -
+
+Move a value from the data stack to the return stack.
+
+Class Handler: {n/a} | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+putc
+
+  Data:  c-
+  Addr:  -
+  Float: -
+
+Display a single character.
+
+Class Handler: class:word | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+putf
+
+  Data:  -
+  Addr:  -
+  Float: F-
+
+Display a floating point number.
+
+Class Handler: class:word | Namespace: global | Interface Layer: rre
+
+----------------------------------------------------------------
+
+putn
+
+  Data:  n-
+  Addr:  -
+  Float: -
+
+Display a number.
+
+Class Handler: class:word | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+puts
+
+  Data:  s-
+  Addr:  -
+  Float: -
+
+Display a string.
+
+Class Handler: class:word | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+r
+
+  Data:  s-
+  Addr:  -
+  Float: -
+
+Lookup a reference by name and inline its pointer to the current assembly segment.
+
+Class Handler: class:word | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+reclass
+
+  Data:  a-
+  Addr:  -
+  Float: -
+
+Change the class handler of the most recently defined word to the specified one.
+
+Class Handler: class:word | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+reorder
+
+  Data:  ...ss-?
+  Addr:  -
+  Float: -
+
+Restructure the order of items on the stack.
+
+Class Handler: class:word | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+repeat
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Begin an unconditional loop.
+
+Class Handler: class:macro | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+reset
+
+  Data:  ...-
+  Addr:  -
+  Float: -
+
+Remove all items from the stack.
+
+Class Handler: class:word | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+rot
+
+  Data:  abc-bca
+  Addr:  -
+  Float: -
+
+Rotate the top three values.
+
+Class Handler: class:word | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+s,
+
+  Data:  s-
+  Addr:  -
+  Float: -
+
+Compile the code needed to push a string pointer to the stack and inline the string data into the current definition.
+
+Class Handler: class:word | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+s:ASCII-LETTERS
+
+  Data:  -s
+  Addr:  -
+  Float: -
+
+Constant. Returns a string of the ASCII letters (upper and lower case)
+
+Class Handler: class:data | Namespace: s | Interface Layer: all
+
+----------------------------------------------------------------
+
+s:ASCII-LOWERCASE
+
+  Data:  -s
+  Addr:  -
+  Float: -
+
+Constant. Returns a string of the ASCII letters in lowercase
+
+Class Handler: class:data | Namespace: s | Interface Layer: all
+
+----------------------------------------------------------------
+
+s:ASCII-UPPERCASE
+
+  Data:  -s
+  Addr:  -
+  Float: -
+
+Constant. Returns a string of the ASCII letters in uppercase
+
+Class Handler: class:data | Namespace: s | Interface Layer: all
+
+----------------------------------------------------------------
+
+s:DIGITS
+
+  Data:  -s
+  Addr:  -
+  Float: -
+
+Constant. Return a string of characters recognized as numeric digits.
+
+Class Handler: class:data | Namespace: s | Interface Layer: all
+
+----------------------------------------------------------------
+
+s:PUNCTUATION
+
+  Data:  -s
+  Addr:  -
+  Float: -
+
+Constant. Return a string of characters recognized as punctuation.
+
+Class Handler: class:data | Namespace: s | Interface Layer: all
+
+----------------------------------------------------------------
+
+s:WHITESPACE
+
+  Data:  -s
+  Addr:  -
+  Float: -
+
+Constant. Returns a string of characters recognized as whitespace.
+
+Class Handler: class:data | Namespace: s | Interface Layer: all
+
+----------------------------------------------------------------
+
+s:append
+
+  Data:  ss-s
+  Addr:  -
+  Float: -
+
+Return a new string consisting of s1 followed by s2.
+
+Class Handler: class:word | Namespace: s | Interface Layer: all
+
+----------------------------------------------------------------
+
+s:case
+
+  Data:  sSq- || sSq-s
+  Addr:  -
+  Float: -
+
+If the `s` matches `S`, discard `s` and run the quote before exiting the caller. If they do not match, discard the quote and leave `s` on the stack.
+
+Class Handler: class:word | Namespace: s | Interface Layer: all
+
+----------------------------------------------------------------
+
+s:chop
+
+  Data:  s-s
+  Addr:  -
+  Float: -
+
+Remove the last character from a string.
+
+Class Handler: class:word | Namespace: s | Interface Layer: all
+
+----------------------------------------------------------------
+
+s:const
+
+  Data:  ss-
+  Addr:  -
+  Float: -
+
+Create a constant named s2, returning a pointer to s1. This will use `s:keep` to preserve the original string.
+
+Class Handler: class:word | Namespace: s | Interface Layer: all
+
+----------------------------------------------------------------
+
+s:contains-char?
+
+  Data:  sc-f
+  Addr:  -
+  Float: -
+
+Return `TRUE` if the character is present in the string or `FALSE` otherwise.
+
+Class Handler: class:word | Namespace: s | Interface Layer: all
+
+----------------------------------------------------------------
+
+s:contains-string?
+
+  Data:  ss-f
+  Addr:  -
+  Float: -
+
+Return `TRUE` if the second string is present in the first string or `FALSE` otherwise.
+
+Class Handler: class:word | Namespace: s | Interface Layer: all
+
+----------------------------------------------------------------
+
+s:copy
+
+  Data:  sa-
+  Addr:  -
+  Float: -
+
+Copy a string (s) to a destination (a). This will include the terminator character when copying.
+
+Class Handler: class:word | Namespace: s | Interface Layer: all
+
+----------------------------------------------------------------
+
+s:empty
+
+  Data:  -s
+  Addr:  -
+  Float: -
+
+Return an empty string.
+
+Class Handler: class:word | Namespace: s | Interface Layer: all
+
+----------------------------------------------------------------
+
+s:eq?
+
+  Data:  ss-f
+  Addr:  -
+  Float: -
+
+Compare two strings for equality. Return `TRUE` if identical or `FALSE` if not.
+
+Class Handler: class:word | Namespace: s | Interface Layer: all
+
+----------------------------------------------------------------
+
+s:evaluate
+
+  Data:  s-?
+  Addr:  -
+  Float: -
+
+Evaluate string as if it was typed into the interpreter.
+
+Class Handler: class:word | Namespace: s | Interface Layer: all
+
+----------------------------------------------------------------
+
+s:filter
+
+  Data:  sq-s
+  Addr:  -
+  Float: -
+
+Execite the quote once for each value in the string. If the quote returns `TRUE`, append the value into a new string. If `FALSE` the value will be discarded.
+
+Class Handler: class:word | Namespace: s | Interface Layer: all
+
+----------------------------------------------------------------
+
+s:for-each
+
+  Data:  sq-
+  Addr:  -
+  Float: -
+
+Execute the quote once for each value in the string.
+
+Class Handler: class:word | Namespace: s | Interface Layer: all
+
+----------------------------------------------------------------
+
+s:hash
+
+  Data:  s-n
+  Addr:  -
+  Float: -
+
+Calculate a hash value for a string. This uses the djb2 algorithim.
+
+Class Handler: class:word | Namespace: s | Interface Layer: all
+
+----------------------------------------------------------------
+
+s:index-of
+
+  Data:  sc-n
+  Addr:  -
+  Float: -
+
+Return the location of the first instance of the specified character in the string.
+
+Class Handler: class:word | Namespace: s | Interface Layer: all
+
+----------------------------------------------------------------
+
+s:index-of-string
+
+  Data:  ss-n
+  Addr:  -
+  Float: -
+
+Return the location of the first instance of the specified substring (s2) in the string (s1). Returns -1 if not found.
+
+Class Handler: class:word | Namespace: s | Interface Layer: all
+
+----------------------------------------------------------------
+
+s:keep
+
+  Data:  s-s
+  Addr:  -
+  Float: -
+
+Store a string into the heap and return a pointer to the start of it.
+
+Class Handler: class:word | Namespace: s | Interface Layer: all
+
+----------------------------------------------------------------
+
+s:left
+
+  Data:  sn-s
+  Addr:  -
+  Float: -
+
+Return a new string containing the first `n` characters from the source string.
+
+Class Handler: class:word | Namespace: s | Interface Layer: all
+
+----------------------------------------------------------------
+
+s:length
+
+  Data:  s-n
+  Addr:  -
+  Float: -
+
+Return the number of characters in a string, excluding the NULL terminator.
+
+Class Handler: class:word | Namespace: s | Interface Layer: all
+
+----------------------------------------------------------------
+
+s:map
+
+  Data:  sq-s
+  Addr:  -
+  Float: -
+
+Execute the specified quote once for each character in the string. Builds a new string from the return value of the quote. The quote should return only one value.
+
+Class Handler: class:word | Namespace: s | Interface Layer: all
+
+----------------------------------------------------------------
+
+s:prepend
+
+  Data:  ss-s
+  Addr:  -
+  Float: -
+
+Return a new string consisting of s2 followed by s1.
+
+Class Handler: class:word | Namespace: s | Interface Layer: all
+
+----------------------------------------------------------------
+
+s:replace
+
+  Data:  sss-s
+  Addr:  -
+  Float: -
+
+Replace the first instance of s2 in s1 with s3.
+
+Class Handler: class:word | Namespace: s | Interface Layer: all
+
+----------------------------------------------------------------
+
+s:reverse
+
+  Data:  s-s
+  Addr:  -
+  Float: -
+
+Reverse the order of ASCII characters in a string.
+
+Class Handler: class:word | Namespace: s | Interface Layer: all
+
+----------------------------------------------------------------
+
+s:right
+
+  Data:  sn-s
+  Addr:  -
+  Float: -
+
+Return a new string containing the specified number of characters from the right side of the string.
+
+Class Handler: class:word | Namespace: s | Interface Layer: all
+
+----------------------------------------------------------------
+
+s:skip
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Internal helper function used to skip over a string in a definition.
+
+Class Handler: class:word | Namespace: s | Interface Layer: all
+
+----------------------------------------------------------------
+
+s:split
+
+  Data:  sc-ss
+  Addr:  -
+  Float: -
+
+Split a string on the first occurrance of the specified character.
+
+Class Handler: class:word | Namespace: s | Interface Layer: all
+
+----------------------------------------------------------------
+
+s:split-on-string
+
+  Data:  ss-ss
+  Addr:  -
+  Float: -
+
+Split a string on the first occurrance of the specified string.
+
+Class Handler: class:word | Namespace: s | Interface Layer: all
+
+----------------------------------------------------------------
+
+s:substr
+
+  Data:  sfl-s
+  Addr:  -
+  Float: -
+
+Extract a substring from the specified string. This will take the characters starting at `f` and extend `l` characters in length.
+
+Class Handler: class:word | Namespace: s | Interface Layer: all
+
+----------------------------------------------------------------
+
+s:temp
+
+  Data:  s-s
+  Addr:  -
+  Float: -
+
+Move a string into the temporary string buffers.
+
+Class Handler: class:word | Namespace: s | Interface Layer: all
+
+----------------------------------------------------------------
+
+s:to-float
+
+  Data:  s-
+  Addr:  -
+  Float: -F
+
+Convert a string representation into a floating point value.
+
+Class Handler: class:word | Namespace: s | Interface Layer: rre
+
+----------------------------------------------------------------
+
+s:to-lower
+
+  Data:  s-s
+  Addr:  -
+  Float: -
+
+Convert uppercase ASCII characters in a string to lowercase.
+
+Class Handler: class:word | Namespace: s | Interface Layer: all
+
+----------------------------------------------------------------
+
+s:to-number
+
+  Data:  s-n
+  Addr:  -
+  Float: -
+
+Convert a string to a number.
+
+Class Handler: class:word | Namespace: s | Interface Layer: all
+
+----------------------------------------------------------------
+
+s:to-upper
+
+  Data:  s-s
+  Addr:  -
+  Float: -
+
+Convert lowercase ASCII characters in a string to uppercase.
+
+Class Handler: class:word | Namespace: s | Interface Layer: all
+
+----------------------------------------------------------------
+
+s:trim
+
+  Data:  s-s
+  Addr:  -
+  Float: -
+
+Trim leading and trailing whitespace from a string.
+
+Class Handler: class:word | Namespace: s | Interface Layer: all
+
+----------------------------------------------------------------
+
+s:trim-left
+
+  Data:  s-s
+  Addr:  -
+  Float: -
+
+Trim leading whitespace from a string.
+
+Class Handler: class:word | Namespace: s | Interface Layer: all
+
+----------------------------------------------------------------
+
+s:trim-right
+
+  Data:  s-s
+  Addr:  -
+  Float: -
+
+Trim trailing whitespace from a string.
+
+Class Handler: class:word | Namespace: s | Interface Layer: all
+
+----------------------------------------------------------------
+
+s:with-format
+
+  Data:  ...s-s
+  Addr:  -
+  Float: -
+
+Construct a new string using the template passed and items from the stack.
+
+Class Handler: class:word | Namespace: s | Interface Layer: all
+
+----------------------------------------------------------------
+
+set:contains-string?
+
+  Data:  sa-f
+  Addr:  -
+  Float: -
+
+Return `TRUE` if the string value is in the set or`FALSE` otherwise.
+
+Class Handler: class:word | Namespace: set | Interface Layer: all
+
+----------------------------------------------------------------
+
+set:contains?
+
+  Data:  na-f
+  Addr:  -
+  Float: -
+
+Return `TRUE` if the value is in the set or `FALSE` otherwise.
+
+Class Handler: class:word | Namespace: set | Interface Layer: all
+
+----------------------------------------------------------------
+
+set:dup
+
+  Data:  a-b
+  Addr:  -
+  Float: -
+
+Make a copy of a set. Return the address of the copy.
+
+Class Handler: class:word | Namespace: set | Interface Layer: all
+
+----------------------------------------------------------------
+
+set:filter
+
+  Data:  aq-b
+  Addr:  -
+  Float: -
+
+For each item in the initial set, run the specified quote. If the quote returns `TRUE`, copy the item into a new set. If `FALSE`, discard it. Returns a pointer to the new set.
+
+Class Handler: class:word | Namespace: set | Interface Layer: all
+
+----------------------------------------------------------------
+
+set:for-each
+
+  Data:  aq-
+  Addr:  -
+  Float: -
+
+Execute the quote once for each item in the set.
+
+Class Handler: class:word | Namespace: set | Interface Layer: all
+
+----------------------------------------------------------------
+
+set:from-results
+
+  Data:  q-a
+  Addr:  -
+  Float: -
+
+Execute quote. Return a new set containing the values the quote leaves on the stack.
+
+Class Handler: class:word | Namespace: set | Interface Layer: all
+
+----------------------------------------------------------------
+
+set:from-string
+
+  Data:  s-a
+  Addr:  -
+  Float: -
+
+Create a new set with the characters in the source string.
+
+Class Handler: class:word | Namespace: set | Interface Layer: all
+
+----------------------------------------------------------------
+
+set:length
+
+  Data:  a-n
+  Addr:  -
+  Float: -
+
+Return the length of a set.
+
+Class Handler: class:word | Namespace: set | Interface Layer: all
+
+----------------------------------------------------------------
+
+set:map
+
+  Data:  aq-
+  Addr:  -
+  Float: -
+
+Execute quote once for each item in the set. Constructs a new set from the value returned by the quote.
+
+Class Handler: class:word | Namespace: set | Interface Layer: all
+
+----------------------------------------------------------------
+
+set:nth
+
+  Data:  an-b
+  Addr:  -
+  Float: -
+
+Return the actual address of the nth item in the set.
+
+Class Handler: class:word | Namespace: set | Interface Layer: all
+
+----------------------------------------------------------------
+
+set:reduce
+
+  Data:  pnq-n
+  Addr:  -
+  Float: -
+
+Takes a set, a starting value, and a quote. This will apply the quote to each item in the set; the quote should consume two values and return one.
+
+Class Handler: class:word | Namespace: set | Interface Layer: all
+
+----------------------------------------------------------------
+
+set:reverse
+
+  Data:  a-b
+  Addr:  -
+  Float: -
+
+Reverse the order of items in a set. This will return a new set.
+
+Class Handler: class:word | Namespace: set | Interface Layer: all
+
+----------------------------------------------------------------
+
+shift
+
+  Data:  mn-o
+  Addr:  -
+  Float: -
+
+Peform a bitwise shift of m by n bits. If n is positive, shift right. If negative, the shift will be to the left.
+
+Class Handler: class:primitive | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+sip
+
+  Data:  nq-n
+  Addr:  -
+  Float: -
+
+Run quote. After execution completes, put a copy of n back on top of the stack.
+
+Class Handler: class:word | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+sp
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Display a space (`ASCII:SPACE`)
+
+Class Handler: class:word | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+store
+
+  Data:  na-
+  Addr:  -
+  Float: -
+
+Store a value into the specified address.
+
+Class Handler: class:primitive | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+store-next
+
+  Data:  na-a
+  Addr:  -
+  Float: -
+
+Store a value into the specified address and return the next address.
+
+Class Handler: class:word | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+swap
+
+  Data:  nm-mn
+  Addr:  -
+  Float: -
+
+Exchange the position of the top two items on the stack
+
+Class Handler: class:primitive | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+sys:argc
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Return the number of arguments passed to the program.
+
+Class Handler: class:word | Namespace: sys | Interface Layer: rre
+
+----------------------------------------------------------------
+
+sys:argv
+
+  Data:  n-s
+  Addr:  -
+  Float: -
+
+Given an argument number, return the argument as a string.
+
+Class Handler: class:word | Namespace: sys | Interface Layer: rre
+
+----------------------------------------------------------------
+
+tab
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Display a tab (`ASCII:HT`)
+
+Class Handler: class:word | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+times
+
+  Data:  nq-
+  Addr:  -
+  Float: -
+
+Run the specified quote the specified number of times.
+
+Class Handler: class:word | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+tors
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Get a copy of the top item on the return stack.
+
+Class Handler: class:word | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+tri
+
+  Data:  xqqq-?
+  Addr:  -
+  Float: -
+
+Apply q1 against x, then q2 against a copy of x, and finally q3 against another copy of x.
+
+Class Handler: class:word | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+tri*
+
+  Data:  xyzqqq-?
+  Addr:  -
+  Float: -
+
+Apply q1 against x, q2 against y, and q3 against z.
+
+Class Handler: class:word | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+tri@
+
+  Data:  xyzq-?
+  Addr:  -
+  Float: -
+
+Apply q against x, then against y, and finally against z.
+
+Class Handler: class:word | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+tuck
+
+  Data:  nm-mnm
+  Addr:  -
+  Float: -
+
+Put a copy of the top item on the stack under the second one.
+
+Class Handler: class:word | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+unix:chdir
+
+  Data:  s-
+  Addr:  -
+  Float: -
+
+Change the current working directory to the specified one.
+
+Class Handler: class:word | Namespace: unix | Interface Layer: rre
+
+----------------------------------------------------------------
+
+unix:exec0
+
+  Data:  s-
+  Addr:  -
+  Float: -
+
+Execute a process by running the application specified by s.
+
+Class Handler: class:word | Namespace: unix | Interface Layer: rre
+
+----------------------------------------------------------------
+
+unix:exec1
+
+  Data:  ss-
+  Addr:  -
+  Float: -
+
+Execute a process by running the application specified by s1. Pass s2 as an argument.
+
+Class Handler: class:word | Namespace: unix | Interface Layer: rre
+
+----------------------------------------------------------------
+
+unix:exec2
+
+  Data:  sss-
+  Addr:  -
+  Float: -
+
+Execute a process by running the application specified by s1. Pass s2 and s3 as arguments.
+
+Class Handler: class:word | Namespace: unix | Interface Layer: rre
+
+----------------------------------------------------------------
+
+unix:exec3
+
+  Data:  ssss-
+  Addr:  -
+  Float: -
+
+Execute a process by running the application specified by s1. Pass s2, s3, and s4 as arguments.
+
+Class Handler: class:word | Namespace: unix | Interface Layer: rre
+
+----------------------------------------------------------------
+
+unix:exit
+
+  Data:  n-
+  Addr:  -
+  Float: -
+
+Exit the current process, returning the specified return code.
+
+Class Handler: class:word | Namespace: unix | Interface Layer: rre
+
+----------------------------------------------------------------
+
+unix:fork
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Fork the current process. Returns a PID.
+
+Class Handler: class:word | Namespace: unix | Interface Layer: rre
+
+----------------------------------------------------------------
+
+unix:getenv
+
+  Data:  sa-
+  Addr:  -
+  Float: -
+
+Get an environment variable. Provide the name and an address to store it in.
+
+Class Handler: class:word | Namespace: unix | Interface Layer: rre
+
+----------------------------------------------------------------
+
+unix:getpid
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Return the PID of the current process.
+
+Class Handler: class:word | Namespace: unix | Interface Layer: rre
+
+----------------------------------------------------------------
+
+unix:kill
+
+  Data:  nn-
+  Addr:  -
+  Float: -
+
+Terminates a process. Takes a process and a signal to send.
+
+Class Handler: class:word | Namespace: unix | Interface Layer: rre
+
+----------------------------------------------------------------
+
+unix:pclose
+
+  Data:  n-
+  Addr:  -
+  Float: -
+
+Close a pipe.
+
+Class Handler: class:word | Namespace: unix | Interface Layer: rre
+
+----------------------------------------------------------------
+
+unix:popen
+
+  Data:  sn-n
+  Addr:  -
+  Float: -
+
+Open a pipe. Takes a command to run, and a file mode (`file:R` or `file:W`; `file:R+` may work on some systems). Returns a file ID usable with words in the `file:` namespace.
+
+Class Handler: class:word | Namespace: unix | Interface Layer: rre
+
+----------------------------------------------------------------
+
+unix:putenv
+
+  Data:  s-
+  Addr:  -
+  Float: -
+
+Takes a string in the form `name=value` and sets an environment variable named `name` to `value`.
+
+Class Handler: class:word | Namespace: unix | Interface Layer: rre
+
+----------------------------------------------------------------
+
+unix:system
+
+  Data:  s-
+  Addr:  -
+  Float: -
+
+Runs another application using the system shell and returns after execution is completed.
+
+Class Handler: class:word | Namespace: unix | Interface Layer: rre
+
+----------------------------------------------------------------
+
+unix:wait
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Waits for a child process to complete. This maps to the wait() system call.
+
+Class Handler: class:word | Namespace: unix | Interface Layer: rre
+
+----------------------------------------------------------------
+
+unix:write
+
+  Data:  sh-
+  Addr:  -
+  Float: -
+
+Write a string to the specified file handle.
+
+Class Handler: class:word | Namespace: unix | Interface Layer: rre
+
+----------------------------------------------------------------
+
+until
+
+  Data:  q-
+  Addr:  -
+  Float: -
+
+Execute quote repeatedly while the quote returns a value of `FALSE`. The quote must return a flag of either `TRUE` or `FALSE` to be used with this.
+
+Class Handler: class:word | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+v:dec
+
+  Data:  a-
+  Addr:  -
+  Float: -
+
+Decrement the value stored at the specified address by 1.
+
+Class Handler: class:word | Namespace: v | Interface Layer: all
+
+----------------------------------------------------------------
+
+v:dec-by
+
+  Data:  na-
+  Addr:  -
+  Float: -
+
+Decrement the value stored at the specified address by the specified value.
+
+Class Handler: class:word | Namespace: v | Interface Layer: all
+
+----------------------------------------------------------------
+
+v:inc
+
+  Data:  a-
+  Addr:  -
+  Float: -
+
+Increment the value stored at the specified address by 1.
+
+Class Handler: class:word | Namespace: v | Interface Layer: all
+
+----------------------------------------------------------------
+
+v:inc-by
+
+  Data:  na-
+  Addr:  -
+  Float: -
+
+Increment the value stored at the specified address by the specified value.
+
+Class Handler: class:word | Namespace: v | Interface Layer: all
+
+----------------------------------------------------------------
+
+v:limit
+
+  Data:  alu-
+  Addr:  -
+  Float: -
+
+Fetch the value stored at the address, then run `n:limit` against it, using the specified lower and upper bounds. Then store the resulting value back to the original address.
+
+Class Handler: class:word | Namespace: v | Interface Layer: all
+
+----------------------------------------------------------------
+
+v:off
+
+  Data:  a-
+  Addr:  -
+  Float: -
+
+Set a variable to 0.
+
+Class Handler: class:word | Namespace: v | Interface Layer: all
+
+----------------------------------------------------------------
+
+v:on
+
+  Data:  a-
+  Addr:  -
+  Float: -
+
+Set a variable to -1.
+
+Class Handler: class:word | Namespace: v | Interface Layer: all
+
+----------------------------------------------------------------
+
+v:preserve
+
+  Data:  aq-
+  Addr:  -
+  Float: -
+
+Make a copy of the value at the address, then run the quote. Once the quote completes, restore the address to the specified value.
+
+Class Handler: class:word | Namespace: v | Interface Layer: all
+
+----------------------------------------------------------------
+
+v:update-using
+
+  Data:  aq-
+  Addr:  -
+  Float: -
+
+Fetch a value from the specified address, then run the quotation with this value on the stack. Afterwards, store the returned value at the original address.
+
+Class Handler: class:word | Namespace: v | Interface Layer: all
+
+----------------------------------------------------------------
+
+var
+
+  Data:  s-
+  Addr:  -
+  Float: -
+
+Create a variable. The variable is initialized to 0.
+
+Class Handler: class:word | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+var<n>
+
+  Data:  ns-
+  Addr:  -
+  Float: -
+
+Create a variable with the specified initial value.
+
+Class Handler: class:word | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+while
+
+  Data:  q-
+  Addr:  -
+  Float: -
+
+Execute quote repeatedly while the quote returns a value of `TRUE`. The quote must return a flag of either `TRUE` or `FALSE` to be used with this.
+
+Class Handler: class:word | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+words
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Display a list of all named items in the `Dictionary`.
+
+Class Handler: class:word | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+xor
+
+  Data:  mn-o
+  Addr:  -
+  Float: -
+
+Perform a bitwise XOR operation.
+
+Class Handler: class:primitive | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+{{
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Begin a lexically scoped area.
+
+Class Handler: class:word | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+}as
+
+  Data:  f-
+  Addr:  -
+  Float: -
+
+End an assembly section
+
+Class Handler: class:macro | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+}}
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+End a lexically scoped area.
+
+Class Handler: class:word | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+

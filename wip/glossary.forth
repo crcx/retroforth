@@ -5,11 +5,11 @@ data set.
 
 It's intended to be used like:
 
-    ./words.forth describe s:filter
+    ./glossary.forth describe s:filter
 
 Or:
 
-    ./words.forth export glossary
+    ./glossary.forth export glossary
 
 First, exit if the required number of argumenta are not passed.
 
