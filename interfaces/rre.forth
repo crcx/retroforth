@@ -143,6 +143,7 @@ to send.
 :unix:write (sh-) [ dup s:length ] dip `-8012 ;
 :unix:chdir (s-) `-8013 ;
 :unix:getenv (sa-) `-8014 ;
+:unix:putenv (s-)  `-8015 ;
 ~~~
 
 ---------------------------------------------------------------

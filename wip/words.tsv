@@ -336,4 +336,7 @@ unix:getpid	-n	-	-	Return the PID of the current process.			class:word	{n/a}	{n/
 unix:system	s-	-	-	Runs another application using the system shell and returns after execution is completed.			class:word	{n/a}	{n/a}	unix	rre	
 unix:exit	n-	-	-	Exit the current process, returning the specified return code.			class:word	{n/a}	{n/a}	unix	rre	
 unix:wait	-n	-	-	Waits for a child process to complete. This maps to the wait() system call.			class:word	{n/a}	{n/a}	unix	rre	
+unix:chdir	s-	-	-	Change the current working directory to the specified one.			class:word	{n/a}	{n/a}	unix	rre	
+unix:getenv	sa-	-	-	Get an environment variable. Provide the name and an address to store it in.			class:word	{n/a}	{n/a}	unix	rre	
+unix:putenv	s-	-	-	Takes a string in the form `name=value` and sets an environment variable named `name` to `value`.			class:word	{n/a}	{n/a}	unix	rre	
 unix:write	sh-	-	-	Write a string to the specified file handle.			class:word	{n/a}	{n/a}	unix	rre	
