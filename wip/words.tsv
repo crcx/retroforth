@@ -222,7 +222,7 @@ prefix:$	s-c	-	-	Process token as an ASCII character.	Fetch first character from
 prefix:&	s-a	-	-	Return a pointer to a named item.	Lookup name in dictionary, return contents of the xt field on the stack.	Lookup name in dictionary, compile code to push the contents of the xt field into the current definition.	class:macro	{n/a}	{n/a}	prefix	all	
 prefix:'	s-s	-	-	Process token as a string.	Move string into temporary buffer. If `RewriteUnderscores` is `TRUE`, replace all instances of _ with space.	Move string into temporary buffer. If `RewriteUnderscores` is `TRUE`, replace all instances of _ with space. Then compile the string into the current definition.	class:macro	{n/a}	{n/a}	prefix	all	
 prefix:(	s-	-	-	Process token as a comment.	Discard the string.	Discard the string.	class:macro	{n/a}	{n/a}	prefix	all	
-prefix:.	s-	-	-F	Interpret time: convert string to a floating point value.\nCompile time: convert string to a floating point value and compile code to push this value to the float stack.			class:macro	{n/a}	{n/a}	prefix	rre	
+prefix:.	s-	-	-F	Interpret time: convert string to a floating point value. Compile time: convert string to a floating point value and compile code to push this value to the float stack.			class:macro	{n/a}	{n/a}	prefix	rre	
 prefix::	s-	-	-	Process token as a new definition.	Create a header pointing to `here` with the provided string as the name. Sets class to `class:word`.		class:macro	{n/a}	{n/a}	prefix	all	
 prefix:@	s-n	-	-	Fetch from a stored variable.	Fetch a value from a named variable.	Compile the code to fetch a value from a named variable into the current definition.	class:macro	{n/a}	{n/a}	prefix	all	
 prefix:`	s-	-	-	Process token as a bytecode.	Discard the string.	Convert the string to a number and use `,` to inline it into the current definition.	class:macro	{n/a}	{n/a}	prefix	all	
@@ -314,12 +314,12 @@ unix:exec2	sss-	-	-	Execute a process by running the application specified by s1
 unix:exec3	ssss-	-	-	Execute a process by running the application specified by s1. Pass s2, s3, and s4 as arguments.			class:word	{n/a}	{n/a}	unix	rre	
 unix:exit	n-	-	-	Exit the current process, returning the specified return code.			class:word	{n/a}	{n/a}	unix	rre	
 unix:fork	-n	-	-	Fork the current process. Returns a PID.			class:word	{n/a}	{n/a}	unix	rre	
-unix:getenv	sa-	-	-	Get an environment variable. Provide the name and an address to store it in.			class:word	{n/a}	{n/a}	unix	rre	
+unix:getenv	sa-	-	-	Get an environment variable. Provide the name and an address to store it in.			class:word	  'SHELL s:empty [ unix:getenv ] sip puts nl	{n/a}	unix	rre	
 unix:getpid	-n	-	-	Return the PID of the current process.			class:word	{n/a}	{n/a}	unix	rre	
 unix:kill	nn-	-	-	Terminates a process. Takes a process and a signal to send.			class:word	{n/a}	{n/a}	unix	rre	
 unix:pclose	n-	-	-	Close a pipe.			class:word	{n/a}	{n/a}	unix	rre	
 unix:popen	sn-n	-	-	Open a pipe. Takes a command to run, and a file mode (`file:R` or `file:W`; `file:R+` may work on some systems). Returns a file ID usable with words in the `file:` namespace.			class:word	{n/a}	{n/a}	unix	rre	
-unix:putenv	s-	-	-	Takes a string in the form `name=value` and sets an environment variable named `name` to `value`.			class:word	{n/a}	{n/a}	unix	rre	
+unix:putenv	s-	-	-	Takes a string in the form `name=value` and sets an environment variable named `name` to `value`.			class:word	  'EDITOR=vi unix:putenv	{n/a}	unix	rre	
 unix:system	s-	-	-	Runs another application using the system shell and returns after execution is completed.			class:word	{n/a}	{n/a}	unix	rre	
 unix:wait	-n	-	-	Waits for a child process to complete. This maps to the wait() system call.			class:word	{n/a}	{n/a}	unix	rre	
 unix:write	sh-	-	-	Write a string to the specified file handle.			class:word	{n/a}	{n/a}	unix	rre	

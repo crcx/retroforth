@@ -2756,7 +2756,7 @@ prefix:.
   Addr:  -
   Float: -F
 
-Interpret time: convert string to a floating point value.\nCompile time: convert string to a floating point value and compile code to push this value to the float stack.
+Interpret time: convert string to a floating point value. Compile time: convert string to a floating point value and compile code to push this value to the float stack.
 
 Class Handler: class:macro | Namespace: prefix | Interface Layer: rre
 
@@ -3879,6 +3879,10 @@ Get an environment variable. Provide the name and an address to store it in.
 
 Class Handler: class:word | Namespace: unix | Interface Layer: rre
 
+Example #1:
+
+  'SHELL s:empty [ unix:getenv ] sip puts nl
+
 ----------------------------------------------------------------
 
 unix:getpid
@@ -3938,6 +3942,10 @@ unix:putenv
 Takes a string in the form `name=value` and sets an environment variable named `name` to `value`.
 
 Class Handler: class:word | Namespace: unix | Interface Layer: rre
+
+Example #1:
+
+  'EDITOR=vi unix:putenv
 
 ----------------------------------------------------------------
 
