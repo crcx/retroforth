@@ -165,9 +165,80 @@ There are five primary roles:
 
 ## Edit a Word
 
+Editing is a bit tricky. To keep things as simple as possible, I export
+each field to a separate file under `/tmp/`.
+
+~~~
+:export-fields
+  field:name      '/tmp/glossary.name      file:spew
+  field:dstack    '/tmp/glossary.dstack    file:spew
+  field:astack    '/tmp/glossary.astack    file:spew
+  field:fstack    '/tmp/glossary.fstack    file:spew
+  field:descr     '/tmp/glossary.descr     file:spew
+  field:itime     '/tmp/glossary.itime     file:spew
+  field:ctime     '/tmp/glossary.ctime     file:spew
+  field:class     '/tmp/glossary.class     file:spew
+  field:ex1       '/tmp/glossary.ex1       file:spew
+  field:ex2       '/tmp/glossary.ex2       file:spew
+  field:namespace '/tmp/glossary.namespace file:spew
+  field:interface '/tmp/glossary.interface file:spew ;
+~~~
+
+Since I'm dumping a bunch of files into `/tmp/`, I also clean up
+when done.
+
+~~~
+:delete-temporary
+  '/tmp/glossary.name      file:delete
+  '/tmp/glossary.dstack    file:delete
+  '/tmp/glossary.astack    file:delete
+  '/tmp/glossary.fstack    file:delete
+  '/tmp/glossary.descr     file:delete
+  '/tmp/glossary.itime     file:delete
+  '/tmp/glossary.ctime     file:delete
+  '/tmp/glossary.class     file:delete
+  '/tmp/glossary.ex1       file:delete
+  '/tmp/glossary.ex2       file:delete
+  '/tmp/glossary.namespace file:delete
+  '/tmp/glossary.interface file:delete ;
+~~~
+
+Next, get the editor from the $EDITOR environment variable.
+
+~~~
+'EDITOR s:empty [ unix:getenv ] sip 'EDITOR s:const
+~~~
+
+~~~
+:edit:field (s-)
+  EDITOR '%s_/tmp/glossary.%s s:with-format unix:system ;
+~~~
+
+:handle-edit
+  TARGET
+  'name      [ edit-name      ] s:case
+  'dstack    [ edit-dstack    ] s:case
+  'astack    [ edit-astack    ] s:case
+  'fstack    [ edit-fstack    ] s:case
+  'descr     [ edit-descr     ] s:case
+  'itime     [ edit-itime     ] s:case
+  'ctime     [ edit-ctime     ] s:case
+  'class     [ edit-class     ] s:case
+  'ex1       [ edit-ex1       ] s:case
+  'ex2       [ edit-ex2       ] s:case
+  'namespace [ edit-namespace ] s:case
+  'interface [ edit-interface ] s:case
+  drop ;
+
 ## Export Data
 
+In addition to providing a readable piece of documentation for each word,
+I provide the ability to export the data into a few formats.
+
 ### Glossary
+
+The glossary file consists of the documentation for each word, with a
+separator bar between each entry.
 
 ~~~
 :export-glossary
@@ -176,6 +247,11 @@ There are five primary roles:
 ~~~
 
 ### TSV
+
+I also provide for exporting the tab separated file itself. This will
+strip out fields beyond the standard set, which can save some space if
+you edit/save the TSV data with a spreadsheet application.
+
 ~~~
 :display-fields
   field:name puts tab
@@ -196,6 +272,10 @@ There are five primary roles:
   'words.tsv [ s:keep !SourceLine display-fields ] file:for-each-line ;
 ~~~
 
+### Handle Exports
+
+This is a second level command processor for deciding which export format
+to use.
 
 ~~~
 :export-data
@@ -226,23 +306,6 @@ process-arguments
 
 
 ~~~
-:export-fields
-  field:name      '/tmp/glossary.name      file:spew
-  field:dstack    '/tmp/glossary.dstack    file:spew
-  field:astack    '/tmp/glossary.astack    file:spew
-  field:fstack    '/tmp/glossary.fstack    file:spew
-  field:descr     '/tmp/glossary.descr     file:spew
-  field:itime     '/tmp/glossary.itime     file:spew
-  field:ctime     '/tmp/glossary.ctime     file:spew
-  field:class     '/tmp/glossary.class     file:spew
-  field:ex1       '/tmp/glossary.ex1       file:spew
-  field:ex2       '/tmp/glossary.ex2       file:spew
-  field:namespace '/tmp/glossary.namespace file:spew
-  field:interface '/tmp/glossary.interface file:spew ;
-~~~
-
-~~~
-'EDITOR here [ unix:getenv ] sip s:temp 'EDITOR s:const
 'FID var
 
 :edit:description
