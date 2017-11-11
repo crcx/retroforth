@@ -214,21 +214,30 @@ Next, get the editor from the $EDITOR environment variable.
   EDITOR '%s_/tmp/glossary.%s s:with-format unix:system ;
 ~~~
 
-:handle-edit
+~~~
+:select-field
+  export-fields
   TARGET
-  'name      [ edit-name      ] s:case
-  'dstack    [ edit-dstack    ] s:case
-  'astack    [ edit-astack    ] s:case
-  'fstack    [ edit-fstack    ] s:case
-  'descr     [ edit-descr     ] s:case
-  'itime     [ edit-itime     ] s:case
-  'ctime     [ edit-ctime     ] s:case
-  'class     [ edit-class     ] s:case
-  'ex1       [ edit-ex1       ] s:case
-  'ex2       [ edit-ex2       ] s:case
-  'namespace [ edit-namespace ] s:case
-  'interface [ edit-interface ] s:case
+  'name      [ 'name      edit:field ] s:case
+  'dstack    [ 'dstack    edit:field ] s:case
+  'astack    [ 'astack    edit:field ] s:case
+  'fstack    [ 'fstack    edit:field ] s:case
+  'descr     [ 'descr     edit:field ] s:case
+  'itime     [ 'itime     edit:field ] s:case
+  'ctime     [ 'ctime     edit:field ] s:case
+  'class     [ 'class     edit:field ] s:case
+  'ex1       [ 'ex1       edit:field ] s:case
+  'ex2       [ 'ex2       edit:field ] s:case
+  'namespace [ 'namespace edit:field ] s:case
+  'interface [ 'interface edit:field ] s:case
   drop ;
+~~~
+
+~~~
+:handle-edit
+  'words.tsv
+  [ s:keep !SourceLine field:name TARGET2 s:eq? [ select-field ] if ] file:for-each-line ;
+~~~
 
 ## Export Data
 
@@ -294,6 +303,7 @@ First, a word to handle command line arguments.
   QUERY
   'describe [ find-and-display-entry ] s:case
   'export   [ export-data            ] s:case
+  'edit     [ handle-edit            ] s:case
   drop ;
 ~~~
 
