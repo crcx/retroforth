@@ -111,7 +111,7 @@ examples, they will be displayed after the description.
   field:ex2 '{n/a} s:eq? [ field:ex2 s:with-format 'Example_#2:\n%s\n\n puts<formatted> ] -if ;
 ~~~
 
-# Begin Processing
+# Prepare for Command Line Processing
 
 This application can take a variable number of arguments.
 
@@ -137,60 +137,45 @@ And then populate constants for each one I care about.
 #2 &Args + fetch 'TARGET2 s:const 
 ~~~
 
-FUTURE:
+# Interactions
 
-:process-arguments
-  QUERY
-  'help     [ display-help           ] s:case
-  'describe [ find-and-display-entry ] s:case
-  'export   [ handle-exports         ] s:case
-  'edit     [ handle-edits           ] s:case
-  drop ;
+With the command line data setup, I can now move on to the words for
+handling specific interactions.
 
-----
+There are five primary roles:
 
-It's intended to be used like:
+* describe word
+* add word
+* delete word
+* edit word
+* export data
 
-    ./glossary.forth describe s:filter
-
-Or:
-
-    ./glossary.forth export glossary
-
-First, exit if the required number of argumenta are not passed.
+## Describe a Word
 
 ~~~
-sys:argc #2 -eq? [ #0 unix:exit ] if
+:matched? (-f) field:name TARGET s:eq? ;
+
+:find-and-display-entry
+ 'words.tsv [ s:keep !SourceLine matched? [ display-result ] if ] file:for-each-line ;
 ~~~
 
-If we made it this far, at least two arguments were passed. This
-assumes the first argument is the type of search and the second
-is name of a word, class, or other detail to search for. Grab them
-and save as `QUERY` and `TARGET`.
+## Add a Word
 
+## Delete a Word
 
-The *words.tsv* has the following fields:
+## Edit a Word
 
+## Export Data
 
-So 11 fields. These are stored, one line per entry, with the fields as
-tab separated data.
+### Glossary
 
 ~~~
-
+:export-glossary
+ 'words.tsv
+  [ s:keep !SourceLine display-result #64 [ $- putc ] times nl nl ] file:for-each-line ;
 ~~~
 
-~~~
-QUERY 'describe s:eq?
-[ 'words.tsv
-  [ s:keep !SourceLine field:name TARGET s:eq? [ display-result ] if ] file:for-each-line
-] if
-
-QUERY 'export s:eq? 'glossary TARGET s:eq? and
-[ 'words.tsv
-  [ s:keep !SourceLine display-result #64 [ $- putc ] times nl nl ] file:for-each-line
-] if
-~~~
-
+### TSV
 ~~~
 :display-fields
   field:name puts tab
@@ -207,11 +192,38 @@ QUERY 'export s:eq? 'glossary TARGET s:eq? and
   field:interface puts tab
   nl ;
 
-QUERY 'export s:eq? 'tsv TARGET s:eq? and
-[ 'words.tsv
-  [ s:keep !SourceLine display-fields ] file:for-each-line
-] if
+:export-tsv
+  'words.tsv [ s:keep !SourceLine display-fields ] file:for-each-line ;
 ~~~
+
+
+~~~
+:export-data
+  TARGET
+  'glossary [ export-glossary ] s:case
+  'tsv      [ export-tsv      ] s:case
+  drop ;
+~~~
+
+# Finish
+
+First, a word to handle command line arguments.
+
+~~~
+:process-arguments
+  QUERY
+  'describe [ find-and-display-entry ] s:case
+  'export   [ export-data            ] s:case
+  drop ;
+~~~
+
+~~~
+process-arguments
+#0 unix:exit
+~~~
+
+----
+
 
 ~~~
 :export-fields
