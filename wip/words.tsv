@@ -224,6 +224,7 @@ file:read-line	f-s	-	-	Given a file handle, read a line and return a pointer to 
 file:seek	nh-	-	-	Move the current offset into a file to the specified one.			class:word	{n/a}	{n/a}	file	rre	
 file:size	h-n	-	-	Given a file handle, return the size of the file (in bytes).			class:word	{n/a}	{n/a}	file	rre	
 file:slurp	as-	-	-	Given an address and a file name, read the file contents into memory starting at the address.			class:word	{n/a}	{n/a}	file	rre	
+file:spew	ss-	-	-	Given a string (s1) and a file name (s2), write the string into the file, replacing any existing cotent.			class:word	{n/a}	{n/a}	file	rre	
 file:tell	h-n	-	-	Given a file handle, return the current offset in the file.			class:word	{n/a}	{n/a}	file	rre	
 file:write	ch-	-	-	Write a character to the file represented by the handle.			class:word	{n/a}	{n/a}	file	rre	
 gopher:get	asns-n	-	-	Takes an address, a server, a port, and a selector. Fetch the resource and store it at address. Return the number of bytes received.			class:word	{n/a}	{n/a}	gopher	rre	
@@ -275,7 +276,7 @@ s:copy	sa-	-	-	Copy a string (s) to a destination (a). This will include the ter
 s:empty	-s	-	-	Return an empty string.			class:word	{n/a}	{n/a}	s	all	
 s:eq?	ss-f	-	-	Compare two strings for equality. Return `TRUE` if identical or `FALSE` if not.			class:word	{n/a}	{n/a}	s	all	
 s:evaluate	s-?	-	-	Evaluate string as if it was typed into the interpreter.			class:word	{n/a}	{n/a}	s	all	
-s:filter	sq-s	-	-	Execite the quote once for each value in the string. If the quote returns `TRUE`, append the value into a new string. If `FALSE` the value will be discarded.			class:word	{n/a}	{n/a}	s	all	
+s:filter	sq-s	-	-	Execute the quote once for each value in the string. If the quote returns `TRUE`, append the value into a new string. If `FALSE` the value will be discarded.			class:word	{n/a}	{n/a}	s	all	
 s:for-each	sq-	-	-	Execute the quote once for each value in the string.			class:word	{n/a}	{n/a}	s	all	
 s:hash	s-n	-	-	Calculate a hash value for a string. This uses the djb2 algorithim.			class:word	{n/a}	{n/a}	s	all	
 s:index-of	sc-n	-	-	Return the location of the first instance of the specified character in the string.			class:word	{n/a}	{n/a}	s	all	

@@ -289,3 +289,12 @@ once for each line in a file. This makes some things trivial. E.g., a simple
     ] buffer:preserve ;
 }}
 ~~~
+
+~~~
+{{
+  'FID var
+---reveal---
+  :file:spew (ss-)
+    file:W file:open !FID [ @FID file:write ] s:for-each @FID file:close ; 
+}}
+~~~
