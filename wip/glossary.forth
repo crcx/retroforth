@@ -203,6 +203,37 @@ when done.
   '/tmp/glossary.interface file:delete ;
 ~~~
 
+~~~
+:clean
+  dup s:length over + n:dec fetch dup ASCII:LF eq? swap ASCII:CR eq? or [ s:chop ] if
+  here [ [ ASCII:LF [ $\ , $n , ] case
+           ASCII:CR [ $\ , $n , ] case
+           ASCII:HT [ $\ , $t , ] case
+           ,
+         ] s:for-each #0 ,
+       ] dip ;
+~~~
+
+~~~
+:generate-entry
+  s:empty [ '/tmp/glossary.fstack    file:slurp ] sip clean s:keep
+  s:empty [ '/tmp/glossary.astack    file:slurp ] sip clean s:keep
+  s:empty [ '/tmp/glossary.dstack    file:slurp ] sip clean s:keep
+  s:empty [ '/tmp/glossary.name      file:slurp ] sip clean s:keep
+  '%s\t%s\t%s\t%s\t s:with-format puts
+  s:empty [ '/tmp/glossary.class     file:slurp ] sip clean s:keep
+  s:empty [ '/tmp/glossary.ctime     file:slurp ] sip clean s:keep
+  s:empty [ '/tmp/glossary.itime     file:slurp ] sip clean s:keep
+  s:empty [ '/tmp/glossary.descr     file:slurp ] sip clean s:keep
+  '%s\t%s\t%s\t%s\t s:with-format puts
+  s:empty [ '/tmp/glossary.interface file:slurp ] sip clean s:keep
+  s:empty [ '/tmp/glossary.namespace file:slurp ] sip clean s:keep
+  s:empty [ '/tmp/glossary.ex2       file:slurp ] sip clean s:keep
+  s:empty [ '/tmp/glossary.ex1       file:slurp ] sip clean s:keep
+  '%s\t%s\t%s\t%s\t s:with-format puts
+;
+~~~
+
 Next, get the editor from the $EDITOR environment variable.
 
 ~~~
@@ -236,7 +267,7 @@ Next, get the editor from the $EDITOR environment variable.
 ~~~
 :handle-edit
   'words.tsv
-  [ s:keep !SourceLine field:name TARGET2 s:eq? [ select-field ] if ] file:for-each-line ;
+  [ s:keep !SourceLine field:name TARGET2 s:eq? [ select-field generate-entry ] if ] file:for-each-line ;
 ~~~
 
 ## Export Data
