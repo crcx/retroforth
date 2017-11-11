@@ -1,33 +1,15 @@
 #!/usr/bin/env rre
 
-This is an application for looking up documentation in the words.tsv
-data set.
+# Overview
 
-It's intended to be used like:
+This is an application for looking up and updating documentation for
+the words provided by RETRO.
 
-    ./glossary.forth describe s:filter
+# Data Set
 
-Or:
-
-    ./glossary.forth export glossary
-
-First, exit if the required number of argumenta are not passed.
-
-~~~
-sys:argc #2 -eq? [ #0 unix:exit ] if
-~~~
-
-If we made it this far, at least two arguments were passed. This
-assumes the first argument is the type of search and the second
-is name of a word, class, or other detail to search for. Grab them
-and save as `QUERY` and `TARGET`.
-
-~~~
-#0 sys:argv 'QUERY s:const
-#1 sys:argv 'TARGET s:const
-~~~
-
-The *words.tsv* has the following fields:
+I like plain text formats, so the data is stored as a text file, with
+one line per word. Each line has a number of fields. These are tab
+separated. The fields are:
 
     | name                       | 0
     | data stack                 | 1
@@ -42,14 +24,22 @@ The *words.tsv* has the following fields:
     | namespace                  | 10
     | interface                  | 11
 
-So 11 fields. These are stored, one line per entry, with the fields as
-tab separated data.
+I use a variable named `SourceLine` to point to the current line
+contents.
 
 ~~~
 'SourceLine var
+~~~
 
+And a helper word to skip a specified number of fields.
+
+~~~
 :skip (n-) [ ASCII:HT s:split drop n:inc ] times ;
+~~~
 
+Then it's easy to add words to return each individual field.
+
+~~~
 :field:name   (-s) @SourceLine
                    ASCII:HT s:split nip ;
 
@@ -87,20 +77,75 @@ tab separated data.
                       ASCII:HT s:split nip ;
 ~~~
 
+# Display an Entry
+
+I implement a word to display an entry. This will use a format like:
+
+    name
+
+      Data:  -
+      Addr:  -
+      Float: -
+
+    A description of the word.
+
+    Class Handler: class:word | Namespace: global | Interface Layer: all
+
+If there are specific notes on interpret or compile time actions, or any
+examples, they will be displayed after the description.
+
 ~~~
+:puts<formatted> (s-)  s:with-format puts ;
+
 :display-result
   field:name puts nl nl
-  field:dstack '__Data:__%s\n s:with-format puts
-  field:astack '__Addr:__%s\n s:with-format puts
-  field:fstack '__Float:_%s\n s:with-format puts nl
-  field:descr s:with-format puts nl nl
-  field:itime s:length n:zero? [ 'Interpret_Time:\n__ s:with-format puts field:itime s:with-format puts nl nl ] -if
-  field:ctime s:length n:zero? [ 'Compile_Time:\n__ s:with-format puts field:ctime s:with-format puts nl nl ] -if
+  field:dstack '__Data:__%s\n puts<formatted>
+  field:astack '__Addr:__%s\n puts<formatted>
+  field:fstack '__Float:_%s\n puts<formatted> nl
+  field:descr  '%s\n\n        puts<formatted>
+  field:itime s:length n:zero? [ field:itime 'Interpret_Time:\n__%s\n\n puts<formatted> ] -if
+  field:ctime s:length n:zero? [ field:ctime 'Compile_Time:\n__%s\n\n   puts<formatted> ] -if
   field:interface field:namespace field:class
-  'Class_Handler:_%s_|_Namespace:_%s_|_Interface_Layer:_%s\n\n
-  s:with-format puts
-  field:ex1 '{n/a} s:eq? [ 'Example_#1: puts nl field:ex1 s:with-format puts nl nl ] -if
-  field:ex2 '{n/a} s:eq? [ 'Example_#2: puts nl field:ex2 s:with-format puts nl nl ] -if ;
+  'Class_Handler:_%s_|_Namespace:_%s_|_Interface_Layer:_%s\n\n puts<formatted>
+  field:ex1 '{n/a} s:eq? [ field:ex1 s:with-format 'Example_#1:\n%s\n\n puts<formatted> ] -if
+  field:ex2 '{n/a} s:eq? [ field:ex2 s:with-format 'Example_#2:\n%s\n\n puts<formatted> ] -if ;
+~~~
+
+
+----
+
+It's intended to be used like:
+
+    ./glossary.forth describe s:filter
+
+Or:
+
+    ./glossary.forth export glossary
+
+First, exit if the required number of argumenta are not passed.
+
+~~~
+sys:argc #2 -eq? [ #0 unix:exit ] if
+~~~
+
+If we made it this far, at least two arguments were passed. This
+assumes the first argument is the type of search and the second
+is name of a word, class, or other detail to search for. Grab them
+and save as `QUERY` and `TARGET`.
+
+~~~
+#0 sys:argv 'QUERY s:const
+#1 sys:argv 'TARGET s:const
+~~~
+
+The *words.tsv* has the following fields:
+
+
+So 11 fields. These are stored, one line per entry, with the fields as
+tab separated data.
+
+~~~
+
 ~~~
 
 ~~~
@@ -135,7 +180,22 @@ QUERY 'export s:eq? 'tsv TARGET s:eq? and
 [ 'words.tsv
   [ s:keep !SourceLine display-fields ] file:for-each-line
 ] if
+~~~
 
+~~~
+:export-fields
+  field:name      '/tmp/glossary.name      file:spew
+  field:dstack    '/tmp/glossary.dstack    file:spew
+  field:astack    '/tmp/glossary.astack    file:spew
+  field:fstack    '/tmp/glossary.fstack    file:spew
+  field:descr     '/tmp/glossary.descr     file:spew
+  field:itime     '/tmp/glossary.itime     file:spew
+  field:ctime     '/tmp/glossary.ctime     file:spew
+  field:class     '/tmp/glossary.class     file:spew
+  field:ex1       '/tmp/glossary.ex1       file:spew
+  field:ex2       '/tmp/glossary.ex2       file:spew
+  field:namespace '/tmp/glossary.namespace file:spew
+  field:interface '/tmp/glossary.interface file:spew ;
 ~~~
 
 ~~~
