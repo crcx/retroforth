@@ -20,6 +20,10 @@ Add `n1` to `n2` and return the result.
 
 Class Handler: class:primitive | Namespace: global | Interface Layer: all
 
+Example #1:
+
+  #1 #2 + 
+
 ----------------------------------------------------------------
 
 ,
@@ -114,7 +118,7 @@ Class Handler: class:primitive | Namespace: global | Interface Layer: all
 
 If `n` is zero, drop `n` and exit the current word. If non-zero, leave `n` alone and allow execution to continue.
 
-Class Handler: {n/a} | Namespace: global | Interface Layer: all
+Class Handler: class:macro | Namespace: global | Interface Layer: all
 
 ----------------------------------------------------------------
 
@@ -582,7 +586,7 @@ EOM
 
 Constant. Returns the last addressable memory address.
 
-Class Handler: {n/a} | Namespace: global | Interface Layer: all
+Class Handler: class:word | Namespace: global | Interface Layer: all
 
 ----------------------------------------------------------------
 
@@ -592,9 +596,9 @@ FALSE
   Addr:  -
   Float: -
 
-Constant. Returns `0`, the value used to indicate a FALSE result.
+Returns `0`, the value used to indicate a FALSE result.
 
-Class Handler: {n/a} | Namespace: global | Interface Layer: all
+Class Handler: class:word | Namespace: global | Interface Layer: all
 
 ----------------------------------------------------------------
 
@@ -606,7 +610,7 @@ FREE
 
 Returns the number of cells available to your application. This is the amount of memory, less the already consumed portion and buffers mapped for RETRO's internal use.
 
-Class Handler: {n/a} | Namespace: global | Interface Layer: all
+Class Handler: class:word | Namespace: global | Interface Layer: all
 
 ----------------------------------------------------------------
 
@@ -642,7 +646,7 @@ STRINGS
 
 Return the address of the start of the temporary string pool.
 
-Class Handler: {n/a} | Namespace: global | Interface Layer: all
+Class Handler: class:word | Namespace: global | Interface Layer: all
 
 ----------------------------------------------------------------
 
@@ -664,9 +668,9 @@ TRUE
   Addr:  -
   Float: -
 
-Constant. Returns `-1`, the value used to indicate a TRUE result.
+Returns `-1`, the value used to indicate a TRUE result.
 
-Class Handler: {n/a} | Namespace: global | Interface Layer: all
+Class Handler: class:word | Namespace: global | Interface Layer: all
 
 ----------------------------------------------------------------
 
@@ -762,7 +766,7 @@ and
 
 Perform a bitwise AND operation between the two provided values.
 
-Class Handler: {n/a} | Namespace: global | Interface Layer: all
+Class Handler: class:primitive | Namespace: global | Interface Layer: all
 
 ----------------------------------------------------------------
 
@@ -774,7 +778,7 @@ as{
 
 Begin an assembly section.
 
-Class Handler: {n/a} | Namespace: global | Interface Layer: all
+Class Handler: class:macro | Namespace: global | Interface Layer: all
 
 ----------------------------------------------------------------
 
@@ -1146,7 +1150,7 @@ call
 
 Call a function.
 
-Class Handler: {n/a} | Namespace: global | Interface Layer: all
+Class Handler: class:primitive | Namespace: global | Interface Layer: all
 
 ----------------------------------------------------------------
 
@@ -1188,7 +1192,7 @@ Interpret Time:
 Compile Time:
   Compile the value or address as a literal into the current definition.
 
-Class Handler: {n/a} | Namespace: class | Interface Layer: all
+Class Handler: class:word | Namespace: class | Interface Layer: all
 
 ----------------------------------------------------------------
 
@@ -1206,7 +1210,7 @@ Interpret Time:
 Compile Time:
   Execute the function at the provided address.
 
-Class Handler: {n/a} | Namespace: class | Interface Layer: all
+Class Handler: class:word | Namespace: class | Interface Layer: all
 
 ----------------------------------------------------------------
 
@@ -1224,7 +1228,7 @@ Interpret Time:
 Compile Time:
   Compile the machine code in the definiton into the current definition.
 
-Class Handler: {n/a} | Namespace: class | Interface Layer: all
+Class Handler: class:word | Namespace: class | Interface Layer: all
 
 ----------------------------------------------------------------
 
@@ -1242,7 +1246,7 @@ Interpret Time:
 Compile Time:
   Compile a call to the specified address into the current definition.
 
-Class Handler: {n/a} | Namespace: class | Interface Layer: all
+Class Handler: class:word | Namespace: class | Interface Layer: all
 
 ----------------------------------------------------------------
 
@@ -1350,7 +1354,7 @@ d
 
 Inline a numeric value to the current assembly segment.
 
-Class Handler: {n/a} | Namespace: global | Interface Layer: all
+Class Handler: class:word | Namespace: global | Interface Layer: all
 
 ----------------------------------------------------------------
 
@@ -2122,6 +2126,18 @@ Class Handler: class:word | Namespace: file | Interface Layer: rre
 
 ----------------------------------------------------------------
 
+file:spew
+
+  Data:  ss-
+  Addr:  -
+  Float: -
+
+Given a string (s1) and a file name (s2), write the string into the file, replacing any existing cotent.
+
+Class Handler: class:word | Namespace: file | Interface Layer: rre
+
+----------------------------------------------------------------
+
 file:tell
 
   Data:  h-n
@@ -2622,7 +2638,7 @@ pop
 
 Move a value from the return stack to the data stack.
 
-Class Handler: {n/a} | Namespace: global | Interface Layer: all
+Class Handler: class:macro | Namespace: global | Interface Layer: all
 
 ----------------------------------------------------------------
 
@@ -2640,7 +2656,7 @@ Interpret Time:
 Compile Time:
   Compile the code to store a value into a named variable.
 
-Class Handler: {n/a} | Namespace: prefix | Interface Layer: all
+Class Handler: class:macro | Namespace: prefix | Interface Layer: all
 
 ----------------------------------------------------------------
 
@@ -2658,7 +2674,7 @@ Interpret Time:
 Compile Time:
   Convert the string into a number and compile into the current definition as a literal.
 
-Class Handler: {n/a} | Namespace: prefix | Interface Layer: all
+Class Handler: class:macro | Namespace: prefix | Interface Layer: all
 
 ----------------------------------------------------------------
 
@@ -2676,7 +2692,7 @@ Interpret Time:
 Compile Time:
   Fetch first character from the string. Compile into the current definition as  literal.
 
-Class Handler: {n/a} | Namespace: prefix | Interface Layer: all
+Class Handler: class:macro | Namespace: prefix | Interface Layer: all
 
 ----------------------------------------------------------------
 
@@ -2694,7 +2710,7 @@ Interpret Time:
 Compile Time:
   Lookup name in dictionary, compile code to push the contents of the xt field into the current definition.
 
-Class Handler: {n/a} | Namespace: prefix | Interface Layer: all
+Class Handler: class:macro | Namespace: prefix | Interface Layer: all
 
 ----------------------------------------------------------------
 
@@ -2712,7 +2728,7 @@ Interpret Time:
 Compile Time:
   Move string into temporary buffer. If `RewriteUnderscores` is `TRUE`, replace all instances of _ with space. Then compile the string into the current definition.
 
-Class Handler: {n/a} | Namespace: prefix | Interface Layer: all
+Class Handler: class:macro | Namespace: prefix | Interface Layer: all
 
 ----------------------------------------------------------------
 
@@ -2730,7 +2746,7 @@ Interpret Time:
 Compile Time:
   Discard the string.
 
-Class Handler: {n/a} | Namespace: prefix | Interface Layer: all
+Class Handler: class:macro | Namespace: prefix | Interface Layer: all
 
 ----------------------------------------------------------------
 
@@ -2740,10 +2756,9 @@ prefix:.
   Addr:  -
   Float: -F
 
-Interpret time: convert string to a floating point value.
-Compile time: convert string to a floating point value and compile code to push this value to the float stack.
+Interpret time: convert string to a floating point value.\nCompile time: convert string to a floating point value and compile code to push this value to the float stack.
 
-Class Handler: {n/a} | Namespace: prefix | Interface Layer: rre
+Class Handler: class:macro | Namespace: prefix | Interface Layer: rre
 
 ----------------------------------------------------------------
 
@@ -2758,7 +2773,7 @@ Process token as a new definition.
 Interpret Time:
   Create a header pointing to `here` with the provided string as the name. Sets class to `class:word`.
 
-Class Handler: @Compiler | Namespace: prefix | Interface Layer: all
+Class Handler: class:macro | Namespace: prefix | Interface Layer: all
 
 ----------------------------------------------------------------
 
@@ -2776,7 +2791,7 @@ Interpret Time:
 Compile Time:
   Compile the code to fetch a value from a named variable into the current definition.
 
-Class Handler: {n/a} | Namespace: prefix | Interface Layer: all
+Class Handler: class:macro | Namespace: prefix | Interface Layer: all
 
 ----------------------------------------------------------------
 
@@ -2794,7 +2809,7 @@ Interpret Time:
 Compile Time:
   Convert the string to a number and use `,` to inline it into the current definition.
 
-Class Handler: {n/a} | Namespace: prefix | Interface Layer: all
+Class Handler: class:macro | Namespace: prefix | Interface Layer: all
 
 ----------------------------------------------------------------
 
@@ -2806,7 +2821,7 @@ push
 
 Move a value from the data stack to the return stack.
 
-Class Handler: {n/a} | Namespace: global | Interface Layer: all
+Class Handler: class:macro | Namespace: global | Interface Layer: all
 
 ----------------------------------------------------------------
 
@@ -3140,7 +3155,7 @@ s:filter
   Addr:  -
   Float: -
 
-Execite the quote once for each value in the string. If the quote returns `TRUE`, append the value into a new string. If `FALSE` the value will be discarded.
+Execute the quote once for each value in the string. If the quote returns `TRUE`, append the value into a new string. If `FALSE` the value will be discarded.
 
 Class Handler: class:word | Namespace: s | Interface Layer: all
 
