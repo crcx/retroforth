@@ -1,5 +1,5 @@
 *	nn-n	-	-	Multiply `n1` by `n2` and return the result.			class:primitive	{n/a}	{n/a}	global	all	
-+	nn-n	-	-	Add `n1` to `n2` and return the result.			class:primitive	{n/a}	{n/a}	global	all	
++	nn-n	-	-	Add `n1` to `n2` and return the result.			class:primitive	  #1 #2 + 	{n/a}	global	all	
 ,	n-	-	-	Store the specified value into the memory at `here` and increment `Heap` by 1.			class:word	{n/a}	{n/a}	global	all	
 -	nn-n	-	-	Subtract `n1` from `n2` and return the difference.			class:primitive	{n/a}	{n/a}	global	all	
 ---reveal---	-	-	-	Switch to the exposed (public) portion of a lexical namespace.			class:word	{n/a}	{n/a}	global	all	

@@ -107,8 +107,8 @@ examples, they will be displayed after the description.
   field:ctime s:length n:zero? [ field:ctime 'Compile_Time:\n__%s\n\n   puts<formatted> ] -if
   field:interface field:namespace field:class
   'Class_Handler:_%s_|_Namespace:_%s_|_Interface_Layer:_%s\n\n puts<formatted>
-  field:ex1 '{n/a} s:eq? [ field:ex1 s:with-format 'Example_#1:\n%s\n\n puts<formatted> ] -if
-  field:ex2 '{n/a} s:eq? [ field:ex2 s:with-format 'Example_#2:\n%s\n\n puts<formatted> ] -if ;
+  field:ex1 '{n/a} s:eq? [ field:ex1 s:with-format 'Example_#1:\n\n%s\n\n puts<formatted> ] -if
+  field:ex2 '{n/a} s:eq? [ field:ex2 s:with-format 'Example_#2:\n\n%s\n\n puts<formatted> ] -if ;
 ~~~
 
 # Prepare for Command Line Processing
@@ -203,9 +203,15 @@ when done.
   '/tmp/glossary.interface file:delete ;
 ~~~
 
+Cleaning the edited data is necessary. This entails:
+
+- removing any trailing newlines
+- converting internal newlines and tabs to escape sequences
+
 ~~~
 :clean
-  dup s:length over + n:dec fetch dup ASCII:LF eq? swap ASCII:CR eq? or [ s:chop ] if
+  dup s:length over + n:dec
+    fetch [ ASCII:LF eq? ] [ ASCII:CR eq? ] bi or [ s:chop ] if
   here [ [ ASCII:LF [ $\ , $n , ] case
            ASCII:CR [ $\ , $n , ] case
            ASCII:HT [ $\ , $t , ] case
@@ -214,24 +220,37 @@ when done.
        ] dip ;
 ~~~
 
+After an edit, I need to reassemble the pieces and write them out to
+the file. I'll use `FOUT` as a variable for the file ID.
+
+~~~
+'FOUT var
+~~~
+
+And provide a word like `puts` that writes to this:
+
+~~~
+:write-line (s-) [ @FOUT file:write ] s:for-each ;
+:write-nl   (-)  ASCII:LF @FOUT file:write ;
+~~~
+
 ~~~
 :generate-entry
   s:empty [ '/tmp/glossary.fstack    file:slurp ] sip clean s:keep
   s:empty [ '/tmp/glossary.astack    file:slurp ] sip clean s:keep
   s:empty [ '/tmp/glossary.dstack    file:slurp ] sip clean s:keep
   s:empty [ '/tmp/glossary.name      file:slurp ] sip clean s:keep
-  '%s\t%s\t%s\t%s\t s:with-format puts
+  '%s\t%s\t%s\t%s\t s:with-format write-line
   s:empty [ '/tmp/glossary.class     file:slurp ] sip clean s:keep
   s:empty [ '/tmp/glossary.ctime     file:slurp ] sip clean s:keep
   s:empty [ '/tmp/glossary.itime     file:slurp ] sip clean s:keep
   s:empty [ '/tmp/glossary.descr     file:slurp ] sip clean s:keep
-  '%s\t%s\t%s\t%s\t s:with-format puts
+  '%s\t%s\t%s\t%s\t s:with-format write-line
   s:empty [ '/tmp/glossary.interface file:slurp ] sip clean s:keep
   s:empty [ '/tmp/glossary.namespace file:slurp ] sip clean s:keep
   s:empty [ '/tmp/glossary.ex2       file:slurp ] sip clean s:keep
   s:empty [ '/tmp/glossary.ex1       file:slurp ] sip clean s:keep
-  '%s\t%s\t%s\t%s\t s:with-format puts
-;
+  '%s\t%s\t%s\t%s\t s:with-format write-line ;
 ~~~
 
 Next, get the editor from the $EDITOR environment variable.
@@ -266,8 +285,12 @@ Next, get the editor from the $EDITOR environment variable.
 
 ~~~
 :handle-edit
+  'words.new file:W file:open !FOUT
   'words.tsv
-  [ s:keep !SourceLine field:name TARGET2 s:eq? [ select-field generate-entry ] if ] file:for-each-line ;
+  [ s:keep !SourceLine field:name TARGET2 s:eq?
+    [ select-field generate-entry ] [ @SourceLine write-line ] choose write-nl
+  ] file:for-each-line
+  'mv_words.new_words.tsv unix:system ;
 ~~~
 
 ## Export Data
