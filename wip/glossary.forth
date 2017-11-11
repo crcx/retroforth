@@ -111,6 +111,41 @@ examples, they will be displayed after the description.
   field:ex2 '{n/a} s:eq? [ field:ex2 s:with-format 'Example_#2:\n%s\n\n puts<formatted> ] -if ;
 ~~~
 
+# Begin Processing
+
+This application can take a variable number of arguments.
+
+I first check to make sure at least one was passed. If not, just exit.
+
+~~~
+sys:argc n:zero? [ #0 unix:exit ] if
+~~~
+
+If execution reaches this point there's at least one argument. I use a
+loop to store arguments into an array.
+
+~~~
+'Args d:create #32 allot
+#0 sys:argc [ dup sys:argv s:keep over &Args + store n:inc ] times drop
+~~~
+
+And then populate constants for each one I care about.
+
+~~~
+#0 &Args + fetch 'QUERY s:const
+#1 &Args + fetch 'TARGET s:const
+#2 &Args + fetch 'TARGET2 s:const 
+~~~
+
+FUTURE:
+
+:process-arguments
+  QUERY
+  'help     [ display-help           ] s:case
+  'describe [ find-and-display-entry ] s:case
+  'export   [ handle-exports         ] s:case
+  'edit     [ handle-edits           ] s:case
+  drop ;
 
 ----
 
@@ -133,10 +168,6 @@ assumes the first argument is the type of search and the second
 is name of a word, class, or other detail to search for. Grab them
 and save as `QUERY` and `TARGET`.
 
-~~~
-#0 sys:argv 'QUERY s:const
-#1 sys:argv 'TARGET s:const
-~~~
 
 The *words.tsv* has the following fields:
 
