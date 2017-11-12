@@ -1,20 +1,21 @@
-#/bin/sh
-# RETRO12: Interactive Listener
-# ---------------------------------------------------------------------
-# This is a bit of trickery using shell scripting and RRE to implement
-# an interactive environment for Retro.
-# ---------------------------------------------------------------------
-# To work as expected, input should process as it's entered and not be
-# line buffered. I use `stty` to set this mode.
+#!/usr/bin/env rre
 
-  stty cbreak
+RETRO12: Interactive Listener
+---------------------------------------------------------------------
+This is a bit of trickery using shell scripting and RRE to implement
+an interactive environment for Retro.
+---------------------------------------------------------------------
+To work as expected, input should process as it's entered and not be
+line buffered. I use `stty` to set this mode.
 
-# ---------------------------------------------------------------------
-# Next, copy the actual Retro source into a temporary file for RRE to
-# process.
-
-  cat >/tmp/_listener.forth << 'EOF'
 ~~~
+'stty_cbreak unix:system
+~~~
+
+~~~
+:bye
+  'stty_-cbreak unix:system #0 unix:exit ;
+
 {{
   :version (-)    @Version #100 /mod putn $. putc putn ;
   :banner  (-)    'RETRO_12_(rx- puts version $) putc nl
@@ -31,16 +32,3 @@
 
 listen
 ~~~
-EOF
-
-# ---------------------------------------------------------------------
-# Now use RRE (in the current directory) to run the program.
-
-  ./rre /tmp/_listener.forth
-
-# ---------------------------------------------------------------------
-# Finally, clean everything up and use `stty` to restore the normal
-# input buffering mode.
-
-  rm -f /tmp/_listener.forth
-  stty -cbreak
