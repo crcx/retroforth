@@ -1,8 +1,10 @@
 #!/usr/bin/env rre
 
-This will (hopefully) be a functional text editor written in RETRO.
-It draws influence from my earlier block editors, but is intended to
-operate on actual text files instead of blocks.
+# Hua: a text editor written in RETRO
+
+Hua is a small, functional text editor written in RETRO, using the
+*RRE* interface. It is line oriented, visual, and tries to be very
+simple to use.
 
 First up, several variables and constants that are used through
 the rest of the code.
@@ -133,31 +135,38 @@ The process here is to just write all but the current line to a dummy
 file, replacing the current line text with a newline. Then replace the
 original file with the dummy one.
 
+I add a custom combinator, `process-lines` to iterate over the lines in
+the file. This takes a quote, and runs it once for each line in the file.
+The quote gets passed two values: a counter and a pointer to the current
+line in the file. The quote should consume the pointer an increment the
+counter. This also sets up `FID` as a pointer to the temporary file where
+changes can be written. The combinator will replace the original file
+after execution completes.
+
+~~~
+:process-lines (q-)
+  TEMP-FILE file:W file:open !FID
+  [ #0 @SourceFile ] dip file:for-each-line drop
+  @FID file:close
+  @SourceFile TEMP-FILE 'mv_%s_%s s:with-format unix:system ;
+~~~
+
 ~~~
 :current? (n-nf)
   over @CurrentLine eq? ;
 
 :delete-line (-)
-  TEMP-FILE file:W file:open !FID
-  #0 @SourceFile [ current? [ drop s:empty ] if file:puts n:inc ] file:for-each-line drop
-  @FID file:close
-  @SourceFile TEMP-FILE 'mv_%s_%s s:with-format unix:system ;
+ [ current? [ drop s:empty ] if file:puts n:inc ] process-lines ;
 ~~~
 
 ~~~
 :kill-line (-)
-  TEMP-FILE file:W file:open !FID
-  #0 @SourceFile [ current? [ drop ] [ file:puts ] choose n:inc ] file:for-each-line drop
-  @FID file:close
-  @SourceFile TEMP-FILE 'mv_%s_%s s:with-format unix:system ;
+  [ current? [ drop ] [ file:puts ] choose n:inc ] process-lines ;
 ~~~
 
 ~~~
 :add-line (-)
-  TEMP-FILE file:W file:open !FID
-  #0 @SourceFile [ current? [ ASCII:LF @FID file:write ] if file:puts n:inc ] file:for-each-line drop
-  @FID file:close
-  @SourceFile TEMP-FILE 'mv_%s_%s s:with-format unix:system ;
+  [ current? [ ASCII:LF @FID file:write ] if file:puts n:inc ] process-lines ;
 ~~~
 
 Replacing a line is next. Much like the `delete-line`, this writes all
@@ -171,10 +180,7 @@ replaces the original file with the dummy one.
     [ repeat getc dup ASCII:LF -eq? 0; drop buffer:add again ] call drop ] sip ;
 
 :replace-line (-)
-  TEMP-FILE file:W file:open !FID
-  #0 @SourceFile [ current? [ drop gets ] if file:puts n:inc ] file:for-each-line drop
-  @FID file:close
-  @SourceFile TEMP-FILE 'mv_%s_%s s:with-format unix:system ;
+  [ current? [ drop gets ] if file:puts n:inc ] process-lines ;
 ~~~
 
 ~~~
