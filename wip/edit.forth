@@ -13,7 +13,12 @@ the rest of the code.
 'FID var
 ~~~
 
+The configuration here is for two items. The number of lines from the
+file to show on screen, and the name of the temporary file to use
+when editing.
+
 ~~~
+#80 'COLS      const
 #12 'MAX-LINES const
 '/tmp/rre.edit 'TEMP-FILE s:const
 ~~~
@@ -43,6 +48,7 @@ an interface like:
      102: This is the current line
      103:
   ---------------------------------------------------------------
+  j: down | k: up | ... other helpful text ...
 
 The * denotes the currently selected line.
 
@@ -60,22 +66,46 @@ advance to the currently selected line.
 Now for words to format the output. This should all be pretty clear in
 intent.
 
+`clear-display` uses an ANSI/VT100 escape sequence. This might need to
+be adjusted for your chosen terminal.
+
 ~~~
 :clear-display (-)
   ASCII:ESC '%c[2J s:with-format puts nl ;
+~~~
 
+This just displays the separator bars.
+
+~~~
 :---- (-)
-  #80 [ $- putc ] times nl ;
+  COLS [ $- putc ] times nl ;
+~~~
 
+Next, a word to display the header. Currently just the name of the file
+being edited and the line count.
+
+~~~
 :header (-)
   count-lines @SourceFile '%s_:_%n_lines\n s:with-format puts ;
+~~~
 
+The `pad` word is used to make sure line numbers are all the same width.
+
+~~~
 :pad (n-n)
   dup #0 #9 n:between? [ '____ puts ] if
   dup #10 #99 n:between? [ '___ puts ] if
   dup #100 #999 n:between? [ '__ puts ] if
   dup #1000 #9999 n:between? [ '_ puts ] if ;
+~~~
 
+A line has a form:
+
+    <indicator><number>: <text>
+
+The indicator is an asterisk, and visually marks the current line.
+
+~~~
 :mark-if-current (n-n)
   dup @CurrentLine eq? [ $* putc ] [ sp ] choose ; 
 
@@ -84,7 +114,9 @@ intent.
 
 :display-line (n-n)
   dup mark-if-current pad line# n:inc @FID file:read-line puts nl ;
+~~~
 
+~~~
 :display (-)
   @SourceFile file:R file:open !FID
   clear-display header ---- skip-to
