@@ -2,14 +2,14 @@
 
 # Overview
 
-This is an application for looking up and updating documentation for
-the words provided by RETRO.
+This is an application for looking up and updating the
+documentation for the words provided by RETRO.
 
 # Data Set
 
-I like plain text formats, so the data is stored as a text file, with
-one line per word. Each line has a number of fields. These are tab
-separated. The fields are:
+I like plain text formats, so the data is stored as a
+text file, with one line per word. Each line has a number
+of fields. These are tab separated. The fields are:
 
     | name                       | 0
     | data stack                 | 1
@@ -24,8 +24,8 @@ separated. The fields are:
     | namespace                  | 10
     | interface                  | 11
 
-I use a variable named `SourceLine` to point to the current line
-contents.
+I use a variable named `SourceLine` to point to the
+current line contents.
 
 ~~~
 'SourceLine var
@@ -37,7 +37,8 @@ And a helper word to skip a specified number of fields.
 :skip (n-) [ ASCII:HT s:split drop n:inc ] times ;
 ~~~
 
-Then it's easy to add words to return each individual field.
+Then it's easy to add words to return each individual
+field.
 
 ~~~
 :field:name   (-s) @SourceLine
@@ -79,7 +80,8 @@ Then it's easy to add words to return each individual field.
 
 # Display an Entry
 
-I implement a word to display an entry. This will use a format like:
+I implement a word to display an entry. This will use a
+format like:
 
     name
 
@@ -91,8 +93,9 @@ I implement a word to display an entry. This will use a format like:
 
     Class Handler: class:word | Namespace: global | Interface Layer: all
 
-If there are specific notes on interpret or compile time actions, or any
-examples, they will be displayed after the description.
+If there are specific notes on interpret or compile time
+actions, or any examples, they will be displayed after
+the description.
 
 ~~~
 :puts<formatted> (s-)  s:with-format puts ;
@@ -115,18 +118,21 @@ examples, they will be displayed after the description.
 
 This application can take a variable number of arguments.
 
-I first check to make sure at least one was passed. If not, just exit.
+I first check to make sure at least one was passed. If
+not, just exit.
 
 ~~~
 sys:argc n:zero? [ #0 unix:exit ] if
 ~~~
 
-If execution reaches this point there's at least one argument. I use a
-loop to store arguments into an array.
+If execution reaches this point there's at least one
+argument. I use a loop to store arguments into an array.
 
 ~~~
 'Args d:create #32 allot
-#0 sys:argc [ dup sys:argv s:keep over &Args + store n:inc ] times drop
+#0 sys:argc
+  [ dup sys:argv s:keep over &Args + store n:inc ] times
+  drop
 ~~~
 
 And then populate constants for each one I care about.
@@ -139,8 +145,8 @@ And then populate constants for each one I care about.
 
 # Interactions
 
-With the command line data setup, I can now move on to the words for
-handling specific interactions.
+With the command line data extracted, I can now move on
+to the words for handling specific interactions.
 
 There are five primary roles:
 
@@ -161,8 +167,9 @@ There are five primary roles:
 
 ## Add a Word
 
-This just adds a stub to the end of the words.tsv file. You'll need to run the
-edit commands for each field to fully populate it.
+This just adds a stub to the end of the words.tsv file.
+You'll need to run the edit commands for each field to
+fully populate it.
 
 ~~~
 'FADD var
