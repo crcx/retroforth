@@ -35,7 +35,7 @@ easier.
 I now turn my attention to displaying the file. I am aiming for
 an interface like:
 
-  <filename> : <line-count> : <current-line>
+  <filename> : <line-count>
   ---------------------------------------------------------------
   *   99:
      100: :n:square dup * ;
@@ -65,18 +65,19 @@ intent.
   ASCII:ESC '%c[2J s:with-format puts nl ;
 
 :---- (-)
-  #78 [ $- putc ] times nl ;
+  #80 [ $- putc ] times nl ;
 
 :header (-)
-  @CurrentLine count-lines @SourceFile '%s_:_%n_:_%n\n s:with-format puts ;
+  count-lines @SourceFile '%s_:_%n_lines\n s:with-format puts ;
 
 :pad (n-n)
-  dup #0 #9 n:between? [ '___ puts ] if
-  dup #10 #99 n:between? [ '__ puts ] if
-  dup #100 #999 n:between? [ '_ puts ] if ;
+  dup #0 #9 n:between? [ '____ puts ] if
+  dup #10 #99 n:between? [ '___ puts ] if
+  dup #100 #999 n:between? [ '__ puts ] if
+  dup #1000 #9999 n:between? [ '_ puts ] if ;
 
 :mark-if-current (n-n)
-  dup @CurrentLine eq? [ '*_ puts ] [ '__ puts ] choose ; 
+  dup @CurrentLine eq? [ $* putc ] [ sp ] choose ; 
 
 :line# (n-)
   putn ':_ puts ;
@@ -111,6 +112,22 @@ original file with the dummy one.
   @SourceFile TEMP-FILE 'mv_%s_%s s:with-format unix:system ;
 ~~~
 
+~~~
+:kill-line (-)
+  TEMP-FILE file:W file:open !FID
+  #0 @SourceFile [ current? [ drop ] [ file:puts ] choose n:inc ] file:for-each-line drop
+  @FID file:close
+  @SourceFile TEMP-FILE 'mv_%s_%s s:with-format unix:system ;
+~~~
+
+~~~
+:add-line (-)
+  TEMP-FILE file:W file:open !FID
+  #0 @SourceFile [ current? [ ASCII:LF @FID file:write ] if file:puts n:inc ] file:for-each-line drop
+  @FID file:close
+  @SourceFile TEMP-FILE 'mv_%s_%s s:with-format unix:system ;
+~~~
+
 Replacing a line is next. Much like the `delete-line`, this writes all
 but the current line to a dummy file. It uses a `gets` word to read in
 the text to write instead of the original current line. When done, it
@@ -128,18 +145,33 @@ replaces the original file with the dummy one.
   @SourceFile TEMP-FILE 'mv_%s_%s s:with-format unix:system ;
 ~~~
 
+~~~
+:goto (-)
+  gets s:to-number !CurrentLine ;
+~~~
+
 And now tie everything together. There's a key handler and a top level loop.
 
 ~~~
+:| '_|_ puts ;
+:describe (cs-)
+  swap putc $: putc puts ;
+
 :help
-  'j-down_|_k-up_|_i-replace_|_d-delete puts nl ;
+  $1 'insert_line describe | $2 'replace_text describe | $3 '____________ describe |
+  $4 'erase_text_ describe | $5 'delete_line_ describe nl
+  $j 'down_______ describe | $k 'up__________ describe | $g 'goto_line___ describe | 
+  #32 '___________ describe | $q 'quit________ describe nl ;
 
 :handler
     getc
-      $i [ replace-line                           ] case
-      $d [ delete-line                            ] case
-      $j [ &CurrentLine v:inc                     ] case
-      $k [ &CurrentLine v:dec                     ] case
+      $1 [ add-line                               ] case
+      $2 [ replace-line                           ] case
+      $4 [ delete-line                            ] case
+      $5 [ kill-line                              ] case
+      $j [ &CurrentLine v:inc &CurrentLine #0 #10000 v:limit ] case
+      $k [ &CurrentLine v:dec &CurrentLine #0 #10000 v:limit ] case
+      $g [ goto &CurrentLine #0 #10000 v:limit    ] case
       $q [ 'stty_-cbreak unix:system #0 unix:exit ] case
     drop ;
 
