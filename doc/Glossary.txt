@@ -3795,6 +3795,10 @@ Change the current working directory to the specified one.
 
 Class Handler: class:word | Namespace: unix | Interface Layer: rre
 
+Example #1:
+
+  '/etc unix:chdir
+
 ----------------------------------------------------------------
 
 unix:exec0
@@ -3958,6 +3962,10 @@ unix:system
 Runs another application using the system shell and returns after execution is completed.
 
 Class Handler: class:word | Namespace: unix | Interface Layer: rre
+
+Example #1:
+
+  'ls_-lh_/etc unix:system
 
 ----------------------------------------------------------------
 

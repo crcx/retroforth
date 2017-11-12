@@ -167,7 +167,7 @@ file:delete	s-	-	-	Delete the named file.			class:word	{n/a}	{n/a}	file	rre
 file:exists?	s-f	-	-	Given a file name, return `TRUE` if it exists or `FALSE` if it does not.			class:word	{n/a}	{n/a}	file	rre	
 file:flush	h-	-	-	Given a file handle, flush any pending writes to disk.			class:word	{n/a}	{n/a}	file	rre	
 file:for-each-line	sq-	-	-	Given a file name, open it and run the quote once for each line in the file.			class:word	{n/a}	{n/a}	file	rre	
-file:open	sm-h	-	-	Open a named file (s) with the given mode (m). Returns a handle identifying the file.			class:word	{n/a}	{n/a}	file	rre	
+file:open	sm-h	-	-	Open a named file (s) with the given mode (m). Returns a handle identifying the file.			class:word	  '/etc/motd file:R file:open	{n/a}	file	rre	
 file:read	h-c	-	-	Given a file handle, read and return the next character in it.			class:word	{n/a}	{n/a}	file	rre	
 file:read-line	f-s	-	-	Given a file handle, read a line and return a pointer to it.			class:word	{n/a}	{n/a}	file	rre	
 file:seek	nh-	-	-	Move the current offset into a file to the specified one.			class:word	{n/a}	{n/a}	file	rre	
@@ -307,7 +307,7 @@ tri	xqqq-?	-	-	Apply q1 against x, then q2 against a copy of x, and finally q3 a
 tri*	xyzqqq-?	-	-	Apply q1 against x, q2 against y, and q3 against z.			class:word	{n/a}	{n/a}	global	all	
 tri@	xyzq-?	-	-	Apply q against x, then against y, and finally against z.			class:word	{n/a}	{n/a}	global	all	
 tuck	nm-mnm	-	-	Put a copy of the top item on the stack under the second one.			class:word	{n/a}	{n/a}	global	all	
-unix:chdir	s-	-	-	Change the current working directory to the specified one.			class:word	{n/a}	{n/a}	unix	rre	
+unix:chdir	s-	-	-	Change the current working directory to the specified one.			class:word	  '/etc unix:chdir	{n/a}	unix	rre	
 unix:exec0	s-	-	-	Execute a process by running the application specified by s.			class:word	{n/a}	{n/a}	unix	rre	
 unix:exec1	ss-	-	-	Execute a process by running the application specified by s1. Pass s2 as an argument.			class:word	{n/a}	{n/a}	unix	rre	
 unix:exec2	sss-	-	-	Execute a process by running the application specified by s1. Pass s2 and s3 as arguments.			class:word	{n/a}	{n/a}	unix	rre	
@@ -320,7 +320,7 @@ unix:kill	nn-	-	-	Terminates a process. Takes a process and a signal to send.			
 unix:pclose	n-	-	-	Close a pipe.			class:word	{n/a}	{n/a}	unix	rre	
 unix:popen	sn-n	-	-	Open a pipe. Takes a command to run, and a file mode (`file:R` or `file:W`; `file:R+` may work on some systems). Returns a file ID usable with words in the `file:` namespace.			class:word	{n/a}	{n/a}	unix	rre	
 unix:putenv	s-	-	-	Takes a string in the form `name=value` and sets an environment variable named `name` to `value`.			class:word	  'EDITOR=vi unix:putenv	{n/a}	unix	rre	
-unix:system	s-	-	-	Runs another application using the system shell and returns after execution is completed.			class:word	{n/a}	{n/a}	unix	rre	
+unix:system	s-	-	-	Runs another application using the system shell and returns after execution is completed.			class:word	  'ls_-lh_/etc unix:system	{n/a}	unix	rre	
 unix:wait	-n	-	-	Waits for a child process to complete. This maps to the wait() system call.			class:word	{n/a}	{n/a}	unix	rre	
 unix:write	sh-	-	-	Write a string to the specified file handle.			class:word	{n/a}	{n/a}	unix	rre	
 until	q-	-	-	Execute quote repeatedly while the quote returns a value of `FALSE`. The quote must return a flag of either `TRUE` or `FALSE` to be used with this.			class:word	{n/a}	{n/a}	global	all	

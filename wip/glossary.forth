@@ -161,6 +161,19 @@ There are five primary roles:
 
 ## Add a Word
 
+This just adds a stub to the end of the words.tsv file. You'll need to run the
+edit commands for each field to fully populate it.
+
+~~~
+'FADD var
+
+:add-word
+  'words.tsv file:A file:open !FADD
+  TARGET '%s\t-\t-\t-\t{n/a}\t\t\tclass:word\t{n/a}\t{n/a}\t{n/a}\t{n/a}\t{n/a}\n s:with-format
+  [ @FADD file:write ] s:for-each
+  @FADD file:close ;
+~~~
+
 ## Delete a Word
 
 ## Edit a Word
@@ -290,6 +303,7 @@ Next, get the editor from the $EDITOR environment variable.
   [ s:keep !SourceLine field:name TARGET2 s:eq?
     [ select-field generate-entry ] [ @SourceLine write-line ] choose write-nl
   ] file:for-each-line
+  @FOUT file:close delete-temporary
   'mv_words.new_words.tsv unix:system ;
 ~~~
 
@@ -358,6 +372,7 @@ First, a word to handle command line arguments.
   'describe [ find-and-display-entry ] s:case
   'export   [ export-data            ] s:case
   'edit     [ handle-edit            ] s:case
+  'add      [ add-word               ] s:case
   drop ;
 ~~~
 
