@@ -374,6 +374,31 @@ to use.
   drop ;
 ~~~
 
+## Help
+
+~~~
+:show-help
+  'RETRO_Glossary_Tool puts nl
+  #32 [ $- putc ] times nl
+  'describe_<wordname> puts nl
+  'delete_<wordname> puts nl
+  'add_<wordname> puts nl
+  'edit_<field>_<wordname> puts nl
+  'export_<format> puts nl
+  #32 [ $- putc ] times nl
+  'Editor_Fields: puts nl
+  '__name\n__dstack\n__astack\n__fstack\n s:with-format puts
+  '__descr\n__itime\n__ctime\n__class\n s:with-format puts
+  '__ex1\n__ex2\n__namespace\n__interface\n s:with-format puts
+  #32 [ $- putc ] times nl
+  'Export_Formats: puts nl
+  '__glossary puts nl
+  '__tsv      puts nl
+  #32 [ $- putc ] times nl
+
+;
+~~~
+
 # Finish
 
 First, a word to handle command line arguments.
@@ -386,7 +411,7 @@ First, a word to handle command line arguments.
   'edit     [ handle-edit            ] s:case
   'add      [ add-word               ] s:case
   'delete   [ delete-entry           ] s:case
-  drop ;
+  drop show-help ;
 ~~~
 
 ~~~
