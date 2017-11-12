@@ -2064,6 +2064,10 @@ Open a named file (s) with the given mode (m). Returns a handle identifying the 
 
 Class Handler: class:word | Namespace: file | Interface Layer: rre
 
+Example #1:
+
+  '/etc/motd file:R file:open
+
 ----------------------------------------------------------------
 
 file:read
@@ -3335,9 +3339,13 @@ s:split-on-string
   Addr:  -
   Float: -
 
-Split a string on the first occurrance of the specified string.
+Split a string on the first occurrance of the specified string. After the split, the top stack item will be the part of the string before the specified subsring, and the second item will be the rest of the original string.
 
 Class Handler: class:word | Namespace: s | Interface Layer: all
+
+Example #1:
+
+  'Hello_Brave_World! 'Brave s:split-on-string puts nl puts nl
 
 ----------------------------------------------------------------
 
