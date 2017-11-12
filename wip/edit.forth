@@ -1,8 +1,39 @@
 #!/usr/bin/env rre
 
 This will (hopefully) be a functional text editor written in RETRO.
+It draws influence from my earlier block editors, but is intended to
+operate on actual text files instead of blocks.
 
-Interface:
+First up, several variables and constants that are used through
+the rest of the code.
+
+~~~
+'SourceFile var
+'CurrentLine var
+'FID var
+~~~
+
+~~~
+#12 'MAX-LINES const
+'/tmp/rre.edit 'TEMP-FILE s:const
+~~~
+
+Get the name of the file to edit. If no file is provided, exit.
+
+~~~
+sys:argc n:zero? [ #0 unix:exit ] if
+#0 sys:argv s:keep !SourceFile
+~~~
+
+This is just a shortcut to make writing strings to the current file
+easier.
+
+~~~
+:file:puts (s-) [ @FID file:write ] s:for-each ASCII:LF @FID file:write ;
+~~~
+
+I now turn my attention to displaying the file. I am aiming for
+an interface like:
 
   <filename> : <line-count> : <current-line>
   ---------------------------------------------------------------
@@ -13,53 +44,95 @@ Interface:
      103:
   ---------------------------------------------------------------
 
-As with my old block editor, this will be primarily line oriented.
-And it's visual, with some simple key bindings.
+The * denotes the currently selected line.
+
+I start with words to count the number of lines in the file and
+advance to the currently selected line.
 
 ~~~
-'SourceFile var
-'FID var
-'FOUT var
+:count-lines (-)
+  #0 @SourceFile [ drop n:inc ] file:for-each-line ;
 
-#0 sys:argv s:keep !SourceFile
+:skip-to
+  @CurrentLine #0 n:max [ @FID file:read-line drop ] times ;
+~~~
 
-:count-lines #0 @SourceFile [ drop n:inc ] file:for-each-line ;
+Now for words to format the output. This should all be pretty clear in
+intent.
 
-#12 'MAX-LINES const
-'CurrentLine var
+~~~
+:clear-display (-)
+  ASCII:ESC '%c[2J s:with-format puts nl ;
+
+:---- (-)
+  #78 [ $- putc ] times nl ;
+
+:header (-)
+  @CurrentLine count-lines @SourceFile '%s_:_%n_:_%n\n s:with-format puts ;
 
 :pad (n-n)
   dup #0 #9 n:between? [ '___ puts ] if
   dup #10 #99 n:between? [ '__ puts ] if
   dup #100 #999 n:between? [ '_ puts ] if ;
 
-:current (n-n)
+:mark-if-current (n-n)
   dup @CurrentLine eq? [ '*_ puts ] [ '__ puts ] choose ; 
 
-:skip-to
-  @CurrentLine #0 n:max [ @FID file:read-line drop ] times ;
+:line# (n-)
+  putn ':_ puts ;
 
-:display
+:display-line (n-n)
+  dup mark-if-current pad line# n:inc @FID file:read-line puts nl ;
+
+:display (-)
   @SourceFile file:R file:open !FID
-  skip-to
-  @CurrentLine count-lines MAX-LINES n:min [ dup current pad putn n:inc ':_ puts @FID file:read-line puts nl ] times drop
+  clear-display header ---- skip-to
+  @CurrentLine count-lines MAX-LINES n:min [ display-line ] times drop
+  ---- dump-stack
   @FID file:close ;
+~~~
 
-:delete-line
-  '/tmp/rre.edit file:W file:open !FID
-  #0 @SourceFile [ over @CurrentLine eq? [ drop ] [ [ @FID file:write ] s:for-each ] choose ASCII:LF @FID file:write n:inc ] file:for-each-line drop
+With the code to display the file done, I can proceed on to words for
+handling editing. First, is a word to delete contents of the current
+line.
+
+The process here is to just write all but the current line to a dummy
+file, replacing the current line text with a newline. Then replace the
+original file with the dummy one.
+
+~~~
+:current? (n-nf)
+  over @CurrentLine eq? ;
+
+:delete-line (-)
+  TEMP-FILE file:W file:open !FID
+  #0 @SourceFile [ current? [ drop s:empty ] if file:puts n:inc ] file:for-each-line drop
   @FID file:close
-  @SourceFile 'mv_/tmp/rre.edit_%s s:with-format unix:system ;
+  @SourceFile TEMP-FILE 'mv_%s_%s s:with-format unix:system ;
+~~~
 
-:gets
-  s:empty [ buffer:set [ repeat getc dup ASCII:LF -eq? 0; drop buffer:add again ] call drop ] sip ;
+Replacing a line is next. Much like the `delete-line`, this writes all
+but the current line to a dummy file. It uses a `gets` word to read in
+the text to write instead of the original current line. When done, it
+replaces the original file with the dummy one.
 
-:replace-line
-  '/tmp/rre.edit file:W file:open !FID
-  #0 @SourceFile [ over @CurrentLine eq? [ drop gets ] if [ @FID file:write ] s:for-each ASCII:LF @FID file:write n:inc ] file:for-each-line drop
+~~~
+:gets (-s)
+  s:empty [ buffer:set
+    [ repeat getc dup ASCII:LF -eq? 0; drop buffer:add again ] call drop ] sip ;
+
+:replace-line (-)
+  TEMP-FILE file:W file:open !FID
+  #0 @SourceFile [ current? [ drop gets ] if file:puts n:inc ] file:for-each-line drop
   @FID file:close
-  @SourceFile 'mv_/tmp/rre.edit_%s s:with-format unix:system ;
+  @SourceFile TEMP-FILE 'mv_%s_%s s:with-format unix:system ;
+~~~
 
+And now tie everything together. There's a key handler and a top level loop.
+
+~~~
+:help
+  'j-down_|_k-up_|_i-replace_|_d-delete puts nl ;
 
 :handler
     getc
@@ -70,15 +143,15 @@ And it's visual, with some simple key bindings.
       $q [ 'stty_-cbreak unix:system #0 unix:exit ] case
     drop ;
 
-:loop
+:edit
   'stty_cbreak unix:system
   repeat
-    ASCII:ESC '%c[2J s:with-format puts nl
-    @CurrentLine count-lines @SourceFile '%s_:_%n_:_%n\n s:with-format puts
-    display
-    #72 [ $- putc ] times nl
-    handler
+    display help handler
   again ;
+~~~
 
-loop
+Run the editor.
+
+~~~
+edit
 ~~~
