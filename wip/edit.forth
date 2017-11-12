@@ -51,8 +51,19 @@ And it's visual, with some simple key bindings.
   @FID file:close
   @SourceFile 'mv_/tmp/rre.edit_%s s:with-format unix:system ;
 
+:gets
+  s:empty [ buffer:set [ repeat getc dup ASCII:LF -eq? 0; drop buffer:add again ] call drop ] sip ;
+
+:replace-line
+  '/tmp/rre.edit file:W file:open !FID
+  #0 @SourceFile [ over @CurrentLine eq? [ drop gets ] if [ @FID file:write ] s:for-each ASCII:LF @FID file:write n:inc ] file:for-each-line drop
+  @FID file:close
+  @SourceFile 'mv_/tmp/rre.edit_%s s:with-format unix:system ;
+
+
 :handler
     getc
+      $i [ replace-line                           ] case
       $d [ delete-line                            ] case
       $j [ &CurrentLine v:inc                     ] case
       $k [ &CurrentLine v:dec                     ] case
