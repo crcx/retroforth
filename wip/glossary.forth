@@ -176,6 +176,18 @@ edit commands for each field to fully populate it.
 
 ## Delete a Word
 
+~~~
+'FNEW var
+
+:matched? (-f) field:name TARGET s:eq? ;
+
+:delete-entry
+  'words.new file:W file:open !FNEW
+  'words.tsv [ s:keep !SourceLine matched? [ @SourceLine [ @FNEW file:write ] s:for-each ASCII:LF @FNEW file:write ] -if ] file:for-each-line
+  @FNEW file:close
+  'mv_words.new_words.tsv unix:system ;
+~~~
+
 ## Edit a Word
 
 Editing is a bit tricky. To keep things as simple as possible, I export
@@ -373,6 +385,7 @@ First, a word to handle command line arguments.
   'export   [ export-data            ] s:case
   'edit     [ handle-edit            ] s:case
   'add      [ add-word               ] s:case
+  'delete   [ delete-entry           ] s:case
   drop ;
 ~~~
 
