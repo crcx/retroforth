@@ -156,7 +156,7 @@ after execution completes.
   over @CurrentLine eq? ;
 
 :delete-line (-)
- [ current? [ drop s:empty ] if file:puts n:inc ] process-lines ;
+ [ current? [ drop '_ ] if file:puts n:inc ] process-lines ;
 ~~~
 
 ~~~
@@ -175,12 +175,29 @@ the text to write instead of the original current line. When done, it
 replaces the original file with the dummy one.
 
 ~~~
-:gets (-s)
-  s:empty [ buffer:set
-    [ repeat getc dup ASCII:LF -eq? 0; drop buffer:add again ] call drop ] sip ;
+{{
+  :save (c-)
+    ASCII:BS  [ buffer:get drop ] case
+    ASCII:DEL [ buffer:get drop ] case
+    buffer:add ;
+---reveal---
+  :gets (-s)  
+    s:empty [ buffer:set
+      [ repeat getc dup ASCII:LF -eq? 0; drop save again ] call drop ] sip ;
+}}
 
 :replace-line (-)
   [ current? [ drop gets ] if file:puts n:inc ] process-lines ;
+~~~
+
+~~~
+'CopiedLine d:create #1025 allot
+
+:copy-line (-)
+  [ current? [ dup &CopiedLine s:copy ] if file:puts n:inc ] process-lines ;
+
+:paste-line (-)
+  [ current? [ drop &CopiedLine ] if file:puts n:inc ] process-lines ;
 ~~~
 
 ~~~
@@ -199,7 +216,7 @@ And now tie everything together. There's a key handler and a top level loop.
   $1 'insert_line describe | $2 'replace_text describe | $3 '____________ describe |
   $4 'erase_text_ describe | $5 'delete_line_ describe nl
   $j 'down_______ describe | $k 'up__________ describe | $g 'goto_line___ describe | 
-  #32 '___________ describe | $q 'quit________ describe nl ;
+  $c 'copy_______ describe | $v 'paste_______ describe nl ;
 
 :handler
     getc
@@ -207,6 +224,8 @@ And now tie everything together. There's a key handler and a top level loop.
       $2 [ replace-line                           ] case
       $4 [ delete-line                            ] case
       $5 [ kill-line                              ] case
+      $c [ copy-line                              ] case
+      $v [ paste-line                             ] case
       $j [ &CurrentLine v:inc &CurrentLine #0 #10000 v:limit ] case
       $k [ &CurrentLine v:dec &CurrentLine #0 #10000 v:limit ] case
       $g [ goto &CurrentLine #0 #10000 v:limit    ] case
