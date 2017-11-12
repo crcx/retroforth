@@ -6,10 +6,10 @@ Interface:
 
   <filename> : <line-count> : <current-line>
   ---------------------------------------------------------------
-      99:
+  *   99:
      100: :n:square dup * ;
      101:
-  *  102: This is the current line
+     102: This is the current line
      103:
   ---------------------------------------------------------------
 
@@ -19,6 +19,7 @@ And it's visual, with some simple key bindings.
 ~~~
 'SourceFile var
 'FID var
+'FOUT var
 
 #0 sys:argv s:keep !SourceFile
 
@@ -36,7 +37,7 @@ And it's visual, with some simple key bindings.
   dup @CurrentLine eq? [ '*_ puts ] [ '__ puts ] choose ; 
 
 :skip-to
-  @CurrentLine n:dec #0 n:max [ @FID file:read-line drop ] times ;
+  @CurrentLine #0 n:max [ @FID file:read-line drop ] times ;
 
 :display
   @SourceFile file:R file:open !FID
@@ -44,8 +45,15 @@ And it's visual, with some simple key bindings.
   @CurrentLine count-lines MAX-LINES n:min [ dup current pad putn n:inc ':_ puts @FID file:read-line puts nl ] times drop
   @FID file:close ;
 
+:delete-line
+  '/tmp/rre.edit file:W file:open !FID
+  #0 @SourceFile [ over @CurrentLine eq? [ drop ] [ [ @FID file:write ] s:for-each ] choose ASCII:LF @FID file:write n:inc ] file:for-each-line drop
+  @FID file:close
+  @SourceFile 'mv_/tmp/rre.edit_%s s:with-format unix:system ;
+
 :handler
     getc
+      $d [ delete-line                            ] case
       $j [ &CurrentLine v:inc                     ] case
       $k [ &CurrentLine v:dec                     ] case
       $q [ 'stty_-cbreak unix:system #0 unix:exit ] case
