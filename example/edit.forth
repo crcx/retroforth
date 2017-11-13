@@ -12,6 +12,7 @@ the rest of the code.
 ~~~
 'SourceFile var
 'CurrentLine var
+'LineCount var
 'FID var
 ~~~
 
@@ -59,7 +60,7 @@ advance to the currently selected line.
 
 ~~~
 :count-lines (-)
-  #0 @SourceFile [ drop n:inc ] file:for-each-line ;
+  #0 @SourceFile [ drop n:inc ] file:for-each-line dup !LineCount ;
 
 :skip-to
   @CurrentLine #0 n:max [ @FID file:read-line drop ] times ;
@@ -73,7 +74,7 @@ be adjusted for your chosen terminal.
 
 ~~~
 :clear-display (-)
-  ASCII:ESC '%c[2J s:with-format puts nl ;
+  ASCII:ESC dup '%c[2J%c[0;0H s:with-format puts nl ;
 ~~~
 
 This just displays the separator bars.
@@ -115,7 +116,8 @@ The indicator is an asterisk, and visually marks the current line.
   putn ':_ puts ;
 
 :display-line (n-n)
-  dup mark-if-current pad line# n:inc @FID file:read-line puts nl ;
+  dup @LineCount lteq?
+  [ dup mark-if-current pad line# n:inc @FID file:read-line puts nl ] if ;
 ~~~
 
 ~~~
