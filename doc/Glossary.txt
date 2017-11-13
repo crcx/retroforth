@@ -3421,6 +3421,18 @@ Class Handler: class:word | Namespace: s | Interface Layer: all
 
 ----------------------------------------------------------------
 
+s:tokenize
+
+  Data:  sc-a
+  Addr:  -
+  Float: -
+
+Takes a string and a character to use as a separator. It splits the string into a set of substrings and returns a set containing pointers to each of them.
+
+Class Handler: class:word | Namespace: {n/a} | Interface Layer: {n/a}
+
+----------------------------------------------------------------
+
 s:trim
 
   Data:  s-s

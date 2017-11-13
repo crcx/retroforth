@@ -276,6 +276,7 @@ s:to-float	s-	-	-F	Convert a string representation into a floating point value.	
 s:to-lower	s-s	-	-	Convert uppercase ASCII characters in a string to lowercase.			class:word	{n/a}	{n/a}	s	all	
 s:to-number	s-n	-	-	Convert a string to a number.			class:word	{n/a}	{n/a}	s	all	
 s:to-upper	s-s	-	-	Convert lowercase ASCII characters in a string to uppercase.			class:word	{n/a}	{n/a}	s	all	
+s:tokenize	sc-a	-	-	Takes a string and a character to use as a separator. It splits the string into a set of substrings and returns a set containing pointers to each of them.			class:word	{n/a}	{n/a}	{n/a}	{n/a}	
 s:trim	s-s	-	-	Trim leading and trailing whitespace from a string.			class:word	{n/a}	{n/a}	s	all	
 s:trim-left	s-s	-	-	Trim leading whitespace from a string.			class:word	{n/a}	{n/a}	s	all	
 s:trim-right	s-s	-	-	Trim trailing whitespace from a string.			class:word	{n/a}	{n/a}	s	all	

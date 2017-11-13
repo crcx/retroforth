@@ -907,6 +907,24 @@ located.
 }}
 ~~~
 
+`s:tokenize` takes a string and a character to use as a separator. It
+splits the string into a set of substrings and returns a set containing
+pointers to each of them.
+
+~~~
+{{
+  'Split-On var
+  :match?    (c-f) @Split-On eq? ;
+  :terminate (s-s) #0 over n:dec store ;
+  :step      (ss-s) [ n:inc ] dip match? [ dup , terminate ] if ;
+---reveal---
+  :s:tokenize (sc-a)
+    !Split-On s:keep
+    here #0 , [ dup , dup [ step ] s:for-each drop ] dip
+    here over - n:dec over store ;
+}}
+~~~
+
 Ok, This is a bit of a hack, but very useful at times.
 
 Assume you have a bunch of values:
