@@ -63,7 +63,7 @@ advance to the currently selected line.
   #0 @SourceFile [ drop n:inc ] file:for-each-line dup !LineCount ;
 
 :skip-to
-  @CurrentLine #0 n:max [ @FID file:read-line drop ] times ;
+  @CurrentLine MAX-LINES #2 / - #0 n:max [ @FID file:read-line drop ] times ;
 ~~~
 
 Now for words to format the output. This should all be pretty clear in
@@ -124,7 +124,7 @@ The indicator is an asterisk, and visually marks the current line.
 :display (-)
   @SourceFile file:R file:open !FID
   clear-display header ---- skip-to
-  @CurrentLine count-lines MAX-LINES n:min [ display-line ] times drop
+  @CurrentLine MAX-LINES #2 / - #0 n:max count-lines MAX-LINES n:min [ display-line ] times drop
   ---- dump-stack
   @FID file:close ;
 ~~~
