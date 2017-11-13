@@ -925,6 +925,25 @@ pointers to each of them.
 }}
 ~~~
 
+`s:tokenize-on-string` is like `s:tokenize`, but for strings.
+
+~~~
+{{
+  'Tokens var
+  'Needle var
+  :-match? (s-sf) dup @Needle s:contains-string? ;
+  :save-token (s-s) @Needle s:split-on-string s:keep buffer:add n:inc ;
+  :tokens-to-set (-a) here @Tokens buffer:size dup , [ fetch-next ,  ] times drop ;
+---reveal---
+  :s:tokenize-on-string (ss-a)
+    [ s:keep !Needle here #8192 + !Tokens
+      @Tokens buffer:set
+      [ repeat -match? 0; drop save-token again ] call s:keep buffer:add
+      tokens-to-set ] buffer:preserve ;
+}}
+~~~
+
+
 Ok, This is a bit of a hack, but very useful at times.
 
 Assume you have a bunch of values:
