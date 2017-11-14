@@ -3985,6 +3985,18 @@ Example #1:
 
 ----------------------------------------------------------------
 
+unix:sleep
+
+  Data:  n-
+  Addr:  -
+  Float: -
+
+Sleep for the specified number of seconds.
+
+Class Handler: class:word | Namespace: unix | Interface Layer: rre
+
+----------------------------------------------------------------
+
 unix:system
 
   Data:  s-
