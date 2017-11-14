@@ -108,9 +108,13 @@ The `pad` word is used to make sure line numbers are all the same width.
 
 A line has a form:
 
-    <indicator><number>: <text>
+    <indicator><number>: <text><eol>
 
 The indicator is an asterisk, and visually marks the current line.
+
+EOL is optional. If `ShowEOL` is `TRUE`, it'll display a ~ at the end
+of each line. This is useful when looking for trailing whitespace. The
+indicator can be toggled via the ~ key.
 
 ~~~
 :mark-if-current (n-n)
@@ -119,12 +123,13 @@ The indicator is an asterisk, and visually marks the current line.
 :line# (n-)
   putn ':_ puts ;
 
+:eol (-)
+  @ShowEOL [ $~ putc ] if nl ;
+
 :display-line (n-n)
   dup @LineCount lteq?
-  [ dup mark-if-current pad line# n:inc @FID file:read-line puts @ShowEOL [ $~ putc ] if nl ] if ;
-~~~
+  [ dup mark-if-current pad line# n:inc @FID file:read-line puts eol ] if ;
 
-~~~
 :display (-)
   @SourceFile file:R file:open !FID
   clear-display header ---- skip-to
@@ -134,12 +139,7 @@ The indicator is an asterisk, and visually marks the current line.
 ~~~
 
 With the code to display the file done, I can proceed on to words for
-handling editing. First, is a word to delete contents of the current
-line.
-
-The process here is to just write all but the current line to a dummy
-file, replacing the current line text with a newline. Then replace the
-original file with the dummy one.
+handling editing.
 
 I add a custom combinator, `process-lines` to iterate over the lines in
 the file. This takes a quote, and runs it once for each line in the file.
@@ -149,26 +149,36 @@ counter. This also sets up `FID` as a pointer to the temporary file where
 changes can be written. The combinator will replace the original file
 after execution completes.
 
+Additionally, I define a word named `current?` which returns `TRUE` if
+the specified line is the current one. This is just to aid in later
+readability.
+
 ~~~
 :process-lines (q-)
   TEMP-FILE file:W file:open !FID
   [ #0 @SourceFile ] dip file:for-each-line drop
   @FID file:close
   @SourceFile TEMP-FILE 'mv_%s_%s s:with-format unix:system ;
-~~~
 
-~~~
 :current? (n-nf)
   over @CurrentLine eq? ;
-
-:delete-line (-)
- [ current? [ drop '_ ] if file:puts n:inc ] process-lines ;
 ~~~
+
+So first up, a word to delete all text in the current line.
+
+~~~
+:delete-line (-)
+  [ current? [ drop '_ ] if file:puts n:inc ] process-lines ;
+~~~
+
+Then a word to discard the current line, removing it from the file.
 
 ~~~
 :kill-line (-)
   [ current? [ drop ] [ file:puts ] choose n:inc ] process-lines ;
 ~~~
+
+And the inverse, a word to inject a new line into the file.
 
 ~~~
 :add-line (-)
@@ -196,17 +206,22 @@ replaces the original file with the dummy one.
   [ current? [ drop gets ] if file:puts n:inc ] process-lines ;
 ~~~
 
-~~~
-:indent-line (-)
-  [ current? [ ASCII:SPACE @FID file:write ] if file:puts n:inc ] process-lines ;
-:dedent-line (-)
-  [ current? [ n:inc ] if file:puts n:inc ] process-lines ;
-~~~
+The next three are just things I find useful. They allow me to indent,
+remove indention, and trim trailing whitespace at a single keystroke.
 
 ~~~
+:indent-line (-)
+  [ current? [ ASCII:SPACE dup @FID file:write @FID file:write ] if file:puts n:inc ] process-lines ;
+
+:dedent-line (-)
+  [ current? [ n:inc n:inc ] if file:puts n:inc ] process-lines ;
+
 :trim-trailing (-)
   [ current? [ s:trim-right ] if file:puts n:inc ] process-lines ;
 ~~~
+
+And then a very limited form of copy/paste, which moves a copy of the
+current line into a `CopiedLine` buffer and back again.
 
 ~~~
 :copy-line (-)
@@ -215,6 +230,8 @@ replaces the original file with the dummy one.
 :paste-line (-)
   [ current? [ drop &CopiedLine ] if file:puts n:inc ] process-lines ;
 ~~~
+
+One more command: a word to jump to a particular line in the file.
 
 ~~~
 :goto (-)
@@ -232,7 +249,9 @@ And now tie everything together. There's a key handler and a top level loop.
   $1 'replace_txt describe | $2 'insert_line_ describe | $3 'trim________ describe |
   $4 'erase_text_ describe | $5 'delete_line_ describe nl
   $j 'down_______ describe | $k 'up__________ describe | $g 'goto_line___ describe | 
-  $c 'copy_______ describe | $v 'paste_______ describe nl ;
+  $c 'copy_______ describe | $v 'paste_______ describe nl
+  $< 'dedent_____ describe | $> 'indent______ describe | $~ 'toggle_eol__ describe |
+  $_ '___________ describe | $q 'quit________ describe nl ;
 ~~~
 
 ~~~
