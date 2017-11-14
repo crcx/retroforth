@@ -197,6 +197,13 @@ replaces the original file with the dummy one.
 ~~~
 
 ~~~
+:indent-line (-)
+  [ current? [ ASCII:SPACE @FID file:write ] if file:puts n:inc ] process-lines ;
+:dedent-line (-)
+  [ current? [ n:inc ] if file:puts n:inc ] process-lines ;
+~~~
+
+~~~
 :trim-trailing (-)
   [ current? [ s:trim-right ] if file:puts n:inc ] process-lines ;
 ~~~
@@ -240,6 +247,8 @@ And now tie everything together. There's a key handler and a top level loop.
       $~ [ @ShowEOL not !ShowEOL                  ] case
       $c [ copy-line                              ] case
       $v [ paste-line                             ] case
+      $< [ dedent-line                            ] case
+      $> [ indent-line                            ] case
       $j [ &CurrentLine v:inc constrain           ] case
       $k [ &CurrentLine v:dec constrain           ] case
       $g [ goto               constrain           ] case
