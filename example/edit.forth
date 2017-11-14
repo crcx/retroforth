@@ -219,7 +219,10 @@ And now tie everything together. There's a key handler and a top level loop.
   $4 'erase_text_ describe | $5 'delete_line_ describe nl
   $j 'down_______ describe | $k 'up__________ describe | $g 'goto_line___ describe | 
   $c 'copy_______ describe | $v 'paste_______ describe nl ;
+~~~
 
+~~~
+:constrain (-) &CurrentLine #0 @LineCount v:limit ;
 :handler
     getc
       $1 [ add-line                               ] case
@@ -228,9 +231,9 @@ And now tie everything together. There's a key handler and a top level loop.
       $5 [ kill-line                              ] case
       $c [ copy-line                              ] case
       $v [ paste-line                             ] case
-      $j [ &CurrentLine v:inc &CurrentLine #0 #10000 v:limit ] case
-      $k [ &CurrentLine v:dec &CurrentLine #0 #10000 v:limit ] case
-      $g [ goto &CurrentLine #0 #10000 v:limit    ] case
+      $j [ &CurrentLine v:inc constrain           ] case
+      $k [ &CurrentLine v:dec constrain           ] case
+      $g [ goto               constrain           ] case
       $q [ 'stty_-cbreak unix:system #0 unix:exit ] case
     drop ;
 
