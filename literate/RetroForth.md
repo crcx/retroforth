@@ -606,7 +606,7 @@ Trimming removes leading (`s:trim-left`) or trailing (`s:trim-right`)
 spaces from a string. `s:trim` removes both leading and trailing spaces.
 
 ~~~
-:s:trim-left (s-s) s:temp [ fetch-next [ #32 eq? ] [ n:zero? ] bi and ] while n:dec ;
+:s:trim-left (s-s) s:temp [ fetch-next [ #32 eq? ] [ n:-zero? ] bi and ] while n:dec ;
 :s:trim-right (s-s) s:temp s:reverse s:trim-left s:reverse ;
 :s:trim (s-s) s:trim-right s:trim-left ;
 ~~~
