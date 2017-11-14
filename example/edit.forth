@@ -13,7 +13,9 @@ the rest of the code.
 'SourceFile var
 'CurrentLine var
 'LineCount var
+'ShowEOL var
 'FID var
+'CopiedLine d:create #1025 allot
 ~~~
 
 The configuration here is for two items. The number of lines from the
@@ -50,6 +52,8 @@ an interface like:
      101:
      102: This is the current line
      103:
+  ---------------------------------------------------------------
+  copied: ....
   ---------------------------------------------------------------
   j: down | k: up | ... other helpful text ...
 
@@ -117,7 +121,7 @@ The indicator is an asterisk, and visually marks the current line.
 
 :display-line (n-n)
   dup @LineCount lteq?
-  [ dup mark-if-current pad line# n:inc @FID file:read-line puts nl ] if ;
+  [ dup mark-if-current pad line# n:inc @FID file:read-line puts @ShowEOL [ $~ putc ] if nl ] if ;
 ~~~
 
 ~~~
@@ -125,7 +129,7 @@ The indicator is an asterisk, and visually marks the current line.
   @SourceFile file:R file:open !FID
   clear-display header ---- skip-to
   @CurrentLine MAX-LINES #2 / - #0 n:max count-lines MAX-LINES n:min [ display-line ] times drop
-  ---- dump-stack
+  ---- 'copied:_ puts &CopiedLine puts nl ---- dump-stack
   @FID file:close ;
 ~~~
 
@@ -193,8 +197,11 @@ replaces the original file with the dummy one.
 ~~~
 
 ~~~
-'CopiedLine d:create #1025 allot
+:trim-trailing (-)
+  [ current? [ s:trim-right ] if file:puts n:inc ] process-lines ;
+~~~
 
+~~~
 :copy-line (-)
   [ current? [ dup &CopiedLine s:copy ] if file:puts n:inc ] process-lines ;
 
@@ -215,7 +222,7 @@ And now tie everything together. There's a key handler and a top level loop.
   swap putc $: putc puts ;
 
 :help
-  $1 'insert_line describe | $2 'replace_text describe | $3 '____________ describe |
+  $1 'replace_txt describe | $2 'insert_line_ describe | $3 'trim________ describe |
   $4 'erase_text_ describe | $5 'delete_line_ describe nl
   $j 'down_______ describe | $k 'up__________ describe | $g 'goto_line___ describe | 
   $c 'copy_______ describe | $v 'paste_______ describe nl ;
@@ -225,10 +232,12 @@ And now tie everything together. There's a key handler and a top level loop.
 :constrain (-) &CurrentLine #0 @LineCount v:limit ;
 :handler
     getc
-      $1 [ add-line                               ] case
-      $2 [ replace-line                           ] case
+      $1 [ replace-line                           ] case
+      $2 [ add-line                               ] case
+      $3 [ trim-trailing                          ] case
       $4 [ delete-line                            ] case
       $5 [ kill-line                              ] case
+      $~ [ @ShowEOL not !ShowEOL                  ] case
       $c [ copy-line                              ] case
       $v [ paste-line                             ] case
       $j [ &CurrentLine v:inc constrain           ] case
