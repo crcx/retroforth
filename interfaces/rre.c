@@ -821,7 +821,13 @@ int main(int argc, char **argv) {
   sys_argc = argc;
   sys_argv = argv;
 
-  include_file(argv[1]);
+  if (argc > 1) {
+    if (strcmp(argv[1], "-i") == 0) {
+      execute(d_xt_for("listen", Dictionary));
+    } else {
+      include_file(argv[1]);
+    }
+  }
 
   if (sp >= 1)
     dump_stack();

@@ -299,3 +299,26 @@ once for each line in a file. This makes some things trivial. E.g., a simple
     file:W file:open !FID [ @FID file:write ] s:for-each @FID file:close ; 
 }}
 ~~~
+
+# Interactive Listener
+
+~~~
+:bye
+  'stty_-cbreak unix:system #0 unix:exit ;
+
+{{
+  :version (-)    @Version #100 /mod putn $. putc putn ;
+  :banner  (-)    'RETRO_12_(rx- puts version $) putc nl
+                  EOM putn '_MAX,_TIB_@_1025,_Heap_@_ puts here putn nl ;
+  :eol?    (c-f)  [ ASCII:CR eq? ] [ ASCII:LF eq? ] [ ASCII:SPACE eq? ] tri or or ;
+  :valid?  (s-sf) dup s:length n:-zero? ;
+  :ok      (-)    compiling? [ nl 'Ok_ puts ] -if ;
+  :gets    (-s)   [ #1025 buffer:set
+                    [ getc dup buffer:add eol? ] until
+                    buffer:start s:chop ] buffer:preserve ;
+---reveal---
+  :listen  (-)
+    'stty_cbreak unix:system
+    banner ok repeat gets valid? [ interpret ok ] [ drop ] choose again ;
+}}
+~~~

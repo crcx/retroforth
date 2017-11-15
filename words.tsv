@@ -344,3 +344,5 @@ xor	mn-o	-	-	Perform a bitwise XOR operation.			class:primitive	{n/a}	{n/a}	glob
 {{	-	-	-	Begin a lexically scoped area.			class:word	{n/a}	{n/a}	global	all	
 }as	f-	-	-	End an assembly section			class:macro	{n/a}	{n/a}	global	all	
 }}	-	-	-	End a lexically scoped area.			class:word	{n/a}	{n/a}	global	all	
+bye	-	-	-	Exit RETRO.			class:word	{n/a}	{n/a}	global	rre	
+listen	-	-	-	Run interactive "listener" (a REPL).			class:word	{n/a}	{n/a}	global	rre	
