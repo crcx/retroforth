@@ -24,7 +24,7 @@ when editing.
 
 ~~~
 #80 'COLS      const
-#12 'MAX-LINES const
+#16 'MAX-LINES const
 '/tmp/rre.edit 'TEMP-FILE s:const
 ~~~
 
@@ -52,8 +52,6 @@ an interface like:
      101:
      102: This is the current line
      103:
-  ---------------------------------------------------------------
-  copied: ....
   ---------------------------------------------------------------
   j: down | k: up | ... other helpful text ...
 
@@ -134,8 +132,7 @@ indicator can be toggled via the ~ key.
   @SourceFile file:R file:open !FID
   clear-display header ---- skip-to
   @CurrentLine MAX-LINES #2 / - #0 n:max count-lines MAX-LINES n:min [ display-line ] times drop
-  ---- 'copied:_ puts &CopiedLine puts nl ---- dump-stack
-  @FID file:close ;
+  ---- @FID file:close ;
 ~~~
 
 With the code to display the file done, I can proceed on to words for
@@ -206,8 +203,9 @@ replaces the original file with the dummy one.
   [ current? [ drop gets ] if file:puts n:inc ] process-lines ;
 ~~~
 
-The next three are just things I find useful. They allow me to indent,
-remove indention, and trim trailing whitespace at a single keystroke.
+The next four are just things I find useful. They allow me to indent,
+remove indention, trim trailing whitespace, and insert a code block
+delimiter at a single keystroke.
 
 ~~~
 :indent-line (-)
@@ -218,6 +216,9 @@ remove indention, and trim trailing whitespace at a single keystroke.
 
 :trim-trailing (-)
   [ current? [ s:trim-right ] if file:puts n:inc ] process-lines ;
+
+:code-block (-)
+  [ current? [ drop '~~~ ] if file:puts n:inc ] process-lines ;
 ~~~
 
 And then a very limited form of copy/paste, which moves a copy of the
@@ -231,14 +232,13 @@ current line into a `CopiedLine` buffer and back again.
   [ current? [ drop &CopiedLine ] if file:puts n:inc ] process-lines ;
 ~~~
 
-One more command: a word to jump to a particular line in the file.
+One more set of commands: jump to a particular line in the file, jump
+to the start or end of the file.
 
 ~~~
 :goto (-)
   gets s:to-number !CurrentLine ;
-~~~
 
-~~~
 :goto-start (-)
   #0 !CurrentLine ;
 
@@ -249,17 +249,29 @@ One more command: a word to jump to a particular line in the file.
 And now tie everything together. There's a key handler and a top level loop.
 
 ~~~
-:| '_|_ puts ;
 :describe (cs-)
   swap putc $: putc puts ;
+:| describe '_|_ puts ;
 
 :help
-  $1 'replace_txt describe | $2 'insert_line_ describe | $3 'trim________ describe |
-  $4 'erase_text_ describe | $5 'delete_line_ describe nl
-  $j 'down_______ describe | $k 'up__________ describe | $g 'goto_line___ describe | 
-  $c 'copy_______ describe | $v 'paste_______ describe nl
-  $< 'dedent_____ describe | $> 'indent______ describe | $~ 'toggle_eol__ describe |
-  $_ '___________ describe | $q 'quit________ describe nl ;
+  $1 'replace_ |
+  $2 'insert__ |
+  $3 'trim____ |
+  $4 'erase___ |
+  $5 'delete__ |
+  $j 'down____ | nl
+  $k 'up______ |
+  $g 'goto____ |
+  $[ 'start___ |
+  $] 'end_____ |
+  $c 'copy____ |
+  $v 'paste___ | nl
+  $< 'dedent__ |
+  $> 'indent__ |
+  $~ 'mark_eol |
+  $| '~~~_____ |
+  '___________|_ puts
+  $q 'quit____ | nl ;
 ~~~
 
 ~~~
@@ -276,6 +288,7 @@ And now tie everything together. There's a key handler and a top level loop.
       $v [ paste-line                             ] case
       $< [ dedent-line                            ] case
       $> [ indent-line                            ] case
+      $| [ code-block                             ] case
       $[ [ goto-start                             ] case
       $] [ goto-end                               ] case
       $j [ &CurrentLine v:inc constrain           ] case
