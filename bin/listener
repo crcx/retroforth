@@ -1,34 +1,5 @@
 #!/usr/bin/env rre
 
-RETRO12: Interactive Listener
----------------------------------------------------------------------
-This is a bit of trickery using shell scripting and RRE to implement
-an interactive environment for Retro.
----------------------------------------------------------------------
-To work as expected, input should process as it's entered and not be
-line buffered. I use `stty` to set this mode.
-
 ~~~
-'stty_cbreak unix:system
-~~~
-
-~~~
-:bye
-  'stty_-cbreak unix:system #0 unix:exit ;
-
-{{
-  :version (-)    @Version #100 /mod putn $. putc putn ;
-  :banner  (-)    'RETRO_12_(rx- puts version $) putc nl
-                  EOM putn '_MAX,_TIB_@_1025,_Heap_@_ puts here putn nl ;
-  :eol?    (c-f)  [ ASCII:CR eq? ] [ ASCII:LF eq? ] [ ASCII:SPACE eq? ] tri or or ;
-  :valid?  (s-sf) dup s:length n:-zero? ;
-  :ok      (-)    compiling? [ nl 'Ok_ puts ] -if ;
-  :gets    (-s)   [ #1025 buffer:set
-                    [ getc dup buffer:add eol? ] until
-                    buffer:start s:chop ] buffer:preserve ;
----reveal---
-  :listen  (-)    banner ok repeat gets valid? [ interpret ok ] [ drop ] choose again ;
-}}
-
 listen
 ~~~
