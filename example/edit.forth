@@ -125,7 +125,7 @@ indicator can be toggled via the ~ key.
   @ShowEOL [ $~ putc ] if nl ;
 
 :display-line (n-n)
-  dup @LineCount lteq?
+  dup @LineCount lt?
   [ dup mark-if-current pad line# n:inc @FID file:read-line puts eol ] if ;
 
 :display (-)
@@ -243,7 +243,7 @@ to the start or end of the file.
   #0 !CurrentLine ;
 
 :goto-end (-)
-  @LineCount !CurrentLine ;
+  @LineCount n:dec !CurrentLine ;
 ~~~
 
 And now tie everything together. There's a key handler and a top level loop.
@@ -275,7 +275,7 @@ And now tie everything together. There's a key handler and a top level loop.
 ~~~
 
 ~~~
-:constrain (-) &CurrentLine #0 @LineCount v:limit ;
+:constrain (-) &CurrentLine #0 @LineCount n:dec v:limit ;
 :handler
     getc
       $1 [ replace-line                           ] case

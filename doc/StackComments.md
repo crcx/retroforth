@@ -4,7 +4,7 @@ Most words in RETRO have a stack comment. These look like:
     (nn-n)
 
 As with all comments, a stack comment begins with ( and should end with 
- a ). There are two parts to the comment. On the left side of the - is
+a ). There are two parts to the comment. On the left side of the - is
 what the word *consumes*. On the right is what it *leaves*.
 
 RETRO uses a short notation, with one character per value taken or left.
