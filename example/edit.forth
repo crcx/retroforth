@@ -238,6 +238,14 @@ One more command: a word to jump to a particular line in the file.
   gets s:to-number !CurrentLine ;
 ~~~
 
+~~~
+:goto-start (-)
+  #0 !CurrentLine ;
+
+:goto-end (-)
+  @LineCount !CurrentLine ;
+~~~
+
 And now tie everything together. There's a key handler and a top level loop.
 
 ~~~
@@ -268,6 +276,8 @@ And now tie everything together. There's a key handler and a top level loop.
       $v [ paste-line                             ] case
       $< [ dedent-line                            ] case
       $> [ indent-line                            ] case
+      $[ [ goto-start                             ] case
+      $] [ goto-end                               ] case
       $j [ &CurrentLine v:inc constrain           ] case
       $k [ &CurrentLine v:dec constrain           ] case
       $g [ goto               constrain           ] case
