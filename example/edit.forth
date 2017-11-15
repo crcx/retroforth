@@ -155,7 +155,7 @@ readability.
   TEMP-FILE file:W file:open !FID
   [ #0 @SourceFile ] dip file:for-each-line drop
   @FID file:close
-  @SourceFile TEMP-FILE 'mv_%s_%s s:with-format unix:system ;
+  here TEMP-FILE file:slurp here @SourceFile file:spew ;
 
 :current? (n-nf)
   over @CurrentLine eq? ;
