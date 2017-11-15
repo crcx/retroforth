@@ -914,6 +914,18 @@ Class Handler: class:word | Namespace: buffer | Interface Layer: all
 
 ----------------------------------------------------------------
 
+bye
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Exit RETRO.
+
+Class Handler: class:word | Namespace: global | Interface Layer: rre
+
+----------------------------------------------------------------
+
 c:-consonant?
 
   Data:  c-f
@@ -2271,6 +2283,18 @@ interpret
 Interpret a single input token.
 
 Class Handler: class:word | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+listen
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Run interactive "listener" (a REPL).
+
+Class Handler: class:word | Namespace: global | Interface Layer: rre
 
 ----------------------------------------------------------------
 

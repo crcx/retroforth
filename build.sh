@@ -40,3 +40,7 @@ mv rre ../bin
 mv repl ../bin
 rm *.o
 cd ..
+
+cat words.tsv | sort >/tmp/words
+mv /tmp/words words.tsv
+./bin/rre glossary.forth export glossary >doc/Glossary.txt

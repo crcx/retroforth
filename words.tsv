@@ -74,6 +74,7 @@ buffer:preserve	q-	-	-	Save and restore the current buffer before and after exec
 buffer:set	a-	-	-	Assign a new buffer as the current one.			class:word	{n/a}	{n/a}	buffer	all	
 buffer:size	-n	-	-	Return the number of cells in the buffer.			class:word	{n/a}	{n/a}	buffer	all	
 buffer:start	-a	-	-	Return the start address of the current buffer.			class:word	{n/a}	{n/a}	buffer	all	
+bye	-	-	-	Exit RETRO.			class:word	{n/a}	{n/a}	global	rre	
 c:-consonant?	c-f	-	-	Return TRUE if character is a not consonant or FALSE otherwise.			class:word	{n/a}	{n/a}	c	all	
 c:-digit?	c-f	-	-	Return TRUE if character is a not numeric digit or FALSE otherwise.			class:word	{n/a}	{n/a}	c	all	
 c:-lowercase?	c-f	-	-	Return TRUE if character is not lowercase or FALSE otherwise.			class:word	{n/a}	{n/a}	c	all	
@@ -185,6 +186,7 @@ i	s-	-	-	Assemble the instructions specified by the string into the current asse
 if	fq-	-	-	Execute the quote if the flag is `TRUE`.			class:word	{n/a}	{n/a}	global	all	
 immediate	-	-	-	Change the class of the most recently defined word to `class:macro`.			class:word	{n/a}	{n/a}	global	all	
 interpret	s-	-	-	Interpret a single input token.			class:word	{n/a}	{n/a}	global	all	
+listen	-	-	-	Run interactive "listener" (a REPL).			class:word	{n/a}	{n/a}	global	rre	
 lt?	nn-f	-	-	Compare n1 and n2. Return `TRUE` if n1 is less than n2, or `FALSE` otherwise.			class:primitive	{n/a}	{n/a}	global	all	
 lteq?	nn-f	-	-	Compare n1 and n2. Return `TRUE` if n1 is less than or equal to n2, or `FALSE` otherwise.			class:word	{n/a}	{n/a}	global	all	
 mod	nm-o	-	-	Divide `n` by `m` and return the remainder.			class:word	{n/a}	{n/a}	global	all	
@@ -344,5 +346,3 @@ xor	mn-o	-	-	Perform a bitwise XOR operation.			class:primitive	{n/a}	{n/a}	glob
 {{	-	-	-	Begin a lexically scoped area.			class:word	{n/a}	{n/a}	global	all	
 }as	f-	-	-	End an assembly section			class:macro	{n/a}	{n/a}	global	all	
 }}	-	-	-	End a lexically scoped area.			class:word	{n/a}	{n/a}	global	all	
-bye	-	-	-	Exit RETRO.			class:word	{n/a}	{n/a}	global	rre	
-listen	-	-	-	Run interactive "listener" (a REPL).			class:word	{n/a}	{n/a}	global	rre	
