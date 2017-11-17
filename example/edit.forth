@@ -33,6 +33,9 @@ Get the name of the file to edit. If no file is provided, exit.
 ~~~
 sys:argc n:zero? [ #0 unix:exit ] if
 #0 sys:argv s:keep !SourceFile
+@SourceFile 'new s:eq?
+  [ #1 sys:argv s:keep !SourceFile
+    @SourceFile file:A file:open file:close ] if
 ~~~
 
 This is just a shortcut to make writing strings to the current file
