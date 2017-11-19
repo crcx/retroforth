@@ -406,6 +406,31 @@ to use.
 ;
 ~~~
 
+~~~
+:display-result (-)
+  field:name dup '0%s\tgopher:describe_%s\tforthworks.com\t7200\n s:with-format puts ;
+
+:gopher:list-words (-)
+ 'words.tsv [ s:keep !SourceLine display-result ] file:for-each-line ;
+~~~
+
+~~~
+:eol? (c-f)
+  [ ASCII:CR eq? ] [ ASCII:LF eq? ] [ ASCII:HT eq? ] tri or or ;
+
+:gets (a-)
+  buffer:set [ getc dup buffer:add eol? not ] while ;
+
+'Selector d:create
+  #1024 allot
+
+:gopher:serve
+  &Selector gets
+  &Selector #0 #4 s:substr 'desc s:eq?
+  [ &Selector puts nl ]
+  [ gopher:list-words ] choose ;
+~~~
+
 # Finish
 
 First, a word to handle command line arguments.
@@ -418,6 +443,7 @@ First, a word to handle command line arguments.
   'edit     [ handle-edit            ] s:case
   'add      [ add-word               ] s:case
   'delete   [ delete-entry           ] s:case
+  'gopher   [ gopher:serve  ] s:case
   drop show-help ;
 ~~~
 
