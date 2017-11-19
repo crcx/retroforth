@@ -455,11 +455,20 @@ And then the actual top level server.
 'Selector d:create
   #1024 allot
 
+:http:display (-)
+  #0 'words.tsv [ s:keep !SourceLine dup-pair eq? [ '<pre> puts display-result '</pre> puts ] if n:inc ] file:for-each-line drop-pair ;
+
+:handle-http
+  &Selector ASCII:SPACE s:tokenize #1 set:nth fetch
+  dup s:length #1 eq?
+    [ drop http:list-words ]
+    [ n:inc s:to-number http:display ] choose ;
+
 :gopher:serve
   &Selector gets
   &Selector #0 #5 s:substr
   '/desc [ &Selector ASCII:SPACE s:tokenize #1 set:nth fetch s:chop s:keep !Target gopher:display ] s:case
-  'GET_/ [ 'HTTP/1.0_200_OK\nContent-Type:_text/html\n\n s:with-format puts http:list-words ] s:case
+  'GET_/ [ 'HTTP/1.0_200_OK\nContent-Type:_text/html\n\n s:with-format puts handle-http ] s:case
   drop gopher:list-words ;
 ~~~
 
