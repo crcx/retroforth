@@ -1,15 +1,24 @@
-*	nn-n	-	-	Multiply `n1` by `n2` and return the result.			class:primitive	{n/a}	{n/a}	global	all	
-+	nn-n	-	-	Add `n1` to `n2` and return the result.			class:primitive	  #1 #2 + 	{n/a}	global	all	
-,	n-	-	-	Store the specified value into the memory at `here` and increment `Heap` by 1.			class:word	{n/a}	{n/a}	global	all	
 -	nn-n	-	-	Subtract `n1` from `n2` and return the difference.			class:primitive	{n/a}	{n/a}	global	all	
 ---reveal---	-	-	-	Switch to the exposed (public) portion of a lexical namespace.			class:word	{n/a}	{n/a}	global	all	
 -eq?	nn-f	-	-	Compare two values for inequality. Returns `TRUE` if they are not equal or `FALSE` otherwise.			class:primitive	{n/a}	{n/a}	global	all	
 -if	fq-	-	-	Execute the quotation if the flag is `FALSE`.			class:word	{n/a}	{n/a}	global	all	
-/	mn-o	-	-	Divide `m` by `n` and return the result.			class:word	{n/a}	{n/a}	global	all	
-/mod	nm-op	-	-	Divide `n` by `m` and return the result and remainder.			class:primitive	{n/a}	{n/a}	global	all	
-0;	n-n || n-	-	-	If `n` is zero, drop `n` and exit the current word. If non-zero, leave `n` alone and allow execution to continue.			class:macro	{n/a}	{n/a}	global	all	
+,	n-	-	-	Store the specified value into the memory at `here` and increment `Heap` by 1.			class:word	{n/a}	{n/a}	global	all	
 ;	-	-	-	End the current definition.			class:macro	{n/a}	{n/a}	global	all	
 ?dup	n-nn || n-n	-	-	Duplicate top value on stack if not zero. If zero, do nothing.			class:word	{n/a}	{n/a}	global	all	
+[	-	-	-	Begin a quotation.			class:macro	{n/a}	{n/a}	global	all	
+]	-	-	-	End a quotation.			class:macro	{n/a}	{n/a}	global	all	
+{{	-	-	-	Begin a lexically scoped area.			class:word	{n/a}	{n/a}	global	all	
+}}	-	-	-	End a lexically scoped area.			class:word	{n/a}	{n/a}	global	all	
+}as	f-	-	-	End an assembly section			class:macro	{n/a}	{n/a}	global	all	
+*	nn-n	-	-	Multiply `n1` by `n2` and return the result.			class:primitive	{n/a}	{n/a}	global	all	
+/	mn-o	-	-	Divide `m` by `n` and return the result.			class:word	{n/a}	{n/a}	global	all	
+/mod	nm-op	-	-	Divide `n` by `m` and return the result and remainder.			class:primitive	{n/a}	{n/a}	global	all	
++	nn-n	-	-	Add `n1` to `n2` and return the result.			class:primitive	  #1 #2 + 	{n/a}	global	all	
+0;	n-n || n-	-	-	If `n` is zero, drop `n` and exit the current word. If non-zero, leave `n` alone and allow execution to continue.			class:macro	{n/a}	{n/a}	global	all	
+again	-	-	-	Close an unconditional loop. Branches back to the prior `repeat`.			class:macro	{n/a}	{n/a}	global	all	
+allot	n-	-	-	Allocate the specified number of cells from the `Heap`.			class:word	{n/a}	{n/a}	global	all	
+and	nm-o	-	-	Perform a bitwise AND operation between the two provided values.			class:primitive	{n/a}	{n/a}	global	all	
+as{	-f	-	-	Begin an assembly section.			class:macro	{n/a}	{n/a}	global	all	
 ASCII:ACK	-n	-	-	Constant. Refers to specific ASCII code.			class:data	{n/a}	{n/a}	ASCII	all	
 ASCII:BEL	-n	-	-	Constant. Refers to specific ASCII code.			class:data	{n/a}	{n/a}	ASCII	all	
 ASCII:BS	-n	-	-	Constant. Refers to specific ASCII code.			class:data	{n/a}	{n/a}	ASCII	all	
@@ -44,28 +53,9 @@ ASCII:SUB	-n	-	-	Constant. Refers to specific ASCII code.			class:data	{n/a}	{n/
 ASCII:SYN	-n	-	-	Constant. Refers to specific ASCII code.			class:data	{n/a}	{n/a}	ASCII	all	
 ASCII:US	-n	-	-	Constant. Refers to specific ASCII code.			class:data	{n/a}	{n/a}	ASCII	all	
 ASCII:VT	-n	-	-	Constant. Refers to specific ASCII code.			class:data	{n/a}	{n/a}	ASCII	all	
-Compiler	-a	-	-	Variable. Holds the compiler state. If TRUE, the compiler is active. If FALSE, it is not.			class:data	{n/a}	{n/a}	global	all	
-Dictionary	-a	-	-	Variable. Holds a pointer to the most recent dictionary header.			class:data	{n/a}	{n/a}	global	all	
-EOM	-n	-	-	Constant. Returns the last addressable memory address.			class:word	{n/a}	{n/a}	global	all	
-FALSE	-n	-	-	Returns `0`, the value used to indicate a FALSE result.			class:word	{n/a}	{n/a}	global	all	
-FREE	-n	-	-	Returns the number of cells available to your application. This is the amount of memory, less the already consumed portion and buffers mapped for RETRO's internal use.			class:word	{n/a}	{n/a}	global	all	
-Heap	-a	-	-	Variable. Holds the address of the next available cell.			class:data	{n/a}	{n/a}	global	all	
-RewriteUnderscores	-a	-	-	Variable. When set to `TRUE`, RETRO will replace underscores in strings with spaces. When `FALSE`, RETRO does not.			class:data	{n/a}	{n/a}	global	all	
-STRINGS	-a	-	-	Return the address of the start of the temporary string pool.			class:word	{n/a}	{n/a}	global	all	
-ScopeList	-a	-	-	Variable. This holds some information used by `{{` and `}}`.			class:data	{n/a}	{n/a}	global	all	
-TRUE	-n	-	-	Returns `-1`, the value used to indicate a TRUE result.			class:word	{n/a}	{n/a}	global	all	
-TempStringMax	-a	-	-	Variable. Holds the maximum length of a temporary string.			class:data	{n/a}	{n/a}	global	all	
-TempStrings	-a	-	-	Variable. Holds the number of temporary strings.			class:data	{n/a}	{n/a}	global	all	
-Version	-a	-	-	Variable. This stores the version number.			class:data	{n/a}	{n/a}	global	all	
-[	-	-	-	Begin a quotation.			class:macro	{n/a}	{n/a}	global	all	
-]	-	-	-	End a quotation.			class:macro	{n/a}	{n/a}	global	all	
-again	-	-	-	Close an unconditional loop. Branches back to the prior `repeat`.			class:macro	{n/a}	{n/a}	global	all	
-allot	n-	-	-	Allocate the specified number of cells from the `Heap`.			class:word	{n/a}	{n/a}	global	all	
-and	nm-o	-	-	Perform a bitwise AND operation between the two provided values.			class:primitive	{n/a}	{n/a}	global	all	
-as{	-f	-	-	Begin an assembly section.			class:macro	{n/a}	{n/a}	global	all	
 bi	xqq-?	-	-	Execute q1 against x, then execute q2 against a copy of x.			class:word	{n/a}	{n/a}	global	all	
-bi*	xyqq-?	-	-	Execute q1 against x and q2 against y.			class:word	{n/a}	{n/a}	global	all	
 bi@	xyq-?	-	-	Execute q against x, then execute q against y.			class:word	{n/a}	{n/a}	global	all	
+bi*	xyqq-?	-	-	Execute q1 against x and q2 against y.			class:word	{n/a}	{n/a}	global	all	
 buffer:add	n-	-	-	Append a value to the current buffer.			class:word	{n/a}	{n/a}	buffer	all	
 buffer:empty	-	-	-	Reset the current buffer to an empty state.			class:word	{n/a}	{n/a}	buffer	all	
 buffer:end	-a	-	-	Return a pointer to the current end of the active buffer.			class:word	{n/a}	{n/a}	buffer	all	
@@ -105,6 +95,7 @@ compile:call	a-	-	-	Compile a call to the specified address into the current def
 compile:jump	a-	-	-	Compile a jump to the specified address into the current definition.			class:word	{n/a}	{n/a}	compile	all	
 compile:lit	n-	-	-	Compile the code to push a number to the stack into the current definition.			class:word	{n/a}	{n/a}	compile	all	
 compile:ret	-	-	-	Compile a return instruction into the current definition.			class:word	{n/a}	{n/a}	compile	all	
+Compiler	-a	-	-	Variable. Holds the compiler state. If TRUE, the compiler is active. If FALSE, it is not.			class:data	{n/a}	{n/a}	global	all	
 compiling?	-f	-	-	Return `TRUE` if compiler is on or `FALSE` otherwise.			class:word	{n/a}	{n/a}	global	all	
 const	ns-	-	-	Create a constant returning the specified value.			class:word	{n/a}	{n/a}	global	all	
 copy	sdl-	-	-	Copy `l` cells from memory at `s` to the memory at `d`. These should not overlap.			class:word	{n/a}	{n/a}	global	all	
@@ -125,6 +116,7 @@ d:name	d-s	-	-	Given a dictionary header, return the name field.			class:word	{n
 d:xt	d-a	-	-	Given a dictionary header, return the xt field.			class:word	{n/a}	{n/a}	d	all	
 data	-	-	-	Change the class of the most recently defined word to `class:data`.			class:word	{n/a}	{n/a}	global	all	
 depth	-n	-	-	Return the number of items on the stack.			class:word	{n/a}	{n/a}	global	all	
+Dictionary	-a	-	-	Variable. Holds a pointer to the most recent dictionary header.			class:data	{n/a}	{n/a}	global	all	
 dip	nq-n	-	-	Temporarily remove n from the stack, execute the quotation, and then restore n to the stack.			class:word	{n/a}	{n/a}	global	all	
 does	q-	-	-	Attach an action to the most recently created word. This is used in a manner similar to CREATE/DOES> in traditional Forth.			class:word	{n/a}	{n/a}	global	all	
 drop	n-	-	-	Discard the top value on the stack.			class:primitive	{n/a}	{n/a}	global	all	
@@ -132,14 +124,18 @@ drop-pair	nn-	-	-	Remove top two items on the stack.			class:word	{n/a}	{n/a}	gl
 dump-stack	-	-	-	Display the items on the data stack.			class:word	{n/a}	{n/a}	global	all	
 dup	n-nn	-	-	Duplicate the top item on the stack.			class:primitive	{n/a}	{n/a}	global	all	
 dup-pair	nm-nmnm	-	-	Duplicate the top two items on the stack.			class:word	{n/a}	{n/a}	global	all	
+EOM	-n	-	-	Constant. Returns the last addressable memory address.			class:word	{n/a}	{n/a}	global	all	
 eq?	nn-f	-	-	Compare two values for equality. Returns `TRUE` if they are equal or `FALSE` otherwise.			class:primitive	{n/a}	{n/a}	global	all	
 err:notfound	-	-	-	Error handler. Called when a word is not found by `interpret`.			class:word	{n/a}	{n/a}	err	all	
-f:*	-	-	FF-F	Multiply two floating point numbers, returning the result.			class:word	{n/a}	{n/a}	f	rre	
-f:+	-	-	FF-F	Add two floating point numbers, returning the result.			class:word	{n/a}	{n/a}	f	rre	
 f:-	-	-	FF-F	Subtract F2 from F1 returing the result.			class:word	{n/a}	{n/a}	f	rre	
 f:-eq?	-f	-	FF-	Compare two floating point values for inequality. Returns `TRUE` if they are not equal or `FALSE` otherwise.			class:word	{n/a}	{n/a}	f	rre	
+f:*	-	-	FF-F	Multiply two floating point numbers, returning the result.			class:word	{n/a}	{n/a}	f	rre	
 f:/	-	-	FF-F	Divide floating point value F1 by F2.			class:word	{n/a}	{n/a}	f	rre	
+f:+	-	-	FF-F	Add two floating point numbers, returning the result.			class:word	{n/a}	{n/a}	f	rre	
 f:abs	-	-	F-F	Return the absolute value for a floating point value.			class:word	{n/a}	{n/a}	f	rre	
+f:acos	-	-	f-f	Return the arc cosine of a floating point number.			class:word	{n/a}	{n/a}	f	rre	
+f:asin	-	-	f-f	Return the arc sine of a floating point number.			class:word	{n/a}	{n/a}	f	rre	
+f:atan	-	-	f-f	Return the arc tangent of a floating point number.			class:word	{n/a}	{n/a}	f	rre	
 f:cos	-	-	f-f	Return the cosine of a floating point number.			class:word	{n/a}	{n/a}	f	rre	
 f:depth	-n	-	-	Return the number of items on the floating point stack.			class:word	{n/a}	{n/a}	f	rre	
 f:drop	-	-	F-	Discard the top item on the floating point stack.			class:word	{n/a}	{n/a}	f	rre	
@@ -160,18 +156,18 @@ f:tan	-	-	f-f	Return the tangent of a floating point number.			class:word	{n/a}	
 f:to-number	-n	-	F-	Convert a floating point value into a number.			class:word	{n/a}	{n/a}	f	rre	
 f:to-string	-s	-	F-	Convert a floating point value into a string.			class:word	{n/a}	{n/a}	f	rre	
 f:tuck	-	-	FG-GFG	Tuck a copy of the top floating point value under the second one.			class:word	{n/a}	{n/a}	f	rre	
+FALSE	-n	-	-	Returns `0`, the value used to indicate a FALSE result.			class:word	{n/a}	{n/a}	global	all	
 fetch	a-n	-	-	Fetch the value stored at the specified address.			class:primitive	{n/a}	{n/a}	global	all	
 fetch-next	a-an	-	-	Fetch the value stored at the specified address. Returns the next address and the value.			class:word	{n/a}	{n/a}	global	all	
 file:A	-n	-	-	Constant for opening a file in APPEND mode.			class:data	{n/a}	{n/a}	file	rre	
-file:R	-n	-	-	Constant for opening a file in READ mode.			class:data	{n/a}	{n/a}	file	rre	
-file:R+	-n	-	-	Constant for opening a file in READ & WRITE mode.			class:data	{n/a}	{n/a}	file	rre	
-file:W	-n	-	-	Constant for opening a file in WRITE mode.			class:data	{n/a}	{n/a}	file	rre	
 file:close	h-	-	-	Given a file handle, close the file.			class:word	{n/a}	{n/a}	file	rre	
 file:delete	s-	-	-	Delete the named file.			class:word	{n/a}	{n/a}	file	rre	
 file:exists?	s-f	-	-	Given a file name, return `TRUE` if it exists or `FALSE` if it does not.			class:word	{n/a}	{n/a}	file	rre	
 file:flush	h-	-	-	Given a file handle, flush any pending writes to disk.			class:word	{n/a}	{n/a}	file	rre	
 file:for-each-line	sq-	-	-	Given a file name, open it and run the quote once for each line in the file.			class:word	{n/a}	{n/a}	file	rre	
 file:open	sm-h	-	-	Open a named file (s) with the given mode (m). Returns a handle identifying the file.			class:word	  '/etc/motd file:R file:open	{n/a}	file	rre	
+file:R	-n	-	-	Constant for opening a file in READ mode.			class:data	{n/a}	{n/a}	file	rre	
+file:R+	-n	-	-	Constant for opening a file in READ & WRITE mode.			class:data	{n/a}	{n/a}	file	rre	
 file:read	h-c	-	-	Given a file handle, read and return the next character in it.			class:word	{n/a}	{n/a}	file	rre	
 file:read-line	f-s	-	-	Given a file handle, read a line and return a pointer to it.			class:word	{n/a}	{n/a}	file	rre	
 file:seek	nh-	-	-	Move the current offset into a file to the specified one.			class:word	{n/a}	{n/a}	file	rre	
@@ -179,11 +175,14 @@ file:size	h-n	-	-	Given a file handle, return the size of the file (in bytes).		
 file:slurp	as-	-	-	Given an address and a file name, read the file contents into memory starting at the address.			class:word	{n/a}	{n/a}	file	rre	
 file:spew	ss-	-	-	Given a string (s1) and a file name (s2), write the string into the file, replacing any existing cotent.			class:word	{n/a}	{n/a}	file	rre	
 file:tell	h-n	-	-	Given a file handle, return the current offset in the file.			class:word	{n/a}	{n/a}	file	rre	
+file:W	-n	-	-	Constant for opening a file in WRITE mode.			class:data	{n/a}	{n/a}	file	rre	
 file:write	ch-	-	-	Write a character to the file represented by the handle.			class:word	{n/a}	{n/a}	file	rre	
+FREE	-n	-	-	Returns the number of cells available to your application. This is the amount of memory, less the already consumed portion and buffers mapped for RETRO's internal use.			class:word	{n/a}	{n/a}	global	all	
 getc	-c	-	-	Read a single keypress.			class:word	{n/a}	{n/a}	global	rre	
 gopher:get	asns-n	-	-	Takes an address, a server, a port, and a selector. Fetch the resource and store it at address. Return the number of bytes received.			class:word	{n/a}	{n/a}	gopher	rre	
 gt?	nn-f	-	-	Compare n1 and n2. Return `TRUE` if n1 is greater than n2, or `FALSE` otherwise.			class:primitive	{n/a}	{n/a}	global	all	
 gteq?	nn-f	-	-	Compare n1 and n2. Return `TRUE` if n1 is greater than or equal to n2, or `FALSE` otherwise.			class:word	{n/a}	{n/a}	global	all	
+Heap	-a	-	-	Variable. Holds the address of the next available cell.			class:data	{n/a}	{n/a}	global	all	
 here	-a	-	-	Return the next free address in memory.			class:word	{n/a}	{n/a}	global	all	
 i	s-	-	-	Assemble the instructions specified by the string into the current assembly scope.			class:word	{n/a}	{n/a}	global	all	
 if	fq-	-	-	Execute the quote if the flag is `TRUE`.			class:word	{n/a}	{n/a}	global	all	
@@ -194,15 +193,15 @@ lt?	nn-f	-	-	Compare n1 and n2. Return `TRUE` if n1 is less than n2, or `FALSE` 
 lteq?	nn-f	-	-	Compare n1 and n2. Return `TRUE` if n1 is less than or equal to n2, or `FALSE` otherwise.			class:word	{n/a}	{n/a}	global	all	
 mod	nm-o	-	-	Divide `n` by `m` and return the remainder.			class:word	{n/a}	{n/a}	global	all	
 n:-zero?	n-f	-	-	Return `TRUE` if number is not zero, or `FALSE` otherwise.			class:word	{n/a}	{n/a}	n	all	
-n:MAX	-n	-	-	Return the maximum value that will fit in a cell.			class:word	{n/a}	{n/a}	n	all	
-n:MIN	-n	-	-	Return the minimum value that will fit in a cell.			class:word	{n/a}	{n/a}	n	all	
 n:abs	n-n	-	-	Return the absolute value of a number.			class:word	{n/a}	{n/a}	n	all	
 n:between?	nlu-f	-	-	Return TRUE if number is between the lower (l) and upper (u) bounds. If not, return FALSE. This is inclusive of the limits.			class:word	{n/a}	{n/a}	n	all	
 n:dec	n-m	-	-	Decrement n by one.			class:word	{n/a}	{n/a}	n	all	
 n:even?	n-f	-	-	Return `TRUE` if number is even, or `FALSE` if not.			class:word	{n/a}	{n/a}	n	all	
 n:inc	n-m	-	-	Increment n by one.			class:word	{n/a}	{n/a}	n	all	
 n:limit	nlu-m	-	-	Return n if it is within the lower (l) and upper (u) bounds. If outside the bounds, return the closes boundary value.			class:word	{n/a}	{n/a}	n	all	
+n:MAX	-n	-	-	Return the maximum value that will fit in a cell.			class:word	{n/a}	{n/a}	n	all	
 n:max	mn-o	-	-	Return the greater of two values.			class:word	{n/a}	{n/a}	n	all	
+n:MIN	-n	-	-	Return the minimum value that will fit in a cell.			class:word	{n/a}	{n/a}	n	all	
 n:min	mn-o	-	-	Return the lesser of two values.			class:word	{n/a}	{n/a}	n	all	
 n:negate	n-n	-	-	Invert the sign of a number.			class:word	{n/a}	{n/a}	n	all	
 n:negative?	n-f	-	-	Return `TRUE` if number is negative, or `FALSE` if not.			class:word	{n/a}	{n/a}	n	all	
@@ -221,16 +220,16 @@ not	n-m	-	-	Perform a logical NOT operation.			class:word	{n/a}	{n/a}	global	all
 or	mn-o	-	-	Perform a bitwise OR between the provided values.			class:primitive	{n/a}	{n/a}	global	all	
 over	nm-nmn	-	-	Put a copy of n over m.			class:word	{n/a}	{n/a}	global	all	
 pop	-n	n-	-	Move a value from the return stack to the data stack.			class:macro	{n/a}	{n/a}	global	all	
+prefix::	s-	-	-	Process token as a new definition.	Create a header pointing to `here` with the provided string as the name. Sets class to `class:word`.		class:macro	{n/a}	{n/a}	prefix	all	
 prefix:!	ns-	-	-	Store a value into a variable.	Store a value into the named variable.	Compile the code to store a value into a named variable.	class:macro	{n/a}	{n/a}	prefix	all	
-prefix:#	s-n	-	-	Process token as a number.	Convert the string into a number and leave on the stack.	Convert the string into a number and compile into the current definition as a literal.	class:macro	{n/a}	{n/a}	prefix	all	
-prefix:$	s-c	-	-	Process token as an ASCII character.	Fetch first character from string. Leave on stack.	Fetch first character from the string. Compile into the current definition as  literal.	class:macro	{n/a}	{n/a}	prefix	all	
-prefix:&	s-a	-	-	Return a pointer to a named item.	Lookup name in dictionary, return contents of the xt field on the stack.	Lookup name in dictionary, compile code to push the contents of the xt field into the current definition.	class:macro	{n/a}	{n/a}	prefix	all	
+prefix:.	s-	-	-F	Interpret time: convert string to a floating point value. Compile time: convert string to a floating point value and compile code to push this value to the float stack.			class:macro	{n/a}	{n/a}	prefix	rre	
 prefix:'	s-s	-	-	Process token as a string.	Move string into temporary buffer. If `RewriteUnderscores` is `TRUE`, replace all instances of _ with space.	Move string into temporary buffer. If `RewriteUnderscores` is `TRUE`, replace all instances of _ with space. Then compile the string into the current definition.	class:macro	{n/a}	{n/a}	prefix	all	
 prefix:(	s-	-	-	Process token as a comment.	Discard the string.	Discard the string.	class:macro	{n/a}	{n/a}	prefix	all	
-prefix:.	s-	-	-F	Interpret time: convert string to a floating point value. Compile time: convert string to a floating point value and compile code to push this value to the float stack.			class:macro	{n/a}	{n/a}	prefix	rre	
-prefix::	s-	-	-	Process token as a new definition.	Create a header pointing to `here` with the provided string as the name. Sets class to `class:word`.		class:macro	{n/a}	{n/a}	prefix	all	
 prefix:@	s-n	-	-	Fetch from a stored variable.	Fetch a value from a named variable.	Compile the code to fetch a value from a named variable into the current definition.	class:macro	{n/a}	{n/a}	prefix	all	
+prefix:&	s-a	-	-	Return a pointer to a named item.	Lookup name in dictionary, return contents of the xt field on the stack.	Lookup name in dictionary, compile code to push the contents of the xt field into the current definition.	class:macro	{n/a}	{n/a}	prefix	all	
+prefix:#	s-n	-	-	Process token as a number.	Convert the string into a number and leave on the stack.	Convert the string into a number and compile into the current definition as a literal.	class:macro	{n/a}	{n/a}	prefix	all	
 prefix:`	s-	-	-	Process token as a bytecode.	Discard the string.	Convert the string to a number and use `,` to inline it into the current definition.	class:macro	{n/a}	{n/a}	prefix	all	
+prefix:$	s-c	-	-	Process token as an ASCII character.	Fetch first character from string. Leave on stack.	Fetch first character from the string. Compile into the current definition as  literal.	class:macro	{n/a}	{n/a}	prefix	all	
 push	n-	-n	-	Move a value from the data stack to the return stack.			class:macro	{n/a}	{n/a}	global	all	
 putc	c-	-	-	Display a single character.			class:word	{n/a}	{n/a}	global	all	
 putf	-	-	F-	Display a floating point number.			class:word	{n/a}	{n/a}	global	rre	
@@ -241,21 +240,20 @@ reclass	a-	-	-	Change the class handler of the most recently defined word to the
 reorder	...ss-?	-	-	Restructure the order of items on the stack.			class:word	{n/a}	{n/a}	global	all	
 repeat	-	-	-	Begin an unconditional loop.			class:macro	{n/a}	{n/a}	global	all	
 reset	...-	-	-	Remove all items from the stack.			class:word	{n/a}	{n/a}	global	all	
+RewriteUnderscores	-a	-	-	Variable. When set to `TRUE`, RETRO will replace underscores in strings with spaces. When `FALSE`, RETRO does not.			class:data	{n/a}	{n/a}	global	all	
 rot	abc-bca	-	-	Rotate the top three values.			class:word	{n/a}	{n/a}	global	all	
 s,	s-	-	-	Compile the code needed to push a string pointer to the stack and inline the string data into the current definition.			class:word	{n/a}	{n/a}	global	all	
+s:append	ss-s	-	-	Return a new string consisting of s1 followed by s2.			class:word	{n/a}	{n/a}	s	all	
 s:ASCII-LETTERS	-s	-	-	Constant. Returns a string of the ASCII letters (upper and lower case)			class:data	{n/a}	{n/a}	s	all	
 s:ASCII-LOWERCASE	-s	-	-	Constant. Returns a string of the ASCII letters in lowercase			class:data	{n/a}	{n/a}	s	all	
 s:ASCII-UPPERCASE	-s	-	-	Constant. Returns a string of the ASCII letters in uppercase			class:data	{n/a}	{n/a}	s	all	
-s:DIGITS	-s	-	-	Constant. Return a string of characters recognized as numeric digits.			class:data	{n/a}	{n/a}	s	all	
-s:PUNCTUATION	-s	-	-	Constant. Return a string of characters recognized as punctuation.			class:data	{n/a}	{n/a}	s	all	
-s:WHITESPACE	-s	-	-	Constant. Returns a string of characters recognized as whitespace.			class:data	{n/a}	{n/a}	s	all	
-s:append	ss-s	-	-	Return a new string consisting of s1 followed by s2.			class:word	{n/a}	{n/a}	s	all	
 s:case	sSq- || sSq-s	-	-	If the `s` matches `S`, discard `s` and run the quote before exiting the caller. If they do not match, discard the quote and leave `s` on the stack.			class:word	{n/a}	{n/a}	s	all	
 s:chop	s-s	-	-	Remove the last character from a string.			class:word	{n/a}	{n/a}	s	all	
 s:const	ss-	-	-	Create a constant named s2, returning a pointer to s1. This will use `s:keep` to preserve the original string.			class:word	{n/a}	{n/a}	s	all	
 s:contains-char?	sc-f	-	-	Return `TRUE` if the character is present in the string or `FALSE` otherwise.			class:word	{n/a}	{n/a}	s	all	
 s:contains-string?	ss-f	-	-	Return `TRUE` if the second string is present in the first string or `FALSE` otherwise.			class:word	{n/a}	{n/a}	s	all	
 s:copy	sa-	-	-	Copy a string (s) to a destination (a). This will include the terminator character when copying.			class:word	{n/a}	{n/a}	s	all	
+s:DIGITS	-s	-	-	Constant. Return a string of characters recognized as numeric digits.			class:data	{n/a}	{n/a}	s	all	
 s:empty	-s	-	-	Return an empty string.			class:word	{n/a}	{n/a}	s	all	
 s:eq?	ss-f	-	-	Compare two strings for equality. Return `TRUE` if identical or `FALSE` if not.			class:word	{n/a}	{n/a}	s	all	
 s:evaluate	s-?	-	-	Evaluate string as if it was typed into the interpreter.			class:word	{n/a}	{n/a}	s	all	
@@ -269,6 +267,7 @@ s:left	sn-s	-	-	Return a new string containing the first `n` characters from the
 s:length	s-n	-	-	Return the number of characters in a string, excluding the NULL terminator.			class:word	{n/a}	{n/a}	s	all	
 s:map	sq-s	-	-	Execute the specified quote once for each character in the string. Builds a new string from the return value of the quote. The quote should return only one value.			class:word	{n/a}	{n/a}	s	all	
 s:prepend	ss-s	-	-	Return a new string consisting of s2 followed by s1.			class:word	{n/a}	{n/a}	s	all	
+s:PUNCTUATION	-s	-	-	Constant. Return a string of characters recognized as punctuation.			class:data	{n/a}	{n/a}	s	all	
 s:replace	sss-s	-	-	Replace the first instance of s2 in s1 with s3.			class:word	{n/a}	{n/a}	s	all	
 s:reverse	s-s	-	-	Reverse the order of ASCII characters in a string.			class:word	{n/a}	{n/a}	s	all	
 s:right	sn-s	-	-	Return a new string containing the specified number of characters from the right side of the string.			class:word	{n/a}	{n/a}	s	all	
@@ -286,7 +285,9 @@ s:tokenize-on-string	ss-a	-	-	Takes a string (s1) and a substring (s2)  use as a
 s:trim	s-s	-	-	Trim leading and trailing whitespace from a string.			class:word	{n/a}	{n/a}	s	all	
 s:trim-left	s-s	-	-	Trim leading whitespace from a string.			class:word	{n/a}	{n/a}	s	all	
 s:trim-right	s-s	-	-	Trim trailing whitespace from a string.			class:word	{n/a}	{n/a}	s	all	
+s:WHITESPACE	-s	-	-	Constant. Returns a string of characters recognized as whitespace.			class:data	{n/a}	{n/a}	s	all	
 s:with-format	...s-s	-	-	Construct a new string using the template passed and items from the stack.			class:word	{n/a}	{n/a}	s	all	
+ScopeList	-a	-	-	Variable. This holds some information used by `{{` and `}}`.			class:data	{n/a}	{n/a}	global	all	
 set:contains-string?	sa-f	-	-	Return `TRUE` if the string value is in the set or`FALSE` otherwise.			class:word	{n/a}	{n/a}	set	all	
 set:contains?	na-f	-	-	Return `TRUE` if the value is in the set or `FALSE` otherwise.			class:word	{n/a}	{n/a}	set	all	
 set:dup	a-b	-	-	Make a copy of a set. Return the address of the copy.			class:word	{n/a}	{n/a}	set	all	
@@ -304,15 +305,19 @@ sip	nq-n	-	-	Run quote. After execution completes, put a copy of n back on top o
 sp	-	-	-	Display a space (`ASCII:SPACE`)			class:word	{n/a}	{n/a}	global	all	
 store	na-	-	-	Store a value into the specified address.			class:primitive	{n/a}	{n/a}	global	all	
 store-next	na-a	-	-	Store a value into the specified address and return the next address.			class:word	{n/a}	{n/a}	global	all	
+STRINGS	-a	-	-	Return the address of the start of the temporary string pool.			class:word	{n/a}	{n/a}	global	all	
 swap	nm-mn	-	-	Exchange the position of the top two items on the stack			class:primitive	{n/a}	{n/a}	global	all	
 sys:argc	-n	-	-	Return the number of arguments passed to the program.			class:word	{n/a}	{n/a}	sys	rre	
 sys:argv	n-s	-	-	Given an argument number, return the argument as a string.			class:word	{n/a}	{n/a}	sys	rre	
 tab	-	-	-	Display a tab (`ASCII:HT`)			class:word	{n/a}	{n/a}	global	all	
+TempStringMax	-a	-	-	Variable. Holds the maximum length of a temporary string.			class:data	{n/a}	{n/a}	global	all	
+TempStrings	-a	-	-	Variable. Holds the number of temporary strings.			class:data	{n/a}	{n/a}	global	all	
 times	nq-	-	-	Run the specified quote the specified number of times.			class:word	{n/a}	{n/a}	global	all	
 tors	-n	-	-	Get a copy of the top item on the return stack.			class:word	{n/a}	{n/a}	global	all	
 tri	xqqq-?	-	-	Apply q1 against x, then q2 against a copy of x, and finally q3 against another copy of x.			class:word	{n/a}	{n/a}	global	all	
-tri*	xyzqqq-?	-	-	Apply q1 against x, q2 against y, and q3 against z.			class:word	{n/a}	{n/a}	global	all	
 tri@	xyzq-?	-	-	Apply q against x, then against y, and finally against z.			class:word	{n/a}	{n/a}	global	all	
+tri*	xyzqqq-?	-	-	Apply q1 against x, q2 against y, and q3 against z.			class:word	{n/a}	{n/a}	global	all	
+TRUE	-n	-	-	Returns `-1`, the value used to indicate a TRUE result.			class:word	{n/a}	{n/a}	global	all	
 tuck	nm-mnm	-	-	Put a copy of the top item on the stack under the second one.			class:word	{n/a}	{n/a}	global	all	
 unix:chdir	s-	-	-	Change the current working directory to the specified one.			class:word	  '/etc unix:chdir	{n/a}	unix	rre	
 unix:exec0	s-	-	-	Execute a process by running the application specified by s.			class:word	{n/a}	{n/a}	unix	rre	
@@ -343,9 +348,7 @@ v:preserve	aq-	-	-	Make a copy of the value at the address, then run the quote. 
 v:update-using	aq-	-	-	Fetch a value from the specified address, then run the quotation with this value on the stack. Afterwards, store the returned value at the original address.			class:word	{n/a}	{n/a}	v	all	
 var	s-	-	-	Create a variable. The variable is initialized to 0.			class:word	{n/a}	{n/a}	global	all	
 var<n>	ns-	-	-	Create a variable with the specified initial value.			class:word	{n/a}	{n/a}	global	all	
+Version	-a	-	-	Variable. This stores the version number.			class:data	{n/a}	{n/a}	global	all	
 while	q-	-	-	Execute quote repeatedly while the quote returns a value of `TRUE`. The quote must return a flag of either `TRUE` or `FALSE` to be used with this.			class:word	{n/a}	{n/a}	global	all	
 words	-	-	-	Display a list of all named items in the `Dictionary`.			class:word	{n/a}	{n/a}	global	all	
 xor	mn-o	-	-	Perform a bitwise XOR operation.			class:primitive	{n/a}	{n/a}	global	all	
-{{	-	-	-	Begin a lexically scoped area.			class:word	{n/a}	{n/a}	global	all	
-}as	f-	-	-	End an assembly section			class:macro	{n/a}	{n/a}	global	all	
-}}	-	-	-	End a lexically scoped area.			class:word	{n/a}	{n/a}	global	all	

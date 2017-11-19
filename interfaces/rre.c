@@ -668,6 +668,21 @@ void float_tan() {
   float_push(tan(a));
 }
 
+void float_asin() {
+  double a = float_pop();
+  float_push(asin(a));
+}
+
+void float_acos() {
+  double a = float_pop();
+  float_push(acos(a));
+}
+
+void float_atan() {
+  double a = float_pop();
+  float_push(atan(a));
+}
+
 void ngaFloatingPointUnit() {
     switch (stack_pop()) {
         case 0: float_from_number();
@@ -713,6 +728,12 @@ void ngaFloatingPointUnit() {
         case 20: float_cos();
           break;
         case 21: float_tan();
+            break;
+        case 22: float_asin();
+          break;
+        case 23: float_acos();
+          break;
+        case 24: float_atan();
             break;
         default: ;
     }
