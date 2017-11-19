@@ -536,8 +536,7 @@ void float_from_number() {
 }
 
 void float_from_string() {
-    double a = atof(string_extract(stack_pop()));
-    float_push(a);
+    float_push(atof(string_extract(stack_pop())));
 }
 
 void float_to_string() {
@@ -570,8 +569,7 @@ void float_div() {
 }
 
 void float_floor() {
-    double a = float_pop();
-    float_push(floor(a));
+    float_push(floor(float_pop()));
 }
 
 void float_eq() {
@@ -649,93 +647,61 @@ void float_to_number() {
       a = 2147483647;
     if (a < -2147483648)
       a = -2147483648;
-    a = round(a);
-    stack_push((CELL)a);
+    stack_push((CELL)round(a));
 }
 
 void float_sin() {
-  double a = float_pop();
-  float_push(sin(a));
+  float_push(sin(float_pop()));
 }
 
 void float_cos() {
-  double a = float_pop();
-  float_push(cos(a));
+  float_push(cos(float_pop()));
 }
 
 void float_tan() {
-  double a = float_pop();
-  float_push(tan(a));
+  float_push(tan(float_pop()));
 }
 
 void float_asin() {
-  double a = float_pop();
-  float_push(asin(a));
+  float_push(asin(float_pop()));
 }
 
 void float_acos() {
-  double a = float_pop();
-  float_push(acos(a));
+  float_push(acos(float_pop()));
 }
 
 void float_atan() {
-  double a = float_pop();
-  float_push(atan(a));
+  float_push(atan(float_pop()));
 }
 
 void ngaFloatingPointUnit() {
     switch (stack_pop()) {
-        case 0: float_from_number();
-            break;
-        case 1: float_from_string();
-            break;
-        case 2: float_to_string();
-            break;
-        case 3: float_add();
-            break;
-        case 4: float_sub();
-            break;
-        case 5: float_mul();
-            break;
-        case 6: float_div();
-            break;
-        case 7: float_floor();
-            break;
-        case 8: float_eq();
-            break;
-        case 9: float_neq();
-            break;
-        case 10: float_lt();
-            break;
-        case 11: float_gt();
-            break;
-        case 12: float_depth();
-            break;
-        case 13: float_dup();
-            break;
-        case 14: float_drop();
-            break;
-        case 15: float_swap();
-            break;
-        case 16: float_log();
-            break;
-        case 17: float_pow();
-            break;
-        case 18: float_to_number();
-            break;
-        case 19: float_sin();
-          break;
-        case 20: float_cos();
-          break;
-        case 21: float_tan();
-            break;
-        case 22: float_asin();
-          break;
-        case 23: float_acos();
-          break;
-        case 24: float_atan();
-            break;
-        default: ;
+        case 0: float_from_number();  break;
+        case 1: float_from_string();  break;
+        case 2: float_to_string();    break;
+        case 3: float_add();          break;
+        case 4: float_sub();          break;
+        case 5: float_mul();          break;
+        case 6: float_div();          break;
+        case 7: float_floor();        break;
+        case 8: float_eq();           break;
+        case 9: float_neq();          break;
+        case 10: float_lt();          break;
+        case 11: float_gt();          break;
+        case 12: float_depth();       break;
+        case 13: float_dup();         break;
+        case 14: float_drop();        break;
+        case 15: float_swap();        break;
+        case 16: float_log();         break;
+        case 17: float_pow();         break;
+        case 18: float_to_number();   break;
+        case 19: float_sin();         break;
+        case 20: float_cos();         break;
+        case 21: float_tan();         break;
+        case 22: float_asin();        break;
+        case 23: float_acos();        break;
+        case 24: float_atan();        break;
+        default:                      break;
     }
 }
 
