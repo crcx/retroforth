@@ -424,7 +424,13 @@ selector).
   GOPHER-PORT field:name dup '0%s\tdesc_%s\tforthworks.com\t%n\n s:with-format puts ;
 
 :gopher:list-words (-)
- 'words.tsv [ s:keep !SourceLine display-entry ] file:for-each-line ;
+  'words.tsv [ s:keep !SourceLine display-entry ] file:for-each-line ;
+
+:display-entry (-)
+  field:name over '<a_href="/%n">%s</a><br> s:with-format puts ;
+
+:http:list-words (-)
+  #0 'words.tsv [ s:keep !SourceLine display-entry n:inc ] file:for-each-line drop ;
 ~~~
 
 Next, words to display a specific word.
@@ -453,7 +459,7 @@ And then the actual top level server.
   &Selector gets
   &Selector #0 #5 s:substr
   '/desc [ &Selector ASCII:SPACE s:tokenize #1 set:nth fetch s:chop s:keep !Target gopher:display ] s:case
-  'GET_/ [ 'HTTP/1.0_200_OK\nContent-Type:_text/plain\n\nHTTP! s:with-format puts ] s:case
+  'GET_/ [ 'HTTP/1.0_200_OK\nContent-Type:_text/html\n\n s:with-format puts http:list-words ] s:case
   drop gopher:list-words ;
 ~~~
 
