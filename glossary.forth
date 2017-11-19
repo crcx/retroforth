@@ -407,11 +407,11 @@ to use.
 ~~~
 
 ~~~
-:display-result (-)
-  field:name dup '0%s\tgopher:describe_%s\tforthworks.com\t7200\n s:with-format puts ;
+:display-entry (-)
+  field:name dup '0%s\tdesc_%s\tforthworks.com\t9999\n s:with-format puts ;
 
 :gopher:list-words (-)
- 'words.tsv [ s:keep !SourceLine display-result ] file:for-each-line ;
+ 'words.tsv [ s:keep !SourceLine display-entry ] file:for-each-line ;
 ~~~
 
 ~~~
@@ -424,10 +424,16 @@ to use.
 'Selector d:create
   #1024 allot
 
+'Target var
+:matched? (-f) field:name @Target s:eq? ;
+
+:gopher:display
+ 'words.tsv [ s:keep !SourceLine matched? [ display-result ] if ] file:for-each-line ;
+
 :gopher:serve
   &Selector gets
-  &Selector #0 #4 s:substr 'desc s:eq?
-  [ &Selector puts nl ]
+  &Selector #0 #5 s:substr '/desc s:eq?
+  [ &Selector ASCII:SPACE s:tokenize #1 set:nth fetch s:chop s:keep !Target gopher:display ]
   [ gopher:list-words ] choose ;
 ~~~
 
