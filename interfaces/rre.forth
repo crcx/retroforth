@@ -41,6 +41,9 @@ This is a set of extensions for RRE.
 :prefix:. (s-__f:-f)
   compiling? [ s:keep ] [ s:temp ] choose &s:to-float class:word ; immediate
 :putf (f:-) f:to-string puts ;
+:f:sin (f:f-f) #19 `-6000 ;
+:f:cos (f:f-f) #20 `-6000 ;
+:f:tan (f:f-f) #21 `-6000 ;
 ~~~
 
 ---------------------------------------------------------------

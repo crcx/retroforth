@@ -1730,6 +1730,18 @@ Class Handler: class:word | Namespace: f | Interface Layer: rre
 
 ----------------------------------------------------------------
 
+f:cos
+
+  Data:  -
+  Addr:  -
+  Float: f-f
+
+Return the cosine of a floating point number.
+
+Class Handler: class:word | Namespace: f | Interface Layer: rre
+
+----------------------------------------------------------------
+
 f:depth
 
   Data:  -n
@@ -1886,6 +1898,18 @@ Class Handler: class:word | Namespace: f | Interface Layer: rre
 
 ----------------------------------------------------------------
 
+f:sin
+
+  Data:  -
+  Addr:  -
+  Float: f-f
+
+Return the sine of a floating point number.
+
+Class Handler: class:word | Namespace: f | Interface Layer: rre
+
+----------------------------------------------------------------
+
 f:swap
 
   Data:  -
@@ -1893,6 +1917,18 @@ f:swap
   Float: FG-GF
 
 Exchange the top and second items on the floating point stack.
+
+Class Handler: class:word | Namespace: f | Interface Layer: rre
+
+----------------------------------------------------------------
+
+f:tan
+
+  Data:  -
+  Addr:  -
+  Float: f-f
+
+Return the tangent of a floating point number.
 
 Class Handler: class:word | Namespace: f | Interface Layer: rre
 

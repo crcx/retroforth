@@ -653,6 +653,21 @@ void float_to_number() {
     stack_push((CELL)a);
 }
 
+void float_sin() {
+  double a = float_pop();
+  float_push(sin(a));
+}
+
+void float_cos() {
+  double a = float_pop();
+  float_push(cos(a));
+}
+
+void float_tan() {
+  double a = float_pop();
+  float_push(tan(a));
+}
+
 void ngaFloatingPointUnit() {
     switch (stack_pop()) {
         case 0: float_from_number();
@@ -692,6 +707,12 @@ void ngaFloatingPointUnit() {
         case 17: float_pow();
             break;
         case 18: float_to_number();
+            break;
+        case 19: float_sin();
+          break;
+        case 20: float_cos();
+          break;
+        case 21: float_tan();
             break;
         default: ;
     }
