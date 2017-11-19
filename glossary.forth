@@ -406,13 +406,38 @@ to use.
 ;
 ~~~
 
+# Gopher Server
+
+This tool includes a minimal Gopher server designed to run under inetd.
+
+First, set the port to use. I default to 9999.
+
+~~~
+#9999 'GOPHER-PORT const
+~~~
+
+Next, words to display the main index (when requesting / or an empty
+selector).
+
 ~~~
 :display-entry (-)
-  field:name dup '0%s\tdesc_%s\tforthworks.com\t9999\n s:with-format puts ;
+  GOPHER-PORT field:name dup '0%s\tdesc_%s\tforthworks.com\t%n\n s:with-format puts ;
 
 :gopher:list-words (-)
  'words.tsv [ s:keep !SourceLine display-entry ] file:for-each-line ;
 ~~~
+
+Next, words to display a specific word.
+
+~~~
+'Target var
+:matched? (-f) field:name @Target s:eq? ;
+
+:gopher:display
+ 'words.tsv [ s:keep !SourceLine matched? [ display-result ] if ] file:for-each-line ;
+~~~
+
+And then the actual top level server.
 
 ~~~
 :eol? (c-f)
@@ -424,22 +449,18 @@ to use.
 'Selector d:create
   #1024 allot
 
-'Target var
-:matched? (-f) field:name @Target s:eq? ;
-
-:gopher:display
- 'words.tsv [ s:keep !SourceLine matched? [ display-result ] if ] file:for-each-line ;
-
 :gopher:serve
   &Selector gets
-  &Selector #0 #5 s:substr '/desc s:eq?
-  [ &Selector ASCII:SPACE s:tokenize #1 set:nth fetch s:chop s:keep !Target gopher:display ]
-  [ gopher:list-words ] choose ;
+  &Selector #0 #5 s:substr
+  '/desc [ &Selector ASCII:SPACE s:tokenize #1 set:nth fetch s:chop s:keep !Target gopher:display ] s:case
+  'GET_/ [ 'HTTP/1.0_200_OK\nContent-Type:_text/plain\n\nHTTP! s:with-format puts ] s:case
+  drop gopher:list-words ;
 ~~~
 
 # Finish
 
-First, a word to handle command line arguments.
+This checks the command line arguments and calls the proper words to
+handle each case.
 
 ~~~
 :process-arguments
@@ -455,5 +476,4 @@ First, a word to handle command line arguments.
 
 ~~~
 process-arguments
-#0 unix:exit
 ~~~
