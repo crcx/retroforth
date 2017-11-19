@@ -16,7 +16,7 @@ This is a set of extensions for RRE.
 :n:to-float  (n-_f:-n)   #0 `-6000 ;
 :s:to-float  (s-_f:-n)   #1 `-6000 ;
 :f:to-string (f:n-__-s) s:empty dup #2 `-6000 ;
-:f:+     (f:ab-c)    #3  `-6000 ;
+:f:+     (f:ab-c)    #3 `-6000 ;
 :f:-     (f:ab-c)    #4 `-6000 ;
 :f:*     (f:ab-c)    #5 `-6000 ;
 :f:/     (f:ab-c)    #6 `-6000 ;
@@ -29,24 +29,24 @@ This is a set of extensions for RRE.
 :f:dup   (f:a-aa)   #13 `-6000 ;
 :f:drop  (f:a-)     #14 `-6000 ;
 :f:swap  (f:ab-ba)  #15 `-6000 ;
+:f:log   (f:ab-c)   #16 `-6000 ;
+:f:power (f:ab-c)   #17 `-6000 ;
+:f:to-number (f:a-__-n)  #18 `-6000 ;
+:f:sin   (f:f-f)    #19 `-6000 ;
+:f:cos   (f:f-f)    #20 `-6000 ;
+:f:tan   (f:f-f)    #21 `-6000 ;
+:f:asin  (f:f-f)    #22 `-6000 ;
+:f:acos  (f:f-f)    #23 `-6000 ;
+:f:atan  (f:f-f)    #24 `-6000 ;
 :f:over  (f:ab-aba) f:to-string f:dup s:to-float f:swap ;
 :f:tuck  (f:ab-bab) f:swap f:over ;
-:f:positive? #0 n:to-float f:gt? ;
-:f:negative? #0 n:to-float f:lt? ;
-:f:negate #-1 n:to-float f:* ;
-:f:abs    f:dup f:negative? [ f:negate ] if ;
-:f:log   (f:ab-c)  #16 `-6000 ;
-:f:power   (f:ab-c)  #17 `-6000 ;
-:f:to-number (f:a-__-n)  #18 `-6000 ;
-:prefix:. (s-__f:-f)
+:f:positive? (-f__f:a-) #0 n:to-float f:gt? ;
+:f:negative? (-f__f:a-) #0 n:to-float f:lt? ;
+:f:negate (f:a-b)  #-1 n:to-float f:* ;
+:f:abs    (f:a-b)  f:dup f:negative? [ f:negate ] if ;
+:prefix:. (s-__f:-a)
   compiling? [ s:keep ] [ s:temp ] choose &s:to-float class:word ; immediate
-:putf (f:-) f:to-string puts ;
-:f:sin (f:f-f) #19 `-6000 ;
-:f:cos (f:f-f) #20 `-6000 ;
-:f:tan (f:f-f) #21 `-6000 ;
-:f:asin (f:f-f) #22 `-6000 ;
-:f:acos (f:f-f) #23 `-6000 ;
-:f:atan (f:f-f) #24 `-6000 ;
+:putf (f:a-) f:to-string puts ;
 ~~~
 
 ---------------------------------------------------------------
@@ -140,6 +140,11 @@ to send.
 :unix:kill (nn-)  `-8009 ;
 ~~~
 
+The next two words allow opening and closing pipes. The first,
+`unix:popen` takes the name of a program and a file mode and
+returns a file handle usable with words in the `file:` namespace.
+The second, `unix:pclose` closes the pipe.
+
 ~~~
 :unix:popen (sn-n) `-8010 ;
 :unix:pclose (n-) `-8011 ;
@@ -147,9 +152,24 @@ to send.
 
 ~~~
 :unix:write (sh-) [ dup s:length ] dip `-8012 ;
+~~~
+
+`unix:chdir` changes the current working directory to the
+specified one.
+
+~~~
 :unix:chdir (s-) `-8013 ;
+~~~
+
+~~~
 :unix:getenv (sa-) `-8014 ;
 :unix:putenv (s-)  `-8015 ;
+~~~
+
+`unix:sleep` pauses execution for the specified number of
+seconds.
+
+~~~
 :unix:sleep (n-) `-8016 ;
 ~~~
 
