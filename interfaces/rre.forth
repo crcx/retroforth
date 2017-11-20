@@ -47,6 +47,8 @@ This is a set of extensions for RRE.
 :prefix:. (s-__f:-a)
   compiling? [ s:keep ] [ s:temp ] choose &s:to-float class:word ; immediate
 :putf (f:a-) f:to-string puts ;
+:f:PI (f:-F) .3.141592 ;
+:f:E  (f:-F) .2.718281 ;
 ~~~
 
 ---------------------------------------------------------------
