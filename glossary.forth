@@ -493,7 +493,7 @@ handle each case.
   'edit     [ handle-edit            ] s:case
   'add      [ add-word               ] s:case
   'delete   [ delete-entry           ] s:case
-  'gopher   [ gopher:serve  ] s:case
+  'serve    [ gopher:serve  ] s:case
   drop show-help ;
 ~~~
 
