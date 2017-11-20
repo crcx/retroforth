@@ -455,10 +455,18 @@ And then the actual top level server.
 'Selector d:create
   #1024 allot
 
+:css (-)
+  '<style>tt,_a,_pre_{_white-space:_pre;_} puts
+  '_*_{_font-family:_monospace;_color:_#aaa;_background:_#121212;_font-size:_large;_}_a_{_color:_#EE7600;_} 
+puts
+  '</style> puts nl ;
+
 :http:display (-)
   #0 'words.tsv [ s:keep !SourceLine dup-pair eq? [ '<pre> puts display-result '</pre> puts ] if n:inc ] file:for-each-line drop-pair ;
 
 :handle-http
+  css
+  '<h2><a_href="http://forthworks.com:9999">RETRO_Glossary</a></h2><hr> puts nl
   &Selector ASCII:SPACE s:tokenize #1 set:nth fetch
   dup s:length #1 eq?
     [ drop http:list-words ]
