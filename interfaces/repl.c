@@ -443,9 +443,13 @@ void inst_fetch() {
 }
 
 void inst_store() {
-  memory[TOS] = NOS;
-  inst_drop();
-  inst_drop();
+  if (TOS <= IMAGE_SIZE) {
+    memory[TOS] = NOS;
+    inst_drop();
+    inst_drop();
+  } else {
+    ip = IMAGE_SIZE;
+  }
 }
 
 void inst_add() {
