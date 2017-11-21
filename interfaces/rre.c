@@ -978,7 +978,7 @@ void inst_fetch() {
 }
 
 void inst_store() {
-  if (TOS <= IMAGE_SIZE) {
+  if (TOS <= IMAGE_SIZE && TOS >= 0) {
     memory[TOS] = NOS;
     inst_drop();
     inst_drop();
