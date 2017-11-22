@@ -70,7 +70,7 @@ namespace Nga
       ip = 0;
       data    = new int[128];
       address = new int[1024];
-      memory  = new int[524288 * 16];
+      memory  = new int[(524288 * 16) + 1];
       loadImage();
       if (memory[0] == 0) {
         Console.Write("Sorry, unable to find ngaImage\n");
@@ -210,11 +210,11 @@ namespace Nga
         case OpCodes.VM_FETCH:
           x = data[sp];
           if (x == -1)
-            data[sp] = sp;
+            data[sp] = sp - 1;
           else if (x == -2)
-            data[sp] = rsp;
+            data[sp] = rsp - 1;
           else if (x == -3)
-            data[sp] = 1000000;
+            data[sp] = 524288 * 16;
           else
             data[sp] = memory[x];
           break;
@@ -338,7 +338,7 @@ public void executeFunction(int cell) {
     }
     ip++;
     if (rsp == 0)
-      ip = 1000000;
+      ip = 524288 * 16;
   }
 }
 
