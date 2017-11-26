@@ -341,7 +341,7 @@ once for each line in a file. This makes some things trivial. E.g., a simple
   :eol?    (c-f)  [ ASCII:CR eq? ] [ ASCII:LF eq? ] [ ASCII:SPACE eq? ] tri or or ;
   :valid?  (s-sf) dup s:length n:-zero? ;
   :ok      (-)    compiling? [ nl 'Ok_ puts ] -if ;
-  :check-eof (c-c) dup #4 eq? [ 'bye d:lookup d:xt fetch call ] if ;
+  :check-eof (c-c) dup [ #-1 eq? ] [ #4 eq? ] bi or [ 'bye d:lookup d:xt fetch call ] if ;
   :check-bs  (c-c) dup [ #8 eq? ] [ #127 eq? ] bi or [ buffer:get drop ] if ;
   :gets      (-s) [ #1025 buffer:set
                     [ getc dup buffer:add check-eof check-bs eol? ] until
