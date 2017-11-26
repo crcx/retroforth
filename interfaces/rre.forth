@@ -331,23 +331,26 @@ once for each line in a file. This makes some things trivial. E.g., a simple
 # Interactive Listener
 
 ~~~
-:bye
-  'stty_-cbreak unix:system #0 unix:exit ;
 
 {{
+  'CBreak var
+
   :version (-)    @Version #100 /mod putn $. putc putn ;
   :banner  (-)    'RETRO_12_(rx- puts version $) putc nl
                   EOM putn '_MAX,_TIB_@_1025,_Heap_@_ puts here putn nl ;
   :eol?    (c-f)  [ ASCII:CR eq? ] [ ASCII:LF eq? ] [ ASCII:SPACE eq? ] tri or or ;
   :valid?  (s-sf) dup s:length n:-zero? ;
   :ok      (-)    compiling? [ nl 'Ok_ puts ] -if ;
-  :check-eof (c-c) dup #4 eq? [ bye ] if ;
-  :gets    (-s)   [ #1025 buffer:set
-                    [ getc dup buffer:add check-eof eol? ] until
+  :check-eof (c-c) dup #4 eq? [ 'bye d:lookup d:xt fetch call ] if ;
+  :check-bs  (c-c) dup [ #8 eq? ] [ #127 eq? ] bi or [ buffer:get drop ] if ;
+  :gets      (-s) [ #1025 buffer:set
+                    [ getc dup buffer:add check-eof check-bs eol? ] until
                     buffer:start s:chop ] buffer:preserve ;
 ---reveal---
+  :bye     (-)  @CBreak [ 'stty_-cbreak unix:system ] if #0 unix:exit ;
   :listen  (-)
-    'stty_cbreak unix:system
     banner ok repeat gets valid? [ interpret ok ] [ drop ] choose again ;
+  :listen-cbreak (-)
+    &CBreak v:on 'stty_cbreak unix:system listen ;
 }}
 ~~~

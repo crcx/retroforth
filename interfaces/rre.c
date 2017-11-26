@@ -832,6 +832,8 @@ int main(int argc, char **argv) {
   if (argc > 1) {
     if (strcmp(argv[1], "-i") == 0) {
       execute(d_xt_for("listen", Dictionary));
+    } else if (strcmp(argv[1], "-ic") == 0) {
+      execute(d_xt_for("listen-cbreak", Dictionary));
     } else {
       include_file(argv[1]);
     }
