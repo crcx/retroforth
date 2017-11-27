@@ -86,6 +86,7 @@ void evaluate(char *s);
 int not_eol(int ch);
 void read_token(FILE *file, char *token_buffer, int echo);
 char *read_token_str(char *s, char *token_buffer, int echo);
+void include_file(char *fname);
 void ngaGopherUnit();
 void ngaFloatingPointUnit();
 CELL ngaLoadImage(char *imageFile);
@@ -374,6 +375,7 @@ void execute(int cell) {
       switch (opcode) {
         case IO_TTY_PUTC:  putc(stack_pop(), stdout); fflush(stdout); break;
         case IO_TTY_GETC:  stack_push(getc(stdin));                   break;
+        case -9999: include_file(string_extract(stack_pop()));        break;
         case IO_FS_OPEN:   ioOpenFile();                              break;
         case IO_FS_CLOSE:  ioCloseFile();                             break;
         case IO_FS_READ:   stack_push(ioReadFile());                  break;

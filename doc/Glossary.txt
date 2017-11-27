@@ -2370,6 +2370,18 @@ Class Handler: class:word | Namespace: global | Interface Layer: all
 
 ----------------------------------------------------------------
 
+include
+
+  Data:  s-
+  Addr:  -
+  Float: -
+
+Run the code in the specified file. 
+
+Class Handler: class:word | Namespace: global | Interface Layer: rre
+
+----------------------------------------------------------------
+
 interpret
 
   Data:  s-

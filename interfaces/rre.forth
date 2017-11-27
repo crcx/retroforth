@@ -354,3 +354,7 @@ once for each line in a file. This makes some things trivial. E.g., a simple
     &CBreak v:on 'stty_cbreak unix:system listen ;
 }}
 ~~~
+
+~~~
+:include (s-) `-9999 ;
+~~~

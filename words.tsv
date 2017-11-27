@@ -193,6 +193,7 @@ here	-a	-	-	Return the next free address in memory.			class:word	{n/a}	{n/a}	glo
 i	s-	-	-	Assemble the instructions specified by the string into the current assembly scope.			class:word	{n/a}	{n/a}	global	all	
 if	fq-	-	-	Execute the quote if the flag is `TRUE`.			class:word	{n/a}	{n/a}	global	all	
 immediate	-	-	-	Change the class of the most recently defined word to `class:macro`.			class:word	{n/a}	{n/a}	global	all	
+include	s-	-	-	Run the code in the specified file. 			class:word	{n/a}	{n/a}	global	rre	
 interpret	s-	-	-	Interpret a single input token.			class:word	{n/a}	{n/a}	global	all	
 listen	-	-	-	Run interactive "listener" (a REPL).			class:word	{n/a}	{n/a}	global	rre	
 lt?	nn-f	-	-	Compare n1 and n2. Return `TRUE` if n1 is less than n2, or `FALSE` otherwise.			class:primitive	{n/a}	{n/a}	global	all	
