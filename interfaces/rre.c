@@ -822,25 +822,54 @@ void include_file(char *fname) {
 
 
 int main(int argc, char **argv) {
-  int i;
+  int i, interactive;
   ngaPrepare();
   for (i = 0; i < ngaImageCells; i++)
     memory[i] = ngaImage[i];
   update_rx();
+
+  interactive = 0;
 
   sys_argc = argc;
   sys_argv = argv;
 
   if (argc > 1) {
     if (strcmp(argv[1], "-i") == 0) {
-      execute(d_xt_for("banner", Dictionary));
-      while (1) execute(d_xt_for("listen", Dictionary));
-    } else if (strcmp(argv[1], "-ic") == 0) {
-      execute(d_xt_for("banner", Dictionary));
-      while (1) execute(d_xt_for("listen-cbreak", Dictionary));
+      interactive = 1;
+      if (argc >= 4 && strcmp(argv[2], "-f") == 0) {
+        include_file(argv[3]);
+      }
+    } else if (strcmp(argv[1], "-c") == 0) {
+      interactive = 2;
+      if (argc >= 4 && strcmp(argv[2], "-f") == 0) {
+        include_file(argv[3]);
+      }
+    } else if (strcmp(argv[1], "-h") == 0) {
+      printf("Scripting Usage: rre filename\n\n");
+      printf("Interactive Usage: rre args\n\n");
+      printf("Valid Arguments:\n\n");
+      printf("  -h\n");
+      printf("  Display this help text\n\n");
+      printf("  -i\n");
+      printf("  Launches in interactive mode (line buffered)\n\n");
+      printf("  -c\n");
+      printf("  Launches in interactive mode (character buffered)\n\n");
+      printf("  -i -f filename\n");
+      printf("  Launches in interactive mode (line buffered) and load the contents of the\n  specified file\n\n");
+      printf("  -c -f filename\n");
+      printf("  Launches in interactive mode (character buffered) and load the contents\n  of the specified file\n\n");
     } else {
       include_file(argv[1]);
     }
+  }
+
+  if (interactive == 1) {
+    execute(d_xt_for("banner", Dictionary));
+    while (1) execute(d_xt_for("listen", Dictionary));
+  }
+  if (interactive == 2) {
+    execute(d_xt_for("banner", Dictionary));
+    while (1) execute(d_xt_for("listen-cbreak", Dictionary));
   }
 
   if (sp >= 1)
