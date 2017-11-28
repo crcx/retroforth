@@ -336,8 +336,6 @@ once for each line in a file. This makes some things trivial. E.g., a simple
   'CBreak var
 
   :version (-)    @Version #100 /mod putn $. putc putn ;
-  :banner  (-)    'RETRO_12_(rx- puts version $) putc nl
-                  EOM putn '_MAX,_TIB_@_1025,_Heap_@_ puts here putn nl ;
   :eol?    (c-f)  [ ASCII:CR eq? ] [ ASCII:LF eq? ] [ ASCII:SPACE eq? ] tri or or ;
   :valid?  (s-sf) dup s:length n:-zero? ;
   :ok      (-)    compiling? [ nl 'Ok_ puts ] -if ;
@@ -347,9 +345,11 @@ once for each line in a file. This makes some things trivial. E.g., a simple
                     [ getc dup buffer:add check-eof check-bs eol? ] until
                     buffer:start s:chop ] buffer:preserve ;
 ---reveal---
+  :banner  (-)    'RETRO_12_(rx- puts version $) putc nl
+                  EOM putn '_MAX,_TIB_@_1025,_Heap_@_ puts here putn nl ;
   :bye     (-)  @CBreak [ 'stty_-cbreak unix:system ] if #0 unix:exit ;
   :listen  (-)
-    banner ok repeat gets valid? [ interpret ok ] [ drop ] choose again ;
+    ok repeat gets valid? [ interpret ok ] [ drop ] choose again ;
   :listen-cbreak (-)
     &CBreak v:on 'stty_cbreak unix:system listen ;
 }}

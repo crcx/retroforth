@@ -375,7 +375,7 @@ void execute(int cell) {
       switch (opcode) {
         case IO_TTY_PUTC:  putc(stack_pop(), stdout); fflush(stdout); break;
         case IO_TTY_GETC:  stack_push(getc(stdin));                   break;
-        case -9999: include_file(string_extract(stack_pop()));        break;
+        case -9999:        include_file(string_extract(stack_pop())); break;
         case IO_FS_OPEN:   ioOpenFile();                              break;
         case IO_FS_CLOSE:  ioCloseFile();                             break;
         case IO_FS_READ:   stack_push(ioReadFile());                  break;
@@ -833,9 +833,11 @@ int main(int argc, char **argv) {
 
   if (argc > 1) {
     if (strcmp(argv[1], "-i") == 0) {
-      execute(d_xt_for("listen", Dictionary));
+      execute(d_xt_for("banner", Dictionary));
+      while (1) execute(d_xt_for("listen", Dictionary));
     } else if (strcmp(argv[1], "-ic") == 0) {
-      execute(d_xt_for("listen-cbreak", Dictionary));
+      execute(d_xt_for("banner", Dictionary));
+      while (1) execute(d_xt_for("listen-cbreak", Dictionary));
     } else {
       include_file(argv[1]);
     }
