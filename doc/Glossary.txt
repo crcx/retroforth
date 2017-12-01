@@ -2286,6 +2286,18 @@ Class Handler: class:word | Namespace: global | Interface Layer: rre
 
 ----------------------------------------------------------------
 
+gets
+
+  Data:  -s
+  Addr:  -
+  Float: -
+
+Read input from standard in (via `getc`) until a CR or LF is encountered. Returns a strig.
+
+Class Handler: class:word | Namespace: all | Interface Layer: rre
+
+----------------------------------------------------------------
+
 gopher:get
 
   Data:  asns-n
@@ -2763,6 +2775,23 @@ over
 Put a copy of n over m.
 
 Class Handler: class:word | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+parse-until
+
+  Data:  q-s
+  Addr:  -
+  Float: -
+
+Read input from stdin (via `getc`) until the returned character is matched by the quote. Returns a string.
+
+Class Handler: class:word | Namespace: all | Interface Layer: rre
+
+Example #1:
+
+  :read-until-period (-s)
+    [ $. eq? ] parse-until ;
 
 ----------------------------------------------------------------
 

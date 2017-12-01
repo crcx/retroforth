@@ -358,3 +358,15 @@ once for each line in a file. This makes some things trivial. E.g., a simple
 ~~~
 :include (s-) `-9999 ;
 ~~~
+
+~~~
+{{
+  :cycle (q-qc)  repeat getc dup-pair swap call not 0; drop buffer:add again ;
+---reveal---
+  :parse-until (q-s)
+    [ s:empty buffer:set cycle drop-pair buffer:start ] buffer:preserve ;
+}}
+
+:gets (-s) [ [ ASCII:LF eq? ] [ ASCII:CR eq? ] bi or ] parse-until ;
+~~~
+

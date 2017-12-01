@@ -186,6 +186,7 @@ file:spew	ss-	-	-	Given a string (s1) and a file name (s2), write the string int
 file:tell	h-n	-	-	Given a file handle, return the current offset in the file.			class:word	{n/a}	{n/a}	file	rre	
 file:write	ch-	-	-	Write a character to the file represented by the handle.			class:word	{n/a}	{n/a}	file	rre	
 getc	-c	-	-	Read a single keypress.			class:word	{n/a}	{n/a}	global	rre	
+gets	-s	-	-	Read input from standard in (via `getc`) until a CR or LF is encountered. Returns a strig.			class:word	{n/a}	{n/a}	all	rre	
 gopher:get	asns-n	-	-	Takes an address, a server, a port, and a selector. Fetch the resource and store it at address. Return the number of bytes received.			class:word	{n/a}	{n/a}	gopher	rre	
 gt?	nn-f	-	-	Compare n1 and n2. Return `TRUE` if n1 is greater than n2, or `FALSE` otherwise.			class:primitive	{n/a}	{n/a}	global	all	
 gteq?	nn-f	-	-	Compare n1 and n2. Return `TRUE` if n1 is greater than or equal to n2, or `FALSE` otherwise.			class:word	{n/a}	{n/a}	global	all	
@@ -226,6 +227,7 @@ nl	-	-	-	Display a newline.			class:word	{n/a}	{n/a}	global	all
 not	n-m	-	-	Perform a logical NOT operation.			class:word	{n/a}	{n/a}	global	all	
 or	mn-o	-	-	Perform a bitwise OR between the provided values.			class:primitive	{n/a}	{n/a}	global	all	
 over	nm-nmn	-	-	Put a copy of n over m.			class:word	{n/a}	{n/a}	global	all	
+parse-until	q-s	-	-	Read input from stdin (via `getc`) until the returned character is matched by the quote. Returns a string.			class:word	  :read-until-period (-s)\n    [ $. eq? ] parse-until ;	{n/a}	all	rre	
 pop	-n	n-	-	Move a value from the return stack to the data stack.			class:macro	{n/a}	{n/a}	global	all	
 prefix:!	ns-	-	-	Store a value into a variable.	Store a value into the named variable.	Compile the code to store a value into a named variable.	class:macro	{n/a}	{n/a}	prefix	all	
 prefix:#	s-n	-	-	Process token as a number.	Convert the string into a number and leave on the stack.	Convert the string into a number and compile into the current definition as a literal.	class:macro	{n/a}	{n/a}	prefix	all	
