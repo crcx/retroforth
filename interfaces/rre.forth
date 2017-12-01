@@ -361,7 +361,9 @@ once for each line in a file. This makes some things trivial. E.g., a simple
 
 ~~~
 {{
-  :cycle (q-qc)  repeat getc dup-pair swap call not 0; drop buffer:add again ;
+  :gather (c-)
+    dup [ #8 eq? ] [ #127 eq? ] bi or [ drop ] [ buffer:add ] choose ;
+  :cycle (q-qc)  repeat getc dup-pair swap call not 0; drop gather again ;
 ---reveal---
   :parse-until (q-s)
     [ s:empty buffer:set cycle drop-pair buffer:start ] buffer:preserve ;
