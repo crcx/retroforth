@@ -1,4 +1,4 @@
-RETRO 12 - 2017.12 (WIP)
+RETRO 12 - 2017.12
 
 Bug fixes:
 
@@ -19,46 +19,62 @@ Interfaces:
 
 - *RRE* has significant improvements.
 
-	- a `unix:` namespace with access to system-specific functionality:
+  - Added `gets` to read a string
+  - a `unix:` namespace with access to system-specific functionality:
 
-		- `unix:system`
-		- `unix:popen`
-		- `unix:pclose`
-		- `unix:fork`
-		- `unix:wait`
-		- `unix:exec0`
-		- `unix:exec1`
-		- `unix:exec2`
-		- `unix:exec3`
-		- `unix:getpid`
-		- `unix:kill`
-		- `unix:getenv`
-		- `unix:putenv`
-		- `unix:chdir`
-		- `unix:write`
-		- `unix:sleep`
+    - `unix:system`
+    - `unix:popen` 
+    - `unix:pclose`
+    - `unix:fork`
+    - `unix:wait`
+    - `unix:exec0`
+    - `unix:exec1`
+    - `unix:exec2`
+    - `unix:exec3`
+    - `unix:getpid`
+    - `unix:kill`
+    - `unix:getenv`
+    - `unix:putenv`
+    - `unix:chdir`
+    - `unix:write`
+    - `unix:sleep`
 
-	- Additions to `f`:
+  - Additions to `f`:
 
-		- `f:sin`
-		- `f:cos`
-		- `f:tan`
+    - `f:sin`
+    - `f:cos`
+    - `f:tan`
+    - `f:asin`
+    - `f:acos`
+    - `f:atan`
 
-	- Addtions to `file`:
+  - Addtions to `file`:
 
-		- `file:spew`
+    - `file:spew`
 
-	- Interactive mode when launched with `-i`:
+  - Interactive mode (line buffered) when launched with `-i`:
 
     rre -i
 
-	- `bin/listener` now uses `rre` directly and no longer has to copy the RETRO code into a temporary file.
+  - Interactive mode (character buffered) when launched with `-c`:
+
+    rre -c
+
+  - When launching with `-i` or `-c` you can also use `-f` to specify
+    a file to load:
+
+    rre -c -f filename.ext
+
+  - `bin/listener` now uses `rre` directly and no longer has to copy the RETRO code into a temporary file.
+
+Other:
+
+  - added a c# implementation of the REPL
 
 Documentation:
 
 - Added a `Building.md` with some notes on the build process.
 - Fixed formatting issues in the `LICENSE.md` (thanks to Mateusz Piotrowski)
-- Build now uses a shell script instead of multiple Makefiles
 - Added a database (tab separated data) of the words
 - Added a `glossary` tool to search, edit, and extract data from the words database
 
@@ -66,3 +82,6 @@ Examples:
 
 - Added `edit.forth`, a functional text/code editor
 
+Final Notes:
+
+Special thanks go to wuehlmaus for his help in testing everything and very useful feedback.
