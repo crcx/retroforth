@@ -29,6 +29,13 @@ cd ..
 
 cp ngaImage interfaces
 cd interfaces
+../bin/extend rre_windows.forth
+../bin/embedimage >image_windows.c
+rm ngaImage
+cd ..
+
+cp ngaImage interfaces
+cd interfaces
 ../bin/extend rre.forth
 ../bin/embedimage >image.c
 rm ngaImage
