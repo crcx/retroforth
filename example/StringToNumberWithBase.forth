@@ -69,3 +69,19 @@ Going the other way, back to a string, follows a similar process.
     &String s:reverse ;
 }}
 ~~~
+
+The `n:to-string<with-base>` returns a representation of binary numbers, but
+not the actual bitwise representation. The next word takes care of this.
+
+~~~
+:n:binary-rep (n-s)
+  [ s:empty buffer:set
+    dup n:negative? [ n:inc ] if
+    #32 [ dup n:negative?
+              [ dup n:odd? ] [ dup n:even? ] choose
+              [ $1 ] [ $0 ] choose buffer:add
+          #2 / ] times drop
+    buffer:start s:reverse
+  ] buffer:preserve ;
+~~~
+
