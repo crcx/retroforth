@@ -136,6 +136,10 @@ void stack_push(CELL value) {
    strings. */
 
 int string_inject(char *str, int buffer) {
+  if (!str) {
+    memory[buffer] = 0;
+    return 0;
+  }
   int m = strlen(str);
   int i = 0;
   while (m > 0) {
