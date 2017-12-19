@@ -1790,6 +1790,18 @@ Class Handler: class:word | Namespace: f | Interface Layer: rre
 
 ----------------------------------------------------------------
 
+f:ceiling
+
+  Data:  -
+  Addr:  -
+  Float: F-F
+
+Return the smallest integral value greater than or equal to the specified value.
+
+Class Handler: class:word | Namespace: f | Interface Layer: rre
+
+----------------------------------------------------------------
+
 f:cos
 
   Data:  -

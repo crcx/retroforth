@@ -145,6 +145,7 @@ f:abs	-	-	F-F	Return the absolute value for a floating point value.			class:word
 f:acos	-	-	f-f	Return the arc cosine of a floating point number.			class:word	{n/a}	{n/a}	f	rre	
 f:asin	-	-	f-f	Return the arc sine of a floating point number.			class:word	{n/a}	{n/a}	f	rre	
 f:atan	-	-	f-f	Return the arc tangent of a floating point number.			class:word	{n/a}	{n/a}	f	rre	
+f:ceiling	-	-	F-F	Return the smallest integral value greater than or equal to the specified value.			class:word	{n/a}	{n/a}	f	rre	
 f:cos	-	-	f-f	Return the cosine of a floating point number.			class:word	{n/a}	{n/a}	f	rre	
 f:depth	-n	-	-	Return the number of items on the floating point stack.			class:word	{n/a}	{n/a}	f	rre	
 f:drop	-	-	F-	Discard the top item on the floating point stack.			class:word	{n/a}	{n/a}	f	rre	

@@ -578,6 +578,10 @@ void float_floor() {
     float_push(floor(float_pop()));
 }
 
+void float_ceil() {
+    float_push(ceil(float_pop()));
+}
+
 void float_eq() {
     double a = float_pop();
     double b = float_pop();
@@ -707,6 +711,7 @@ void ngaFloatingPointUnit() {
         case 22: float_asin();        break;
         case 23: float_acos();        break;
         case 24: float_atan();        break;
+        case 25: float_ceil();        break;
         default:                      break;
     }
 }
