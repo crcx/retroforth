@@ -421,7 +421,7 @@ selector).
 
 ~~~
 :display-entry (-)
-  GOPHER-PORT field:name dup '0%s\tdesc_%s\tforthworks.com\t%n\n s:with-format puts ;
+  GOPHER-PORT field:name dup '0%s\t/desc_%s\tforthworks.com\t%n\r\n s:with-format puts ;
 
 :gopher:list-words (-)
   'words.tsv [ s:keep !SourceLine display-entry ] file:for-each-line ;
