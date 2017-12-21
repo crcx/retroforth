@@ -1018,6 +1018,7 @@ can be illustrated with:
 
 The format language is simple:
 
+| \r | Replace with a CR                         |
 | \n | Replace with a LF                         |
 | \t | Replace with a TAB                        |
 | \\ | Replace with a single \                   |
@@ -1030,6 +1031,7 @@ The format language is simple:
 {{
   :char (c-)
     ASCII:SPACE [ $_ buffer:add ] case
+    $r [ ASCII:CR buffer:add ] case
     $n [ ASCII:LF buffer:add ] case
     $t [ ASCII:HT buffer:add ] case
     buffer:add ;
