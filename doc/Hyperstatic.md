@@ -4,7 +4,7 @@ This now brings up an interesting subpoint. Retro provides a *hyper-
 static global environment.* This can be difficult to explain, so let's
 take a quick look at how it works:
 
-````
+~~~
     #1000 'a var<n>
     :scale (x-y) @a * ;
     #3 scale putn
@@ -17,7 +17,7 @@ take a quick look at how it works:
     >>> 300
     @a putn
     >>> 5
-````
+~~~
 
 Output is marked with **\>\>\>**.
 
