@@ -132,11 +132,11 @@ drop-pair	nn-	-	-	Remove top two items on the stack.			class:word	{n/a}	{n/a}	gl
 dump-stack	-	-	-	Display the items on the data stack.			class:word	{n/a}	{n/a}	global	all	
 dup	n-nn	-	-	Duplicate the top item on the stack.			class:primitive	{n/a}	{n/a}	global	all	
 dup-pair	nm-nmnm	-	-	Duplicate the top two items on the stack.			class:word	{n/a}	{n/a}	global	all	
-eq?	nn-f	-	-	Compare two values for equality. Returns `TRUE` if they are equal or `FALSE` otherwise.			class:primitive	{n/a}	{n/a}	global	all	
+eq?	nn-f	-	-	Compare two values for equality. Returns `TRUE` if they are equal or `FALSE` otherwise.			class:primitive	    #1 #2 eq?\n    $a $b eq?	{n/a}	global	all	
 err:notfound	-	-	-	Error handler. Called when a word is not found by `interpret`.			class:word	{n/a}	{n/a}	err	all	
-f:*	-	-	FF-F	Multiply two floating point numbers, returning the result.			class:word	{n/a}	{n/a}	f	rre	
-f:+	-	-	FF-F	Add two floating point numbers, returning the result.			class:word	{n/a}	{n/a}	f	rre	
-f:-	-	-	FF-F	Subtract F2 from F1 returing the result.			class:word	{n/a}	{n/a}	f	rre	
+f:*	-	-	FF-F	Multiply two floating point numbers, returning the result.			class:word	    .3.1415 .22 f:*	{n/a}	f	rre	
+f:+	-	-	FF-F	Add two floating point numbers, returning the result.			class:word	    .3.1 .22 f:+	{n/a}	f	rre	
+f:-	-	-	FF-F	Subtract F2 from F1 returing the result.			class:word	    .22.3 .0.12 f:-	{n/a}	f	rre	
 f:-eq?	-f	-	FF-	Compare two floating point values for inequality. Returns `TRUE` if they are not equal or `FALSE` otherwise.			class:word	{n/a}	{n/a}	f	rre	
 f:/	-	-	FF-F	Divide floating point value F1 by F2.			class:word	{n/a}	{n/a}	f	rre	
 f:E	-	-	-F	Return the floating point value for Euler's number.			class:word	{n/a}	{n/a}	f	rre	
@@ -155,7 +155,7 @@ f:floor	-	-	F-F	Perform a mathmatical floor operation on the floating point valu
 f:gt?	-f	-	FF-	Compare two floating point values for greater than.			class:word	{n/a}	{n/a}	f	rre	
 f:log	-	-	FF-F	Return log(F1) for base F2 for floating point values.			class:word	{n/a}	{n/a}	f	rre	
 f:lt?	-f	-	FF-	Compare two floating point values for less than.			class:word	{n/a}	{n/a}	f	rre	
-f:negate	-	-	F-F	Invert the sign of the floating point value.			class:word	{n/a}	{n/a}	f	rre	
+f:negate	-	-	F-F	Invert the sign of the floating point value.			class:word	    .3.1415 f:negate	{n/a}	f	rre	
 f:negative?	-f	-	F-	Return `TRUE` if floating point value is negative or `FALSE` if not.			class:word	{n/a}	{n/a}	f	rre	
 f:over	-	-	FG-FGF	Put a copy of the second floating point value over the top one.			class:word	{n/a}	{n/a}	f	rre	
 f:positive?	-f	-	F-	Return `TRUE` if floating point value is positive or `FALSE` otherwise.			class:word	{n/a}	{n/a}	f	rre	
@@ -166,7 +166,7 @@ f:tan	-	-	f-f	Return the tangent of a floating point number.			class:word	{n/a}	
 f:to-number	-n	-	F-	Convert a floating point value into a number.			class:word	{n/a}	{n/a}	f	rre	
 f:to-string	-s	-	F-	Convert a floating point value into a string.			class:word	{n/a}	{n/a}	f	rre	
 f:tuck	-	-	FG-GFG	Tuck a copy of the top floating point value under the second one.			class:word	{n/a}	{n/a}	f	rre	
-fetch	a-n	-	-	Fetch the value stored at the specified address.			class:primitive	{n/a}	{n/a}	global	all	
+fetch	a-n	-	-	Fetch the value stored at the specified address.			class:primitive	    &Version fetch	{n/a}	global	all	
 fetch-next	a-an	-	-	Fetch the value stored at the specified address. Returns the next address and the value.			class:word	{n/a}	{n/a}	global	all	
 file:A	-n	-	-	Constant for opening a file in APPEND mode.			class:data	{n/a}	{n/a}	file	rre	
 file:R	-n	-	-	Constant for opening a file in READ mode.			class:data	{n/a}	{n/a}	file	rre	
@@ -188,7 +188,7 @@ file:tell	h-n	-	-	Given a file handle, return the current offset in the file.			
 file:write	ch-	-	-	Write a character to the file represented by the handle.			class:word	{n/a}	{n/a}	file	rre	
 getc	-c	-	-	Read a single keypress.			class:word	{n/a}	{n/a}	global	rre	
 gets	-s	-	-	Read input from standard in (via `getc`) until a CR or LF is encountered. Returns a strig.			class:word	{n/a}	{n/a}	all	rre	
-gopher:get	asns-n	-	-	Takes an address, a server, a port, and a selector. Fetch the resource and store it at address. Return the number of bytes received.			class:word	{n/a}	{n/a}	gopher	rre	
+gopher:get	asns-n	-	-	Takes an address, a server, a port, and a selector. Fetch the resource and store it at address. Return the number of bytes received.			class:word	    here 'forthworks.com #70 '/ gopher:get\n    here puts	{n/a}	gopher	rre	
 gt?	nn-f	-	-	Compare n1 and n2. Return `TRUE` if n1 is greater than n2, or `FALSE` otherwise.			class:primitive	{n/a}	{n/a}	global	all	
 gteq?	nn-f	-	-	Compare n1 and n2. Return `TRUE` if n1 is greater than or equal to n2, or `FALSE` otherwise.			class:word	{n/a}	{n/a}	global	all	
 here	-a	-	-	Return the next free address in memory.			class:word	{n/a}	{n/a}	global	all	
@@ -196,7 +196,7 @@ i	s-	-	-	Assemble the instructions specified by the string into the current asse
 if	fq-	-	-	Execute the quote if the flag is `TRUE`.			class:word	{n/a}	{n/a}	global	all	
 immediate	-	-	-	Change the class of the most recently defined word to `class:macro`.			class:word	{n/a}	{n/a}	global	all	
 include	s-	-	-	Run the code in the specified file. 			class:word	{n/a}	{n/a}	global	rre	
-interpret	s-	-	-	Interpret a single input token.			class:word	{n/a}	{n/a}	global	all	
+interpret	s-	-	-	Interpret a single input token.			class:word	    '#100 interpret\n    'words interpret	{n/a}	global	all	
 listen	-	-	-	Run interactive "listener" (a REPL).			class:word	{n/a}	{n/a}	global	rre	
 lt?	nn-f	-	-	Compare n1 and n2. Return `TRUE` if n1 is less than n2, or `FALSE` otherwise.			class:primitive	{n/a}	{n/a}	global	all	
 lteq?	nn-f	-	-	Compare n1 and n2. Return `TRUE` if n1 is less than or equal to n2, or `FALSE` otherwise.			class:word	{n/a}	{n/a}	global	all	
@@ -204,15 +204,15 @@ mod	nm-o	-	-	Divide `n` by `m` and return the remainder.			class:word	{n/a}	{n/a
 n:-zero?	n-f	-	-	Return `TRUE` if number is not zero, or `FALSE` otherwise.			class:word	{n/a}	{n/a}	n	all	
 n:MAX	-n	-	-	Return the maximum value that will fit in a cell.			class:word	{n/a}	{n/a}	n	all	
 n:MIN	-n	-	-	Return the minimum value that will fit in a cell.			class:word	{n/a}	{n/a}	n	all	
-n:abs	n-n	-	-	Return the absolute value of a number.			class:word	{n/a}	{n/a}	n	all	
-n:between?	nlu-f	-	-	Return TRUE if number is between the lower (l) and upper (u) bounds. If not, return FALSE. This is inclusive of the limits.			class:word	{n/a}	{n/a}	n	all	
-n:dec	n-m	-	-	Decrement n by one.			class:word	{n/a}	{n/a}	n	all	
-n:even?	n-f	-	-	Return `TRUE` if number is even, or `FALSE` if not.			class:word	{n/a}	{n/a}	n	all	
-n:inc	n-m	-	-	Increment n by one.			class:word	{n/a}	{n/a}	n	all	
-n:limit	nlu-m	-	-	Return n if it is within the lower (l) and upper (u) bounds. If outside the bounds, return the closes boundary value.			class:word	{n/a}	{n/a}	n	all	
-n:max	mn-o	-	-	Return the greater of two values.			class:word	{n/a}	{n/a}	n	all	
-n:min	mn-o	-	-	Return the lesser of two values.			class:word	{n/a}	{n/a}	n	all	
-n:negate	n-n	-	-	Invert the sign of a number.			class:word	{n/a}	{n/a}	n	all	
+n:abs	n-n	-	-	Return the absolute value of a number.			class:word	    #10 n:abs\n    #-10 n:abs\n	{n/a}	n	all	
+n:between?	nlu-f	-	-	Return TRUE if number is between the lower (l) and upper (u) bounds. If not, return FALSE. This is inclusive of the limits.			class:word	    #3 #1 #100 n:between?\n    $q $a $b   n:between?	{n/a}	n	all	
+n:dec	n-m	-	-	Decrement n by one.			class:word	    #100 n:dec	{n/a}	n	all	
+n:even?	n-f	-	-	Return `TRUE` if number is even, or `FALSE` if not.			class:word	    #12 n:even?\n    #11 n:even?	{n/a}	n	all	
+n:inc	n-m	-	-	Increment n by one.			class:word	    #100 n:inc	{n/a}	n	all	
+n:limit	nlu-m	-	-	Return n if it is within the lower (l) and upper (u) bounds. If outside the bounds, return the closes boundary value.			class:word	    #-10 #5 #8 n:limit\n    #10  #1 #15 n:limit	{n/a}	n	all	
+n:max	mn-o	-	-	Return the greater of two values.			class:word	    #1 #7 n:max\n    #-8 #-10 n:max	{n/a}	n	all	
+n:min	mn-o	-	-	Return the lesser of two values.			class:word	    #1 #7 n:min\n    #-8 #-10 n:min	{n/a}	n	all	
+n:negate	n-n	-	-	Invert the sign of a number.			class:word	    #10 n:negate\n    #-10 n:negate	{n/a}	n	all	
 n:negative?	n-f	-	-	Return `TRUE` if number is negative, or `FALSE` if not.			class:word	{n/a}	{n/a}	n	all	
 n:odd?	n-f	-	-	Return `TRUE` if number is odd, or `FALSE` if not.			class:word	{n/a}	{n/a}	n	all	
 n:positive?	n-f	-	-	Return `TRUE` if number is positive, or `FALSE` if not.			class:word	{n/a}	{n/a}	n	all	
@@ -266,7 +266,7 @@ s:contains-char?	sc-f	-	-	Return `TRUE` if the character is present in the strin
 s:contains-string?	ss-f	-	-	Return `TRUE` if the second string is present in the first string or `FALSE` otherwise.			class:word	{n/a}	{n/a}	s	all	
 s:copy	sa-	-	-	Copy a string (s) to a destination (a). This will include the terminator character when copying.			class:word	{n/a}	{n/a}	s	all	
 s:empty	-s	-	-	Return an empty string.			class:word	{n/a}	{n/a}	s	all	
-s:eq?	ss-f	-	-	Compare two strings for equality. Return `TRUE` if identical or `FALSE` if not.			class:word	{n/a}	{n/a}	s	all	
+s:eq?	ss-f	-	-	Compare two strings for equality. Return `TRUE` if identical or `FALSE` if not.			class:word	    'hello 'again s:eq?\n    'test  'test  s:eq?	{n/a}	s	all	
 s:evaluate	s-?	-	-	Evaluate string as if it was typed into the interpreter.			class:word	{n/a}	{n/a}	s	all	
 s:filter	sq-s	-	-	Execute the quote once for each value in the string. If the quote returns `TRUE`, append the value into a new string. If `FALSE` the value will be discarded.			class:word	{n/a}	{n/a}	s	all	
 s:for-each	sq-	-	-	Execute the quote once for each value in the string.			class:word	{n/a}	{n/a}	s	all	
@@ -311,7 +311,7 @@ set:reverse	a-b	-	-	Reverse the order of items in a set. This will return a new 
 shift	mn-o	-	-	Peform a bitwise shift of m by n bits. If n is positive, shift right. If negative, the shift will be to the left.			class:primitive	{n/a}	{n/a}	global	all	
 sip	nq-n	-	-	Run quote. After execution completes, put a copy of n back on top of the stack.			class:word	{n/a}	{n/a}	global	all	
 sp	-	-	-	Display a space (`ASCII:SPACE`)			class:word	    :spaces (n-)  [ sp ] times ;\n    #12 spaces	{n/a}	global	all	
-store	na-	-	-	Store a value into the specified address.			class:primitive	{n/a}	{n/a}	global	all	
+store	na-	-	-	Store a value into the specified address.			class:primitive	    'Base var\n    #10 &Base store	{n/a}	global	all	
 store-next	na-a	-	-	Store a value into the specified address and return the next address.			class:word	{n/a}	{n/a}	global	all	
 swap	nm-mn	-	-	Exchange the position of the top two items on the stack			class:primitive	{n/a}	{n/a}	global	all	
 sys:argc	-n	-	-	Return the number of arguments passed to the program.			class:word	{n/a}	{n/a}	sys	rre	

@@ -1684,6 +1684,11 @@ Compare two values for equality. Returns `TRUE` if they are equal or `FALSE` oth
 
 Class Handler: class:primitive | Namespace: global | Interface Layer: all
 
+Example #1:
+
+    #1 #2 eq?
+    $a $b eq?
+
 ----------------------------------------------------------------
 
 err:notfound
@@ -1708,6 +1713,10 @@ Multiply two floating point numbers, returning the result.
 
 Class Handler: class:word | Namespace: f | Interface Layer: rre
 
+Example #1:
+
+    .3.1415 .22 f:*
+
 ----------------------------------------------------------------
 
 f:+
@@ -1720,6 +1729,10 @@ Add two floating point numbers, returning the result.
 
 Class Handler: class:word | Namespace: f | Interface Layer: rre
 
+Example #1:
+
+    .3.1 .22 f:+
+
 ----------------------------------------------------------------
 
 f:-
@@ -1731,6 +1744,10 @@ f:-
 Subtract F2 from F1 returing the result.
 
 Class Handler: class:word | Namespace: f | Interface Layer: rre
+
+Example #1:
+
+    .22.3 .0.12 f:-
 
 ----------------------------------------------------------------
 
@@ -1960,6 +1977,10 @@ Invert the sign of the floating point value.
 
 Class Handler: class:word | Namespace: f | Interface Layer: rre
 
+Example #1:
+
+    .3.1415 f:negate
+
 ----------------------------------------------------------------
 
 f:negative?
@@ -2091,6 +2112,10 @@ fetch
 Fetch the value stored at the specified address.
 
 Class Handler: class:primitive | Namespace: global | Interface Layer: all
+
+Example #1:
+
+    &Version fetch
 
 ----------------------------------------------------------------
 
@@ -2360,6 +2385,11 @@ Takes an address, a server, a port, and a selector. Fetch the resource and store
 
 Class Handler: class:word | Namespace: gopher | Interface Layer: rre
 
+Example #1:
+
+    here 'forthworks.com #70 '/ gopher:get
+    here puts
+
 ----------------------------------------------------------------
 
 gt?
@@ -2455,6 +2485,11 @@ interpret
 Interpret a single input token.
 
 Class Handler: class:word | Namespace: global | Interface Layer: all
+
+Example #1:
+
+    '#100 interpret
+    'words interpret
 
 ----------------------------------------------------------------
 
@@ -2552,6 +2587,12 @@ Return the absolute value of a number.
 
 Class Handler: class:word | Namespace: n | Interface Layer: all
 
+Example #1:
+
+    #10 n:abs
+    #-10 n:abs
+
+
 ----------------------------------------------------------------
 
 n:between?
@@ -2563,6 +2604,11 @@ n:between?
 Return TRUE if number is between the lower (l) and upper (u) bounds. If not, return FALSE. This is inclusive of the limits.
 
 Class Handler: class:word | Namespace: n | Interface Layer: all
+
+Example #1:
+
+    #3 #1 #100 n:between?
+    $q $a $b   n:between?
 
 ----------------------------------------------------------------
 
@@ -2576,6 +2622,10 @@ Decrement n by one.
 
 Class Handler: class:word | Namespace: n | Interface Layer: all
 
+Example #1:
+
+    #100 n:dec
+
 ----------------------------------------------------------------
 
 n:even?
@@ -2587,6 +2637,11 @@ n:even?
 Return `TRUE` if number is even, or `FALSE` if not.
 
 Class Handler: class:word | Namespace: n | Interface Layer: all
+
+Example #1:
+
+    #12 n:even?
+    #11 n:even?
 
 ----------------------------------------------------------------
 
@@ -2600,6 +2655,10 @@ Increment n by one.
 
 Class Handler: class:word | Namespace: n | Interface Layer: all
 
+Example #1:
+
+    #100 n:inc
+
 ----------------------------------------------------------------
 
 n:limit
@@ -2611,6 +2670,11 @@ n:limit
 Return n if it is within the lower (l) and upper (u) bounds. If outside the bounds, return the closes boundary value.
 
 Class Handler: class:word | Namespace: n | Interface Layer: all
+
+Example #1:
+
+    #-10 #5 #8 n:limit
+    #10  #1 #15 n:limit
 
 ----------------------------------------------------------------
 
@@ -2624,6 +2688,11 @@ Return the greater of two values.
 
 Class Handler: class:word | Namespace: n | Interface Layer: all
 
+Example #1:
+
+    #1 #7 n:max
+    #-8 #-10 n:max
+
 ----------------------------------------------------------------
 
 n:min
@@ -2636,6 +2705,11 @@ Return the lesser of two values.
 
 Class Handler: class:word | Namespace: n | Interface Layer: all
 
+Example #1:
+
+    #1 #7 n:min
+    #-8 #-10 n:min
+
 ----------------------------------------------------------------
 
 n:negate
@@ -2647,6 +2721,11 @@ n:negate
 Invert the sign of a number.
 
 Class Handler: class:word | Namespace: n | Interface Layer: all
+
+Example #1:
+
+    #10 n:negate
+    #-10 n:negate
 
 ----------------------------------------------------------------
 
@@ -3352,6 +3431,11 @@ Compare two strings for equality. Return `TRUE` if identical or `FALSE` if not.
 
 Class Handler: class:word | Namespace: s | Interface Layer: all
 
+Example #1:
+
+    'hello 'again s:eq?
+    'test  'test  s:eq?
+
 ----------------------------------------------------------------
 
 s:evaluate
@@ -3912,6 +3996,11 @@ store
 Store a value into the specified address.
 
 Class Handler: class:primitive | Namespace: global | Interface Layer: all
+
+Example #1:
+
+    'Base var
+    #10 &Base store
 
 ----------------------------------------------------------------
 
