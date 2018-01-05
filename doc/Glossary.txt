@@ -3628,6 +3628,10 @@ Trim leading and trailing whitespace from a string.
 
 Class Handler: class:word | Namespace: s | Interface Layer: all
 
+Example #1:
+
+    '__hello__ s:trim
+
 ----------------------------------------------------------------
 
 s:trim-left
@@ -3640,6 +3644,10 @@ Trim leading whitespace from a string.
 
 Class Handler: class:word | Namespace: s | Interface Layer: all
 
+Example #1:
+
+    '__hello__ s:trim-left
+
 ----------------------------------------------------------------
 
 s:trim-right
@@ -3651,6 +3659,10 @@ s:trim-right
 Trim trailing whitespace from a string.
 
 Class Handler: class:word | Namespace: s | Interface Layer: all
+
+Example #1:
+
+    '__hello__ s:trim-right
 
 ----------------------------------------------------------------
 
@@ -3844,6 +3856,11 @@ Display a space (`ASCII:SPACE`)
 
 Class Handler: class:word | Namespace: global | Interface Layer: all
 
+Example #1:
+
+    :spaces (n-)  [ sp ] times ;
+    #12 spaces
+
 ----------------------------------------------------------------
 
 store
@@ -3927,6 +3944,10 @@ times
 Run the specified quote the specified number of times.
 
 Class Handler: class:word | Namespace: global | Interface Layer: all
+
+Example #1:
+
+    #12 [ $- putc ] times
 
 ----------------------------------------------------------------
 
@@ -4220,6 +4241,10 @@ Execute quote repeatedly while the quote returns a value of `FALSE`. The quote m
 
 Class Handler: class:word | Namespace: global | Interface Layer: all
 
+Example #1:
+
+    #10 [ dup putn nl n:dec dup n:zero? ] until
+
 ----------------------------------------------------------------
 
 v:dec
@@ -4340,6 +4365,10 @@ Create a variable. The variable is initialized to 0.
 
 Class Handler: class:word | Namespace: global | Interface Layer: all
 
+Example #1:
+
+    'Base var
+
 ----------------------------------------------------------------
 
 var<n>
@@ -4352,6 +4381,11 @@ Create a variable with the specified initial value.
 
 Class Handler: class:word | Namespace: global | Interface Layer: all
 
+Example #1:
+
+    #10 'Base var<n>
+
+
 ----------------------------------------------------------------
 
 while
@@ -4363,6 +4397,10 @@ while
 Execute quote repeatedly while the quote returns a value of `TRUE`. The quote must return a flag of either `TRUE` or `FALSE` to be used with this.
 
 Class Handler: class:word | Namespace: global | Interface Layer: all
+
+Example #1:
+
+    #10 [ dup putn nl n:dec dup n:-zero? ] while
 
 ----------------------------------------------------------------
 
