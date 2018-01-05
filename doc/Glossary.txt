@@ -8,6 +8,11 @@ Multiply `n1` by `n2` and return the result.
 
 Class Handler: class:primitive | Namespace: global | Interface Layer: all
 
+Example #1:
+
+    #2 #6 *
+    #-1 #100 *
+
 ----------------------------------------------------------------
 
 +
@@ -22,7 +27,7 @@ Class Handler: class:primitive | Namespace: global | Interface Layer: all
 
 Example #1:
 
-  #1 #2 + 
+    #1 #2 + 
 
 ----------------------------------------------------------------
 
@@ -36,6 +41,10 @@ Store the specified value into the memory at `here` and increment `Heap` by 1.
 
 Class Handler: class:word | Namespace: global | Interface Layer: all
 
+Example #1:
+
+    $a , $b , $c , #0 ,
+
 ----------------------------------------------------------------
 
 -
@@ -47,6 +56,11 @@ Class Handler: class:word | Namespace: global | Interface Layer: all
 Subtract `n1` from `n2` and return the difference.
 
 Class Handler: class:primitive | Namespace: global | Interface Layer: all
+
+Example #1:
+
+    #2 #1 -
+    #-10 #3 -
 
 ----------------------------------------------------------------
 
@@ -71,6 +85,11 @@ Class Handler: class:word | Namespace: global | Interface Layer: all
 Compare two values for inequality. Returns `TRUE` if they are not equal or `FALSE` otherwise.
 
 Class Handler: class:primitive | Namespace: global | Interface Layer: all
+
+Example #1:
+
+    #1 #2 -eq?
+    $a $b -eq?
 
 ----------------------------------------------------------------
 
@@ -143,6 +162,11 @@ Class Handler: class:macro | Namespace: global | Interface Layer: all
 Duplicate top value on stack if not zero. If zero, do nothing.
 
 Class Handler: class:word | Namespace: global | Interface Layer: all
+
+Example #1:
+
+    #1 ?dup
+    #0 ?dup
 
 ----------------------------------------------------------------
 
@@ -756,6 +780,10 @@ Allocate the specified number of cells from the `Heap`.
 
 Class Handler: class:word | Namespace: global | Interface Layer: all
 
+Example #1:
+
+    'Buffer d:create  #100 allot
+
 ----------------------------------------------------------------
 
 and
@@ -792,6 +820,10 @@ Execute q1 against x, then execute q2 against a copy of x.
 
 Class Handler: class:word | Namespace: global | Interface Layer: all
 
+Example #1:
+
+    #100 [ #10 * ] [ #10 - ] bi
+
 ----------------------------------------------------------------
 
 bi*
@@ -804,6 +836,10 @@ Execute q1 against x and q2 against y.
 
 Class Handler: class:word | Namespace: global | Interface Layer: all
 
+Example #1:
+
+    #10 #20 [ #2 * ] [ #10 / ] bi*
+
 ----------------------------------------------------------------
 
 bi@
@@ -815,6 +851,10 @@ bi@
 Execute q against x, then execute q against y.
 
 Class Handler: class:word | Namespace: global | Interface Layer: all
+
+Example #1:
+
+    #10 #20 [ #3 * ] bi@
 
 ----------------------------------------------------------------
 
