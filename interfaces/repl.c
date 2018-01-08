@@ -3,7 +3,7 @@
     ||_// ||==    ||   ||_// ((   ))
     || \\ ||___   ||   || \\  \\_//
     a personal, minimalistic forth
-    Copyright (c) 2016, 2017 Charles Childers
+    Copyright (c) 2016 - 2018 Charles Childers
 */
 
 #include <stdio.h>
@@ -11,8 +11,6 @@
 #include <unistd.h>
 #include <string.h>
 #include <stdint.h>
-#include <sys/types.h>
-#include <sys/stat.h>
 
 /* This assumes some knowledge of the ngaImage format for the
    Retro language. If things change there, these will need to
@@ -25,9 +23,9 @@
 #define D_OFFSET_NAME     3
 
 #define CELL         int32_t
-#define IMAGE_SIZE   524288 * 16
-#define ADDRESSES    2048
-#define STACK_DEPTH  512
+#define IMAGE_SIZE   524288 * 8
+#define ADDRESSES    1024
+#define STACK_DEPTH  128
 
 enum vm_opcode {
   VM_NOP,  VM_LIT,    VM_DUP,   VM_DROP,    VM_SWAP,   VM_PUSH,  VM_POP,
@@ -46,13 +44,8 @@ CELL memory[IMAGE_SIZE + 1];
 #define NOS  data[sp-1]
 #define TORS address[rp]
 
-#ifdef ARGV
-extern char **sys_argv;
-extern int sys_argc;
-#endif
-
-extern CELL Dictionary, Heap, Compiler;
-extern CELL notfound;
+CELL Dictionary, Heap, Compiler;
+CELL notfound;
 
 CELL stack_pop();
 void stack_push(CELL value);
@@ -64,7 +57,6 @@ int d_class(CELL dt);
 int d_name(CELL dt);
 int d_lookup(CELL Dictionary, char *name);
 CELL d_xt_for(char *Name, CELL Dictionary);
-CELL d_class_for(char *Name, CELL Dictionary);
 void update_rx();
 void execute(int cell);
 void evaluate(char *s);
@@ -78,13 +70,16 @@ void ngaProcessOpcode(CELL opcode);
 void ngaProcessPackedOpcodes(int opcode);
 int ngaValidatePackedOpcodes(CELL opcode);
 
+void retro_puts(char *s) {
+  write(1, s, strlen(s));
+}
+
 int main(int argc, char **argv) {
+  char input[1024];
   ngaPrepare();
   ngaLoadImage("ngaImage");
   update_rx();
-  printf("RETRO 12 (rx-%d.%d)\n", memory[4] / 100, memory[4] % 100);
-  char input[1024];
-  printf("%d MAX, TIB @ %d, Heap @ %d\n\n", IMAGE_SIZE, TIB, Heap);
+  retro_puts("RETRO Listener (c) 2016-2018, Charles Childers\n\n");
   while(1) {
     Dictionary = memory[2];
     read_token(stdin, input, 0);
@@ -98,9 +93,6 @@ int main(int argc, char **argv) {
 
 /* I/O ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-
-CELL Dictionary, Heap, Compiler;
-CELL notfound;
 
 /* Some I/O Parameters */
 
@@ -133,7 +125,7 @@ int string_inject(char *str, int buffer) {
   return buffer;
 }
 
-char string_data[8192];
+char string_data[1024];
 char *string_extract(int at) {
   CELL starting = at;
   CELL i = 0;
@@ -185,10 +177,6 @@ CELL d_xt_for(char *Name, CELL Dictionary) {
   return memory[d_xt(d_lookup(Dictionary, Name))];
 }
 
-CELL d_class_for(char *Name, CELL Dictionary) {
-  return memory[d_class(d_lookup(Dictionary, Name))];
-}
-
 
 /* Retro needs to track a few variables. This function is
    called as necessary to ensure that the interface stays
@@ -206,25 +194,26 @@ void update_rx() {
    It also handles the additional I/O instructions. */
 
 void execute(int cell) {
-  CELL a, b;
   CELL opcode;
   rp = 1;
   ip = cell;
   while (ip < IMAGE_SIZE) {
     if (ip == notfound) {
-      printf("%s ?\n", string_extract(TIB));
+      retro_puts(string_extract(TIB));
+      retro_puts(" ?\n");
     }
     opcode = memory[ip];
     if (ngaValidatePackedOpcodes(opcode) != 0) {
       ngaProcessPackedOpcodes(opcode);
-    } else if (opcode >= 0 && opcode < 27) {
-      ngaProcessOpcode(opcode);
     } else {
       switch (opcode) {
-        case IO_TTY_PUTC:  putc(stack_pop(), stdout); fflush(stdout); break;
-        default:   printf("Invalid instruction!\n");
-                   printf("At %d, opcode %d\n", ip, opcode);
-                   exit(1);
+        case IO_TTY_PUTC:
+          putc(stack_pop(), stdout);
+          fflush(stdout);
+          break;
+        default:
+          retro_puts("Invalid instruction!\n");
+          exit(1);
       }
     }
     ip++;
@@ -239,8 +228,7 @@ void execute(int cell) {
    to process it. */
 
 void evaluate(char *s) {
-  if (strlen(s) == 0)
-    return;
+  if (strlen(s) == 0) return;
   update_rx();
   CELL interpret = d_xt_for("interpret", Dictionary);
   string_inject(s, TIB);
@@ -330,7 +318,7 @@ CELL ngaLoadImage(char *imageFile) {
     fclose(fp);
   }
   else {
-    printf("Unable to find the ngaImage!\n");
+    retro_puts("Unable to find the ngaImage!\n");
     exit(1);
   }
   return imageSize;
