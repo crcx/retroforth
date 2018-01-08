@@ -1,10 +1,24 @@
-/*  ____   ____ ______ ____    ___
-    || \\ ||    | || | || \\  // \\
-    ||_// ||==    ||   ||_// ((   ))
-    || \\ ||___   ||   || \\  \\_//
-    a personal, minimalistic forth
-    Copyright (c) 2016 - 2018 Charles Childers
-*/
+/*---------------------------------------------------------------------
+  ____   ____ ______ ____    ___
+  || \\ ||    | || | || \\  // \\
+  ||_// ||==    ||   ||_// ((   ))
+  || \\ ||___   ||   || \\  \\_//
+  a personal, minimalistic forth
+  Copyright (c) 2016 - 2018 Charles Childers
+  ---------------------------------------------------------------------
+  This is the `repl`, a basic interactive interface for RETRO. It is
+  intended to be simple and very minimalistic, providing the minimal
+  I/O and additions needed to support a basic RETRO system. For a much
+  larger system, see `rre`.
+
+  I'll include commentary throughout the source, so read on.
+  ---------------------------------------------------------------------*/
+
+
+
+/*---------------------------------------------------------------------
+  Begin by including the various C headers needed.
+  ---------------------------------------------------------------------*/
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -12,9 +26,12 @@
 #include <string.h>
 #include <stdint.h>
 
-/* This assumes some knowledge of the ngaImage format for the
-   Retro language. If things change there, these will need to
-   be adjusted to match. */
+
+/*---------------------------------------------------------------------
+  First, a few constants relating to the image format and memory
+  layout. If you modify the kernel (Rx.md), these will need to be
+  altered to match your memory layout.
+  ---------------------------------------------------------------------*/
 
 #define TIB            1025
 #define D_OFFSET_LINK     0
@@ -22,30 +39,41 @@
 #define D_OFFSET_CLASS    2
 #define D_OFFSET_NAME     3
 
-#define CELL         int32_t
-#define IMAGE_SIZE   524288 * 8
-#define ADDRESSES    1024
-#define STACK_DEPTH  128
 
-enum vm_opcode {
-  VM_NOP,  VM_LIT,    VM_DUP,   VM_DROP,    VM_SWAP,   VM_PUSH,  VM_POP,
-  VM_JUMP, VM_CALL,   VM_CCALL, VM_RETURN,  VM_EQ,     VM_NEQ,   VM_LT,
-  VM_GT,   VM_FETCH,  VM_STORE, VM_ADD,     VM_SUB,    VM_MUL,   VM_DIVMOD,
-  VM_AND,  VM_OR,     VM_XOR,   VM_SHIFT,   VM_ZRET,   VM_END
-};
-#define NUM_OPS VM_END + 1
+/*---------------------------------------------------------------------
+  Next we get into some things that relate to the Nga virtual machine
+  that RETRO runs on.
+  ---------------------------------------------------------------------*/
 
-CELL sp, rp, ip;
-CELL data[STACK_DEPTH];
-CELL address[ADDRESSES];
-CELL memory[IMAGE_SIZE + 1];
+#define CELL         int32_t      /* Cell size (32 bit, signed integer */
+#define IMAGE_SIZE   524288 * 8   /* Amount of RAM. 4MiB by default.   */
+#define ADDRESSES    1024         /* Depth of address stack            */
+#define STACK_DEPTH  128          /* Depth of data stack               */
 
-#define TOS  data[sp]
-#define NOS  data[sp-1]
-#define TORS address[rp]
+CELL sp, rp, ip;                  /* Data, address, instruction pointers */
+CELL data[STACK_DEPTH];           /* The data stack                    */
+CELL address[ADDRESSES];          /* The address stack                 */
+CELL memory[IMAGE_SIZE + 1];      /* The memory for the image          */
 
-CELL Dictionary, Heap, Compiler;
-CELL notfound;
+#define TOS  data[sp]             /* Shortcut for top item on stack    */
+#define NOS  data[sp-1]           /* Shortcut for second item on stack */
+#define TORS address[rp]          /* Shortcut for top item on address stack */
+
+
+
+/*---------------------------------------------------------------------
+  Moving forward, a few variables. These are updated to point to the
+  latest values in the image.
+  ---------------------------------------------------------------------*/
+
+CELL Dictionary;
+CELL NotFound;
+CELL interpret;
+
+
+/*---------------------------------------------------------------------
+  Function prototypes.
+  ---------------------------------------------------------------------*/
 
 CELL stack_pop();
 void stack_push(CELL value);
@@ -62,44 +90,39 @@ void execute(int cell);
 void evaluate(char *s);
 int not_eol(int ch);
 void read_token(FILE *file, char *token_buffer, int echo);
-char *read_token_str(char *s, char *token_buffer, int echo);
-
 CELL ngaLoadImage(char *imageFile);
 void ngaPrepare();
 void ngaProcessOpcode(CELL opcode);
 void ngaProcessPackedOpcodes(int opcode);
 int ngaValidatePackedOpcodes(CELL opcode);
 
+
+/*---------------------------------------------------------------------
+  Here's an output helper. I define a wrapper over `write` to avoid
+  using `printf()`.
+  ---------------------------------------------------------------------*/
+
 void retro_puts(char *s) {
   write(1, s, strlen(s));
 }
 
-int main(int argc, char **argv) {
-  char input[1024];
-  ngaPrepare();
-  ngaLoadImage("ngaImage");
-  update_rx();
-  retro_puts("RETRO Listener (c) 2016-2018, Charles Childers\n\n");
-  while(1) {
-    Dictionary = memory[2];
-    read_token(stdin, input, 0);
-    if (strcmp(input, "bye") == 0)
-      exit(0);
-    else
-      evaluate(input);
-  }
-  exit(0);
-}
 
-/* I/O ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/*---------------------------------------------------------------------
+  Now to the fun stuff: interfacing with the virtual machine. There are
+  a things I like to have here:
 
-/* Some I/O Parameters */
+  - push a value to the stack
+  - pop a value off the stack
+  - extract a string from the image
+  - inject a string into the image.
+  - lookup dictionary headers and access dictionary fields
+  ---------------------------------------------------------------------*/
 
-#define IO_TTY_PUTC  1000
 
-/* First, a couple of functions to simplify interacting with
-   the stack. */
+/*---------------------------------------------------------------------
+  Stack push/pop is easy. I could avoid these, but it aids in keeping
+  the code readable, so it's worth the slight overhead.
+  ---------------------------------------------------------------------*/
 
 CELL stack_pop() {
   sp--;
@@ -111,31 +134,56 @@ void stack_push(CELL value) {
   data[sp] = value;
 }
 
-/* Next, functions to translate C strings to/from Retro
-   strings. */
+
+/*---------------------------------------------------------------------
+  Strings are next. RETRO uses C-style NULL terminated strings. So I
+  can easily inject or extract a string. Injection iterates over the
+  string, copying it into the image. This also takes care to ensure
+  that the NULL terminator is added.
+  ---------------------------------------------------------------------*/
 
 int string_inject(char *str, int buffer) {
-  int m = strlen(str);
   int i = 0;
-  while (m > 0) {
-    memory[buffer + i] = (CELL)str[i];
+  while (*str) {
+    memory[buffer + i] = (CELL)*str++;
     memory[buffer + i + 1] = 0;
-    m--; i++;
+    i++;
   }
   return buffer;
 }
 
-char string_data[1024];
+
+/*---------------------------------------------------------------------
+  Extracting a string is similar, but I have to iterate over the VM
+  memory instead of a C string and copy the charaters into a buffer.
+  This uses a static buffer (`string_data`) as I prefer to avoid using
+  `malloc()`.
+  ---------------------------------------------------------------------*/
+
+char string_data[1025];
 char *string_extract(int at) {
   CELL starting = at;
   CELL i = 0;
-  while(memory[starting] && i < 8192)
+  while(memory[starting] && i < 1024)
     string_data[i++] = (char)memory[starting++];
   string_data[i] = 0;
   return (char *)string_data;
 }
 
-/* Then accessor functions for dictionary fields. */
+
+/*---------------------------------------------------------------------
+  Continuing along, I now define functions to access the dictionary.
+
+  RETRO's dictionary is a linked list. Each entry is setup like:
+
+  0000  Link to previous entry (NULL if this is the root entry)
+  0001  Pointer to definition start
+  0002  Pointer to class handler
+  0003  Start of a NULL terminated string with the word name
+
+  First, functions to access each field. The offsets were defineed at
+  the start of the file.
+  ---------------------------------------------------------------------*/
 
 int d_link(CELL dt) {
   return dt + D_OFFSET_LINK;
@@ -154,8 +202,12 @@ int d_name(CELL dt) {
 }
 
 
-/* With the dictionary accessors, some functions to actually
-   lookup headers. */
+/*---------------------------------------------------------------------
+  Next, a more complext word. This will walk through the entries to
+  find one with a name that matches the specified name. This is *slow*,
+  but works ok unless you have a really large dictionary. (I've not
+  run into issues with this in practice).
+  ---------------------------------------------------------------------*/
 
 int d_lookup(CELL Dictionary, char *name) {
   CELL dt = 0;
@@ -173,32 +225,59 @@ int d_lookup(CELL Dictionary, char *name) {
   return dt;
 }
 
+
+/*---------------------------------------------------------------------
+  My last dictionary related word returns the `xt` pointer for a word.
+  This is used to help keep various important bits up to date.
+  ---------------------------------------------------------------------*/
+
 CELL d_xt_for(char *Name, CELL Dictionary) {
   return memory[d_xt(d_lookup(Dictionary, Name))];
 }
 
 
-/* Retro needs to track a few variables. This function is
-   called as necessary to ensure that the interface stays
-   in sync with the image state. */
+
+/*---------------------------------------------------------------------
+  This interface tracks a few words and variables in the image. These
+  are:
+
+  Dictionary - the latest dictionary header
+  NotFound   - called when a word is not found
+  interpret  - the heart of the interpreter/compiler
+
+  I have to call this periodically, as the Dictionary will change as
+  new words are defined, and the user might write a new error handler
+  or interpreter.
+  ---------------------------------------------------------------------*/
 
 void update_rx() {
   Dictionary = memory[2];
-  Heap = memory[3];
-  Compiler = d_xt_for("Compiler", Dictionary);
-  notfound = d_xt_for("err:notfound", Dictionary);
+  NotFound = d_xt_for("err:notfound", Dictionary);
+  interpret = d_xt_for("interpret", Dictionary);
 }
 
 
-/* The `execute` function runs a word in the Retro image.
-   It also handles the additional I/O instructions. */
+/*---------------------------------------------------------------------
+  With these out of the way, I implement `execute`, which takes an
+  address and runs the code at it. This has a couple of interesting
+  bits.
+
+  Nga uses packed instruction bundles, with up to four instructions per
+  bundle. Since RETRO requires an additional instruction to handle
+  displaying a character, I define the handler for that here.
+
+  This will also exit if the address stack depth is zero (meaning that
+  the word being run, and it's dependencies) are finished.
+  ---------------------------------------------------------------------*/
+
+#define IO_TTY_PUTC  1000
 
 void execute(int cell) {
   CELL opcode;
   rp = 1;
   ip = cell;
   while (ip < IMAGE_SIZE) {
-    if (ip == notfound) {
+    if (ip == NotFound) {
       retro_puts(string_extract(TIB));
       retro_puts(" ?\n");
     }
@@ -223,24 +302,26 @@ void execute(int cell) {
 }
 
 
-/* The `evaluate` function moves a token into the Retro
-   token buffer, then calls the Retro `interpret` word
-   to process it. */
+/*---------------------------------------------------------------------
+  RETRO's `interpret` word expects a token on the stack. This next
+  function copies a token to the `TIB` (text input buffer) and then
+  calls `interpret` to process it.
+  ---------------------------------------------------------------------*/
 
 void evaluate(char *s) {
   if (strlen(s) == 0) return;
   update_rx();
-  CELL interpret = d_xt_for("interpret", Dictionary);
   string_inject(s, TIB);
   stack_push(TIB);
   execute(interpret);
 }
 
 
-/* `read_token` reads a token from the specified file.
-   It will stop on a whitespace or newline. It also
-   tries to handle backspaces, though the success of this
-   depends on how your terminal is configured. */
+/*---------------------------------------------------------------------
+  `read_token` reads a token from the specified file.  It will stop on
+   a whitespace or newline. It also tries to handle backspaces, though
+   the success of this depends on how your terminal is configured.
+  ---------------------------------------------------------------------*/
 
 int not_eol(int ch) {
   return (ch != (char)10) && (ch != (char)13) && (ch != (char)32) && (ch != EOF) && (ch != 0);
@@ -270,29 +351,33 @@ void read_token(FILE *file, char *token_buffer, int echo) {
   token_buffer[count] = '\0';
 }
 
-char *read_token_str(char *s, char *token_buffer, int echo) {
-  int ch = (char)*s++;
-  if (echo != 0)
-    putchar(ch);
-  int count = 0;
-  while (not_eol(ch))
-  {
-    if ((ch == 8 || ch == 127) && count > 0) {
-      count--;
-      if (echo != 0) {
-        putchar(8);
-        putchar(32);
-        putchar(8);
-      }
-    } else {
-      token_buffer[count++] = ch;
-    }
-    ch = (char)*s++;
-    if (echo != 0)
-      putchar(ch);
+
+/*---------------------------------------------------------------------
+  The `main()` routine. This sets up the Nga VM, loads the image, and
+  enters a loop.
+
+  The loop:
+
+  - reads input
+  - if input == 'bye', exit
+  - otherwise, pass to `evaluate()` to run
+  ---------------------------------------------------------------------*/
+
+int main(int argc, char **argv) {
+  char input[1024];
+  ngaPrepare();
+  ngaLoadImage("ngaImage");
+  update_rx();
+  retro_puts("RETRO Listener (c) 2016-2018, Charles Childers\n\n");
+  while(1) {
+    Dictionary = memory[2];
+    read_token(stdin, input, 0);
+    if (strcmp(input, "bye") == 0)
+      exit(0);
+    else
+      evaluate(input);
   }
-  token_buffer[count] = '\0';
-  return s;
+  exit(0);
 }
 
 
@@ -303,6 +388,14 @@ char *read_token_str(char *s, char *token_buffer, int echo) {
    Copyright (c) 2010,        Jay Skeer
    Copyright (c) 2011,        Kenneth Keating
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+
+enum vm_opcode {
+  VM_NOP,  VM_LIT,    VM_DUP,   VM_DROP,    VM_SWAP,   VM_PUSH,  VM_POP,
+  VM_JUMP, VM_CALL,   VM_CCALL, VM_RETURN,  VM_EQ,     VM_NEQ,   VM_LT,
+  VM_GT,   VM_FETCH,  VM_STORE, VM_ADD,     VM_SUB,    VM_MUL,   VM_DIVMOD,
+  VM_AND,  VM_OR,     VM_XOR,   VM_SHIFT,   VM_ZRET,   VM_END
+};
+#define NUM_OPS VM_END + 1
 
 CELL ngaLoadImage(char *imageFile) {
   FILE *fp;
