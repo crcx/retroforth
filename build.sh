@@ -42,7 +42,7 @@ rm ngaImage
 cc -O3 -c rre.c -o rre.o
 cc -O3 -c repl.c -o repl.o
 cc rre.o -lm -o rre
-cc repl.o -lm -o repl
+cc repl.o -o repl
 mv rre ../bin
 mv repl ../bin
 rm *.o
