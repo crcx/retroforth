@@ -117,7 +117,6 @@ void execute(int cell);
 void evaluate(char *s);
 int not_eol(int ch);
 void read_token(FILE *file, char *token_buffer, int echo);
-char *read_token_str(char *s, char *token_buffer, int echo);
 void include_file(char *fname);
 void ngaGopherUnit();
 void ngaFloatingPointUnit();
@@ -695,15 +694,29 @@ void ngaUnixUnit() {
 
 
 /*---------------------------------------------------------------------
+  Floating Point.
+
+  I kind of dislike floating point (it's tricky, and not as precise as
+  fixed point), but it is useful for certain things. I include support
+  for it as it's been requested frequently by my users.
   ---------------------------------------------------------------------*/
 
 #ifdef ENABLE_FLOATING_POINT
 
+/*---------------------------------------------------------------------
+  I have a stack of floating point values ("floats") and a stack
+  pointer (`fsp`).  
+  ---------------------------------------------------------------------*/
+
 double Floats[8192];
 CELL fsp;
 
+
 /*---------------------------------------------------------------------
+  The first two functions push a float to the stack and pop a value off
+  the stack.
   ---------------------------------------------------------------------*/
+
 void float_push(double value) {
     fsp++;
     Floats[fsp] = value;
@@ -714,160 +727,44 @@ double float_pop() {
     return Floats[fsp + 1];
 }
 
+
 /*---------------------------------------------------------------------
+  RETRO operates on 32-bit signed integer values. This function just
+  pops a number from the data stack, casts it to a float, and pushes it
+  to the float stack.
   ---------------------------------------------------------------------*/
 void float_from_number() {
     float_push((double)stack_pop());
 }
 
+
 /*---------------------------------------------------------------------
+  To get a float from a string in the image, I provide this function.
+  I cheat: using `atof()` takes care of the details, so I don't have
+  to.
   ---------------------------------------------------------------------*/
 void float_from_string() {
     float_push(atof(string_extract(stack_pop())));
 }
 
+
 /*---------------------------------------------------------------------
+  Converting a floating point into a string is slightly more work. Here
+  I pass it off to `snprintf()` to deal with.
   ---------------------------------------------------------------------*/
 void float_to_string() {
     snprintf(string_data, 8192, "%f", float_pop());
     string_inject(string_data, stack_pop());
 }
 
-/*---------------------------------------------------------------------
-  ---------------------------------------------------------------------*/
-void float_add() {
-    double a = float_pop();
-    double b = float_pop();
-    float_push(a+b);
-}
 
 /*---------------------------------------------------------------------
+  Converting a floating point back into a standard number requires a
+  little care due to the signed nature. This makes adjustments for the
+  max & min value, and then casts (rounding) the float back to a normal
+  number.
   ---------------------------------------------------------------------*/
-void float_sub() {
-    double a = float_pop();
-    double b = float_pop();
-    float_push(b-a);
-}
 
-/*---------------------------------------------------------------------
-  ---------------------------------------------------------------------*/
-void float_mul() {
-    double a = float_pop();
-    double b = float_pop();
-    float_push(a*b);
-}
-
-/*---------------------------------------------------------------------
-  ---------------------------------------------------------------------*/
-void float_div() {
-    double a = float_pop();
-    double b = float_pop();
-    float_push(b/a);
-}
-
-/*---------------------------------------------------------------------
-  ---------------------------------------------------------------------*/
-void float_floor() {
-    float_push(floor(float_pop()));
-}
-
-/*---------------------------------------------------------------------
-  ---------------------------------------------------------------------*/
-void float_ceil() {
-    float_push(ceil(float_pop()));
-}
-
-/*---------------------------------------------------------------------
-  ---------------------------------------------------------------------*/
-void float_eq() {
-    double a = float_pop();
-    double b = float_pop();
-    if (a == b)
-        stack_push(-1);
-    else
-        stack_push(0);
-}
-
-/*---------------------------------------------------------------------
-  ---------------------------------------------------------------------*/
-void float_neq() {
-    double a = float_pop();
-    double b = float_pop();
-    if (a != b)
-        stack_push(-1);
-    else
-        stack_push(0);
-}
-
-/*---------------------------------------------------------------------
-  ---------------------------------------------------------------------*/
-void float_lt() {
-    double a = float_pop();
-    double b = float_pop();
-    if (b < a)
-        stack_push(-1);
-    else
-        stack_push(0);
-}
-
-/*---------------------------------------------------------------------
-  ---------------------------------------------------------------------*/
-void float_gt() {
-    double a = float_pop();
-    double b = float_pop();
-    if (b > a)
-        stack_push(-1);
-    else
-        stack_push(0);
-}
-
-/*---------------------------------------------------------------------
-  ---------------------------------------------------------------------*/
-void float_depth() {
-    stack_push(fsp);
-}
-
-/*---------------------------------------------------------------------
-  ---------------------------------------------------------------------*/
-void float_dup() {
-    double a = float_pop();
-    float_push(a);
-    float_push(a);
-}
-
-/*---------------------------------------------------------------------
-  ---------------------------------------------------------------------*/
-void float_drop() {
-    float_pop();
-}
-
-/*---------------------------------------------------------------------
-  ---------------------------------------------------------------------*/
-void float_swap() {
-    double a = float_pop();
-    double b = float_pop();
-    float_push(a);
-    float_push(b);
-}
-
-/*---------------------------------------------------------------------
-  ---------------------------------------------------------------------*/
-void float_log() {
-    double a = float_pop();
-    double b = float_pop();
-    float_push(log(b) / log(a));
-}
-
-/*---------------------------------------------------------------------
-  ---------------------------------------------------------------------*/
-void float_pow() {
-    double a = float_pop();
-    double b = float_pop();
-    float_push(pow(b, a));
-}
-
-/*---------------------------------------------------------------------
-  ---------------------------------------------------------------------*/
 void float_to_number() {
     double a = float_pop();
     if (a > 2147483647)
@@ -877,87 +774,201 @@ void float_to_number() {
     stack_push((CELL)round(a));
 }
 
+
 /*---------------------------------------------------------------------
+  Now I get to define a bunch of functions that operate on floats.
+  These provide the basic math, and wrappers around functionality in
+  libm.
   ---------------------------------------------------------------------*/
+
+void float_add() {
+    double a = float_pop();
+    double b = float_pop();
+    float_push(a+b);
+}
+
+void float_sub() {
+    double a = float_pop();
+    double b = float_pop();
+    float_push(b-a);
+}
+
+void float_mul() {
+    double a = float_pop();
+    double b = float_pop();
+    float_push(a*b);
+}
+
+void float_div() {
+    double a = float_pop();
+    double b = float_pop();
+    float_push(b/a);
+}
+
+void float_floor() {
+    float_push(floor(float_pop()));
+}
+
+void float_ceil() {
+    float_push(ceil(float_pop()));
+}
+
+void float_eq() {
+    double a = float_pop();
+    double b = float_pop();
+    if (a == b)
+        stack_push(-1);
+    else
+        stack_push(0);
+}
+
+void float_neq() {
+    double a = float_pop();
+    double b = float_pop();
+    if (a != b)
+        stack_push(-1);
+    else
+        stack_push(0);
+}
+
+void float_lt() {
+    double a = float_pop();
+    double b = float_pop();
+    if (b < a)
+        stack_push(-1);
+    else
+        stack_push(0);
+}
+
+void float_gt() {
+    double a = float_pop();
+    double b = float_pop();
+    if (b > a)
+        stack_push(-1);
+    else
+        stack_push(0);
+}
+
+void float_depth() {
+    stack_push(fsp);
+}
+
+void float_dup() {
+    double a = float_pop();
+    float_push(a);
+    float_push(a);
+}
+
+void float_drop() {
+    float_pop();
+}
+
+void float_swap() {
+    double a = float_pop();
+    double b = float_pop();
+    float_push(a);
+    float_push(b);
+}
+
+void float_log() {
+    double a = float_pop();
+    double b = float_pop();
+    float_push(log(b) / log(a));
+}
+
+void float_pow() {
+    double a = float_pop();
+    double b = float_pop();
+    float_push(pow(b, a));
+}
+
 void float_sin() {
   float_push(sin(float_pop()));
 }
 
-/*---------------------------------------------------------------------
-  ---------------------------------------------------------------------*/
 void float_cos() {
   float_push(cos(float_pop()));
 }
 
-/*---------------------------------------------------------------------
-  ---------------------------------------------------------------------*/
 void float_tan() {
   float_push(tan(float_pop()));
 }
 
-/*---------------------------------------------------------------------
-  ---------------------------------------------------------------------*/
 void float_asin() {
   float_push(asin(float_pop()));
 }
 
-/*---------------------------------------------------------------------
-  ---------------------------------------------------------------------*/
 void float_acos() {
   float_push(acos(float_pop()));
 }
 
-/*---------------------------------------------------------------------
-  ---------------------------------------------------------------------*/
 void float_atan() {
   float_push(atan(float_pop()));
 }
 
+
 /*---------------------------------------------------------------------
+  With this finally done, I implement the FPU instructions.
   ---------------------------------------------------------------------*/
+
 void ngaFloatingPointUnit() {
-    switch (stack_pop()) {
-        case 0:  float_from_number();  break;
-        case 1:  float_from_string();  break;
-        case 2:  float_to_string();    break;
-        case 3:  float_add();          break;
-        case 4:  float_sub();          break;
-        case 5:  float_mul();          break;
-        case 6:  float_div();          break;
-        case 7:  float_floor();        break;
-        case 8:  float_eq();           break;
-        case 9:  float_neq();          break;
-        case 10: float_lt();           break;
-        case 11: float_gt();           break;
-        case 12: float_depth();        break;
-        case 13: float_dup();          break;
-        case 14: float_drop();         break;
-        case 15: float_swap();         break;
-        case 16: float_log();          break;
-        case 17: float_pow();          break;
-        case 18: float_to_number();    break;
-        case 19: float_sin();          break;
-        case 20: float_cos();          break;
-        case 21: float_tan();          break;
-        case 22: float_asin();         break;
-        case 23: float_acos();         break;
-        case 24: float_atan();         break;
-        case 25: float_ceil();         break;
-        default:                       break;
-    }
+  switch (stack_pop()) {
+    case 0:  float_from_number();  break;
+    case 1:  float_from_string();  break;
+    case 2:  float_to_string();    break;
+    case 3:  float_add();          break;
+    case 4:  float_sub();          break;
+    case 5:  float_mul();          break;
+    case 6:  float_div();          break;
+    case 7:  float_floor();        break;
+    case 8:  float_eq();           break;
+    case 9:  float_neq();          break;
+    case 10: float_lt();           break;
+    case 11: float_gt();           break;
+    case 12: float_depth();        break;
+    case 13: float_dup();          break;
+    case 14: float_drop();         break;
+    case 15: float_swap();         break;
+    case 16: float_log();          break;
+    case 17: float_pow();          break;
+    case 18: float_to_number();    break;
+    case 19: float_sin();          break;
+    case 20: float_cos();          break;
+    case 21: float_tan();          break;
+    case 22: float_asin();         break;
+    case 23: float_acos();         break;
+    case 24: float_atan();         break;
+    case 25: float_ceil();         break;
+    default:                       break;
+  }
 }
 
 #endif
 
+
 /*---------------------------------------------------------------------
+  Gopher Support
+
+  I'm a big fan of Gopher, so RRE provides support for fetching files
+  via the Gopher protocol.
   ---------------------------------------------------------------------*/
 
 #ifdef ENABLE_GOPHER
+
+/*---------------------------------------------------------------------
+  The first Gopher related function is `error()`, which prints an
+  error message and exits if there is a problem.
+  ---------------------------------------------------------------------*/
 
 void error(const char *msg) {
   perror(msg);
   exit(0);
 }
+
+
+/*---------------------------------------------------------------------
+  `gopher_fetch()` is the part that does all the real work.
+  ---------------------------------------------------------------------*/
 
 void gopher_fetch(char *host, CELL port, char *selector, CELL dest) {
   int sockfd, portno, n;
@@ -965,47 +976,67 @@ void gopher_fetch(char *host, CELL port, char *selector, CELL dest) {
   struct hostent *server;
   char data[128 * 1024 + 1];
   char buffer[1025];
+
   portno = (int)port;
   sockfd = socket(AF_INET, SOCK_STREAM, 0);
   if (sockfd < 0)
     error("ERROR opening socket");
+
   server = gethostbyname(host);
   if (server == NULL) {
     fprintf(stderr,"ERROR, no such host\n");
     exit(0);
   }
+
   bzero(data, 128 * 1024 + 1);
   bzero((char *) &serv_addr, sizeof(serv_addr));
+
   serv_addr.sin_family = AF_INET;
   bcopy((char *)server->h_addr,
      (char *)&serv_addr.sin_addr.s_addr,
      server->h_length);
   serv_addr.sin_port = htons(portno);
+
   if (connect(sockfd,(struct sockaddr *) &serv_addr,sizeof(serv_addr)) < 0)
     error("ERROR connecting");
+
   n = write(sockfd,selector,strlen(selector));
   if (n < 0)
      error("ERROR writing to socket");
+
   n = write(sockfd,"\n",strlen("\n"));
   if (n < 0)
      error("ERROR writing to socket");
+
   n = 1;
   while (n > 0) {
     bzero(buffer,1025);
     n = read(sockfd,buffer,1024);
     strcat(data, buffer);
   }
+
   close(sockfd);
   string_inject(data, dest);
   stack_push(strlen(data));
 }
 
 
-/* <addr> <server> <port> <selector> */
+
+/*---------------------------------------------------------------------
+  The last Gopher function, `ngaGopherUnit()` pulls the values needed
+  from the stack and passes them to the `gopher_fetch()` function.
+
+  This will take the following from the stack (TOS to bottom):
+
+  Selector   (NULL terminated string)
+  Port       (Number)
+  Server     (NULL terminated string)
+  Buffer     (Pointer to memory that will hold the received file)
+  ---------------------------------------------------------------------*/
+
 void ngaGopherUnit() {
-  char server[1025];
-  char selector[4097];
   CELL port, dest;
+  char server[1025], selector[4097];
   strcpy(selector, string_extract(stack_pop()));
   port = stack_pop();
   strcpy(server, string_extract(stack_pop()));
@@ -1016,12 +1047,22 @@ void ngaGopherUnit() {
 #endif
 
 
+/*---------------------------------------------------------------------
+  With these out of the way, I implement `execute`, which takes an
+  address and runs the code at it. This has a couple of interesting
+  bits.
+
+  Nga uses packed instruction bundles, with up to four instructions per
+  bundle. Since RETRO requires an additional instruction to handle
+  displaying a character, I define the handler for that here.
+
+  This will also exit if the address stack depth is zero (meaning that
+  the word being run, and it's dependencies) are finished.
+  ---------------------------------------------------------------------*/
+
 void execute(int cell) {
-  CELL a, b, c;
+  CELL a, b;
   CELL opcode;
-  char path[1024];
-  char arg0[1024], arg1[1024], arg2[1024];
-  char arg3[1024], arg4[1024], arg5[1024];
   rp = 1;
   ip = cell;
   while (ip < IMAGE_SIZE) {
@@ -1038,6 +1079,7 @@ void execute(int cell) {
         case IO_TTY_PUTC:  putc(stack_pop(), stdout); fflush(stdout); break;
         case IO_TTY_GETC:  stack_push(getc(stdin));                   break;
         case -9999:        include_file(string_extract(stack_pop())); break;
+#ifdef ENABLE_FILES
         case IO_FS_OPEN:   ioOpenFile();                              break;
         case IO_FS_CLOSE:  ioCloseFile();                             break;
         case IO_FS_READ:   stack_push(ioReadFile());                  break;
@@ -1047,14 +1089,21 @@ void execute(int cell) {
         case IO_FS_SIZE:   stack_push(ioGetFileSize());               break;
         case IO_FS_DELETE: ioDeleteFile();                            break;
         case IO_FS_FLUSH:  ioFlushFile();                             break;
+#endif
+#ifdef ENABLE_FLOATING_POINT
         case -6000: ngaFloatingPointUnit(); break;
+#endif
         case -6100: stack_push(sys_argc - 2); break;
         case -6101: a = stack_pop();
                     b = stack_pop();
                     stack_push(string_inject(sys_argv[a + 2], b));
                     break;
+#ifdef ENABLE_GOPHER
         case -6200: ngaGopherUnit(); break;
+#endif
+#ifdef ENABLE_UNIX
         case -6300: ngaUnixUnit(); break;
+#endif
         default:   printf("Invalid instruction!\n");
                    printf("At %d, opcode %d\n", ip, opcode);
                    exit(1);
@@ -1067,11 +1116,12 @@ void execute(int cell) {
 }
 
 
+
 /*---------------------------------------------------------------------
+  RETRO's `interpret` word expects a token on the stack. This next
+  function copies a token to the `TIB` (text input buffer) and then
+  calls `interpret` to process it.
   ---------------------------------------------------------------------*/
-/* The `evaluate` function moves a token into the Retro
-   token buffer, then calls the Retro `interpret` word
-   to process it. */
 
 void evaluate(char *s) {
   if (strlen(s) == 0)
@@ -1084,11 +1134,10 @@ void evaluate(char *s) {
 
 
 /*---------------------------------------------------------------------
+  `read_token` reads a token from the specified file.  It will stop on
+   a whitespace or newline. It also tries to handle backspaces, though
+   the success of this depends on how your terminal is configured.
   ---------------------------------------------------------------------*/
-/* `read_token` reads a token from the specified file.
-   It will stop on a whitespace or newline. It also
-   tries to handle backspaces, though the success of this
-   depends on how your terminal is configured. */
 
 int not_eol(int ch) {
   return (ch != (char)10) && (ch != (char)13) && (ch != (char)32) && (ch != EOF) && (ch != 0);
@@ -1118,37 +1167,12 @@ void read_token(FILE *file, char *token_buffer, int echo) {
   token_buffer[count] = '\0';
 }
 
-/*---------------------------------------------------------------------
-  ---------------------------------------------------------------------*/
-char *read_token_str(char *s, char *token_buffer, int echo) {
-  int ch = (char)*s++;
-  if (echo != 0)
-    putchar(ch);
-  int count = 0;
-  while (not_eol(ch))
-  {
-    if ((ch == 8 || ch == 127) && count > 0) {
-      count--;
-      if (echo != 0) {
-        putchar(8);
-        putchar(32);
-        putchar(8);
-      }
-    } else {
-      token_buffer[count++] = ch;
-    }
-    ch = (char)*s++;
-    if (echo != 0)
-      putchar(ch);
-  }
-  token_buffer[count] = '\0';
-  return s;
-}
-
 
 /*---------------------------------------------------------------------
+  RRE embeds the image into the binary. This includes the image data
+  (converted to a .c file by an external tool).
   ---------------------------------------------------------------------*/
-/* Compile image.c and link against the image.o */
+
 #include "image.c"
 
 
