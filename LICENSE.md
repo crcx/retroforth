@@ -18,7 +18,7 @@ PERFORMANCE OF THIS SOFTWARE.
 
 Retro 12 is:
 
-    Copyright (c) 2008 - 2017, Charles Childers
+    Copyright (c) 2008 - 2018, Charles Childers
 
 Portions of the code derive from Retro 11, which is:
 
