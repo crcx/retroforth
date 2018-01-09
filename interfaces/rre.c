@@ -623,40 +623,72 @@ void unix_exec3() {
   stack_push(errno);
 }
 
+void unix_exit() {
+  exit(stack_pop());
+}
+
+void unix_getpid() {
+  stack_push(getpid());
+}
+
+void unix_wait() {
+  CELL a;
+  stack_push(wait(&a));
+}
+
+void unix_kill() {
+  CELL a;
+  a = stack_pop();
+  kill(stack_pop(), a);
+}
+
+void unix_write() {
+  CELL a, b, c;
+  c = stack_pop();
+  b = stack_pop();
+  a = stack_pop();
+  write(fileno(ioFileHandles[c]), string_extract(a), b);
+}
+
+void unix_chdir() {
+  chdir(string_extract(stack_pop()));
+}
+
+void unix_getenv() {
+  CELL a, b;
+  a = stack_pop();
+  b = stack_pop();
+  string_inject(getenv(string_extract(b)), a);
+}
+
+void unix_putenv() {
+  putenv(string_extract(stack_pop()));
+}
+
+void unix_sleep() {
+  sleep(stack_pop());
+}
 
 void ngaUnixUnit() {
-  CELL a, b, c;
   switch (stack_pop()) {
-      case UNIX_SYSTEM: unix_system();        break;
-      case UNIX_FORK:   unix_fork();                         break;
-      case UNIX_EXEC0:  unix_exec0(); break;
-      case UNIX_EXEC1:  unix_exec1(); break;
-      case UNIX_EXEC2:  unix_exec2(); break;
-      case UNIX_EXEC3:  unix_exec3(); break;
-      case UNIX_EXIT:   exit(stack_pop()); break;
-      case UNIX_GETPID: stack_push(getpid()); break;
-      case UNIX_WAIT:   stack_push(wait(&a)); break;
-      case UNIX_KILL:   a = stack_pop();
-                        kill(stack_pop(), a);
-                        break;
-      case UNIX_POPEN:  unixOpenPipe(); break;
+      case UNIX_SYSTEM: unix_system();   break;
+      case UNIX_FORK:   unix_fork();     break;
+      case UNIX_EXEC0:  unix_exec0();    break;
+      case UNIX_EXEC1:  unix_exec1();    break;
+      case UNIX_EXEC2:  unix_exec2();    break;
+      case UNIX_EXEC3:  unix_exec3();    break;
+      case UNIX_EXIT:   unix_exit();     break;
+      case UNIX_GETPID: unix_getpid();   break;
+      case UNIX_WAIT:   unix_wait();     break;
+      case UNIX_KILL:   unix_kill();     break;
+      case UNIX_POPEN:  unixOpenPipe();  break;
       case UNIX_PCLOSE: unixClosePipe(); break;
-      case UNIX_WRITE:  c = stack_pop();
-                        b = stack_pop();
-                        a = stack_pop();
-                        write(fileno(ioFileHandles[c]), string_extract(a), b);
-                        break;
-      case UNIX_CHDIR:  chdir(string_extract(stack_pop()));
-                        break;
-      case UNIX_GETENV: a = stack_pop();
-                        b = stack_pop();
-                        string_inject(getenv(string_extract(b)), a);
-                        break;
-      case UNIX_PUTENV: putenv(string_extract(stack_pop()));
-                        break;
-      case UNIX_SLEEP:  sleep(stack_pop());
-                        break;
-      default:          break;
+      case UNIX_WRITE:  unix_write();    break;
+      case UNIX_CHDIR:  unix_chdir();    break;
+      case UNIX_GETENV: unix_getenv();   break;
+      case UNIX_PUTENV: unix_putenv();   break;
+      case UNIX_SLEEP:  unix_sleep();    break;
+      default:                           break;
   }
 }
 #endif
@@ -1118,6 +1150,7 @@ char *read_token_str(char *s, char *token_buffer, int echo) {
   ---------------------------------------------------------------------*/
 /* Compile image.c and link against the image.o */
 #include "image.c"
+
 
 /*---------------------------------------------------------------------
   ---------------------------------------------------------------------*/
