@@ -1,13 +1,20 @@
-/* RETRO ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   a personal, pragmatic, minimalistic forth
-   Copyright (c) 2016, 2017 Charles Childers
+/* RETRO --------------------------------------------------------------
+  A personal, minimalistic forth
+  Copyright (c) 2016 - 2018 Charles Childers
 
-   This is `rre`, short for `run retro and exit`. It's the basic
-   interface layer for Retro on FreeBSD, Linux and macOS.
+  This is `rre`, short for `run retro and exit`. It's the basic
+  interface layer for Retro on FreeBSD, Linux and macOS.
 
-   rre embeds the image file into the binary, so the compiled version
-   of this is all you need to have a functional system.
-   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+  rre embeds the image file into the binary, so the compiled version
+  of this is all you need to have a functional system.
+
+  I'll include commentary throughout the source, so read on.
+  ---------------------------------------------------------------------*/
+
+
+/*---------------------------------------------------------------------
+  Begin by including the various C headers needed.
+  ---------------------------------------------------------------------*/
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -23,15 +30,12 @@
 #include <sys/wait.h>
 #include <signal.h>
 
-/* Configure Nga (the VM) Limitations */
-#define CELL         int32_t
-#define IMAGE_SIZE   524288 * 16
-#define ADDRESSES    2048
-#define STACK_DEPTH  512
 
-/* This assumes some knowledge of the ngaImage format for the
-   Retro language. If things change there, these will need to
-   be adjusted to match. */
+/*---------------------------------------------------------------------
+  First, a few constants relating to the image format and memory
+  layout. If you modify the kernel (Rx.md), these will need to be
+  altered to match your memory layout.
+  ---------------------------------------------------------------------*/
 
 #define TIB            1025
 #define D_OFFSET_LINK     0
@@ -39,25 +43,41 @@
 #define D_OFFSET_CLASS    2
 #define D_OFFSET_NAME     3
 
-/* More Nga bits. You shouldn't need to alter these */
 
-enum vm_opcode {
-  VM_NOP,  VM_LIT,    VM_DUP,   VM_DROP,    VM_SWAP,   VM_PUSH,  VM_POP,
-  VM_JUMP, VM_CALL,   VM_CCALL, VM_RETURN,  VM_EQ,     VM_NEQ,   VM_LT,
-  VM_GT,   VM_FETCH,  VM_STORE, VM_ADD,     VM_SUB,    VM_MUL,   VM_DIVMOD,
-  VM_AND,  VM_OR,     VM_XOR,   VM_SHIFT,   VM_ZRET,   VM_END
-};
-#define NUM_OPS VM_END + 1
 
-CELL sp, rp, ip;
-CELL data[STACK_DEPTH];
-CELL address[ADDRESSES];
-CELL memory[IMAGE_SIZE + 1];
-#define TOS  data[sp]
-#define NOS  data[sp-1]
-#define TORS address[rp]
+/*---------------------------------------------------------------------
+  Next we get into some things that relate to the Nga virtual machine
+  that RETRO runs on.
+  ---------------------------------------------------------------------*/
 
-/* Function Prototypes */
+#define CELL         int32_t      /* Cell size (32 bit, signed integer */
+#define IMAGE_SIZE   524288 * 16  /* Amount of RAM. 8MiB by default.   */
+#define ADDRESSES    2048         /* Depth of address stack            */
+#define STACK_DEPTH  512          /* Depth of data stack               */
+
+CELL sp, rp, ip;                  /* Data, address, instruction pointers */
+CELL data[STACK_DEPTH];           /* The data stack                    */
+CELL address[ADDRESSES];          /* The address stack                 */
+CELL memory[IMAGE_SIZE + 1];      /* The memory for the image          */
+
+#define TOS  data[sp]             /* Shortcut for top item on stack    */
+#define NOS  data[sp-1]           /* Shortcut for second item on stack */
+#define TORS address[rp]          /* Shortcut for top item on address stack */
+
+
+/*---------------------------------------------------------------------
+  Moving forward, a few variables. These are updated to point to the
+  latest values in the image.
+  ---------------------------------------------------------------------*/
+
+CELL Dictionary;
+CELL NotFound;
+CELL interpret;
+
+
+/*---------------------------------------------------------------------
+  Function prototypes.
+  ---------------------------------------------------------------------*/
 
 CELL stack_pop();
 void stack_push(CELL value);
@@ -69,7 +89,6 @@ int d_class(CELL dt);
 int d_name(CELL dt);
 int d_lookup(CELL Dictionary, char *name);
 CELL d_xt_for(char *Name, CELL Dictionary);
-CELL d_class_for(char *Name, CELL Dictionary);
 CELL ioGetFileHandle();
 CELL ioOpenFile();
 CELL ioReadFile();
@@ -96,10 +115,6 @@ void ngaProcessPackedOpcodes(int opcode);
 int ngaValidatePackedOpcodes(CELL opcode);
 
 
-
-CELL Dictionary, Compiler;
-CELL notfound;
-
 char **sys_argv;
 int sys_argc;
 
@@ -119,8 +134,22 @@ int sys_argc;
 #define IO_FS_FLUSH   126
 
 
-/* First, a couple of functions to simplify interacting with
-   the stack. */
+/*---------------------------------------------------------------------
+  Now to the fun stuff: interfacing with the virtual machine. There are
+  a things I like to have here:
+
+  - push a value to the stack
+  - pop a value off the stack
+  - extract a string from the image
+  - inject a string into the image.
+  - lookup dictionary headers and access dictionary fields
+  ---------------------------------------------------------------------*/
+
+
+/*---------------------------------------------------------------------
+  Stack push/pop is easy. I could avoid these, but it aids in keeping
+  the code readable, so it's worth the slight overhead.
+  ---------------------------------------------------------------------*/
 
 CELL stack_pop() {
   sp--;
@@ -132,8 +161,13 @@ void stack_push(CELL value) {
   data[sp] = value;
 }
 
-/* Next, functions to translate C strings to/from Retro
-   strings. */
+
+/*---------------------------------------------------------------------
+  Strings are next. RETRO uses C-style NULL terminated strings. So I
+  can easily inject or extract a string. Injection iterates over the
+  string, copying it into the image. This also takes care to ensure
+  that the NULL terminator is added.
+  ---------------------------------------------------------------------*/
 
 int string_inject(char *str, int buffer) {
   if (!str) {
@@ -150,6 +184,14 @@ int string_inject(char *str, int buffer) {
   return buffer;
 }
 
+
+/*---------------------------------------------------------------------
+  Extracting a string is similar, but I have to iterate over the VM
+  memory instead of a C string and copy the charaters into a buffer.
+  This uses a static buffer (`string_data`) as I prefer to avoid using
+  `malloc()`.
+  ---------------------------------------------------------------------*/
+
 char string_data[8192];
 char *string_extract(int at) {
   CELL starting = at;
@@ -159,6 +201,21 @@ char *string_extract(int at) {
   string_data[i] = 0;
   return (char *)string_data;
 }
+
+
+/*---------------------------------------------------------------------
+  Continuing along, I now define functions to access the dictionary.
+
+  RETRO's dictionary is a linked list. Each entry is setup like:
+
+  0000  Link to previous entry (NULL if this is the root entry)
+  0001  Pointer to definition start
+  0002  Pointer to class handler
+  0003  Start of a NULL terminated string with the word name
+
+  First, functions to access each field. The offsets were defineed at
+  the start of the file.
+  ---------------------------------------------------------------------*/
 
 int d_link(CELL dt) {
   return dt + D_OFFSET_LINK;
@@ -176,8 +233,13 @@ int d_name(CELL dt) {
   return dt + D_OFFSET_NAME;
 }
 
-/* With the dictionary accessors, some functions to actually
-   lookup headers. */
+
+/*---------------------------------------------------------------------
+  Next, a more complext word. This will walk through the entries to
+  find one with a name that matches the specified name. This is *slow*,
+  but works ok unless you have a really large dictionary. (I've not
+  run into issues with this in practice).
+  ---------------------------------------------------------------------*/
 
 int d_lookup(CELL Dictionary, char *name) {
   CELL dt = 0;
@@ -195,18 +257,60 @@ int d_lookup(CELL Dictionary, char *name) {
   return dt;
 }
 
+
+/*---------------------------------------------------------------------
+  My last dictionary related word returns the `xt` pointer for a word.
+  This is used to help keep various important bits up to date.
+  ---------------------------------------------------------------------*/
+
 CELL d_xt_for(char *Name, CELL Dictionary) {
   return memory[d_xt(d_lookup(Dictionary, Name))];
 }
 
-CELL d_class_for(char *Name, CELL Dictionary) {
-  return memory[d_class(d_lookup(Dictionary, Name))];
+
+/*---------------------------------------------------------------------
+  This interface tracks a few words and variables in the image. These
+  are:
+
+  Dictionary - the latest dictionary header
+  NotFound   - called when a word is not found
+  interpret  - the heart of the interpreter/compiler
+
+  I have to call this periodically, as the Dictionary will change as
+  new words are defined, and the user might write a new error handler
+  or interpreter.
+  ---------------------------------------------------------------------*/
+
+void update_rx() {
+  Dictionary = memory[2];
+  interpret = d_xt_for("interpret", Dictionary);
+  NotFound = d_xt_for("err:notfound", Dictionary);
 }
 
 
-/* Now for File I/O functions. These were adapted from the Ngaro VM. */
+/*---------------------------------------------------------------------
+  Now on to I/O and extensions!
+
+  RRE provides a lot of additional functionality over the base RETRO
+  system. First up is support for files.
+
+  The RRE file model is intended to be similar to that of the standard
+  C libraries and wraps fopen(), fclose(), etc.
+  ---------------------------------------------------------------------*/
+
+
+/*---------------------------------------------------------------------
+  I keep an array of file handles. RETRO will use the index number as
+  its representation of the file.
+  ---------------------------------------------------------------------*/
 
 FILE *ioFileHandles[MAX_OPEN_FILES];
+
+
+/*---------------------------------------------------------------------
+  `ioGetFileHandle()` returns a file handle, or 0 if there are no
+  available handle slots in the array.
+  ---------------------------------------------------------------------*/
 
 CELL ioGetFileHandle() {
   CELL i;
@@ -215,6 +319,27 @@ CELL ioGetFileHandle() {
       return i;
   return 0;
 }
+
+
+/*---------------------------------------------------------------------
+  `ioOpenFile()` opens a file. This pulls from the RETRO data stack:
+
+  - mode     (number, TOS)
+  - filename (string, NOS)
+
+  Modes are:
+
+  | Mode | Corresponds To | Description          |
+  | ---- | -------------- | -------------------- |
+  |  0   | rb             | Open for reading     |
+  |  1   | w              | Open for writing     |
+  |  2   | a              | Open for append      |
+  |  3   | rb+            | Open for read/update |
+
+  The file name should be a NULL terminated string. This will attempt
+  to open the requested file and will return a handle (index number
+  into the `ioFileHandles` array).
+  ---------------------------------------------------------------------*/
 
 CELL ioOpenFile() {
   CELL slot, mode, name;
@@ -236,11 +361,19 @@ CELL ioOpenFile() {
   return slot;
 }
 
+
+/*---------------------------------------------------------------------
+  ---------------------------------------------------------------------*/
+
 CELL ioReadFile() {
   CELL slot = stack_pop();
   CELL c = fgetc(ioFileHandles[slot]);
   return feof(ioFileHandles[slot]) ? 0 : c;
 }
+
+
+/*---------------------------------------------------------------------
+  ---------------------------------------------------------------------*/
 
 CELL ioWriteFile() {
   CELL slot, c, r;
@@ -250,6 +383,10 @@ CELL ioWriteFile() {
   return (r == EOF) ? 0 : 1;
 }
 
+
+/*---------------------------------------------------------------------
+  ---------------------------------------------------------------------*/
+
 CELL ioCloseFile() {
   fclose(ioFileHandles[data[sp]]);
   ioFileHandles[data[sp]] = 0;
@@ -257,10 +394,18 @@ CELL ioCloseFile() {
   return 0;
 }
 
+
+/*---------------------------------------------------------------------
+  ---------------------------------------------------------------------*/
+
 CELL ioGetFilePosition() {
   CELL slot = data[sp]; sp--;
   return (CELL) ftell(ioFileHandles[slot]);
 }
+
+
+/*---------------------------------------------------------------------
+  ---------------------------------------------------------------------*/
 
 CELL ioSetFilePosition() {
   CELL slot, pos, r;
@@ -269,6 +414,10 @@ CELL ioSetFilePosition() {
   r = fseek(ioFileHandles[slot], pos, SEEK_SET);
   return r;
 }
+
+
+/*---------------------------------------------------------------------
+  ---------------------------------------------------------------------*/
 
 CELL ioGetFileSize() {
   CELL slot, current, r, size;
@@ -287,11 +436,19 @@ CELL ioGetFileSize() {
   return (r == 0) ? size : 0;
 }
 
+
+/*---------------------------------------------------------------------
+  ---------------------------------------------------------------------*/
+
 CELL ioDeleteFile() {
   CELL name = data[sp]; sp--;
   char *request = string_extract(name);
   return (unlink(request) == 0) ? -1 : 0;
 }
+
+
+/*---------------------------------------------------------------------
+  ---------------------------------------------------------------------*/
 
 void ioFlushFile() {
   CELL slot;
@@ -299,17 +456,9 @@ void ioFlushFile() {
   fflush(ioFileHandles[slot]);
 }
 
-/* Retro needs to track a few variables. This function is
-   called as necessary to ensure that the interface stays
-   in sync with the image state. */
 
-void update_rx() {
-  Dictionary = memory[2];
-  Compiler = d_xt_for("Compiler", Dictionary);
-  notfound = d_xt_for("err:notfound", Dictionary);
-}
-
-
+/*---------------------------------------------------------------------
+  ---------------------------------------------------------------------*/
 /* The `execute` function runs a word in the Retro image.
    It also handles the additional I/O instructions. */
 
@@ -331,6 +480,8 @@ void update_rx() {
 #define UNIX_PUTENV -8015
 #define UNIX_SLEEP  -8016
 
+/*---------------------------------------------------------------------
+  ---------------------------------------------------------------------*/
 CELL unixOpenPipe() {
   CELL slot, mode, name;
   slot = ioGetFileHandle();
@@ -350,6 +501,9 @@ CELL unixOpenPipe() {
   return slot;
 }
 
+
+/*---------------------------------------------------------------------
+  ---------------------------------------------------------------------*/
 CELL unixClosePipe() {
   pclose(ioFileHandles[data[sp]]);
   ioFileHandles[data[sp]] = 0;
@@ -367,7 +521,7 @@ void execute(int cell) {
   rp = 1;
   ip = cell;
   while (ip < IMAGE_SIZE) {
-    if (ip == notfound) {
+    if (ip == NotFound) {
       printf("%s ?\n", string_extract(TIB));
     }
     opcode = memory[ip];
@@ -451,6 +605,8 @@ void execute(int cell) {
 }
 
 
+/*---------------------------------------------------------------------
+  ---------------------------------------------------------------------*/
 /* The `evaluate` function moves a token into the Retro
    token buffer, then calls the Retro `interpret` word
    to process it. */
@@ -459,13 +615,14 @@ void evaluate(char *s) {
   if (strlen(s) == 0)
     return;
   update_rx();
-  CELL interpret = d_xt_for("interpret", Dictionary);
   string_inject(s, TIB);
   stack_push(TIB);
   execute(interpret);
 }
 
 
+/*---------------------------------------------------------------------
+  ---------------------------------------------------------------------*/
 /* `read_token` reads a token from the specified file.
    It will stop on a whitespace or newline. It also
    tries to handle backspaces, though the success of this
@@ -499,6 +656,8 @@ void read_token(FILE *file, char *token_buffer, int echo) {
   token_buffer[count] = '\0';
 }
 
+/*---------------------------------------------------------------------
+  ---------------------------------------------------------------------*/
 char *read_token_str(char *s, char *token_buffer, int echo) {
   int ch = (char)*s++;
   if (echo != 0)
@@ -524,9 +683,13 @@ char *read_token_str(char *s, char *token_buffer, int echo) {
   return s;
 }
 
+/*---------------------------------------------------------------------
+  ---------------------------------------------------------------------*/
 double Floats[8192];
 CELL fsp;
 
+/*---------------------------------------------------------------------
+  ---------------------------------------------------------------------*/
 void float_push(double value) {
     fsp++;
     Floats[fsp] = value;
@@ -537,51 +700,71 @@ double float_pop() {
     return Floats[fsp + 1];
 }
 
+/*---------------------------------------------------------------------
+  ---------------------------------------------------------------------*/
 void float_from_number() {
     float_push((double)stack_pop());
 }
 
+/*---------------------------------------------------------------------
+  ---------------------------------------------------------------------*/
 void float_from_string() {
     float_push(atof(string_extract(stack_pop())));
 }
 
+/*---------------------------------------------------------------------
+  ---------------------------------------------------------------------*/
 void float_to_string() {
     snprintf(string_data, 8192, "%f", float_pop());
     string_inject(string_data, stack_pop());
 }
 
+/*---------------------------------------------------------------------
+  ---------------------------------------------------------------------*/
 void float_add() {
     double a = float_pop();
     double b = float_pop();
     float_push(a+b);
 }
 
+/*---------------------------------------------------------------------
+  ---------------------------------------------------------------------*/
 void float_sub() {
     double a = float_pop();
     double b = float_pop();
     float_push(b-a);
 }
 
+/*---------------------------------------------------------------------
+  ---------------------------------------------------------------------*/
 void float_mul() {
     double a = float_pop();
     double b = float_pop();
     float_push(a*b);
 }
 
+/*---------------------------------------------------------------------
+  ---------------------------------------------------------------------*/
 void float_div() {
     double a = float_pop();
     double b = float_pop();
     float_push(b/a);
 }
 
+/*---------------------------------------------------------------------
+  ---------------------------------------------------------------------*/
 void float_floor() {
     float_push(floor(float_pop()));
 }
 
+/*---------------------------------------------------------------------
+  ---------------------------------------------------------------------*/
 void float_ceil() {
     float_push(ceil(float_pop()));
 }
 
+/*---------------------------------------------------------------------
+  ---------------------------------------------------------------------*/
 void float_eq() {
     double a = float_pop();
     double b = float_pop();
@@ -591,6 +774,8 @@ void float_eq() {
         stack_push(0);
 }
 
+/*---------------------------------------------------------------------
+  ---------------------------------------------------------------------*/
 void float_neq() {
     double a = float_pop();
     double b = float_pop();
@@ -600,6 +785,8 @@ void float_neq() {
         stack_push(0);
 }
 
+/*---------------------------------------------------------------------
+  ---------------------------------------------------------------------*/
 void float_lt() {
     double a = float_pop();
     double b = float_pop();
@@ -609,6 +796,8 @@ void float_lt() {
         stack_push(0);
 }
 
+/*---------------------------------------------------------------------
+  ---------------------------------------------------------------------*/
 void float_gt() {
     double a = float_pop();
     double b = float_pop();
@@ -618,20 +807,28 @@ void float_gt() {
         stack_push(0);
 }
 
+/*---------------------------------------------------------------------
+  ---------------------------------------------------------------------*/
 void float_depth() {
     stack_push(fsp);
 }
 
+/*---------------------------------------------------------------------
+  ---------------------------------------------------------------------*/
 void float_dup() {
     double a = float_pop();
     float_push(a);
     float_push(a);
 }
 
+/*---------------------------------------------------------------------
+  ---------------------------------------------------------------------*/
 void float_drop() {
     float_pop();
 }
 
+/*---------------------------------------------------------------------
+  ---------------------------------------------------------------------*/
 void float_swap() {
     double a = float_pop();
     double b = float_pop();
@@ -639,18 +836,24 @@ void float_swap() {
     float_push(b);
 }
 
+/*---------------------------------------------------------------------
+  ---------------------------------------------------------------------*/
 void float_log() {
     double a = float_pop();
     double b = float_pop();
     float_push(log(b) / log(a));
 }
 
+/*---------------------------------------------------------------------
+  ---------------------------------------------------------------------*/
 void float_pow() {
     double a = float_pop();
     double b = float_pop();
     float_push(pow(b, a));
 }
 
+/*---------------------------------------------------------------------
+  ---------------------------------------------------------------------*/
 void float_to_number() {
     double a = float_pop();
     if (a > 2147483647)
@@ -660,30 +863,44 @@ void float_to_number() {
     stack_push((CELL)round(a));
 }
 
+/*---------------------------------------------------------------------
+  ---------------------------------------------------------------------*/
 void float_sin() {
   float_push(sin(float_pop()));
 }
 
+/*---------------------------------------------------------------------
+  ---------------------------------------------------------------------*/
 void float_cos() {
   float_push(cos(float_pop()));
 }
 
+/*---------------------------------------------------------------------
+  ---------------------------------------------------------------------*/
 void float_tan() {
   float_push(tan(float_pop()));
 }
 
+/*---------------------------------------------------------------------
+  ---------------------------------------------------------------------*/
 void float_asin() {
   float_push(asin(float_pop()));
 }
 
+/*---------------------------------------------------------------------
+  ---------------------------------------------------------------------*/
 void float_acos() {
   float_push(acos(float_pop()));
 }
 
+/*---------------------------------------------------------------------
+  ---------------------------------------------------------------------*/
 void float_atan() {
   float_push(atan(float_pop()));
 }
 
+/*---------------------------------------------------------------------
+  ---------------------------------------------------------------------*/
 void ngaFloatingPointUnit() {
     switch (stack_pop()) {
         case 0: float_from_number();  break;
@@ -716,6 +933,8 @@ void ngaFloatingPointUnit() {
     }
 }
 
+/*---------------------------------------------------------------------
+  ---------------------------------------------------------------------*/
 void error(const char *msg) {
   perror(msg);
   exit(0);
@@ -775,9 +994,14 @@ void ngaGopherUnit() {
   gopher_fetch(server, port, selector, dest);
 }
 
+
+/*---------------------------------------------------------------------
+  ---------------------------------------------------------------------*/
 /* Compile image.c and link against the image.o */
 #include "image.c"
 
+/*---------------------------------------------------------------------
+  ---------------------------------------------------------------------*/
 void dump_stack() {
   CELL i;
   if (sp == 0)
@@ -793,6 +1017,8 @@ void dump_stack() {
 }
 
 
+/*---------------------------------------------------------------------
+  ---------------------------------------------------------------------*/
 int fenced(char *s)
 {
   int a = strcmp(s, "```");
@@ -803,6 +1029,8 @@ int fenced(char *s)
 }
 
 
+/*---------------------------------------------------------------------
+  ---------------------------------------------------------------------*/
 void include_file(char *fname) {
   int inBlock = 0;
   char source[64 * 1024];
@@ -830,6 +1058,8 @@ void include_file(char *fname) {
 }
 
 
+/*---------------------------------------------------------------------
+  ---------------------------------------------------------------------*/
 int main(int argc, char **argv) {
   int i, interactive;
   ngaPrepare();
@@ -887,6 +1117,7 @@ int main(int argc, char **argv) {
   exit(0);
 }
 
+
 /* Nga ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    Copyright (c) 2008 - 2017, Charles Childers
    Copyright (c) 2009 - 2010, Luke Parrish
@@ -894,6 +1125,14 @@ int main(int argc, char **argv) {
    Copyright (c) 2010,        Jay Skeer
    Copyright (c) 2011,        Kenneth Keating
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+
+enum vm_opcode {
+  VM_NOP,  VM_LIT,    VM_DUP,   VM_DROP,    VM_SWAP,   VM_PUSH,  VM_POP,
+  VM_JUMP, VM_CALL,   VM_CCALL, VM_RETURN,  VM_EQ,     VM_NEQ,   VM_LT,
+  VM_GT,   VM_FETCH,  VM_STORE, VM_ADD,     VM_SUB,    VM_MUL,   VM_DIVMOD,
+  VM_AND,  VM_OR,     VM_XOR,   VM_SHIFT,   VM_ZRET,   VM_END
+};
+#define NUM_OPS VM_END + 1
 
 CELL ngaLoadImage(char *imageFile) {
   FILE *fp;

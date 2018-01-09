@@ -1,11 +1,7 @@
-/*---------------------------------------------------------------------
-  ____   ____ ______ ____    ___
-  || \\ ||    | || | || \\  // \\
-  ||_// ||==    ||   ||_// ((   ))
-  || \\ ||___   ||   || \\  \\_//
-  a personal, minimalistic forth
+/* RETRO -------------------------------------------------------------
+  A personal, minimalistic forth
   Copyright (c) 2016 - 2018 Charles Childers
-  ---------------------------------------------------------------------
+
   This is the `repl`, a basic interactive interface for RETRO. It is
   intended to be simple and very minimalistic, providing the minimal
   I/O and additions needed to support a basic RETRO system. For a much
