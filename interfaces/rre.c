@@ -79,6 +79,14 @@ CELL memory[IMAGE_SIZE + 1];      /* The memory for the image          */
 
 
 /*---------------------------------------------------------------------
+  RRE embeds the image into the binary. This includes the image data
+  (converted to a .c file by an external tool).
+  ---------------------------------------------------------------------*/
+
+#include "image.c"
+
+
+/*---------------------------------------------------------------------
   Moving forward, a few variables. These are updated to point to the
   latest values in the image.
   ---------------------------------------------------------------------*/
@@ -127,23 +135,12 @@ void ngaProcessPackedOpcodes(int opcode);
 int ngaValidatePackedOpcodes(CELL opcode);
 
 
+/*---------------------------------------------------------------------
+  Declare global variables related to I/O.
+  ---------------------------------------------------------------------*/
+
 char **sys_argv;
 int sys_argc;
-
-/* Some I/O Parameters */
-
-#define MAX_OPEN_FILES   128
-#define IO_TTY_PUTC  1000
-#define IO_TTY_GETC  1001
-#define IO_FS_OPEN    118
-#define IO_FS_CLOSE   119
-#define IO_FS_READ    120
-#define IO_FS_WRITE   121
-#define IO_FS_TELL    122
-#define IO_FS_SEEK    123
-#define IO_FS_SIZE    124
-#define IO_FS_DELETE  125
-#define IO_FS_FLUSH   126
 
 
 /*---------------------------------------------------------------------
@@ -311,6 +308,20 @@ void update_rx() {
   ---------------------------------------------------------------------*/
 
 #ifdef ENABLE_FILES
+
+#define MAX_OPEN_FILES   128
+#define IO_TTY_PUTC  1000
+#define IO_TTY_GETC  1001
+#define IO_FS_OPEN    118
+#define IO_FS_CLOSE   119
+#define IO_FS_READ    120
+#define IO_FS_WRITE   121
+#define IO_FS_TELL    122
+#define IO_FS_SEEK    123
+#define IO_FS_SIZE    124
+#define IO_FS_DELETE  125
+#define IO_FS_FLUSH   126
+
 
 /*---------------------------------------------------------------------
   I keep an array of file handles. RETRO will use the index number as
@@ -1169,14 +1180,6 @@ void read_token(FILE *file, char *token_buffer, int echo) {
 
 
 /*---------------------------------------------------------------------
-  RRE embeds the image into the binary. This includes the image data
-  (converted to a .c file by an external tool).
-  ---------------------------------------------------------------------*/
-
-#include "image.c"
-
-
-/*---------------------------------------------------------------------
   ---------------------------------------------------------------------*/
 void dump_stack() {
   CELL i;
@@ -1194,7 +1197,25 @@ void dump_stack() {
 
 
 /*---------------------------------------------------------------------
+  RRE is primarily intended to be used in a batch or scripting model.
+  The `include_file()` function will be used to read the code in the
+  file, evaluating it as encountered.
+
+  I enforce a literate model, with code in fenced blocks. E.g.,
+
+    # This is a test
+
+    Display "Hello, World!"
+
+    ~~~
+    'Hello,_World! puts nl
+    ~~~
+
+  RRE will ignore anything outside the `~~~` blocks. To identify if the
+  current token is the start or end of a block, I provide a `fenced()`
+  function.
   ---------------------------------------------------------------------*/
+
 int fenced(char *s)
 {
   int a = strcmp(s, "```");
@@ -1206,90 +1227,101 @@ int fenced(char *s)
 
 
 /*---------------------------------------------------------------------
+  And now for the actual `include_file()` function.
+
+  RRE will use 
   ---------------------------------------------------------------------*/
+
 void include_file(char *fname) {
-  int inBlock = 0;
-  char source[64 * 1024];
-  char fence[4];
-  FILE *fp;
-  fp = fopen(fname, "r");
+  int inBlock = 0;                 /* Tracks status of in/out of block */
+  char source[64 * 1024];          /* Line buffer [about 64K]          */
+  char fence[4];                   /* Used with `fenced()`             */
+
+  FILE *fp;                        /* Open the file. If not found,     */
+  fp = fopen(fname, "r");          /* exit.                            */
   if (fp == NULL)
     return;
-  while (!feof(fp))
+
+  while (!feof(fp))                /* Loop through the file            */
   {
     read_token(fp, source, 0);
-    strncpy(fence, source, 3);
-    fence[3] = '\0';
-    if (fenced(fence)) {
+    strncpy(fence, source, 3);     /* Copy the first three characters  */
+    fence[3] = '\0';               /* into `fence` to see if we are in */
+    if (fenced(fence)) {           /* a code block.                    */
       if (inBlock == 0)
         inBlock = 1;
       else
         inBlock = 0;
     } else {
-      if (inBlock == 1)
+      if (inBlock == 1)            /* If we are, evaluate token        */
         evaluate(source);
     }
   }
+
   fclose(fp);
 }
 
 
 /*---------------------------------------------------------------------
   ---------------------------------------------------------------------*/
-int main(int argc, char **argv) {
-  int i, interactive;
+
+void help() {
+  printf("Scripting Usage: rre filename\n\n");
+  printf("Interactive Usage: rre args\n\n");
+  printf("Valid Arguments:\n\n");
+  printf("  -h\n");
+  printf("  Display this help text\n\n");
+  printf("  -i\n");
+  printf("  Launches in interactive mode (line buffered)\n\n");
+  printf("  -c\n");
+  printf("  Launches in interactive mode (character buffered)\n\n");
+  printf("  -i -f filename\n");
+  printf("  Launches in interactive mode (line buffered) and load the contents of the\n  specified file\n\n");
+  printf("  -c -f filename\n");
+  printf("  Launches in interactive mode (character buffered) and load the contents\n  of the specified file\n\n");
+}
+
+void initialize() {
+  int i;
   ngaPrepare();
   for (i = 0; i < ngaImageCells; i++)
     memory[i] = ngaImage[i];
   update_rx();
+}
 
-  interactive = 0;
+int main(int argc, char **argv) {
+  if (argc <= 1) return 0;
+
+  initialize();
 
   sys_argc = argc;
   sys_argv = argv;
 
-  if (argc > 1) {
-    if (strcmp(argv[1], "-i") == 0) {
-      interactive = 1;
-      if (argc >= 4 && strcmp(argv[2], "-f") == 0) {
-        include_file(argv[3]);
-      }
-    } else if (strcmp(argv[1], "-c") == 0) {
-      interactive = 2;
-      if (argc >= 4 && strcmp(argv[2], "-f") == 0) {
-        include_file(argv[3]);
-      }
-    } else if (strcmp(argv[1], "-h") == 0) {
-      printf("Scripting Usage: rre filename\n\n");
-      printf("Interactive Usage: rre args\n\n");
-      printf("Valid Arguments:\n\n");
-      printf("  -h\n");
-      printf("  Display this help text\n\n");
-      printf("  -i\n");
-      printf("  Launches in interactive mode (line buffered)\n\n");
-      printf("  -c\n");
-      printf("  Launches in interactive mode (character buffered)\n\n");
-      printf("  -i -f filename\n");
-      printf("  Launches in interactive mode (line buffered) and load the contents of the\n  specified file\n\n");
-      printf("  -c -f filename\n");
-      printf("  Launches in interactive mode (character buffered) and load the contents\n  of the specified file\n\n");
-    } else {
-      include_file(argv[1]);
+  if (strcmp(argv[1], "-i") == 0) {
+    if (argc >= 4 && strcmp(argv[2], "-f") == 0) {
+      include_file(argv[3]);
     }
-  }
-
-  if (interactive == 1) {
     execute(d_xt_for("banner", Dictionary));
     while (1) execute(d_xt_for("listen", Dictionary));
+    exit(0);
   }
-  if (interactive == 2) {
+
+  if (strcmp(argv[1], "-c") == 0) {
+    if (argc >= 4 && strcmp(argv[2], "-f") == 0) {
+      include_file(argv[3]);
+    }
+    exit(0);
     execute(d_xt_for("banner", Dictionary));
     while (1) execute(d_xt_for("listen-cbreak", Dictionary));
   }
 
-  if (sp >= 1)
-    dump_stack();
+  if (strcmp(argv[1], "-h") == 0) {
+    help();
+    exit(0);
+  }
 
+  include_file(argv[1]);
+  if (sp >= 1)  dump_stack();
   exit(0);
 }
 
