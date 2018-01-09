@@ -13,6 +13,19 @@
 
 
 /*---------------------------------------------------------------------
+  RRE provides numerous extensions to RETRO. Support for these can be
+  enabled/disabled here. (Note that this won't remove the words, just
+  support for them. You should also edit `rre.forth` to remove anything
+  you don't want/need after making changes here).
+  ---------------------------------------------------------------------*/
+
+#define ENABLE_FILES
+#define ENABLE_FLOATING_POINT
+#define ENABLE_UNIX
+#define ENABLE_GOPHER
+
+
+/*---------------------------------------------------------------------
   Begin by including the various C headers needed.
   ---------------------------------------------------------------------*/
 
@@ -298,6 +311,7 @@ void update_rx() {
   C libraries and wraps fopen(), fclose(), etc.
   ---------------------------------------------------------------------*/
 
+#ifdef ENABLE_FILES
 
 /*---------------------------------------------------------------------
   I keep an array of file handles. RETRO will use the index number as
@@ -363,6 +377,8 @@ CELL ioOpenFile() {
 
 
 /*---------------------------------------------------------------------
+  `ioReadFile()` reads a byte from a file. This takes a file pointer
+  from the stack and pushes the character that was read to the stack.
   ---------------------------------------------------------------------*/
 
 CELL ioReadFile() {
@@ -373,6 +389,9 @@ CELL ioReadFile() {
 
 
 /*---------------------------------------------------------------------
+  `ioWriteFile()` writes a byte to a file. This takes a file pointer
+  (TOS) and a byte (NOS) from the stack. It does not return any values
+  on the stack.
   ---------------------------------------------------------------------*/
 
 CELL ioWriteFile() {
@@ -385,6 +404,8 @@ CELL ioWriteFile() {
 
 
 /*---------------------------------------------------------------------
+  `ioCloseFile()` closes a file. This takes a file handle from the
+  stack and does not return anything on the stack.
   ---------------------------------------------------------------------*/
 
 CELL ioCloseFile() {
@@ -396,6 +417,8 @@ CELL ioCloseFile() {
 
 
 /*---------------------------------------------------------------------
+  `ioGetFilePosition()` provides the current index into a file. This
+  takes the file handle from the stack and returns the offset.
   ---------------------------------------------------------------------*/
 
 CELL ioGetFilePosition() {
@@ -405,6 +428,9 @@ CELL ioGetFilePosition() {
 
 
 /*---------------------------------------------------------------------
+  `ioSetFilePosition()` changes the current index into a file to the
+  specified one. This takes a file handle (TOS) and new offset (NOS)
+  from the stack.
   ---------------------------------------------------------------------*/
 
 CELL ioSetFilePosition() {
@@ -417,6 +443,9 @@ CELL ioSetFilePosition() {
 
 
 /*---------------------------------------------------------------------
+  `ioGetFileSize()` returns the size of a file, or 0 if empty. If the
+  file is a directory, it returns -1. It takes a file handle from the
+  stack.
   ---------------------------------------------------------------------*/
 
 CELL ioGetFileSize() {
@@ -438,6 +467,8 @@ CELL ioGetFileSize() {
 
 
 /*---------------------------------------------------------------------
+  `ioDeleteFile()` removes a file. This takes a file name (as a string)
+  from the stack.
   ---------------------------------------------------------------------*/
 
 CELL ioDeleteFile() {
@@ -448,6 +479,8 @@ CELL ioDeleteFile() {
 
 
 /*---------------------------------------------------------------------
+  `ioFlushFile()` flushes any pending writes to disk. This takes a
+  file handle from the stack.
   ---------------------------------------------------------------------*/
 
 void ioFlushFile() {
@@ -456,11 +489,20 @@ void ioFlushFile() {
   fflush(ioFileHandles[slot]);
 }
 
+#endif
+
 
 /*---------------------------------------------------------------------
+  UNIX. Or Linux. Or BSD. Or whatever. This section adds functions for
+  interacting with the host OS. It's tested on FreeBSD and Linux, but
+  likely won't work on Windows or any other host not supporting POSIX.
   ---------------------------------------------------------------------*/
-/* The `execute` function runs a word in the Retro image.
-   It also handles the additional I/O instructions. */
+
+#ifdef ENABLE_UNIX
+
+/*---------------------------------------------------------------------
+  First step is to define the instruction values for each of these.
+  ---------------------------------------------------------------------*/
 
 #define UNIX_SYSTEM -8000
 #define UNIX_FORK   -8001
@@ -480,8 +522,30 @@ void ioFlushFile() {
 #define UNIX_PUTENV -8015
 #define UNIX_SLEEP  -8016
 
+
 /*---------------------------------------------------------------------
+  `unixOpenPipe()` is like `ioOpenFile()`, but for pipes. This pulls
+  from the data stack:
+
+  - mode       (number, TOS)
+  - executable (string, NOS)
+
+  Modes are:
+
+  | Mode | Corresponds To | Description          |
+  | ---- | -------------- | -------------------- |
+  |  0   | r              | Open for reading     |
+  |  1   | w              | Open for writing     |
+  |  3   | r+             | Open for read/update |
+
+  The file name should be a NULL terminated string. This will attempt
+  to open the requested file and will return a handle (index number
+  into the `ioFileHandles` array).
+
+  Once opened, you can use the standard file words to read/write to the
+  process.
   ---------------------------------------------------------------------*/
+
 CELL unixOpenPipe() {
   CELL slot, mode, name;
   slot = ioGetFileHandle();
@@ -503,13 +567,18 @@ CELL unixOpenPipe() {
 
 
 /*---------------------------------------------------------------------
+  `unixClosePipe()` closes an open pipe. This takes a file handle from
+  the stack.
   ---------------------------------------------------------------------*/
+
 CELL unixClosePipe() {
   pclose(ioFileHandles[data[sp]]);
   ioFileHandles[data[sp]] = 0;
   sp--;
   return 0;
 }
+
+#endif
 
 
 void execute(int cell) {
@@ -685,6 +754,9 @@ char *read_token_str(char *s, char *token_buffer, int echo) {
 
 /*---------------------------------------------------------------------
   ---------------------------------------------------------------------*/
+
+#ifdef ENABLE_FLOATING_POINT
+
 double Floats[8192];
 CELL fsp;
 
@@ -903,38 +975,43 @@ void float_atan() {
   ---------------------------------------------------------------------*/
 void ngaFloatingPointUnit() {
     switch (stack_pop()) {
-        case 0: float_from_number();  break;
-        case 1: float_from_string();  break;
-        case 2: float_to_string();    break;
-        case 3: float_add();          break;
-        case 4: float_sub();          break;
-        case 5: float_mul();          break;
-        case 6: float_div();          break;
-        case 7: float_floor();        break;
-        case 8: float_eq();           break;
-        case 9: float_neq();          break;
-        case 10: float_lt();          break;
-        case 11: float_gt();          break;
-        case 12: float_depth();       break;
-        case 13: float_dup();         break;
-        case 14: float_drop();        break;
-        case 15: float_swap();        break;
-        case 16: float_log();         break;
-        case 17: float_pow();         break;
-        case 18: float_to_number();   break;
-        case 19: float_sin();         break;
-        case 20: float_cos();         break;
-        case 21: float_tan();         break;
-        case 22: float_asin();        break;
-        case 23: float_acos();        break;
-        case 24: float_atan();        break;
-        case 25: float_ceil();        break;
-        default:                      break;
+        case 0:  float_from_number();  break;
+        case 1:  float_from_string();  break;
+        case 2:  float_to_string();    break;
+        case 3:  float_add();          break;
+        case 4:  float_sub();          break;
+        case 5:  float_mul();          break;
+        case 6:  float_div();          break;
+        case 7:  float_floor();        break;
+        case 8:  float_eq();           break;
+        case 9:  float_neq();          break;
+        case 10: float_lt();           break;
+        case 11: float_gt();           break;
+        case 12: float_depth();        break;
+        case 13: float_dup();          break;
+        case 14: float_drop();         break;
+        case 15: float_swap();         break;
+        case 16: float_log();          break;
+        case 17: float_pow();          break;
+        case 18: float_to_number();    break;
+        case 19: float_sin();          break;
+        case 20: float_cos();          break;
+        case 21: float_tan();          break;
+        case 22: float_asin();         break;
+        case 23: float_acos();         break;
+        case 24: float_atan();         break;
+        case 25: float_ceil();         break;
+        default:                       break;
     }
 }
 
+#endif
+
 /*---------------------------------------------------------------------
   ---------------------------------------------------------------------*/
+
+#ifdef ENABLE_GOPHER
+
 void error(const char *msg) {
   perror(msg);
   exit(0);
@@ -993,6 +1070,8 @@ void ngaGopherUnit() {
   dest = stack_pop();
   gopher_fetch(server, port, selector, dest);
 }
+
+#endif
 
 
 /*---------------------------------------------------------------------
