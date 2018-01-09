@@ -578,179 +578,89 @@ CELL unixClosePipe() {
   return 0;
 }
 
-#endif
+void unix_system() {
+  system(string_extract(stack_pop()));
+}
 
+void unix_fork() {
+  stack_push(fork());
+}
 
-void execute(int cell) {
-  CELL a, b, c;
-  CELL opcode;
+void unix_exec0() {
+  char path[1024];
+  strcpy(path, string_extract(stack_pop()));
+  execl(path, path, (char *)0);
+  stack_push(errno);
+}
+
+void unix_exec1() {
+  char path[1024];
+  char arg0[1024];
+  strcpy(arg0, string_extract(stack_pop()));
+  strcpy(path, string_extract(stack_pop()));
+  execl(path, path, arg0, (char *)0);
+  stack_push(errno);
+}
+
+void unix_exec2() {
+  char path[1024];
+  char arg0[1024], arg1[1024];
+  strcpy(arg1, string_extract(stack_pop()));
+  strcpy(arg0, string_extract(stack_pop()));
+  strcpy(path, string_extract(stack_pop()));
+  execl(path, path, arg0, arg1, (char *)0);
+  stack_push(errno);
+}
+
+void unix_exec3() {
   char path[1024];
   char arg0[1024], arg1[1024], arg2[1024];
-  char arg3[1024], arg4[1024], arg5[1024];
-  rp = 1;
-  ip = cell;
-  while (ip < IMAGE_SIZE) {
-    if (ip == NotFound) {
-      printf("%s ?\n", string_extract(TIB));
-    }
-    opcode = memory[ip];
-    if (ngaValidatePackedOpcodes(opcode) != 0) {
-      ngaProcessPackedOpcodes(opcode);
-    } else if (opcode >= 0 && opcode < 27) {
-      ngaProcessOpcode(opcode);
-    } else {
-      switch (opcode) {
-        case IO_TTY_PUTC:  putc(stack_pop(), stdout); fflush(stdout); break;
-        case IO_TTY_GETC:  stack_push(getc(stdin));                   break;
-        case -9999:        include_file(string_extract(stack_pop())); break;
-        case IO_FS_OPEN:   ioOpenFile();                              break;
-        case IO_FS_CLOSE:  ioCloseFile();                             break;
-        case IO_FS_READ:   stack_push(ioReadFile());                  break;
-        case IO_FS_WRITE:  ioWriteFile();                             break;
-        case IO_FS_TELL:   stack_push(ioGetFilePosition());           break;
-        case IO_FS_SEEK:   ioSetFilePosition();                       break;
-        case IO_FS_SIZE:   stack_push(ioGetFileSize());               break;
-        case IO_FS_DELETE: ioDeleteFile();                            break;
-        case IO_FS_FLUSH:  ioFlushFile();                             break;
-        case -6000: ngaFloatingPointUnit(); break;
-        case -6100: stack_push(sys_argc - 2); break;
-        case -6101: a = stack_pop();
-                    b = stack_pop();
-                    stack_push(string_inject(sys_argv[a + 2], b));
-                    break;
-        case -6200: ngaGopherUnit(); break;
-        case UNIX_SYSTEM: system(string_extract(stack_pop()));        break;
-        case UNIX_FORK:   stack_push(fork());                         break;
-        case UNIX_EXEC0:  strcpy(path, string_extract(stack_pop()));
-                          execl(path, path, (char *)0);
-                          stack_push(errno);                          break;
-        case UNIX_EXEC1:  strcpy(arg0, string_extract(stack_pop()));
-                          strcpy(path, string_extract(stack_pop()));
-                          execl(path, path, arg0, (char *)0);
-                          stack_push(errno);                          break;
-        case UNIX_EXEC2:  strcpy(arg1, string_extract(stack_pop()));
-                          strcpy(arg0, string_extract(stack_pop()));
-                          strcpy(path, string_extract(stack_pop()));
-                          execl(path, path, arg0, arg1, (char *)0);
-                          stack_push(errno);                          break;
-        case UNIX_EXEC3:  strcpy(arg2, string_extract(stack_pop()));
-                          strcpy(arg1, string_extract(stack_pop()));
-                          strcpy(arg0, string_extract(stack_pop()));
-                          strcpy(path, string_extract(stack_pop()));
-                          execl(path, path, arg0, arg1, arg2, (char *)0);
-                          stack_push(errno);                          break;
-        case UNIX_EXIT:   exit(stack_pop()); break;
-        case UNIX_GETPID: stack_push(getpid()); break;
-        case UNIX_WAIT:   stack_push(wait(&a)); break;
-        case UNIX_KILL:   a = stack_pop();
-                          kill(stack_pop(), a);
-                          break;
-        case UNIX_POPEN:  unixOpenPipe(); break;
-        case UNIX_PCLOSE: unixClosePipe(); break;
-        case UNIX_WRITE:  c = stack_pop();
-                          b = stack_pop();
-                          a = stack_pop();
-                          write(fileno(ioFileHandles[c]), string_extract(a), b);
-                          break;
-        case UNIX_CHDIR:  chdir(string_extract(stack_pop()));
-                          break;
-        case UNIX_GETENV: a = stack_pop();
-                          b = stack_pop();
-                          string_inject(getenv(string_extract(b)), a);
-                          break;
-        case UNIX_PUTENV: putenv(string_extract(stack_pop()));
-                          break;
-        case UNIX_SLEEP:  sleep(stack_pop());
-                          break;
-        default:   printf("Invalid instruction!\n");
-                   printf("At %d, opcode %d\n", ip, opcode);
-                   exit(1);
-      }
-    }
-    ip++;
-    if (rp == 0)
-      ip = IMAGE_SIZE;
+  strcpy(arg2, string_extract(stack_pop()));
+  strcpy(arg1, string_extract(stack_pop()));
+  strcpy(arg0, string_extract(stack_pop()));
+  strcpy(path, string_extract(stack_pop()));
+  execl(path, path, arg0, arg1, arg2, (char *)0);
+  stack_push(errno);
+}
+
+
+void ngaUnixUnit() {
+  CELL a, b, c;
+  switch (stack_pop()) {
+      case UNIX_SYSTEM: unix_system();        break;
+      case UNIX_FORK:   unix_fork();                         break;
+      case UNIX_EXEC0:  unix_exec0(); break;
+      case UNIX_EXEC1:  unix_exec1(); break;
+      case UNIX_EXEC2:  unix_exec2(); break;
+      case UNIX_EXEC3:  unix_exec3(); break;
+      case UNIX_EXIT:   exit(stack_pop()); break;
+      case UNIX_GETPID: stack_push(getpid()); break;
+      case UNIX_WAIT:   stack_push(wait(&a)); break;
+      case UNIX_KILL:   a = stack_pop();
+                        kill(stack_pop(), a);
+                        break;
+      case UNIX_POPEN:  unixOpenPipe(); break;
+      case UNIX_PCLOSE: unixClosePipe(); break;
+      case UNIX_WRITE:  c = stack_pop();
+                        b = stack_pop();
+                        a = stack_pop();
+                        write(fileno(ioFileHandles[c]), string_extract(a), b);
+                        break;
+      case UNIX_CHDIR:  chdir(string_extract(stack_pop()));
+                        break;
+      case UNIX_GETENV: a = stack_pop();
+                        b = stack_pop();
+                        string_inject(getenv(string_extract(b)), a);
+                        break;
+      case UNIX_PUTENV: putenv(string_extract(stack_pop()));
+                        break;
+      case UNIX_SLEEP:  sleep(stack_pop());
+                        break;
+      default:          break;
   }
 }
+#endif
 
-
-/*---------------------------------------------------------------------
-  ---------------------------------------------------------------------*/
-/* The `evaluate` function moves a token into the Retro
-   token buffer, then calls the Retro `interpret` word
-   to process it. */
-
-void evaluate(char *s) {
-  if (strlen(s) == 0)
-    return;
-  update_rx();
-  string_inject(s, TIB);
-  stack_push(TIB);
-  execute(interpret);
-}
-
-
-/*---------------------------------------------------------------------
-  ---------------------------------------------------------------------*/
-/* `read_token` reads a token from the specified file.
-   It will stop on a whitespace or newline. It also
-   tries to handle backspaces, though the success of this
-   depends on how your terminal is configured. */
-
-int not_eol(int ch) {
-  return (ch != (char)10) && (ch != (char)13) && (ch != (char)32) && (ch != EOF) && (ch != 0);
-}
-
-void read_token(FILE *file, char *token_buffer, int echo) {
-  int ch = getc(file);
-  if (echo != 0)
-    putchar(ch);
-  int count = 0;
-  while (not_eol(ch))
-  {
-    if ((ch == 8 || ch == 127) && count > 0) {
-      count--;
-      if (echo != 0) {
-        putchar(8);
-        putchar(32);
-        putchar(8);
-      }
-    } else {
-      token_buffer[count++] = ch;
-    }
-    ch = getc(file);
-    if (echo != 0)
-      putchar(ch);
-  }
-  token_buffer[count] = '\0';
-}
-
-/*---------------------------------------------------------------------
-  ---------------------------------------------------------------------*/
-char *read_token_str(char *s, char *token_buffer, int echo) {
-  int ch = (char)*s++;
-  if (echo != 0)
-    putchar(ch);
-  int count = 0;
-  while (not_eol(ch))
-  {
-    if ((ch == 8 || ch == 127) && count > 0) {
-      count--;
-      if (echo != 0) {
-        putchar(8);
-        putchar(32);
-        putchar(8);
-      }
-    } else {
-      token_buffer[count++] = ch;
-    }
-    ch = (char)*s++;
-    if (echo != 0)
-      putchar(ch);
-  }
-  token_buffer[count] = '\0';
-  return s;
-}
 
 /*---------------------------------------------------------------------
   ---------------------------------------------------------------------*/
@@ -1072,6 +982,136 @@ void ngaGopherUnit() {
 }
 
 #endif
+
+
+void execute(int cell) {
+  CELL a, b, c;
+  CELL opcode;
+  char path[1024];
+  char arg0[1024], arg1[1024], arg2[1024];
+  char arg3[1024], arg4[1024], arg5[1024];
+  rp = 1;
+  ip = cell;
+  while (ip < IMAGE_SIZE) {
+    if (ip == NotFound) {
+      printf("%s ?\n", string_extract(TIB));
+    }
+    opcode = memory[ip];
+    if (ngaValidatePackedOpcodes(opcode) != 0) {
+      ngaProcessPackedOpcodes(opcode);
+    } else if (opcode >= 0 && opcode < 27) {
+      ngaProcessOpcode(opcode);
+    } else {
+      switch (opcode) {
+        case IO_TTY_PUTC:  putc(stack_pop(), stdout); fflush(stdout); break;
+        case IO_TTY_GETC:  stack_push(getc(stdin));                   break;
+        case -9999:        include_file(string_extract(stack_pop())); break;
+        case IO_FS_OPEN:   ioOpenFile();                              break;
+        case IO_FS_CLOSE:  ioCloseFile();                             break;
+        case IO_FS_READ:   stack_push(ioReadFile());                  break;
+        case IO_FS_WRITE:  ioWriteFile();                             break;
+        case IO_FS_TELL:   stack_push(ioGetFilePosition());           break;
+        case IO_FS_SEEK:   ioSetFilePosition();                       break;
+        case IO_FS_SIZE:   stack_push(ioGetFileSize());               break;
+        case IO_FS_DELETE: ioDeleteFile();                            break;
+        case IO_FS_FLUSH:  ioFlushFile();                             break;
+        case -6000: ngaFloatingPointUnit(); break;
+        case -6100: stack_push(sys_argc - 2); break;
+        case -6101: a = stack_pop();
+                    b = stack_pop();
+                    stack_push(string_inject(sys_argv[a + 2], b));
+                    break;
+        case -6200: ngaGopherUnit(); break;
+        case -6300: ngaUnixUnit(); break;
+        default:   printf("Invalid instruction!\n");
+                   printf("At %d, opcode %d\n", ip, opcode);
+                   exit(1);
+      }
+    }
+    ip++;
+    if (rp == 0)
+      ip = IMAGE_SIZE;
+  }
+}
+
+
+/*---------------------------------------------------------------------
+  ---------------------------------------------------------------------*/
+/* The `evaluate` function moves a token into the Retro
+   token buffer, then calls the Retro `interpret` word
+   to process it. */
+
+void evaluate(char *s) {
+  if (strlen(s) == 0)
+    return;
+  update_rx();
+  string_inject(s, TIB);
+  stack_push(TIB);
+  execute(interpret);
+}
+
+
+/*---------------------------------------------------------------------
+  ---------------------------------------------------------------------*/
+/* `read_token` reads a token from the specified file.
+   It will stop on a whitespace or newline. It also
+   tries to handle backspaces, though the success of this
+   depends on how your terminal is configured. */
+
+int not_eol(int ch) {
+  return (ch != (char)10) && (ch != (char)13) && (ch != (char)32) && (ch != EOF) && (ch != 0);
+}
+
+void read_token(FILE *file, char *token_buffer, int echo) {
+  int ch = getc(file);
+  if (echo != 0)
+    putchar(ch);
+  int count = 0;
+  while (not_eol(ch))
+  {
+    if ((ch == 8 || ch == 127) && count > 0) {
+      count--;
+      if (echo != 0) {
+        putchar(8);
+        putchar(32);
+        putchar(8);
+      }
+    } else {
+      token_buffer[count++] = ch;
+    }
+    ch = getc(file);
+    if (echo != 0)
+      putchar(ch);
+  }
+  token_buffer[count] = '\0';
+}
+
+/*---------------------------------------------------------------------
+  ---------------------------------------------------------------------*/
+char *read_token_str(char *s, char *token_buffer, int echo) {
+  int ch = (char)*s++;
+  if (echo != 0)
+    putchar(ch);
+  int count = 0;
+  while (not_eol(ch))
+  {
+    if ((ch == 8 || ch == 127) && count > 0) {
+      count--;
+      if (echo != 0) {
+        putchar(8);
+        putchar(32);
+        putchar(8);
+      }
+    } else {
+      token_buffer[count++] = ch;
+    }
+    ch = (char)*s++;
+    if (echo != 0)
+      putchar(ch);
+  }
+  token_buffer[count] = '\0';
+  return s;
+}
 
 
 /*---------------------------------------------------------------------

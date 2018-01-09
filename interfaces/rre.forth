@@ -91,27 +91,27 @@ host operating system.
 and returns after execution is completed.
 
 ~~~
-:unix:system (s-)    `-8000 ;
+:unix:system (s-)    #-8000 `-6300 ;
 ~~~
 
 `unix:fork` forks the current process and returns a process
 identifier.
 
 ~~~
-:unix:fork   (-n)    `-8001 ;
+:unix:fork   (-n)    #-8001 `-6300 ;
 ~~~
 
 `unix:exit` takes a return code and exits RRE, returning the
 specified code.
 
 ~~~
-:unix:exit   (n-)    `-8002 ;
+:unix:exit   (n-)    #-8002 `-6300 ;
 ~~~
 
 `unix:getpid` returns the current process identifier.
 
 ~~~
-:unix:getpid (-n)    `-8003 ;
+:unix:getpid (-n)    #-8003 `-6300 ;
 ~~~
 
 This group is used to execute a new process in place of the
@@ -123,24 +123,24 @@ Example:
     '/usr/bin/cal '2 '2019 unix:exec2
 
 ~~~
-:unix:exec0  (s-)    `-8004 ;
-:unix:exec1  (ss-)   `-8005 ;
-:unix:exec2  (sss-)  `-8006 ;
-:unix:exec3  (ssss-) `-8007 ;
+:unix:exec0  (s-)    #-8004 `-6300 ;
+:unix:exec1  (ss-)   #-8005 `-6300 ;
+:unix:exec2  (sss-)  #-8006 `-6300 ;
+:unix:exec3  (ssss-) #-8007 `-6300 ;
 ~~~
 
 `unix:wait` waits for a child process to complete. This maps to
 the wait() system call.
 
 ~~~
-:unix:wait   (-n)    `-8008 ;
+:unix:wait   (-n)    #-8008 `-6300 ;
 ~~~
 
 `unix:kill` terminates a process. Takes a process and a signal
 to send.
 
 ~~~
-:unix:kill (nn-)  `-8009 ;
+:unix:kill (nn-)  #-8009 `-6300 ;
 ~~~
 
 The next two words allow opening and closing pipes. The first,
@@ -149,31 +149,31 @@ returns a file handle usable with words in the `file:` namespace.
 The second, `unix:pclose` closes the pipe.
 
 ~~~
-:unix:popen (sn-n) `-8010 ;
-:unix:pclose (n-) `-8011 ;
+:unix:popen (sn-n) #-8010 `-6300 ;
+:unix:pclose (n-) #-8011 `-6300 ;
 ~~~
 
 ~~~
-:unix:write (sh-) [ dup s:length ] dip `-8012 ;
+:unix:write (sh-) [ dup s:length ] dip #-8012 `-6300 ;
 ~~~
 
 `unix:chdir` changes the current working directory to the
 specified one.
 
 ~~~
-:unix:chdir (s-) `-8013 ;
+:unix:chdir (s-) #-8013 `-6300 ;
 ~~~
 
 ~~~
-:unix:getenv (sa-) `-8014 ;
-:unix:putenv (s-)  `-8015 ;
+:unix:getenv (sa-) #-8014 `-6300 ;
+:unix:putenv (s-)  #-8015 `-6300 ;
 ~~~
 
 `unix:sleep` pauses execution for the specified number of
 seconds.
 
 ~~~
-:unix:sleep (n-) `-8016 ;
+:unix:sleep (n-) #-8016 `-6300 ;
 ~~~
 
 ---------------------------------------------------------------
