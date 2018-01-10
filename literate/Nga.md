@@ -38,7 +38,7 @@ Endian: the image files are stored in little endian format.
 Nga derives from my earlier work on Ngaro. The following block lists
 the people who helped work on the C implementation.
 
-````
+~~~
 /* Nga ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    Copyright (c) 2008 - 2017, Charles Childers
    Copyright (c) 2009 - 2010, Luke Parrish
@@ -46,19 +46,19 @@ the people who helped work on the C implementation.
    Copyright (c) 2010,        Jay Skeer
    Copyright (c) 2011,        Kenneth Keating
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-````
+~~~
 
 ## Boilerplate
 
 Since the code is in C, we have to include some headers.
 
-````
+~~~
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
-````
+~~~
 
 ## Configuration
 
@@ -73,12 +73,12 @@ biggest pool of memory needed. Alternately, for use on machines with
 plenty of RAM, consider increasing these and reaping the benefits of
 a much larger memory and stack space.
 
-````
+~~~
 #define CELL         int32_t
 #define IMAGE_SIZE   524288 * 16
 #define ADDRESSES    2048
 #define STACK_DEPTH  512
-````
+~~~
 
 ## Numbering The Instructions
 
@@ -94,7 +94,7 @@ corresponding values (in decimal):
     5  push      12  neq       19  mul       26  end
     6  pop       13  lt        20  divmod
 
-````
+~~~
 enum vm_opcode {
   VM_NOP,  VM_LIT,    VM_DUP,   VM_DROP,    VM_SWAP,   VM_PUSH,  VM_POP,
   VM_JUMP, VM_CALL,   VM_CCALL, VM_RETURN,  VM_EQ,     VM_NEQ,   VM_LT,
@@ -102,7 +102,7 @@ enum vm_opcode {
   VM_AND,  VM_OR,     VM_XOR,   VM_SHIFT,   VM_ZRET,   VM_END
 };
 #define NUM_OPS VM_END + 1
-````
+~~~
 
 ## VM State
 
@@ -119,23 +119,23 @@ There are stack pointers (**sp** for **data** and **rp** for
 **address**), and an instruction pointer (**ip**). These are *not*
 exposed via the instruction set.
 
-````
+~~~
 CELL sp, rp, ip;
 CELL data[STACK_DEPTH];
 CELL address[ADDRESSES];
 CELL memory[IMAGE_SIZE + 1];
-````
+~~~
 
 ## A Little More Boilerplate
 
 Here we have a few bits of shorthand that'll be handled by the C
 preprocessor. These are used for readability purposes.
 
-````
+~~~
 #define TOS  data[sp]
 #define NOS  data[sp-1]
 #define TORS address[rp]
-````
+~~~
 
 ## Loading an Image File
 
@@ -151,7 +151,7 @@ What we do here is:
 * read the cells into memory (**image**)
 * return the size of the data read (in bytes)
 
-````
+~~~
 CELL ngaLoadImage(char *imageFile) {
   FILE *fp;
   CELL imageSize;
@@ -173,7 +173,7 @@ CELL ngaLoadImage(char *imageFile) {
   }
   return imageSize;
 }
-````
+~~~
 
 ## Preparations
 
@@ -181,7 +181,7 @@ This function initializes all of the variables and fills the arrays
 with known values. Memory is filled with **VM_NOP** instructions; the
 others are populated with zeros.
 
-````
+~~~
 void ngaPrepare() {
   ip = sp = rp = 0;
 
@@ -194,7 +194,7 @@ void ngaPrepare() {
   for (ip = 0; ip < ADDRESSES; ip++)
     address[ip] = 0;
 }
-````
+~~~
 
 ## The Instructions
 
@@ -204,92 +204,92 @@ later on.
 
 The **NOP** instruction does nothing.
 
-````
+~~~
 void inst_nop() {
 }
-````
+~~~
 
 **LIT** is a special case: it's followed by a value to push to the
 stack. This needs to increment the **sp** and **ip** and push the value
 at the incremented **ip** to the stack.
 
-````
+~~~
 void inst_lit() {
   sp++;
   ip++;
   TOS = memory[ip];
 }
-````
+~~~
 
 **DUP** duplicates the top item on the stack.
 
-````
+~~~
 void inst_dup() {
   sp++;
   data[sp] = NOS;
 }
-````
+~~~
 
 **DROP** removes the top item from the stack.
 
-````
+~~~
 void inst_drop() {
   data[sp] = 0;
    if (--sp < 0)
      ip = IMAGE_SIZE;
 }
-````
+~~~
 
 **SWAP** switches the top and second items on the stack.
 
-````
+~~~
 void inst_swap() {
   int a;
   a = TOS;
   TOS = NOS;
   NOS = a;
 }
-````
+~~~
 
 **PUSH** moves the top value from the data stack to the address stack.
 
-````
+~~~
 void inst_push() {
   rp++;
   TORS = TOS;
   inst_drop();
 }
-````
+~~~
 
 **POP** moves the top item on the address stack to the data stack.
 
-````
+~~~
 void inst_pop() {
   sp++;
   TOS = TORS;
   rp--;
 }
-````
+~~~
 
 **JUMP** moves execution to the address on the top of the stack.
 
-````
+~~~
 void inst_jump() {
   ip = TOS - 1;
   inst_drop();
 }
-````
+~~~
 
 **CALL** calls a subroutine at the address on the top of the stack.
 
-````
+~~~
 void inst_call() {
   rp++;
   TORS = ip;
   ip = TOS - 1;
   inst_drop();
 }
-````
+~~~
 
 **CCALL** is a conditional call. It takes two values: a flag and a
 pointer for an address to jump to if the flag is true.
@@ -314,7 +314,7 @@ Example:
       call
     end
 
-````
+~~~
 void inst_ccall() {
   int a, b;
   a = TOS; inst_drop();  /* False */
@@ -325,53 +325,53 @@ void inst_ccall() {
     ip = a - 1;
   }
 }
-````
+~~~
 
 **RETURN** ends a subroutine and returns flow to the instruction
 following the last **CALL** or **CCALL**.
 
-````
+~~~
 void inst_return() {
   ip = TORS;
   rp--;
 }
-````
+~~~
 
 **EQ** compares two values for equality and returns a flag.
 
-````
+~~~
 void inst_eq() {
   NOS = (NOS == TOS) ? -1 : 0;
   inst_drop();
 }
-````
+~~~
 
 **NEQ** compares two values for inequality and returns a flag.
 
-````
+~~~
 void inst_neq() {
   NOS = (NOS != TOS) ? -1 : 0;
   inst_drop();
 }
-````
+~~~
 
 **LT** compares two values for less than and returns a flag.
 
-````
+~~~
 void inst_lt() {
   NOS = (NOS < TOS) ? -1 : 0;
   inst_drop();
 }
-````
+~~~
 
 **GT** compares two values for greater than and returns a flag.
 
-````
+~~~
 void inst_gt() {
   NOS = (NOS > TOS) ? -1 : 0;
   inst_drop();
 }
-````
+~~~
 
 **FETCH** takes an address and returns the value stored there.
 
@@ -387,7 +387,7 @@ addresses correspond to VM queries:
 An implementation may use negative values below -100 for implementation
 specific inquiries.
 
-````
+~~~
 void inst_fetch() {
   switch (TOS) {
     case -1: TOS = sp - 1; break;
@@ -396,48 +396,48 @@ void inst_fetch() {
     default: TOS = memory[TOS]; break;
   }
 }
-````
+~~~
 
 **STORE** stores a value into an address.
 
-````
+~~~
 void inst_store() {
   memory[TOS] = NOS;
   inst_drop();
   inst_drop();
 }
-````
+~~~
 
 **ADD** adds two numbers together.
 
-````
+~~~
 void inst_add() {
   NOS += TOS;
   inst_drop();
 }
-````
+~~~
 
 **SUB** subtracts two numbers.
 
-````
+~~~
 void inst_sub() {
   NOS -= TOS;
   inst_drop();
 }
-````
+~~~
 
 **MUL** multiplies two numbers.
 
-````
+~~~
 void inst_mul() {
   NOS *= TOS;
   inst_drop();
 }
-````
+~~~
 
 **DIVMOD** divides and returns the quotient and remainder.
 
-````
+~~~
 void inst_divmod() {
   int a, b;
   a = TOS;
@@ -445,34 +445,111 @@ void inst_divmod() {
   TOS = b / a;
   NOS = b % a;
 }
-````
+~~~
 
 **AND** performs a bitwise AND operation.
 
-````
+    +----------------+
+    | Before | After |
+    | ------ | ----- |
+    | -1     | -1    |
+    | -1     |       |
+    +----------------+
+
+    +----------------+
+    | Before | After |
+    | ------ | ----- |
+    |  0     |  0    |
+    | -1     |       |
+    +----------------+
+
+    +----------------+
+    | Before | After |
+    | ------ | ----- |
+    | -1     |  0    |
+    |  0     |       |
+    +----------------+
+
+~~~
 void inst_and() {
   NOS = TOS & NOS;
   inst_drop();
 }
-````
+~~~
 
 **OR** performs a bitwise OR operation.
 
-````
+    +----------------+
+    | Before | After |
+    | ------ | ----- |
+    | -1     | -1    |
+    | -1     |       |
+    +----------------+
+
+    +----------------+
+    | Before | After |
+    | ------ | ----- |
+    | -1     | -1    |
+    |  0     |       |
+    +----------------+
+
+    +----------------+
+    | Before | After |
+    | ------ | ----- |
+    |  0     | -1    |
+    | -1     |       |
+    +----------------+
+
+    +----------------+
+    | Before | After |
+    | ------ | ----- |
+    |  0     |  0    |
+    |  0     |       |
+    +----------------+
+
+~~~
 void inst_or() {
   NOS = TOS | NOS;
   inst_drop();
 }
-````
+~~~
 
 **XOR** performs a bitwise XOR operation.
 
-````
+    +----------------+
+    | Before | After |
+    | ------ | ----- |
+    | -1     |  0    |
+    | -1     |       |
+    +----------------+
+
+    +----------------+
+    | Before | After |
+    | ------ | ----- |
+    |  0     | -1    |
+    | -1     |       |
+    +----------------+
+
+    +----------------+
+    | Before | After |
+    | ------ | ----- |
+    | -1     | -1    |
+    |  0     |       |
+    +----------------+
+
+    +----------------+
+    | Before | After |
+    | ------ | ----- |
+    |  0     |  0    |
+    |  0     |       |
+    +----------------+
+
+~~~
 void inst_xor() {
   NOS = TOS ^ NOS;
   inst_drop();
 }
-````
+~~~
 
 **SHIFT** performs a bitwise arithmetic SHIFT operation.
 
@@ -487,7 +564,7 @@ And returns a single one:
 If `y` is positive, this shifts right. If negative, it shifts
 left.
 
-````
+~~~
 void inst_shift() {
   CELL y = TOS;
   CELL x = NOS;
@@ -501,12 +578,12 @@ void inst_shift() {
   }
   inst_drop();
 }
-````
+~~~
 
 **ZRET** returns from a subroutine if the top item on the stack is
 zero. If not, it acts like a **NOP** instead.
 
-````
+~~~
 void inst_zret() {
   if (TOS == 0) {
     inst_drop();
@@ -514,15 +591,15 @@ void inst_zret() {
     rp--;
   }
 }
-````
+~~~
 
 **END** tells Nga that execution should end.
 
-````
+~~~
 void inst_end() {
   ip = IMAGE_SIZE;
 }
-````
+~~~
 
 ## Instruction Handler
 
@@ -533,7 +610,7 @@ and makes maintenance easier overall.
 So first up, the jump table itself. Just a list of pointers to the
 instruction implementations, in the proper order.
 
-````
+~~~
 typedef void (*Handler)(void);
 
 Handler instructions[NUM_OPS] = {
@@ -542,16 +619,16 @@ Handler instructions[NUM_OPS] = {
   inst_gt, inst_fetch, inst_store, inst_add, inst_sub, inst_mul, inst_divmod,
   inst_and, inst_or, inst_xor, inst_shift, inst_zret, inst_end
 };
-````
+~~~
 
 And now **ngaProcessOpcode()** which calls the functions in the jump
 table.
 
-````
+~~~
 void ngaProcessOpcode(CELL opcode) {
   instructions[opcode]();
 }
-````
+~~~
 
 Nga also allows (optionally) support for packing multiple instructions
 per cell. This has benefits on memory constained targets as four
@@ -585,7 +662,7 @@ modify the IP for flow control are used. These are:
 Nga will not stop processing code, but execution flow errors may arise
 if the packing tool does not take these into account.
 
-````
+~~~
 int ngaValidatePackedOpcodes(CELL opcode) {
   CELL raw = opcode;
   CELL current;
@@ -608,7 +685,7 @@ void ngaProcessPackedOpcodes(int opcode) {
     raw = raw >> 8;
   }
 }
-````
+~~~
 
 Nga is intended to be used as a part of a larger environment adding
 host-specific I/O and functionality. For testing purposes, it is
@@ -616,7 +693,7 @@ possible to run non-interactive images by building defining STANDALONE
 when compiling this source. A sample `main()` is included below showing
 how to use this.
 
-````
+~~~
 #ifdef STANDALONE
 int main(int argc, char **argv) {
   ngaPrepare();
