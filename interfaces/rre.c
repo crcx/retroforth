@@ -587,13 +587,37 @@ CELL unixClosePipe() {
   return 0;
 }
 
+
+/*---------------------------------------------------------------------
+  `unix_system()` executes a shell command. This takes a string and
+  will execute it by calling the shell, returning to RRE after
+  execution completes.
+  ---------------------------------------------------------------------*/
+
 void unix_system() {
   system(string_extract(stack_pop()));
 }
 
+
+/*---------------------------------------------------------------------
+  `unix_fork()` creates a new process. This returns a new process ID on
+  the stack.
+  ---------------------------------------------------------------------*/
+
 void unix_fork() {
   stack_push(fork());
 }
+
+
+/*---------------------------------------------------------------------
+  UNIX provides `execl` to execute a file, with various forms for
+  arguments provided.
+
+  RRE wraps this in several functions, one for each number of passed
+  arguments. See the Glossary for details on what each takes from the
+  stack. Each of these will return the error code if the execution
+  fails.
+  ---------------------------------------------------------------------*/
 
 void unix_exec0() {
   char path[1024];
@@ -632,24 +656,46 @@ void unix_exec3() {
   stack_push(errno);
 }
 
+
+/*---------------------------------------------------------------------
+  `unix_exit()` exits RRE with a return code of the top value on the
+  stack.
+  ---------------------------------------------------------------------*/
+
 void unix_exit() {
   exit(stack_pop());
 }
 
+
+/*---------------------------------------------------------------------
+  ---------------------------------------------------------------------*/
+
 void unix_getpid() {
   stack_push(getpid());
 }
+
+
+/*---------------------------------------------------------------------
+  ---------------------------------------------------------------------*/
 
 void unix_wait() {
   CELL a;
   stack_push(wait(&a));
 }
 
+
+/*---------------------------------------------------------------------
+  ---------------------------------------------------------------------*/
+
 void unix_kill() {
   CELL a;
   a = stack_pop();
   kill(stack_pop(), a);
 }
+
+
+/*---------------------------------------------------------------------
+  ---------------------------------------------------------------------*/
 
 void unix_write() {
   CELL a, b, c;
@@ -659,9 +705,17 @@ void unix_write() {
   write(fileno(ioFileHandles[c]), string_extract(a), b);
 }
 
+
+/*---------------------------------------------------------------------
+  ---------------------------------------------------------------------*/
+
 void unix_chdir() {
   chdir(string_extract(stack_pop()));
 }
+
+
+/*---------------------------------------------------------------------
+  ---------------------------------------------------------------------*/
 
 void unix_getenv() {
   CELL a, b;
@@ -670,13 +724,25 @@ void unix_getenv() {
   string_inject(getenv(string_extract(b)), a);
 }
 
+
+/*---------------------------------------------------------------------
+  ---------------------------------------------------------------------*/
+
 void unix_putenv() {
   putenv(string_extract(stack_pop()));
 }
 
+
+/*---------------------------------------------------------------------
+  ---------------------------------------------------------------------*/
+
 void unix_sleep() {
   sleep(stack_pop());
 }
+
+
+/*---------------------------------------------------------------------
+  ---------------------------------------------------------------------*/
 
 void ngaUnixUnit() {
   switch (stack_pop()) {
