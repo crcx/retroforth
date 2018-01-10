@@ -57,7 +57,6 @@
 #define D_OFFSET_NAME     3
 
 
-
 /*---------------------------------------------------------------------
   Next we get into some things that relate to the Nga virtual machine
   that RETRO runs on.
@@ -1228,8 +1227,6 @@ int fenced(char *s)
 
 /*---------------------------------------------------------------------
   And now for the actual `include_file()` function.
-
-  RRE will use 
   ---------------------------------------------------------------------*/
 
 void include_file(char *fname) {
@@ -1263,6 +1260,9 @@ void include_file(char *fname) {
 
 
 /*---------------------------------------------------------------------
+  `help()` displays a summary of the command line arguments RRE allows.
+
+  This is invoked using `rre -h`
   ---------------------------------------------------------------------*/
 
 void help() {
@@ -1281,6 +1281,12 @@ void help() {
   printf("  Launches in interactive mode (character buffered) and load the contents\n  of the specified file\n\n");
 }
 
+
+/*---------------------------------------------------------------------
+  `initialize()` sets up Nga and loads the image (from the array in
+  `image.c`) to memory.
+  ---------------------------------------------------------------------*/
+
 void initialize() {
   int i;
   ngaPrepare();
@@ -1289,40 +1295,55 @@ void initialize() {
   update_rx();
 }
 
+
+/*---------------------------------------------------------------------
+  `arg_is()` exists to aid in readability. It compares the first actual
+  command line argument to a string and returns a boolean flag.
+  ---------------------------------------------------------------------*/
+
+int arg_is(char *t) {
+  return strcmp(sys_argv[1], t) == 0;
+}
+
+
+/*---------------------------------------------------------------------
+  ---------------------------------------------------------------------*/
+
 int main(int argc, char **argv) {
-  if (argc <= 1) return 0;
+  if (argc <= 1) return 0;                /* Guard clause: exit if no  */
+                                          /* arguments are passed.     */
 
-  initialize();
+  initialize();                           /* Initialize Nga & image    */
 
-  sys_argc = argc;
-  sys_argv = argv;
+  sys_argc = argc;                        /* Point the global argc and */
+  sys_argv = argv;                        /* argv to the actual ones   */
 
-  if (strcmp(argv[1], "-i") == 0) {
-    if (argc >= 4 && strcmp(argv[2], "-f") == 0) {
+  if (arg_is("-h")) {                     /* If argument is -h, show   */
+    help();                               /* help text and exit        */
+    exit(0);
+  }
+
+  /* Interactive Mode is the most complext bit. RRE has two modes:     */
+  /*   -i  for basic interactive mode                                  */
+  /*   -c  for interactive mode, with character breaking               */
+  /* Additionally, either can be followed by a `-f filename`           */
+  /* This checks as needed, and invokes the appropriate functions here */
+  /* and in the image.                                                 */
+
+  if (arg_is("-i") || arg_is("-c")) {
+    if (argc >= 4)
       include_file(argv[3]);
-    }
     execute(d_xt_for("banner", Dictionary));
-    while (1) execute(d_xt_for("listen", Dictionary));
+    if (arg_is("-i"))
+      while (1) execute(d_xt_for("listen", Dictionary));
+    else
+      while (1) execute(d_xt_for("listen-cbreak", Dictionary));
     exit(0);
   }
 
-  if (strcmp(argv[1], "-c") == 0) {
-    if (argc >= 4 && strcmp(argv[2], "-f") == 0) {
-      include_file(argv[3]);
-    }
-    exit(0);
-    execute(d_xt_for("banner", Dictionary));
-    while (1) execute(d_xt_for("listen-cbreak", Dictionary));
-  }
-
-  if (strcmp(argv[1], "-h") == 0) {
-    help();
-    exit(0);
-  }
-
-  include_file(argv[1]);
-  if (sp >= 1)  dump_stack();
-  exit(0);
+  include_file(argv[1]);                  /* If no flags were passed,  */
+  if (sp >= 1)  dump_stack();             /* load the file specified   */
+  exit(0);                                /* and display the stack.    */
 }
 
 
