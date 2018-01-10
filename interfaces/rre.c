@@ -309,17 +309,15 @@ void update_rx() {
 #ifdef ENABLE_FILES
 
 #define MAX_OPEN_FILES   128
-#define IO_TTY_PUTC  1000
-#define IO_TTY_GETC  1001
-#define IO_FS_OPEN    118
-#define IO_FS_CLOSE   119
-#define IO_FS_READ    120
-#define IO_FS_WRITE   121
-#define IO_FS_TELL    122
-#define IO_FS_SEEK    123
-#define IO_FS_SIZE    124
-#define IO_FS_DELETE  125
-#define IO_FS_FLUSH   126
+#define RRE_FILE_OPEN    118
+#define RRE_FILE_CLOSE   119
+#define RRE_FILE_READ    120
+#define RRE_FILE_WRITE   121
+#define RRE_FILE_TELL    122
+#define RRE_FILE_SEEK    123
+#define RRE_FILE_SIZE    124
+#define RRE_FILE_DELETE  125
+#define RRE_FILE_FLUSH   126
 
 
 /*---------------------------------------------------------------------
@@ -513,23 +511,23 @@ void ioFlushFile() {
   First step is to define the instruction values for each of these.
   ---------------------------------------------------------------------*/
 
-#define UNIX_SYSTEM -8000
-#define UNIX_FORK   -8001
-#define UNIX_EXIT   -8002
-#define UNIX_GETPID -8003
-#define UNIX_EXEC0  -8004	
-#define UNIX_EXEC1  -8005
-#define UNIX_EXEC2  -8006
-#define UNIX_EXEC3  -8007
-#define UNIX_WAIT   -8008
-#define UNIX_KILL   -8009
-#define UNIX_POPEN  -8010
-#define UNIX_PCLOSE -8011
-#define UNIX_WRITE  -8012
-#define UNIX_CHDIR  -8013
-#define UNIX_GETENV -8014
-#define UNIX_PUTENV -8015
-#define UNIX_SLEEP  -8016
+#define RRE_UNIX_SYSTEM -8000
+#define RRE_UNIX_FORK   -8001
+#define RRE_UNIX_EXIT   -8002
+#define RRE_UNIX_GETPID -8003
+#define RRE_UNIX_EXEC0  -8004	
+#define RRE_UNIX_EXEC1  -8005
+#define RRE_UNIX_EXEC2  -8006
+#define RRE_UNIX_EXEC3  -8007
+#define RRE_UNIX_WAIT   -8008
+#define RRE_UNIX_KILL   -8009
+#define RRE_UNIX_POPEN  -8010
+#define RRE_UNIX_PCLOSE -8011
+#define RRE_UNIX_WRITE  -8012
+#define RRE_UNIX_CHDIR  -8013
+#define RRE_UNIX_GETENV -8014
+#define RRE_UNIX_PUTENV -8015
+#define RRE_UNIX_SLEEP  -8016
 
 
 /*---------------------------------------------------------------------
@@ -746,23 +744,23 @@ void unix_sleep() {
 
 void ngaUnixUnit() {
   switch (stack_pop()) {
-      case UNIX_SYSTEM: unix_system();   break;
-      case UNIX_FORK:   unix_fork();     break;
-      case UNIX_EXEC0:  unix_exec0();    break;
-      case UNIX_EXEC1:  unix_exec1();    break;
-      case UNIX_EXEC2:  unix_exec2();    break;
-      case UNIX_EXEC3:  unix_exec3();    break;
-      case UNIX_EXIT:   unix_exit();     break;
-      case UNIX_GETPID: unix_getpid();   break;
-      case UNIX_WAIT:   unix_wait();     break;
-      case UNIX_KILL:   unix_kill();     break;
-      case UNIX_POPEN:  unixOpenPipe();  break;
-      case UNIX_PCLOSE: unixClosePipe(); break;
-      case UNIX_WRITE:  unix_write();    break;
-      case UNIX_CHDIR:  unix_chdir();    break;
-      case UNIX_GETENV: unix_getenv();   break;
-      case UNIX_PUTENV: unix_putenv();   break;
-      case UNIX_SLEEP:  unix_sleep();    break;
+      case RRE_UNIX_SYSTEM: unix_system();   break;
+      case RRE_UNIX_FORK:   unix_fork();     break;
+      case RRE_UNIX_EXEC0:  unix_exec0();    break;
+      case RRE_UNIX_EXEC1:  unix_exec1();    break;
+      case RRE_UNIX_EXEC2:  unix_exec2();    break;
+      case RRE_UNIX_EXEC3:  unix_exec3();    break;
+      case RRE_UNIX_EXIT:   unix_exit();     break;
+      case RRE_UNIX_GETPID: unix_getpid();   break;
+      case RRE_UNIX_WAIT:   unix_wait();     break;
+      case RRE_UNIX_KILL:   unix_kill();     break;
+      case RRE_UNIX_POPEN:  unixOpenPipe();  break;
+      case RRE_UNIX_PCLOSE: unixClosePipe(); break;
+      case RRE_UNIX_WRITE:  unix_write();    break;
+      case RRE_UNIX_CHDIR:  unix_chdir();    break;
+      case RRE_UNIX_GETENV: unix_getenv();   break;
+      case RRE_UNIX_PUTENV: unix_putenv();   break;
+      case RRE_UNIX_SLEEP:  unix_sleep();    break;
       default:                           break;
   }
 }
@@ -1136,6 +1134,9 @@ void ngaGopherUnit() {
   the word being run, and it's dependencies) are finished.
   ---------------------------------------------------------------------*/
 
+#define IO_TTY_PUTC  1000
+#define IO_TTY_GETC  1001
+
 void execute(int cell) {
   CELL a, b;
   CELL opcode;
@@ -1156,15 +1157,15 @@ void execute(int cell) {
         case IO_TTY_GETC:  stack_push(getc(stdin));                   break;
         case -9999:        include_file(string_extract(stack_pop())); break;
 #ifdef ENABLE_FILES
-        case IO_FS_OPEN:   ioOpenFile();                              break;
-        case IO_FS_CLOSE:  ioCloseFile();                             break;
-        case IO_FS_READ:   stack_push(ioReadFile());                  break;
-        case IO_FS_WRITE:  ioWriteFile();                             break;
-        case IO_FS_TELL:   stack_push(ioGetFilePosition());           break;
-        case IO_FS_SEEK:   ioSetFilePosition();                       break;
-        case IO_FS_SIZE:   stack_push(ioGetFileSize());               break;
-        case IO_FS_DELETE: ioDeleteFile();                            break;
-        case IO_FS_FLUSH:  ioFlushFile();                             break;
+        case RRE_FILE_OPEN:   ioOpenFile();                              break;
+        case RRE_FILE_CLOSE:  ioCloseFile();                             break;
+        case RRE_FILE_READ:   stack_push(ioReadFile());                  break;
+        case RRE_FILE_WRITE:  ioWriteFile();                             break;
+        case RRE_FILE_TELL:   stack_push(ioGetFilePosition());           break;
+        case RRE_FILE_SEEK:   ioSetFilePosition();                       break;
+        case RRE_FILE_SIZE:   stack_push(ioGetFileSize());               break;
+        case RRE_FILE_DELETE: ioDeleteFile();                            break;
+        case RRE_FILE_FLUSH:  ioFlushFile();                             break;
 #endif
 #ifdef ENABLE_FLOATING_POINT
         case -6000: ngaFloatingPointUnit(); break;
