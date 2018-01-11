@@ -41,3 +41,7 @@ Portions of the code derive from Retro 11, which is:
     Copyright (c) 2011,        Remy Moueza
     Copyright (c) 2012,        John M Harrison
     Copyright (c) 2012,        Todd Thomas
+
+The Free Pascal implementation in interfaces/pascal is:
+
+    Copyright (c) 2016,        Rob Judd
