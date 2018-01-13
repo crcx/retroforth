@@ -381,6 +381,29 @@ void setup_interface() {
   doupdate();
 }
 
+
+/*---------------------------------------------------------------------
+  Display some help on startup
+  ---------------------------------------------------------------------*/
+
+void start_screen() {
+  wprintw(output, "Welcome to RETRO\n");
+  wprintw(output, "\n");
+  wprintw(output, "Input appears on the bottom left.\n");
+  wprintw(output, "The stack appears on the bottom right.\n");
+  wprintw(output, "Output appears here.\n");
+  wprintw(output, "\n");
+  wprintw(output, "TAB    to clear output.\n");
+  wprintw(output, "CTRL+D to exit.\n");
+  wprintw(output, "SPACE  to run input.\n");
+  wprintw(output, "\n");
+
+  wrefresh(output);
+  dump_stack();
+  wrefresh(stack);
+  doupdate();
+}
+
 #ifndef CTRL
 #define CTRL(c) ((c) & 037)
 #endif
@@ -401,6 +424,7 @@ int main() {
   update_rx();
 
   setup_interface();
+  start_screen();
 
   while ((ch = wgetch(input)) != CTRL('d')) {
     switch (ch) {
