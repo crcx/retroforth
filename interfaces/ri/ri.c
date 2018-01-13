@@ -428,6 +428,11 @@ int main() {
 
   while ((ch = wgetch(input)) != CTRL('d')) {
     switch (ch) {
+      case KEY_BACKSPACE:              /* Handle backspaces          */
+      case 127:
+        n--;
+        c[n] = '\0';
+        break;
       case 9:                          /* TAB = clear output         */
         wclear(input);
         wclear(output);
