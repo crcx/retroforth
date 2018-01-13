@@ -329,11 +329,10 @@ void evaluate(char *s) {
 }
 
 
-
-
-
-
 /*---------------------------------------------------------------------
+  I now turn to the actual user interface.
+
+  First, a function to display the stack.
   ---------------------------------------------------------------------*/
 
 void dump_stack() {
@@ -351,13 +350,14 @@ void dump_stack() {
 
 
 /*---------------------------------------------------------------------
+  Then a function to lay out the interface (and adjust color scheme)
   ---------------------------------------------------------------------*/
 
 void setup_interface() {
   initscr();
   start_color();
-  init_pair(1,COLOR_WHITE, COLOR_BLUE);
-  init_pair(2,COLOR_BLACK, COLOR_WHITE);
+  init_pair(1, COLOR_WHITE, COLOR_BLUE);
+  init_pair(2, COLOR_BLACK, COLOR_WHITE);
   printw("first");
   refresh();
   cbreak();
@@ -385,15 +385,16 @@ void setup_interface() {
 #define CTRL(c) ((c) & 037)
 #endif
 
+
 /*---------------------------------------------------------------------
   The `main()` routine. This sets up the Nga VM, loads the image, and
   enters an evaluation loop.
   ---------------------------------------------------------------------*/
 
 int main() {
-  int ch;
-  char c[1024];
-  int n = 0;
+  int ch;                              /* Character being read       */
+  char c[1024];                        /* Input buffer               */
+  int n = 0;                           /* Index to input buffer      */
 
   ngaPrepare();
   ngaLoadImage("ngaImage");
@@ -401,30 +402,32 @@ int main() {
 
   setup_interface();
 
-  while ((ch = wgetch(input)) != CTRL('d') ) {
-    if (ch == 9) {
-      wclear(input);
-      wclear(output);
-      wrefresh(output);
-      doupdate();
-      ch = 0;
-    }
-    if (ch == 10 || ch == 13 || ch == 32) {
-      evaluate(c);
-      c[0] = '\0';
-      update_rx();
-      dump_stack();
-      wrefresh(output);
-      wrefresh(stack);
-      n = 0;
-      if (memory[Compiler] == 0)
+  while ((ch = wgetch(input)) != CTRL('d')) {
+    switch (ch) {
+      case 9:                          /* TAB = clear output         */
         wclear(input);
-      wrefresh(input);
-    } else {
-      if (ch != 0) {
-        c[n++] = ch;
+        wclear(output);
+        wrefresh(output);
+        doupdate();
+        break;
+      case 10:                         /* ENTER or SPACE = evaluate  */
+      case 13:
+      case 32:
+        evaluate(c);
+        n = 0;
+        c[0] = '\0';
+        update_rx();
+        dump_stack();
+        wrefresh(output);
+        wrefresh(stack);
+        if (memory[Compiler] == 0)     /* Clear the input if not     */
+          wclear(input);               /* compiling                  */
+        wrefresh(input);
+        break;
+      default:                         /* Default is to add char to  */
+        c[n++] = ch;                   /* the input string           */
         c[n] = '\0';
-      }
+        break;
     }
   }
 
