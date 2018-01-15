@@ -27,6 +27,12 @@ cd ..
 ./bin/muri literate/Rx.md
 ./bin/extend literate/RetroForth.md
 
+cp ngaImage interfaces/ri
+cd interfaces/ri
+../../bin/embedimage >image.c
+rm ngaImage
+cd ../..
+
 cp ngaImage interfaces
 cd interfaces
 ../bin/extend rre_windows.forth

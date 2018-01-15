@@ -24,6 +24,7 @@ Interfaces:
   - Build script no longer links this against libm
 
 - pascal/listener is a Free Pascal implementation by Rob Judd
+- ri is a new (n)curses based interface
 
 Other:
 

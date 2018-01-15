@@ -79,6 +79,14 @@ CELL memory[IMAGE_SIZE + 1];      /* The memory for the image          */
 
 
 /*---------------------------------------------------------------------
+  `ri` embeds the image into the binary. This includes the image data
+  (converted to a .c file by an external tool).
+  ---------------------------------------------------------------------*/
+
+#include "image.c"
+
+
+/*---------------------------------------------------------------------
   Moving forward, a few variables. These are updated to point to the
   latest values in the image.
   ---------------------------------------------------------------------*/
@@ -420,7 +428,11 @@ int main() {
   int n = 0;                           /* Index to input buffer      */
 
   ngaPrepare();
-  ngaLoadImage("ngaImage");
+
+  for (n = 0; n < ngaImageCells; n++)  /* Copy the embedded image to */
+    memory[n] = ngaImage[n];           /* the Nga VM memory          */
+  n = 0;
+
   update_rx();
 
   setup_interface();
