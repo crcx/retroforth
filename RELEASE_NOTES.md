@@ -22,6 +22,7 @@ Interfaces:
 - repl
 
   - Build script no longer links this against libm
+  - added varient for x86 DOS systems
 
 - pascal/listener is a Free Pascal implementation by Rob Judd
 - ri is a new (n)curses based interface
