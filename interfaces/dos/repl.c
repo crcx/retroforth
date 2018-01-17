@@ -53,7 +53,7 @@
   ---------------------------------------------------------------------*/
 
 #define CELL         long int     /* Cell size (32 bit, signed integer */
-#define IMAGE_SIZE   10000        /* Amount of RAM. 10K cells due to   */
+#define IMAGE_SIZE   12000        /* Amount of RAM. 12K cells due to   */
                                   /* memory constraints                */
 #define ADDRESSES    128          /* Depth of address stack            */
 #define STACK_DEPTH  32           /* Depth of data stack               */
@@ -379,6 +379,10 @@ int main(int argc, char **argv) {
   ngaLoadImage("ngaImage");
   update_rx();
   retro_puts("RETRO Listener (c) 2016-2018, Charles Childers\n\n");
+  evaluate("#81");
+  evaluate("!TempStringMax");
+  evaluate("#6");
+  evaluate("!TempStrings");
   while(1) {
     Dictionary = memory[2];
     read_token(stdin, input, 0);
