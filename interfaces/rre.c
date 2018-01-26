@@ -63,7 +63,7 @@
   ---------------------------------------------------------------------*/
 
 #define CELL         int32_t      /* Cell size (32 bit, signed integer */
-#define IMAGE_SIZE   524288 * 16  /* Amount of RAM. 8MiB by default.   */
+#define IMAGE_SIZE   524288 * 32  /* Amount of RAM. 16MiB by default.  */
 #define ADDRESSES    2048         /* Depth of address stack            */
 #define STACK_DEPTH  512          /* Depth of data stack               */
 
@@ -1144,7 +1144,11 @@ void execute(int cell) {
   ip = cell;
   while (ip < IMAGE_SIZE) {
     if (ip == NotFound) {
-      printf("%s ?\n", string_extract(TIB));
+      printf("\n");
+      printf("Rather than a beep\nOr a rude error message,\n");
+      printf("These words: 'word not found.'\n\nUnrecognized: ");
+      printf("%s", string_extract(TIB));
+      printf("\n\n");
     }
     opcode = memory[ip];
     if (ngaValidatePackedOpcodes(opcode) != 0) {
