@@ -327,10 +327,11 @@ int not_eol(int ch) {
 }
 
 void read_token(FILE *file, char *token_buffer, int echo) {
-  int ch = getc(file);
+  int ch, count;
+  ch = getc(file);
   if (echo != 0)
     putchar(ch);
-  int count = 0;
+  count = 0;
   while (not_eol(ch))
   {
     if ((ch == 8 || ch == 127) && count > 0) {
