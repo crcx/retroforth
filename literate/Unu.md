@@ -29,14 +29,16 @@ I use this for readability purposes.
 
 ~~~
 void read_line(FILE *file, char *line_buffer) {
+  int ch, count;
+
   if (file == NULL || line_buffer == NULL)
   {
     printf("Error: file or line buffer pointer is null.");
     exit(1);
   }
 
-  int ch = getc(file);
-  int count = 0;
+  ch = getc(file);
+  count = 0;
 
   while ((ch != '\n') && (ch != EOF)) {
     line_buffer[count] = ch;

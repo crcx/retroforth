@@ -126,10 +126,12 @@ void pass1(char *fname) {
   fclose(fp);
 }
 void pass2(char *fname) {
-  char *buffer = (char *)source;
+  char *buffer;
   FILE *fp;
+  int inBlock;
+  inBlock = 0;
+  buffer = (char *)source;
   here = 0;
-  int inBlock = 0;
   fp = fopen(fname, "r");
   while (!feof(fp)) {
     read_line(fp, buffer);
