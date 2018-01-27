@@ -63,7 +63,7 @@
   ---------------------------------------------------------------------*/
 
 #define CELL         int32_t      /* Cell size (32 bit, signed integer */
-#define IMAGE_SIZE   524288 * 32  /* Amount of RAM. 16MiB by default.  */
+#define IMAGE_SIZE   524288 * 16  /* Amount of RAM. 8MiB by default.   */
 #define ADDRESSES    2048         /* Depth of address stack            */
 #define STACK_DEPTH  512          /* Depth of data stack               */
 
@@ -178,12 +178,13 @@ void stack_push(CELL value) {
   ---------------------------------------------------------------------*/
 
 int string_inject(char *str, int buffer) {
+  int m, i;
   if (!str) {
     memory[buffer] = 0;
     return 0;
   }
-  int m = strlen(str);
-  int i = 0;
+  m = strlen(str);
+  i = 0;
   while (m > 0) {
     memory[buffer + i] = (CELL)str[i];
     memory[buffer + i + 1] = 0;
@@ -364,10 +365,11 @@ CELL ioGetFileHandle() {
 
 CELL ioOpenFile() {
   CELL slot, mode, name;
+  char *request;
   slot = ioGetFileHandle();
   mode = data[sp]; sp--;
   name = data[sp]; sp--;
-  char *request = string_extract(name);
+  request = string_extract(name);
   if (slot > 0) {
     if (mode == 0)  ioFileHandles[slot] = fopen(request, "rb");
     if (mode == 1)  ioFileHandles[slot] = fopen(request, "w");
@@ -457,9 +459,9 @@ CELL ioSetFilePosition() {
 
 CELL ioGetFileSize() {
   CELL slot, current, r, size;
-  slot = data[sp]; sp--;
   struct stat buffer;
   int    status;
+  slot = data[sp]; sp--;
   status = fstat(fileno(ioFileHandles[slot]), &buffer);
   if (!S_ISDIR(buffer.st_mode)) {
     current = ftell(ioFileHandles[slot]);
@@ -479,8 +481,9 @@ CELL ioGetFileSize() {
   ---------------------------------------------------------------------*/
 
 CELL ioDeleteFile() {
+  char *request;
   CELL name = data[sp]; sp--;
-  char *request = string_extract(name);
+  request = string_extract(name);
   return (unlink(request) == 0) ? -1 : 0;
 }
 
@@ -555,10 +558,11 @@ void ioFlushFile() {
 
 CELL unixOpenPipe() {
   CELL slot, mode, name;
+  char *request;
   slot = ioGetFileHandle();
   mode = data[sp]; sp--;
   name = data[sp]; sp--;
-  char *request = string_extract(name);
+  request = string_extract(name);
   if (slot > 0) {
     if (mode == 0)  ioFileHandles[slot] = popen(request, "r");
     if (mode == 1)  ioFileHandles[slot] = popen(request, "w");
@@ -1144,11 +1148,9 @@ void execute(int cell) {
   ip = cell;
   while (ip < IMAGE_SIZE) {
     if (ip == NotFound) {
-      printf("\n");
-      printf("Rather than a beep\nOr a rude error message,\n");
+      printf("\nRather than a beep\nOr a rude error message,\n");
       printf("These words: 'word not found.'\n\nUnrecognized: ");
-      printf("%s", string_extract(TIB));
-      printf("\n\n");
+      printf("%s\n\n", string_extract(TIB));
     }
     opcode = memory[ip];
     if (ngaValidatePackedOpcodes(opcode) != 0) {
@@ -1226,9 +1228,9 @@ int not_eol(int ch) {
 
 void read_token(FILE *file, char *token_buffer, int echo) {
   int ch = getc(file);
+  int count = 0;
   if (echo != 0)
     putchar(ch);
-  int count = 0;
   while (not_eol(ch))
   {
     if ((ch == 8 || ch == 127) && count > 0) {
