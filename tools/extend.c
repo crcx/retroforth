@@ -122,6 +122,8 @@ void stats() {
 }
 
 int main(int argc, char **argv) {
+  int tokens;
+  FILE *fp;
   printf("RETRO12\n");
   printf("+ initialize\n");
   ngaPrepare();
@@ -130,11 +132,10 @@ int main(int argc, char **argv) {
   stats();
   dump_stack();
   printf("+ load %s\n", argv[1]);
-  int tokens = include_file(argv[1]);
+  tokens = include_file(argv[1]);
   printf("  processed %d tokens\n", tokens);
   stats();
   printf("+ save new image\n");
-  FILE *fp;
   if ((fp = fopen("ngaImage", "wb")) == NULL) {
     printf("Unable to save the ngaImage!\n");
     exit(2);
@@ -270,10 +271,11 @@ void execute(int cell) {
    to process it. */
 
 void evaluate(char *s) {
+  CELL interpret;
   if (strlen(s) == 0)
     return;
   update_rx();
-  CELL interpret = d_xt_for("interpret", Dictionary);
+  interpret = d_xt_for("interpret", Dictionary);
   string_inject(s, TIB);
   stack_push(TIB);
   execute(interpret);
@@ -290,10 +292,11 @@ int not_eol(int ch) {
 }
 
 void read_token(FILE *file, char *token_buffer, int echo) {
-  int ch = getc(file);
+  int ch, count;
+  ch = getc(file);
   if (echo != 0)
     putchar(ch);
-  int count = 0;
+  count = 0;
   while (not_eol(ch))
   {
     if ((ch == 8 || ch == 127) && count > 0) {
@@ -314,10 +317,11 @@ void read_token(FILE *file, char *token_buffer, int echo) {
 }
 
 char *read_token_str(char *s, char *token_buffer, int echo) {
-  int ch = (char)*s++;
+  int ch, count;
+  ch = (char)*s++;
   if (echo != 0)
     putchar(ch);
-  int count = 0;
+  count = 0;
   while (not_eol(ch))
   {
     if ((ch == 8 || ch == 127) && count > 0) {

@@ -48,6 +48,7 @@ void output_header(int size) {
 
 int main(int argc, char **argv) {
   int32_t size = 0;
+  int32_t i;
   if (argc == 2)
       size = ngaLoadImage(argv[1]);
   else
@@ -55,7 +56,6 @@ int main(int argc, char **argv) {
 
   output_header(size);
 
-  int32_t i;
   i = 0;
   while (i < size) {
     if (i+1 < size)
