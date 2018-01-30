@@ -29,7 +29,7 @@ cd ..
 
 cp ngaImage interfaces/ri
 cd interfaces/ri
-../../bin/embedimage >image.c
+../../bin/embedimage > image.c
 cp image.c ..
 rm ngaImage
 cd ../..
@@ -37,14 +37,14 @@ cd ../..
 cp ngaImage interfaces
 cd interfaces
 ../bin/extend rre_windows.forth
-../bin/embedimage >rre_image_windows.c
+../bin/embedimage > rre_image_windows.c
 rm ngaImage
 cd ..
 
 cp ngaImage interfaces
 cd interfaces
 ../bin/extend rre.forth
-../bin/embedimage >rre_image_unix.c
+../bin/embedimage > rre_image_unix.c
 rm ngaImage
 cc -O3 -c rre.c -o rre.o
 cc -O3 -c repl.c -o repl.o
