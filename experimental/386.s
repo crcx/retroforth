@@ -27,6 +27,19 @@ header_start:
 header_end:
 
 
+section .data
+gdt:
+        dw      (.end-.dummy)
+        dd      .dummy
+        dw      0
+.dummy: dw      0,0,0,0
+        dw      0xffff,0x0000
+        db      0x00,0x9a,0xcf,0x00
+        dw      0xffff,0x0000
+        db      0x00,0x92,0xcf,0x00
+.end:
+
+
 section .text
 extern main
 global _start
