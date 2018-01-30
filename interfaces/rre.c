@@ -82,7 +82,7 @@ CELL memory[IMAGE_SIZE + 1];      /* The memory for the image          */
   (converted to a .c file by an external tool).
   ---------------------------------------------------------------------*/
 
-#include "image.c"
+#include "rre_image_unix.c"
 
 
 /*---------------------------------------------------------------------

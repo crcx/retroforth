@@ -681,7 +681,7 @@ void error(const char *msg) {
 
 
 /* Compile image.c and link against the image.o */
-#include "image_windows.c"
+#include "rre_image_windows.c"
 
 void dump_stack() {
   CELL i;
