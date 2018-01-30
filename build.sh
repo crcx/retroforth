@@ -55,6 +55,6 @@ rm *.o
 cd ..
 
 echo "Update Glossary"
-cat words.tsv | sort -h >/tmp/words
+cat words.tsv | LC_ALL=c sort -h >/tmp/words
 mv /tmp/words words.tsv
 ./bin/rre glossary.forth export glossary >doc/Glossary.txt
