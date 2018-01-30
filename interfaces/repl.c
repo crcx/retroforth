@@ -56,6 +56,13 @@ CELL memory[IMAGE_SIZE + 1];      /* The memory for the image          */
 #define TORS address[rp]          /* Shortcut for top item on address stack */
 
 
+/*---------------------------------------------------------------------
+  Embed a copy of the image into the executable.
+  ---------------------------------------------------------------------*/
+
+#include "image.c"
+
+
 
 /*---------------------------------------------------------------------
   Moving forward, a few variables. These are updated to point to the
@@ -401,6 +408,7 @@ CELL ngaLoadImage(char *imageFile) {
   FILE *fp;
   CELL imageSize;
   long fileLen;
+  int i;
   if ((fp = fopen(imageFile, "rb")) != NULL) {
     /* Determine length (in cells) */
     fseek(fp, 0, SEEK_END);
@@ -411,9 +419,8 @@ CELL ngaLoadImage(char *imageFile) {
     fclose(fp);
   }
   else {
-    retro_puts("You step in the stream\nBut the water has moved on\n");
-    retro_puts("Image file not found.\n");
-    exit(1);
+    for (i = 0; i < ngaImageCells; i++)
+      memory[i] = ngaImage[i];
   }
   return imageSize;
 }
