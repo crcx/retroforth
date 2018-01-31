@@ -16,41 +16,41 @@ extern main
 
 align 4
 _start:
-	call main
-	jmp $
+        call    main
+        jmp     $
 
 align 4
 putchar:
-	mov eax, [esp+4]
-	mov [buf], eax
-	push dword 1
-	push dword buf
-	push dword 1
-	mov eax, 4
-	call kernel
-	add esp, 12
-	ret
+        mov     eax, [esp+4]
+        mov     [buf], eax
+        push    dword 1
+        push    dword buf
+        push    dword 1
+        mov     eax, 4
+        call    kernel
+        add     esp, 12
+        ret
 
 align 4
 getchar:
-	push dword 1
-	push dword buf
-	push dword 0
-	mov eax, 3
-	call kernel
-	add esp, 12
-	mov eax, 0
-	mov eax, [buf]
-	ret
+        push    dword 1
+        push    dword buf
+        push    dword 0
+        mov     eax, 3
+        call    kernel
+        add     esp, 12
+        mov     eax, 0
+        mov     eax, [buf]
+        ret
 
 align 4
 kernel:
-	int	80h
-	ret
+        int     80h
+        ret
 
 section .data
 buf:
-	dd 0
-	dd 0
-	dd 0
-	dd 0
+        dd 0
+        dd 0
+        dd 0
+        dd 0
