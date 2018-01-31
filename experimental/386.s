@@ -54,10 +54,16 @@ _start:
 
 align 4
 putchar:
+	mov eax, [esp-4]
+	call vEmit
 	ret
 
 align 4
 getchar:
+	call key
+	push eax
+	call vEmit
+	pop eax
 	ret
 
 section .text
@@ -82,9 +88,6 @@ key:
         jz .a                   ;  Ignore 0's
         or dl,dl                        ;  Filter for break code
         jnz .a                  ;  Ignore break code
-;        dup
-;        call sys_emit
-;          ret
   jmp .done
 .shift:  mov ecx,[edx*4 + .shifts]       ;  Load the CAPITAL keymap
         mov [board],ecx                 ;  Store into BOARD pointer
