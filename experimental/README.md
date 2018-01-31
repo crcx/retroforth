@@ -34,6 +34,4 @@ Current Status:
   - FreeBSD (32-bit, x86)
   - FreeBSD (64-bit, x86)
   - Linux   (32-bit, x86)
-
-- Work on a multiboot compliant system for raw hardware is
-  progressing
+  - Native  (32-bit, x86, multiboot)

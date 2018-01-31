@@ -46,16 +46,23 @@ align 4
 loader:
 _start:
         mov     esp, stack+STACKSIZE
-        push    eax
-        push    ebx
-        mov     dword [0xb8000], 0x2f4b2f4f
+        push    dword 0
+        push    dword 0
+        call    vClear
+        call    vHome
         jmp     main
         jmp     $
 
 align 4
 putchar:
         mov     eax, [esp+4]
+        cmp     eax, -1
+        jz      clearscreen
         call    vEmit
+        ret
+clearscreen:
+        call    vClear
+        call    vHome
         ret
 
 align 4
