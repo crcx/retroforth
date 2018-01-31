@@ -20,6 +20,7 @@ native386:
 	cc -m32 -c retro.c
 	nasm -f elf 386.s
 	ld -nostdlib -m elf_i386_fbsd -n -T 386.ld 386.o retro.o -o bin/rf.386
+	ld -nostdlib -m elf_i386_fbsd -n -e_start -T 386flat.ld 386.o retro.o -o bin/rf.386flat
 
 clean:
 	rm *.o

@@ -45,6 +45,7 @@ STACKSIZE equ 0x4000
 align 4
 loader:
 _start:
+        lgdt    [gdt]
         mov     esp, stack+STACKSIZE
         push    dword 0
         push    dword 0
