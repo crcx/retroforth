@@ -9,23 +9,18 @@
 ; NOTE: NOT COMPLETE OR TESTED YET!
 ; =============================================================
 
-section .multiboot_header
+MODULEALIGN equ 1<<0
+MEMINFO equ 1<<1
+FLAGS equ MODULEALIGN | MEMINFO
+MAGIC equ 0x1BADB002
+CHECKSUM equ -(MAGIC + FLAGS)
 
-header_start:
-    dd 0xe85250d6                ; magic number (multiboot 2)
-    dd 0                         ; architecture 0 (protected mode i386)
-    dd header_end - header_start ; header length
-    ; checksum
-    dd 0x100000000 - (0xe85250d6 + 0 + (header_end - header_start))
-
-    ; insert optional multiboot tags here
-
-    ; required end tag
-    dw 0    ; type
-    dw 0    ; flags
-    dd 8    ; size
-header_end:
-
+section .mbheader
+align 4
+MultiBootHeader:
+  dd MAGIC
+  dd FLAGS
+  dd CHECKSUM
 
 section .data
 gdt:
@@ -42,19 +37,26 @@ gdt:
 
 section .text
 extern main
+global loader
 global _start
 global putchar
 global getchar
 
+STACKSIZE equ 0x4000
+
 align 4
+loader:
 _start:
+  mov esp, stack+STACKSIZE
+  push eax
+  push ebx
 	mov dword [0xb8000], 0x2f4b2f4f
 	jmp main
 	jmp $
 
 align 4
 putchar:
-	mov eax, [esp-4]
+        mov eax, [esp+4]
 	call vEmit
 	ret
 
@@ -910,3 +912,8 @@ uMoveDown:
 
 
 
+section .bss
+align 4
+stack:
+  resb STACKSIZE
+stack_ptr:
