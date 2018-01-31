@@ -5,8 +5,6 @@
 ;
 ; This is the minimal startup & I/O needed to run a basic RETRO
 ; instance on x86 hardware.
-;
-; NOTE: NOT COMPLETE OR TESTED YET!
 ; =============================================================
 
 MODULEALIGN equ 1<<0
@@ -47,58 +45,57 @@ STACKSIZE equ 0x4000
 align 4
 loader:
 _start:
-  mov esp, stack+STACKSIZE
-  push eax
-  push ebx
-	mov dword [0xb8000], 0x2f4b2f4f
-	jmp main
-	jmp $
+        mov     esp, stack+STACKSIZE
+        push    eax
+        push    ebx
+        mov     dword [0xb8000], 0x2f4b2f4f
+        jmp     main
+        jmp     $
 
 align 4
 putchar:
-        mov eax, [esp+4]
-	call vEmit
-	ret
+        mov     eax, [esp+4]
+        call    vEmit
+        ret
 
 align 4
 getchar:
-	call key
-	push eax
-	call vEmit
-	pop eax
-	ret
+        call    key
+        push    eax
+        call    vEmit
+        pop     eax
+        ret
 
 section .text
 
 key:
-        xor eax,eax             ;  clear eax
-.a:     in al,64h               ;  Is any data waiting?
-        test al,1               ;  Is character = ASCII 0?
-        jz .a                   ;  Yes? Try again
-        in al,60h               ;  Otherwise, read scancode
-        xor edx,edx             ;  edx: 0=make, 1=break
-        test al,80h             ;  Is character = HEX 80h?
-        jz .b                   ;  Skip the next line
-        inc edx                 ;  Update edx
-.b:      and al,7Fh             ;  Filters to handle
-       cmp al,39h              ;  the ignored keys
-          ja .a                 ;  We just try another key
-        mov ecx,[board]         ;  Load the keymap
-        mov al,[ecx+eax]        ;  Get the key ASCII char
-          or al,al                      ;  Is is = 0?
-        js .shift                       ;  No, use CAPITALS
-        jz .a                   ;  Ignore 0's
-        or dl,dl                        ;  Filter for break code
-        jnz .a                  ;  Ignore break code
-  jmp .done
-.shift:  mov ecx,[edx*4 + .shifts]       ;  Load the CAPITAL keymap
-        mov [board],ecx                 ;  Store into BOARD pointer
-        jmp .a                    ;  And try again
-.done:
-ret
+        xor     eax, eax                ;  clear eax
+.a:     in      al, 64h                 ;  Is any data waiting?
+        test    al, 1                   ;  Is character = ASCII 0?
+        jz      .a                      ;  Yes? Try again
+        in      al, 60h                 ;  Otherwise, read scancode
+        xor     edx, edx                ;  edx: 0=make, 1=break
+        test    al, 80h                 ;  Is character = HEX 80h?
+        jz      .b                      ;  Skip the next line
+        inc     edx                     ;  Update edx
+.b:     and     al, 7Fh                 ;  Filters to handle
+        cmp     al, 39h                 ;  the ignored keys
+        ja      .a                      ;  We just try another key
+        mov     ecx, [board]            ;  Load the keymap
+        mov     al, [ecx+eax]           ;  Get the key ASCII char
+        or      al, al                  ;  Is is = 0?
+        js     .shift                   ;  No, use CAPITALS
+        jz     .a                       ;  Ignore 0's
+        or     dl, dl                   ;  Filter for break code
+        jnz    .a                       ;  Ignore break code
+        jmp    .done                    ;  Skip to end
+.shift: mov    ecx, [edx*4 + .shifts]   ;  Load the CAPITAL keymap
+        mov    [board], ecx             ;  Store into BOARD pointer
+        jmp    .a                       ;  And try again
+.done:  ret
 
 section .data
-.shifts dd shift,alpha
+.shifts dd shift, alpha
 board dd alpha
 alpha:
   db 0,27,"1234567890-=",8              ;00-0E
