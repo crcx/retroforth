@@ -1,0 +1,28 @@
+Version numbering:
+
+  12.YYYY.MM
+
+Since all current builds are 12, I only specify the YYYY.MM part.
+
+=======================================================================
+
+For 2018.3 I'm focusing on:
+
+- cleaning up the build scripts
+- cleaning up the source tree
+- making it easier to package / install
+- setting the stage for the return of a standalone RETRO system
+- general bug fixes
+- documentation improvements
+
+=======================================================================
+
+I think I may move to a longer (2 month) release cycle. This will give
+more time to refine things and reduce maintenance headaches for
+packaging.
+
+So releases in 2018 should be:
+
+  1 / 3 / 5 / 7 / 9 / 11
+
+I expect to make releases near the end of the month.

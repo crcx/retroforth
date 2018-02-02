@@ -16,7 +16,7 @@ adapt to various uses.
 
 ## Quick Start
 
-For FreeBSD, macOS, Linux:
+For FreeBSD, NetBSD, macOS, Linux:
 
     ./build
 
@@ -36,8 +36,8 @@ and deploy.
 
 This is a basic `read-evaluate-print-loop` for interactive use. It's
 intended for quick tests and as an easy starting point for new interfaces.
-The `repl` interface requires the RETRO image (`ngaImage`) in the current
-working directory to operate.
+The `repl` interface looks for the RETRO image (`ngaImage`) in the current
+working. If not found, this will use an embedded copy.
 
     listener
 

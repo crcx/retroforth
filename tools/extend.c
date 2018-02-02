@@ -118,24 +118,20 @@ int include_file(char *fname) {
 
 void stats() {
   update_rx();
-  printf("  Heap @ %d\n", Heap);
+  printf("-> Image Size: %d\n", Heap);
 }
 
 int main(int argc, char **argv) {
   int tokens;
   FILE *fp;
-  printf("RETRO12\n");
-  printf("+ initialize\n");
   ngaPrepare();
-  printf("+ load image\n");
   ngaLoadImage("ngaImage");
   stats();
   dump_stack();
-  printf("+ load %s\n", argv[1]);
+  printf("-> Process code from %s\n", argv[1]);
   tokens = include_file(argv[1]);
-  printf("  processed %d tokens\n", tokens);
+  printf("   %d tokens\n", tokens);
   stats();
-  printf("+ save new image\n");
   if ((fp = fopen("ngaImage", "wb")) == NULL) {
     printf("Unable to save the ngaImage!\n");
     exit(2);
