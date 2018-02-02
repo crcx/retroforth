@@ -49,6 +49,8 @@ void output_header(int size) {
 int main(int argc, char **argv) {
   int32_t size = 0;
   int32_t i;
+  int32_t n;
+
   if (argc == 2)
       size = ngaLoadImage(argv[1]);
   else
@@ -57,7 +59,13 @@ int main(int argc, char **argv) {
   output_header(size);
 
   i = 0;
+  n = 0;
   while (i < size) {
+    n++;
+    if (n == 20) {
+      printf("\n                       ");
+      n = 0;
+    }
     if (i+1 < size)
       printf("%d,", memory[i]);
     else
