@@ -1,40 +1,33 @@
-RETRO 12 - 2018.1
+RETRO 12 - 2018.2
 
 Bug fixes:
 
-- Fixed an issue with line endings in the Glossary's gopher server
-
 Language Improvements:
-
-- `s:with-format` now handles `\r`
 
 Interfaces:
 
 - rre
 
-  - Added `f:ceiling`
-  - Significant internal refactoring
-
-    - Extended instruction set handling
-    - Command line argument handling
-    - Individual features can now be disabled easily
-
 - repl
 
-  - Build script no longer links this against libm
-  - added varient for x86 DOS systems
+  - now embeds image (used if no ngaImage in the cwd)
 
-- pascal/listener is a Free Pascal implementation by Rob Judd
-- ri is a new (n)curses based interface
+- native
+
+  - Implementations of repl w/o requiring libc
+
+    - FreeBSD / x86
+    - FreeBSD / x86-64
+    - Linux / x86
+    - Standalone / x86
 
 Other:
 
+- source now builds using ancient (2.92) gcc
+
 Documentation:
 
-- Added significant comments to repl
-- Added significant comments to rre
-- Began adding examples to the Glossary
-- Update code fence style
+- fix sorting of Glossary by setting LC_ALL=c
 
 Examples:
 
