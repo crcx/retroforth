@@ -235,7 +235,6 @@ void update_rx() {
    It also handles the additional I/O instructions. */
 
 void execute(int cell) {
-  CELL a, b;
   CELL opcode;
   rp = 1;
   ip = cell;

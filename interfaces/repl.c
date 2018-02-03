@@ -421,6 +421,7 @@ CELL ngaLoadImage(char *imageFile) {
   else {
     for (i = 0; i < ngaImageCells; i++)
       memory[i] = ngaImage[i];
+    imageSize = i;
   }
   return imageSize;
 }
