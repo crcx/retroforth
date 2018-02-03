@@ -8,9 +8,12 @@ Interfaces:
 
 - rre
 
+  - add NOP skipping to Nga instruction handler
+
 - repl
 
   - now embeds image (used if no ngaImage in the cwd)
+  - add NOP skipping to Nga instruction handler
 
 - native
 
@@ -21,9 +24,15 @@ Interfaces:
     - Linux / x86
     - Standalone / x86
 
+- ri
+
+  - now uses same embedded image as repl
+  - add NOP skipping to Nga instruction handler
+
 Other:
 
 - source now builds using ancient (2.92) gcc
+- back to using `make`
 
 Documentation:
 

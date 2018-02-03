@@ -615,7 +615,8 @@ Handler instructions[NUM_OPS] = {
 };
 
 void ngaProcessOpcode(CELL opcode) {
-  instructions[opcode]();
+  if (opcode != 0)
+    instructions[opcode]();
 }
 
 int ngaValidatePackedOpcodes(CELL opcode) {
