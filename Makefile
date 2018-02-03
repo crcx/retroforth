@@ -38,6 +38,9 @@ rre:
 repl:
 	cd interfaces && $(CC) $(CFLAGS) repl.c -o ../bin/repl
 
+ri:
+	cd interfaces && $(CC) $(CFLAGS) -lcurses ri.c -o ../bin/ri
+
 glossary:
 	LC_ALL=c sort -o sorted.tsv words.tsv
 	mv sorted.tsv words.tsv
