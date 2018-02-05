@@ -237,6 +237,9 @@ not	n-m	-	-	Perform a logical NOT operation.			class:word	{n/a}	{n/a}	global	all
 or	mn-o	-	-	Perform a bitwise OR between the provided values.			class:primitive	{n/a}	{n/a}	global	all	
 over	nm-nmn	-	-	Put a copy of n over m.			class:word	{n/a}	{n/a}	global	all	
 parse-until	q-s	-	-	Read input from stdin (via `getc`) until the returned character is matched by the quote. Returns a string.			class:word	  :read-until-period (-s)\n    [ $. eq? ] parse-until ;	{n/a}	all	rre	
+pb:get	a-	-	-	Copy a string from the pasteboard to the specified address.			class:word	{n/a}	{n/a}	pb	iOS	{n/a}
+pb:length	-n	-	-	Return the length of the string on the pasteboard.			class:word	{n/a}	pb	{n/a}	iOS	{n/a}
+pb:set	s-	-	-	Copy a string to the pasteboard.			class:word	{n/a}	{n/a}	pb	iOS	{n/a}
 pop	-n	n-	-	Move a value from the return stack to the data stack.			class:macro	{n/a}	{n/a}	global	all	
 prefix:!	ns-	-	-	Store a value into a variable.	Store a value into the named variable.	Compile the code to store a value into a named variable.	class:macro	{n/a}	{n/a}	prefix	all	
 prefix:#	s-n	-	-	Process token as a number.	Convert the string into a number and leave on the stack.	Convert the string into a number and compile into the current definition as a literal.	class:macro	{n/a}	{n/a}	prefix	all	

@@ -3022,6 +3022,46 @@ Example #1:
 
 ----------------------------------------------------------------
 
+pb:get
+
+  Data:  a-
+  Addr:  -
+  Float: -
+
+Copy a string from the pasteboard to the specified address.
+
+Class Handler: class:word | Namespace: pb | Interface Layer: iOS
+
+----------------------------------------------------------------
+
+pb:length
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Return the length of the string on the pasteboard.
+
+Class Handler: class:word | Namespace: {n/a} | Interface Layer: iOS
+
+Example #2:
+
+pb
+
+----------------------------------------------------------------
+
+pb:set
+
+  Data:  s-
+  Addr:  -
+  Float: -
+
+Copy a string to the pasteboard.
+
+Class Handler: class:word | Namespace: pb | Interface Layer: iOS
+
+----------------------------------------------------------------
+
 pop
 
   Data:  -n
