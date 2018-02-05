@@ -810,6 +810,18 @@ Class Handler: class:macro | Namespace: global | Interface Layer: all
 
 ----------------------------------------------------------------
 
+banner
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Display a welcome message on startup.
+
+Class Handler: class:word | Namespace: global | Interface Layer: rre
+
+----------------------------------------------------------------
+
 bi
 
   Data:  xqq-?
@@ -2596,6 +2608,18 @@ listen
   Float: -
 
 Run interactive "listener" (a REPL).
+
+Class Handler: class:word | Namespace: global | Interface Layer: rre
+
+----------------------------------------------------------------
+
+listen-cbreak
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Run interactive "listener" (a REPL) in character breaking mode.
 
 Class Handler: class:word | Namespace: global | Interface Layer: rre
 
