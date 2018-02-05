@@ -1302,6 +1302,78 @@ Class Handler: class:word | Namespace: class | Interface Layer: all
 
 ----------------------------------------------------------------
 
+clock:day
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Return the current day.
+
+Class Handler: class:word | Namespace: clock | Interface Layer: iOS
+
+----------------------------------------------------------------
+
+clock:hour
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Return the current hour.
+
+Class Handler: class:word | Namespace: clock | Interface Layer: iOS
+
+----------------------------------------------------------------
+
+clock:minute
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Return the current minute.
+
+Class Handler: class:word | Namespace: clock | Interface Layer: iOS
+
+----------------------------------------------------------------
+
+clock:month
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Return the current month.
+
+Class Handler: class:word | Namespace: clock | Interface Layer: iOS
+
+----------------------------------------------------------------
+
+clock:second
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Return the current second.
+
+Class Handler: class:word | Namespace: clock | Interface Layer: iOS
+
+----------------------------------------------------------------
+
+clock:year
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Return the current year.
+
+Class Handler: class:word | Namespace: clock | Interface Layer: iOS
+
+----------------------------------------------------------------
+
 compile:call
 
   Data:  a-
@@ -4599,7 +4671,7 @@ Class Handler: class:word | Namespace: global | Interface Layer: all
   Addr:  -
   Float: -
 
-End an assembly section
+End an assembly section.
 
 Class Handler: class:macro | Namespace: global | Interface Layer: all
 

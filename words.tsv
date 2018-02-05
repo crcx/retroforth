@@ -101,6 +101,12 @@ class:data	n- || n-n	-	-	Class handler for data structures.	Keep the address or 
 class:macro	a-	-	-	Class handler for compiler macros (immediate words)	Execute the function at the provided address.	Execute the function at the provided address.	class:word	{n/a}	{n/a}	class	all	
 class:primitive	a-	-	-	Class handler for primitive words (words which map to Nga instructions)	Execute the function.	Compile the machine code in the definiton into the current definition.	class:word	{n/a}	{n/a}	class	all	
 class:word	a-	-	-	Class handler for normal words.	Execute the function at the provided address.	Compile a call to the specified address into the current definition.	class:word	{n/a}	{n/a}	class	all	
+clock:day	-n	-	-	Return the current day.			class:word	{n/a}	{n/a}	clock	iOS	
+clock:hour	-n	-	-	Return the current hour.			class:word	{n/a}	{n/a}	clock	iOS	
+clock:minute	-n	-	-	Return the current minute.			class:word	{n/a}	{n/a}	clock	iOS	
+clock:month	-n	-	-	Return the current month.			class:word	{n/a}	{n/a}	clock	iOS	
+clock:second	-n	-	-	Return the current second.			class:word	{n/a}	{n/a}	clock	iOS	
+clock:year	-n	-	-	Return the current year.			class:word	{n/a}	{n/a}	clock	iOS	
 compile:call	a-	-	-	Compile a call to the specified address into the current definition.			class:word	{n/a}	{n/a}	compile	all	
 compile:jump	a-	-	-	Compile a jump to the specified address into the current definition.			class:word	{n/a}	{n/a}	compile	all	
 compile:lit	n-	-	-	Compile the code to push a number to the stack into the current definition.			class:word	{n/a}	{n/a}	compile	all	
@@ -358,5 +364,5 @@ while	q-	-	-	Execute quote repeatedly while the quote returns a value of `TRUE`.
 words	-	-	-	Display a list of all named items in the `Dictionary`.			class:word	{n/a}	{n/a}	global	all	
 xor	mn-o	-	-	Perform a bitwise XOR operation.			class:primitive	{n/a}	{n/a}	global	all	
 {{	-	-	-	Begin a lexically scoped area.			class:word	{n/a}	{n/a}	global	all	
-}as	f-	-	-	End an assembly section			class:macro	{n/a}	{n/a}	global	all	
+}as	f-	-	-	End an assembly section.			class:macro	{n/a}	{n/a}	global	all	
 }}	-	-	-	End a lexically scoped area.			class:word	{n/a}	{n/a}	global	all	
