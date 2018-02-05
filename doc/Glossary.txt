@@ -1674,6 +1674,30 @@ Class Handler: class:word | Namespace: global | Interface Layer: all
 
 ----------------------------------------------------------------
 
+editor:set-font-face
+
+  Data:  s-
+  Addr:  -
+  Float: -
+
+Set the font to use in the editor and toolbars. If the font fails to load, RETRO will fall back to a safe default.
+
+Class Handler: class:word | Namespace: editor | Interface Layer: iOS
+
+----------------------------------------------------------------
+
+editor:set-font-size
+
+  Data:  n-
+  Addr:  -
+  Float: -
+
+Set the size of the font to use in the editor and toolbars.
+
+Class Handler: class:word | Namespace: editor | Interface Layer: iOS
+
+----------------------------------------------------------------
+
 eq?
 
   Data:  nn-f
