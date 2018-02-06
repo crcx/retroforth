@@ -1,7 +1,7 @@
 CFLAGS = -Wall -O3
-all: clean toolchain image repl rre
+all: clean toolchain image repl rre js
 
-rebuild: clean toolchain update image repl rre glossary
+rebuild: clean toolchain update image repl rre js glossary
 
 clean:
 	rm -f bin/unu
@@ -10,9 +10,11 @@ clean:
 	rm -f bin/repl
 	rm -f bin/extend
 	rm -f bin/muri
+	rm -f bin/injectimage-js
 
 toolchain:
 	$(CC) $(CFLAGS) tools/embedimage.c -o bin/embedimage
+	$(CC) $(CFLAGS) tools/injectimage-js.c -o bin/injectimage-js
 	$(CC) $(CFLAGS) tools/extend.c -o bin/extend
 	$(CC) $(CFLAGS) tools/unu.c -o bin/unu
 	$(CC) $(CFLAGS) tools/muri.c -o bin/muri
@@ -42,6 +44,9 @@ repl:
 
 ri:
 	cd interfaces && $(CC) $(CFLAGS) -lcurses ri.c -o ../bin/ri
+
+js:
+	./bin/injectimage-js >bin/RETRO12.html
 
 glossary:
 	LC_ALL=c sort -o sorted.tsv words.tsv

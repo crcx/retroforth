@@ -29,6 +29,10 @@ Interfaces:
   - now uses same embedded image as repl
   - add NOP skipping to Nga instruction handler
 
+- To-be-named
+
+  - HTML + JavaScript implementation using iOS/macOS style editor
+
 Other:
 
 - source now builds using ancient (2.92) gcc

@@ -1,0 +1,740 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>RETRO FORTH</title>
+  <style type="text/css">
+/*<![CDATA[*/
+  *::-webkit-scrollbar {
+    width: 0.75em;
+  }
+ 
+  *::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: slategrey;
+    outline: 1px solid slategrey;
+  }
+
+  body {
+    padding: 0px;
+    margin: 0px;
+    background: #111111;
+  }
+
+  #wrapper {
+    display: table;
+    table-layout: fixed;
+    width:100%;
+    height:80vh;
+    background-color:Gray;
+  }
+
+  #wrapper div {
+    display: table-cell;
+    height:100%;
+  }
+
+  #left {
+    background: #222222;
+    border-right: 1px solid #111111;
+  }
+
+  #right {
+    background: #222222;
+    border-left: 1px solid #111111;
+  }
+
+  #listenerbar {
+    background: rgba(255,255,255,0);
+    height: 5vp;
+  }
+
+  #listener {
+    margin-top: 8pt;
+    width: 93.5%;
+    margin-left: 1%;
+    background: #222222;
+    color: white;
+    border: 0px;
+  }
+
+  textarea {
+    height: 99%;
+    width: 99%;
+    margin-left: 1%;
+    background: rgba(255,255,255,0);
+    color: white;
+    border: 0px;
+  }
+
+  button {
+    border: 0px solid black;
+    height: 6vh;
+    margin-top: 1vh;
+    margin-bottom: 1vh;
+    margin-right: 8px;
+    margin-left: 8px;
+    color: #D66A00;
+    background: rgba(255,255,255,0);
+  }
+
+  * {
+    font-size: 20pt;
+  }
+  /*]]>*/
+  </style>
+<script>
+/* Nga ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   Copyright (c) 2008 - 2017, Charles Childers
+   Copyright (c) 2009 - 2010, Luke Parrish
+   Copyright (c) 2010,        Marc Simpson
+   Copyright (c) 2010,        Jay Skeer
+   Copyright (c) 2011,        Kenneth Keating
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+
+var IMAGE_SIZE = 524288 * 4; /* Amount of simulated RAM    */
+var DATA_DEPTH = 8192; /* Depth of data stack        */
+var ADDRESS_DEPTH = 32768; /* Depth of the stacks        */
+
+function Stack(size) {
+    this.sp = 0;
+    this.data = new Array(size);
+    this.push = function(n) {
+        this.sp++;
+        this.data[this.sp] = n;
+    }
+    this.pop = function() {
+        return this.data[this.sp--];
+    }
+    this.depth = function() {
+        return this.sp;
+    }
+    this.tos = function() {
+        return this.data[this.sp];
+    }
+    this.nos = function() {
+        return this.data[this.sp - 1];
+    }
+    this.dup = function() {
+        this.push(this.tos());
+    }
+    this.drop = function() {
+        this.sp--;
+    }
+    this.swap = function() {
+        var a = this.nos();
+        this.data[this.sp - 1] = this.tos();
+        this.data[this.sp] = a;
+    }
+    this.inc = function() {
+        this.data[this.sp]++;
+    }
+    this.dec = function() {
+        this.data[this.sp]--;
+    }
+    this.reset = function() {
+        this.sp = 0;
+    }
+}
+
+function Opcodes() {
+    this.NOP = 0;
+    this.LIT = 1;
+    this.DUP = 2;
+    this.DROP = 3;
+    this.SWAP = 4;
+    this.PUSH = 5;
+    this.POP = 6;
+    this.JUMP = 7;
+    this.CALL = 8;
+    this.CCALL = 9;
+    this.RETURN = 10;
+    this.EQ = 11;
+    this.NEQ = 12;
+    this.LT = 13;
+    this.GT = 14;
+    this.FETCH = 15;
+    this.STORE = 16;
+    this.ADD = 17;
+    this.SUB = 18;
+    this.MUL = 19;
+    this.DIVMOD = 20;
+    this.AND = 21;
+    this.OR = 22;
+    this.XOR = 23;
+    this.SHIFT = 24;
+    this.ZERO_EXIT = 25;
+    this.END = 26;
+}
+var ip = 0;
+var data = new Stack(DATA_DEPTH);
+var address = new Stack(ADDRESS_DEPTH);
+var image = new Array(IMAGE_SIZE);
+var vm = new Opcodes();
+var instructions = new Array(vm.END);
+
+function rxPrepareVM() {
+    ip = 0;
+    data.reset();
+    address.reset();
+}
+instructions[vm.NOP] = function() {}
+instructions[vm.LIT] = function() {
+    ip++;
+    data.push(image[ip]);
+}
+instructions[vm.DUP] = function() {
+    data.dup();
+}
+instructions[vm.DROP] = function() {
+    data.drop();
+}
+instructions[vm.SWAP] = function() {
+    data.swap();
+}
+instructions[vm.PUSH] = function() {
+    address.push(data.pop());
+}
+instructions[vm.POP] = function() {
+    data.push(address.pop())
+}
+instructions[vm.JUMP] = function() {
+    ip = data.pop() - 1;
+}
+instructions[vm.CALL] = function() {
+    address.push(ip);
+    ip = data.pop() - 1;
+}
+instructions[vm.CCALL] = function() {
+    var a, b;
+    a = data.pop();
+    b = data.pop();
+    if (b != 0) {
+        address.push(ip);
+        ip = a - 1;
+    }
+}
+instructions[vm.RETURN] = function() {
+    ip = address.pop();
+}
+instructions[vm.EQ] = function() {
+    var a, b;
+    a = data.pop();
+    b = data.pop();
+    if (b == a)
+        data.push(-1);
+    else
+        data.push(0);
+}
+instructions[vm.NEQ] = function() {
+    var a, b;
+    a = data.pop();
+    b = data.pop();
+    if (b != a)
+        data.push(-1);
+    else
+        data.push(0);
+}
+instructions[vm.LT] = function() {
+    var a, b;
+    a = data.pop();
+    b = data.pop();
+    if (b < a)
+        data.push(-1);
+    else
+        data.push(0);
+}
+instructions[vm.GT] = function() {
+    var a, b;
+    a = data.pop();
+    b = data.pop();
+    if (b > a)
+        data.push(-1);
+    else
+        data.push(0);
+}
+instructions[vm.FETCH] = function() {
+    x = data.pop();
+    if (x == -1)
+        data.push(data.sp);
+    else if (x == -2)
+        data.push(address.sp);
+    else if (x == -3)
+        data.push(IMAGE_SIZE);
+    else
+        data.push(image[x]);
+}
+instructions[vm.STORE] = function() {
+    image[data.tos()] = data.nos();
+    data.drop();
+    data.drop();
+}
+instructions[vm.ADD] = function() {
+    var x = data.pop();
+    var y = data.pop();
+    data.push(x + y);
+}
+instructions[vm.SUB] = function() {
+    var x = data.pop();
+    var y = data.pop();
+    data.push(y - x);
+}
+instructions[vm.MUL] = function() {
+    var x = data.pop();
+    var y = data.pop();
+    data.push(y * x);
+}
+instructions[vm.DIVMOD] = function() {
+    var b = data.pop();
+    var a = data.pop();
+    if (b == 0) {
+        ip = 0;
+        data.sp = 0;
+        address.sp = 0;
+    } else {
+        var x = Math.abs(b);
+        var y = Math.abs(a);
+        var q = Math.floor(y / x);
+        var r = y % x;
+        if (a < 0 && b < 0)
+            r = r * -1;
+        if (a > 0 && b < 0)
+            q = q * -1;
+        if (a < 0 && b > 0) {
+            r = r * -1;
+            q = q * -1;
+        }
+        data.push(r);
+        data.push(q);
+    }
+}
+instructions[vm.AND] = function() {
+    var x = data.pop();
+    var y = data.pop();
+    data.push(x & y);
+}
+instructions[vm.OR] = function() {
+    var x = data.pop();
+    var y = data.pop();
+    data.push(x | y);
+}
+instructions[vm.XOR] = function() {
+    var x = data.pop();
+    var y = data.pop();
+    data.push(x ^ y);
+}
+instructions[vm.SHIFT] = function() {
+    var x = data.pop();
+    var y = data.pop();
+    if (x < 0)
+        data.push(y << (x * -1));
+    else
+        data.push(y >>= x);
+}
+instructions[vm.ZERO_EXIT] = function() {
+    if (data.tos() == 0) {
+        data.drop();
+        ip = address.pop();
+    }
+}
+instructions[vm.END] = function() {
+    ip = IMAGE_SIZE;
+}
+window.addEventListener('load', function(e) {
+    rxPrepareVM();
+}, false);
+
+function processOpcode(opcode) {
+    instructions[opcode]();
+    checkStack();
+}
+
+function validatePackedOpcodes(opcode) {
+    var raw = opcode;
+    var current;
+    var valid = -1;
+    var i = 0;
+    while (i < 4) {
+        current = raw & 0xFF;
+        if (!current >= 0 && current <= 26)
+            valid = 0;
+        raw = raw >> 8;
+        i++;
+    }
+}
+
+function ngaProcessPackedOpcodes(opcode) {
+    var raw = opcode;
+    ops = new Array(3);
+    ops[0] = raw & (255);
+    raw = raw >> 8;
+    ops[1] = raw & (255);
+    raw = raw >> 8;
+    ops[2] = raw & (255);
+    raw = raw >> 8;
+    ops[3] = raw & (255);
+    processOpcode(ops[0]);
+    processOpcode(ops[1]);
+    processOpcode(ops[2]);
+    processOpcode(ops[3]);
+}
+
+var ngaImage = [
+<<<IMAGE>>>
+];
+
+/* Nga - Retro - JavaScript Interface ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   Copyright (c) 2008 - 2017, Charles Childers
+   Copyright (c) 2009 - 2010, Luke Parrish
+   Copyright (c) 2010,        Marc Simpson
+   Copyright (c) 2010,        Jay Skeer
+   Copyright (c) 2011,        Kenneth Keating
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+function loadInitialImage() {
+    image = ngaImage.slice();
+}
+
+function execute(offset) {
+    var opcode;
+    address.sp = 1;
+    ip = offset;
+    var notfound = d_xt_for("err:notfound");
+    while (ip < IMAGE_SIZE) {
+        opcode = image[ip];
+        if (ip == notfound) {
+            document.getElementById('console').value +=
+                "err:notfound : " + string_extract(1471) + "\n";
+        }
+        if (validatePackedOpcodes(opcode) != 0) {
+            if (opcode == 1000) {
+                var s = String.fromCharCode(data.pop());
+                document.getElementById('console').value += s;
+            } else {
+                ngaProcessPackedOpcodes(opcode);
+            }
+        } else {
+            console.log("Invalid instruction!");
+            console.log("At " + ip + ", opcode " + opcode);
+        }
+        if (address.sp == 0)
+            ip = IMAGE_SIZE;
+        ip++;
+    }
+}
+
+function checkStack() {
+    var depth = data.depth();
+    var adepth = address.depth();
+    var flag = 0;
+    if (depth < 0 || adepth < 0) {
+        flag = -1;
+    }
+    if (depth > DATA_DEPTH || adepth > DATA_DEPTH) {
+        flag = -1;
+    }
+    if (flag == -1) {
+        ip = 0;
+        data.sp = 0;
+        address.sp = 0;
+    }
+}
+
+function string_inject(str, buffer) {
+    var m = str.length;
+    var i = 0;
+    while (m > 0) {
+        image[buffer + i] = str[i].charCodeAt(0);
+        image[buffer + i + 1] = 0;
+        m--;
+        i++;
+    }
+}
+
+function string_extract(at) {
+    string_data = "";
+    var starting = at;
+    var i = 0;
+    while (image[starting] != 0)
+        string_data += String.fromCharCode(image[starting++]);
+    return string_data;
+}
+
+function d_link(dt) {
+    return dt + 0;
+}
+
+function d_xt(dt) {
+    return dt + 1;
+}
+
+function d_class(dt) {
+    return dt + 2;
+}
+
+function d_name(dt) {
+    return dt + 3;
+}
+
+function d_count_entries() {
+    var c = 0;
+    var i = image[2];
+    while (image[i] != 0) {
+        c++;
+        i = image[i];
+    }
+    return c;
+}
+
+function d_lookup(name) {
+    var dt = 0;
+    var i = image[2];
+    var dname;
+    while (image[i] != 0 && i != 0) {
+        dname = string_extract(d_name(i));
+        if (dname == name) {
+            dt = i;
+            i = 0;
+        } else {
+            i = image[i];
+        }
+    }
+    return dt;
+}
+
+function d_xt_for(name) {
+    return image[d_xt(d_lookup(name))];
+}
+
+function d_class_for(name) {
+    return image[d_class(d_lookup(name))];
+}
+
+function evaluate(s) {
+    if (s.length == 0)
+        return;
+    var i = d_xt_for("interpret");
+    string_inject(s, 1471);
+    data.push(1471);
+    execute(i);
+}
+
+function cls() {
+    document.getElementById('console').value = "";
+}
+
+function unu(src) {
+    raw = src.split("\n");
+    var i = raw.length;
+    var lines = new Array();
+    var j = 0;
+    var code = 0;
+    while (j < i) {
+        if (code == 1 && raw[j] == "~~~") {
+            code = 0;
+        } else if (code == 0 && raw[j] == "~~~") {
+            code = 1;
+        } else if (code == 1) {
+            lines.push(raw[j]);
+        }
+        j++;
+    }
+    return lines.join(" ");
+}
+
+function main() {
+    rxPrepareVM();
+    loadInitialImage();
+}
+
+function go() {
+    rxPrepareVM();
+    loadInitialImage();
+    document.getElementById("console").value = "";
+    src = document.getElementById("input").value;
+    tokens = unu(src).match(/\S+/g);
+    var i = tokens.length;
+    var j = 0;
+    while (j < i) {
+        evaluate(tokens[j]);
+        j++;
+    }
+    s = "";
+    i = data.depth();
+    j = 1;
+    while (j <= i) {
+        s = s + data.data[j] + " ";
+        j++;
+    }
+    document.getElementById("console").value += "\n";
+}
+
+function listen() {
+    src = "~~~\n" + document.getElementById("listener").value + "\n~~~\n";
+    document.getElementById("listener").value = "";
+    tokens = unu(src).match(/\S+/g);
+    var i = tokens.length;
+    var j = 0;
+    while (j < i) {
+        evaluate(tokens[j]);
+        j++;
+    }
+    s = "";
+    i = data.depth();
+    j = 1;
+    while (j <= i) {
+        s = s + data.data[j] + " ";
+        j++;
+    }
+    document.getElementById("console").value += "\n";
+}
+
+function saveSnapshot() {
+    src = document.getElementById("input").value;
+    console.log('saving ' + src);
+    localStorage.setItem("Snapshot", src);
+}
+
+function loadSnapshot() {
+    src = localStorage.getItem("Snapshot");
+    document.getElementById("input").value = src;
+}
+
+function newProject() {
+    document.getElementById("input").value = "";
+}
+</script>
+</head>
+
+<body onLoad='main()'>
+  <div id="toolbar">
+    <button onclick="newProject()">New</button>
+    <button onclick="saveSnapshot()">Save</button>
+    <button onclick="loadSnapshot()">Load</button>
+    <span style="float: right">
+      <button onclick="cls()">Clear</button>
+      <button onclick="go()">Go</button>
+    </span>
+  </div>
+
+  <div id="wrapper">
+    <div id='left'>
+      <textarea id='input'>
+# Syntax
+
+RETRO code consists of a series of whitespace delimited tokens. Each of these can have an optional prefix telling RETRO how to treat the token. If the token lacks a valid prefix, it will be treated as a word name.
+
+So:
+
+    [prefix][token]
+
+Prefixes are single character modifiers. They are similar to colors in ColorForth, but are handled via words in the `prefix:` namespace.
+
+The major prefixes are:
+
+@ Fetch from variable
+! Store into variable
+& Pointer to named item
+# Numbers
+$ ASCII characters
+' Strings
+( Comments
+: Define a word
+
+Example:
+
+~~~
+(This_is_a_comment)
+~~~
+
+Define some words:
+
+~~~
+:hello  (-)
+  'Hello_World! puts nl ;
+
+:n:square  (n-m)
+  dup * ;
+~~~
+
+And then use them:
+
+~~~
+hello
+#33 n:square
+~~~
+
+Numbers must be prefixed with a # for RETRO to recognize them:
+
+~~~
+#2 putn sp
+#3 putn sp
+#4 putn sp
+nl
+~~~
+
+A few more things...
+
+~~~
+$a (this_is_the_ASCII_'a')
+~~~
+
+Strings:
+
+~~~
+'Use_underscores_in_place_of_spaces_in_strings
+puts nl
+~~~
+
+Strings also allow for formatted output:
+
+~~~
+#3 #1 #2 '%n_+_%n_=_%n\n s:with-format puts
+~~~
+
+Variables:
+
+~~~
+'Foo var
+#100 !Foo
+@Foo putn
+~~~
+
+Note that RETRO will only run code in a fenced block (starting and ending with ~~~). This allows for code and documentation to be intermixed easily.
+
+The full glossary can be browsed:
+
+http://forthworks.com:9999 or gopher://forthworks.com:9999
+</textarea>
+    </div>
+
+    <div id='right'>
+      <textarea id='console'></textarea>
+    </div>
+  </div>
+  <div id='listenerbar'>
+    <input id='listener'>
+    <span style="float: right">
+      <button onclick="listen()">Eval</button>
+    </span>
+  </div>
+</body>
+</html>
+<!--
+
+Permission to use, copy, modify, and/or distribute this software for
+any purpose with or without fee is hereby granted, provided that the
+copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL
+WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE
+AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL
+DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR
+PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER
+TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+PERFORMANCE OF THIS SOFTWARE.
+
+-->
