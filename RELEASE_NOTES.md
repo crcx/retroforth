@@ -37,6 +37,7 @@ Other:
 Documentation:
 
 - fix sorting of Glossary by setting LC_ALL=c
+- added words from RETRO/iOS
 
 Examples:
 

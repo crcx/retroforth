@@ -1,5 +1,7 @@
 CFLAGS = -Wall -O3
-default: clean toolchain update image repl rre glossary
+all: clean toolchain image repl rre
+
+rebuild: clean toolchain update image repl rre glossary
 
 clean:
 	rm -f bin/unu
