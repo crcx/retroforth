@@ -72,10 +72,10 @@ Now it's possible to write words to display instruction bundles. The formats are
 
 So now I'm ready to write a disassembler. I'll provide an output setup like this:
 
-    (address 'instructionbundle i
-    (address #value d (reference
+    address 'instructionbundle i
+    address #value d [possibly reference]
 
-The address and reference will output with a leading ( so the output can be pasted directly into an assembly block if desired. The reference will be a word name, if the value corresponds to a word in the `Dictionary`.
+If the value corresponds to a word in the `Dictionary`, the disassembler will display a message indicating the possible name that corresponds to the value.
 
 To begin, I'll add a variable to track the number of `li` instructions. (These require special handling as they push a value in the following cells to the stack).
 
@@ -101,25 +101,18 @@ To actually display a bundle, I need to decide on what it is. So I have a `valid
 
 With this and the `LitCount`, I can determine how to render a bundle.
 
-So the next step is a word to pad raw values so they're at least as long as instruction bundle strings (8 characters).
-
-~~~
-:pad (s-)
-  s:length #30 swap - #0 n:max [ sp ] times ;
-~~~
-
 I split out each type (instruction, reference/raw, and data) into a separate handler.
 
 ~~~
 :render-inst (n-)
-  $' putc unpack #4 [ name-for<counting-li> putc putc ] times sp '________ pad $i putc ;
+  $' putc unpack #4 [ name-for<counting-li> putc putc ] times sp $i putc ;
 
 :render-data (n-)
-  $# putc n:to-string dup puts pad sp $d putc ;
+  $# putc n:to-string puts sp $d putc ;
 
 :render-ref  (n-)
   dup d:lookup-xt n:-zero?
-    [ dup render-data sp $( putc d:lookup-xt d:name puts ]
+    [ dup render-data tab tab d:lookup-xt d:name '[possibly_`%s`] s:with-format puts ]
     [     render-data ] choose ;
 ~~~
 
@@ -140,8 +133,8 @@ And now to tie it all together:
 ~~~
 :disassemble (an-)
   [ fetch-next
-    over $( putc putn sp    (address)
-    render-packed nl        (inst_or_data)
+    over putn sp      (address)
+    render-packed nl  (inst_or_data)
   ] times drop ;
 ~~~
 
