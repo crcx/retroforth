@@ -246,7 +246,7 @@ So helpers for displaying things:
 ~~~
 :display-status
   @RP @SP [IP] unpack @IP
-  'IP:%n_[%n,%n,%n,%n]_SP:%n_RP:%n__ s:with-format puts ;
+  'IP:%n_[%n,%n,%n,%n]\tSP:%n_RP:%n\t s:with-format puts ;
 
 :display-data-stack
   #0 @SP [ &DataStack over + fetch putn sp n:inc ] times drop ;
