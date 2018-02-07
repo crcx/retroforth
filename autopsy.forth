@@ -239,14 +239,15 @@ This will display output indicating state. It'll provide:
 
 E.g.,
 
-    IP:13966 [19,0,0,0] SP:3 RP:1  Stack: 9 3 3  -> 9 9    
+    IP:13966 [19,0,0,0] SP:3 RP:1
+      Stack: 9 3 3  -> 9 9    
 
 So helpers for displaying things:
 
 ~~~
 :display-status
   @RP @SP [IP] unpack @IP
-  'IP:%n_[%n,%n,%n,%n]\tSP:%n_RP:%n\t s:with-format puts ;
+  'IP:%n\t[%n,%n,%n,%n]\tSP:%n_RP:%n\t s:with-format puts ;
 
 :display-data-stack
   #0 @SP [ &DataStack over + fetch putn sp n:inc ] times drop ;
@@ -262,9 +263,9 @@ And then using the display helpers and instruction processor, a single stepper. 
 
 :step (-)
   display-status
-  'Stack:_ puts display-data-stack '_->_ puts
+  nl '__Stack:_ puts display-data-stack '_->_ puts
   [IP] process-packed-opcode &IP v:inc
-  display-data-stack nl
+  display-data-stack nl nl
   &Steps v:inc ;
 ~~~
 
