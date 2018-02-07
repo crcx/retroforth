@@ -188,8 +188,8 @@ Now for the instructions. Taking a cue from the C implementation, I have a separ
 :i:re from-rstack !IP ;
 :i:eq from-stack from-stack eq? to-stack ;
 :i:ne from-stack from-stack -eq? to-stack ;
-:i:lt from-stack from-stack lt? to-stack ;
-:i:gt from-stack from-stack gt? to-stack ;
+:i:lt from-stack from-stack swap lt? to-stack ;
+:i:gt from-stack from-stack swap gt? to-stack ;
 :i:fe from-stack fetch to-stack ;
 :i:st from-stack from-stack swap store ;
 :i:ad from-stack from-stack + to-stack ;
@@ -301,7 +301,7 @@ Tests
 ~~~
 :test
   as{ 'liliaddu i #22 d #33 d }as
-  #3 #4 -eq? [ #1 ] if ;
+  #3 #4 gt? [ #1 ] if ;
 &test dup here swap - disassemble
 &test trace
 ~~~
