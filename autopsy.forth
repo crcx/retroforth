@@ -131,8 +131,14 @@ render the packed cell in a meaningful manner.
 And now to tie it all together:
 
 ~~~
+'TryToIdentifyWords var
+
 :disassemble (an-)
-  [ fetch-next
+  [
+    @TryToIdentifyWords
+    [ dup d:lookup-xt n:-zero?
+      [ dup d:lookup-xt d:name nl puts nl ] if ] if
+    fetch-next
     over putn sp      (address)
     render-packed nl  (inst_or_data)
   ] times drop ;
@@ -298,7 +304,9 @@ Tests
 :test
   as{ 'liliaddu i #22 d #33 d }as
   #3 #4 gt? [ #1 ] if ;
-&test dup here swap - disassemble
-&test trace
-~~~
 
+#0 #100 disassemble
+nl '-------------------------- puts nl
+&TryToIdentifyWords v:on
+#0 #100 disassemble
+~~~
