@@ -348,8 +348,10 @@ window.addEventListener('load', function(e) {
 }, false);
 
 function processOpcode(opcode) {
-    instructions[opcode]();
-    checkStack();
+    if (opcode != 0) {
+        instructions[opcode]();
+        checkStack();
+    }
 }
 
 function validatePackedOpcodes(opcode) {
