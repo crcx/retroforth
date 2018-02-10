@@ -1,5 +1,10 @@
 all: freebsd freebsd64 linux native386 clean
 
+macos:
+	cc -m64 -c retro.c
+	nasm -f macho64 macos.s
+	ld macos.o retro.o -o bin/rf.macos
+
 freebsd:
 	cc -m32 -c retro.c
 	nasm -f elf fbsd.s
