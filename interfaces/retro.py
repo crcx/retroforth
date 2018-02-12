@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 # Nga: a Virtual Machine
 # Copyright (c) 2010 - 2018, Charles Childers
@@ -65,129 +65,160 @@ def processOpcode(opcode):
       if   opcode ==  0:   # nop
         pass
 
-      elif opcode ==  1:   # lit
-        ip += 1
-        stack.append( memory[ip] )
+def i_no():
+    pass
 
-      elif opcode ==  2:   # dup
-        stack.append( stack[-1] )
-
-      elif opcode ==  3:   # drop
-        stack.pop()
-
-      elif opcode ==  4:   # swap
-        a = stack[-2]
-        stack[-2] = stack[-1]
-        stack[-1] = a
-
-      elif opcode ==  5:   # push
-        address.append( stack.pop() )
-
-      elif opcode ==  6:   # pop
-        stack.append( address.pop() )
-
-      elif opcode ==  7:   # jump
-        ip = stack.pop() - 1
-
-      elif opcode ==  8:   # call
-        address.append(ip)
-        ip = stack.pop() - 1
+def i_li():
+    global ip, memory, stack, address
+    ip += 1
+    stack.append( memory[ip] )
         
-      elif opcode == 9:    # ccall
-        target = stack.pop()
-        flag = stack.pop()
-        if (flag != 0):
-          address.append(ip)
-          ip = target - 1
+def i_du():
+    global ip, memory, stack, address
+    stack.append( stack[-1] )
+        
+def i_dr():
+    global ip, memory, stack, address
+    stack.pop()
 
-      elif opcode ==  10:  # return
+def i_sw():
+    global ip, memory, stack, address
+    a = stack[-2]
+    stack[-2] = stack[-1]
+    stack[-1] = a
+
+def i_pu():
+    global ip, memory, stack, address
+    address.append(stack.pop())
+
+def i_po():
+    global ip, memory, stack, address
+    stack.append(address.pop())
+
+def i_ju():
+    global ip, memory, stack, address
+    ip = stack.pop() - 1
+    
+def i_ca():
+    global ip, memory, stack, address
+    address.append(ip)
+    ip = stack.pop() - 1
+   
+def i_cc():
+    global ip, memory, stack, address
+    target = stack.pop()
+    if stack.pop() != 0:
+        address.append(ip)
+        ip = target - 1
+
+def i_re():
+    global ip, memory, stack, address
+    ip = address.pop()
+
+def i_eq():
+    global ip, memory, stack, address
+    a = stack.pop()
+    b = stack.pop()
+    if b == a:
+        stack.append(-1)
+    else:
+        stack.append(0)
+
+def i_ne():
+    global ip, memory, stack, address
+    a = stack.pop()
+    b = stack.pop()
+    if b != a:
+        stack.append(-1)
+    else:
+        stack.append(0)
+
+def i_lt():
+    global ip, memory, stack, address
+    a = stack.pop()
+    b = stack.pop()
+    if b < a:
+        stack.append(-1)
+    else:
+        stack.append(0)
+
+def i_gt():
+    global ip, memory, stack, address
+    a = stack.pop()
+    b = stack.pop()
+    if b > a:
+        stack.append(-1)
+    else:
+        stack.append(0)
+
+def i_fe():
+    global ip, memory, stack, address
+    stack[-1] = memory[stack[-1]]
+
+def i_st():
+    global ip, memory, stack, address
+    mi = stack.pop()
+    memory[mi] = stack.pop()
+
+def i_ad():
+    global ip, memory, stack, address
+    t = stack.pop()
+    stack[ -1 ] += t
+    stack[-1] = unpack('=l', pack('=L', stack[-1] & 0xffffffff))[0]
+
+def i_su():
+    global ip, memory, stack, address
+    t = stack.pop()
+    stack[-1] -= t
+    stack[-1] = unpack('=l', pack('=L', stack[-1] & 0xffffffff))[0]
+            
+def i_mu():
+    global ip, memory, stack, address
+    t = stack.pop()
+    stack[-1] *= t
+    stack[-1] = unpack('=l', pack('=L', stack[-1] & 0xffffffff))[0]
+        
+def i_di():
+    global ip, memory, stack, address
+    a = stack[-1]
+    b = stack[-2]
+    stack[-1], stack[-2] = rxDivMod( b, a )
+    stack[-1] = unpack('=l', pack('=L', stack[-1] & 0xffffffff))[0]
+    stack[-2] = unpack('=l', pack('=L', stack[-2] & 0xffffffff))[0]
+    
+def i_an():
+    global ip, memory, stack, address
+    t = stack.pop()
+    stack[-1] &= t
+
+def i_or():
+    global ip, memory, stack, address
+    t = stack.pop()
+    stack[-1] |= t
+   
+def i_xo():
+    global ip, memory, stack, address
+    t = stack.pop()
+    stack[-1] ^= t
+
+def i_sh():
+    global ip, memory, stack, address
+    t = stack.pop()
+    stack[-1] <<= t
+    t = stack.pop()
+    stack[-1] >>= t
+
+def i_zr():
+    global ip, memory, stack, address
+    if stack[-1] == 0:
+        stack.pop()
         ip = address.pop()
+          
+def i_en():
+    global ip, memory, stack, address
+    ip = 9000000
 
-      elif opcode == 11:   # eq
-        a = stack.pop()
-        if stack[-1] == a:
-          stack[-1] = -1
-        else:
-          stack[-1] = 0
-
-      elif opcode == 12:   # neq
-        a = stack.pop()
-        if stack[-1] != a:
-          stack[-1] = -1
-        else:
-          stack[-1] = 0
-
-      elif opcode == 13:   # lt
-        a = stack.pop()
-        if stack[-1] < a:
-          stack[-1] = -1
-        else:
-          stack[-1] = 0
-
-      elif opcode == 14:   # gt
-        a = stack.pop()
-        if stack[-1] > a:
-          stack[-1] = -1
-        else:
-          stack[-1] = 0
-
-      elif opcode == 15:   # @
-        stack[-1] = memory[stack[-1]]
-
-      elif opcode == 16:   # !
-        mi = stack.pop()
-        memory[mi] = stack.pop()
-
-      elif opcode == 17:   # +
-        t = stack.pop()
-        stack[ -1 ] += t
-        stack[-1] = unpack('=l', pack('=L', stack[-1] & 0xffffffff))[0]
-
-      elif opcode == 18:   # -
-        t = stack.pop()
-        stack[-1] -= t
-        stack[-1] = unpack('=l', pack('=L', stack[-1] & 0xffffffff))[0]
-
-      elif opcode == 19:   # *
-        t = stack.pop()
-        stack[-1] *= t
-        stack[-1] = unpack('=l', pack('=L', stack[-1] & 0xffffffff))[0]
-
-      elif opcode == 20:   # /mod
-        a = stack[-1]
-        b = stack[-2]
-        stack[-1], stack[-2] = rxDivMod( b, a )
-        stack[-1] = unpack('=l', pack('=L', stack[-1] & 0xffffffff))[0]
-        stack[-2] = unpack('=l', pack('=L', stack[-2] & 0xffffffff))[0]
-
-      elif opcode == 21:   # and
-        t = stack.pop()
-        stack[-1] &= t
-
-      elif opcode == 22:   # or
-        t = stack.pop()
-        stack[-1] |= t
-
-      elif opcode == 23:   # xor
-        t = stack.pop()
-        stack[-1] ^= t
-
-      elif opcode == 24:   # <<
-        t = stack.pop()
-        stack[-1] <<= t
-        t = stack.pop()
-        stack[-1] >>= t
-
-      elif opcode == 25:   # 0;
-        if stack[-1] == 0:
-          stack.pop()
-          ip = address.pop()
-
-      elif opcode == 26:   # inc
-        stack[-1] += 1
-
-      elif opcode == 26:   # dec
-        ip = 1000000
+instructions = [i_no, i_li, i_du, i_dr, i_sw, i_pu, i_po, i_ju, i_ca, i_cc, i_re, i_eq, i_ne, i_lt, i_gt, i_fe, i_st, i_ad, i_su, i_mu, i_di, i_an, i_or, i_xo, i_sh, i_zr, i_en]
 
 def validateOpcode(opcode):
     I0 = opcode & 0xFF
@@ -198,31 +229,6 @@ def validateOpcode(opcode):
        return True
     else:
        return False
-
-def execute(word):
-    global ip, memory, stack, address
-    ip = word
-    address.append(0)
-    while ip < 100000 and len(address) > 0:
-        if ip == memory[findEntry('err:notfound') + 1]:
-            print('ooo: word not found!')
-        opcode = memory[ip]
-        if validateOpcode(opcode):
-            I0 = opcode & 0xFF
-            I1 = (opcode >> 8) & 0xFF
-            I2 = (opcode >> 16) & 0xFF
-            I3 = (opcode >> 24) & 0xFF
-            if I0 != 0: processOpcode(I0)
-            if I1 != 0: processOpcode(I1)
-            if I2 != 0: processOpcode(I2)
-            if I3 != 0: processOpcode(I3)
-        else:
-            if opcode == 1000:
-                rxDisplayCharacter()
-            else:
-                print('Invalid Bytecode', opcode, ip)
-                ip = 2000000
-        ip = ip + 1
 
 def extractString( at ):
     i = at
@@ -239,6 +245,31 @@ def injectString( s, to ):
         memory[i] = ord(c)
         i = i + 1
     memory[i] = 0
+
+def execute(word):
+    global ip, memory, stack, address
+    ip = word
+    address.append(0)
+    while ip < 100000 and len(address) > 0:
+        if ip == memory[findEntry('err:notfound') + 1]:
+            print('ERROR: word not found!')
+        opcode = memory[ip]
+        if validateOpcode(opcode):
+            I0 = opcode & 0xFF
+            I1 = (opcode >> 8) & 0xFF
+            I2 = (opcode >> 16) & 0xFF
+            I3 = (opcode >> 24) & 0xFF
+            if I0 != 0: instructions[I0]()
+            if I1 != 0: instructions[I1]()
+            if I2 != 0: instructions[I2]()
+            if I3 != 0: instructions[I3]()
+        else:
+            if opcode == 1000:
+                rxDisplayCharacter()
+            else:
+                print('Invalid Bytecode', opcode, ip)
+                ip = 2000000
+        ip = ip + 1
 
 def words():
     header = memory[2]
@@ -257,16 +288,11 @@ def run():
   remaining = 1000000 - cells
   memory.extend( [0] * remaining )
 
-  try:
-      while True:
-          s = input('OK:> ')
-          injectString(s, 1025)
-          stack.append(1025)
-          header = findEntry('interpret')
-          execute(memory[header + 1])
-  except:
-      print('Error!')
-      pass
+  s = 'words' #input('OK:> ')
+  injectString(s, 1025)
+  stack.append(1025)
+  header = findEntry('interpret')
+  execute(memory[header + 1])
 
 if __name__ == "__main__":
   run()
