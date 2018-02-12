@@ -17,7 +17,7 @@ compilation. Developing in a literate approach is beneficial as it
 makes it easier for me to keep documentation current and lets me
 approach the code in a more structured manner.
 
-This source s written in Muri, an assembler for Nga.
+This source is written in Muri, an assembler for Nga.
 
 ## In the Beginning...
 
@@ -39,6 +39,7 @@ Here's the initial memory map:
 
 Naje, the Nga assembler, compiles the initial instructions automatically.
 Muri does not, so provide this here.
+
 
 ~~~
 i liju....
@@ -248,8 +249,10 @@ since a *true* flag is -1.
 ~~~
 : choice:true
 d 0
+
 : choice:false
 d 0
+
 : choose
 i listlist
 r choice:false
@@ -768,14 +771,17 @@ I use `jump` for tail call eliminations here.
 ~~~
 : prefix:(
 i drre....
+
 : prefix:#
 i lica....
 r s:to-number
 i liju....
 r class:data
+
 : prefix:$
 i feliju..
 r class:data
+
 : prefix::
 i lilifeli
 r class:word
@@ -791,6 +797,7 @@ i stlilist
 d -1
 r Compiler
 i re......
+
 : prefix:&
 i lica....
 r d:lookup
@@ -864,6 +871,7 @@ to use them interactively, wrap them in a quote and `call` it.
 : repeat
 i lifere..
 r Heap
+
 : again
 i lilica..
 r _lit
@@ -873,18 +881,21 @@ r comma
 i liliju..
 r _jump
 r comma:opcode
+
 : t-0;
 i lifezr..
 r Compiler
 i drliliju
 r _zret
 r comma:opcode
+
 : t-push
 i lifezr..
 r Compiler
 i drliliju
 r _push
 r comma:opcode
+
 : t-pop
 i lifezr..
 r Compiler
@@ -938,6 +949,7 @@ i feju....
 ~~~
 : input:source
 d 0
+
 : interpret:prefix
 i lifezr..
 r prefix:handler
@@ -950,6 +962,7 @@ r call:dt
 i lifeliju
 r Which
 r call:dt
+
 : interpret:noprefix
 i lifelica
 r input:source
@@ -960,6 +973,7 @@ r interpret:word
 r err:notfound
 i liju....
 r choose
+
 : interpret
 i dulistli
 r input:source
@@ -1328,7 +1342,7 @@ s err:notfound
 
 ## Legalities
 
-Rx is Copyright (c) 2016-2017, Charles Childers
+Rx is Copyright (c) 2016-2018, Charles Childers
 
 Permission to use, copy, modify, and/or distribute this software for
 any purpose with or without fee is hereby granted, provided that the
