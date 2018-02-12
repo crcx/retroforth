@@ -1,7 +1,7 @@
     ____  _   _
     || \\ \\ //
     ||_//  )x(
-    || \\ // \\ 2018.1
+    || \\ // \\ 2018.2
     a minimalist forth for nga
 
 *Rx* (*retro experimental*) is a minimal Forth implementation for the
@@ -55,7 +55,7 @@ r 9999
 d 1536
 
 : Version
-d 201801
+d 201802
 ~~~
 
 Both of these are pointers. `Dictionary` points to the most recent
@@ -268,9 +268,6 @@ i re......
 String comparisons are harder.
 
 ~~~
-: get-set
-i feswfere
-
 : next-set
 i liadswli
 d 1
@@ -280,8 +277,7 @@ i adre....
 : compare
 i pupulica
 r dup-pair
-i lica....
-r get-set
+i feswfe.. ; get-set
 i eqpoanpu
 i lica....
 r next-set

@@ -4,6 +4,8 @@ Bug fixes:
 
 Language Improvements:
 
+- rx kernel: slightly faster s:eq?
+
 Interfaces:
 
 - rre
