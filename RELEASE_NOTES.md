@@ -4,7 +4,7 @@ Bug fixes:
 
 Language Improvements:
 
-- rx kernel: slightly faster s:eq?
+- rx kernel: faster and smaller `s:eq?`
 
 Interfaces:
 

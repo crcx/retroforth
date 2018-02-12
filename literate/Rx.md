@@ -230,86 +230,6 @@ d 1
 i stpore..
 ~~~
 
-## Strings
-
-The kernel needs two basic string operations for dictionary searches:
-obtaining the length and comparing for equality.
-
-Strings in Rx are zero terminated. This is a bit less elegant than
-counted strings, but the implementation is quick and easy.
-
-First up, string length. The process here is trivial:
-
-* Make a copy of the starting point
-* Fetch each character, comparing to zero
-
-  * If zero, break the loop
-  * Otherwise discard and repeat
-
-* When done subtract the original address from the current one
-* Then subtract one (to account for the zero terminator)
-
-~~~
-: count
-i lica....
-r fetch-next
-i zr......
-i drliju..
-r count
-
-: s:length
-i dulica..
-r count
-i lisuswsu
-d 1
-i re......
-~~~
-
-String comparisons are harder.
-
-~~~
-: next-set
-i liadswli
-d 1
-d 1
-i adre....
-
-: compare
-i pupulica
-r dup-pair
-i feswfe.. ; get-set
-i eqpoanpu
-i lica....
-r next-set
-i popolisu
-d 1
-i zr......
-i liju....
-r compare
-
-: s:compare:mismatched
-i drdrlidu
-d 0
-i re......
-
-: s:eq
-i lica....
-r dup-pair
-i lica....
-r s:length
-i swlica..
-r s:length
-i nelicc..
-r s:compare:mismatched
-i zr......
-i dulica..
-r s:length
-i liswlica
-d -1
-r compare
-i pudrdrpo
-i re......
-~~~
 
 ## Conditionals
 
@@ -349,6 +269,77 @@ d 0
 : if
 i cc......
 i re......
+~~~
+
+## Strings
+
+The kernel needs two basic string operations for dictionary searches:
+obtaining the length and comparing for equality.
+
+Strings in Rx are zero terminated. This is a bit less elegant than
+counted strings, but the implementation is quick and easy.
+
+First up, string length. The process here is trivial:
+
+* Make a copy of the starting point
+* Fetch each character, comparing to zero
+
+  * If zero, break the loop
+  * Otherwise discard and repeat
+
+* When done subtract the original address from the current one
+* Then subtract one (to account for the zero terminator)
+
+~~~
+: count
+i lica....
+r fetch-next
+i zr......
+i drliju..
+r count
+
+: s:length
+i dulica..
+r count
+i lisuswsu
+d 1
+i re......
+~~~
+
+String comparisons are harder.
+
+  dup fetch push n:inc swap
+  dup fetch push n:inc pop dup pop
+  -eq? [ drop-pair drop #0 pop pop drop drop ]
+       [ 0; drop s:eq? pop pop drop drop ] choose drop-pair #-1 ;
+
+~~~
+: mismatch
+i drdrdrli
+d 0
+i popodrdr
+i re......
+
+: matched
+i zr......
+i drlica..
+r s:eq
+i popodrdr
+i re......
+
+: s:eq
+i dufepuli
+d 1
+i adswdufe
+i puliadpo
+d 1
+i duponeli
+r mismatch
+i lilica..
+r matched
+r choose
+i drdrlire
+d -1
 ~~~
 
 ## Interpreter & Compiler
