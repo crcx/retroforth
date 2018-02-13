@@ -891,23 +891,17 @@ r _jump
 r comma:opcode
 
 : t-0;
-i lifezr..
-r Compiler
-i drliliju
+i liliju..
 r _zret
 r comma:opcode
 
 : t-push
-i lifezr..
-r Compiler
-i drliliju
+i liliju..
 r _push
 r comma:opcode
 
 : t-pop
-i lifezr..
-r Compiler
-i drliliju
+i liliju..
 r _pop
 r comma:opcode
 ~~~
