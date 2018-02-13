@@ -188,24 +188,6 @@ d 1793
 i re......
 ~~~
 
-## Stack Shufflers
-
-These add additional operations on the stack elements that'll keep
-later code much more readable. The `dup-pair` is the same as `over
-over`, but I inline the machine code as it's smaller and faster in
-this case.
-
-~~~
-: over
-i puduposw
-i re......
-
-: dup-pair
-i puduposw
-i puduposw
-i re......
-~~~
-
 ## Memory
 
 The basic memory accesses are handled via `fetch` and `store`. These
