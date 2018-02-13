@@ -720,15 +720,19 @@ done by `prefix?`, also returns a flag.
 : prefix:no
 d 32
 d 0
+
 : prefix:handler
 d 0
+
 : prefixed
 s prefix:_
+
 : prefix:prepare
 i feliliad
 r prefixed
 d 7
 i stre....
+
 : prefix:has-token?
 i dulica..
 r s:length
@@ -736,6 +740,7 @@ i lieqzr..
 d 1
 i drdrlire
 r prefix:no
+
 : prefix?
 i lica....
 r prefix:has-token?
