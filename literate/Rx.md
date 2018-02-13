@@ -78,81 +78,107 @@ functions later.
 : _nop
 d 0
 i re......
+
 : _lit
 d 1
 i re......
+
 : _dup
 d 2
 i re......
+
 : _drop
 d 3
 i re......
+
 : _swap
 d 4
 i re......
+
 : _push
 d 5
 i re......
+
 : _pop
 d 6
 i re......
+
 : _jump
 d 7
 i re......
+
 : _call
 d 8
 i re......
+
 : _ccall
 d 9
 i re......
+
 : _ret
 d 10
 i re......
+
 : _eq
 d 11
 i re......
+
 : _neq
 d 12
 i re......
+
 : _lt
 d 13
 i re......
+
 : _gt
 d 14
 i re......
+
 : _fetch
 d 15
 i re......
+
 : _store
 d 16
 i re......
+
 : _add
 d 17
 i re......
+
 : _sub
 d 18
 i re......
+
 : _mul
 d 19
 i re......
+
 : _divmod
 d 20
 i re......
+
 : _and
 d 21
 i re......
+
 : _or
 d 22
 i re......
+
 : _xor
 d 23
 i re......
+
 : _shift
 d 24
 i re......
+
 : _zret
 d 25
 i re......
+
 : _end
 d 26
 i re......
@@ -940,6 +966,7 @@ r input:source
 d 1
 i swliju..
 r call:dt
+
 : interpret:word
 i lifeliju
 r Which
