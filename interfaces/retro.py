@@ -13,23 +13,18 @@ stack = [] * 128
 address = []
 memory = []
 
-EXIT = 0x0FFFFFFF
-ext = EXIT
-
 def rxDivMod( a, b ):
-  x = abs(a)
-  y = abs(b)
-  q, r = divmod(x, y)
-
-  if a < 0 and b < 0:
-    r *= -1
-  elif a > 0 and b < 0:
-    q *= -1
-  elif a < 0 and b > 0:
-    r *= -1
-    q *= -1
-
-  return q, r
+    x = abs(a)
+    y = abs(b)
+    q, r = divmod(x, y)
+    if a < 0 and b < 0:
+        r *= -1
+    elif a > 0 and b < 0:
+        q *= -1
+    elif a < 0 and b > 0:
+        r *= -1
+        q *= -1
+    return q, r
 
 
 def findEntry(named):
@@ -45,24 +40,27 @@ def findEntry(named):
 def rxGetInput():
     return ord(sys.stdin.read(1))
 
-def rxDisplayCharacter():
+def rxDisplayCharacter(target):
     global stack
-    if stack[-1] > 0 and stack[-1] < 128:
-      if stack[-1] == 8:
-        sys.stdout.write(chr(stack.pop()))
-        sys.stdout.write(chr(32))
-        sys.stdout.write(chr(8))
-      else:
-        sys.stdout.write(chr(stack.pop()))
+    if target == 'console':
+        if stack[-1] > 0 and stack[-1] < 128:
+            if stack[-1] == 8:
+                sys.stdout.write(chr(stack.pop()))
+                sys.stdout.write(chr(32))
+                sys.stdout.write(chr(8))
+            else:
+                sys.stdout.write(chr(stack.pop()))
+        else:
+            sys.stdout.write("\033[2J\033[1;1H")
+            stack.pop()
+        sys.stdout.flush()
+        return ''
     else:
-      sys.stdout.write("\033[2J\033[1;1H")
-      stack.pop()
-    sys.stdout.flush()
-    return ip
+        return str(chr(stack.pop()))
 
 def processOpcode(opcode):
-      global ip, stack, address, memory
-      if   opcode ==  0:   # nop
+    global ip, stack, address, memory
+    if   opcode ==  0:   # nop
         pass
 
 def i_no():
@@ -72,11 +70,11 @@ def i_li():
     global ip, memory, stack, address
     ip += 1
     stack.append( memory[ip] )
-        
+
 def i_du():
     global ip, memory, stack, address
     stack.append( stack[-1] )
-        
+
 def i_dr():
     global ip, memory, stack, address
     stack.pop()
@@ -98,12 +96,12 @@ def i_po():
 def i_ju():
     global ip, memory, stack, address
     ip = stack.pop() - 1
-    
+
 def i_ca():
     global ip, memory, stack, address
     address.append(ip)
     ip = stack.pop() - 1
-   
+
 def i_cc():
     global ip, memory, stack, address
     target = stack.pop()
@@ -171,13 +169,13 @@ def i_su():
     t = stack.pop()
     stack[-1] -= t
     stack[-1] = unpack('=l', pack('=L', stack[-1] & 0xffffffff))[0]
-            
+
 def i_mu():
     global ip, memory, stack, address
     t = stack.pop()
     stack[-1] *= t
     stack[-1] = unpack('=l', pack('=L', stack[-1] & 0xffffffff))[0]
-        
+
 def i_di():
     global ip, memory, stack, address
     a = stack[-1]
@@ -185,7 +183,7 @@ def i_di():
     stack[-1], stack[-2] = rxDivMod( b, a )
     stack[-1] = unpack('=l', pack('=L', stack[-1] & 0xffffffff))[0]
     stack[-2] = unpack('=l', pack('=L', stack[-2] & 0xffffffff))[0]
-    
+
 def i_an():
     global ip, memory, stack, address
     t = stack.pop()
@@ -195,7 +193,7 @@ def i_or():
     global ip, memory, stack, address
     t = stack.pop()
     stack[-1] |= t
-   
+
 def i_xo():
     global ip, memory, stack, address
     t = stack.pop()
@@ -213,7 +211,7 @@ def i_zr():
     if stack[-1] == 0:
         stack.pop()
         ip = address.pop()
-          
+
 def i_en():
     global ip, memory, stack, address
     ip = 9000000
@@ -226,9 +224,9 @@ def validateOpcode(opcode):
     I2 = (opcode >> 16) & 0xFF
     I3 = (opcode >> 24) & 0xFF
     if (I0 >= 0 and I0 <= 26) and (I1 >= 0 and I1 <= 26) and (I2 >= 0 and I2 <= 26) and (I3 >= 0 and I3 <= 26):
-       return True
+        return True
     else:
-       return False
+        return False
 
 def extractString( at ):
     i = at
@@ -246,8 +244,9 @@ def injectString( s, to ):
         i = i + 1
     memory[i] = 0
 
-def execute(word):
+def execute(word, output = 'console'):
     global ip, memory, stack, address
+    TOB = ''
     ip = word
     address.append(0)
     while ip < 100000 and len(address) > 0:
@@ -265,11 +264,12 @@ def execute(word):
             if I3 != 0: instructions[I3]()
         else:
             if opcode == 1000:
-                rxDisplayCharacter()
+                TOB = TOB + rxDisplayCharacter(output)
             else:
                 print('Invalid Bytecode', opcode, ip)
                 ip = 2000000
         ip = ip + 1
+    return TOB
 
 def words():
     header = memory[2]
@@ -277,23 +277,29 @@ def words():
         print(header, extractString(header + 3))
         header = memory[header]
 
+def load_image():
+    global memory
+    cells = int(os.path.getsize('ngaImage') / 4)
+    f = open( 'ngaImage', 'rb' )
+    memory = list(struct.unpack( cells * 'i', f.read() ))
+    f.close()
+    remaining = 1000000 - cells
+    memory.extend( [0] * remaining )
+
 def run():
-  global memory
-  cells = int(os.path.getsize('ngaImage') / 4)
-
-  f = open( 'ngaImage', 'rb' )
-  memory = list(struct.unpack( cells * 'i', f.read() ))
-  f.close()
-
-  remaining = 1000000 - cells
-  memory.extend( [0] * remaining )
-
-  s = 'words' #input('OK:> ')
-  injectString(s, 1025)
-  stack.append(1025)
-  header = findEntry('interpret')
-  execute(memory[header + 1])
+    Done = False
+    Interpreter = memory[findEntry('interpret') + 1]
+    while not Done:
+        Line = input('\nOk> ')
+        if Line == 'bye': Done = True
+        else:
+            for Token in Line.split(' '):
+                injectString(Token, 1025)
+                stack.append(1025)
+                execute(Interpreter)
 
 if __name__ == "__main__":
-  run()
+    load_image()
+    print(memory[0])
+    run()
 
