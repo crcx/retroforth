@@ -198,21 +198,9 @@ lit/call combination can be fit into a single cell. We define the
 opcode for this here so that the compiler can take advantage of the
 space savings.
 
-~~~
-: _packedcall
-d 2049
-i re......
-~~~
-
 Likewise, I define a packed jump for use with quotations. This saves
 several hundred cells (and thus fetch/decode cycles) when loading the
 standard library.
-
-~~~
-: _packedjump
-d 1793
-i re......
-~~~
 
 ## Memory
 
@@ -467,8 +455,8 @@ i ju......
 
 : class:word:compile
 i lilica..
-r _packedcall
-r comma:opcode
+d 2049 packed li/ca/../..
+r comma
 i liju....
 r comma
 
@@ -836,8 +824,8 @@ r Compiler
 d -1
 r Compiler
 i stlilica
-r _packedjump
-r comma:opcode
+d 1793 packed li/ju/../..
+r comma
 i lifelili
 r Heap
 d 0
