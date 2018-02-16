@@ -329,6 +329,11 @@ once for each line in a file. This makes some things trivial. E.g., a simple
 }}
 ~~~
 
+~~~
+:unix:io:putn (n-) #-8100 `-6300 ;
+:unix:io:puts (s-) #-8101 `-6300 ;
+~~~
+
 # Interactive Listener
 
 ~~~

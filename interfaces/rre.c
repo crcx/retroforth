@@ -531,6 +531,8 @@ void ioFlushFile() {
 #define RRE_UNIX_GETENV -8014
 #define RRE_UNIX_PUTENV -8015
 #define RRE_UNIX_SLEEP  -8016
+#define RRE_UNIX_IO_PUTN -8100
+#define RRE_UNIX_IO_PUTS -8101
 
 
 /*---------------------------------------------------------------------
@@ -746,6 +748,21 @@ void unix_sleep() {
 /*---------------------------------------------------------------------
   ---------------------------------------------------------------------*/
 
+void unix_io_putn() {
+  printf("%ld", (long)stack_pop());
+}
+
+/*---------------------------------------------------------------------
+  ---------------------------------------------------------------------*/
+
+void unix_io_puts() {
+  printf("%s", string_extract(stack_pop()));
+}
+
+
+/*---------------------------------------------------------------------
+  ---------------------------------------------------------------------*/
+
 void ngaUnixUnit() {
   switch (stack_pop()) {
       case RRE_UNIX_SYSTEM: unix_system();   break;
@@ -765,6 +782,8 @@ void ngaUnixUnit() {
       case RRE_UNIX_GETENV: unix_getenv();   break;
       case RRE_UNIX_PUTENV: unix_putenv();   break;
       case RRE_UNIX_SLEEP:  unix_sleep();    break;
+      case RRE_UNIX_IO_PUTN: unix_io_putn(); break;
+      case RRE_UNIX_IO_PUTS: unix_io_puts(); break;
       default:                           break;
   }
 }

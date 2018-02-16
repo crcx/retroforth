@@ -11,6 +11,8 @@ Interfaces:
 - rre
 
   - add NOP skipping to Nga instruction handler
+  - add `unix:io:putn`
+  - add `unix:io:puts`
 
 - repl
 
