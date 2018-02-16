@@ -345,6 +345,8 @@ unix:exit	n-	-	-	Exit the current process, returning the specified return code.	
 unix:fork	-n	-	-	Fork the current process. Returns a PID.			class:word	{n/a}	{n/a}	unix	rre	
 unix:getenv	sa-	-	-	Get an environment variable. Provide the name and an address to store it in.			class:word	  'SHELL s:empty [ unix:getenv ] sip puts nl	{n/a}	unix	rre	
 unix:getpid	-n	-	-	Return the PID of the current process.			class:word	{n/a}	{n/a}	unix	rre	
+unix:io:putn	n-	-	-	Display a number (in base 10) to the standard output device. This is faster than `putn`, but not portable.			class:word	{n/a}	{n/a}	unix:io	rre	
+unix:io:puts	s-	-	-	Display a string to stdout. This is faster than `puts`, but not portable.			class:word	{n/a}	{n/a}	unix:io	rre	
 unix:kill	nn-	-	-	Terminates a process. Takes a process and a signal to send.			class:word	{n/a}	{n/a}	unix	rre	
 unix:pclose	n-	-	-	Close a pipe.			class:word	{n/a}	{n/a}	unix	rre	
 unix:popen	sn-n	-	-	Open a pipe. Takes a command to run, and a file mode (`file:R` or `file:W`; `file:R+` may work on some systems). Returns a file ID usable with words in the `file:` namespace.			class:word	{n/a}	{n/a}	unix	rre	

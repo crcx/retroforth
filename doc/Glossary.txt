@@ -4416,6 +4416,30 @@ Class Handler: class:word | Namespace: unix | Interface Layer: rre
 
 ----------------------------------------------------------------
 
+unix:io:putn
+
+  Data:  n-
+  Addr:  -
+  Float: -
+
+Display a number (in base 10) to the standard output device. This is faster than `putn`, but not portable.
+
+Class Handler: class:word | Namespace: unix:io | Interface Layer: rre
+
+----------------------------------------------------------------
+
+unix:io:puts
+
+  Data:  s-
+  Addr:  -
+  Float: -
+
+Display a string to stdout. This is faster than `puts`, but not portable.
+
+Class Handler: class:word | Namespace: unix:io | Interface Layer: rre
+
+----------------------------------------------------------------
+
 unix:kill
 
   Data:  nn-
