@@ -300,6 +300,5 @@ def run():
 
 if __name__ == "__main__":
     load_image()
-    print(memory[0])
     run()
 
