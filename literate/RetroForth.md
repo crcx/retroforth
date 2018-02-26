@@ -1435,6 +1435,30 @@ And finally, tie it all together into the single exposed word
 ~~~
 
 
+## Loops, continued
+
+Sometimes it's useful to be able to access a loop index. The next word,
+`times<with-index>` adds this to RETRO. It also provides `I`, `J`, and
+`K` words to access the index of the current, and two outer loops as
+well.
+
+~~~
+{{
+  'LP var
+  'Index d:create #128 allot
+  :next (-) @LP &Index + v:inc ;
+  :prep (-)
+    &LP v:inc #0 @LP &Index + store ;
+  :done (-) &LP v:dec ;
+---reveal---
+  :I (-n) @LP &Index + fetch ;
+  :J (-n) @LP &Index + n:dec fetch ;
+  :K (-n) @LP &Index + #2 - fetch ;
+  :times<with-index>
+    prep swap [ repeat 0; #1 - push &call sip pop next again ] call drop done ;
+}}
+~~~
+
 ## I/O
 
 Retro really only provides one I/O function in the standard interface:

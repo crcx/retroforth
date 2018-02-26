@@ -40,7 +40,6 @@ Here's the initial memory map:
 Naje, the Nga assembler, compiles the initial instructions automatically.
 Muri does not, so provide this here.
 
-
 ~~~
 i liju....
 d -1

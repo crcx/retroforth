@@ -650,6 +650,42 @@ Class Handler: class:data | Namespace: global | Interface Layer: all
 
 ----------------------------------------------------------------
 
+I
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Access the loop index for the current loop. (For loops made using `times<with-index>`)
+
+Class Handler: class:word | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+J
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Access the parent loop index for the current loop. (For loops made using `times<with-index>`)
+
+Class Handler: class:word | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+K
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Access the grandparent loop index for the current loop. (For loops made using `times<with-index>`)
+
+Class Handler: class:word | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
 RewriteUnderscores
 
   Data:  -a
@@ -4237,6 +4273,18 @@ Class Handler: class:word | Namespace: global | Interface Layer: all
 Example #1:
 
     #12 [ $- putc ] times
+
+----------------------------------------------------------------
+
+times<with-index>
+
+  Data:  nq-
+  Addr:  -
+  Float: -
+
+Run a quote the specified number of times, tracking the loop index in `I`.
+
+Class Handler: class:word | Namespace: global | Interface Layer: all
 
 ----------------------------------------------------------------
 
