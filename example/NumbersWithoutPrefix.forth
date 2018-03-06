@@ -27,6 +27,22 @@ the handler) and pass it to `s:to-number` and `class:data`.
 }}
 ~~~
 
+For single digits, define each digit as a word. (Prefixes
+are not processed for tokens with nothing other than the
+prefix character, so this takes care of the issue).
+
+~~~
+:1 (-n) #1 ;
+:2 (-n) #2 ;
+:3 (-n) #3 ;
+:4 (-n) #4 ;
+:5 (-n) #5 ;
+:6 (-n) #6 ;
+:7 (-n) #7 ;
+:8 (-n) #8 ;
+:9 (-n) #9 ;
+~~~
+
 Handling negative numbers is a bigger headache though. By
 convention, RETRO uses - to imply "not" (as in `-eq?`). So
 to handle the `-` prefix for numbers, it needs to fall back
