@@ -14,7 +14,7 @@ the handler) and pass it to `s:to-number` and `class:data`.
   :process-with-prefix (s-n)
     s:prepend s:to-number class:data ;
 ---reveal---
-  :prefix:0 (s-n) '0 process-with-prefix ; immediate
+  :prefix:0 (s-n) dup '; s:eq? [ drop &0; call ] [ '0 process-with-prefix ] choose ; immediate
   :prefix:1 (s-n) '1 process-with-prefix ; immediate
   :prefix:2 (s-n) '2 process-with-prefix ; immediate
   :prefix:3 (s-n) '3 process-with-prefix ; immediate
@@ -32,6 +32,7 @@ are not processed for tokens with nothing other than the
 prefix character, so this takes care of the issue).
 
 ~~~
+:0 (-n) #0 ;
 :1 (-n) #1 ;
 :2 (-n) #2 ;
 :3 (-n) #3 ;
