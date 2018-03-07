@@ -14,7 +14,6 @@ the handler) and pass it to `s:to-number` and `class:data`.
   :process-with-prefix (s-n)
     s:prepend s:to-number class:data ;
 ---reveal---
-  :prefix:0 (s-n) dup '; s:eq? [ drop &0; call ] [ '0 process-with-prefix ] choose ; immediate
   :prefix:1 (s-n) '1 process-with-prefix ; immediate
   :prefix:2 (s-n) '2 process-with-prefix ; immediate
   :prefix:3 (s-n) '3 process-with-prefix ; immediate
@@ -24,6 +23,19 @@ the handler) and pass it to `s:to-number` and `class:data`.
   :prefix:7 (s-n) '7 process-with-prefix ; immediate
   :prefix:8 (s-n) '8 process-with-prefix ; immediate
   :prefix:9 (s-n) '9 process-with-prefix ; immediate
+~~~
+
+`0` is a special case. Since RETRO has `0;` as a control
+flow word, the `0` prefix would prevent using it. So the
+handler for this checks to see if the part following the
+prefix is a `;`. If so, it'll fall back to `0;`, otherwise
+it treats the token as a number.
+
+~~~
+  :prefix:0 (s-n)
+    dup '; s:eq?
+    [ drop &0; call ]
+    [ '0 process-with-prefix ] choose ; immediate
 }}
 ~~~
 

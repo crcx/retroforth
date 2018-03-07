@@ -39,6 +39,7 @@ Interfaces:
 
 Other:
 
+- fixed bugs in example/NumbersWithoutPrefix.forth (thanks to kiyoshi)
 - source now builds using ancient (2.92) gcc
 - back to using `make`
 
