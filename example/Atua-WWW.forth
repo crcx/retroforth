@@ -282,6 +282,7 @@ The `gopher:icon` displays an indicator for menu items.
   ]
   [ PATH DEFAULT-INDEX s:append &Server-Info v:on ] choose
 ;
+
 :gopher:read-file (f-s)
   file:R file:open !FID
   buffer buffer:set
@@ -303,15 +304,20 @@ The `gopher:icon` displays an indicator for menu items.
 
 :gopher:generate-index (f-)
   'Content-type:_text/html puts eol eol
-  '<style>tt_{_white-space:_pre;_} puts
-  '_*_{_color:_#aaa;_background:_#121212;_font-size:_large;_}_a_{_color:_#EE7600;_} puts
-  '</style> puts eol eol
+  '<!DOCTYPE_HTML_PUBLIC_"-//W3C//DTD_HTML_4.01_Transitional//EN"_"http://www.w3.org/TR/html4/loose.dtd"> puts eol
+  '<html><head><meta_http-equiv="Content-Type"_content="text/html;_charset=utf-8"> puts
+  '<style_type="text/css">tt_{_white-space:_pre;_} puts
+  '_*_{_color:_#bbb;_background:_#090909;_font-size:_large;_}_a_{_color:_#FF6600;_} puts
+  '</style><title>forthworks.com</title></head><body> puts eol eol
   file:R file:open !FID
   @FID file:size !Size
   [ buffer gopher:gets
     buffer tab? [ [ link ] html:tt eol ] [ gopher:i ] choose
     @FID file:tell @Size lt? ] while
   @FID file:close
+  [ #70 [ $_ putc ] times ] html:tt html:br eol
+  'forthworks.com:80_/_atua-www_/_running_on_retro gopher:i
+  '</body></html> puts
 ;
 ````
 
@@ -335,8 +341,6 @@ The only thing left is the top level server.
   gopher:file-for-request
   @Server-Info
   [ gopher:generate-index
-    [ #70 [ $_ putc ] times ] html:tt html:br eol
-    'forthworks.com:80_/_atua-www_/_running_on_retro gopher:i
 ````
     '<tt> puts
     '<a_href="http://forthworks.com:8888 puts &Selector s:chop puts '">Light_on_Dark</a>_or_ puts
