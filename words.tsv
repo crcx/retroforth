@@ -210,7 +210,6 @@ immediate	-	-	-	Change the class of the most recently defined word to `class:mac
 include	s-	-	-	Run the code in the specified file. 			class:word	{n/a}	{n/a}	global	rre	
 interpret	s-	-	-	Interpret a single input token.			class:word	    '#100 interpret\n    'words interpret	{n/a}	global	all	
 listen	-	-	-	Run interactive "listener" (a REPL).			class:word	{n/a}	{n/a}	global	rre	
-listen-cbreak	-	-	-	Run interactive "listener" (a REPL) in character breaking mode.			class:word	{n/a}	{n/a}	global	rre	
 lt?	nn-f	-	-	Compare n1 and n2. Return `TRUE` if n1 is less than n2, or `FALSE` otherwise.			class:primitive	{n/a}	{n/a}	global	all	
 lteq?	nn-f	-	-	Compare n1 and n2. Return `TRUE` if n1 is less than or equal to n2, or `FALSE` otherwise.			class:word	{n/a}	{n/a}	global	all	
 mod	nm-o	-	-	Divide `n` by `m` and return the remainder.			class:word	{n/a}	{n/a}	global	all	

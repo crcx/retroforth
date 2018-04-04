@@ -23,7 +23,7 @@
 #define ENABLE_FLOATING_POINT
 #define ENABLE_UNIX
 #define ENABLE_GOPHER
-
+#define USE_TERMIOS
 
 /*---------------------------------------------------------------------
   Begin by including the various C headers needed.
@@ -43,6 +43,10 @@
 #include <sys/wait.h>
 #include <signal.h>
 
+#ifdef USE_TERMIOS
+#include <termios.h>
+#include <sys/ioctl.h>
+#endif
 
 /*---------------------------------------------------------------------
   First, a few constants relating to the image format and memory
@@ -1145,6 +1149,29 @@ void ngaGopherUnit() {
 
 
 /*---------------------------------------------------------------------
+  ---------------------------------------------------------------------*/
+
+#ifdef USE_TERMIOS
+struct termios new_termios, old_termios;
+
+void prepare_term() {
+  tcgetattr(0, &old_termios);
+  new_termios = old_termios;
+  new_termios.c_iflag &= ~(BRKINT+ISTRIP+IXON+IXOFF);
+  new_termios.c_iflag |= (IGNBRK+IGNPAR);
+  new_termios.c_lflag &= ~(ICANON+ISIG+IEXTEN+ECHO);
+  new_termios.c_cc[VMIN] = 1;
+  new_termios.c_cc[VTIME] = 0;
+  tcsetattr(0, TCSANOW, &new_termios);
+}
+
+void restore_term() {
+  tcsetattr(0, TCSANOW, &old_termios);
+}
+#endif
+
+
+/*---------------------------------------------------------------------
   With these out of the way, I implement `execute`, which takes an
   address and runs the code at it. This has a couple of interesting
   bits.
@@ -1179,7 +1206,12 @@ void execute(int cell) {
     } else {
       switch (opcode) {
         case IO_TTY_PUTC:  putc(stack_pop(), stdout); fflush(stdout); break;
-        case IO_TTY_GETC:  stack_push(getc(stdin));                   break;
+        case IO_TTY_GETC:  stack_push(getc(stdin));
+                           if (TOS == 127) TOS = 8;
+#ifdef USE_TERMIOS
+                           putc(TOS, stdout); fflush(stdout);
+#endif
+        break;
         case -9999:        include_file(string_extract(stack_pop())); break;
 #ifdef ENABLE_FILES
         case RRE_FILE_OPEN:   ioOpenFile();                              break;
@@ -1208,6 +1240,9 @@ void execute(int cell) {
 #endif
         default:   printf("Invalid instruction!\n");
                    printf("At %d, opcode %d\n", ip, opcode);
+#ifdef USE_TERMIOS
+                   restore_term();
+#endif
                    exit(1);
       }
     }
@@ -1426,10 +1461,13 @@ int main(int argc, char **argv) {
     if (argc >= 4)
       include_file(argv[3]);
     execute(d_xt_for("banner", Dictionary));
-    if (arg_is("-i"))
+#ifdef USE_TERMIOS
+      if (arg_is("-c")) prepare_term();
+#endif
       while (1) execute(d_xt_for("listen", Dictionary));
-    else
-      while (1) execute(d_xt_for("listen-cbreak", Dictionary));
+#ifdef USE_TERMIOS
+      if (arg_is("-c")) restore_term();
+#endif
     exit(0);
   }
 
