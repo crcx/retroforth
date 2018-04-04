@@ -124,8 +124,8 @@ CELL ioGetFileSize();
 CELL ioDeleteFile();
 void ioFlushFile();
 void update_rx();
-void execute(int cell);
-void evaluate(char *s);
+void execute(int cell, int silent);
+void evaluate(char *s, int silent);
 int not_eol(int ch);
 void read_token(FILE *file, char *token_buffer, int echo);
 void include_file(char *fname);
@@ -1187,7 +1187,7 @@ void restore_term() {
 #define IO_TTY_PUTC  1000
 #define IO_TTY_GETC  1001
 
-void execute(int cell) {
+void execute(int cell, int silent) {
   CELL a, b;
   CELL opcode;
   rp = 1;
@@ -1209,7 +1209,7 @@ void execute(int cell) {
         case IO_TTY_GETC:  stack_push(getc(stdin));
                            if (TOS == 127) TOS = 8;
 #ifdef USE_TERMIOS
-                           putc(TOS, stdout); fflush(stdout);
+                           if (silent != -1) { putc(TOS, stdout); fflush(stdout); }
 #endif
         break;
         case -9999:        include_file(string_extract(stack_pop())); break;
@@ -1260,13 +1260,13 @@ void execute(int cell) {
   calls `interpret` to process it.
   ---------------------------------------------------------------------*/
 
-void evaluate(char *s) {
+void evaluate(char *s, int silent) {
   if (strlen(s) == 0)
     return;
   update_rx();
   string_inject(s, TIB);
   stack_push(TIB);
-  execute(interpret);
+  execute(interpret, silent);
 }
 
 
@@ -1378,7 +1378,7 @@ void include_file(char *fname) {
         inBlock = 0;
     } else {
       if (inBlock == 1)            /* If we are, evaluate token        */
-        evaluate(source);
+        evaluate(source, -1);
     }
   }
 
@@ -1460,11 +1460,12 @@ int main(int argc, char **argv) {
   if (arg_is("-i") || arg_is("-c")) {
     if (argc >= 4)
       include_file(argv[3]);
-    execute(d_xt_for("banner", Dictionary));
+    execute(d_xt_for("banner", Dictionary), 0);
 #ifdef USE_TERMIOS
       if (arg_is("-c")) prepare_term();
 #endif
-      while (1) execute(d_xt_for("listen", Dictionary));
+      if (arg_is("-c")) while (1) execute(d_xt_for("listen", Dictionary), 0);
+      if (arg_is("-i")) while (1) execute(d_xt_for("listen", Dictionary), -1);
 #ifdef USE_TERMIOS
       if (arg_is("-c")) restore_term();
 #endif
