@@ -1,10 +1,11 @@
-RETRO 12 - 2018.2
+RETRO 12 - 2018.4
 
 Bug fixes:
 
 Language Improvements:
 
 - rx kernel: faster and smaller `s:eq?`
+- stdlib: smaller implementations of `c:whitespace?` and `c:vowel?`
 
 Interfaces:
 
@@ -13,6 +14,10 @@ Interfaces:
   - add NOP skipping to Nga instruction handler
   - add `unix:io:putn`
   - add `unix:io:puts`
+  - fixed handling of backspace
+  - removed: listen-cbreak
+  - now uses termios instead of calling out to stty for
+    character breaking mode
 
 - repl
 
@@ -49,5 +54,7 @@ Documentation:
 - added words from RETRO/iOS
 
 Examples:
+
+- added defstruct.forth
 
 Final Notes:

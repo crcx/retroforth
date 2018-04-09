@@ -633,6 +633,66 @@ a key part of building the other high-level string operations.
   ] call drop-pair ;
 ~~~
 
+Building on `s:for-each`, I am able to implement `s:index-of`, which
+finds the first instance of a character in a string.
+
+~~~
+:s:index-of (sc-n)
+  swap [ repeat
+           fetch-next 0; swap
+           [ over -eq? ] dip
+           swap 0; drop
+         again
+       ] sip
+  [ - n:dec nip ] sip
+  s:length over eq? [ drop #-1 ] if ;
+~~~
+
+`s:contains-char?` returns a flag indicating whether or not a given
+character is in a string.
+
+~~~
+:s:contains-char? (sc-f) s:index-of #-1 -eq? ;
+~~~
+
+`s:contains-string?` returns a flag indicating whether or not a given
+substring is in a string.
+
+~~~
+{{
+  'Src var
+  'Tar var
+  'Pad var
+  'I   var
+  'F   var
+  'At  var
+
+  :terminate (-)
+    #0 @Pad @Tar s:length + store ;
+
+  :extract (-)
+    @Src @I + @Pad @Tar s:length copy ;
+
+  :compare (-)
+    @Pad @Tar s:eq? @F or !F @F [ @I !At ] -if ;
+
+  :next (-)
+    &I v:inc ;
+---reveal---
+  :s:contains-string? (ss-f)
+    !Tar !Src s:empty !Pad #0 !I #0 !F
+    @Src s:length
+    [ extract terminate compare next ] times
+    @F ;
+
+  :s:index-of-string (ss-a)
+    !Tar !Src s:empty !Pad #0 !I #0 !F #-1 !At
+    @Src s:length
+    [ extract terminate compare next ] times
+    @F [ @At ] [ #-1 ] choose ;
+}}
+~~~
+
 `s:filter` returns a new string, consisting of the characters from
 another string that are filtered by a quotation.
 
@@ -744,25 +804,14 @@ First are a bunch of words to help identify character values.
 :c:lowercase?   (c-f) $a $z n:between? ;
 :c:uppercase?   (c-f) $A $Z n:between? ;
 :c:digit?       (c-f) $0 $9 n:between? ;
-:c:whitespace?  (c-f)
-  ASCII:SPACE [ TRUE ] case
-  ASCII:HT    [ TRUE ] case
-  ASCII:LF    [ TRUE ] case
-  ASCII:CR    [ TRUE ] case
-  drop FALSE ;
+{{
+  'WS d:create
+    ASCII:SPACE , ASCII:HT , ASCII:LF , ASCII:CR , #0 ,
+---reveal---
+  :c:whitespace?  (c-f) &WS swap s:contains-char? ;
+}}
 :c:visible?     (c-f) #31 #126 n:between? ;
-:c:vowel?       (c-f)
-  $a [ TRUE ] case
-  $e [ TRUE ] case
-  $i [ TRUE ] case
-  $o [ TRUE ] case
-  $u [ TRUE ] case
-  $A [ TRUE ] case
-  $E [ TRUE ] case
-  $I [ TRUE ] case
-  $O [ TRUE ] case
-  $U [ TRUE ] case
-  drop FALSE ;
+:c:vowel?       (c-f) 'aeiouAEIOU swap s:contains-char? ;
 :c:consonant?   (c-f)
   dup c:letter? [ c:vowel? not ] [ drop FALSE ] choose ;
 ~~~
@@ -825,66 +874,6 @@ TRUE 'RewriteUnderscores var<n>
     @RewriteUnderscores [ [ sub ] s:map ] if &prefix:' call ;
 ---reveal---
   :prefix:' rewrite ; immediate
-}}
-~~~
-
-Building on `s:for-each`, I am able to implement `s:index-of`, which
-finds the first instance of a character in a string.
-
-~~~
-:s:index-of (sc-n)
-  swap [ repeat
-           fetch-next 0; swap
-           [ over -eq? ] dip
-           swap 0; drop
-         again
-       ] sip
-  [ - n:dec nip ] sip
-  s:length over eq? [ drop #-1 ] if ;
-~~~
-
-`s:contains-char?` returns a flag indicating whether or not a given
-character is in a string.
-
-~~~
-:s:contains-char? (sc-f) s:index-of #-1 -eq? ;
-~~~
-
-`s:contains-string?` returns a flag indicating whether or not a given
-substring is in a string.
-
-~~~
-{{
-  'Src var
-  'Tar var
-  'Pad var
-  'I   var
-  'F   var
-  'At  var
-
-  :terminate (-)
-    #0 @Pad @Tar s:length + store ;
-
-  :extract (-)
-    @Src @I + @Pad @Tar s:length copy ;
-
-  :compare (-)
-    @Pad @Tar s:eq? @F or !F @F [ @I !At ] -if ;
-
-  :next (-)
-    &I v:inc ;
----reveal---
-  :s:contains-string? (ss-f)
-    !Tar !Src s:empty !Pad #0 !I #0 !F
-    @Src s:length
-    [ extract terminate compare next ] times
-    @F ;
-
-  :s:index-of-string (ss-a)
-    !Tar !Src s:empty !Pad #0 !I #0 !F #-1 !At
-    @Src s:length
-    [ extract terminate compare next ] times
-    @F [ @At ] [ #-1 ] choose ;
 }}
 ~~~
 

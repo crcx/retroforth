@@ -1194,8 +1194,7 @@ void execute(int cell, int silent) {
   ip = cell;
   while (ip < IMAGE_SIZE) {
     if (ip == NotFound) {
-      printf("\nRather than a beep\nOr a rude error message,\n");
-      printf("These words: 'word not found.'\n\nUnrecognized: ");
+      printf("\nERROR: Word Not Found: ");
       printf("%s\n\n", string_extract(TIB));
     }
     opcode = memory[ip];
@@ -1209,7 +1208,10 @@ void execute(int cell, int silent) {
         case IO_TTY_GETC:  stack_push(getc(stdin));
                            if (TOS == 127) TOS = 8;
 #ifdef USE_TERMIOS
-                           if (silent != -1) { putc(TOS, stdout); fflush(stdout); }
+                           if (silent != -1) {
+                             putc(TOS, stdout);
+                             fflush(stdout);
+                           }
 #endif
         break;
         case -9999:        include_file(string_extract(stack_pop())); break;
