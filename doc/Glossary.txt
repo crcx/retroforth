@@ -4586,7 +4586,7 @@ until
   Addr:  -
   Float: -
 
-Execute quote repeatedly while the quote returns a value of `FALSE`. The quote must return a flag of either `TRUE` or `FALSE` to be used with this.
+Execute quote repeatedly while the quote returns a value of `FALSE`. The quote should return a flag of either `TRUE` or `FALSE`, though `until` will treat any non-zero value as `TRUE`.
 
 Class Handler: class:word | Namespace: global | Interface Layer: all
 
@@ -4743,7 +4743,7 @@ while
   Addr:  -
   Float: -
 
-Execute quote repeatedly while the quote returns a value of `TRUE`. The quote must return a flag of either `TRUE` or `FALSE` to be used with this.
+Execute quote repeatedly while the quote returns a `TRUE` value. The quote should return a flag of either `TRUE` or `FALSE`, though `while` will treat any non-zero value as `TRUE`.
 
 Class Handler: class:word | Namespace: global | Interface Layer: all
 

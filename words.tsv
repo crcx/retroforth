@@ -358,7 +358,7 @@ unix:sleep	n-	-	-	Sleep for the specified number of seconds.			class:word	{n/a}	
 unix:system	s-	-	-	Runs another application using the system shell and returns after execution is completed.			class:word	  'ls_-lh_/etc unix:system	{n/a}	unix	rre	
 unix:wait	-n	-	-	Waits for a child process to complete. This maps to the wait() system call.			class:word	{n/a}	{n/a}	unix	rre	
 unix:write	sh-	-	-	Write a string to the specified file handle.			class:word	{n/a}	{n/a}	unix	rre	
-until	q-	-	-	Execute quote repeatedly while the quote returns a value of `FALSE`. The quote must return a flag of either `TRUE` or `FALSE` to be used with this.			class:word	    #10 [ dup putn nl n:dec dup n:zero? ] until	{n/a}	global	all	
+until	q-	-	-	Execute quote repeatedly while the quote returns a value of `FALSE`. The quote should return a flag of either `TRUE` or `FALSE`, though `until` will treat any non-zero value as `TRUE`.			class:word	    #10 [ dup putn nl n:dec dup n:zero? ] until	{n/a}	global	all	
 v:dec	a-	-	-	Decrement the value stored at the specified address by 1.			class:word	{n/a}	{n/a}	v	all	
 v:dec-by	na-	-	-	Decrement the value stored at the specified address by the specified value.			class:word	{n/a}	{n/a}	v	all	
 v:inc	a-	-	-	Increment the value stored at the specified address by 1.			class:word	{n/a}	{n/a}	v	all	
@@ -370,7 +370,7 @@ v:preserve	aq-	-	-	Make a copy of the value at the address, then run the quote. 
 v:update-using	aq-	-	-	Fetch a value from the specified address, then run the quotation with this value on the stack. Afterwards, store the returned value at the original address.			class:word	{n/a}	{n/a}	v	all	
 var	s-	-	-	Create a variable. The variable is initialized to 0.			class:word	    'Base var	{n/a}	global	all	
 var<n>	ns-	-	-	Create a variable with the specified initial value.			class:word	    #10 'Base var<n>\n	{n/a}	global	all	
-while	q-	-	-	Execute quote repeatedly while the quote returns a value of `TRUE`. The quote must return a flag of either `TRUE` or `FALSE` to be used with this.			class:word	    #10 [ dup putn nl n:dec dup n:-zero? ] while	{n/a}	global	all	
+while	q-	-	-	Execute quote repeatedly while the quote returns a `TRUE` value. The quote should return a flag of either `TRUE` or `FALSE`, though `while` will treat any non-zero value as `TRUE`.			class:word	    #10 [ dup putn nl n:dec dup n:-zero? ] while	{n/a}	global	all	
 words	-	-	-	Display a list of all named items in the `Dictionary`.			class:word	{n/a}	{n/a}	global	all	
 xor	mn-o	-	-	Perform a bitwise XOR operation.			class:primitive	{n/a}	{n/a}	global	all	
 {{	-	-	-	Begin a lexically scoped area.			class:word	{n/a}	{n/a}	global	all	
