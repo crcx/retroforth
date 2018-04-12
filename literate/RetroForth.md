@@ -312,7 +312,7 @@ Execute quote until quote returns a flag of 0.
   [ repeat dup dip swap 0; drop again ] call drop ;
 ~~~
 
-Execute quote until quote returns a flag of -1.
+Execute quote until quote returns a non-zero flag.
 
 ~~~
 :until  (q-)
