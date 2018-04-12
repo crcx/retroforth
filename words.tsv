@@ -285,7 +285,7 @@ s:eq?	ss-f	-	-	Compare two strings for equality. Return `TRUE` if identical or `
 s:evaluate	s-?	-	-	Evaluate string as if it was typed into the interpreter.			class:word	{n/a}	{n/a}	s	all	
 s:filter	sq-s	-	-	Execute the quote once for each value in the string. If the quote returns `TRUE`, append the value into a new string. If `FALSE` the value will be discarded.			class:word	{n/a}	{n/a}	s	all	
 s:for-each	sq-	-	-	Execute the quote once for each value in the string.			class:word	{n/a}	{n/a}	s	all	
-s:hash	s-n	-	-	Calculate a hash value for a string. This uses the djb2 algorithim.			class:word	{n/a}	{n/a}	s	all	
+s:hash	s-n	-	-	Calculate a hash value for a string. This uses the djb2 algorithm.			class:word	{n/a}	{n/a}	s	all	
 s:index-of	sc-n	-	-	Return the location of the first instance of the specified character in the string.			class:word	{n/a}	{n/a}	s	all	
 s:index-of-string	ss-n	-	-	Return the location of the first instance of the specified substring (s2) in the string (s1). Returns -1 if not found.			class:word	{n/a}	{n/a}	s	all	
 s:keep	s-s	-	-	Store a string into the heap and return a pointer to the start of it.			class:word	{n/a}	{n/a}	s	all	

@@ -2649,18 +2649,6 @@ Class Handler: class:word | Namespace: global | Interface Layer: rre
 
 ----------------------------------------------------------------
 
-listen-cbreak
-
-  Data:  -
-  Addr:  -
-  Float: -
-
-Run interactive "listener" (a REPL) in character breaking mode.
-
-Class Handler: class:word | Namespace: global | Interface Layer: rre
-
-----------------------------------------------------------------
-
 lt?
 
   Data:  nn-f
@@ -3676,7 +3664,7 @@ s:hash
   Addr:  -
   Float: -
 
-Calculate a hash value for a string. This uses the djb2 algorithim.
+Calculate a hash value for a string. This uses the djb2 algorithm.
 
 Class Handler: class:word | Namespace: s | Interface Layer: all
 
