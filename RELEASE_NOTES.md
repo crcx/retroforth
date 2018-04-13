@@ -18,6 +18,7 @@ Interfaces:
   - removed: listen-cbreak
   - now uses termios instead of calling out to stty for
     character breaking mode
+  - now exits on stack overflow, stack underflow, memory write out of bounds
 
 - repl
 
@@ -52,9 +53,11 @@ Documentation:
 
 - fix sorting of Glossary by setting LC_ALL=c
 - added words from RETRO/iOS
+- fix descriptions for `until`, `while`
 
 Examples:
 
+- new debugger (examples/Autopsy.forth)
 - added defstruct.forth
 
 Final Notes:

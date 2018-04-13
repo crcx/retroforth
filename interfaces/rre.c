@@ -165,11 +165,19 @@ int sys_argc;
 
 CELL stack_pop() {
   sp--;
+  if (sp < 0) {
+    printf("Data stack underflow.\n");
+    exit(1);
+  }
   return data[sp + 1];
 }
 
 void stack_push(CELL value) {
   sp++;
+  if (sp >= STACK_DEPTH) {
+    printf("Data stack overflow.\n");
+    exit(1);
+  }
   data[sp] = value;
 }
 
@@ -1531,19 +1539,29 @@ void inst_nop() {
 
 void inst_lit() {
   sp++;
+  if (sp >= STACK_DEPTH) {
+    printf("Data stack overflow.\n");
+    exit(1);
+  }
   ip++;
   TOS = memory[ip];
 }
 
 void inst_dup() {
   sp++;
+  if (sp >= STACK_DEPTH) {
+    printf("Data stack overflow.\n");
+    exit(1);
+  }
   data[sp] = NOS;
 }
 
 void inst_drop() {
   data[sp] = 0;
-   if (--sp < 0)
-     ip = IMAGE_SIZE;
+  if (--sp < 0) {
+    printf("Data stack underflow!\n");
+    exit(1);
+  }
 }
 
 void inst_swap() {
@@ -1561,8 +1579,15 @@ void inst_push() {
 
 void inst_pop() {
   sp++;
+  if (sp >= STACK_DEPTH) {
+    printf("Data stack overflow.\n");
+    exit(1);
+  }
   TOS = TORS;
-  rp--;
+  if (--rp < 0) {
+    printf("Address stack underflow!\n");
+    exit(1);
+  }
 }
 
 void inst_jump() {
@@ -1590,7 +1615,10 @@ void inst_ccall() {
 
 void inst_return() {
   ip = TORS;
-  rp--;
+  if (--rp < 0) {
+    printf("Address stack underflow!\n");
+    exit(1);
+  }
 }
 
 void inst_eq() {
@@ -1628,7 +1656,8 @@ void inst_store() {
     inst_drop();
     inst_drop();
   } else {
-     ip = IMAGE_SIZE;
+    printf("Attempt to store outside of memory bounds\n");
+    exit(1);
   }
 }
 
