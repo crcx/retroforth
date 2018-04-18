@@ -1272,7 +1272,7 @@ choose
   Addr:  -
   Float: -
 
-Execute q1 if the flag is `TRUE` or q2 if it is not.
+Execute q1 if the flag is true (-1) or q2 if the flag is false (0). Only these flags are valid when using `choose`.
 
 Class Handler: class:word | Namespace: global | Interface Layer: all
 

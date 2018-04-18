@@ -100,7 +100,7 @@ c:vowel?	c-f	-	-	Return TRUE if character is a vowel or FALSE otherwise.			class
 c:whitespace?	c-f	-	-	Return TRUE if character is whitespace, or FALSE otherwise.			class:word	{n/a}	{n/a}	c	all	
 call	a-	-	-	Call a function.			class:primitive	{n/a}	{n/a}	global	all	
 case	nmq- || nmq-n	-	-	If `n` is equal to `m`, drop both and execute the specified quote before exiting the calling word. If not equal, leave `n` on the stack and let execution continue.			class:word	{n/a}	{n/a}	global	all	
-choose	fqq-	-	-	Execute q1 if the flag is `TRUE` or q2 if it is not.			class:word	{n/a}	{n/a}	global	all	
+choose	fqq-	-	-	Execute q1 if the flag is true (-1) or q2 if the flag is false (0). Only these flags are valid when using `choose`.			class:word	{n/a}	{n/a}	global	all	
 class:data	n- || n-n	-	-	Class handler for data structures.	Keep the address or value on the stack.	Compile the value or address as a literal into the current definition.	class:word	{n/a}	{n/a}	class	all	
 class:macro	a-	-	-	Class handler for compiler macros (immediate words)	Execute the function at the provided address.	Execute the function at the provided address.	class:word	{n/a}	{n/a}	class	all	
 class:primitive	a-	-	-	Class handler for primitive words (words which map to Nga instructions)	Execute the function.	Compile the machine code in the definiton into the current definition.	class:word	{n/a}	{n/a}	class	all	
