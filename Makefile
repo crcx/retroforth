@@ -32,11 +32,13 @@ rre:
 	./bin/extend interfaces/rre.forth
 	./bin/embedimage >interfaces/rre_image_unix.c
 	mv cleanImage ngaImage
+	cd interfaces && $(CC) $(CFLAGS) -lm rre.c -o ../bin/rre
+
+rre_windows:
 	cp ngaImage cleanImage
 	./bin/extend interfaces/rre_windows.forth
 	./bin/embedimage >interfaces/rre_image_windows.c
 	mv cleanImage ngaImage
-	cd interfaces && $(CC) $(CFLAGS) -lm rre.c -o ../bin/rre
 
 repl:
 	cd interfaces && $(CC) $(CFLAGS) repl.c -o ../bin/repl

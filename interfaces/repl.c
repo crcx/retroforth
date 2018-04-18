@@ -281,9 +281,7 @@ void execute(int cell) {
   ip = cell;
   while (ip < IMAGE_SIZE) {
     if (ip == NotFound) {
-      retro_puts("\n");
-      retro_puts("Rather than a beep\nOr a rude error message,\n");
-      retro_puts("These words: 'word not found.'\n\nUnrecognized: ");
+      retro_puts("\nERROR: Word Not Found: ");
       retro_puts(string_extract(TIB));
       retro_puts("\n\n");
     }
