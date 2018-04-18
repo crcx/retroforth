@@ -2,7 +2,11 @@ RETRO 12 - 2018.4
 
 Bug fixes:
 
-Language Improvements:
+Build:
+
+- now recommended to use "make" instead of "build.sh"
+
+Core Language Improvements:
 
 - rx kernel: faster and smaller `s:eq?`
 - stdlib: smaller implementations of `c:whitespace?` and `c:vowel?`

@@ -1,4 +1,3 @@
-CFLAGS = -Wall -O3
 all: clean toolchain image repl rre js
 
 rebuild: clean toolchain update image repl rre js glossary
