@@ -478,18 +478,6 @@ int is_even(double d) {
     return 2.0 * int_part == d;
 }
 
-double round(double d) {
-    double i = floor(d);
-    d -= i;
-    if(d < 0.5)
-        return i;
-    if(d > 0.5)
-        return i + 1.0;
-    if(is_even(i))
-        return i;
-    return i + 1.0;
-}
-
 void float_push(double value) {
     fsp++;
     Floats[fsp] = value;
