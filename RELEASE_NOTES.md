@@ -1,4 +1,6 @@
-RETRO 12 - 2018.4.xx (WIP)
+RETRO 12 - 2018.4.20
+
+Changes in the .20 marked with (*).
 
 Bug fixes:
 
