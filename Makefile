@@ -1,8 +1,13 @@
-PREFIX = /usr/local
+PREFIX ?= /usr/local
+DATADIR ?= $(PREFIX)/share/RETRO12
+DOCSDIR ?= $(PREFIX)/share/doc/RETRO12
+EXAMPLESDIR ?= $(PREFIX)/share/examples/RETRO12
+LIBM ?= -lm
+LIBCURSES ?= -lcurses
 
-all: build bin/ri
+all: build
 
-build: bin/embedimage bin/extend bin/injectimage-js bin/muri bin/RETRO12.html bin/rre bin/repl bin/unu
+build: bin/embedimage bin/extend bin/injectimage-js bin/muri bin/RETRO12.html bin/ri bin/rre bin/repl bin/unu
 
 clean:
 	rm -f bin/embedimage
@@ -15,15 +20,48 @@ clean:
 	rm -f bin/rre
 	rm -f bin/unu
 
-install: build
-	mkdir -p $(DESTDIR)$(PREFIX)/bin
-	cp -p bin/embedimage $(DESTDIR)$(PREFIX)/bin/
-	cp -p bin/extend $(DESTDIR)$(PREFIX)/bin/
-	cp -p bin/injectimage-js $(DESTDIR)$(PREFIX)/bin/
-	cp -p bin/muri $(DESTDIR)$(PREFIX)/bin/
-	cp -p bin/repl $(DESTDIR)$(PREFIX)/bin/
-	cp -p bin/rre $(DESTDIR)$(PREFIX)/bin/
-	cp -p bin/unu $(DESTDIR)$(PREFIX)/bin/
+install: build install-data install-docs install-examples
+	install -m 755 -d -- $(DESTDIR)$(PREFIX)/bin
+	install -c -m 755 bin/embedimage $(DESTDIR)$(PREFIX)/bin/embedimage
+	install -c -m 755 bin/extend $(DESTDIR)$(PREFIX)/bin/extend
+	install -c -m 755 bin/injectimage-js $(DESTDIR)$(PREFIX)/bin/injectimage-js
+	install -c -m 755 bin/listener $(DESTDIR)$(PREFIX)/bin/listener
+	install -c -m 755 bin/muri $(DESTDIR)$(PREFIX)/bin/muri
+	install -c -m 755 bin/repl $(DESTDIR)$(PREFIX)/bin/repl
+	install -c -m 755 bin/ri $(DESTDIR)$(PREFIX)/bin/ri
+	install -c -m 755 bin/rre $(DESTDIR)$(PREFIX)/bin/rre
+	install -c -m 755 bin/unu $(DESTDIR)$(PREFIX)/bin/unu
+
+install-strip: build install-data install-docs install-examples
+	install -m 755 -d -- $(DESTDIR)/bin
+	install -c -m 755 -s bin/embedimage $(DESTDIR)$(PREFIX)/bin/embedimage
+	install -c -m 755 -s bin/extend $(DESTDIR)$(PREFIX)/bin/extend
+	install -c -m 755 -s bin/injectimage-js $(DESTDIR)$(PREFIX)/bin/injectimage-js
+	install -c -m 755 bin/listener $(DESTDIR)$(PREFIX)/bin/listener
+	install -c -m 755 -s bin/muri $(DESTDIR)$(PREFIX)/bin/muri
+	install -c -m 755 -s bin/repl $(DESTDIR)$(PREFIX)/bin/repl
+	install -c -m 755 -s bin/ri $(DESTDIR)$(PREFIX)/bin/ri
+	install -c -m 755 -s bin/rre $(DESTDIR)$(PREFIX)/bin/rre
+	install -c -m 755 -s bin/unu $(DESTDIR)$(PREFIX)/bin/unu
+
+install-data: bin/RETRO12.html
+	install -m 755 -d -- $(DESTDIR)$(DATADIR)
+	install -c -m 644 bin/RETRO12.html $(DESTDIR)$(DATADIR)/RETRO12.html
+	install -c -m 644 glossary.forth $(DESTDIR)$(DATADIR)/glossary.forth
+	install -c -m 644 ngaImage $(DESTDIR)$(DATADIR)/ngaImage
+	cp -fpR tests $(DESTDIR)$(DATADIR)/
+	install -c -m 644 words.tsv $(DESTDIR)$(DATADIR)/words.tsv
+
+install-docs:
+	install -m 755 -d -- $(DESTDIR)$(DOCSDIR)
+	cp -fpR doc $(DESTDIR)$(DOCSDIR)
+	cp -fpR literate $(DESTDIR)$(DOCSDIR)
+	install -c -m 644 README.md $(DESTDIR)$(DOCSDIR)/README.md
+	install -c -m 644 RELEASE_NOTES.md $(DESTDIR)$(DOCSDIR)/RELEASE_NOTES.md
+
+install-examples:
+	install -m 755 -d -- $(DESTDIR)$(EXAMPLESDIR)
+	cp -fpR example $(DESTDIR)$(EXAMPLESDIR)
 
 test: bin/rre
 	./bin/rre tests/test-core.forth
@@ -47,32 +85,32 @@ update: bin/unu literate/Unu.md literate/Muri.md
 # File targets.
 
 bin/embedimage: tools/embedimage.c
-	$(CC) $(CFLAGS) $(LDFLAGS) tools/embedimage.c -o bin/embedimage
+	$(CC) $(CFLAGS) $(LDFLAGS) -o bin/embedimage  tools/embedimage.c
 
 bin/extend: tools/extend.c
-	$(CC) $(CFLAGS) $(LDFLAGS) tools/extend.c -o bin/extend
+	$(CC) $(CFLAGS) $(LDFLAGS) -o bin/extend  tools/extend.c
 
 bin/injectimage-js: tools/injectimage-js.c
-	$(CC) $(CFLAGS) $(LDFLAGS) tools/injectimage-js.c -o bin/injectimage-js
+	$(CC) $(CFLAGS) $(LDFLAGS) -o bin/injectimage-js  tools/injectimage-js.c
 
 bin/muri: tools/muri.c
-	$(CC) $(CFLAGS) $(LDFLAGS) tools/muri.c -o bin/muri
+	$(CC) $(CFLAGS) $(LDFLAGS) -o bin/muri tools/muri.c
 
 bin/RETRO12.html: bin/injectimage-js
 	./bin/injectimage-js >bin/RETRO12.html
 
 bin/repl: interfaces/repl.c interfaces/image.c
-	cd interfaces && $(CC) $(CFLAGS) $(LDFLAGS) repl.c -o ../bin/repl
+	cd interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../bin/repl repl.c
 
 bin/ri: interfaces/ri.c interfaces/image.c
-	cd interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -lcurses ri.c -o ../bin/ri
+	cd interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../bin/ri $(LIBCURSES) ri.c
 
 bin/rre: bin/embedimage bin/extend interfaces/image.c interfaces/rre.c interfaces/rre.forth
 	cp ngaImage cleanImage
 	./bin/extend interfaces/rre.forth
 	./bin/embedimage >interfaces/rre_image_unix.c
 	mv cleanImage ngaImage
-	cd interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -lm rre.c -o ../bin/rre
+	cd interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../bin/rre $(LIBM) rre.c
 
 # XXX: I am not sure if the Windows build works.
 rre_windows: bin/embedimage bin/extend interfaces/rre.c interface/image.c interfaces/rre_windows.forth
@@ -82,10 +120,10 @@ rre_windows: bin/embedimage bin/extend interfaces/rre.c interface/image.c interf
 	mv cleanImage ngaImage
 
 bin/unu: tools/unu.c
-	$(CC) $(CFLAGS) $(LDFLAGS) tools/unu.c -o bin/unu
+	$(CC) $(CFLAGS) $(LDFLAGS) -o bin/unu tools/unu.c
 
 doc/Glossary.txt: bin/rre words.tsv
-	LC_ALL=c sort -o sorted.tsv words.tsv
+	LC_ALL=C sort -o sorted.tsv words.tsv
 	mv sorted.tsv words.tsv
 	./bin/rre glossary.forth export glossary >doc/Glossary.txt
 
