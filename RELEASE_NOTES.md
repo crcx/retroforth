@@ -1,10 +1,11 @@
-RETRO 12 - 2018.4
+RETRO 12 - 2018.4.xx (WIP)
 
 Bug fixes:
 
 Build:
 
 - now recommended to use "make" instead of "build.sh"
+- (*) new Makefile from mpts
 
 Core Language Improvements:
 
@@ -15,6 +16,7 @@ Interfaces:
 
 - rre
 
+  - (*) increase default memory size to 12MiB
   - add NOP skipping to Nga instruction handler
   - add `unix:io:putn`
   - add `unix:io:puts`
@@ -61,6 +63,7 @@ Documentation:
 
 Examples:
 
+- (*) use `/usr/bin/env rre` instead of hard coding a path
 - new debugger (examples/Autopsy.forth)
 - added defstruct.forth
 
