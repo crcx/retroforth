@@ -1482,6 +1482,78 @@ Class Handler: class:word | Namespace: global | Interface Layer: all
 
 ----------------------------------------------------------------
 
+config:set-editor-font
+
+  Data:  s-
+  Addr:  -
+  Float: -
+
+Set the font to use in the editor. If the font fails to load, RETRO will fall back to a safe default.
+
+Class Handler: class:word | Namespace: config | Interface Layer: iOS
+
+----------------------------------------------------------------
+
+config:set-editor-size
+
+  Data:  n-
+  Addr:  -
+  Float: -
+
+Set the size of the font to use in the editor.
+
+Class Handler: class:word | Namespace: config | Interface Layer: iOS
+
+----------------------------------------------------------------
+
+config:set-output-font
+
+  Data:  s-
+  Addr:  -
+  Float: -
+
+Set the font to use in output area. If the font fails to load, RETRO will fall back to a safe default.
+
+Class Handler: class:word | Namespace: config | Interface Layer: iOS
+
+----------------------------------------------------------------
+
+config:set-output-size
+
+  Data:  n-
+  Addr:  -
+  Float: -
+
+Set the size of the font to use in the output area.
+
+Class Handler: class:word | Namespace: config | Interface Layer: iOS
+
+----------------------------------------------------------------
+
+config:set-toolbar-font
+
+  Data:  s-
+  Addr:  -
+  Float: -
+
+Set the font to use in the toolbar. If the font fails to load, RETRO will fall back to a safe default.
+
+Class Handler: class:word | Namespace: config | Interface Layer: iOS
+
+----------------------------------------------------------------
+
+config:set-toolbar-size
+
+  Data:  n-
+  Addr:  -
+  Float: -
+
+Set the size of the font to use in the toolbar.
+
+Class Handler: class:word | Namespace: config | Interface Layer: iOS
+
+----------------------------------------------------------------
+
 const
 
   Data:  ns-
@@ -1791,30 +1863,6 @@ dup-pair
 Duplicate the top two items on the stack.
 
 Class Handler: class:word | Namespace: global | Interface Layer: all
-
-----------------------------------------------------------------
-
-editor:set-font-face
-
-  Data:  s-
-  Addr:  -
-  Float: -
-
-Set the font to use in the editor and toolbars. If the font fails to load, RETRO will fall back to a safe default.
-
-Class Handler: class:word | Namespace: editor | Interface Layer: iOS
-
-----------------------------------------------------------------
-
-editor:set-font-size
-
-  Data:  n-
-  Addr:  -
-  Float: -
-
-Set the size of the font to use in the editor and toolbars.
-
-Class Handler: class:word | Namespace: editor | Interface Layer: iOS
 
 ----------------------------------------------------------------
 
@@ -2634,6 +2682,18 @@ Example #1:
 
     '#100 interpret
     'words interpret
+
+----------------------------------------------------------------
+
+ios:list-fonts
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Display a list of all installed fonts.
+
+Class Handler: class:word | Namespace: ios | Interface Layer: iOS
 
 ----------------------------------------------------------------
 

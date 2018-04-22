@@ -116,6 +116,12 @@ compile:jump	a-	-	-	Compile a jump to the specified address into the current def
 compile:lit	n-	-	-	Compile the code to push a number to the stack into the current definition.			class:word	{n/a}	{n/a}	compile	all	
 compile:ret	-	-	-	Compile a return instruction into the current definition.			class:word	{n/a}	{n/a}	compile	all	
 compiling?	-f	-	-	Return `TRUE` if compiler is on or `FALSE` otherwise.			class:word	{n/a}	{n/a}	global	all	
+config:set-editor-font	s-	-	-	Set the font to use in the editor. If the font fails to load, RETRO will fall back to a safe default.			class:word	{n/a}	{n/a}	config	iOS	
+config:set-editor-size	n-	-	-	Set the size of the font to use in the editor.			class:word	{n/a}	{n/a}	config	iOS	
+config:set-output-font	s-	-	-	Set the font to use in output area. If the font fails to load, RETRO will fall back to a safe default.			class:word	{n/a}	{n/a}	config	iOS	
+config:set-output-size	n-	-	-	Set the size of the font to use in the output area.			class:word	{n/a}	{n/a}	config	iOS	
+config:set-toolbar-font	s-	-	-	Set the font to use in the toolbar. If the font fails to load, RETRO will fall back to a safe default.			class:word	{n/a}	{n/a}	config	iOS	
+config:set-toolbar-size	n-	-	-	Set the size of the font to use in the toolbar.			class:word	{n/a}	{n/a}	config	iOS	
 const	ns-	-	-	Create a constant returning the specified value.			class:word	{n/a}	{n/a}	global	all	
 copy	sdl-	-	-	Copy `l` cells from memory at `s` to the memory at `d`. These should not overlap.			class:word	{n/a}	{n/a}	global	all	
 curry	nq-q	-	-	Bind a value to a function and return a new quote that calls the bound action.			class:word	{n/a}	{n/a}	global	all	
@@ -142,8 +148,6 @@ drop-pair	nn-	-	-	Remove top two items on the stack.			class:word	{n/a}	{n/a}	gl
 dump-stack	-	-	-	Display the items on the data stack.			class:word	{n/a}	{n/a}	global	all	
 dup	n-nn	-	-	Duplicate the top item on the stack.			class:primitive	{n/a}	{n/a}	global	all	
 dup-pair	nm-nmnm	-	-	Duplicate the top two items on the stack.			class:word	{n/a}	{n/a}	global	all	
-editor:set-font-face	s-	-	-	Set the font to use in the editor and toolbars. If the font fails to load, RETRO will fall back to a safe default.			class:word	{n/a}	{n/a}	editor	iOS	
-editor:set-font-size	n-	-	-	Set the size of the font to use in the editor and toolbars.			class:word	{n/a}	{n/a}	editor	iOS	
 eq?	nn-f	-	-	Compare two values for equality. Returns `TRUE` if they are equal or `FALSE` otherwise.			class:primitive	    #1 #2 eq?\n    $a $b eq?	{n/a}	global	all	
 err:notfound	-	-	-	Error handler. Called when a word is not found by `interpret`.			class:word	{n/a}	{n/a}	err	all	
 f:*	-	-	FF-F	Multiply two floating point numbers, returning the result.			class:word	    .3.1415 .22 f:*	{n/a}	f	rre	
@@ -209,6 +213,7 @@ if	fq-	-	-	Execute the quote if the flag is `TRUE`.			class:word	{n/a}	{n/a}	glo
 immediate	-	-	-	Change the class of the most recently defined word to `class:macro`.			class:word	{n/a}	{n/a}	global	all	
 include	s-	-	-	Run the code in the specified file. 			class:word	{n/a}	{n/a}	global	rre	
 interpret	s-	-	-	Interpret a single input token.			class:word	    '#100 interpret\n    'words interpret	{n/a}	global	all	
+ios:list-fonts	-	-	-	Display a list of all installed fonts.			class:word	{n/a}	{n/a}	ios	iOS	
 listen	-	-	-	Run interactive "listener" (a REPL).			class:word	{n/a}	{n/a}	global	rre	
 lt?	nn-f	-	-	Compare n1 and n2. Return `TRUE` if n1 is less than n2, or `FALSE` otherwise.			class:primitive	{n/a}	{n/a}	global	all	
 lteq?	nn-f	-	-	Compare n1 and n2. Return `TRUE` if n1 is less than or equal to n2, or `FALSE` otherwise.			class:word	{n/a}	{n/a}	global	all	
