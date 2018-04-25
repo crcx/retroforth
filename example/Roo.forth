@@ -72,8 +72,8 @@ Which copies the text into the specified block.
 So first, define words to construct the selectors:
 
 ~~~
-:selector<get>  (-s)  @Current-Block '/r/%n s:with-format ;
-:selector<set>  (-s)  &Block @Current-Block '/s/%n/%s s:with-format ;
+:selector<get>  (-s)  @Current-Block '/r/%n s:format ;
+:selector<set>  (-s)  &Block @Current-Block '/s/%n/%s s:format ;
 ~~~
 
 And then words to actually talk to the server:
@@ -288,7 +288,7 @@ The cursor display will be platform specific.
 ~~~
 :position-cursor (-)
   @Cursor-Col @Cursor-Row [ n:inc ] bi@
-  ASCII:ESC '%c[%n;%nH s:with-format puts ;
+  ASCII:ESC '%c[%n;%nH s:format puts ;
 
 :clear-display (-)
   ASCII:ESC putc '[2J puts

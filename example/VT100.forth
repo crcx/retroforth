@@ -55,27 +55,27 @@ Cursor Control
 ~~~
 :VT100:cursor:move (rc-)
   VT100:escape
-  swap '[%n;%nH s:with-format puts ;
+  swap '[%n;%nH s:format puts ;
 ~~~
 
 ~~~
 :VT100:cursor:down (n-)
-  VT100:escape '[%nB s:with-format puts ;
+  VT100:escape '[%nB s:format puts ;
 ~~~
 
 ~~~
 :VT100:cursor:up (n-)
-  VT100:escape '[%nA s:with-format puts ;
+  VT100:escape '[%nA s:format puts ;
 ~~~
 
 ~~~
 :VT100:cursor:forward (n-)
-  VT100:escape '[%nC s:with-format puts ;
+  VT100:escape '[%nC s:format puts ;
 ~~~
 
 ~~~
 :VT100:cursor:back (n-)
-  VT100:escape '[%nD s:with-format puts ;
+  VT100:escape '[%nD s:format puts ;
 ~~~
 
 ~~~
@@ -123,7 +123,7 @@ Cursor Control
 
 ~~~
 :VT100:set (n-)
-  VT100:escape '[%nm s:with-format puts ;
+  VT100:escape '[%nm s:format puts ;
 ~~~
 
 ~~~

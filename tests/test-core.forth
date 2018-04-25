@@ -1995,7 +1995,7 @@ passed
 -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
 
 ````
-'s:with-format Testing
+'s:format Testing
 passed
 ````
 

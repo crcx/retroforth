@@ -79,7 +79,7 @@ be adjusted for your chosen terminal.
 
 ~~~
 :clear-display (-)
-  ASCII:ESC dup '%c[2J%c[0;0H s:with-format puts nl ;
+  ASCII:ESC dup '%c[2J%c[0;0H s:format puts nl ;
 ~~~
 
 This just displays the separator bars.
@@ -94,7 +94,7 @@ being edited and the line count.
 
 ~~~
 :header (-)
-  count-lines @SourceFile '%s_:_%n_lines\n s:with-format puts ;
+  count-lines @SourceFile '%s_:_%n_lines\n s:format puts ;
 ~~~
 
 The `pad` word is used to make sure line numbers are all the same width.

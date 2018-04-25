@@ -24,8 +24,8 @@ Strings
 Mixed
 =====
 
-    #1 #2 #3  '%n_-_%n_=_%n\n s:with-format puts
-    'Charles' 'Hello_%s\n     s:with-format puts
+    #1 #2 #3  '%n_-_%n_=_%n\n s:format puts
+    'Charles' 'Hello_%s\n     s:format puts
 
 
 Conditionals

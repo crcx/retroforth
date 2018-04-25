@@ -102,7 +102,7 @@ construct the line.
 
 ~~~
 :generate-entry (ss-)
-  SERVER PORT 'abcd 'dcba reorder '0%s\t%s\t%s\t%n s:with-format puts nl ;
+  SERVER PORT 'abcd 'dcba reorder '0%s\t%s\t%s\t%n s:format puts nl ;
 ~~~
 
 With this it's easy to define `generate-index` using a loop to make a
@@ -111,7 +111,7 @@ usable directory index listing all blocks.
 ~~~
 :generate-index (-)
   #0 MAX-BLOCKS
-  [ dup n:to-string over '/%n s:with-format generate-entry n:inc ] times
+  [ dup n:to-string over '/%n s:format generate-entry n:inc ] times
   drop ;
 ~~~
 

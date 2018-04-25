@@ -98,7 +98,7 @@ actions, or any examples, they will be displayed after
 the description.
 
 ~~~
-:puts<formatted> (s-)  s:with-format puts ;
+:puts<formatted> (s-)  s:format puts ;
 
 :display-result
   field:name puts nl nl
@@ -110,8 +110,8 @@ the description.
   field:ctime s:length n:zero? [ field:ctime 'Compile_Time:\n__%s\n\n   puts<formatted> ] -if
   field:interface field:namespace field:class
   'Class_Handler:_%s_|_Namespace:_%s_|_Interface_Layer:_%s\n\n puts<formatted>
-  field:ex1 '{n/a} s:eq? [ field:ex1 s:with-format 'Example_#1:\n\n%s\n\n puts<formatted> ] -if
-  field:ex2 '{n/a} s:eq? [ field:ex2 s:with-format 'Example_#2:\n\n%s\n\n puts<formatted> ] -if ;
+  field:ex1 '{n/a} s:eq? [ field:ex1 s:format 'Example_#1:\n\n%s\n\n puts<formatted> ] -if
+  field:ex2 '{n/a} s:eq? [ field:ex2 s:format 'Example_#2:\n\n%s\n\n puts<formatted> ] -if ;
 ~~~
 
 # Prepare for Command Line Processing
@@ -176,7 +176,7 @@ fully populate it.
 
 :add-word
   'words.tsv file:A file:open !FADD
-  TARGET '%s\t-\t-\t-\t{n/a}\t\t\tclass:word\t{n/a}\t{n/a}\t{n/a}\t{n/a}\t{n/a}\n s:with-format
+  TARGET '%s\t-\t-\t-\t{n/a}\t\t\tclass:word\t{n/a}\t{n/a}\t{n/a}\t{n/a}\t{n/a}\n s:format
   [ @FADD file:write ] s:for-each
   @FADD file:close ;
 ~~~
@@ -272,17 +272,17 @@ And provide a word like `puts` that writes to this:
   s:empty [ '/tmp/glossary.astack    file:slurp ] sip clean s:keep
   s:empty [ '/tmp/glossary.dstack    file:slurp ] sip clean s:keep
   s:empty [ '/tmp/glossary.name      file:slurp ] sip clean s:keep
-  '%s\t%s\t%s\t%s\t s:with-format write-line
+  '%s\t%s\t%s\t%s\t s:format write-line
   s:empty [ '/tmp/glossary.class     file:slurp ] sip clean s:keep
   s:empty [ '/tmp/glossary.ctime     file:slurp ] sip clean s:keep
   s:empty [ '/tmp/glossary.itime     file:slurp ] sip clean s:keep
   s:empty [ '/tmp/glossary.descr     file:slurp ] sip clean s:keep
-  '%s\t%s\t%s\t%s\t s:with-format write-line
+  '%s\t%s\t%s\t%s\t s:format write-line
   s:empty [ '/tmp/glossary.interface file:slurp ] sip clean s:keep
   s:empty [ '/tmp/glossary.namespace file:slurp ] sip clean s:keep
   s:empty [ '/tmp/glossary.ex2       file:slurp ] sip clean s:keep
   s:empty [ '/tmp/glossary.ex1       file:slurp ] sip clean s:keep
-  '%s\t%s\t%s\t%s\t s:with-format write-line ;
+  '%s\t%s\t%s\t%s\t s:format write-line ;
 ~~~
 
 Next, get the editor from the $EDITOR environment variable.
@@ -293,7 +293,7 @@ Next, get the editor from the $EDITOR environment variable.
 
 ~~~
 :edit:field (s-)
-  EDITOR '%s_/tmp/glossary.%s s:with-format unix:system ;
+  EDITOR '%s_/tmp/glossary.%s s:format unix:system ;
 ~~~
 
 ~~~
@@ -394,9 +394,9 @@ to use.
   'export_<format> puts nl
   #32 [ $- putc ] times nl
   'Editor_Fields: puts nl
-  '__name\n__dstack\n__astack\n__fstack\n s:with-format puts
-  '__descr\n__itime\n__ctime\n__class\n s:with-format puts
-  '__ex1\n__ex2\n__namespace\n__interface\n s:with-format puts
+  '__name\n__dstack\n__astack\n__fstack\n s:format puts
+  '__descr\n__itime\n__ctime\n__class\n s:format puts
+  '__ex1\n__ex2\n__namespace\n__interface\n s:format puts
   #32 [ $- putc ] times nl
   'Export_Formats: puts nl
   '__glossary puts nl
@@ -421,13 +421,13 @@ selector).
 
 ~~~
 :display-entry (-)
-  GOPHER-PORT field:name dup '0%s\t/desc_%s\tforthworks.com\t%n\r\n s:with-format puts ;
+  GOPHER-PORT field:name dup '0%s\t/desc_%s\tforthworks.com\t%n\r\n s:format puts ;
 
 :gopher:list-words (-)
   'words.tsv [ s:keep !SourceLine display-entry ] file:for-each-line ;
 
 :display-entry (-)
-  field:name over '<a_href="/%n">%s</a><br> s:with-format puts ;
+  field:name over '<a_href="/%n">%s</a><br> s:format puts ;
 
 :http:list-words (-)
   #0 'words.tsv [ s:keep !SourceLine display-entry n:inc ] file:for-each-line drop ;
@@ -476,7 +476,7 @@ puts
   &Selector gets
   &Selector #0 #5 s:substr
   '/desc [ &Selector ASCII:SPACE s:tokenize #1 set:nth fetch s:chop s:keep !Target gopher:display ] s:case
-  'GET_/ [ 'HTTP/1.0_200_OK\nContent-Type:_text/html\n\n s:with-format puts handle-http ] s:case
+  'GET_/ [ 'HTTP/1.0_200_OK\nContent-Type:_text/html\n\n s:format puts handle-http ] s:case
   drop gopher:list-words ;
 ~~~
 

@@ -1000,10 +1000,10 @@ header by the `d:xt` field.
            [ swap [ nip ] dip ] [ drop ] choose ] d:for-each drop ;
 ~~~
 
-Use `s:with-format` to construct a string from multiple items. This
+Use `s:format` to construct a string from multiple items. This
 can be illustrated with:
 
-    #4 #6 #10  '%n-%n=%n\n  s:with-format
+    #4 #6 #10  '%n-%n=%n\n  s:format
 
 The format language is simple:
 
@@ -1039,7 +1039,7 @@ The format language is simple:
     $% [ fetch-next type ] case
     buffer:add ;
 ---reveal---
-  :s:with-format (...s-s)
+  :s:format (...s-s)
     [ s:empty [ buffer:set
       [ repeat fetch-next 0; handle again ]
       call drop ] sip ] buffer:preserve ;

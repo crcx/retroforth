@@ -300,7 +300,7 @@ The `gopher:icon` displays an indicator for menu items.
   [ ASCII:HT [ #0 ] case ] s:map
   dup s:length over + n:inc
   pop [ #4 + ] if
-  '<a_href="%s">%s</a><br> s:with-format puts ;
+  '<a_href="%s">%s</a><br> s:format puts ;
 
 :gopher:generate-index (f-)
   'Content-type:_text/html puts eol eol

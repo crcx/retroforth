@@ -64,7 +64,7 @@ Now it's possible to write words to display instruction bundles. The formats are
   #27 n:min #2 * &INST + fetch-next swap fetch swap ;
 
 :display:bundle<raw> (n-)
-  unpack '%n,%n,%n,%n s:with-format puts ;
+  unpack '%n,%n,%n,%n s:format puts ;
 
 :display:bundle<named> (n-)
   unpack #4 [ name-for putc putc ] times ;
@@ -112,7 +112,7 @@ I split out each type (instruction, reference/raw, and data) into a separate han
 
 :render-ref  (n-)
   dup d:lookup-xt n:-zero?
-    [ dup render-data tab tab d:lookup-xt d:name '[possibly_`%s`] s:with-format puts ]
+    [ dup render-data tab tab d:lookup-xt d:name '[possibly_`%s`] s:format puts ]
     [     render-data ] choose ;
 ~~~
 
@@ -219,7 +219,7 @@ With the populated table of instructions, implementing a `process-single-opcode`
 :process-single-opcode (n-)
   dup #0 #26 n:between?
   [ &Instructions + fetch call ]
-  [ 'Invalid_Instruction:_%n_! s:with-format puts nl ] choose ;
+  [ 'Invalid_Instruction:_%n_! s:format puts nl ] choose ;
 ~~~
 
 Next is to unpack an instruction bundle and process each instruction.
@@ -253,8 +253,8 @@ So helpers for displaying things:
 
 ~~~
 :display-status
-  @RP @SP @IP 'IP:%n_SP:%n_RP:%n\n s:with-format puts
-  [IP] [ unpack ] sip '__%n_->_[%n,%n,%n,%n]_->_ s:with-format puts
+  @RP @SP @IP 'IP:%n_SP:%n_RP:%n\n s:format puts
+  [IP] [ unpack ] sip '__%n_->_[%n,%n,%n,%n]_->_ s:format puts
   [IP] unpack #4 [ name-for<counting-li> putc putc ] times nl ;
 
 :display-data-stack
@@ -293,7 +293,7 @@ The `trace` will empty the step counter and display the number of steps used.
   #0 !Steps
   !IP #0 to-rstack
   [ step @RP n:zero? ] until
-  @Steps '%n_steps_taken\n s:with-format puts ;
+  @Steps '%n_steps_taken\n s:format puts ;
 ~~~
 
 ==================================================

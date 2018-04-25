@@ -6,9 +6,9 @@ It's based heavily on an earlier, two player system for Retro 11.
 
 Begin a private namespace.
 
-````
+~~~
 {{ 
-````
+~~~
 
 Setup the default board.
 
@@ -25,7 +25,7 @@ We use an ASCII character for each piece.
 
 Lowercase is used for black pieces, UPPERCASE for white.
 
-````
+~~~
   :str:, (s-)
    [ , ] s:for-each ; 
  
@@ -34,14 +34,14 @@ Lowercase is used for black pieces, UPPERCASE for white.
   '................ str:,
   '................ str:,
   'PPPPPPPPRNBQKBNR str:, #0 ,
-````
+~~~
 
 The default board (named Blank) won't be direcly used. I create a second board for the actual gameplay.
 
-````
+~~~
   'Board d:create
   #64 allot 
-````
+~~~
 
 Next up, the fundamentals of the display.
 
@@ -63,33 +63,33 @@ It'll display like this:
 
 So first up, the columns.
 
-````
+~~~
   :cols (-)
     '____0_1_2_3_4_5_6_7 puts nl ;
-````
+~~~
 
 Then a horizontal separator.
 
-````
+~~~
   :--- (-) 
     '__+-----------------+ puts nl ;
-````
+~~~
 
 And then a row.
 
 Possible Future:
 
 
-````
+~~~
   :row (a-a)
-    '%n_|_ s:with-format puts
+    '%n_|_ s:format puts
     #8 [ fetch-next putc sp ] times
     $| putc nl ;
-````
+~~~
 
 These will be tied together a little later into the top level display word.
 
-````
+~~~
   :get (rc-a) swap #8 * &Board + + ;
 ---reveal---
   :chess:display (-)
@@ -109,15 +109,15 @@ These will be tied together a little later into the top level display word.
     get [ get ] dip swap
     dup fetch swap $. swap store
     swap store ;
-````
+~~~
 
 Close the private namespace.
 
-````
+~~~
 }}
-````
+~~~
 
-````
+~~~
   chess:new
   #0 #0 #2 #1 chess:move chess:display
-````
+~~~
