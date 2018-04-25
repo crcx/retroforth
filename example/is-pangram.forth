@@ -1,6 +1,6 @@
-A pangram is a scentence that uses all the letters in the alphabet.
+A pangram is a sentence that uses all the letters in the alphabet.
 
-This is one way to determine if a scentence is a pangram using RETRO.
+This is one way to determine if a sentence is a pangram using RETRO.
 
 First, define a string containing the alphabet:
 

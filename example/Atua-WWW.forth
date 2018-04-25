@@ -11,7 +11,7 @@ prevents needing to handle socket I/O directly.
 
 # Features
 
-Atua is a minimal server targetting the the basic Gopher0 protocol. It
+Atua is a minimal server targeting the the basic Gopher0 protocol. It
 supports a minimal gophermap format for indexes and transfer of static
 content.
 
@@ -49,7 +49,7 @@ and provide some other helpers.
 
 *Console Output*
 
-The Gopher protocol uses tabs and cr/lf for signficant things. To aid
+The Gopher protocol uses tabs and cr/lf for significant things. To aid
 in this, I define output words for tabs and end of line.
 
 ~~~
@@ -120,7 +120,7 @@ future.
 'Server-Info var
 ~~~
 
-These are just simple accessor words to aid in overall readability.
+These are just simple words to aid in overall readability.
 
 ~~~
 :requested-file  (-s)  @Requested-File  ;

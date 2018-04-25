@@ -34,7 +34,7 @@ Next, a quick word to setup all the variables.
 :set-vars !Via !To !From !Num ;
 ~~~
 
-Then, implementing the recursive alogrithim from the Wikipedia article:
+Then, implementing the recursive algorithm from the Wikipedia article:
 
 ~~~
 :hanoi (num,from,to,via-)

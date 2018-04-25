@@ -36,7 +36,7 @@ Lowercase is used for black pieces, UPPERCASE for white.
   'PPPPPPPPRNBQKBNR str:, #0 ,
 ~~~
 
-The default board (named Blank) won't be direcly used. I create a second board for the actual gameplay.
+The default board (named Blank) won't be directly used. I create a second board for the actual gameplay.
 
 ~~~
   'Board d:create

@@ -26,4 +26,6 @@ Documentation:
 
 Examples:
 
+- fix numerous spelling errors (thanks hannah!)
+
 Final Notes:
