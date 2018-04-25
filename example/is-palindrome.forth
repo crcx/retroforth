@@ -10,9 +10,9 @@ In Retro this is fairly easy. We can use `s:hash` to identify a unique
 string. So make a copy, take he hash, reverse the copy, get its hash,
 and compare them.
 
-````
+~~~
 :s:palindrome? (s-f)
   dup s:hash [ s:reverse s:hash ] dip eq? ;
 
 'ingirumimusnocteetconsumimurigni s:palindrome?
-````
+~~~

@@ -2,13 +2,7 @@
 
 Display the text for the *99 Bottles of Beer* song.
 
-Declare module constant (prevents reloading when using `import`):
-
-````
-:example|99Bottles ;
-````
-
-````
+~~~
 [ dup putn sp 'bottles puts ]
 [ '1_bottle puts ]
 [ 'no_more_bottles puts  ]
@@ -38,4 +32,4 @@ Declare module constant (prevents reloading when using `import`):
   [ nl display-verse dup n:-zero? ] while drop ;
  
 #99 verses
-````
+~~~

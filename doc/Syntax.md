@@ -26,7 +26,7 @@ The major prefixes are:
 
 Example:
 
-````
+~~~
 (This_is_a_comment)
 
 (Define_some_words)
@@ -49,4 +49,4 @@ $a (this_is_the_ASCII_'a')
 'Foo var
 #100 !Foo
 @Foo putn
-````
+~~~

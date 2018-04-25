@@ -17,50 +17,50 @@ If, in the following table, a live cell is represented by 1 and a dead cell by 0
 
 Declare module constant (prevents reloading when using `import`):
 
-````
+~~~
 :example|RosettaCode|1D-Cellular-Automota ;
-````
+~~~
 
 I had originally written an implementation of this in RETRO 11. For RETRO 12 I took advantage of new language features and some further considerations into the rules for this task.
 
 The first word, `string,` inlines a string to `here`. I'll use this to setup the initial input.
 
-````
+~~~
 :string, (s-) [ , ] s:for-each #0 , ;
-````
+~~~
 
 The next two lines setup an initial generation and a buffer for the evolved generation. In this case, `This` is the current generation and `Next` reflects the next step in the evolution.
 
-````
+~~~
 'This d:create
   '.###.##.#.#.#.#..#.. string,
 
 'Next d:create
   '.................... string,
-````
+~~~
 
 I use `display` to show the current generation.
 
-````
+~~~
 :display (-)
   &This puts nl ;
-````
+~~~
 
 As might be expected, `update` copies the `Next` generation to the `This` generation, setting things up for the next cycle.
 
-````
+~~~
 :update (-)
   &Next &This dup s:length copy ;
-````
+~~~
 
 The word `group` extracts a group of three cells. This data will be passed to `evolve` for processing.
 
-````
+~~~
 :group (a-nnn)
   [ fetch ]
   [ n:inc fetch ]
   [ n:inc n:inc fetch ] tri ;
-````
+~~~
 
 I use `evolve` to decide how a cell should change, based on its initial state with relation to its neighbors.
 
@@ -72,25 +72,25 @@ In the prior implementation this part was much more complex as I tallied things 
 - if the result is `#-2`, the cell should live
 - otherwise it'll be dead
 
-````
+~~~
 :evolve (nnn-c)
   [ $# eq? ] tri@ + +
   #-2 eq? [ $# ] [ $. ] choose ;
-````
+~~~
 
 For readability I separated out the next few things. `at` takes an index and returns the address in `This` starting with the index.
 
-````
+~~~
 :at (n-na)
   &This over + ;
-````
+~~~
 
 The `record` word adds the evolved value to a buffer. In this case my `generation` code will set the buffer to `Next`.
 
-````
+~~~
 :record (c-)
   buffer:add n:inc ;
-````
+~~~
 
 And now to tie it all together. Meet `generation`, the longest bit of code in this sample. It has several bits:
 
@@ -107,21 +107,21 @@ And now to tie it all together. Meet `generation`, the longest bit of code in th
 
 - copy `Next` to `This` using `update`.
 
-````
+~~~
 :generation (-)
   [ &Next buffer:set
     #-1 &This s:length
     [ at group evolve record ] times drop
     update
   ] buffer:preserve ;
-````
+~~~
 
 The last bit is a helper. It takes a number of generations and displays the state, then runs a `generation`.
 
-````
+~~~
 :generations (n-)
   [ display generation ] times ;
-````
+~~~
 
 And a text. The output should be:
 
@@ -136,6 +136,6 @@ And a text. The output should be:
     ..##................
     ..##................
 
-````
+~~~
 #10 generations
-````
+~~~
