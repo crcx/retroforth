@@ -156,6 +156,7 @@ f:-	-	-	FF-F	Subtract F2 from F1 returing the result.			class:word	    .22.3 .0.
 f:-eq?	-f	-	FF-	Compare two floating point values for inequality. Returns `TRUE` if they are not equal or `FALSE` otherwise.			class:word	{n/a}	{n/a}	f	rre	
 f:/	-	-	FF-F	Divide floating point value F1 by F2.			class:word	{n/a}	{n/a}	f	rre	
 f:E	-	-	-F	Return the floating point value for Euler's number.			class:word	{n/a}	{n/a}	f	rre	
+f:NaN	-	-	-n	Return a value corresponding to NaN			class:word	{n/a}	{n/a}	f	rre	
 f:PI	-	-	-F	Return the floating point value for PI.			class:word	{n/a}	{n/a}	f	rre	
 f:abs	-	-	F-F	Return the absolute value for a floating point value.			class:word	{n/a}	{n/a}	f	rre	
 f:acos	-	-	f-f	Return the arc cosine of a floating point number.			class:word	{n/a}	{n/a}	f	rre	
@@ -290,6 +291,7 @@ s:eq?	ss-f	-	-	Compare two strings for equality. Return `TRUE` if identical or `
 s:evaluate	s-?	-	-	Evaluate string as if it was typed into the interpreter.			class:word	{n/a}	{n/a}	s	all	
 s:filter	sq-s	-	-	Execute the quote once for each value in the string. If the quote returns `TRUE`, append the value into a new string. If `FALSE` the value will be discarded.			class:word	{n/a}	{n/a}	s	all	
 s:for-each	sq-	-	-	Execute the quote once for each value in the string.			class:word	{n/a}	{n/a}	s	all	
+s:format	...s-s	-	-	Construct a new string using the template passed and items from the stack.			class:word	{n/a}	{n/a}	s	all	
 s:hash	s-n	-	-	Calculate a hash value for a string. This uses the djb2 algorithm.			class:word	{n/a}	{n/a}	s	all	
 s:index-of	sc-n	-	-	Return the location of the first instance of the specified character in the string.			class:word	{n/a}	{n/a}	s	all	
 s:index-of-string	ss-n	-	-	Return the location of the first instance of the specified substring (s2) in the string (s1). Returns -1 if not found.			class:word	{n/a}	{n/a}	s	all	
@@ -315,7 +317,6 @@ s:tokenize-on-string	ss-a	-	-	Takes a string (s1) and a substring (s2)  use as a
 s:trim	s-s	-	-	Trim leading and trailing whitespace from a string.			class:word	    '__hello__ s:trim	{n/a}	s	all	
 s:trim-left	s-s	-	-	Trim leading whitespace from a string.			class:word	    '__hello__ s:trim-left	{n/a}	s	all	
 s:trim-right	s-s	-	-	Trim trailing whitespace from a string.			class:word	    '__hello__ s:trim-right	{n/a}	s	all	
-s:format	...s-s	-	-	Construct a new string using the template passed and items from the stack.			class:word	{n/a}	{n/a}	s	all	
 set:contains-string?	sa-f	-	-	Return `TRUE` if the string value is in the set or`FALSE` otherwise.			class:word	{n/a}	{n/a}	set	all	
 set:contains?	na-f	-	-	Return `TRUE` if the value is in the set or `FALSE` otherwise.			class:word	{n/a}	{n/a}	set	all	
 set:dup	a-b	-	-	Make a copy of a set. Return the address of the copy.			class:word	{n/a}	{n/a}	set	all	

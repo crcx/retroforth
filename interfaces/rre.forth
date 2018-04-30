@@ -50,6 +50,7 @@ This is a set of extensions for RRE.
 :putf (f:a-) f:to-string puts ;
 :f:PI (f:-F) .3.141592 ;
 :f:E  (f:-F) .2.718281 ;
+:f:NaN (f:-n) .0 .0 f:/ ;
 ~~~
 
 ---------------------------------------------------------------

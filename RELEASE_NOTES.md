@@ -19,6 +19,9 @@ Core Language:
 Interfaces:
 
 - no longer use ```` for code blocks; use ~~~ instead
+- rre:
+
+  - added `f:NaN`
 
 Other:
 
