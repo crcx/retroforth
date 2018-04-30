@@ -153,10 +153,12 @@ err:notfound	-	-	-	Error handler. Called when a word is not found by `interpret`
 f:*	-	-	FF-F	Multiply two floating point numbers, returning the result.			class:word	    .3.1415 .22 f:*	{n/a}	f	rre	
 f:+	-	-	FF-F	Add two floating point numbers, returning the result.			class:word	    .3.1 .22 f:+	{n/a}	f	rre	
 f:-	-	-	FF-F	Subtract F2 from F1 returing the result.			class:word	    .22.3 .0.12 f:-	{n/a}	f	rre	
+f:-INF	-	-	-n	Return a value corresponding to negative infinity			class:word	{n/a}	{n/a}	f	rre	
 f:-eq?	-f	-	FF-	Compare two floating point values for inequality. Returns `TRUE` if they are not equal or `FALSE` otherwise.			class:word	{n/a}	{n/a}	f	rre	
 f:/	-	-	FF-F	Divide floating point value F1 by F2.			class:word	{n/a}	{n/a}	f	rre	
 f:E	-	-	-F	Return the floating point value for Euler's number.			class:word	{n/a}	{n/a}	f	rre	
-f:NaN	-	-	-n	Return a value corresponding to NaN			class:word	{n/a}	{n/a}	f	rre	
+f:INF	-	-	-n	Return a value corresponding to positive infinity			class:word	{n/a}	{n/a}	f	rre	
+f:NAN	-	-	-n	Return a value corresponding to NaN			class:word	{n/a}	{n/a}	f	rre	
 f:PI	-	-	-F	Return the floating point value for PI.			class:word	{n/a}	{n/a}	f	rre	
 f:abs	-	-	F-F	Return the absolute value for a floating point value.			class:word	{n/a}	{n/a}	f	rre	
 f:acos	-	-	f-f	Return the arc cosine of a floating point number.			class:word	{n/a}	{n/a}	f	rre	

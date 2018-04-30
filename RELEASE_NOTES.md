@@ -21,7 +21,9 @@ Interfaces:
 - no longer use ```` for code blocks; use ~~~ instead
 - rre:
 
-  - added `f:NaN`
+  - added `f:NAN`
+  - added `f:INF`
+  - added `f:-INF`
 
 Other:
 

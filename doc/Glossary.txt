@@ -1943,6 +1943,18 @@ Example #1:
 
 ----------------------------------------------------------------
 
+f:-INF
+
+  Data:  -
+  Addr:  -
+  Float: -n
+
+Return a value corresponding to negative infinity
+
+Class Handler: class:word | Namespace: f | Interface Layer: rre
+
+----------------------------------------------------------------
+
 f:-eq?
 
   Data:  -f
@@ -1979,7 +1991,19 @@ Class Handler: class:word | Namespace: f | Interface Layer: rre
 
 ----------------------------------------------------------------
 
-f:NaN
+f:INF
+
+  Data:  -
+  Addr:  -
+  Float: -n
+
+Return a value corresponding to positive infinity
+
+Class Handler: class:word | Namespace: f | Interface Layer: rre
+
+----------------------------------------------------------------
+
+f:NAN
 
   Data:  -
   Addr:  -
