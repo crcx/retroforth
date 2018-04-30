@@ -53,6 +53,9 @@ This is a set of extensions for RRE.
 :f:NAN (f:-n) .0 .0 f:/ ;
 :f:INF (f:-n) .1.0 .0 f:/ ;
 :f:-INF (f:-n) .-1.0 .0 f:/ ;
+:f:nan? (f:n-,-f) f:dup f:-eq? ;
+:f:inf? (f:n-,-f) f:INF f:eq? ;
+:f:-inf? (f:n-,-f) f:-INF f:eq? ;
 ~~~
 
 ---------------------------------------------------------------

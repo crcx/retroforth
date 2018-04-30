@@ -24,6 +24,9 @@ Interfaces:
   - added `f:NAN`
   - added `f:INF`
   - added `f:-INF`
+  - added `f:nan?`
+  - added `f:inf?`
+  - added `f:-inf?`
 
 Other:
 

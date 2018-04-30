@@ -155,6 +155,7 @@ f:+	-	-	FF-F	Add two floating point numbers, returning the result.			class:word	
 f:-	-	-	FF-F	Subtract F2 from F1 returing the result.			class:word	    .22.3 .0.12 f:-	{n/a}	f	rre	
 f:-INF	-	-	-n	Return a value corresponding to negative infinity			class:word	{n/a}	{n/a}	f	rre	
 f:-eq?	-f	-	FF-	Compare two floating point values for inequality. Returns `TRUE` if they are not equal or `FALSE` otherwise.			class:word	{n/a}	{n/a}	f	rre	
+f:-inf?	-f	-	F-	Return `TRUE` if floating point value is -INF or `FALSE` otherwise.			class:word	{n/a}	{n/a}	f	rre	
 f:/	-	-	FF-F	Divide floating point value F1 by F2.			class:word	{n/a}	{n/a}	f	rre	
 f:E	-	-	-F	Return the floating point value for Euler's number.			class:word	{n/a}	{n/a}	f	rre	
 f:INF	-	-	-n	Return a value corresponding to positive infinity			class:word	{n/a}	{n/a}	f	rre	
@@ -172,8 +173,10 @@ f:dup	-	-	F-FF	Duplicate the top item on the floating point stack.			class:word	
 f:eq?	-f	-	FF-	Compare two floating point values for equality. Returns `TRUE` if they are equal or `FALSE` otherwise.			class:word	{n/a}	{n/a}	f	rre	
 f:floor	-	-	F-F	Perform a mathmatical floor operation on the floating point value.			class:word	{n/a}	{n/a}	f	rre	
 f:gt?	-f	-	FF-	Compare two floating point values for greater than.			class:word	{n/a}	{n/a}	f	rre	
+f:inf?	-f	-	F-	Return `TRUE` if floating point value is INF or `FALSE` otherwise.			class:word	{n/a}	{n/a}	f	rre	
 f:log	-	-	FF-F	Return log(F1) for base F2 for floating point values.			class:word	{n/a}	{n/a}	f	rre	
 f:lt?	-f	-	FF-	Compare two floating point values for less than.			class:word	{n/a}	{n/a}	f	rre	
+f:nan?	-f	-	F-	Return `TRUE` if floating point value is NaN or `FALSE` otherwise.			class:word	{n/a}	{n/a}	f	rre	
 f:negate	-	-	F-F	Invert the sign of the floating point value.			class:word	    .3.1415 f:negate	{n/a}	f	rre	
 f:negative?	-f	-	F-	Return `TRUE` if floating point value is negative or `FALSE` if not.			class:word	{n/a}	{n/a}	f	rre	
 f:over	-	-	FG-FGF	Put a copy of the second floating point value over the top one.			class:word	{n/a}	{n/a}	f	rre	

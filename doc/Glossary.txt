@@ -1967,6 +1967,18 @@ Class Handler: class:word | Namespace: f | Interface Layer: rre
 
 ----------------------------------------------------------------
 
+f:-inf?
+
+  Data:  -f
+  Addr:  -
+  Float: F-
+
+Return `TRUE` if floating point value is -INF or `FALSE` otherwise.
+
+Class Handler: class:word | Namespace: f | Interface Layer: rre
+
+----------------------------------------------------------------
+
 f:/
 
   Data:  -
@@ -2171,6 +2183,18 @@ Class Handler: class:word | Namespace: f | Interface Layer: rre
 
 ----------------------------------------------------------------
 
+f:inf?
+
+  Data:  -f
+  Addr:  -
+  Float: F-
+
+Return `TRUE` if floating point value is INF or `FALSE` otherwise.
+
+Class Handler: class:word | Namespace: f | Interface Layer: rre
+
+----------------------------------------------------------------
+
 f:log
 
   Data:  -
@@ -2190,6 +2214,18 @@ f:lt?
   Float: FF-
 
 Compare two floating point values for less than.
+
+Class Handler: class:word | Namespace: f | Interface Layer: rre
+
+----------------------------------------------------------------
+
+f:nan?
+
+  Data:  -f
+  Addr:  -
+  Float: F-
+
+Return `TRUE` if floating point value is NaN or `FALSE` otherwise.
 
 Class Handler: class:word | Namespace: f | Interface Layer: rre
 
