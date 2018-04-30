@@ -128,7 +128,7 @@ void execute(int cell, int silent);
 void evaluate(char *s, int silent);
 int not_eol(int ch);
 void read_token(FILE *file, char *token_buffer, int echo);
-void include_file(char *fname);
+void include_file(char *fname, int run_tests);
 void ngaGopherUnit();
 void ngaFloatingPointUnit();
 CELL ngaLoadImage(char *imageFile);
@@ -1222,7 +1222,7 @@ void execute(int cell, int silent) {
                            }
 #endif
         break;
-        case -9999:        include_file(string_extract(stack_pop())); break;
+        case -9999:        include_file(string_extract(stack_pop()), 0); break;
 #ifdef ENABLE_FILES
         case RRE_FILE_OPEN:   ioOpenFile();                              break;
         case RRE_FILE_CLOSE:  ioCloseFile();                             break;
@@ -1356,7 +1356,7 @@ int fenced(char *s)
 {
   int a = strcmp(s, "```");
   int b = strcmp(s, "~~~");
-  if (a == 0) return 1;
+  if (a == 0) return 2;
   if (b == 0) return 1;
               return 0;
 }
@@ -1366,7 +1366,7 @@ int fenced(char *s)
   And now for the actual `include_file()` function.
   ---------------------------------------------------------------------*/
 
-void include_file(char *fname) {
+void include_file(char *fname, int run_tests) {
   int inBlock = 0;                 /* Tracks status of in/out of block */
   char source[64 * 1024];          /* Line buffer [about 64K]          */
   char fence[4];                   /* Used with `fenced()`             */
@@ -1381,11 +1381,14 @@ void include_file(char *fname) {
     read_token(fp, source, 0);
     strncpy(fence, source, 3);     /* Copy the first three characters  */
     fence[3] = '\0';               /* into `fence` to see if we are in */
-    if (fenced(fence)) {           /* a code block.                    */
-      if (inBlock == 0)
-        inBlock = 1;
-      else
-        inBlock = 0;
+    if (fenced(fence) > 0) {       /* a code block.                    */
+      if (fenced(fence) == 2 && run_tests == 0) {
+      } else {
+        if (inBlock == 0)
+          inBlock = 1;
+        else
+          inBlock = 0;
+      }
     } else {
       if (inBlock == 1)            /* If we are, evaluate token        */
         evaluate(source, -1);
@@ -1447,6 +1450,7 @@ int arg_is(char *t) {
   ---------------------------------------------------------------------*/
 
 int main(int argc, char **argv) {
+  int run_tests;
   if (argc <= 1) return 0;                /* Guard clause: exit if no  */
                                           /* arguments are passed.     */
 
@@ -1454,6 +1458,8 @@ int main(int argc, char **argv) {
 
   sys_argc = argc;                        /* Point the global argc and */
   sys_argv = argv;                        /* argv to the actual ones   */
+
+  run_tests = 0;
 
   if (arg_is("-h")) {                     /* If argument is -h, show   */
     help();                               /* help text and exit        */
@@ -1468,8 +1474,16 @@ int main(int argc, char **argv) {
   /* and in the image.                                                 */
 
   if (arg_is("-i") || arg_is("-c")) {
-    if (argc >= 4)
-      include_file(argv[3]);
+    if (argc >= 4) {
+      if (strcmp(argv[2], "-t") == 0) {
+        run_tests = -1;
+        include_file(argv[4], run_tests);
+      }
+      else {
+        include_file(argv[3], run_tests);
+      }
+    }
+
     execute(d_xt_for("banner", Dictionary), 0);
 #ifdef USE_TERMIOS
       if (arg_is("-c")) prepare_term();
@@ -1482,7 +1496,13 @@ int main(int argc, char **argv) {
     exit(0);
   }
 
-  include_file(argv[1]);                  /* If no flags were passed,  */
+  if (arg_is("-t")) {                     /* If argument is -t, enable */
+    run_tests = -1;
+    include_file(argv[2], run_tests);
+    exit(0);
+  }
+
+  include_file(argv[1], 0);               /* If no flags were passed,  */
   if (sp >= 1)  dump_stack();             /* load the file specified   */
   exit(0);                                /* and display the stack.    */
 }
