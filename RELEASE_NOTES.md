@@ -28,6 +28,7 @@ Interfaces:
   - added `f:inf?`
   - added `f:-inf?`
   - added "-t" command line argument to run tests
+  - rewrote command line handler
 
 Other:
 

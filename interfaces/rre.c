@@ -1407,7 +1407,7 @@ void include_file(char *fname, int run_tests) {
 
 void help() {
   printf("Scripting Usage: rre filename\n\n");
-  printf("Interactive Usage: rre args\n\n");
+  printf("Interactive Usage: rre [-h] [-i] [-c] [-f filename] [-t]\n\n");
   printf("Valid Arguments:\n\n");
   printf("  -h\n");
   printf("  Display this help text\n\n");
@@ -1415,10 +1415,10 @@ void help() {
   printf("  Launches in interactive mode (line buffered)\n\n");
   printf("  -c\n");
   printf("  Launches in interactive mode (character buffered)\n\n");
-  printf("  -i -f filename\n");
-  printf("  Launches in interactive mode (line buffered) and load the contents of the\n  specified file\n\n");
-  printf("  -c -f filename\n");
-  printf("  Launches in interactive mode (character buffered) and load the contents\n  of the specified file\n\n");
+  printf("  -f filename\n");
+  printf("  Run the contents of the specified file\n\n");
+  printf("  -t\n");
+  printf("  Run tests (in ``` blocks) in any loaded files\n\n");
 }
 
 
@@ -1449,8 +1449,18 @@ int arg_is(char *t) {
 /*---------------------------------------------------------------------
   ---------------------------------------------------------------------*/
 
+enum flags {
+  FLAG_HELP, FLAG_RUN_TESTS, FLAG_INCLUDE, FLAG_INTERACTIVE, FLAG_CBREAK
+};
+
 int main(int argc, char **argv) {
+  int i;
+  int modes[32];
+  char *files[16];
+  int fsp;
+
   int run_tests;
+
   if (argc <= 1) return 0;                /* Guard clause: exit if no  */
                                           /* arguments are passed.     */
 
@@ -1459,52 +1469,60 @@ int main(int argc, char **argv) {
   sys_argc = argc;                        /* Point the global argc and */
   sys_argv = argv;                        /* argv to the actual ones   */
 
-  run_tests = 0;
-
-  if (arg_is("-h")) {                     /* If argument is -h, show   */
-    help();                               /* help text and exit        */
-    exit(0);
+  if (argc >= 2 && argv[1][0] != '-') {
+    include_file(argv[1], 0);             /* If no flags were passed,  */
+    if (sp >= 1)  dump_stack();           /* load the file specified,  */
+    exit(0);                              /* and exit                  */
   }
 
-  /* Interactive Mode is the most complext bit. RRE has two modes:     */
-  /*   -i  for basic interactive mode                                  */
-  /*   -c  for interactive mode, with character breaking               */
-  /* Additionally, either can be followed by a `-f filename`           */
-  /* This checks as needed, and invokes the appropriate functions here */
-  /* and in the image.                                                 */
+  for (i = 0; i < 32; i++)
+    modes[i] = 0;
 
-  if (arg_is("-i") || arg_is("-c")) {
-    if (argc >= 4) {
-      if (strcmp(argv[2], "-t") == 0) {
-        run_tests = -1;
-        include_file(argv[4], run_tests);
-      }
-      else {
-        include_file(argv[3], run_tests);
-      }
+  for (i = 0; i < 16; i++)
+    files[i] = "\0";
+
+  run_tests = 0;
+  fsp = 0;
+
+  for (i = 1; i < argc; i++) {
+    if (strcmp(argv[i], "-h") == 0) {
+      help();
+      exit(0);    
+    } else if (strcmp(argv[i], "-i") == 0) {
+      modes[FLAG_INTERACTIVE] = 1;
+    } else if (strcmp(argv[i], "-c") == 0) {
+      modes[FLAG_INTERACTIVE] = 1;
+      modes[FLAG_CBREAK] = 1;
+    } else if (strcmp(argv[i], "-f") == 0) {
+      printf("ADD: %s\n", argv[i + 1]);
+      files[fsp] = argv[i + 1];
+      fsp++;
+      i++;
+    } else if (strcmp(argv[i], "-t") == 0) {
+      modes[FLAG_RUN_TESTS] = 1;
+      run_tests = 1;
     }
+  }
 
+  printf("%d files\n", fsp);
+  for (i = 0; i <= fsp; i++) {
+    printf("LOAD: %s\n", files[i]);
+    if (strcmp(files[i], "\0") != 0)
+      include_file(files[i], run_tests);
+  }
+
+  if (modes[FLAG_INTERACTIVE] == 1) {
     execute(d_xt_for("banner", Dictionary), 0);
 #ifdef USE_TERMIOS
-      if (arg_is("-c")) prepare_term();
+    if (modes[FLAG_CBREAK] == 1) prepare_term();
 #endif
-      if (arg_is("-c")) while (1) execute(d_xt_for("listen", Dictionary), 0);
-      if (arg_is("-i")) while (1) execute(d_xt_for("listen", Dictionary), -1);
+    if (modes[FLAG_CBREAK] == 1) while (1) execute(d_xt_for("listen", Dictionary), 0);
+    if (modes[FLAG_CBREAK] == 0) while (1) execute(d_xt_for("listen", Dictionary), -1);
 #ifdef USE_TERMIOS
-      if (arg_is("-c")) restore_term();
+    if (modes[FLAG_CBREAK] == 1) restore_term();
 #endif
     exit(0);
   }
-
-  if (arg_is("-t")) {                     /* If argument is -t, enable */
-    run_tests = -1;
-    include_file(argv[2], run_tests);
-    exit(0);
-  }
-
-  include_file(argv[1], 0);               /* If no flags were passed,  */
-  if (sp >= 1)  dump_stack();             /* load the file specified   */
-  exit(0);                                /* and display the stack.    */
 }
 
 

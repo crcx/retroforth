@@ -13,7 +13,8 @@ See http://osiris.978.org/~alex/ups.html for a list of service codes.
   valid? [ account service-code package-id checksum
            #4 [ puts nl ] times ]
          [ drop 'invalid_tracking_number puts nl ] choose ;
-
-'1Z6x36270342495730 parse-ups
 ~~~
 
+```
+'1Z6x36270342495730 parse-ups
+```
