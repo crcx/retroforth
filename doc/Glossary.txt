@@ -1770,6 +1770,18 @@ Class Handler: class:word | Namespace: d | Interface Layer: all
 
 ----------------------------------------------------------------
 
+d:words
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Display a list of all named items in the `Dictionary`.
+
+Class Handler: class:word | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
 d:xt
 
   Data:  d-a
@@ -4894,18 +4906,6 @@ Class Handler: class:word | Namespace: global | Interface Layer: all
 Example #1:
 
     #10 [ dup n:put nl n:dec dup n:-zero? ] while
-
-----------------------------------------------------------------
-
-words
-
-  Data:  -
-  Addr:  -
-  Float: -
-
-Display a list of all named items in the `Dictionary`.
-
-Class Handler: class:word | Namespace: global | Interface Layer: all
 
 ----------------------------------------------------------------
 

@@ -9,6 +9,7 @@ Major Changes:
 - renamed `putc` to `c:put`
 - renamed `getc` to `c:get`
 - renamed `gets` to `s:get`
+- renamed `words` to `d:words`
 - ```` no longer used for code blocks (now reserved for 'tests'
   under rre)
 
@@ -27,6 +28,7 @@ Core Language:
 - renamed `putc` to `c:put`
 - renamed `getc` to `c:get`
 - renamed `gets` to `s:get`
+- renamed `words` to `d:words`
 
 Interfaces:
 
