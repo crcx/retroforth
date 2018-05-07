@@ -7,15 +7,15 @@ take a quick look at how it works:
 ~~~
     #1000 'a var<n>
     :scale (x-y) @a * ;
-    #3 scale putn
+    #3 scale n:put
     >>> 3000
     #100 !a
-    #3 scale putn
+    #3 scale n:put
     >>> 300
     #5 'a var<n>
-    #3 scale putn
+    #3 scale n:put
     >>> 300
-    @a putn
+    @a n:put
     >>> 5
 ~~~
 

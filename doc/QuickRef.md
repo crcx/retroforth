@@ -6,26 +6,26 @@ Displaying Things
 Numbers
 =======
 
-    #100 putn
+    #100 n:put
 
 
 Characters
 ==========
 
-    $a putc
+    $a c:put
 
 
 Strings
 =======
 
-    'hello,_world puts
+    'hello,_world s:put
 
 
 Mixed
 =====
 
-    #1 #2 #3  '%n_-_%n_=_%n\n s:format puts
-    'Charles' 'Hello_%s\n     s:format puts
+    #1 #2 #3  '%n_-_%n_=_%n\n s:format s:put
+    'Charles' 'Hello_%s\n     s:format s:put
 
 
 Conditionals
@@ -134,13 +134,13 @@ Counted
 =======
 
     (simple,_no_index_on_stack)
-    #10 [ $a putc ] times
+    #10 [ $a c:put ] times
 
 
 Conditional
 ===========
 
-    #10 [ n:dec dup putn dup n:-zero? ] while
+    #10 [ n:dec dup n:put dup n:-zero? ] while
 
 
 Math

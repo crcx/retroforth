@@ -25,22 +25,22 @@ flag is `TRUE`:
 
 ~~~
   #1 #2 eq?
-  [ 'True! puts ] if
+  [ 'True! s:put ] if
 ~~~
 
 Or if it's `FALSE`:
 
 ~~~
   #1 #2 eq?
-  [ 'Not_true! puts ] -if
+  [ 'Not_true! s:put ] -if
 ~~~
 
 There's also a `choose` combinator:
 
 ~~~
   #1 #2 eq?
-  [ 'True! puts     ]
-  [ 'Not_true! puts ] choose
+  [ 'True! s:put     ]
+  [ 'Not_true! s:put ] choose
 ~~~
 
 RETRO also uses combinators for loops:
@@ -48,7 +48,7 @@ RETRO also uses combinators for loops:
 A counted loop takes a count and a quote:
 
 ~~~
-  #0 #100 [ dup putn sp n:inc ] times
+  #0 #100 [ dup n:put sp n:inc ] times
 ~~~
 
 You can also loop while a quote returns a flag of `TRUE`:
@@ -68,7 +68,7 @@ instance, many structures provide a `for-each` combinator which can be run
 once for each item in the structure. E.g., with a string:
 
 ~~~
-  'Hello [ putc ] s:for-each
+  'Hello [ c:put ] s:for-each
 ~~~
 
 Moving further, combinators are also used for filters and operations on

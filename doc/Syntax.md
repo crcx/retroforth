@@ -31,7 +31,7 @@ Example:
 
 (Define_some_words)
 :hello  (-)
-  'Hello_World! puts nl ;
+  'Hello_World! s:put nl ;
 
 :n:square  (n-m)
   dup * ;
@@ -44,9 +44,9 @@ hello
 $a (this_is_the_ASCII_'a')
 
 'Use_underscores_in_place_of_spaces_in_strings
-&puts call
+&s:put call
 
 'Foo var
 #100 !Foo
-@Foo putn
+@Foo n:put
 ~~~

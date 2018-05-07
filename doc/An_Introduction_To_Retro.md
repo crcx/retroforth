@@ -128,7 +128,7 @@ To create new functions, you use the compiler. This is generally
 started by using the `:` (pronounced *colon*) prefix. A simple
 example:
 
-    :foo #1 #2 + putn ;
+    :foo #1 #2 + n:put ;
 
 Breaking this apart:
 
@@ -157,13 +157,13 @@ calls the corresponding class handler. The class handler for
 normal words calls the code at the address if interpreting, or
 compiles a call to it if the `Compiler` is active.
 
-    putn
+    n:put
 
-The process is repeated for `putn`.
+The process is repeated for `n:put`.
 
     ;
 
-The last word has a slight difference. Like `+` and `putn`, this
+The last word has a slight difference. Like `+` and `n:put`, this
 is a word, not a prefixed token. But the class handler for this
 one always calls the associated code. In this case, `;` is the
 word which ends a definition and turns off the `Compiler`.
@@ -178,15 +178,15 @@ difficult to explain, so let's take a quick look at how it works:
     >>> A ?
     #1000 'A var<n>
     :scale (x-y) A fetch * ;
-    #3 scale putn
+    #3 scale n:put
     >>> 3000
     #100 A store
-    #3 scale putn
+    #3 scale n:put
     >>> 300
     #5 'A var<n>
-    #3 scale putn
+    #3 scale n:put
     >>> 300
-    A fetch putn
+    A fetch n:put
     >>> 5
 
 Output is marked with **>>>**.
@@ -321,9 +321,9 @@ Comparisons
 -----------
 Strings can be compared using `s:eq?`:
 
-  'test_1  'test_2  s:eq? putn
+  'test_1  'test_2  s:eq? n:put
   >>> 0
-  'test_3  'test_3  s:eq? putn
+  'test_3  'test_3  s:eq? n:put
   >>> -1
 
 The comparisons are case sensitive.
