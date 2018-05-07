@@ -985,6 +985,10 @@ void float_log() {
     float_push(log(b) / log(a));
 }
 
+void float_sqrt() {
+  float_push(sqrt(float_pop()));
+}
+
 void float_pow() {
     double a = float_pop();
     double b = float_pop();
@@ -1048,6 +1052,7 @@ void ngaFloatingPointUnit() {
     case 23: float_acos();         break;
     case 24: float_atan();         break;
     case 25: float_ceil();         break;
+    case 26: float_sqrt();         break;
     default:                       break;
   }
 }
@@ -1494,7 +1499,6 @@ int main(int argc, char **argv) {
       modes[FLAG_INTERACTIVE] = 1;
       modes[FLAG_CBREAK] = 1;
     } else if (strcmp(argv[i], "-f") == 0) {
-      printf("ADD: %s\n", argv[i + 1]);
       files[fsp] = argv[i + 1];
       fsp++;
       i++;
@@ -1504,9 +1508,7 @@ int main(int argc, char **argv) {
     }
   }
 
-  printf("%d files\n", fsp);
-  for (i = 0; i <= fsp; i++) {
-    printf("LOAD: %s\n", files[i]);
+  for (i = 0; i < fsp; i++) {
     if (strcmp(files[i], "\0") != 0)
       include_file(files[i], run_tests);
   }

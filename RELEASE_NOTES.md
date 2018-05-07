@@ -27,6 +27,7 @@ Interfaces:
   - added `f:nan?`
   - added `f:inf?`
   - added `f:-inf?`
+  - added `f:sqrt`
   - added "-t" command line argument to run tests
   - rewrote command line handler
 

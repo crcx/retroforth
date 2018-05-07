@@ -2299,9 +2299,21 @@ f:sin
 
   Data:  -
   Addr:  -
-  Float: f-f
+  Float: F-F
 
 Return the sine of a floating point number.
+
+Class Handler: class:word | Namespace: f | Interface Layer: rre
+
+----------------------------------------------------------------
+
+f:sqrt
+
+  Data:  -
+  Addr:  -
+  Float: F-F
+
+Return the square root of a floating point number.
 
 Class Handler: class:word | Namespace: f | Interface Layer: rre
 
@@ -2323,7 +2335,7 @@ f:tan
 
   Data:  -
   Addr:  -
-  Float: f-f
+  Float: F-F
 
 Return the tangent of a floating point number.
 

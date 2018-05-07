@@ -39,6 +39,7 @@ This is a set of extensions for RRE.
 :f:acos  (f:f-f)    #23 `-6000 ;
 :f:atan  (f:f-f)    #24 `-6000 ;
 :f:ceiling (f:f-f)  #25 `-6000 ;
+:f:sqrt  (f:f-f)    #26 `-6000 ;
 :f:over  (f:ab-aba) f:to-string f:dup s:to-float f:swap ;
 :f:tuck  (f:ab-bab) f:swap f:over ;
 :f:positive? (-f__f:a-) #0 n:to-float f:gt? ;
