@@ -98,20 +98,20 @@ actions, or any examples, they will be displayed after
 the description.
 
 ~~~
-:puts<formatted> (s-)  s:format puts ;
+:s:put<formatted> (s-)  s:format s:put ;
 
 :display-result
-  field:name puts nl nl
-  field:dstack '__Data:__%s\n puts<formatted>
-  field:astack '__Addr:__%s\n puts<formatted>
-  field:fstack '__Float:_%s\n puts<formatted> nl
-  field:descr  '%s\n\n        puts<formatted>
-  field:itime s:length n:zero? [ field:itime 'Interpret_Time:\n__%s\n\n puts<formatted> ] -if
-  field:ctime s:length n:zero? [ field:ctime 'Compile_Time:\n__%s\n\n   puts<formatted> ] -if
+  field:name s:put nl nl
+  field:dstack '__Data:__%s\n s:put<formatted>
+  field:astack '__Addr:__%s\n s:put<formatted>
+  field:fstack '__Float:_%s\n s:put<formatted> nl
+  field:descr  '%s\n\n        s:put<formatted>
+  field:itime s:length n:zero? [ field:itime 'Interpret_Time:\n__%s\n\n s:put<formatted> ] -if
+  field:ctime s:length n:zero? [ field:ctime 'Compile_Time:\n__%s\n\n   s:put<formatted> ] -if
   field:interface field:namespace field:class
-  'Class_Handler:_%s_|_Namespace:_%s_|_Interface_Layer:_%s\n\n puts<formatted>
-  field:ex1 '{n/a} s:eq? [ field:ex1 s:format 'Example_#1:\n\n%s\n\n puts<formatted> ] -if
-  field:ex2 '{n/a} s:eq? [ field:ex2 s:format 'Example_#2:\n\n%s\n\n puts<formatted> ] -if ;
+  'Class_Handler:_%s_|_Namespace:_%s_|_Interface_Layer:_%s\n\n s:put<formatted>
+  field:ex1 '{n/a} s:eq? [ field:ex1 s:format 'Example_#1:\n\n%s\n\n s:put<formatted> ] -if
+  field:ex2 '{n/a} s:eq? [ field:ex2 s:format 'Example_#2:\n\n%s\n\n s:put<formatted> ] -if ;
 ~~~
 
 # Prepare for Command Line Processing
@@ -259,7 +259,7 @@ the file. I'll use `FOUT` as a variable for the file ID.
 'FOUT var
 ~~~
 
-And provide a word like `puts` that writes to this:
+And provide a word like `s:put` that writes to this:
 
 ~~~
 :write-line (s-) [ @FOUT file:write ] s:for-each ;
@@ -339,7 +339,7 @@ separator bar between each entry.
 ~~~
 :export-glossary
  'words.tsv
-  [ s:keep !SourceLine display-result #64 [ $- putc ] times nl nl ] file:for-each-line ;
+  [ s:keep !SourceLine display-result #64 [ $- c:put ] times nl nl ] file:for-each-line ;
 ~~~
 
 ### TSV
@@ -350,18 +350,18 @@ you edit/save the TSV data with a spreadsheet application.
 
 ~~~
 :display-fields
-  field:name puts tab
-  field:dstack puts tab
-  field:astack puts tab
-  field:fstack puts tab
-  field:descr puts tab
-  field:itime puts tab
-  field:ctime puts tab
-  field:class puts tab
-  field:ex1 puts tab
-  field:ex2 puts tab
-  field:namespace puts tab
-  field:interface puts tab
+  field:name s:put tab
+  field:dstack s:put tab
+  field:astack s:put tab
+  field:fstack s:put tab
+  field:descr s:put tab
+  field:itime s:put tab
+  field:ctime s:put tab
+  field:class s:put tab
+  field:ex1 s:put tab
+  field:ex2 s:put tab
+  field:namespace s:put tab
+  field:interface s:put tab
   nl ;
 
 :export-tsv
@@ -385,23 +385,23 @@ to use.
 
 ~~~
 :show-help
-  'RETRO_Glossary_Tool puts nl
-  #32 [ $- putc ] times nl
-  'describe_<wordname> puts nl
-  'delete_<wordname> puts nl
-  'add_<wordname> puts nl
-  'edit_<field>_<wordname> puts nl
-  'export_<format> puts nl
-  #32 [ $- putc ] times nl
-  'Editor_Fields: puts nl
-  '__name\n__dstack\n__astack\n__fstack\n s:format puts
-  '__descr\n__itime\n__ctime\n__class\n s:format puts
-  '__ex1\n__ex2\n__namespace\n__interface\n s:format puts
-  #32 [ $- putc ] times nl
-  'Export_Formats: puts nl
-  '__glossary puts nl
-  '__tsv      puts nl
-  #32 [ $- putc ] times nl
+  'RETRO_Glossary_Tool s:put nl
+  #32 [ $- c:put ] times nl
+  'describe_<wordname> s:put nl
+  'delete_<wordname> s:put nl
+  'add_<wordname> s:put nl
+  'edit_<field>_<wordname> s:put nl
+  'export_<format> s:put nl
+  #32 [ $- c:put ] times nl
+  'Editor_Fields: s:put nl
+  '__name\n__dstack\n__astack\n__fstack\n s:format s:put
+  '__descr\n__itime\n__ctime\n__class\n s:format s:put
+  '__ex1\n__ex2\n__namespace\n__interface\n s:format s:put
+  #32 [ $- c:put ] times nl
+  'Export_Formats: s:put nl
+  '__glossary s:put nl
+  '__tsv      s:put nl
+  #32 [ $- c:put ] times nl
 
 ;
 ~~~
@@ -421,13 +421,13 @@ selector).
 
 ~~~
 :display-entry (-)
-  GOPHER-PORT field:name dup '0%s\t/desc_%s\tforthworks.com\t%n\r\n s:format puts ;
+  GOPHER-PORT field:name dup '0%s\t/desc_%s\tforthworks.com\t%n\r\n s:format s:put ;
 
 :gopher:list-words (-)
   'words.tsv [ s:keep !SourceLine display-entry ] file:for-each-line ;
 
 :display-entry (-)
-  field:name over '<a_href="/%n">%s</a><br> s:format puts ;
+  field:name over '<a_href="/%n">%s</a><br> s:format s:put ;
 
 :http:list-words (-)
   #0 'words.tsv [ s:keep !SourceLine display-entry n:inc ] file:for-each-line drop ;
@@ -449,34 +449,34 @@ And then the actual top level server.
 :eol? (c-f)
   [ ASCII:CR eq? ] [ ASCII:LF eq? ] [ ASCII:HT eq? ] tri or or ;
 
-:gets (a-)
-  buffer:set [ getc dup buffer:add eol? not ] while ;
+:s:get (a-)
+  buffer:set [ c:get dup buffer:add eol? not ] while ;
 
 'Selector d:create
   #1024 allot
 
 :css (-)
-  '<style>tt,_a,_pre_{_white-space:_pre;_} puts
+  '<style>tt,_a,_pre_{_white-space:_pre;_} s:put
   '_*_{_font-family:_monospace;_color:_#aaa;_background:_#121212;_font-size:_large;_}_a_{_color:_#EE7600;_} 
-puts
-  '</style> puts nl ;
+s:put
+  '</style> s:put nl ;
 
 :http:display (-)
-  #0 'words.tsv [ s:keep !SourceLine dup-pair eq? [ '<pre> puts display-result '</pre> puts ] if n:inc ] file:for-each-line drop-pair ;
+  #0 'words.tsv [ s:keep !SourceLine dup-pair eq? [ '<pre> s:put display-result '</pre> s:put ] if n:inc ] file:for-each-line drop-pair ;
 
 :handle-http
   css
-  '<h2><a_href="http://forthworks.com:9999">RETRO_Glossary</a></h2><hr> puts nl
+  '<h2><a_href="http://forthworks.com:9999">RETRO_Glossary</a></h2><hr> s:put nl
   &Selector ASCII:SPACE s:tokenize #1 set:nth fetch
   dup s:length #1 eq?
     [ drop http:list-words ]
     [ n:inc s:to-number http:display ] choose ;
 
 :gopher:serve
-  &Selector gets
+  &Selector s:get
   &Selector #0 #5 s:substr
   '/desc [ &Selector ASCII:SPACE s:tokenize #1 set:nth fetch s:chop s:keep !Target gopher:display ] s:case
-  'GET_/ [ 'HTTP/1.0_200_OK\nContent-Type:_text/html\n\n s:format puts handle-http ] s:case
+  'GET_/ [ 'HTTP/1.0_200_OK\nContent-Type:_text/html\n\n s:format s:put handle-http ] s:case
   drop gopher:list-words ;
 ~~~
 

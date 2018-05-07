@@ -976,7 +976,7 @@ it is run.
 
 This can be used for implementing `words`:
 
-    [ d:name puts sp ] d:for-each
+    [ d:name s:put sp ] d:for-each
 
 Or finding the length of the longest name in the dictionary:
 
@@ -1454,17 +1454,17 @@ Retro really only provides one I/O function in the standard interface:
 pushing a character to the output log.
 
 ~~~
-:putc (c-) `1000 ;
+:c:put (c-) `1000 ;
 ~~~
 
 This can be used to implement words that push other item to the log.
 
 ~~~
-:nl   (-)  ASCII:LF putc ;
-:sp   (-)  ASCII:SPACE putc ;
-:tab  (-)  ASCII:HT putc ;
-:puts (s-) [ putc ] s:for-each ;
-:putn (n-) n:to-string puts ;
+:nl   (-)  ASCII:LF c:put ;
+:sp   (-)  ASCII:SPACE c:put ;
+:tab  (-)  ASCII:HT c:put ;
+:s:put (s-) [ c:put ] s:for-each ;
+:n:put (n-) n:to-string s:put ;
 ~~~
 
 Different inteface layers may provide additional I/O words.
@@ -1474,9 +1474,9 @@ Different inteface layers may provide additional I/O words.
 I provide just a few debugging aids.
 
 ~~~
-:words      (-)  [ d:name puts sp ] d:for-each ;
+:words      (-)  [ d:name s:put sp ] d:for-each ;
 :reset      (...-) depth repeat 0; push drop pop #1 - again ;
-:dump-stack (-)  depth 0; drop push dump-stack pop dup putn sp ;
+:dump-stack (-)  depth 0; drop push dump-stack pop dup n:put sp ;
 ~~~
 
 ~~~

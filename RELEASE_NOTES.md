@@ -3,6 +3,12 @@ RETRO 12 - 2018.6 - WIP
 Major Changes:
 
 - renamed `s:with-format` to `s:format`
+- renamed `puts` to `s:put`
+- renamed `putn` to `n:put`
+- renamed `putf` to `f:put`
+- renamed `putc` to `c:put`
+- renamed `getc` to `c:get`
+- renamed `gets` to `s:get`
 - ```` no longer used for code blocks (now reserved for 'tests'
   under rre)
 
@@ -15,6 +21,12 @@ Build:
 Core Language:
 
 - renamed `s:with-format` to `s:format`
+- renamed `puts` to `s:put`
+- renamed `putn` to `n:put`
+- renamed `putf` to `f:put`
+- renamed `putc` to `c:put`
+- renamed `getc` to `c:get`
+- renamed `gets` to `s:get`
 
 Interfaces:
 

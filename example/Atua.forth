@@ -1,4 +1,4 @@
-#!/usr/bin/env rre
+#!/usr/bin/rre
 
 # Atua: A Gopher Server
 
@@ -9,7 +9,7 @@ prevents needing to handle socket I/O directly.
 
 # Features
 
-Atua is a minimal server targeting the the basic Gopher0 protocol. It
+Atua is a minimal server targetting the the basic Gopher0 protocol. It
 supports a minimal gophermap format for indexes and transfer of static
 content.
 
@@ -31,12 +31,12 @@ Atua needs to know:
 - The maximum file size
 
 ~~~
-'/home/crc/atua        'PATH   s:const
-'/gophermap     'DEFAULT-INDEX s:const
-#1024     'MAX-SELECTOR-LENGTH   const
-#1000000 #4 * 'MAX-FILE-SIZE     const
-'forthworks.com        'SERVER s:const
-'70                    'PORT   s:const
+'/home/crc/atua s:keep 'PATH   const
+'/gophermap     s:keep 'DEFAULT-INDEX const
+#1024  'MAX-SELECTOR-LENGTH    const
+#1000000 #4 * 'MAX-FILE-SIZE   const
+'forthworks.com s:keep 'SERVER const
+'70             s:keep 'PORT   const
 ~~~
 
 # I/O Words
@@ -47,11 +47,11 @@ provide some other helpers.
 
 *Console Output*
 
-The Gopher protocol uses tabs and cr/lf for significant things. To aid
+The Gopher protocol uses tabs and cr/lf for signficant things. To aid
 in this, I define output words for tabs and end of line.
 
 ~~~
-:eol  (-)  ASCII:CR putc ASCII:LF putc ;
+:eol  (-)  ASCII:CR c:put ASCII:LF c:put ;
 ~~~
 
 *Console Input*
@@ -63,9 +63,9 @@ it checks for. This suffices for a Gopher server though.
 ~~~
 :eol? (c-f)
   [ ASCII:CR eq? ] [ ASCII:LF eq? ] [ ASCII:HT eq? ] tri or or ;
-:gets (a-)
+:s:get (a-)
   buffer:set
-  [ getc dup buffer:add eol? not ] while ;
+  [ c:get dup buffer:add eol? not ] while ;
 ~~~
 
 # Gopher Namespace
@@ -157,7 +157,7 @@ namespace that'll be left exposed to the world.
 ---reveal---
 ~~~
 
-An information line gets a format like:
+An information line s:get a format like:
 
   i...text...<tab><tab>null.host<tab>port<cr,lf>
 
@@ -166,12 +166,12 @@ the index footer.
 
 ~~~
 :gopher:i (s-)
-  'i%s\t\tnull.host\t1 s:format puts eol ;
+  'i%s\t\tnull.host\t1 s:format s:put eol ;
 ~~~
 
 ~~~
 :gopher:get-selector (-)
-  &Selector gets ;
+  &Selector s:get ;
 
 :gopher:file-requested? (-f)
   &Selector s:chop s:length n:-zero? ;
@@ -208,8 +208,8 @@ the index footer.
 
 :gopher:line (s-)
   dup [ ASCII:HT eq? ] s:filter s:length #1 gt?
-  [ puts ]
-  [ puts tab SERVER puts tab PORT puts ] choose
+  [ s:put ]
+  [ s:put tab SERVER s:put tab PORT s:put ] choose
   eol ;
 
 :gopher:generate-index (f-)
@@ -222,14 +222,14 @@ the index footer.
 ;
 ~~~
 
-In a prior version of this I used `puts` to send the content. That
+In a prior version of this I used `s:put` to send the content. That
 stopped at the first zero value, which kept it from working with
 binary data. I added `gopher:send` to send the `Size` number of
 bytes to stdout, fixing this issue.
 
 ~~~
 :gopher:send (p-)
-  @Size [ fetch-next putc ] times drop ;
+  @Size [ fetch-next c:put ] times drop ;
 ~~~
 
 The only thing left is the top level server.
@@ -242,7 +242,7 @@ The only thing left is the top level server.
   [ gopher:generate-index
     '------------------------------------------- gopher:i
     'forthworks.com:70_/_atua_/_running_on_retro gopher:i 
-    '. puts eol ]
+    '. s:put eol ]
   [ gopher:read-file gopher:send ] choose
 ;
 ~~~

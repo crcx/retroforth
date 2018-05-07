@@ -43,7 +43,7 @@ I use `display` to show the current generation.
 
 ~~~
 :display (-)
-  &This puts nl ;
+  &This s:put nl ;
 ~~~
 
 As might be expected, `update` copies the `Next` generation to the `This` generation, setting things up for the next cycle.

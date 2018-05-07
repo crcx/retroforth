@@ -1,4 +1,4 @@
-#!/usr/bin/env rre
+#!/usr/bin/rre
 
 # Atua-WWW: A Gopher Server for the Web
 
@@ -11,7 +11,7 @@ prevents needing to handle socket I/O directly.
 
 # Features
 
-Atua is a minimal server targeting the the basic Gopher0 protocol. It
+Atua is a minimal server targetting the the basic Gopher0 protocol. It
 supports a minimal gophermap format for indexes and transfer of static
 content.
 
@@ -49,32 +49,32 @@ and provide some other helpers.
 
 *Console Output*
 
-The Gopher protocol uses tabs and cr/lf for significant things. To aid
+The Gopher protocol uses tabs and cr/lf for signficant things. To aid
 in this, I define output words for tabs and end of line.
 
 ~~~
-:eol  (-)  ASCII:CR putc ASCII:LF putc ;
+:eol  (-)  ASCII:CR c:put ASCII:LF c:put ;
 ~~~
 
 *Console Input*
 
 Input lines end with a cr, lf, or tab. The `eol?` checks for this.
-The `gets` word could easily be made more generic in terms of what
+The `s:get` word could easily be made more generic in terms of what
 it checks for. This suffices for a Gopher server though.
 
 ~~~
 :eol? (c-f)
   [ ASCII:CR eq? ] [ ASCII:LF eq? ] [ ASCII:SPACE eq? ] tri or or ;
-:gets (a-)
+:s:get (a-)
   buffer:set
-  [ getc dup buffer:add eol? not ] while ;
+  [ c:get dup buffer:add eol? not ] while ;
 ~~~
 
 # An HTML Namespace
 
 ~~~
-:html:tt  (q-)  '<tt> puts call '</tt> puts ;
-:html:br  (-)   '<br> puts ;
+:html:tt  (q-)  '<tt> s:put call '</tt> s:put ;
+:html:br  (-)   '<br> s:put ;
 ~~~
 
 # Gopher Namespace
@@ -120,7 +120,7 @@ future.
 'Server-Info var
 ~~~
 
-These are just simple words to aid in overall readability.
+These are just simple accessor words to aid in overall readability.
 
 ~~~
 :requested-file  (-s)  @Requested-File  ;
@@ -215,7 +215,7 @@ Atua's gophermap support covers:
 :tab? @Tab ;
 :check-tab
   dup ASCII:HT eq? [ &Tab v:on ] if ;
-:gopher:gets (a-)
+:gopher:s:get (a-)
   &Tab v:off
   buffer:set
   [ @FID file:read dup buffer:add check-tab eol? not ] while
@@ -230,7 +230,7 @@ namespace that'll be left exposed to the world.
 ---reveal---
 ~~~
 
-An information line gets a format like:
+An information line s:get a format like:
 
   i...text...<tab><tab>null.host<tab>port<cr,lf>
 
@@ -239,34 +239,34 @@ the index footer.
 
 ~~~
 :gopher:i (s-)
-  [ puts ] html:tt html:br eol ;
+  [ s:put ] html:tt html:br eol ;
 ~~~
 
 The `gopher:icon` displays an indicator for menu items.
 
 ~~~
 :gopher:icon
-  $0 [ '&nbsp;TXT&nbsp;&nbsp; puts ] case
-  $1 [ '[DIR]_ puts ] case
-  $2 [ '&nbsp;CSO&nbsp;&nbsp; puts ] case
-  $3 [ '&nbsp;ERR&nbsp;&nbsp; puts ] case
-  $4 [ '&nbsp;BIN&nbsp;&nbsp; puts ] case
-  $5 [ '&nbsp;BIN&nbsp;&nbsp; puts ] case
-  $6 [ '&nbsp;UUE&nbsp;&nbsp; puts ] case
-  $7 [ '[FND]_ puts ] case
-  $8 [ '&nbsp;TEL&nbsp;&nbsp; puts ] case
-  $9 [ '&nbsp;BIN&nbsp;&nbsp; puts ] case
-  $I [ '&nbsp;IMG&nbsp;&nbsp; puts ] case
-  $S [ '&nbsp;AUD&nbsp;&nbsp; puts ] case
-  $g [ '&nbsp;GIF&nbsp;&nbsp; puts ] case
-  $h [ '&nbsp;HTM&nbsp;&nbsp; puts ] case
-  drop '&nbsp;???&nbsp;&nbsp; puts
+  $0 [ '&nbsp;TXT&nbsp;&nbsp; s:put ] case
+  $1 [ '[DIR]_ s:put ] case
+  $2 [ '&nbsp;CSO&nbsp;&nbsp; s:put ] case
+  $3 [ '&nbsp;ERR&nbsp;&nbsp; s:put ] case
+  $4 [ '&nbsp;BIN&nbsp;&nbsp; s:put ] case
+  $5 [ '&nbsp;BIN&nbsp;&nbsp; s:put ] case
+  $6 [ '&nbsp;UUE&nbsp;&nbsp; s:put ] case
+  $7 [ '[FND]_ s:put ] case
+  $8 [ '&nbsp;TEL&nbsp;&nbsp; s:put ] case
+  $9 [ '&nbsp;BIN&nbsp;&nbsp; s:put ] case
+  $I [ '&nbsp;IMG&nbsp;&nbsp; s:put ] case
+  $S [ '&nbsp;AUD&nbsp;&nbsp; s:put ] case
+  $g [ '&nbsp;GIF&nbsp;&nbsp; s:put ] case
+  $h [ '&nbsp;HTM&nbsp;&nbsp; s:put ] case
+  drop '&nbsp;???&nbsp;&nbsp; s:put
 ;
 ~~~
 
 ~~~
 :gopher:get-selector (-)
-  &Selector gets &Selector gets ;
+  &Selector s:get &Selector s:get ;
 (Rewrite_This:_It's_too_big)
 :gopher:file-for-request (-s)
   &Mode v:off
@@ -300,37 +300,37 @@ The `gopher:icon` displays an indicator for menu items.
   [ ASCII:HT [ #0 ] case ] s:map
   dup s:length over + n:inc
   pop [ #4 + ] if
-  '<a_href="%s">%s</a><br> s:format puts ;
+  '<a_href="%s">%s</a><br> s:format s:put ;
 
 :gopher:generate-index (f-)
-  'Content-type:_text/html puts eol eol
-  '<!DOCTYPE_HTML_PUBLIC_"-//W3C//DTD_HTML_4.01//EN" puts sp
-  '"http://www.w3.org/TR/html4/strict.dtd"> puts eol
-  '<html><head><meta_http-equiv="Content-Type"_content="text/html;_charset=utf-8"> puts
-  '<style_type="text/css">tt_{_white-space:_pre;_} puts
-  '_*_{_color:_#bbb;_background:_#090909;_font-size:_large;_}_a_{_color:_#FF6600;_} puts
-  '</style><title>forthworks.com</title></head><body><p> puts eol eol
+  'Content-type:_text/html s:put eol eol
+  '<!DOCTYPE_HTML_PUBLIC_"-//W3C//DTD_HTML_4.01//EN" s:put sp
+  '"http://www.w3.org/TR/html4/strict.dtd"> s:put eol
+  '<html><head><meta_http-equiv="Content-Type"_content="text/html;_charset=utf-8"> s:put
+  '<style_type="text/css">tt_{_white-space:_pre;_} s:put
+  '_*_{_color:_#bbb;_background:_#090909;_font-size:_large;_}_a_{_color:_#FF6600;_} s:put
+  '</style><title>forthworks.com</title></head><body><p> s:put eol eol
   file:R file:open !FID
   @FID file:size !Size
-  [ buffer gopher:gets
+  [ buffer gopher:s:get
     buffer tab? [ [ link ] html:tt eol ] [ gopher:i ] choose
     @FID file:tell @Size lt? ] while
   @FID file:close
-  [ #70 [ $_ putc ] times ] html:tt html:br eol
+  [ #70 [ $_ c:put ] times ] html:tt html:br eol
   'forthworks.com:80_/_atua-www_/_running_on_retro gopher:i
-  '</p></body></html> puts
+  '</p></body></html> s:put
 ;
 ~~~
 
-In a prior version of this I used `puts` to send the content. That
+In a prior version of this I used `s:put` to send the content. That
 stopped at the first zero value, which kept it from working with
 binary data. I added `gopher:send` to send the `Size` number of
 bytes to stdout, fixing this issue.
 
 ~~~
 :gopher:send (p-)
-  requested-file get-mime-type 'Content-type:_ puts puts eol eol
-  @Size [ fetch-next putc ] times drop ;
+  requested-file get-mime-type 'Content-type:_ s:put s:put eol eol
+  @Size [ fetch-next c:put ] times drop ;
 ~~~
 
 The only thing left is the top level server.
@@ -338,7 +338,7 @@ The only thing left is the top level server.
 ~~~
 :gopher:server
   gopher:get-selector
-  'HTTP/1.0_200_OK puts eol
+  'HTTP/1.0_200_OK s:put eol
   gopher:file-for-request
   @Server-Info
   [ gopher:generate-index ]

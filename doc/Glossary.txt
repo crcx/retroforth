@@ -1122,6 +1122,18 @@ Class Handler: class:word | Namespace: c | Interface Layer: all
 
 ----------------------------------------------------------------
 
+c:get
+
+  Data:  -c
+  Addr:  -
+  Float: -
+
+Read a single keypress.
+
+Class Handler: class:word | Namespace: global | Interface Layer: rre
+
+----------------------------------------------------------------
+
 c:letter?
 
   Data:  c-f
@@ -1143,6 +1155,18 @@ c:lowercase?
 Return TRUE if character is lowercase or FALSE otherwise.
 
 Class Handler: class:word | Namespace: c | Interface Layer: all
+
+----------------------------------------------------------------
+
+c:put
+
+  Data:  c-
+  Addr:  -
+  Float: -
+
+Display a single character.
+
+Class Handler: class:word | Namespace: global | Interface Layer: all
 
 ----------------------------------------------------------------
 
@@ -2295,6 +2319,18 @@ Class Handler: class:word | Namespace: f | Interface Layer: rre
 
 ----------------------------------------------------------------
 
+f:put
+
+  Data:  -
+  Addr:  -
+  Float: F-
+
+Display a floating point number.
+
+Class Handler: class:word | Namespace: global | Interface Layer: rre
+
+----------------------------------------------------------------
+
 f:sin
 
   Data:  -
@@ -2627,30 +2663,6 @@ Class Handler: class:word | Namespace: file | Interface Layer: rre
 
 ----------------------------------------------------------------
 
-getc
-
-  Data:  -c
-  Addr:  -
-  Float: -
-
-Read a single keypress.
-
-Class Handler: class:word | Namespace: global | Interface Layer: rre
-
-----------------------------------------------------------------
-
-gets
-
-  Data:  -s
-  Addr:  -
-  Float: -
-
-Read input from standard in (via `getc`) until a CR or LF is encountered. Returns a strig.
-
-Class Handler: class:word | Namespace: all | Interface Layer: rre
-
-----------------------------------------------------------------
-
 gopher:get
 
   Data:  asns-n
@@ -2664,7 +2676,7 @@ Class Handler: class:word | Namespace: gopher | Interface Layer: rre
 Example #1:
 
     here 'forthworks.com #70 '/ gopher:get
-    here puts
+    here s:put
 
 ----------------------------------------------------------------
 
@@ -3065,6 +3077,18 @@ Class Handler: class:word | Namespace: n | Interface Layer: all
 
 ----------------------------------------------------------------
 
+n:put
+
+  Data:  n-
+  Addr:  -
+  Float: -
+
+Display a number.
+
+Class Handler: class:word | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
 n:sqrt
 
   Data:  n-m
@@ -3203,7 +3227,7 @@ parse-until
   Addr:  -
   Float: -
 
-Read input from stdin (via `getc`) until the returned character is matched by the quote. Returns a string.
+Read input from stdin (via `c:get`) until the returned character is matched by the quote. Returns a string.
 
 Class Handler: class:word | Namespace: all | Interface Layer: rre
 
@@ -3446,54 +3470,6 @@ push
 Move a value from the data stack to the return stack.
 
 Class Handler: class:macro | Namespace: global | Interface Layer: all
-
-----------------------------------------------------------------
-
-putc
-
-  Data:  c-
-  Addr:  -
-  Float: -
-
-Display a single character.
-
-Class Handler: class:word | Namespace: global | Interface Layer: all
-
-----------------------------------------------------------------
-
-putf
-
-  Data:  -
-  Addr:  -
-  Float: F-
-
-Display a floating point number.
-
-Class Handler: class:word | Namespace: global | Interface Layer: rre
-
-----------------------------------------------------------------
-
-putn
-
-  Data:  n-
-  Addr:  -
-  Float: -
-
-Display a number.
-
-Class Handler: class:word | Namespace: global | Interface Layer: all
-
-----------------------------------------------------------------
-
-puts
-
-  Data:  s-
-  Addr:  -
-  Float: -
-
-Display a string.
-
-Class Handler: class:word | Namespace: global | Interface Layer: all
 
 ----------------------------------------------------------------
 
@@ -3814,6 +3790,18 @@ Class Handler: class:word | Namespace: s | Interface Layer: all
 
 ----------------------------------------------------------------
 
+s:get
+
+  Data:  -s
+  Addr:  -
+  Float: -
+
+Read input from standard in (via `c:get`) until a CR or LF is encountered. Returns a strig.
+
+Class Handler: class:word | Namespace: all | Interface Layer: rre
+
+----------------------------------------------------------------
+
 s:hash
 
   Data:  s-n
@@ -3910,6 +3898,18 @@ Class Handler: class:word | Namespace: s | Interface Layer: all
 
 ----------------------------------------------------------------
 
+s:put
+
+  Data:  s-
+  Addr:  -
+  Float: -
+
+Display a string.
+
+Class Handler: class:word | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
 s:replace
 
   Data:  sss-s
@@ -3982,7 +3982,7 @@ Class Handler: class:word | Namespace: s | Interface Layer: all
 
 Example #1:
 
-  'Hello_Brave_World! 'Brave s:split-on-string puts nl puts nl
+  'Hello_Brave_World! 'Brave s:split-on-string s:put nl s:put nl
 
 ----------------------------------------------------------------
 
@@ -4404,7 +4404,7 @@ Class Handler: class:word | Namespace: global | Interface Layer: all
 
 Example #1:
 
-    #12 [ $- putc ] times
+    #12 [ $- c:put ] times
 
 ----------------------------------------------------------------
 
@@ -4580,7 +4580,7 @@ Class Handler: class:word | Namespace: unix | Interface Layer: rre
 
 Example #1:
 
-  'SHELL s:empty [ unix:getenv ] sip puts nl
+  'SHELL s:empty [ unix:getenv ] sip s:put nl
 
 ----------------------------------------------------------------
 
@@ -4596,25 +4596,25 @@ Class Handler: class:word | Namespace: unix | Interface Layer: rre
 
 ----------------------------------------------------------------
 
-unix:io:putn
+unix:io:n:put
 
   Data:  n-
   Addr:  -
   Float: -
 
-Display a number (in base 10) to the standard output device. This is faster than `putn`, but not portable.
+Display a number (in base 10) to the standard output device. This is faster than `n:put`, but not portable.
 
 Class Handler: class:word | Namespace: unix:io | Interface Layer: rre
 
 ----------------------------------------------------------------
 
-unix:io:puts
+unix:io:s:put
 
   Data:  s-
   Addr:  -
   Float: -
 
-Display a string to stdout. This is faster than `puts`, but not portable.
+Display a string to stdout. This is faster than `s:put`, but not portable.
 
 Class Handler: class:word | Namespace: unix:io | Interface Layer: rre
 
@@ -4736,7 +4736,7 @@ Class Handler: class:word | Namespace: global | Interface Layer: all
 
 Example #1:
 
-    #10 [ dup putn nl n:dec dup n:zero? ] until
+    #10 [ dup n:put nl n:dec dup n:zero? ] until
 
 ----------------------------------------------------------------
 
@@ -4893,7 +4893,7 @@ Class Handler: class:word | Namespace: global | Interface Layer: all
 
 Example #1:
 
-    #10 [ dup putn nl n:dec dup n:-zero? ] while
+    #10 [ dup n:put nl n:dec dup n:-zero? ] while
 
 ----------------------------------------------------------------
 

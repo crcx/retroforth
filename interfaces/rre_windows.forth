@@ -5,7 +5,7 @@ This is a set of extensions for RRE.
 # Console Input
 
 ~~~
-:getc (-c) `1001 ;
+:c:get (-c) `1001 ;
 ~~~
 
 ---------------------------------------------------------------
@@ -46,7 +46,7 @@ This is a set of extensions for RRE.
 :f:abs    (f:a-b)  f:dup f:negative? [ f:negate ] if ;
 :prefix:. (s-__f:-a)
   compiling? [ s:keep ] [ s:temp ] choose &s:to-float class:word ; immediate
-:putf (f:a-) f:to-string puts ;
+:f:put (f:a-) f:to-string s:put ;
 :f:PI (f:-F) .3.141592 ;
 :f:E  (f:-F) .2.718281 ;
 ~~~
@@ -158,7 +158,7 @@ The second goes with it. The `for-each-line` word will invoke a combinator
 once for each line in a file. This makes some things trivial. E.g., a simple
 'cat' implementation could be as simple as:
 
-  'filename [ puts nl ] file:for-each-line
+  'filename [ s:put nl ] file:for-each-line
 
 ~~~
 {{
@@ -218,20 +218,20 @@ once for each line in a file. This makes some things trivial. E.g., a simple
 ~~~
 
 {{
-  :version (-)    @Version #100 /mod putn $. putc putn ;
+  :version (-)    @Version #100 /mod n:put $. c:put n:put ;
   :eol?    (c-f)  [ ASCII:CR eq? ] [ ASCII:LF eq? ] [ ASCII:SPACE eq? ] tri or or ;
   :valid?  (s-sf) dup s:length n:-zero? ;
-  :ok      (-)    compiling? [ nl 'Ok_ puts ] -if ;
+  :ok      (-)    compiling? [ nl 'Ok_ s:put ] -if ;
   :check-eof (c-c) dup [ #-1 eq? ] [ #4 eq? ] bi or [ 'bye d:lookup d:xt fetch call ] if ;
   :check-bs  (c-c) dup [ #8 eq? ] [ #127 eq? ] bi or [ buffer:get drop ] if ;
-  :gets      (-s) [ #1025 buffer:set
-                    [ getc dup buffer:add check-eof check-bs eol? ] until
+  :s:get     (-s) [ #1025 buffer:set
+                    [ c:get dup buffer:add check-eof check-bs eol? ] until
                     buffer:start s:chop ] buffer:preserve ;
 ---reveal---
-  :banner  (-)    'RETRO_12_(rx- puts version $) putc nl
-                  EOM putn '_MAX,_TIB_@_1025,_Heap_@_ puts here putn nl ;
+  :banner  (-)    'RETRO_12_(rx- s:put version $) c:put nl
+                  EOM n:put '_MAX,_TIB_@_1025,_Heap_@_ s:put here n:put nl ;
   :listen  (-)
-    ok repeat gets valid? [ interpret ok ] [ drop ] choose again ;
+    ok repeat s:get valid? [ interpret ok ] [ drop ] choose again ;
 }}
 ~~~
 
@@ -243,11 +243,11 @@ once for each line in a file. This makes some things trivial. E.g., a simple
 {{
   :gather (c-)
     dup [ #8 eq? ] [ #127 eq? ] bi or [ drop ] [ buffer:add ] choose ;
-  :cycle (q-qc)  repeat getc dup-pair swap call not 0; drop gather again ;
+  :cycle (q-qc)  repeat c:get dup-pair swap call not 0; drop gather again ;
 ---reveal---
   :parse-until (q-s)
     [ s:empty buffer:set cycle drop-pair buffer:start ] buffer:preserve ;
 }}
 
-:gets (-s) [ [ ASCII:LF eq? ] [ ASCII:CR eq? ] bi or ] parse-until ;
+:s:get (-s) [ [ ASCII:LF eq? ] [ ASCII:CR eq? ] bi or ] parse-until ;
 ~~~
