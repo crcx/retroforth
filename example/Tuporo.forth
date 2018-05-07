@@ -102,7 +102,7 @@ construct the line.
 
 ~~~
 :generate-entry (ss-)
-  SERVER PORT 'abcd 'dcba reorder '0%s\t%s\t%s\t%n s:format puts nl ;
+  SERVER PORT 'abcd 'dcba reorder '0%s\t%s\t%s\t%n s:format s:put nl ;
 ~~~
 
 With this it's easy to define `generate-index` using a loop to make a
@@ -121,7 +121,7 @@ displaying the characters and newlines as needed.
 
 ~~~
 :display-block (n-)
-  block:get #16 [ #64 [ fetch-next putc ] times nl ] times drop ;
+  block:get #16 [ #64 [ fetch-next c:put ] times nl ] times drop ;
 ~~~
 
 ## ...
@@ -157,7 +157,7 @@ correspond to /r/nnnn selectors.
 
 ~~~
 :raw-block (-)
-  &Selector #3 + s:chop block:get puts ;
+  &Selector #3 + s:chop block:get s:put ;
 ~~~
 
 `set-block` updates a block with new text. This selector takes a form:
@@ -209,11 +209,11 @@ to `handle`
 ~~~
 :eol? (c-f)
   [ ASCII:CR eq? ] [ ASCII:LF eq? ] [ ASCII:HT eq? ] tri or or ;
-:gets (a-)
+:s:get (a-)
   buffer:set
-  [ getc dup buffer:add eol? not ] while ;
+  [ s:get dup buffer:add eol? not ] while ;
 
-&Selector gets handle
+&Selector s:get handle
 ~~~
 
 ## Future Direction

@@ -11,8 +11,8 @@ See http://osiris.978.org/~alex/ups.html for a list of service codes.
 :checksum #17 + 'Checksum:_ swap s:append ;
 :parse-ups
   valid? [ account service-code package-id checksum
-           #4 [ puts nl ] times ]
-         [ drop 'invalid_tracking_number puts nl ] choose ;
+           #4 [ s:put nl ] times ]
+         [ drop 'invalid_tracking_number s:put nl ] choose ;
 ~~~
 
 ```

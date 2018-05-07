@@ -26,5 +26,5 @@
 ~~~
 
 ~~~
-#0 sys:argv [ puts nl ] file:for-each-line
+#0 sys:argv [ s:put nl ] file:for-each-line
 ~~~

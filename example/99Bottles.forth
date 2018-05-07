@@ -3,9 +3,9 @@
 Display the text for the *99 Bottles of Beer* song.
 
 ~~~
-[ dup putn sp 'bottles puts ]
-[ '1_bottle puts ]
-[ 'no_more_bottles puts  ]
+[ dup n:put sp 'bottles s:put ]
+[ '1_bottle s:put ]
+[ 'no_more_bottles s:put  ]
 'bottles d:create
   , , ,
 
@@ -13,13 +13,13 @@ Display the text for the *99 Bottles of Beer* song.
   dup #2 n:min bottles + fetch call ;
 
 :display-beer
-  display-bottles '_of_beer puts ;
+  display-bottles '_of_beer s:put ;
 
 :display-wall
-  display-beer '_on_the_wall puts ;
+  display-beer '_on_the_wall s:put ;
 
 :display-take
-  'Take_one_down,_pass_it_around  puts ;
+  'Take_one_down,_pass_it_around  s:put ;
 
 :display-verse
   display-wall nl display-beer nl

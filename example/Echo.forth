@@ -14,7 +14,7 @@ Then a simple loop:
 - increment the argument number
 
 ~~~
-[ dup sys:argv puts sp n:inc ] times
+[ dup sys:argv s:put sp n:inc ] times
 ~~~
 
 And at the end, discard the argument number and inject a

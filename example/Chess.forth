@@ -65,14 +65,14 @@ So first up, the columns.
 
 ~~~
   :cols (-)
-    '____0_1_2_3_4_5_6_7 puts nl ;
+    '____0_1_2_3_4_5_6_7 s:put nl ;
 ~~~
 
 Then a horizontal separator.
 
 ~~~
   :--- (-) 
-    '__+-----------------+ puts nl ;
+    '__+-----------------+ s:put nl ;
 ~~~
 
 And then a row.
@@ -82,9 +82,9 @@ Possible Future:
 
 ~~~
   :row (a-a)
-    '%n_|_ s:format puts
-    #8 [ fetch-next putc sp ] times
-    $| putc nl ;
+    '%n_|_ s:format s:put
+    #8 [ fetch-next c:put sp ] times
+    $| c:put nl ;
 ~~~
 
 These will be tied together a little later into the top level display word.

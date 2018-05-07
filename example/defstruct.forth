@@ -32,7 +32,7 @@ book 'A const
 
 :info (a-)
   [ subject@ ] [ author@ ] [ title@ ] tri
-  '%s_by_%s_is_a_%s_book. s:format puts nl ;
+  '%s_by_%s_is_a_%s_book. s:format s:put nl ;
 
 &A info
 ~~~

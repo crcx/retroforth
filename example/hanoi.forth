@@ -44,7 +44,7 @@ Then, implementing the recursive algorithm from the Wikipedia article:
     @Num @From @To @Via
     @Num n:dec @From @Via @To hanoi
     set-vars
-    @To @From '\nMove_a_ring_from_%n_to_%n s:format puts
+    @To @From '\nMove_a_ring_from_%n_to_%n s:format s:put
     @Num n:dec @Via @To @From hanoi
   ] if ;
 ~~~

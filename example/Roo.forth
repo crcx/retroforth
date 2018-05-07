@@ -288,16 +288,16 @@ The cursor display will be platform specific.
 ~~~
 :position-cursor (-)
   @Cursor-Col @Cursor-Row [ n:inc ] bi@
-  ASCII:ESC '%c[%n;%nH s:format puts ;
+  ASCII:ESC '%c[%n;%nH s:format s:put ;
 
 :clear-display (-)
-  ASCII:ESC putc '[2J puts
-  ASCII:ESC putc '[H puts ;
+  ASCII:ESC c:put '[2J s:put
+  ASCII:ESC c:put '[H s:put ;
 
 :display-block (-)
   clear-display
-  &Block #16 [ #64 [ fetch-next putc ] times $| putc nl ] times drop
-  #64 [ $- putc ] times $+ putc sp @Current-Block putn @Mode putc nl
+  &Block #16 [ #64 [ fetch-next c:put ] times $| c:put nl ] times drop
+  #64 [ $- c:put ] times $+ c:put sp @Current-Block n:put @Mode c:put nl
   dump-stack position-cursor ;
 ~~~
 
@@ -311,7 +311,7 @@ All that's left is a single top level loop to tie it all together.
 :edit
   &Completed v:off
   #0 !Current-Block load-block
-  [ display-block getc handle-key @Completed ] until ;
+  [ display-block c:get handle-key @Completed ] until ;
 
 edit
 ~~~

@@ -42,7 +42,7 @@ This is just a shortcut to make writing strings to the current file
 easier.
 
 ~~~
-:file:puts (s-) [ @FID file:write ] s:for-each ASCII:LF @FID file:write ;
+:file:s:put (s-) [ @FID file:write ] s:for-each ASCII:LF @FID file:write ;
 ~~~
 
 I now turn my attention to displaying the file. I am aiming for
@@ -79,14 +79,14 @@ be adjusted for your chosen terminal.
 
 ~~~
 :clear-display (-)
-  ASCII:ESC dup '%c[2J%c[0;0H s:format puts nl ;
+  ASCII:ESC dup '%c[2J%c[0;0H s:format s:put nl ;
 ~~~
 
 This just displays the separator bars.
 
 ~~~
 :---- (-)
-  COLS [ $- putc ] times nl ;
+  COLS [ $- c:put ] times nl ;
 ~~~
 
 Next, a word to display the header. Currently just the name of the file
@@ -94,17 +94,17 @@ being edited and the line count.
 
 ~~~
 :header (-)
-  count-lines @SourceFile '%s_:_%n_lines\n s:format puts ;
+  count-lines @SourceFile '%s_:_%n_lines\n s:format s:put ;
 ~~~
 
 The `pad` word is used to make sure line numbers are all the same width.
 
 ~~~
 :pad (n-n)
-  dup #0 #9 n:between? [ '____ puts ] if
-  dup #10 #99 n:between? [ '___ puts ] if
-  dup #100 #999 n:between? [ '__ puts ] if
-  dup #1000 #9999 n:between? [ '_ puts ] if ;
+  dup #0 #9 n:between? [ '____ s:put ] if
+  dup #10 #99 n:between? [ '___ s:put ] if
+  dup #100 #999 n:between? [ '__ s:put ] if
+  dup #1000 #9999 n:between? [ '_ s:put ] if ;
 ~~~
 
 A line has a form:
@@ -119,17 +119,17 @@ indicator can be toggled via the ~ key.
 
 ~~~
 :mark-if-current (n-n)
-  dup @CurrentLine eq? [ $* putc ] [ sp ] choose ; 
+  dup @CurrentLine eq? [ $* c:put ] [ sp ] choose ; 
 
 :line# (n-)
-  putn ':_ puts ;
+  n:put ':_ s:put ;
 
 :eol (-)
-  @ShowEOL [ $~ putc ] if nl ;
+  @ShowEOL [ $~ c:put ] if nl ;
 
 :display-line (n-n)
   dup @LineCount lt?
-  [ dup mark-if-current pad line# n:inc @FID file:read-line puts eol ] if ;
+  [ dup mark-if-current pad line# n:inc @FID file:read-line s:put eol ] if ;
 
 :display (-)
   @SourceFile file:R file:open !FID
@@ -168,25 +168,25 @@ So first up, a word to delete all text in the current line.
 
 ~~~
 :delete-line (-)
-  [ current? [ drop '_ ] if file:puts n:inc ] process-lines ;
+  [ current? [ drop '_ ] if file:s:put n:inc ] process-lines ;
 ~~~
 
 Then a word to discard the current line, removing it from the file.
 
 ~~~
 :kill-line (-)
-  [ current? [ drop ] [ file:puts ] choose n:inc ] process-lines ;
+  [ current? [ drop ] [ file:s:put ] choose n:inc ] process-lines ;
 ~~~
 
 And the inverse, a word to inject a new line into the file.
 
 ~~~
 :add-line (-)
-  [ current? [ ASCII:LF @FID file:write ] if file:puts n:inc ] process-lines ;
+  [ current? [ ASCII:LF @FID file:write ] if file:s:put n:inc ] process-lines ;
 ~~~
 
 Replacing a line is next. Much like the `delete-line`, this writes all
-but the current line to a dummy file. It uses a `gets` word to read in
+but the current line to a dummy file. It uses a `s:get` word to read in
 the text to write instead of the original current line. When done, it
 replaces the original file with the dummy one.
 
@@ -197,13 +197,13 @@ replaces the original file with the dummy one.
     ASCII:DEL [ buffer:get drop ] case
     buffer:add ;
 ---reveal---
-  :gets (-s)  
+  :s:get (-s)  
     s:empty [ buffer:set
-      [ repeat getc dup ASCII:LF -eq? 0; drop save again ] call drop ] sip ;
+      [ repeat c:get dup ASCII:LF -eq? 0; drop save again ] call drop ] sip ;
 }}
 
 :replace-line (-)
-  [ current? [ drop gets ] if file:puts n:inc ] process-lines ;
+  [ current? [ drop s:get ] if file:s:put n:inc ] process-lines ;
 ~~~
 
 The next four are just things I find useful. They allow me to indent,
@@ -212,16 +212,16 @@ delimiter at a single keystroke.
 
 ~~~
 :indent-line (-)
-  [ current? [ ASCII:SPACE dup @FID file:write @FID file:write ] if file:puts n:inc ] process-lines ;
+  [ current? [ ASCII:SPACE dup @FID file:write @FID file:write ] if file:s:put n:inc ] process-lines ;
 
 :dedent-line (-)
-  [ current? [ n:inc n:inc ] if file:puts n:inc ] process-lines ;
+  [ current? [ n:inc n:inc ] if file:s:put n:inc ] process-lines ;
 
 :trim-trailing (-)
-  [ current? [ s:trim-right ] if file:puts n:inc ] process-lines ;
+  [ current? [ s:trim-right ] if file:s:put n:inc ] process-lines ;
 
 :code-block (-)
-  [ current? [ drop '~~~ ] if file:puts n:inc ] process-lines ;
+  [ current? [ drop '~~~ ] if file:s:put n:inc ] process-lines ;
 ~~~
 
 And then a very limited form of copy/paste, which moves a copy of the
@@ -229,10 +229,10 @@ current line into a `CopiedLine` buffer and back again.
 
 ~~~
 :copy-line (-)
-  [ current? [ dup &CopiedLine s:copy ] if file:puts n:inc ] process-lines ;
+  [ current? [ dup &CopiedLine s:copy ] if file:s:put n:inc ] process-lines ;
 
 :paste-line (-)
-  [ current? [ drop &CopiedLine ] if file:puts n:inc ] process-lines ;
+  [ current? [ drop &CopiedLine ] if file:s:put n:inc ] process-lines ;
 ~~~
 
 One more set of commands: jump to a particular line in the file, jump
@@ -240,7 +240,7 @@ to the start or end of the file.
 
 ~~~
 :goto (-)
-  gets s:to-number !CurrentLine ;
+  s:get s:to-number !CurrentLine ;
 
 :goto-start (-)
   #0 !CurrentLine ;
@@ -253,8 +253,8 @@ And now tie everything together. There's a key handler and a top level loop.
 
 ~~~
 :describe (cs-)
-  swap putc $: putc puts ;
-:| describe '_|_ puts ;
+  swap c:put $: c:put s:put ;
+:| describe '_|_ s:put ;
 
 :help
   $1 'replace_ |
@@ -273,14 +273,14 @@ And now tie everything together. There's a key handler and a top level loop.
   $> 'indent__ |
   $~ 'mark_eol |
   $| '~~~_____ |
-  '___________|_ puts
+  '___________|_ s:put
   $q 'quit____ | nl ;
 ~~~
 
 ~~~
 :constrain (-) &CurrentLine #0 @LineCount n:dec v:limit ;
 :handler
-    getc
+    c:get
       $1 [ replace-line                           ] case
       $2 [ add-line                               ] case
       $3 [ trim-trailing                          ] case

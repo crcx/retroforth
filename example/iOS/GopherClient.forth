@@ -48,7 +48,7 @@ A `wrap` word handles wrapping and indenting lines based on the `Displayed` char
 ~~~
   :wrap
     @Displayed @WrapPoint gt?
-    [ #0 !Displayed nl '__________ puts ]
+    [ #0 !Displayed nl '__________ s:put ]
     [ &Displayed v:inc ] choose ;
 ~~~
 
@@ -56,9 +56,9 @@ Next is a word to display the directory type. This uses a simple case structure 
 
 ~~~
   :type (c-)
-    $0 [ 'TXT_ puts ] case
-    $1 [ 'DIR_ puts ] case
-    drop '____ puts ;
+    $0 [ 'TXT_ s:put ] case
+    $1 [ 'DIR_ s:put ] case
+    drop '____ s:put ;
 ~~~
 
 I define a `line` word to display the line number. This lets me pad the number with a leading number of spaces and have a colon and space following it.
@@ -67,24 +67,24 @@ I define a `line` word to display the line number. This lets me pad the number w
   :line (n-)
     n:to-string dup
     s:length #4 swap - [ sp ] times
-    puts ':_ puts ;
+    s:put ':_ s:put ;
 ~~~
 
-I now define a custom version of `puts` that will call the `wrap` word defined earlier. I've not used `s:for-each` here as this will be called frequently, so it's a little faster to have a manually constructed loop here.
+I now define a custom version of `s:put` that will call the `wrap` word defined earlier. I've not used `s:for-each` here as this will be called frequently, so it's a little faster to have a manually constructed loop here.
 
 ~~~
-  :puts<w/wrap> (s-)
-    [ repeat fetch-next 0; putc wrap again ]
+  :s:put<w/wrap> (s-)
+    [ repeat fetch-next 0; c:put wrap again ]
     call drop ;
 ~~~
 
-The next word is `display`. This will tokenize a line and display the `type` and then the rest of the description using `puts<w/wrap>`.
+The next word is `display`. This will tokenize a line and display the `type` and then the rest of the description using `s:put<w/wrap>`.
 
 ~~~
   :display (s-)
     #0 !Displayed
     ASCII:HT s:tokenize #0 set:nth fetch
-    fetch-next type puts<w/wrap> ;
+    fetch-next type s:put<w/wrap> ;
 ~~~
 
 ~~~
@@ -112,7 +112,7 @@ Text files are really easy. We just read the downloaded file into a buffer and d
 
 ~~~
 :display:text (-)
-  GOPHER-DATA file:slurp puts nl ;
+  GOPHER-DATA file:slurp s:put nl ;
 ~~~
 
 # Final Bits
@@ -123,7 +123,7 @@ Text files are really easy. We just read the downloaded file into a buffer and d
 :display-by-type (c-)
   $0 [ display:text  ] case
   $1 [ display:index ] case
-  dup putc nl drop ;
+  dup c:put nl drop ;
 ~~~
 
 `home` just fetches a starting index and displays it. I have this hardcoded to my personal Gopher server.

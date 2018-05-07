@@ -85,14 +85,14 @@ separate handler.
 
 ~~~
 :render-inst (n-)
-  $' putc unpack #4 [ name-for putc putc ] times sp '________ pad $i putc ;
+  $' c:put unpack #4 [ name-for c:put c:put ] times sp '________ pad $i c:put ;
 
 :render-data (n-)
-  $# putc n:to-string dup puts pad sp $d putc ;
+  $# c:put n:to-string dup s:put pad sp $d c:put ;
 
 :render-ref  (n-)
   dup d:lookup-xt n:-zero?
-    [ dup render-data sp $( putc d:lookup-xt d:name puts ]
+    [ dup render-data sp $( c:put d:lookup-xt d:name s:put ]
     [     render-data ] choose ;
 ~~~
 
@@ -113,7 +113,7 @@ And now to tie it all together:
 ~~~
 :disassemble (an-)
   [ fetch-next
-    over $( putc putn sp    (address)
+    over $( c:put n:put sp    (address)
     render-packed nl        (inst_or_data)
   ] times drop ;
 ~~~

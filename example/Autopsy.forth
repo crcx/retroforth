@@ -64,10 +64,10 @@ Now it's possible to write words to display instruction bundles. The formats are
   #27 n:min #2 * &INST + fetch-next swap fetch swap ;
 
 :display:bundle<raw> (n-)
-  unpack '%n,%n,%n,%n s:format puts ;
+  unpack '%n,%n,%n,%n s:format s:put ;
 
 :display:bundle<named> (n-)
-  unpack #4 [ name-for putc putc ] times ;
+  unpack #4 [ name-for c:put c:put ] times ;
 ~~~
 
 So now I'm ready to write a disassembler. I'll provide an output setup like this:
@@ -105,14 +105,14 @@ I split out each type (instruction, reference/raw, and data) into a separate han
 
 ~~~
 :render-inst (n-)
-  $' putc unpack #4 [ name-for<counting-li> putc putc ] times sp $i putc ;
+  $' c:put unpack #4 [ name-for<counting-li> c:put c:put ] times sp $i c:put ;
 
 :render-data (n-)
-  $# putc n:to-string puts sp $d putc ;
+  $# c:put n:to-string s:put sp $d c:put ;
 
 :render-ref  (n-)
   dup d:lookup-xt n:-zero?
-    [ dup render-data tab tab d:lookup-xt d:name '[possibly_`%s`] s:format puts ]
+    [ dup render-data tab tab d:lookup-xt d:name '[possibly_`%s`] s:format s:put ]
     [     render-data ] choose ;
 ~~~
 
@@ -137,9 +137,9 @@ And now to tie it all together:
   [
     @TryToIdentifyWords
     [ dup d:lookup-xt n:-zero?
-      [ dup d:lookup-xt d:name nl puts nl ] if ] if
+      [ dup d:lookup-xt d:name nl s:put nl ] if ] if
     fetch-next
-    over putn sp      (address)
+    over n:put sp      (address)
     render-packed nl  (inst_or_data)
   ] times drop ;
 ~~~
@@ -219,7 +219,7 @@ With the populated table of instructions, implementing a `process-single-opcode`
 :process-single-opcode (n-)
   dup #0 #26 n:between?
   [ &Instructions + fetch call ]
-  [ 'Invalid_Instruction:_%n_! s:format puts nl ] choose ;
+  [ 'Invalid_Instruction:_%n_! s:format s:put nl ] choose ;
 ~~~
 
 Next is to unpack an instruction bundle and process each instruction.
@@ -253,15 +253,15 @@ So helpers for displaying things:
 
 ~~~
 :display-status
-  @RP @SP @IP 'IP:%n_SP:%n_RP:%n\n s:format puts
-  [IP] [ unpack ] sip '__%n_->_[%n,%n,%n,%n]_->_ s:format puts
-  [IP] unpack #4 [ name-for<counting-li> putc putc ] times nl ;
+  @RP @SP @IP 'IP:%n_SP:%n_RP:%n\n s:format s:put
+  [IP] [ unpack ] sip '__%n_->_[%n,%n,%n,%n]_->_ s:format s:put
+  [IP] unpack #4 [ name-for<counting-li> c:put c:put ] times nl ;
 
 :display-data-stack
-  #0 @SP [ &DataStack over + fetch putn sp n:inc ] times drop ;
+  #0 @SP [ &DataStack over + fetch n:put sp n:inc ] times drop ;
 
 :display-return-stack
-  #0 @RP [ &ReturnStack over + fetch putn sp n:inc ] times drop ;
+  #0 @RP [ &ReturnStack over + fetch n:put sp n:inc ] times drop ;
 ~~~
 
 And then using the display helpers and instruction processor, a single stepper. (This also updates a `Steps` counter)
@@ -271,7 +271,7 @@ And then using the display helpers and instruction processor, a single stepper. 
 
 :step (-)
   display-status
-  '__Stack:_ puts display-data-stack '_->_ puts
+  '__Stack:_ s:put display-data-stack '_->_ s:put
   [IP] process-packed-opcode &IP v:inc
   display-data-stack nl nl
   &Steps v:inc ;
@@ -293,7 +293,7 @@ The `trace` will empty the step counter and display the number of steps used.
   #0 !Steps
   !IP #0 to-rstack
   [ step @RP n:zero? ] until
-  @Steps '%n_steps_taken\n s:format puts ;
+  @Steps '%n_steps_taken\n s:format s:put ;
 ~~~
 
 ==================================================
@@ -306,7 +306,7 @@ Tests
   #3 #4 gt? [ #1 ] if ;
 
 #0 #100 disassemble
-nl '-------------------------- puts nl
+nl '-------------------------- s:put nl
 &TryToIdentifyWords v:on
 #0 #100 disassemble
 ~~~

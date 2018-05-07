@@ -17,8 +17,8 @@ A test case:
 
 &a &b &c vadd
 
-&c fetch-next putn nl
-   fetch-next putn nl
-   fetch      putn nl
+&c fetch-next n:put nl
+   fetch-next n:put nl
+   fetch      n:put nl
 ~~~
 

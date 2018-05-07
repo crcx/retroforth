@@ -9,7 +9,7 @@ based applications.
 
 ~~~
 :VT100:escape (-)
-  ASCII:ESC putc ;
+  ASCII:ESC c:put ;
 ~~~
 
 Everything starts with an ESCAPE character.
@@ -18,17 +18,17 @@ Everything starts with an ESCAPE character.
 
 ~~~
 :VT100:reset (-)
-  VT100:escape $c putc ;
+  VT100:escape $c c:put ;
 ~~~
 
 ~~~
 :VT100:enable-line-wrap (-)
-  VT100:escape '[7h puts ;
+  VT100:escape '[7h s:put ;
 ~~~
 
 ~~~
 :VT100:disable-line-wrap (-)
-  VT100:escape '[7l puts ;
+  VT100:escape '[7l s:put ;
 ~~~
 
 
@@ -36,12 +36,12 @@ Everything starts with an ESCAPE character.
 
 ~~~
 :VT100:default-font (-)
-  VT100:escape $( putc ;
+  VT100:escape $( c:put ;
 ~~~
 
 ~~~
 :VT100:alternate-font (-)
-  VT100:escape $) putc ;
+  VT100:escape $) c:put ;
 ~~~
 
 
@@ -49,53 +49,53 @@ Cursor Control
 
 ~~~
 :VT100:cursor:home (-)
-  VT100:escape '[0;0H puts ;
+  VT100:escape '[0;0H s:put ;
 ~~~
 
 ~~~
 :VT100:cursor:move (rc-)
   VT100:escape
-  swap '[%n;%nH s:format puts ;
+  swap '[%n;%nH s:format s:put ;
 ~~~
 
 ~~~
 :VT100:cursor:down (n-)
-  VT100:escape '[%nB s:format puts ;
+  VT100:escape '[%nB s:format s:put ;
 ~~~
 
 ~~~
 :VT100:cursor:up (n-)
-  VT100:escape '[%nA s:format puts ;
+  VT100:escape '[%nA s:format s:put ;
 ~~~
 
 ~~~
 :VT100:cursor:forward (n-)
-  VT100:escape '[%nC s:format puts ;
+  VT100:escape '[%nC s:format s:put ;
 ~~~
 
 ~~~
 :VT100:cursor:back (n-)
-  VT100:escape '[%nD s:format puts ;
+  VT100:escape '[%nD s:format s:put ;
 ~~~
 
 ~~~
 :VT100:cursor:save (-)
-  VT100:escape '[s puts ;
+  VT100:escape '[s s:put ;
 ~~~
 
 ~~~
 :VT100:cursor:restore (-)
-  VT100:escape '[u puts ;
+  VT100:escape '[u s:put ;
 ~~~
 
 ~~~
 :VT100:cursor:save-attributes (-)
-  VT100:escape '[7 puts ;
+  VT100:escape '[7 s:put ;
 ~~~
 
 ~~~
 :VT100:cursor:restore-attributes (-)
-  VT100:escape '[8 puts ;
+  VT100:escape '[8 s:put ;
 ~~~
 
 
@@ -123,12 +123,12 @@ Cursor Control
 
 ~~~
 :VT100:set (n-)
-  VT100:escape '[%nm s:format puts ;
+  VT100:escape '[%nm s:format s:put ;
 ~~~
 
 ~~~
 :VT100:clear (-)
-  VT100:escape '[2J puts ;
+  VT100:escape '[2J s:put ;
 ~~~
 
 ## Example:
@@ -136,9 +136,9 @@ Cursor Control
     VT100:clear
     #10 #15 VT100:cursor:move
     'red VT100:color VT100:foreground VT100:set
-    'Hello_World! puts nl
+    'Hello_World! s:put nl
     #11 #15 VT100:cursor:move
     'cyan VT100:color VT100:foreground VT100:set
-    'Press_a_key_to_exit puts nl
-    getc drop
+    'Press_a_key_to_exit s:put nl
+    c:get drop
     VT100:reset
