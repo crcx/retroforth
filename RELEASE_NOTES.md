@@ -33,9 +33,9 @@ Core Language:
 
 Interfaces:
 
-- no longer use ```` for code blocks; use ~~~ instead
 - rre:
 
+  - no longer use ```` for code blocks; use ~~~ instead
   - added `f:NAN`
   - added `f:INF`
   - added `f:-INF`
@@ -45,6 +45,11 @@ Interfaces:
   - added `f:sqrt`
   - added "-t" command line argument to run tests
   - rewrote command line handler
+
+- javascript/html
+
+  - cleaned up user interface (closer to the iOS UI now)
+  - simplified, cleaned up CSS a bit
 
 Other:
 

@@ -1,4 +1,6 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-
+
+strict.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -6,7 +8,7 @@
   <style type="text/css">
 /*<![CDATA[*/
   *::-webkit-scrollbar {
-    width: 0.75em;
+    width: 0.5em;
   }
  
   *::-webkit-scrollbar-track {
@@ -14,14 +16,14 @@
   }
 
   *::-webkit-scrollbar-thumb {
-    background-color: slategrey;
+    background-color: #333333;
     outline: 1px solid slategrey;
   }
 
   body {
     padding: 0px;
     margin: 0px;
-    background: #111111;
+    background: #101010;
   }
 
   #wrapper {
@@ -29,7 +31,7 @@
     table-layout: fixed;
     width:100%;
     height:80vh;
-    background-color:Gray;
+    background: #101010;
   }
 
   #wrapper div {
@@ -37,15 +39,11 @@
     height:100%;
   }
 
-  #left {
-    background: #222222;
-    border-right: 1px solid #111111;
+  #left, #right {
+    background: #181818;
+    border: 1px solid #333333;
   }
 
-  #right {
-    background: #222222;
-    border-left: 1px solid #111111;
-  }
 
   #listenerbar {
     background: rgba(255,255,255,0);
@@ -54,24 +52,24 @@
 
   #listener {
     margin-top: 8pt;
-    width: 93.5%;
+    width: 90%;
     margin-left: 1%;
-    background: #222222;
-    color: white;
+    background: #181818;
+    color: #D6D6D6;
     border: 0px;
   }
 
   textarea {
-    height: 99%;
+    height: 100%;
     width: 99%;
     margin-left: 1%;
     background: rgba(255,255,255,0);
-    color: white;
+    color: #D6D6D6;
     border: 0px;
   }
 
   button {
-    border: 0px solid black;
+    border: 0px;
     height: 6vh;
     margin-top: 1vh;
     margin-bottom: 1vh;
@@ -81,6 +79,10 @@
     background: rgba(255,255,255,0);
   }
 
+  button:hover {
+    color: #FF8C00;
+  }
+
   * {
     font-size: 20pt;
   }
@@ -88,7 +90,7 @@
   </style>
 <script>
 /* Nga ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   Copyright (c) 2008 - 2017, Charles Childers
+   Copyright (c) 2008 - 2018, Charles Childers
    Copyright (c) 2009 - 2010, Luke Parrish
    Copyright (c) 2010,        Marc Simpson
    Copyright (c) 2010,        Jay Skeer
@@ -389,7 +391,7 @@ var ngaImage = [
 ];
 
 /* Nga - Retro - JavaScript Interface ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   Copyright (c) 2008 - 2017, Charles Childers
+   Copyright (c) 2008 - 2018, Charles Childers
    Copyright (c) 2009 - 2010, Luke Parrish
    Copyright (c) 2010,        Marc Simpson
    Copyright (c) 2010,        Jay Skeer
@@ -611,28 +613,24 @@ function newProject() {
 </head>
 
 <body onLoad='main()'>
-  <div id="toolbar">
-    <button onclick="newProject()">New</button>
-    <button onclick="saveSnapshot()">Save</button>
-    <button onclick="loadSnapshot()">Load</button>
-    <span style="float: right">
-      <button onclick="cls()">Clear</button>
-      <button onclick="go()">Go</button>
-    </span>
-  </div>
-
   <div id="wrapper">
     <div id='left'>
       <textarea id='input'>
 # Syntax
 
-RETRO code consists of a series of whitespace delimited tokens. Each of these can have an optional prefix telling RETRO how to treat the token. If the token lacks a valid prefix, it will be treated as a word name.
+RETRO code consists of a series of whitespace delimited tokens. Each of these can have an optional 
+
+prefix telling RETRO how to treat the token. If the token lacks a valid prefix, it will be treated as a 
+
+word name.
 
 So:
 
     [prefix][token]
 
-Prefixes are single character modifiers. They are similar to colors in ColorForth, but are handled via words in the `prefix:` namespace.
+Prefixes are single character modifiers. They are similar to colors in ColorForth, but are handled via 
+
+words in the `prefix:` namespace.
 
 The major prefixes are:
 
@@ -704,7 +702,9 @@ Variables:
 @Foo putn
 ~~~
 
-Note that RETRO will only run code in a fenced block (starting and ending with ~~~). This allows for code and documentation to be intermixed easily.
+Note that RETRO will only run code in a fenced block (starting and ending with ~~~). This allows for 
+
+code and documentation to be intermixed easily.
 
 The full glossary can be browsed:
 
@@ -718,8 +718,15 @@ http://forthworks.com:9999 or gopher://forthworks.com:9999
   </div>
   <div id='listenerbar'>
     <input id='listener'>
-    <span style="float: right">
       <button onclick="listen()">Eval</button>
+  </div>
+  <div id="toolbar">
+    <button onclick="newProject()">New</button>
+    <button onclick="saveSnapshot()">Save</button>
+    <button onclick="loadSnapshot()">Load</button>
+    <span style="float: right">
+      <button onclick="cls()">Clear</button>
+      <button onclick="go()">Go</button>
     </span>
   </div>
 </body>
@@ -740,3 +747,4 @@ TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
 PERFORMANCE OF THIS SOFTWARE.
 
 -->
+
