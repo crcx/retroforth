@@ -29,6 +29,7 @@ Core Language:
 - renamed `getc` to `c:get`
 - renamed `gets` to `s:get`
 - renamed `words` to `d:words`
+- add `d:words-with`
 
 Interfaces:
 

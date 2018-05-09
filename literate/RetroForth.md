@@ -1479,6 +1479,20 @@ I provide just a few debugging aids.
 :dump-stack (-)  depth 0; drop push dump-stack pop dup n:put sp ;
 ~~~
 
+From Kiyoshi Yoneda, this is a variant of `d:words` which displays
+words containing a specific substring. It's useful to see words in
+a specific namespace, e.g., by doing `'s: d:words-with`, or words
+that likely display something: `':puts d:words-with`.
+
+{{
+  :display-if-matched  (s-)
+    dup here s:contains-string? [ s:put sp ] [ drop ] choose ;
+---reveal---
+  :d:words-with (s-)
+    here s:copy [ d:name display-if-matched ] d:for-each ;
+}}
+
+
 ~~~
 :FREE (-n) STRINGS #1025 - here - ;
 ~~~

@@ -1782,6 +1782,18 @@ Class Handler: class:word | Namespace: global | Interface Layer: all
 
 ----------------------------------------------------------------
 
+d:words-with
+
+  Data:  s-
+  Addr:  -
+  Float: -
+
+Display a list of all named items in the `Dictionary` that contain the provided substring.
+
+Class Handler: class:word | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
 d:xt
 
   Data:  d-a
