@@ -4,48 +4,99 @@
     || \\ // \\ 2018.6
     a minimalist forth for nga
 
-*Rx* (*retro experimental*) is a minimal Forth implementation for the
-Nga virtual machine. Like Nga this is intended to be used within a
-larger supporting framework adding I/O and other desired functionality.
-Various example interface layers are included.
+*Rx* (*retro experimental*) is a minimal Forth implementation
+for the Nga virtual machine. Like Nga this is intended to be
+used within a larger supporting framework adding I/O and other
+desired functionality.
 
 ## General Notes on the Source
 
-Rx is developed using a literate tool called *unu*. This allows easy
-extraction of fenced code blocks into a separate file for later
-compilation. Developing in a literate approach is beneficial as it
-makes it easier for me to keep documentation current and lets me
-approach the code in a more structured manner.
+Rx is developed using a literate tool called *unu*. This allows
+easy extraction of fenced code blocks into a separate file for
+later compilation. I've found the use of a literate style to be
+very beneficial as it makes it easier for me to keep the code
+and commentary in sync, and helps me to approach development in
+a more structured manner.
 
 This source is written in Muri, an assembler for Nga.
 
+Before going on, I should explain a bit about Nga and Muri.
+
+Nga provides a MISC inspired virtual machine for a dual stack
+architecture. There are 27 instructions, with up to four packed
+into each memory location (*cell*). The instructions are:
+
+    0  nop        7  jump      14  gt        21  and
+    1  lit <v>    8  call      15  fetch     22  or
+    2  dup        9  ccall     16  store     23  xor
+    3  drop      10  return    17  add       24  shift
+    4  swap      11  eq        18  sub       25  zret
+    5  push      12  neq       19  mul       26  end
+    6  pop       13  lt        20  divmod
+
+I won't explain them here, but if you're familiar with Forth,
+it should be pretty easy to figure out.
+
+Packing of instructions lets me save space, but does require a
+little care. Instructions that modify the instruction pointer
+must be followed by NOP. These are: JUMP, CALL, CCALL, RETURN,
+and ZRET.
+
+Additionally, if the instruction bundle contains a LIT, a value
+must be in the following cell. (One for each LIT in the bundle)
+
+Muri uses the first two characters of each instruction name
+when composing the bundles, with NOP being named as two dots.
+
+So:
+
+    lit lit add nop
+    
+Is a bundle named:
+
+    liliad..
+
+And with two `li` instructions, must be followed by two values.
+
+Muri uses a directive in the first line to tell it what to
+expect. Directives are:
+
+    i   instruction bundle
+    d   decimal value
+    r   reference to label
+    :   label
+    s   zero terminated string
+
 ## In the Beginning...
 
-All code built with the Nga toolchain starts with a jump to the main
-entry point. With cell packing, this takes two cells. We can take
-advantage of this knowledge to place a couple of variables at the
-start so they can be easily identified and interfaced with external
-tools. This is important as Nga allows for a variety of I/O models to
-be implemented and I don't want to tie Rx into any one specific model.
-
-Here's the initial memory map:
-
-| Offset | Contains                    | Notes              |
-| ------ | --------------------------- | ------------------ |
-| 0      | lit call nop nop            | Compiled by *Naje* |
-| 1      | Pointer to main entry point | Compiled by *Naje* |
-| 2      | Dictionary                  |                    |
-| 3      | Heap                        |                    |
-
-Naje, the Nga assembler, compiles the initial instructions automatically.
-Muri does not, so provide this here.
+Nga expects code to start with a jump to the main entry point.
+Rx doesn't really have a main entry point (the top level loop
+is assumed to be part of the interface layer), but I allocate
+the space for a jump here anyway. This makes it possible to
+patch the entry point later, if using an interface that adds
+the appropriate I/O functionality.
 
 ~~~
 i liju....
 d -1
 ~~~
 
-The two variables need to be declared next, so:
+With this, it's time to allocate some data elements. These are
+always kept in known locations after the initial jump to ensure
+that they can be easily identified and interfaced with external
+tools. This is important as Nga allows for a variety of I/O
+models to be implemented and I don't want to tie Rx into any
+one specific model.
+
+Here's the initial memory map:
+
+| Offset | Contains                    |
+| ------ | --------------------------- |
+| 0      | lit call nop nop            |
+| 1      | Pointer to main entry point |
+| 2      | Dictionary                  |
+| 3      | Heap                        |
+| 4      | RETRO version               |
 
 ~~~
 : Dictionary
@@ -58,20 +109,21 @@ d 1536
 d 201806
 ~~~
 
-Both of these are pointers. `Dictionary` points to the most recent
-dictionary entry. (See the *Dictionary* section at the end of this
-file.) `Heap` points to the next free memory address. This is hard
-coded to an address beyond the end of the Rx kernel. It'll be fine
-tuned as development progresses. See the *Interpreter &amp; Compiler*
-section for more on this.
+Both of these are pointers. `Dictionary` points to the most
+recent dictionary entry. (See the *Dictionary* section at the
+end of this file.) `Heap` points to the next free address.
+This is hard coded to an address beyond the end of the Rx
+kernel. I adjust this as needed if the kernel grows or shinks
+significantly. See the *Interpreter &amp; Compiler* section
+for more on this.
 
 ## Nga Instruction Set
 
-The core Nga instruction set consists of 27 instructions. Rx begins by
-assigning each to a separate function. These are not intended for direct
-use; in Rx the compiler will fetch the opcode values to use from these
-functions when compiling. Some of them will also be wrapped in normal
-functions later.
+As mentioned earlier, Nga provides 27 instructions. Rx begins
+the actual coding by assigning each to a separate function.
+These are not intended for direct use; the compiler will fetch
+the opcode values to use from these functions when compiling.
+Many will also be exposed in the initial dictionary.
 
 ~~~
 : _nop
@@ -183,31 +235,46 @@ d 26
 i re......
 ~~~
 
-Nga also allows for multiple instructions to be packed into a single
-memory location (called a *cell*). Rx doesn't take advantage of this
-yet, with the exception of calls. Since calls take a value from the
-stack, a typical call (in Muri assembly) would look like:
+Though Nga allows for multiple instructions to be packed into a
+single memory location (called a *cell*), Rx only packs a few
+specific combinations.
+
+Since calls and jumps take a value from the stack, a typical
+call (in Muri assembly) would look like:
 
     i lica....
     r bye
 
-Without packing this takes three cells: one for the lit, one for the
-address, and one for the call. Packing drops it to two since the
-lit/call combination can be fit into a single cell. We define the
-opcode for this here so that the compiler can take advantage of the
-space savings.
+Without packing this takes three cells: one for the lit, one
+for the address, and one for the call. Packing drops it to two
+since the lit/call combination can be fit into a single cell.
+Likewise, I use a packed jump for use with quotations. These
+saves several hundred cells (and thus fetch/decode cycles) when
+loading the standard library.
 
-Likewise, I define a packed jump for use with quotations. This saves
-several hundred cells (and thus fetch/decode cycles) when loading the
-standard library.
+The raw values for these are:
+
+    2049  lica....
+    1793  liju....
+
+These are hardcoded in a few places later. I had previously
+used a lookup, but this proved costly in processing time, so
+hard coding proved better. (These places are clearly marked)
 
 ## Memory
 
-The basic memory accesses are handled via `fetch` and `store`. These
-two functions provide slightly easier access to linear sequences of data.
+Memory is a big, flat, linear array. The addressing starts at
+zero and counts upwards towards a fixed upper limit (set by the
+VM).
 
-`fetch-next` takes an address and fetches the stored value. It returns
-the next address and the stored value.
+The basic memory accesses are handled via `fetch` and `store`.
+
+The next two functions provide easier access to sequences of
+data by fetching or storing a value and returning the next
+address.
+
+`fetch-next` takes an address and fetches the stored value. It
+returns the next address and the stored value.
 
 ~~~
 : fetch-next
@@ -216,8 +283,8 @@ d 1
 i fere....
 ~~~
 
-`store-next` takes a value and an address. It stores the value to the
-address and returns the next address.
+`store-next` takes a value and an address. It stores the value
+to the address and returns the next address.
 
 ~~~
 : store-next
@@ -232,14 +299,18 @@ i stpore..
 The Rx kernel provides three conditional forms:
 
     flag true-pointer false-pointer choose
-    flag true-pointer if
+    flag true-pointer   if
     flag false-pointer -if
 
-Implement `choose`, a conditional combinator which will execute one of
-two functions, depending on the state of a flag. We take advantage of
-a little hack here. Store the pointers into a jump table with two
-fields, and use the flag as the index. Default to the *false* entry,
-since a *true* flag is -1.
+`choose` is a conditional combinator which will execute one of
+two functions, depending on the state of a flag. I use a little
+hack here. I store the pointers into a jump table with two
+fields, and use the flag as the index. Defaults to the *false*
+entry, since a *true* flag is -1.
+
+Note that this requires that the flags be -1 (for TRUE) and 0
+(for FALSE). It's possible to make this more flexible, but at
+a significant performance hit, so I'm leaving it this way.
 
 ~~~
 : choice:true
@@ -257,8 +328,8 @@ r choice:false
 i re......
 ~~~
 
-Next the two *if* forms. Note that I allow *-if* to fall through
-into *if*. This saves two cells of memory.
+Next the two *if* forms. Note that `-if` falls into `if`. This
+saves two cells of memory.
 
 ~~~
 : -if
@@ -271,11 +342,11 @@ i re......
 
 ## Strings
 
-The kernel needs two basic string operations for dictionary searches:
-obtaining the length and comparing for equality.
+The kernel needs two basic string operations for dictionary
+searches: obtaining the length and comparing for equality.
 
-Strings in Rx are zero terminated. This is a bit less elegant than
-counted strings, but the implementation is quick and easy.
+Strings in Rx are zero terminated. This is a bit less elegant
+than counted strings, but the implementation is quick and easy.
 
 First up, string length. The process here is trivial:
 
@@ -304,12 +375,16 @@ d 1
 i re......
 ~~~
 
-String comparisons are harder.
+String comparisons are harder. In high level code this is:
 
   dup fetch push n:inc swap
   dup fetch push n:inc pop dup pop
   -eq? [ drop-pair drop #0 pop pop drop drop ]
        [ 0; drop s:eq? pop pop drop drop ] choose drop-pair #-1 ;
+
+I've rewritten this a few times. The current implementation is
+fast enough, and not overly long. It may be worth looking into
+a hash based comparsion in the future.
 
 ~~~
 : mismatch
@@ -344,9 +419,9 @@ d -1
 
 ### Compiler Core
 
-The heart of the compiler is `comma` which stores a value into memory
-and increments a variable (`Heap`) pointing to the next free address.
-`here` is a helper function that returns the address stored in `Heap`.
+The heart of the compiler is `comma` which stores a value into
+memory and increments a variable (`Heap`) pointing to the next
+free address.
 
 ~~~
 : comma
@@ -357,14 +432,15 @@ i listre..
 r Heap
 ~~~
 
-With these we can add a couple of additional forms. `comma:opcode` is
-used to compile VM instructions into the current defintion. This is
-where those functions starting with an underscore come into play. Each
-wraps a single instruction. Using this we can avoid hard coding the
-opcodes.
+I also add a couple of additional forms. `comma:opcode` is used
+to compile VM instructions into the current defintion. This is
+where those functions starting with an underscore come into
+play. Each wraps a single instruction. Using this I can avoid
+hard coding the opcodes.
 
-This performs a jump to the `comma` word instead of using a `call/ret`
-to save a cell and slightly improve performance.
+This performs a jump to the `comma` word instead of using a
+`call/ret` to save a cell and slightly improve performance. I
+will use this technique frequently.
 
 ~~~
 : comma:opcode
@@ -372,9 +448,9 @@ i feliju..
 r comma
 ~~~
 
-`comma:string` is used to compile a string into the current definition.
-As with `comma:opcode`, this uses a `jump` to eliminate the final tail
-call.
+`comma:string` is used to compile a string into the current
+definition. As with `comma:opcode`, this uses a `jump` to
+eliminate the final tail call.
 
 ~~~
 : ($)
@@ -394,16 +470,23 @@ d 0
 r comma
 ~~~
 
-With the core functions above it's now possible to setup a few more
-things that make compilation at runtime more practical.
+With the core functions above it's now possible to setup a few
+more things that make compilation at runtime more practical.
 
-First, a variable indicating whether we should compile or run a function.
+First, a variable indicating whether we should compile or run a 
+function. In traditional Forth this would be **STATE**; I call
+it `Compiler`.
+
 This will be used by the *word classes*.
 
 ~~~
 : Compiler
 d 0
 ~~~
+
+Next is *semicolon*; which compiles the code to terminate a
+function and sets the `Compiler` to an off state (0). This
+just needs to compile in a RET.
 
 ~~~
 : t-;
@@ -417,13 +500,12 @@ r Compiler
 
 ### Word Classes
 
-Rx is built over the concept of *word classes*. Word classes are a way
-to group related words, based on their compilation and execution
-behaviors. A special word, called a *class handler*, is defined to
-handle an execution token passed to it on the stack. The compiler uses
-a variable named class to set the default class when compiling a word.
-We'll take a closer look at class later. Rx provides several classes
-with differing behaviors:
+Rx is built over the concept of *word classes*. Word classes
+are a way to group related words, based on their compilation
+and execution behaviors. A *class handler* function is defined
+to handle an execution token passed to it on the stack.
+
+Rx provides several  classes with differing behaviors:
 
 `class:data` provides for dealing with data structures.
 
@@ -471,9 +553,9 @@ r choose
 `class:primitive` is a special class handler for functions that
 correspond to Nga instructions.
 
-| interpret            | compile                                     |
-| -------------------- | ------------------------------------------- |
-| call the function    | compile the instruction into the definition |
+| interpret            | compile                              |
+| -------------------- | ------------------------------------ |
+| call the function    | compile an instruction               |
 
 ~~~
 : class:primitive
@@ -485,9 +567,9 @@ i liju....
 r choose
 ~~~
 
-`class:macro` is the class handler for *compiler macros*. These are
-functions that always get called. They can be used to extend the
-language in interesting ways.
+`class:macro` is the class handler for *compiler macros*. These
+are functions that always get called. They can be used to
+extend the language in interesting ways.
 
 | interpret            | compile                       |
 | -------------------- | ----------------------------- |
@@ -498,30 +580,28 @@ language in interesting ways.
 i ju......
 ~~~
 
-The class mechanism is not limited to these classes. You can write
-custom classes at any time. On entry the custom handler should take the
-XT passed on the stack and do something with it. Generally the handler
-should also check the `Compiler` state to determine what to do in either
-interpretation or compilation.
+The class mechanism is not limited to these classes. You can
+write custom classes at any time. On entry the custom handler
+should take the XT passed on the stack and do something with
+it. Generally the handler should also check the `Compiler`
+state to determine what to do in either interpretation or 
+compilation.
 
 ### Dictionary
 
-Rx has a single dictionary consisting of a linked list of headers. The
-current form of a header is shown in the chart below. Pay special
-attention to the accessors. Each of these words corresponds to a field
-in the dictionary header. When dealing with dictionary headers, it is
-recommended that you use the accessors to access the fields since it is
-expected that the exact structure of the header will change over time.
+Rx has a single dictionary consisting of a linked list of
+headers. The current form of a header is shown in the chart
+below.
 
-| field | holds                                       | accessor |
-| ----- | ------------------------------------------- | -------- |
-| link  | link to the previous entry, 0 if last entry | d:link   |
-| xt    | link to start of the function               | d:xt     |
-| class | link to the class handler function          | d:class  |
-| name  | zero terminated string                      | d:name   |
+| field | holds                              | accessor |
+| ----- | ---------------------------------- | -------- |
+| link  | link to the previous entry         | d:link   |
+| xt    | link to start of the function      | d:xt     |
+| class | link to the class handler function | d:class  |
+| name  | zero terminated string             | d:name   |
 
-The initial dictionary is constructed at the end of this file. It'll
-take a form like this:
+The initial dictionary is constructed at the end of this file.
+It'll take a form like this:
 
     : 0000
     d 0
@@ -541,19 +621,20 @@ take a form like this:
     r class:primitive
     s swap
 
-Each entry starts with a pointer to the prior entry (with a pointer
-to zero marking the first entry in the dictionary), a pointer to
-the start of the function, a pointer to the class handler, and a nul
-terminated string indicating the name exposed to the Rx interpreter.
+Each entry starts with a pointer to the prior entry (with a
+pointer to zero marking the first entry in the dictionary), a
+pointer to the start of the function, a pointer to the class
+handler, and a null terminated string indicating the name
+exposed to the Rx interpreter.
 
-Rx will store the pointer to the most recent entry in a variable
-called `Dictionary`. For simplicity, we just assign the last entry
-an arbitrary label of 9999. This is set at the start of the source.
-(See *In the Beginning...*)
+Rx stores the pointer to the most recent entry in a variable
+called `Dictionary`. For simplicity, I just assign the last
+entry an arbitrary label of 9999. This is set at the start of
+the source. (See *In the Beginning...*)
 
-Rx provides accessor functions for each field. Since the number of
-fields (or their ordering) may change over time, using these reduces
-the number of places where field offsets are hard coded.
+Rx provides accessor functions for each field. Since the number
+of fields (or their ordering) may change over time, using these 
+reduces the number of places where field offsets are hard coded.
 
 ~~~
 : d:link
@@ -573,10 +654,15 @@ d 3
 ~~~
 
 A traditional Forth has `create` to make a new dictionary entry
-pointing to the next free location in `Heap`. Rx has `newentry` which
-serves as a slightly more flexible base. You provide a string for the
-name, a pointer to the class handler, and a pointer to the start of
-the function. Rx does the rest.
+pointing to the next free location in `Heap`. Rx has `newentry` 
+which serves as a slightly more flexible base. You provide a
+string for the name, a pointer to the class handler, and a
+pointer to the start of the function. Rx does the rest.
+
+In actual practice, I never use this outside of Rx. New words
+are made using the `:` prefix, or `d:create` (once defined in
+the standard library). At some point I may simplify this by
+moving `d:create` into Rx and using it in place of `newentry`.
 
 ~~~
 : newentry
@@ -595,9 +681,9 @@ i polistre
 r Dictionary
 ~~~
 
-Rx doesn't provide a traditional create as it's designed to avoid
-assuming a normal input stream and prefers to take its data from the
-stack.
+Rx doesn't provide a traditional create as it's designed to
+avoid assuming a normal input stream and prefers to take its
+data from the stack.
 
 ### Dictionary Search
 
@@ -642,23 +728,26 @@ r Which
 
 ### Number Conversion
 
-This code converts a zero terminated string into a number. The approach
-is very simple:
+This code converts a zero terminated string into a number. The 
+approach is very simple:
 
-* Store an internal multiplier value (-1 for negative, 1 for positive)
+* Store an internal multiplier value (-1 for negative, 1 for
+  positive)
 * Clear an internal accumulator value
 * Loop:
 
   * Fetch the accumulator value
   * Multiply by 10
-  * For each character, convert to a numeric value and add to the
-    accumulator
+  * For each character, convert to a numeric value and add to
+    the accumulator
   * Store the updated accumulator
 
-* When done, take the accumulator value and the modifier and multiply
-  them to get the final result
+* When done, take the accumulator value and the modifier and
+  multiply them to get the final result
 
-At this time Rx only supports decimal numbers.
+Rx only supports decimal numbers. If you want more bases, it's
+pretty easy to add them later, but it's not needed in the base
+kernel.
 
 ~~~
 : next
@@ -697,23 +786,25 @@ An input token has a form like:
 
     <prefix-char>string
 
-Rx will check the first character to see if it matches a known prefix.
-If it does, it will pass the string (without the token) to the prefix
-handler. If not, it will attempt to find the token in the dictionary.
+Rx will check the first character to see if it matches a known 
+prefix. If it does, it will pass the string (sans prefix) to
+the prefix handler. If not, it will attempt to find the token
+in the dictionary.
 
-Prefixes are handled by functions with specific naming conventions. A
-prefix name should be:
+Prefixes are handled by functions with specific naming
+conventions. A prefix name should be:
 
     prefix:<prefix-char>
 
-Where <prefix-char> is the character for the prefix. These should be
-compiler macros (using the `class:macro` class) and watch the `compiler`
-state to decide how to deal with the token. To find a prefix, Rx stores
-the prefix character into a string named `prefixed`. It then searches
-for this string in the dictionary. If found, it sets an internal
-variable (`prefix:handler`) to the dictionary entry for the handler
-function. If not found, `prefix:handler` is set to zero. The check,
-done by `prefix?`, also returns a flag.
+Where <prefix-char> is the character for the prefix. These are
+compiler macros (using the `class:macro` class) and watch the
+`Compiler` to decide how to deal with the token. To find a
+prefix, Rx stores the prefix character into a string named
+`prefixed`. It then searches for this string in the dictionary.
+If found, it sets an internal variable (`prefix:handler`) to
+the dictionary entry for the handler function. If not found,
+`prefix:handler` is set to zero. The check, done by `prefix?`,
+also returns a flag.
 
 ~~~
 : prefix:no
@@ -754,11 +845,10 @@ d 0
 i nere....
 ~~~
 
-Rx uses prefixes for important bits of functionality including parsing
-numbers (prefix with `#`), obtaining pointers (prefix with `&`), and
-starting new functions (using the `:` prefix).
-
-I use `jump` for tail call eliminations here.
+Rx makes extensive use of prefixes for implementing major parts
+of the language, including  parsing numbers (prefix with `#`), 
+obtaining pointers (prefix with `&`), and defining functions
+(using the `:` prefix).
 
 | prefix | used for          | example |
 | ------ | ----------------- | ------- |
@@ -809,14 +899,18 @@ r class:data
 
 ### Quotations
 
-Quotations are anonymous, nestable blocks of code. Rx uses them for
-control structures and some aspects of data flow. A quotation takes a
-form like:
+Quotations are anonymous, nestable blocks of code. Rx uses them
+for control structures and some aspects of data flow. A quote
+takes a form like:
 
     [ #1 #2 ]
     #12 [ square #144 eq? [ #123 ] [ #456 ] choose ] call
 
-Begin a quotation with `[` and end it with `]`.
+Begin a quotation with `[` and end it with `]`. The code here
+is slightly complicated by the fact that these have to be
+nestable, and so must compile the appropriate jumps around
+the nested blocks, in addition to properly setting and
+restoring the `Compiler` state.
 
 ~~~
 : t-[
@@ -858,14 +952,17 @@ i drdrre..
 
 ## Lightweight Control Structures
 
-Rx provides a couple of functions for simple flow control apart from
-using quotations. These are `repeat`, `again`, and `0;`. An example of
-using them:
+Rx provides a couple of functions for simple flow control apart
+from using quotations. These are `repeat`, `again`, and `0;`.
+An example of using them:
 
-    :s:length dup [ repeat fetch-next 0; drop again ] call swap - #1 - ;
+    :s:length
+      dup [ repeat fetch-next 0; drop again ] call
+      swap - #1 - ;
 
-These can only be used within a definition or quotation. If you need
-to use them interactively, wrap them in a quote and `call` it.
+These can only be used within a definition or quotation. If you
+need to use them interactively, wrap them in a quote and `call`
+it.
 
 ~~~
 : repeat
@@ -886,7 +983,13 @@ r comma:opcode
 i liliju..
 r _zret
 r comma:opcode
+~~~
 
+I take a brief aside here to implement `push` and `pop`, which
+move a value to/from the address stack. These are compiler
+macros.
+
+~~~
 : t-push
 i liliju..
 r _push
@@ -905,22 +1008,24 @@ The *interpreter* is what processes input. What it does is:
 * Take a string
 * See if the first character has a prefix handler
 
-  * Yes: pass the rest of the string to the prefix handler for
-         processing
+  * Yes: pass the rest of the string to the prefix handler
   * No: lookup in the dictionary
 
-    * Found: pass xt of word to the class handler for processing
+    * Found: pass xt of word to the class handler
     * Not found: report error via `err:notfound`
 
-First up, the handler for dealing with words that are not found. This
-is defined here as a jump to the handler for the Nga *NOP* instruction.
-It is intended that this be hooked into and changed.
+First, the handler for dealing with words that are not found.
+This is defined here as a jump to the handler for the Nga *NOP*
+instruction. It is intended that this be hooked into and changed.
 
-As an example, in Rx code, assuming an I/O interface with some support
-for strings and output:
+As an example, in Rx code, assuming an I/O interface with some
+support for strings and output:
 
     [ $? putc space 'word not found' puts ]
     &err:notfound #1 + store
+
+An interface should either patch the jump, or catch it and do
+something to report the error.
 
 ~~~
 : err:notfound
@@ -928,8 +1033,9 @@ i liju....
 r _nop
 ~~~
 
-`call:dt` takes a dictionary token and pushes the contents of the `d:xt`
-field to the stack. It then calls the class handler stored in `d:class`.
+`call:dt` takes a dictionary token and pushes the contents of
+the `d:xt` field to the stack. It then calls the class handler
+stored in `d:class`.
 
 ~~~
 : call:dt
@@ -982,10 +1088,9 @@ r choose
 
 ## The Initial Dictionary
 
-The dictionary is a linked list. This sets up the initial dictionary.
-Maintenance of this bit is annoying, but it generally shouldn't be
-necessary to change this unless you are adding new functions to the
-Rx kernel. 
+This sets up the initial dictionary. Maintenance of this bit is
+annoying, but it isn't necessary to change this unless you add
+or remove new functions in the kernel.
 
 ~~~
 : 0000
@@ -1339,21 +1444,25 @@ s err:notfound
 
 Rx is Copyright (c) 2016-2018, Charles Childers
 
-Permission to use, copy, modify, and/or distribute this software for
-any purpose with or without fee is hereby granted, provided that the
-above copyright notice and this permission notice appear in all copies.
+Permission to use, copy, modify, and/or distribute this software
+for any purpose with or without fee is hereby granted, provided
+that the above copyright notice and this permission notice
+appear in all copies.
 
-THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
-WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
-MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
-ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
-ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT
-OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL
+WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL
+THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR
+CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT,
+NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
+CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
-My thanks go out to Michal J Wallace, Luke Parrish, JGL, Marc Simpson,
-Oleksandr Kozachuk, Jay Skeer, Greg Copeland, Aleksej Saushev, Foucist,
-Erturk Kocalar, Kenneth Keating, Ashley Feniello, Peter Salvi, Christian
-Kellermann, Jorge Acereda, Remy Moueza, John M Harrison, and Todd Thomas.
-All of these great people helped in the development of Retro 10 & 11,
-without which Rx wouldn't have been possible.
+My thanks go out to Michal J Wallace, Luke Parrish, JGL, Marc
+Simpson, Oleksandr Kozachuk, Jay Skeer, Greg Copeland, Aleksej
+Saushev, Foucist, Erturk Kocalar, Kenneth Keating, Ashley
+Feniello, Peter Salvi, Christian Kellermann, Jorge Acereda,
+Remy Moueza, John M Harrison, and Todd Thomas.
+
+All of these great people helped in the development of RETRO 10
+and 11, without which Rx wouldn't have been possible.
