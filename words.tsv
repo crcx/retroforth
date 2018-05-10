@@ -333,6 +333,7 @@ set:for-each	aq-	-	-	Execute the quote once for each item in the set.			class:wo
 set:from-results	q-a	-	-	Execute quote. Return a new set containing the values the quote leaves on the stack.			class:word	{n/a}	{n/a}	set	all	
 set:from-string	s-a	-	-	Create a new set with the characters in the source string.			class:word	{n/a}	{n/a}	set	all	
 set:length	a-n	-	-	Return the length of a set.			class:word	{n/a}	{n/a}	set	all	
+set:make	q-a	-	-	Execute quote. Return a new set containing the values the quote leaves on the stack. This is identical to doing `set:from-results set:reverse`			class:word	{n/a}	{n/a}	set	all	
 set:map	aq-	-	-	Execute quote once for each item in the set. Constructs a new set from the value returned by the quote.			class:word	{n/a}	{n/a}	set	all	
 set:nth	an-b	-	-	Return the actual address of the nth item in the set.			class:word	{n/a}	{n/a}	set	all	
 set:reduce	pnq-n	-	-	Takes a set, a starting value, and a quote. This will apply the quote to each item in the set; the quote should consume two values and return one.			class:word	{n/a}	{n/a}	set	all	

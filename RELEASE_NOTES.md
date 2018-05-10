@@ -30,6 +30,7 @@ Core Language:
 - renamed `gets` to `s:get`
 - renamed `words` to `d:words`
 - add `d:words-with`
+- add `set:make`
 
 Interfaces:
 

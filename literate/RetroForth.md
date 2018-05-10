@@ -1183,6 +1183,16 @@ to the quote. The quote should consume both and return a new value.
   [ swap ] dip set:for-each ;
 ~~~
 
+When making a set, I often want the values in the original
+order. The `set:from-results set:reverse` is a bit long, so
+I'm defining a new `set:make` which wraps these.
+
+~~~
+:set:make (q-a)
+  set:from-results set:reverse ;
+~~~
+
+
 ## Muri: an assembler
 
 Muri is my minimalist assembler for Nga. This is an attempt to

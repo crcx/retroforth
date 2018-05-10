@@ -4250,6 +4250,18 @@ Class Handler: class:word | Namespace: set | Interface Layer: all
 
 ----------------------------------------------------------------
 
+set:make
+
+  Data:  q-a
+  Addr:  -
+  Float: -
+
+Execute quote. Return a new set containing the values the quote leaves on the stack. This is identical to doing `set:from-results set:reverse`
+
+Class Handler: class:word | Namespace: set | Interface Layer: all
+
+----------------------------------------------------------------
+
 set:map
 
   Data:  aq-
