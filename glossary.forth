@@ -38,44 +38,29 @@ And a helper word to skip a specified number of fields.
 ~~~
 
 Then it's easy to add words to return each individual
-field.
+field. I use `skip` to implement `select`, which selects
+a specific field.
 
 ~~~
-:field:name   (-s) @SourceLine
-                   ASCII:HT s:split nip ;
+:select   (n-s)
+  @SourceLine swap skip ASCII:HT s:split nip ;
+~~~
 
-:field:dstack (-s) @SourceLine #1 skip
-                   ASCII:HT s:split nip ;
+And then named words to access each field.
 
-:field:astack (-s) @SourceLine #2 skip
-                   ASCII:HT s:split nip ;
-
-:field:fstack (-s) @SourceLine #3 skip
-                   ASCII:HT s:split nip ;
-
-:field:descr  (-s) @SourceLine #4 skip
-                   ASCII:HT s:split nip ;
-
-:field:itime  (-s) @SourceLine #5 skip
-                   ASCII:HT s:split nip ;
-
-:field:ctime  (-s) @SourceLine #6 skip
-                   ASCII:HT s:split nip ;
-
-:field:class  (-s) @SourceLine #7 skip
-                   ASCII:HT s:split nip ;
-
-:field:ex1    (-s) @SourceLine #8 skip
-                   ASCII:HT s:split nip ;
-
-:field:ex2    (-s) @SourceLine #9 skip
-                   ASCII:HT s:split nip ;
-
-:field:namespace (-s) @SourceLine #10 skip
-                      ASCII:HT s:split nip ;
-
-:field:interface (-s) @SourceLine #11 skip
-                      ASCII:HT s:split nip ;
+~~~
+:field:name   (-s) #0 select ;
+:field:dstack (-s) #1 select ;
+:field:astack (-s) #2 select ;
+:field:fstack (-s) #3 select ;
+:field:descr  (-s) #4 select ;
+:field:itime  (-s) #5 select ;
+:field:ctime  (-s) #6 select ;
+:field:class  (-s) #7 select ;
+:field:ex1    (-s) #8 select ;
+:field:ex2    (-s) #9 select ;
+:field:namespace (-s) #10 select ;
+:field:interface (-s) #11 select ;
 ~~~
 
 # Display an Entry
@@ -96,6 +81,8 @@ format like:
 If there are specific notes on interpret or compile time
 actions, or any examples, they will be displayed after
 the description.
+
+Note to self: This is horribly messy and should be rewritten.
 
 ~~~
 :s:put<formatted> (s-)  s:format s:put ;
@@ -406,9 +393,10 @@ to use.
 ;
 ~~~
 
-# Gopher Server
+# Gopher and HTTP Server
 
-This tool includes a minimal Gopher server designed to run under inetd.
+This tool embeds a tiny Gopher and HTTP server designed to run
+under inetd.
 
 First, set the port to use. I default to 9999.
 
@@ -416,17 +404,42 @@ First, set the port to use. I default to 9999.
 #9999 'GOPHER-PORT const
 ~~~
 
-Next, words to display the main index (when requesting / or an empty
-selector).
+Next, words to display the main index (when requesting / or an
+empty selector).
+
+Gopher protocol for directories dictates the following format:
+
+    <type><description>\t<selector>\t<server>\t<port>\r\n
+
+So `display-entry` constructs these. The selectors chosen are
+`desc wordname`; the server is hardcoded to forthworks.com in
+this.
 
 ~~~
 :display-entry (-)
   GOPHER-PORT field:name dup '0%s\t/desc_%s\tforthworks.com\t%n\r\n s:format s:put ;
+~~~
 
+Next, `gopher:list-words` which iterates over each entry,
+generating the directory line for each.
+
+~~~
 :gopher:list-words (-)
   'words.tsv [ s:keep !SourceLine display-entry ] file:for-each-line ;
+~~~
 
-:display-entry (-)
+With the Gopher side of the index taken care of, I turn my
+attentions towards HTTP. In this case, the index is an HTML
+file with a bunch of hyperlinks. Since we can't just pass
+any non-whitespace in the URLs, this uses the line number in
+**words.tsv** instead.
+
+As with the Gopher, there's a `display-entry` which makes
+the HTML for each line, and an `http:list-words` which uses
+this to build an index.
+
+~~~
+:display-entry (n-n)
   field:name over '<a_href="/%n">%s</a><br> s:format s:put ;
 
 :http:list-words (-)
