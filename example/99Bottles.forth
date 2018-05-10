@@ -1,4 +1,4 @@
-# example|99Bottles
+# 99 Bottles
 
 Display the text for the *99 Bottles of Beer* song.
 

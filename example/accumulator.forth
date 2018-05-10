@@ -1,23 +1,42 @@
-Traditional Forth has a CREATE/DOES> construct. RETRO allows for
-something similar using the `does` combinator.
+# Accumulator
 
-An example in traditional Forth:
+## Description
+
+This implements a function that takes an initial value and constructs a new function that returns the value before incrementing the stored value by 1.
+
+So, given an initial value of 1, the first time the function is called, 1 is returned. The second, 2, and so on.
+
+In traditional Forth, this would be done using a CREATE/DOES> construct. RETRO allows for something similar using the `does` combinator.
+
+An example in a traditional Forth:
 
     : acc ( n "name" -- )
       create , does> dup >r @ dup 1+ r> ! ;
 
-And in RETRO, using `does` and the `bi` combinator:
+In RETRO, we could begin by rewriting this using the RETRO words:
+
+    :acc (ns-)
+      d:create , [ dup push fetch n:inc pop store ] does ;
+
+The `dup push ... pop` pattern is the `sip` combinator, so we can simplify it:
+
+    :acc (ns-)
+      d:create , [ [ fetch n:inc ] sip store ] does ;
+
+This is better, but not quite done. RETRO has a `v:inc` for incrementing variables, which would eliminate the n:inc and store. And a `bi` combinator to run two quotes against a value. So we could simplify yet again, resulting in:
 
 ~~~
 :acc (ns-)
   d:create , [ [ fetch ] [ v:inc ] bi ] does ;
 ~~~
 
-Here's a little test case:
+This removes the primitive stack shuffling, and leaves something that expresses the intent more clearly.
 
-~~~
-#10 'foo acc
-foo
-foo
-foo
-~~~
+Finally, here's a little test case:
+
+```
+    #10 'foo acc
+    foo
+    foo
+    foo
+```

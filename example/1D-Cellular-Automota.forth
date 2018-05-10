@@ -1,4 +1,4 @@
-# example|RosettaCode|1D-Cellular-Automota
+# 1D Cellular Automota
 
 Assume an array of cells with an initial distribution of live and dead cells, and imaginary cells off the end of the array having fixed values.
 
@@ -14,12 +14,6 @@ If, in the following table, a live cell is represented by 1 and a dead cell by 0
 101 -> 1  # Two neighbours giving birth
 110 -> 1  # Needs one neighbour to survive
 111 -> 0  # Starved to death.
-
-Declare module constant (prevents reloading when using `import`):
-
-~~~
-:example|RosettaCode|1D-Cellular-Automota ;
-~~~
 
 I had originally written an implementation of this in RETRO 11. For RETRO 12 I took advantage of new language features and some further considerations into the rules for this task.
 
