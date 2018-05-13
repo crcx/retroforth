@@ -322,7 +322,7 @@ Execute quote until quote returns a non-zero flag.
 The `times` combinator runs a quote (n) times.
 
 ~~~
-:times  (q-)
+:times  (nq-)
   swap [ repeat 0; #1 - push &call sip pop again ] call drop ;
 ~~~
 
