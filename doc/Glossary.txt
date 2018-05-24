@@ -2355,6 +2355,18 @@ Class Handler: class:word | Namespace: global | Interface Layer: rre
 
 ----------------------------------------------------------------
 
+f:round
+
+  Data:  -
+  Addr:  -
+  Float: f-f
+
+Round a floating point value.
+
+Class Handler: class:word | Namespace: f | Interface Layer: rre
+
+----------------------------------------------------------------
+
 f:sin
 
   Data:  -
@@ -2374,6 +2386,18 @@ f:sqrt
   Float: F-F
 
 Return the square root of a floating point number.
+
+Class Handler: class:word | Namespace: f | Interface Layer: rre
+
+----------------------------------------------------------------
+
+f:square
+
+  Data:  -
+  Addr:  -
+  Float: f-f
+
+Return the square of a floating point number.
 
 Class Handler: class:word | Namespace: f | Interface Layer: rre
 

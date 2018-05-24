@@ -40,6 +40,7 @@ This is a set of extensions for RRE.
 :f:atan  (f:f-f)    #24 `-6000 ;
 :f:ceiling (f:f-f)  #25 `-6000 ;
 :f:sqrt  (f:f-f)    #26 `-6000 ;
+:f:square (f:n-m)   f:dup f:* ;
 :f:over  (f:ab-aba) f:to-string f:dup s:to-float f:swap ;
 :f:tuck  (f:ab-bab) f:swap f:over ;
 :f:positive? (-f__f:a-) #0 n:to-float f:gt? ;
@@ -57,6 +58,8 @@ This is a set of extensions for RRE.
 :f:nan? (f:n-,-f) f:dup f:-eq? ;
 :f:inf? (f:n-,-f) f:INF f:eq? ;
 :f:-inf? (f:n-,-f) f:-INF f:eq? ;
+:f:round (-|f:a-b) f:dup
+  f:negative? [ .0.5 f:- f:ceiling ] [ .0.5 f:+ f:floor ] choose ;
 ~~~
 
 ---------------------------------------------------------------
