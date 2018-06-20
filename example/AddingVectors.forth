@@ -10,7 +10,7 @@ This is an example adding two three element vectors.
 
 A test case:
 
-~~~
+```
 'a d:create #1 , #2 , #3 ,
 'b d:create #2 , #3 , #4 ,
 'c d:create #3 allot
@@ -20,5 +20,5 @@ A test case:
 &c fetch-next n:put nl
    fetch-next n:put nl
    fetch      n:put nl
-~~~
+```
 

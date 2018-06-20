@@ -35,8 +35,8 @@ This removes the primitive stack shuffling, and leaves something that expresses 
 Finally, here's a little test case:
 
 ```
-    #10 'foo acc
-    foo
-    foo
-    foo
+  #10 'foo acc
+  foo
+  foo
+  foo
 ```

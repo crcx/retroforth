@@ -12,7 +12,8 @@ and compare them.
 
 ~~~
 :s:palindrome? (s-f)
-  dup s:hash [ s:reverse s:hash ] dip eq? ;
+  [ s:hash ]
+  [ s:reverse s:hash ] bi eq? ;
 
 'ingirumimusnocteetconsumimurigni s:palindrome?
 ~~~

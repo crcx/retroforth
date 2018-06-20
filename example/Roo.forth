@@ -1,7 +1,6 @@
-#/bin/sh
+#!/bin/sh
 stty cbreak
 cat >/tmp/_roo.forth << 'EOF'
-
 
 # Roo: A Block Editor for RETRO
 
@@ -51,7 +50,6 @@ the currently loaded block.
 ~~~
 
 
-
 ## Server Communication
 
 With that done, it's now time for a word to load a block from the
@@ -80,11 +78,10 @@ And then words to actually talk to the server:
 
 ~~~
 :load-block     (-)   &Block SERVER selector<get> gopher:get drop ;
-:save-block     (-)   here SERVER selector<set> gopher:get drop ;
+:save-block     (-)   here   SERVER selector<set> gopher:get drop ;
 ~~~
 
 All done :)
-
 
 
 ## Modes
@@ -103,7 +100,6 @@ active, and a single word to switch back and forth between them.
 $C 'Mode var<n>
 :toggle-mode (-)  @Mode $C eq? [ $I ] [ $C ] choose !Mode ;
 ~~~
-
 
 
 ## Cursor & Positioning
@@ -148,7 +144,6 @@ The last bit here is `insert-character` which inserts a character to
 ~~~
 :insert-character (c-) cursor-position &Block + store cursor-right ;
 ~~~
-
 
 
 ## Keyboard Handling
@@ -251,7 +246,6 @@ if editing is finished.
 ~~~
 
 
-
 ## Display
 
 The block display is kept minimalistic. Each line is bounded by a single
@@ -302,7 +296,6 @@ The cursor display will be platform specific.
 ~~~
 
 
-
 ## The Final Piece
 
 All that's left is a single top level loop to tie it all together.
@@ -315,6 +308,7 @@ All that's left is a single top level loop to tie it all together.
 
 edit
 ~~~
+
 
 
 EOF
