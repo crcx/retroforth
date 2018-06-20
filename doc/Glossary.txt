@@ -4480,18 +4480,6 @@ Class Handler: class:word | Namespace: global | Interface Layer: all
 
 ----------------------------------------------------------------
 
-tors
-
-  Data:  -n
-  Addr:  -
-  Float: -
-
-Get a copy of the top item on the return stack.
-
-Class Handler: class:word | Namespace: global | Interface Layer: all
-
-----------------------------------------------------------------
-
 tri
 
   Data:  xqqq-?

@@ -391,14 +391,6 @@ Two more stack shufflers.
 :rot  (abc-bca)   [ swap ] dip swap ;
 ~~~
 
-Next is `tors`. Short for *top of return stack*, this returns the top
-item on the address stack. As an analog to traditional Forth, this is
-equivilent to `R@`.
-
-~~~
-:tors (-n)  pop pop dup push swap push ;
-~~~
-
 The core Rx language provides addition, subtraction, multiplication,
 and a combined division/remainder. Retro expands on this.
 

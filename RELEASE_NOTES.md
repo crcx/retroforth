@@ -12,6 +12,7 @@ Major Changes:
 - renamed `words` to `d:words`
 - ```` no longer used for code blocks (now reserved for 'tests'
   under rre)
+- removed `tors`
 
 ----------------------------------------------------------------
 
