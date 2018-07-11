@@ -40,7 +40,7 @@ the people who helped work on the C implementation.
 
 ~~~
 /* Nga ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   Copyright (c) 2008 - 2017, Charles Childers
+   Copyright (c) 2008 - 2018, Charles Childers
    Copyright (c) 2009 - 2010, Luke Parrish
    Copyright (c) 2010,        Marc Simpson
    Copyright (c) 2010,        Jay Skeer
@@ -244,7 +244,7 @@ void inst_drop() {
 
 ~~~
 void inst_swap() {
-  int a;
+  CELL a;
   a = TOS;
   TOS = NOS;
   NOS = a;
@@ -316,7 +316,7 @@ Example:
 
 ~~~
 void inst_ccall() {
-  int a, b;
+  CELL a, b;
   a = TOS; inst_drop();  /* False */
   b = TOS; inst_drop();  /* Flag  */
   if (b != 0) {
@@ -439,7 +439,7 @@ void inst_mul() {
 
 ~~~
 void inst_divmod() {
-  int a, b;
+  CELL a, b;
   a = TOS;
   b = NOS;
   TOS = b / a;
@@ -677,7 +677,7 @@ int ngaValidatePackedOpcodes(CELL opcode) {
   return valid;
 }
 
-void ngaProcessPackedOpcodes(int opcode) {
+void ngaProcessPackedOpcodes(CELL opcode) {
   CELL raw = opcode;
   int i;
   for (i = 0; i < 4; i++) {

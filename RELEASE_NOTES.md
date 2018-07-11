@@ -18,6 +18,8 @@ Major Changes:
 
 Bug fixes:
 
+- use CELL instead of int in the VM
+
 Build:
 
 Core Language:

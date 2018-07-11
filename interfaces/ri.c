@@ -110,21 +110,21 @@ WINDOW *output, *input, *stack, *back;
 
 CELL stack_pop();
 void stack_push(CELL value);
-int string_inject(char *str, int buffer);
-char *string_extract(int at);
-int d_link(CELL dt);
-int d_xt(CELL dt);
-int d_class(CELL dt);
-int d_name(CELL dt);
-int d_lookup(CELL Dictionary, char *name);
+CELL string_inject(char *str, CELL buffer);
+char *string_extract(CELL at);
+CELL d_link(CELL dt);
+CELL d_xt(CELL dt);
+CELL d_class(CELL dt);
+CELL d_name(CELL dt);
+CELL d_lookup(CELL Dictionary, char *name);
 CELL d_xt_for(char *Name, CELL Dictionary);
 void update_rx();
-void execute(int cell);
+void execute(CELL cell);
 void evaluate(char *s);
 CELL ngaLoadImage(char *imageFile);
 void ngaPrepare();
 void ngaProcessOpcode(CELL opcode);
-void ngaProcessPackedOpcodes(int opcode);
+void ngaProcessPackedOpcodes(CELL opcode);
 int ngaValidatePackedOpcodes(CELL opcode);
 
 
@@ -163,8 +163,8 @@ void stack_push(CELL value) {
   that the NULL terminator is added.
   ---------------------------------------------------------------------*/
 
-int string_inject(char *str, int buffer) {
-  int i = 0;
+CELL string_inject(char *str, CELL buffer) {
+  CELL i = 0;
   while (*str) {
     memory[buffer + i] = (CELL)*str++;
     memory[buffer + i + 1] = 0;
@@ -182,7 +182,7 @@ int string_inject(char *str, int buffer) {
   ---------------------------------------------------------------------*/
 
 char string_data[1025];
-char *string_extract(int at) {
+char *string_extract(CELL at) {
   CELL starting = at;
   CELL i = 0;
   while(memory[starting] && i < 1024)
@@ -206,19 +206,19 @@ char *string_extract(int at) {
   the start of the file.
   ---------------------------------------------------------------------*/
 
-int d_link(CELL dt) {
+CELL d_link(CELL dt) {
   return dt + D_OFFSET_LINK;
 }
 
-int d_xt(CELL dt) {
+CELL d_xt(CELL dt) {
   return dt + D_OFFSET_XT;
 }
 
-int d_class(CELL dt) {
+CELL d_class(CELL dt) {
   return dt + D_OFFSET_CLASS;
 }
 
-int d_name(CELL dt) {
+CELL d_name(CELL dt) {
   return dt + D_OFFSET_NAME;
 }
 
@@ -230,7 +230,7 @@ int d_name(CELL dt) {
   run into issues with this in practice).
   ---------------------------------------------------------------------*/
 
-int d_lookup(CELL Dictionary, char *name) {
+CELL d_lookup(CELL Dictionary, char *name) {
   CELL dt = 0;
   CELL i = Dictionary;
   char *dname;
@@ -294,7 +294,7 @@ void update_rx() {
 
 #define IO_TTY_PUTC  1000
 
-void execute(int cell) {
+void execute(CELL cell) {
   CELL opcode;
   rp = 1;
   ip = cell;
@@ -478,7 +478,7 @@ int main() {
 
 
 /* Nga ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   Copyright (c) 2008 - 2017, Charles Childers
+   Copyright (c) 2008 - 2018, Charles Childers
    Copyright (c) 2009 - 2010, Luke Parrish
    Copyright (c) 2010,        Marc Simpson
    Copyright (c) 2010,        Jay Skeer
@@ -544,7 +544,7 @@ void inst_drop() {
 }
 
 void inst_swap() {
-  int a;
+  CELL a;
   a = TOS;
   TOS = NOS;
   NOS = a;
@@ -575,7 +575,7 @@ void inst_call() {
 }
 
 void inst_ccall() {
-  int a, b;
+  CELL a, b;
   a = TOS; inst_drop();  /* False */
   b = TOS; inst_drop();  /* Flag  */
   if (b != 0) {
@@ -645,7 +645,7 @@ void inst_mul() {
 }
 
 void inst_divmod() {
-  int a, b;
+  CELL a, b;
   a = TOS;
   b = NOS;
   TOS = b / a;
@@ -720,7 +720,7 @@ int ngaValidatePackedOpcodes(CELL opcode) {
   return valid;
 }
 
-void ngaProcessPackedOpcodes(int opcode) {
+void ngaProcessPackedOpcodes(CELL opcode) {
   CELL raw = opcode;
   int i;
   for (i = 0; i < 4; i++) {
