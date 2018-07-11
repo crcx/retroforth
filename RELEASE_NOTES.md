@@ -62,5 +62,6 @@ Documentation:
 Examples:
 
 - fix numerous spelling errors (thanks hannah!)
+- add example showing a means of addressing specific bytes
 
 Final Notes:
