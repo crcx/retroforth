@@ -63,5 +63,7 @@ Examples:
 
 - fix numerous spelling errors (thanks hannah!)
 - add example showing a means of addressing specific bytes
+- add example showing assertions
+- add example showing hooks/deferred words
 
 Final Notes:

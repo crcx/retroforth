@@ -41,11 +41,12 @@ NOTE: For simplicity of implementation, failure within a word of class `class:as
   nl [ 'Success ] [ reset 'Failure ] choose s:put ;
 ~~~
 
+These are from Hooks.forth:
 
 ~~~
-:hook  #0 , #0 , ; immediate
-:set   #1793 swap store-next store ;
-:unset #0 swap store-next #0 swap store ;
+:hook (-)  #1793 , here n:inc , ; immediate
+:set-hook (aa-) n:inc store ;
+:unhook (a-) n:inc dup n:inc swap store ;
 ~~~
 
 ~~~
