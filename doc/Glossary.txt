@@ -2615,6 +2615,42 @@ Example #1:
 
 ----------------------------------------------------------------
 
+file:open<for-append>
+
+  Data:  s-nn
+  Addr:  -
+  Float: -
+
+Open a file for reading & writing. Returns the size (NOS) and a file ID (TOS)
+
+Class Handler: class:word | Namespace: file | Interface Layer: rre
+
+----------------------------------------------------------------
+
+file:open<for-reading>
+
+  Data:  s-nn
+  Addr:  -
+  Float: -
+
+Open a file for reading. Returns the size (NOS) and a file ID (TOS)
+
+Class Handler: class:word | Namespace: file | Interface Layer: rre
+
+----------------------------------------------------------------
+
+file:open<for-writing>
+
+  Data:  s-nn
+  Addr:  -
+  Float: -
+
+Open a file for reading. Returns the file ID
+
+Class Handler: class:word | Namespace: file | Interface Layer: rre
+
+----------------------------------------------------------------
+
 file:read
 
   Data:  h-c

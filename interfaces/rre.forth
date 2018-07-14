@@ -275,6 +275,17 @@ Given a file name, return `TRUE` if it exists or `FALSE` otherwise.
   [ drop FALSE ] choose ;
 ~~~
 
+~~~
+:file:open<for-reading> (s-nn)
+  file:R file:open dup file:size swap ;
+
+:file:open<for-append> (s-nn)
+  file:A file:open dup file:size swap ;
+
+:file:open<for-writing> (s-n)
+  file:W file:open ;
+~~~
+
 With that out of the way, we can begin building higher level functionality.
 
 The first of these reads a line from the file. This is read to `here`; move
@@ -289,11 +300,11 @@ once for each line in a file. This makes some things trivial. E.g., a simple
 ~~~
 {{
   'FID var
-  'FSize var
+  'Size var
   'Action var
   'Buffer var
-  :-eof? (-f) @FID file:tell @FSize lt? ;
-  :preserve (q-) &FID [ &FSize [ call ] v:preserve ] v:preserve ;
+  :-eof? (-f) @FID file:tell @Size lt? ;
+  :preserve (q-) &FID [ &Size [ call ] v:preserve ] v:preserve ;
 ---reveal---
   :file:read-line (f-s)
     !FID
@@ -305,8 +316,7 @@ once for each line in a file. This makes some things trivial. E.g., a simple
 
   :file:for-each-line (sq-)
     [ !Action
-      file:R file:open !FID
-      @FID file:size !FSize
+      file:open<for-reading> !FID !Size
       [ @FID file:read-line @Action call -eof? ] while
       @FID file:close
     ] preserve ;
@@ -321,9 +331,8 @@ once for each line in a file. This makes some things trivial. E.g., a simple
   'Size var
 ---reveal---
   :file:slurp (as-)
-    [ file:R file:open !FID
+    [ file:open<for-reading> !FID !Size
       buffer:set
-      @FID file:size !Size
       @Size [ @FID file:read buffer:add ] times
       @FID file:close
     ] buffer:preserve ;
@@ -335,9 +344,13 @@ once for each line in a file. This makes some things trivial. E.g., a simple
   'FID var
 ---reveal---
   :file:spew (ss-)
-    file:W file:open !FID [ @FID file:write ] s:for-each @FID file:close ; 
+    file:open<for-writing> !FID
+    [ @FID file:write ] s:for-each
+    @FID file:close ; 
 }}
 ~~~
+
+
 
 ~~~
 :unix:io:n:put (n-) #-8100 `-6300 ;

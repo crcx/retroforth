@@ -208,6 +208,9 @@ file:exists?	s-f	-	-	Given a file name, return `TRUE` if it exists or `FALSE` if
 file:flush	h-	-	-	Given a file handle, flush any pending writes to disk.			class:word	{n/a}	{n/a}	file	rre	
 file:for-each-line	sq-	-	-	Given a file name, open it and run the quote once for each line in the file.			class:word	{n/a}	{n/a}	file	rre	
 file:open	sm-h	-	-	Open a named file (s) with the given mode (m). Returns a handle identifying the file.			class:word	  '/etc/motd file:R file:open	{n/a}	file	rre	
+file:open<for-append>	s-nn	-	-	Open a file for reading & writing. Returns the size (NOS) and a file ID (TOS)			class:word	{n/a}	{n/a}	file	rre	
+file:open<for-reading>	s-nn	-	-	Open a file for reading. Returns the size (NOS) and a file ID (TOS)			class:word	{n/a}	{n/a}	file	rre	
+file:open<for-writing>	s-nn	-	-	Open a file for reading. Returns the file ID			class:word	{n/a}	{n/a}	file	rre	
 file:read	h-c	-	-	Given a file handle, read and return the next character in it.			class:word	{n/a}	{n/a}	file	rre	
 file:read-line	f-s	-	-	Given a file handle, read a line and return a pointer to it.			class:word	{n/a}	{n/a}	file	rre	
 file:seek	nh-	-	-	Move the current offset into a file to the specified one.			class:word	{n/a}	{n/a}	file	rre	

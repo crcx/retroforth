@@ -13,6 +13,10 @@ Major Changes:
 - ```` no longer used for code blocks (now reserved for 'tests'
   under rre)
 - removed `tors`
+- add `file:open<for-reading>` to RRE
+- add `file:open<for-append>` to RRE
+- add `file:open<for-writing>` to RRE
+
 
 ----------------------------------------------------------------
 
@@ -49,6 +53,9 @@ Interfaces:
   - added `f:sqrt`
   - added "-t" command line argument to run tests
   - rewrote command line handler
+  - added `file:open<for-reading>`
+  - added `file:open<for-append>`
+  - added `file:open<for-writing>`
 
 - javascript/html
 
