@@ -23,6 +23,8 @@ Major Changes:
 Bug fixes:
 
 - use CELL instead of int in the VM
+- glossary.forth now renders < > and & when serving the index as
+  HTML
 
 Build:
 

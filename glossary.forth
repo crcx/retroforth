@@ -88,7 +88,7 @@ Note to self: This is horribly messy and should be rewritten.
 :s:put<formatted> (s-)  s:format s:put ;
 
 :display-result
-  field:name s:put nl nl
+  field:name   s:put nl nl
   field:dstack '__Data:__%s\n s:put<formatted>
   field:astack '__Addr:__%s\n s:put<formatted>
   field:fstack '__Float:_%s\n s:put<formatted> nl
@@ -439,8 +439,15 @@ the HTML for each line, and an `http:list-words` which uses
 this to build an index.
 
 ~~~
+:sanitize (s-s)
+  here buffer:set
+  [ $< [ '&lt;  [ buffer:add ] s:for-each ] case
+    $> [ '&gt;  [ buffer:add ] s:for-each ] case
+    $& [ '&amp; [ buffer:add ] s:for-each ] case
+    buffer:add ] s:for-each buffer:start s:temp ;
+
 :display-entry (n-n)
-  field:name over '<a_href="/%n">%s</a><br> s:format s:put ;
+  field:name sanitize over '<a_href="/%n">%s</a><br> s:format s:put ;
 
 :http:list-words (-)
   #0 'words.tsv [ s:keep !SourceLine display-entry n:inc ] file:for-each-line drop ;
@@ -469,13 +476,13 @@ And then the actual top level server.
   #1024 allot
 
 :css (-)
-  '<style>tt,_a,_pre_{_white-space:_pre;_} s:put
+  '<style>tt,_a,_pre,_xmp_{_white-space:_pre;_} s:put
   '_*_{_font-family:_monospace;_color:_#aaa;_background:_#121212;_font-size:_large;_}_a_{_color:_#EE7600;_} 
 s:put
   '</style> s:put nl ;
 
 :http:display (-)
-  #0 'words.tsv [ s:keep !SourceLine dup-pair eq? [ '<pre> s:put display-result '</pre> s:put ] if n:inc ] file:for-each-line drop-pair ;
+  #0 'words.tsv [ s:keep !SourceLine dup-pair eq? [ '<xmp> s:put display-result '</xmp> s:put ] if n:inc ] file:for-each-line drop-pair ;
 
 :handle-http
   css
