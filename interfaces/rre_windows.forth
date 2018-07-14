@@ -149,6 +149,18 @@ Given a file name, return `TRUE` if it exists or `FALSE` otherwise.
   [ drop FALSE ] choose ;
 ~~~
 
+~~~
+:file:open<for-reading> (s-nn)
+  file:R file:open dup file:size swap ;
+
+:file:open<for-append> (s-nn)
+  file:A file:open dup file:size swap ;
+
+:file:open<for-writing> (s-n)
+  file:W file:open ;
+~~~
+
+
 With that out of the way, we can begin building higher level functionality.
 
 The first of these reads a line from the file. This is read to `here`; move
