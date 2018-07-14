@@ -1,7 +1,7 @@
     ____  _   _
     || \\ \\ //
     ||_//  )x(
-    || \\ // \\ 2018.6
+    || \\ // \\ 2018.7
     a minimalist forth for nga
 
 *Rx* (*retro experimental*) is a minimal Forth implementation
@@ -106,7 +106,7 @@ r 9999
 d 1536
 
 : Version
-d 201806
+d 201807
 ~~~
 
 Both of these are pointers. `Dictionary` points to the most
