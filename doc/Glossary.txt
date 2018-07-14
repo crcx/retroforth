@@ -4993,6 +4993,18 @@ Class Handler: class:primitive | Namespace: global | Interface Layer: all
 
 ----------------------------------------------------------------
 
+{
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Begin a set. This is intended to make creating sets a bit cleaner than using a quotation and `set:from-results`.
+
+Class Handler: class:word | Namespace: set | Interface Layer: all
+
+----------------------------------------------------------------
+
 {{
 
   Data:  -
@@ -5002,6 +5014,18 @@ Class Handler: class:primitive | Namespace: global | Interface Layer: all
 Begin a lexically scoped area.
 
 Class Handler: class:word | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+}
+
+  Data:  -a
+  Addr:  -
+  Float: -
+
+Complete a set begun by `{`. Returns a pointer to the data.
+
+Class Handler: class:word | Namespace: set | Interface Layer: all
 
 ----------------------------------------------------------------
 

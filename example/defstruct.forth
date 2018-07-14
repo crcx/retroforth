@@ -10,7 +10,7 @@ This can be useful, so I'm doing something similar here.
   :make-struct (ns-)   d:create , [ here swap fetch allot ] does ;
 ---reveal---
   :defstruct (sq-)
-    set:from-results dup set:length
+    set:make dup set:length
     [ n:dec swap
       [ 'ab 'aabab reorder
         '@ s:append [ fetch + fetch ] make-helper

@@ -1182,6 +1182,9 @@ I'm defining a new `set:make` which wraps these.
 ~~~
 :set:make (q-a)
   set:from-results set:reverse ;
+
+:{ (-)  &[ call ; immediate
+:} (-a) &] call &set:make class:word ; immediate
 ~~~
 
 

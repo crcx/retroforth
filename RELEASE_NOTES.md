@@ -40,6 +40,7 @@ Core Language:
 - renamed `words` to `d:words`
 - add `d:words-with`
 - add `set:make`
+- add `{` and `}` to create sets
 
 Interfaces:
 

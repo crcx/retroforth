@@ -391,6 +391,8 @@ var	s-	-	-	Create a variable. The variable is initialized to 0.			class:word	   
 var<n>	ns-	-	-	Create a variable with the specified initial value.			class:word	    #10 'Base var<n>\n	{n/a}	global	all	
 while	q-	-	-	Execute quote repeatedly while the quote returns a `TRUE` value. The quote should return a flag of either `TRUE` or `FALSE`, though `while` will treat any non-zero value as `TRUE`.			class:word	    #10 [ dup n:put nl n:dec dup n:-zero? ] while	{n/a}	global	all	
 xor	mn-o	-	-	Perform a bitwise XOR operation.			class:primitive	{n/a}	{n/a}	global	all	
+{	-	-	-	Begin a set. This is intended to make creating sets a bit cleaner than using a quotation and `set:from-results`.			class:word	{n/a}	{n/a}	set	all	
 {{	-	-	-	Begin a lexically scoped area.			class:word	{n/a}	{n/a}	global	all	
+}	-a	-	-	Complete a set begun by `{`. Returns a pointer to the data.			class:word	{n/a}	{n/a}	set	all	
 }as	f-	-	-	End an assembly section.			class:macro	{n/a}	{n/a}	global	all	
 }}	-	-	-	End a lexically scoped area.			class:word	{n/a}	{n/a}	global	all	
