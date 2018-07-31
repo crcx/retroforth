@@ -58,8 +58,10 @@ This is a set of extensions for RRE.
 :f:nan? (f:n-,-f) f:dup f:-eq? ;
 :f:inf? (f:n-,-f) f:INF f:eq? ;
 :f:-inf? (f:n-,-f) f:-INF f:eq? ;
-:f:round (-|f:a-b) f:dup
-  f:negative? [ .0.5 f:- f:ceiling ] [ .0.5 f:+ f:floor ] choose ;
+:f:round (-|f:a-b)
+  f:dup f:negative?
+  [ .0.5 f:- f:ceiling ]
+  [ .0.5 f:+ f:floor   ] choose ;
 ~~~
 
 ---------------------------------------------------------------
