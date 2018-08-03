@@ -66,5 +66,7 @@ Examples:
 - add example showing assertions
 - add example showing hooks/deferred words
 - add Casket, an HTTP/1.1 server
+- add example showing a means of encoding floating point
+  values into integer cells
 
 Final Notes:
