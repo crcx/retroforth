@@ -14,6 +14,7 @@ There is also a `Results` variable which will point to the data set being displa
 'GopherData.txt 'GOPHER-DATA s:const
 #34 'WrapPoint var<n>
 'Results var
+'TARGET d:create #1024 #64 * allot
 ~~~
 
 # Download Data
@@ -22,8 +23,8 @@ Specify a server, a port number, and the initial seletor to fetch.
 
 ~~~
 :grab (sns-)
-  s:empty 'abcd 'ddabc reorder gopher:get
-  drop GOPHER-DATA file:spew ;
+  &TARGET 'abcd 'dabc reorder gopher:get
+  drop ;
 ~~~
 
 # Indexes
@@ -95,12 +96,11 @@ And finally, tie everything together. This will display an index.
 
 ~~~
   :display:index (-)
-    #0 here GOPHER-DATA file:slurp drop
-    ASCII:LF s:tokenize !Results
+    &TARGET ASCII:LF s:tokenize !Results
 
     @Results fetch #2 - @Results store
 
-    @Results
+    #0 @Results
     [ over line display nl n:inc ]
     set:for-each drop ;
 }}
@@ -112,7 +112,7 @@ Text files are really easy. We just read the downloaded file into a buffer and d
 
 ~~~
 :display:text (-)
-  GOPHER-DATA file:slurp s:put nl ;
+  &TARGET s:put nl ;
 ~~~
 
 # Final Bits
@@ -130,7 +130,7 @@ Text files are really easy. We just read the downloaded file into a buffer and d
 
 ~~~
 :home (-)
- 'forthworks.com #70 '/ grab
+  'forthworks.com #70 '/ grab
   $1 display-by-type ;
 ~~~
 
