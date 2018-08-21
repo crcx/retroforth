@@ -523,6 +523,7 @@ better in many ways, but I've used these for years and they are a
 workable approach.
 
 Temporary strings are allocated in a circular pool (at STRINGS).
+This space can be altered as needed by adjusting these variables.
 
 ~~~
 :TempStrings ;   data  #32 !TempStrings
@@ -530,12 +531,12 @@ Temporary strings are allocated in a circular pool (at STRINGS).
 :STRINGS   EOM @TempStrings @TempStringMax * - ;
 
 {{
-  :s:Current `0 ; data
+  :Current `0 ; data
 
-  :s:pointer (-p)  @s:Current @TempStringMax * STRINGS + ;
+  :s:pointer (-p)  @Current @TempStringMax * STRINGS + ;
   :s:next    (-)
-    &s:Current v:inc
-    @s:Current @TempStrings eq? [ #0 !s:Current ] if ;
+    &Current v:inc
+    @Current @TempStrings eq? [ #0 !Current ] if ;
 ---reveal---
   :s:temp (s-s) dup s:length n:inc s:pointer swap copy s:pointer s:next ;
   :s:empty (-s) s:pointer s:next ;
@@ -545,14 +546,12 @@ Temporary strings are allocated in a circular pool (at STRINGS).
 Permanent strings are compiled into memory. To skip over them a helper
 function is used. When compiled into a definition this will look like:
 
-    lit &s:skip
-    call
-    :stringbegins
-    .data 98
-    .data 99
-    .data 100
-    .data 0
-    lit &stringbegins
+    i lica....
+    r s:skip
+    d 98
+    d 99
+    d 100
+    d 0
 
 The `s:skip` adjusts the Nga instruction pointer to skip to the code
 following the stored string.
@@ -756,14 +755,13 @@ are of some general interest.
 :s:ASCII-UPPERCASE (-s)  'ABCDEFGHIJKLMNOPQRSTUVWXYZ ;
 :s:ASCII-LETTERS   (-s)  'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ ;
 :s:PUNCTUATION     (-s)  '_!"#$%&'()*+,-./:;<=>?@[\]^`{|}~ $_ over store ;
-'s:WHITESPACE d:create  #32, #9 , #10 , #13 , #0 ,
+'s:WHITESPACE d:create
+  #32, #9 , #10 , #13 , #0 ,
 ~~~
 
 Not all characters can be obtained via the $ prefix. ASCII has many
 characters that aren't really intended to be printable. Retro has an
 `ASCII` namespace providing symbolic names for these.
-
-Note that `ASCII:HT` is the horizontal tab character.
 
 ~~~
 #0  'ASCII:NUL const    #1   'ASCII:SOH const
@@ -881,12 +879,9 @@ located.
 :s:split-on-string (ss-ss)
   dup-pair s:index-of-string n:inc nip dup-pair s:left [ + ] dip ;
 
-{{
-  'L var
----reveal---
-  :s:replace (sss-s)
-    over s:length !L [ s:split-on-string swap @L + ] dip s:prepend s:append ;
-}}
+:s:replace (sss-s)
+  over s:length here store
+  [ s:split-on-string swap here fetch + ] dip s:prepend s:append ;
 ~~~
 
 `s:tokenize` takes a string and a character to use as a separator. It
@@ -1267,45 +1262,43 @@ I allocate a small buffer for each portion of an instruction
 bundle.
 
 ~~~
-'I0 d:create #3 allot
-'I1 d:create #3 allot
-'I2 d:create #3 allot
-'I3 d:create #3 allot
+  'I0 d:create #3 allot
+  'I1 d:create #3 allot
+  'I2 d:create #3 allot
+  'I3 d:create #3 allot
 ~~~
 
 The `opcode` word maps a two character instruction to an opcode
 number.
 
 ~~~
-:opcode (s-n)
-  '.. [ #0  ] s:case  'li [ #1  ] s:case
-  'du [ #2  ] s:case  'dr [ #3  ] s:case
-  'sw [ #4  ] s:case  'pu [ #5  ] s:case
-  'po [ #6  ] s:case  'ju [ #7  ] s:case
-  'ca [ #8  ] s:case  'cc [ #9  ] s:case
-  're [ #10 ] s:case  'eq [ #11 ] s:case
-  'ne [ #12 ] s:case  'lt [ #13 ] s:case
-  'gt [ #14 ] s:case  'fe [ #15 ] s:case
-  'st [ #16 ] s:case  'ad [ #17 ] s:case
-  'su [ #18 ] s:case  'mu [ #19 ] s:case
-  'di [ #20 ] s:case  'an [ #21 ] s:case
-  'or [ #22 ] s:case  'xo [ #23 ] s:case
-  'sh [ #24 ] s:case  'zr [ #25 ] s:case
-  'en [ #26 ] s:case  drop #0 ;
+  :opcode (s-n)
+    '.. [ #0  ] s:case  'li [ #1  ] s:case
+    'du [ #2  ] s:case  'dr [ #3  ] s:case
+    'sw [ #4  ] s:case  'pu [ #5  ] s:case
+    'po [ #6  ] s:case  'ju [ #7  ] s:case
+    'ca [ #8  ] s:case  'cc [ #9  ] s:case
+    're [ #10 ] s:case  'eq [ #11 ] s:case
+    'ne [ #12 ] s:case  'lt [ #13 ] s:case
+    'gt [ #14 ] s:case  'fe [ #15 ] s:case
+    'st [ #16 ] s:case  'ad [ #17 ] s:case
+    'su [ #18 ] s:case  'mu [ #19 ] s:case
+    'di [ #20 ] s:case  'an [ #21 ] s:case
+    'or [ #22 ] s:case  'xo [ #23 ] s:case
+    'sh [ #24 ] s:case  'zr [ #25 ] s:case
+    'en [ #26 ] s:case  drop #0 ;
 ~~~
 
 I use `pack` to combine the individual parts of the instruction
 bundle into a single cell.
 
 ~~~
-:pack (-n)
-  &I0 opcode
-  &I1 opcode
-  &I2 opcode
-  &I3 opcode
-  #-24 shift  swap
-  #-16 shift + swap
-  #-8  shift + swap + ;
+  :pack (-n)
+    &I0 opcode  &I1 opcode
+    &I2 opcode  &I3 opcode
+    #-24 shift   swap
+    #-16 shift + swap
+    #-8  shift + swap + ;
 ~~~
 
 Switch to the public portion of the code.
@@ -1321,26 +1314,24 @@ then `pack` to combine them before using `,` to write them into
 the `Heap`.
 
 ~~~
-:i (s-)
-  dup &I0 #2 copy #2 +
-  dup &I1 #2 copy #2 +
-  dup &I2 #2 copy #2 +
-      &I3 #2 copy
-  pack , ;
+  :i (s-)
+    dup &I0 #2 copy #2 +
+    dup &I1 #2 copy #2 +
+    dup &I2 #2 copy #2 +
+        &I3 #2 copy
+    pack , ;
 ~~~
 
 The `d` word inlines a data item.
 
 ~~~
-:d (n-)
-  , ;
+  :d (n-)  , ;
 ~~~
 
 And `r` inlines a reference (pointer).
 
 ~~~
-:r (s-)
-  d:lookup d:xt fetch , ;
+  :r (s-)  d:lookup d:xt fetch , ;
 ~~~
 
 The final bits are `as{` and `}as`, which start and stop the
@@ -1348,11 +1339,11 @@ assembler. (Basically, they just turn the `Compiler` on and
 off, restoring its state as needed).
 
 ~~~
-:as{ (-f)
-  @Compiler &Compiler v:off ; immediate
+  :as{ (-f)
+    @Compiler &Compiler v:off ; immediate
 
-:}as (f-?)
-  !Compiler ; immediate
+  :}as (f-?)
+    !Compiler ; immediate
 ~~~
 
 This finishes by sealing off the private words.
