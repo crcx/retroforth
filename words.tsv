@@ -93,6 +93,7 @@ c:letter?	c-f	-	-	Return TRUE if character is an ASCII letter or FALSE otherwise
 c:lowercase?	c-f	-	-	Return TRUE if character is lowercase or FALSE otherwise.			class:word	{n/a}	{n/a}	c	all	
 c:put	c-	-	-	Display a single character.			class:word	{n/a}	{n/a}	global	all	
 c:to-lower	c-c	-	-	Convert character to lowercase equivalent.			class:word	{n/a}	{n/a}	c	all	
+c:to-number	c-n	-	-	Convert an ASCII digit character into the corresponding decimal value			class:word	{n/a}	{n/a}	global	all	
 c:to-string	c-s	-	-	Convert character into a string.			class:word	{n/a}	{n/a}	c	all	
 c:to-upper	c-c	-	-	Convert character to uppercase equivalent.			class:word	{n/a}	{n/a}	c	all	
 c:toggle-case	c-c	-	-	Convert an ASCII character to the opposite case.			class:word	{n/a}	{n/a}	c	all	

@@ -1182,6 +1182,18 @@ Class Handler: class:word | Namespace: c | Interface Layer: all
 
 ----------------------------------------------------------------
 
+c:to-number
+
+  Data:  c-n
+  Addr:  -
+  Float: -
+
+Convert an ASCII digit character into the corresponding decimal value
+
+Class Handler: class:word | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
 c:to-string
 
   Data:  c-s

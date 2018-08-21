@@ -828,6 +828,7 @@ The next few words perform simple transformations.
 :c:to-lower     (c-c) dup c:uppercase? 0; drop ASCII:SPACE + ;
 :c:toggle-case  (c-c) dup c:lowercase? [ c:to-upper ] [ c:to-lower ] choose ;
 :c:to-string    (c-s) '. s:temp [ store ] sip ;
+:c:to-number    (c-n) dup c:digit? [ $0 - ] [ drop #0 ] choose ;
 ~~~
 
 With the character transformations a few more string words are
