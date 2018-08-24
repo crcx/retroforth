@@ -1,55 +1,90 @@
-# RETRO 12
+# RETRO FORTH
 
 ## Background
 
-Retro is a dialect of Forth. It builds on the barebones Rx core,
-providing a much more flexible and useful language.
+Retro is a dialect of Forth. It builds on the barebones Rx
+core, expanding it into a flexible and useful language.
 
-Retro has a history going back many years. It began as a 16-bit
-assembly implementation for x86 hardware, evolved into a 32-bit
-system with cmForth and ColorForth influences, and eventually started
-supporting mainstream OSes. Later it was rewritten for a small,
-portable virtual machine. Over the years the language implementation
-has varied substantially. This is the twelfth generation of Retro. It
-now targets a new virtual machine (called Nga), and is built over a
-barebones Forth kernel (called Rx).
+Over the years the language implementation has varied
+substantially. Retro began in 1998 as a 16-bit assembly
+implementation for x86 hardware, evolved into a 32-bit
+system with cmForth and ColorForth influences, and
+eventually started supporting mainstream OSes. Later it
+was rewritten for a small, portable virtual machine.
+
+This is the twelfth generation of Retro. It targets a virtual
+machine (called Nga) and runs on a wide variety of host
+systems.
 
 ### Namespaces
 
-Various past releases have had different methods of dealing with the
-dictionary. Retro 12 has a single global dictionary, with a convention
-of using a namespace prefix for grouping related words.
+Various past releases have had different methods of dealing
+with the dictionary. I have settled on using a] single global
+dictionary, with a convention of using a short namespace prefix
+for grouping related words. This was inspired by Ron Aaron's
+8th language.
 
-| namespace  | words related to   |
-| ---------- | ------------------ |
-| ASCII      | ASCII Constants    |
-| c          | characters         |
-| compile    | compiler functions |
-| d          | dictionary headers |
-| err        | error handlers     |
-| n          | numbers            |
-| s          | strings            |
-| set        | sets (arrays)      |
-| v          | variables          |
+The main namespaces are:
+
+    | namespace  | words related to   |
+    | ---------- | ------------------ |
+    | ASCII      | ASCII Constants    |
+    | c          | characters         |
+    | compile    | compiler functions |
+    | d          | dictionary headers |
+    | err        | error handlers     |
+    | n          | numbers            |
+    | s          | strings            |
+    | set        | sets (arrays)      |
+    | v          | variables          |
+
+This makes it very easy to identify related words, especially
+across namespaces. E.g.,
+
+    c:put
+    c:to-upper
+    s:put
+    s:to-upper
 
 ### Prefixes
 
-Prefixes are an integral part of Retro. These are single characters
-added to the start of a word which indicate to Retro how it should
-execute the word. These are processed at the start of interpreting a
-token.
+Prefixes are an integral part of Retro. These are single symbol
+modifiers added to the start of a word which control how Retro
+processes the word.
 
-| prefix | used for               |
-| ------ | ---------------------- |
-| :      | starting a definition  |
-| &amp;  | obtaining pointers     |
-| (      | stack comments         |
-| `      | inlining bytecodes     |
-| '      | strings                |
-| #      | numbers                |
-| $      | characters             |
-| @      | variable get           |
-| !      | variable set           |
+The interpreter model is covered in *Rx.md*, but basically:
+
+    - Get a token (whitespace delimited string)
+    - Pass it to `interpret`
+      + if the token starts with a known prefix then pass
+        it to the prefix handler
+      + if the initial character is not a known prefix,
+        look it up
+        - if found, push the address ("xt") to the stack
+          and call the word's class handler
+        - if not found call `err:not-found`
+    - repeat as needed
+
+This is different than the process in traditional Forth. A few
+observations:
+
+    - there are no parsing words
+    - numbers are handled using a prefix
+    - prefixes can be added or changed at any time
+
+The basic prefixes are:
+
+    | prefix | used for               |
+    | ------ | ---------------------- |
+    | :      | starting a definition  |
+    | &      | obtaining pointers     |
+    | (      | stack comments         |
+    | `      | inlining bytecodes     |
+    | '      | strings                |
+    | #      | numbers                |
+    | $      | characters             |
+    | @      | variable get           |
+    | !      | variable set           |
 
 ### Naming and Style Conventions
 
@@ -65,43 +100,52 @@ token.
 
 Memory Map
 
-This assumes that the VM defines an image as being 524288 cells.
+This assumes that the VM defines an image as being 524,288
+cells. Nga implementations may provide varying amounts of
+memory, so the specific addresses will vary.
 
-| range           | contains                     |
-| --------------- | ---------------------------- |
-| 0 - 1024        | rx kernel                    |
-| 1025 - 1535     | token input buffer           |
-| 1536 +          | start of heap space          |
-| ............... | free memory for your use     |
-| 506879          | buffer for string evaluate   |
-| 507904          | temporary strings (32 * 512) |
-| 524287          | end of memory                |
+    | RANGE           | CONTAINS                     |
+    | --------------- | ---------------------------- |
+    | 0 - 1024        | rx kernel                    |
+    | 1025 - 1535     | token input buffer           |
+    | 1536 +          | start of heap space          |
+    | ............... | free memory for your use     |
+    | 506879          | buffer for string evaluate   |
+    | 507904          | temporary strings (32 * 512) |
+    | 524287          | end of memory                |
 
-I provide a word, `EOM`, which returns the last addressable location.
-This will be used by the words in the `s:` namespace to allocate the
-temporary string buffers at the end of memory.
+I provide a word, `EOM`, which returns the last addressable
+location. This will be used by the words in the `s:` namespace
+to allocate the temporary string buffers at the end of memory.
 
 ~~~
 :EOM  (-n)  #-3 fetch ;
 ~~~
 
-... stack comments ...
+## Stack Comments
 
-  (takes-returns)
+Stack comments are terse notes that indicate the stack effects
+of words. While not required, it's helpful to include these.
 
-I use a single character for each input and output item. These will
-often (though perhaps not always) be:
+They take a form like:
 
-  n, m, x, y  number
-  a, p        pointer
-  q           quotation (pointer)
-  d           dictionary header (pointer)
-  s           string
-  c           character (ASCII)
+    (takes-returns)
 
-I next define a few words in the `d:` namespace to make it easier
-to operate on the most recent header in the dictionary. These return
-pointers to specific fields in the header.
+I use a single character for each input and output item. These
+will often (though perhaps not always) be:
+
+    n, m, x, y  number
+    a, p        pointer
+    q           quotation (pointer)
+    d           dictionary header (pointer)
+    s           string
+    c           character (ASCII)
+
+## Dictionary Shortcuts
+
+I define a few words in the `d:` namespace to make it easier
+to operate on the most recent header in the dictionary. These
+return the values in specific fields of the header.
 
 ~~~
 :d:last        (-d) &Dictionary fetch ;
@@ -110,18 +154,17 @@ pointers to specific fields in the header.
 :d:last<name>  (-s) d:last d:name ;
 ~~~
 
-... reclass ...
+## Changing A Word's Class Handler
 
-This is used to change the class from `class:word` to `class:macro`.
-Doing this is ugly and not very readable. I implement `reclass` to
-change the class of the most recent word.
+I implement `reclass` to change the class of the most recent
+word.
 
 ~~~
 :reclass    (a-) d:last d:class store ;
 ~~~
 
-With this I can then define `immediate` (for state-smart words) and
-`data` to tag data words.
+With this I can then define `immediate` (for state-smart words)
+and `data` to tag data words.
 
 ~~~
 :immediate  (-)  &class:macro reclass ;
