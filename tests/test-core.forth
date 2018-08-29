@@ -32,12 +32,12 @@ This will count the number of successful tests.
 'Tests var
 'InTestState var
 :Testing (s-)
-  'Test:__ puts puts nl #-1 !Flag #0 !Tests  &WordsTested v:inc reset ;
+  'Test:__ s:put s:put nl #-1 !Flag #0 !Tests  &WordsTested v:inc reset ;
 :passed (-)
-  '->_ puts @Tests putn '_tests_passed puts nl
-  '----------------------------------- puts nl ;
+  '->_ s:put @Tests n:put '_tests_passed s:put nl
+  '----------------------------------- s:put nl ;
 :exit-on-fail (-)
-  @Flag [ passed '->_1_test_failed puts nl err:die ] -if ; 
+  @Flag [ passed '->_1_test_failed s:put nl err:die ] -if ; 
 :match (n-)
   eq? @InTestState and !InTestState ;
 :try (qq-)
@@ -48,8 +48,8 @@ This will count the number of successful tests.
   exit-on-fail &Tests v:inc &Total v:inc ;
 
 :summary (-)
-  @WordsTested putn '_words_tested puts nl
-  @Total putn '_tests_passed puts nl ;
+  @WordsTested n:put '_words_tested s:put nl
+  @Total n:put '_tests_passed s:put nl ;
 ~~~
 
 And now the tests begin. These should follow the order of the
