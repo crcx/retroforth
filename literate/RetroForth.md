@@ -122,6 +122,15 @@ to allocate the temporary string buffers at the end of memory.
 :EOM  (-n)  #-3 fetch ;
 ~~~
 
+## Stack Depth
+
+`depth` returns the number of items on the data stack. This is
+provided by the VM upon reading from address *-1*.
+
+~~~
+:depth  (-n) #-1 fetch ;
+~~~
+
 ## Stack Comments
 
 Stack comments are terse notes that indicate the stack effects
@@ -171,15 +180,11 @@ and `data` to tag data words.
 :data       (-)  &class:data  reclass ;
 ~~~
 
-`depth` returns the number of items on the data stack. This is
-provided by the VM upon reading from address *-1*.
+## Optimizations & Compiler Extensions
 
-~~~
-:depth  (-n) #-1 fetch ;
-~~~
-
-I have a `compile` namespace for some low level words that compile
-specific Nga bytecode.
+I have a `compile` namespace for some low level words that
+compile specific Nga bytecode. This is intended to aid in
+readability when constructing compiler extensions.
 
 ~~~
 :compile:lit  (a-) #1 , , ;
@@ -188,19 +193,38 @@ specific Nga bytecode.
 :compile:ret  (-)  #10 , ;
 ~~~
 
-The compiler state is stored in a value named `Compiler`. I have an
-accessor word that aids in readability.
+The compiler state is stored in a value named `Compiler`. I
+have an accessor word that aids in readability.
 
 ~~~
 :compiling?  (-f)  &Compiler fetch ;
 ~~~
 
-The next two are additional prefixes to make working with variables
-a bit less painful. By default you have to do things like:
+It's sometimes useful to inline values directly. I use a
+backtick prefix for this.
+
+~~~
+:prefix:`  (s-)
+  s:to-number , ; immediate
+~~~
+
+It's traditional to have a word named `here` which returns the next
+free address in memory.
+
+~~~
+:here  (-a)
+  &Heap fetch ;
+~~~
+
+## Variables
+
+The next two are additional prefixes to make working with
+variables a bit less painful. By default you have to do things
+like:
 
     &Name fetch #10 * &Name store
 
-Or use combinators:
+Or using combinators:
 
     &Name [ fetch #10 * ] sip store
 
@@ -217,40 +241,30 @@ corresponding to:
 ~~~
 :prefix:@  (s-n)
   d:lookup d:xt fetch
-  compiling? [ (life....) #3841 , , ] [ fetch ] choose ; immediate
+  compiling? [ (life....) #3841 , , ]
+             [ fetch                ] choose ; immediate
 
 :prefix:!  (s-n)
   d:lookup d:xt fetch
-  compiling? [ (list....) #4097 , , ] [ store ] choose ; immediate
+  compiling? [ (list....) #4097 , , ]
+             [ store                ] choose ; immediate
 ~~~
 
-It's sometimes useful to inline values directly. I use a backtick
-prefix for this.
+The next few words aren't actually useful until the `s:`
+namespace is defined. With strings and the `'` prefix they
+allow creation of variables and constants.
 
-~~~
-:prefix:`  (s-)
-  compiling? [ s:to-number , ] [ drop ] choose ; immediate
-~~~
+    | To create a                  | Use a form like    |
+    | ---------------------------- | ------------------ |
+    | Variable                     | `'Base var`        |
+    | Variable, with initial value | `#10 'Base var<n>` |
+    | Constant                     | `#-1 'TRUE const`  |
 
-It's traditional to have a word named `here` which returns the next
-free address in memory.
-
-~~~
-:here  (-a) @Heap ;
-~~~
-
-The next few words aren't useful until the `s:` namespace is defined.
-With strings and the `'` prefix they allow creation of variables and
-constants.
-
-| To create a                  | Use a form like    |
-| ---------------------------- | ------------------ |
-| Variable                     | `'Base var`        |
-| Variable, with initial value | `#10 'Base var<n>` |
-| Constant                     | `#-1 'TRUE const`  |
-
-The first word creates a new header pointing to `here`. This is used
-to build other data structures without invoking the `:` compiler.
+The lower level kernel provides `d:add-header` to make a new
+header. This is a bit ugly to use as most of the time I don't
+need all of the flexibility it provides. Here I add a word to
+create a new header pointing to `here`. This is then used to
+build other data structures without invoking the `:` compiler.
 
 ~~~
 :d:create (s-)
@@ -266,16 +280,20 @@ And then the others are trivial.
 :const  (ns-) d:create d:last d:xt store ;
 ~~~
 
-The `const` word bears a tiny bit of explaination. It takes advantage
-of Retro's word class model. It creates a header, with a class of
-`class:data`, then sets the word pointer to the value. Since the data
-class either leaves the word pointer on the stack or compiles it as
-a literal into a definition, this allows constants to exist as just
-a header with no special runtime code.
+The `const` word is an example of using the dictionary and word
+classes to do some optimization.It creates a header, with a
+class of `class:data`, then sets the execution pointer to the
+desired value. Since the data class either leaves the word
+pointer on the stack or compiles it as a literal into a
+definition, this allows constants to exist as just a header
+with no extra runtime code.
 
-The core Rx language provides a few basic stack shuffling words: `push`,
-`pop`, `drop`, `swap`, and `dup`. There are quite a few more that are
-useful. Some of these are provided here.
+## Stack Shufflers
+
+The core Rx language provides a few basic stack shuffling
+words: `push`, `pop`, `drop`, `swap`, and `dup`. There are
+quite a few more that are useful. Some of these are provided
+here.
 
 ~~~
 :tuck      (xy-yxy)   dup push swap pop ;
@@ -283,15 +301,25 @@ useful. Some of these are provided here.
 :dup-pair  (xy-xyxy)  over over ;
 :nip       (xy-y)     swap drop ;
 :drop-pair (nn-)      drop drop ;
-:?dup      (n-nn||n-n) dup 0; ;
+:?dup      (n-nn|n-n) dup 0; ;
 ~~~
 
-Retro makes use of anonymous functions called *quotations* for much of
-the execution flow and stack control. The words that operate on these
-quotations are called *combinators*.
+## Combinators
 
-`dip` executes a quotation after moving a value off the stack. The
-value is restored after execution completes. These are equivilent:
+Retro makes use of anonymous functions called *quotations* for
+much of the execution flow and stack control. The words that
+operate on these quotations are called *combinators*.
+
+Combinators are a major part of using Retro. They help in
+reducing the use of lower level shuffling and allow for a
+greater overall consistency in the syntax. I also find them
+to help in reducing visual noise.
+
+### Combinators: Data
+
+`dip` executes a quotation after moving a value off the stack.
+The value is restored after execution completes. These are
+equivilent:
 
     #10 #12 [ #3 - ] dip
     #10 #12 push #3 - pop
@@ -300,8 +328,8 @@ value is restored after execution completes. These are equivilent:
 :dip  (nq-n)  swap push call pop ;
 ~~~
 
-`sip` is similar to dip, but leaves a copy of the value on the stack
-while the quotation is executed. These are equivilent:
+`sip` is similar to dip, but leaves a copy of the value on the
+stack while the quotation is executed. These are equivilent:
 
     #10 [ #3 * ] sip
     #10 dup push #3 * pop
@@ -310,43 +338,43 @@ while the quotation is executed. These are equivilent:
 :sip  (nq-n)  push dup pop swap &call dip ;
 ~~~
 
-Apply each quote to a copy of x
+Apply each quote to a copy of x.
 
 ~~~
 :bi  (xqq-)  &sip dip call ;
 ~~~
 
-Apply q1 to x and q2 to y
+Apply q1 to x and q2 to y.
 
 ~~~
 :bi*  (xyqq-) &dip dip call ;
 ~~~
 
-Apply q to x and y
+Apply q to x and y.
 
 ~~~
 :bi@  (xyq-)  dup bi* ;
 ~~~
 
-Apply each quote to a copy of x
+Apply each quote to a copy of x.
 
 ~~~
 :tri  (xqqq-)  [ &sip dip sip ] dip call ;
 ~~~
 
-Apply q1 to x, q2 to y, and q3 to z
+Apply q1 to x, q2 to y, and q3 to z.
 
 ~~~
 :tri*  (xyzqqq-)  [ [ swap &dip dip ] dip dip ] dip call ;
 ~~~
 
-Apply q to x, y, and z
+Apply q to x, y, and z.
 
 ~~~
 :tri@ dup dup tri* ;
 ~~~
 
-## Flow
+### Combinators: Control
 
 Execute quote until quote returns a flag of 0.
 
@@ -369,8 +397,40 @@ The `times` combinator runs a quote (n) times.
   swap [ repeat 0; #1 - push &call sip pop again ] call drop ;
 ~~~
 
-Taking a break from combinators for a bit, I turn to some words for
-comparing things. First, constants for TRUE and FALSE.
+`case` is a conditional combinator. It's actually pretty
+useful. What it does is compare a value on the stack to a
+specific value. If the values are identical, it discards the
+value and calls a quote before exiting the word. Otherwise
+it leaves the stack alone and allows execution to continue.
+
+Example:
+
+    :c:vowel?
+      $a [ TRUE ] case
+      $e [ TRUE ] case
+      $i [ TRUE ] case
+      $o [ TRUE ] case
+      $u [ TRUE ] case
+      drop FALSE ;
+
+~~~
+:case
+  [ over eq? ] dip swap
+  [ nip call #-1 ] [ drop #0 ] choose 0; pop drop drop ;
+
+:s:case
+  [ over s:eq? ] dip swap
+  [ nip call #-1 ] [ drop #0 ] choose 0; pop drop drop ;
+~~~
+
+## Conditionals
+
+Taking a break from combinators for a bit, I turn to some words
+for comparing things. First, constants for TRUE and FALSE.
+
+Due to the way the conditional execution works, only these
+values can be used. This is different than in a traditional
+Forth, where non-zero values are true.
 
 ~~~
 :TRUE  (-n) #-1 ;
@@ -399,34 +459,7 @@ And then some numeric comparators.
 :n:odd?       (n-f)  #2 /mod drop n:-zero? ;
 ~~~
 
-And now back to combinators.
-
-`case` is a conditional combinator. It's actually pretty useful. What
-it does is compare a value on the stack to a specific value. If the
-values are identical, it discards the value and calls a quote before
-exiting the word. Otherwise it leaves the stack alone and allows
-execution to continue.
-
-Example:
-
-    :c:vowel?
-      $a [ TRUE ] case
-      $e [ TRUE ] case
-      $i [ TRUE ] case
-      $o [ TRUE ] case
-      $u [ TRUE ] case
-      drop FALSE ;
-
-~~~
-:case
-  [ over eq? ] dip swap
-  [ nip call TRUE ] [ drop FALSE ] choose 0; pop drop drop ;
-:s:case
-  [ over s:eq? ] dip swap
-  [ nip call TRUE ] [ drop FALSE ] choose 0; pop drop drop ;
-~~~
-
-Two more stack shufflers.
+## More Stack Shufflers.
 
 `rot` rotates the top three values.
 
@@ -434,8 +467,11 @@ Two more stack shufflers.
 :rot  (abc-bca)   [ swap ] dip swap ;
 ~~~
 
-The core Rx language provides addition, subtraction, multiplication,
-and a combined division/remainder. Retro expands on this.
+## Numeric Operations
+
+The core Rx language provides addition, subtraction,
+multiplication, and a combined division/remainder. Retro
+expands on this.
 
 ~~~
 :/         (nq-d)  /mod nip ;
@@ -444,7 +480,8 @@ and a combined division/remainder. Retro expands on this.
 :n:pow     (bp-n)  #1 swap [ over * ] times nip ;
 :n:negate  (n-n)   #-1 * ;
 :n:square  (n-n)   dup * ;
-:n:sqrt    (n-n)   #1 [ repeat dup-pair / over - #2 / 0; + again ] call nip ;
+:n:sqrt    (n-n)
+  #1 [ repeat dup-pair / over - #2 / 0; + again ] call nip ;
 :n:min     (nn-n)  dup-pair lt? [ drop ] [ nip ] choose ;
 :n:max     (nn-n)  dup-pair gt? [ drop ] [ nip ] choose ;
 :n:abs     (n-n)   dup n:negate n:max ;
@@ -454,13 +491,13 @@ and a combined division/remainder. Retro expands on this.
 :n:between? (nul-) rot [ rot rot n:limit ] sip eq? ;
 ~~~
 
-Some of the above, like `n:inc`, are useful with variables. But it's
-messy to execute sequences like:
+Some of the above, like `n:inc`, are useful with variables. But
+it's messy to execute sequences like:
 
   @foo n:inc !foo
 
-The `v:` namespace provides words which simplify the overall handling
-of variables. With this, the above can become simply:
+The `v:` namespace provides words which simplify the overall
+handling of variables. With this, the above can become simply:
 
   &foo v:inc
 
@@ -469,14 +506,35 @@ of variables. With this, the above can become simply:
 :v:dec-by  (na-)   [ fetch swap - ] sip store ;
 :v:inc     (n-n)   #1 swap v:inc-by ;
 :v:dec     (n-n)   #1 swap v:dec-by ;
-:v:limit   (alu-)  push push dup fetch pop pop n:limit swap store ;
+:v:limit   (alu-)
+  push push dup fetch pop pop n:limit swap store ;
 :v:on      (a-)    TRUE swap store ;
 :v:off     (a-)    FALSE swap store ;
-:v:preserve (aq-)  swap dup fetch [ [ call ] dip ] dip swap store ;
 :allot     (n-)    &Heap v:inc-by ;
 ~~~
 
-If you need to update a stored variable there are two typical forms:
+`v:preserve` is a combinator that executes a quotation while
+preserving the contents of a variable.
+
+E.g., instead of:
+
+    @Base [ #16 !Base ... ] dip !Base
+
+You can do:
+
+    &Base [ #16 !Base ... ] v:preserve
+
+This is primarily to aid in readability. I find it to be
+helpful when revisiting older code as it makes the intent
+a bit clearer.
+
+~~~
+:v:preserve (aq-)
+  swap dup fetch [ [ call ] dip ] dip swap store ;
+~~~
+
+If you need to update a stored variable there are two typical
+forms:
 
     #1 'Next var<n>
     @Next #10 * !Next
@@ -486,28 +544,32 @@ Or:
     #1 'Next var<n>
     &Next [ fetch #10 * ] sip store
 
-The `v:update-using` replaces this with:
+`v:update-using` replaces this with:
 
     #1 'Next var<n>
     &Next [ #10 * ] v:update-using
 
-It takes care of preserving the variable address, fetching the stored
-value, and updating with the resulting value.
+It takes care of preserving the variable address, fetching the
+stored value, and updating with the resulting value.
 
 ~~~
 :v:update-using (aq-) swap [ fetch swap call ] sip store ;
 ~~~
 
-I have a simple word `copy` which copies memory to another location.
+I have a simple word `copy` which copies memory to another
+location.
 
 ~~~
 :copy   (aan-) [ &fetch-next dip store-next ] times drop drop ;
 ~~~
 
+## Lexical Scope
+
 Now for something tricky: a system for lexical scoping.
 
-The dictionary is a simple linked list. Retro allows for some control
-over what is visible using the `{{`, `---reveal---`, and `}}` words.
+The dictionary is a simple linked list. Retro allows for some
+control over what is visible using the `{{`, `---reveal---`,
+and `}}` words.
 
 As an example:
 
@@ -518,8 +580,12 @@ As an example:
       :next-number @Value &Value increment ;
     }}
 
-Only the `next-number` function will remain visible once `}}` is
-executed. 
+Only the `next-number` function will remain visible once `}}`
+is executed.
+
+It's important to note that this only provides a *lexical*
+scope. Any variables are *global* (though the names may be
+hidden), so use `v:preserve` if you need reentrancy.
 
 ~~~
 :ScopeList `0 `0 ;
@@ -530,14 +596,20 @@ executed.
 :}}            (-)
   &ScopeList fetch-next swap fetch eq?
   [ @ScopeList !Dictionary ]
-  [ @ScopeList [ &Dictionary repeat fetch dup fetch &ScopeList n:inc fetch -eq? 0; drop again ] call store ] choose ;
+  [ @ScopeList
+    [ &Dictionary repeat
+        fetch dup fetch &ScopeList n:inc fetch -eq? 0; drop
+      again ] call store ] choose ;
 ~~~
 
---> The scoping code is a bit messy. I'd like to simplify it.
-
+## Linear Buffers
 
 A buffer is a linear memory buffer. Retro provides a `buffer:`
 namespace for working with them.
+
+This is something I've used for years. It's simple, but makes
+it easy to construct strings (as it writes a trailing ASCII
+null) and other simple structures.
 
 ~~~
 {{
@@ -557,16 +629,19 @@ namespace for working with them.
 }}
 ~~~
 
-And now for strings. Traditional Forth systems have a messy mix of
-strings. You have counted strings, address/length pairs, and sometimes
-other forms.
+## Strings
 
-Retro uses zero terminated strings. I know that counted strings are
-better in many ways, but I've used these for years and they are a
-workable approach.
+And now for strings. Traditional Forth systems have a messy mix
+of strings. You have counted strings, address/length pairs, and
+sometimes other forms.
 
-Temporary strings are allocated in a circular pool (at STRINGS).
-This space can be altered as needed by adjusting these variables.
+Retro uses zero terminated strings. I know that counted strings
+are better in many ways, but I've used these for years and they
+are a workable approach.
+
+Temporary strings are allocated in a circular pool (`STRINGS`).
+This space can be altered as needed by adjusting these
+variables.
 
 ~~~
 :TempStrings ;   data  #32 !TempStrings
@@ -586,8 +661,9 @@ This space can be altered as needed by adjusting these variables.
 }}
 ~~~
 
-Permanent strings are compiled into memory. To skip over them a helper
-function is used. When compiled into a definition this will look like:
+Permanent strings are compiled into memory. To skip over them a
+helper function is used. When compiled into a definition this
+will look like:
 
     i lica....
     r s:skip
@@ -596,24 +672,24 @@ function is used. When compiled into a definition this will look like:
     d 100
     d 0
 
-The `s:skip` adjusts the Nga instruction pointer to skip to the code
-following the stored string.
+The `s:skip` adjusts the Nga instruction pointer to skip to the
+code following the stored string.
 
 ~~~
 :s:skip (-) pop [ fetch-next n:-zero? ] while n:dec push ;
 :s:keep (s-s) compiling? [ &s:skip class:word ] if here [ s, ] dip class:data ;
 ~~~
 
-And now a quick `'` prefix. (This will be replaced later). What this
-does is either move the string token to the temporary buffer or compile
-it into the current definition.
+And now a quick `'` prefix. (This will be replaced later). What
+this does is either move the string token to the temporary
+buffer or compile it into the current definition.
 
 This doesn't support spaces. I use underscores instead. E.g.,
 
     'Hello_World!
 
-Later in the code I'll add a better implementation which can handle
-conversion of _ into spaces.
+Later in the code I'll add a better implementation which can
+handle conversion of _ into spaces.
 
 ~~~
 :prefix:' compiling? [ s:keep ] [ s:temp ] choose ; immediate
@@ -636,8 +712,9 @@ conversion of _ into spaces.
   buffer:preserve ;
 ~~~
 
-Trimming removes leading (`s:trim-left`) or trailing (`s:trim-right`)
-spaces from a string. `s:trim` removes both leading and trailing spaces.
+Trimming removes leading (`s:trim-left`) or trailing
+(`s:trim-right`) spaces from a string. `s:trim` removes
+both leading and trailing spaces.
 
 ~~~
 :s:trim-left (s-s) s:temp [ fetch-next [ #32 eq? ] [ n:-zero? ] bi and ] while n:dec ;
@@ -661,7 +738,7 @@ a key part of building the other high-level string operations.
   [ repeat
       over fetch 0; drop
       dup-pair
-      [ [ [ fetch ] dip call ] dip ] dip
+      [ [ &fetch dip call ] dip ] dip
       [ n:inc ] dip
     again
   ] call drop-pair ;
@@ -727,8 +804,8 @@ substring is in a string.
 }}
 ~~~
 
-`s:filter` returns a new string, consisting of the characters from
-another string that are filtered by a quotation.
+`s:filter` returns a new string, consisting of the characters
+from another string that are filtered by a quotation.
 
     'This_is_a_test [ c:-vowel? ] s:filter
 
@@ -742,8 +819,8 @@ another string that are filtered by a quotation.
   ] buffer:preserve ;
 ~~~
 
-`s:map` Return a new string resulting from applying a quotation to each
-character in a source string.
+`s:map` Return a new string resulting from applying a quotation
+to each character in a source string.
 
     'This_is_a_test [ $_ [ ASCII:SPACE ] case ] s:map
 
@@ -755,8 +832,8 @@ character in a source string.
   ] buffer:preserve ;
 ~~~
 
-`s:substr` returns a subset of a string. Provide it with a string,
-a starting offset, and a length.
+`s:substr` returns a subset of a string. Provide it with a
+string, a starting offset, and a length.
 
 ~~~
 :s:substr (sfl-s)
@@ -774,10 +851,10 @@ from fixed ends of the string.
 
 Hash (using DJB2)
 
-I use the djb2 hash algorithm for computing hashes from strings.
-There are certainly better hashes out there, but this is pretty
-simple and works well for my limited hash needs. The implementation
-was adapted from the C example at http://www.cse.yorku.ca/~oz/hash.html
+I use the djb2 hash algorithm for computing hashes from
+strings. There are better hashes out there, but this is
+pretty simple and works well for my needs. This was based
+on an implementation at http://www.cse.yorku.ca/~oz/hash.html
 
 ~~~
 :s:hash (s-n) #5381 swap [ swap #33 * + ] s:for-each ;
@@ -802,9 +879,12 @@ are of some general interest.
   #32, #9 , #10 , #13 , #0 ,
 ~~~
 
-Not all characters can be obtained via the $ prefix. ASCII has many
-characters that aren't really intended to be printable. Retro has an
-`ASCII` namespace providing symbolic names for these.
+## ASCII Constants
+
+Not all characters can be obtained via the $ prefix. ASCII has
+many characters that aren't really intended to be printable.
+Retro has an `ASCII` namespace providing symbolic names for
+these.
 
 ~~~
 #0  'ASCII:NUL const    #1   'ASCII:SOH const
@@ -826,9 +906,9 @@ characters that aren't really intended to be printable. Retro has an
 #32 'ASCII:SPACE const  #127 'ASCII:DEL const
 ~~~
 
-These words operate on character values. Retro currently deals with
-ASCII, though cells are 32 bits in length, so Unicode values can be
-stored.
+These words operate on character values. Retro currently deals
+with ASCII, though cells are 32 bits in length, so Unicode
+values can be stored.
 
 First are a bunch of words to help identify character values.
 
@@ -837,16 +917,17 @@ First are a bunch of words to help identify character values.
 :c:lowercase?   (c-f) $a $z n:between? ;
 :c:uppercase?   (c-f) $A $Z n:between? ;
 :c:digit?       (c-f) $0 $9 n:between? ;
+:c:visible?     (c-f) #31 #126 n:between? ;
+:c:vowel?       (c-f) 'aeiouAEIOU swap s:contains-char? ;
+:c:consonant?   (c-f)
+  dup c:letter? [ c:vowel? not ] [ drop FALSE ] choose ;
+
 {{
   'WS d:create
     ASCII:SPACE , ASCII:HT , ASCII:LF , ASCII:CR , #0 ,
 ---reveal---
   :c:whitespace?  (c-f) &WS swap s:contains-char? ;
 }}
-:c:visible?     (c-f) #31 #126 n:between? ;
-:c:vowel?       (c-f) 'aeiouAEIOU swap s:contains-char? ;
-:c:consonant?   (c-f)
-  dup c:letter? [ c:vowel? not ] [ drop FALSE ] choose ;
 ~~~
 
 And the inverse forms. (These are included for readability and
@@ -871,6 +952,8 @@ The next few words perform simple transformations.
 :c:to-string    (c-s) '. s:temp [ store ] sip ;
 :c:to-number    (c-n) dup c:digit? [ $0 - ] [ drop #0 ] choose ;
 ~~~
+
+## Back to Strings
 
 With the character transformations a few more string words are
 possible.
@@ -905,7 +988,7 @@ TRUE 'RewriteUnderscores var<n>
 {{
   :sub (c-c) $_ [ ASCII:SPACE ] case ;
   :rewrite (s-s)
-    @RewriteUnderscores [ [ sub ] s:map ] if &prefix:' call ;
+    @RewriteUnderscores [ &sub s:map ] if &prefix:' call ;
 ---reveal---
   :prefix:' rewrite ; immediate
 }}
@@ -936,7 +1019,8 @@ pointers to each of them.
   'Split-On var
   :match?    (c-f) @Split-On eq? ;
   :terminate (s-s) #0 over n:dec store ;
-  :step      (ss-s) [ n:inc ] dip match? [ dup , terminate ] if ;
+  :step      (ss-s)
+    [ n:inc ] dip match? [ dup , terminate ] if ;
 ---reveal---
   :s:tokenize (sc-a)
     !Split-On s:keep
@@ -951,84 +1035,19 @@ pointers to each of them.
 {{
   'Tokens var
   'Needle var
-  :-match? (s-sf) dup @Needle s:contains-string? ;
-  :save-token (s-s) @Needle s:split-on-string s:keep buffer:add n:inc ;
-  :tokens-to-set (-a) here @Tokens buffer:size dup , [ fetch-next ,  ] times drop ;
+  :-match?    (s-sf)
+    dup @Needle s:contains-string? ;
+  :save-token (s-s)
+    @Needle s:split-on-string s:keep buffer:add n:inc ;
+  :tokens-to-set (-a)
+    here @Tokens buffer:size dup , [ fetch-next , ] times drop ;
 ---reveal---
   :s:tokenize-on-string (ss-a)
     [ s:keep !Needle here #8192 + !Tokens
       @Tokens buffer:set
-      [ repeat -match? 0; drop save-token again ] call s:keep buffer:add
-      tokens-to-set ] buffer:preserve ;
+      [ repeat -match? 0; drop save-token again ] call
+      s:keep buffer:add tokens-to-set ] buffer:preserve ;
 }}
-~~~
-
-
-Ok, This is a bit of a hack, but very useful at times.
-
-Assume you have a bunch of values:
-
-    #3 #1 #2 #5
-
-And you want to reorder them into something new:
-
-    #1 #3 #5 #5 #2 #1
-
-Rather than using a lot of shufflers, `reorder` simplfies this into:
-
-    #3 #1 #2 #5
-    'abcd  'baddcb reorder
-
-~~~
-{{
-  'Values var #27 allot
-  :from s:length dup [ [ &Values + store ] sip n:dec ] times drop ;
-  :to dup s:length [ fetch-next $a -  n:inc &Values + fetch swap ] times drop ;
----reveal---
-  :reorder (...ss-?) [ from ] dip to ;
-}}
-~~~
-
-`does` is intended to be paired with `d:create` to attach an action to a
-newwly created data structure. An example use might be something like:
-
-    :constant (ns-)  d:create , [ fetch ] does ;
-
-In a traditional Forth this is similar in spirit to DOES>.
-
-~~~
-:curry (vp-p) here [ swap compile:lit compile:call compile:ret ] dip ;
-:does  (q-)   d:last<xt> swap curry d:last d:xt store &class:word reclass ;
-~~~
-
-`d:for-each` is a combinator which runs a quote once for each header in
-the dictionary. A pointer to each header will be passed to the quote as
-it is run.
-
-This can be used for implementing `words`:
-
-    [ d:name s:put sp ] d:for-each
-
-Or finding the length of the longest name in the dictionary:
-
-    #0 [ d:name s:length n:max ] d:for-each
-
-It's a handy combinator that lets me quickly walk though the entire
-dictionary in a very clean manner.
-
-~~~
-:d:for-each (q-)
-  &Dictionary [ repeat fetch 0;
- dup-pair [ [ swap call ] dip ] dip again ] call drop ;
-~~~
-
-Using `d:for-each`, I implement a means of looking up a dictionary
-header by the `d:xt` field.
-
-~~~
-:d:lookup-xt (a-d)
- #0 swap [ dup-pair d:xt fetch eq?
-           [ swap [ nip ] dip ] [ drop ] choose ] d:for-each drop ;
 ~~~
 
 Use `s:format` to construct a string from multiple items. This
@@ -1038,14 +1057,14 @@ can be illustrated with:
 
 The format language is simple:
 
-| \r | Replace with a CR                         |
-| \n | Replace with a LF                         |
-| \t | Replace with a TAB                        |
-| \\ | Replace with a single \                   |
-| \  | Replace with an underscore (_)            |
-| %c | Replace with a character on the stack     |
-| %s | Replace with a string on the stack        |
-| %n | Replace with the next number on the stack |
+    | \r | Replace with a CR                         |
+    | \n | Replace with a LF                         |
+    | \t | Replace with a TAB                        |
+    | \\ | Replace with a single \                   |
+    | \  | Replace with an underscore (_)            |
+    | %c | Replace with a character on the stack     |
+    | %s | Replace with a string on the stack        |
+    | %n | Replace with the next number on the stack |
 
 ~~~
 {{
@@ -1081,26 +1100,100 @@ The format language is simple:
 :s:const (ss-)  [ s:keep ] dip const ;
 ~~~
 
+## The Ultimate Stack Shuffler
+
+Ok, This is a bit of a hack, but very useful at times.
+
+Assume you have a bunch of values:
+
+    #3 #1 #2 #5
+
+And you want to reorder them into something new:
+
+    #1 #3 #5 #5 #2 #1
+
+Rather than using a lot of shufflers, `reorder` simplfies this
+into:
+
+    #3 #1 #2 #5
+    'abcd  'baddcb reorder
+
+~~~
+{{
+  'Values var #27 allot
+  :from s:length dup [ [ &Values + store ] sip n:dec ] times drop ;
+  :to dup s:length [ fetch-next $a -  n:inc &Values + fetch swap ] times drop ;
+---reveal---
+  :reorder (...ss-?) [ from ] dip to ;
+}}
+~~~
+
+## Extending The Language
+
+`does` is intended to be paired with `d:create` to attach an
+action to a newly created data structure. An example use might
+be something like:
+
+    :constant (ns-)  d:create , [ fetch ] does ;
+
+In a traditional Forth this is similar in spirit to DOES>.
+
+~~~
+:curry (vp-p) here [ swap compile:lit compile:call compile:ret ] dip ;
+:does  (q-)   d:last<xt> swap curry d:last d:xt store &class:word reclass ;
+~~~
+
+`d:for-each` is a combinator which runs a quote once for each
+header in the dictionary. A pointer to each header will be passed
+to the quote as it is run.
+
+This can be used for implementing `words`:
+
+    [ d:name s:put sp ] d:for-each
+
+Or finding the length of the longest name in the dictionary:
+
+    #0 [ d:name s:length n:max ] d:for-each
+
+It's a handy combinator that lets me quickly walk though the
+entire dictionary in a very clean manner.
+
+~~~
+:d:for-each (q-)
+  &Dictionary [ repeat fetch 0;
+ dup-pair [ [ swap call ] dip ] dip again ] call drop ;
+~~~
+
+Using `d:for-each`, I implement a means of looking up a
+dictionary header by the `d:xt` field.
+
+~~~
+:d:lookup-xt (a-d)
+ #0 swap [ dup-pair d:xt fetch eq?
+           [ swap &nip dip ] &drop choose ] d:for-each drop ;
+~~~
+
 ## Sets
 
-Sets are statically sized arrays. They are represented in memory as:
+Sets are statically sized arrays. They are represented in
+memory as:
 
     count
     data #1 (first)
     ...
     data #n (last)
 
-Since the count comes first, a simple `fetch` will suffice to get it,
-but for completeness (and to allow for future changes), we wrap this
-as `set:length`:
+Since the count comes first, a simple `fetch` will suffice to
+get it, but for completeness (and to allow for future changes),
+we wrap this as `set:length`:
 
 ~~~
 :set:length (a-n) fetch ;
 ~~~
 
 The first couple of words are used to create sets. The first,
-`set:from-results` executes a quote and constructs a set from the
-returned values.
+`set:from-results` executes a quote and constructs a set from
+the returned values.
 
 ~~~
 :set:from-results (q-a)
@@ -1108,8 +1201,8 @@ returned values.
   here [ dup , [ , ] times ] dip ;
 ~~~
 
-The second, `set:from-string`, creates a new string with the characters
-in given a string.
+The second, `set:from-string`, creates a new string with the
+characters in given a string.
 
 ~~~
 :set:from-string (s-a)
@@ -1117,9 +1210,9 @@ in given a string.
   set:from-results ;
 ~~~
 
-A very crucial piece is `set:for-each`. This runs a quote once against
-each value in a set. This will be leveraged to implement additional
-combinators.
+A very crucial piece is `set:for-each`. This runs a quote once
+against each value in a set. This is leveraged to implement
+additional combinators.
 
 ~~~
 {{
@@ -1132,21 +1225,22 @@ combinators.
 }}
 ~~~
 
-With this I can easily define `set:dup` to make a copy of a set.
+With this I can easily define `set:dup` to make a copy of a
+set.
 
 ~~~
 :set:dup (a-a)
   here [ dup fetch , [ , ] set:for-each ] dip ;
 ~~~
 
-Next is `set:filter`, which is extracts matching values from a set. This
-is used like:
+Next is `set:filter`, which is extracts matching values from
+a set. This is used like:
 
     [ #1 #2 #3 #4 #5 #6 #7 #8 ] set:from-results
     [ n:even? ] set:filter
 
-It returns a new set with the values that the quote returned a `TRUE`
-flag for.
+It returns a new set with the values that the quote returned
+a `TRUE` flag for.
 
 ~~~
 :set:filter (aq-)
@@ -1154,8 +1248,9 @@ flag for.
   here [ over fetch , set:for-each ] dip here over - n:dec over store ;
 ~~~
 
-Next are `set:contains?` and `set:contains-string?` which compare a given
-value to each item in the array and returns a flag.
+Next are `set:contains?` and `set:contains-string?` which
+compare a given value to each item in the array and returns
+a flag.
 
 ~~~
 {{
@@ -1173,8 +1268,8 @@ value to each item in the array and returns a flag.
 }}
 ~~~
 
-I implemented `set:map` to apply a quotation to each item in a set and
-construct a new set from the returned values.
+I implemented `set:map` to apply a quotation to each item in a
+set and construct a new set from the returned values.
 
 Example:
 
@@ -1187,8 +1282,8 @@ Example:
   here [ over fetch , set:for-each ] dip ;
 ~~~
 
-You can use `set:reverse` to make a copy of a set with the values
-reversed. This can be useful after a `set:from-results`.
+You can use `set:reverse` to make a copy of a set with the
+values reversed. This can be useful after a `set:from-results`.
 
 ~~~
 :set:reverse (a-a)
@@ -1197,17 +1292,18 @@ reversed. This can be useful after a `set:from-results`.
        ] dip ;
 ~~~
 
-`set:nth` provides a quick means of adjusting a set and offset into an
-address for use with `fetch` and `store`.
+`set:nth` provides a quick means of adjusting a set and offset
+into an address for use with `fetch` and `store`.
 
 ~~~
 :set:nth (an-a)
   + n:inc ;
 ~~~
 
-`set:reduce` takes a set, a starting value, and a quote. It executes
-the quote once for each item in the set, passing the item and the value
-to the quote. The quote should consume both and return a new value.
+`set:reduce` takes a set, a starting value, and a quote. It
+executes the quote once for each item in the set, passing the
+item and the value to the quote. The quote should consume both
+and return a new value.
 
 ~~~
 :set:reduce (pnp-n)
@@ -1225,7 +1321,6 @@ I'm defining a new `set:make` which wraps these.
 :{ (-)  &[ call ; immediate
 :} (-a) &] call &set:make class:word ; immediate
 ~~~
-
 
 ## Muri: an assembler
 
@@ -1397,52 +1492,57 @@ This finishes by sealing off the private words.
 
 ## Evaluating Source
 
-The standard interfaces have their own approaches to getting and
-dealing with user input. Sometimes though it'd be nicer to have a
-way of evaluating code from within RETRO itself. This provides an
-`evaluate` word.
+The standard interfaces have their own approaches to getting
+and dealing with user input. Sometimes though it'd be nicer to
+have a way of evaluating code from within RETRO itself. This
+provides an `evaluate` word.
 
 ~~~
 {{
 ~~~
 
-First, create a buffer for the string to be evaluated. This is sized
-to allow for a standard FORTH block to fit, or to easily fit a RETRO
-style 512 character block. It's also long enough for most source lines
-I expect to encounter when working with files.
+First, create a buffer for the string to be evaluated. This is
+sized to allow for a standard FORTH block to fit, or to easily
+fit a traditional 1024 character block. It's also long enough
+for most source lines I expect to encounter when working with
+files.
 
-I allocate this immediately prior to the temporary string buffers.
+I allocate this immediately prior to the temporary string
+buffers.
 
 ~~~
   :current-line (-a) STRINGS #1025 - ;
 ~~~
 
-To make use of this, we need to know how many tokens are in the input
-string. The `count-tokens` word will do this, by filtering out anything
-other than spaces and getting the size of the remaining string.
+To make use of this, we need to know how many tokens are in the
+input string. `count-tokens` takes care of this by filtering
+out anything other than spaces and getting the size of the
+remaining string.
 
 ~~~
   :count-tokens (s-n)
     [ ASCII:SPACE eq? ] s:filter s:length ;
 ~~~
 
-The `next-token` word splits the remainimg string on SPACE and returns
-both parts.
+The `next-token` word splits the remainimg string on SPACE and
+returns both parts.
 
 ~~~
   :next-token (s-ss)
     ASCII:SPACE s:split ;
 ~~~
 
-And then the `process-tokens` uses `next-token` and `interpret` to go
-through the string, processing each token in turn. Using the standard
-`interpret` word allows for proper handling of the prefixes and classes
-so everything works just as if entered directly.
+And then the `process-tokens` uses `next-token` and `interpret`
+to go through the string, processing each token in turn. Using
+the standard `interpret` word allows for proper handling of the
+prefixes and classes so everything works just as if entered
+directly.
 
 ~~~
   :process-tokens (sn-)
     [ next-token swap
-      [ dup s:length n:-zero? [ interpret ] [ drop ] choose ] dip n:inc
+      [ dup s:length n:-zero?
+            &interpret &drop choose ] dip n:inc
     ] times interpret ;
 ~~~
 
@@ -1466,18 +1566,17 @@ And finally, tie it all together into the single exposed word
 
 ## Loops, continued
 
-Sometimes it's useful to be able to access a loop index. The next word,
-`times<with-index>` adds this to RETRO. It also provides `I`, `J`, and
-`K` words to access the index of the current, and two outer loops as
-well.
+Sometimes it's useful to be able to access a loop index. The
+next word, `times<with-index>` adds this to RETRO. It also
+provides `I`, `J`, and `K` words to access the index of the
+current, and up to two outer loops as well.
 
 ~~~
 {{
   'LP var
   'Index d:create #128 allot
   :next (-) @LP &Index + v:inc ;
-  :prep (-)
-    &LP v:inc #0 @LP &Index + store ;
+  :prep (-) &LP v:inc #0 @LP &Index + store ;
   :done (-) &LP v:dec ;
 ---reveal---
   :I (-n) @LP &Index + fetch ;
@@ -1490,14 +1589,15 @@ well.
 
 ## I/O
 
-Retro really only provides one I/O function in the standard interface:
-pushing a character to the output log.
+A Retro system is only required to provide a single I/O word to
+the user: a word to push a single character to the output log.
 
 ~~~
 :c:put (c-) `1000 ;
 ~~~
 
-This can be used to implement words that push other item to the log.
+This can be used to implement words that push other items to
+the log.
 
 ~~~
 :nl   (-)  ASCII:LF c:put ;
@@ -1507,11 +1607,15 @@ This can be used to implement words that push other item to the log.
 :n:put (n-) n:to-string s:put ;
 ~~~
 
-Different inteface layers may provide additional I/O words.
+An interface layer may provide additional I/O words, but these
+will not be implemented here as they are not part of the core
+language.
 
 ## Debugging Aids
 
-I provide just a few debugging aids.
+I provide a few debugging aids in the core language. The
+examples provide much better tools, and interface layers can
+provide much more than I can do here.
 
 ~~~
 :d:words    (-)  [ d:name s:put sp ] d:for-each ;
@@ -1542,18 +1646,20 @@ that likely display something: `':puts d:words-with`.
 
 ## Legalities
 
-Permission to use, copy, modify, and/or distribute this software for
-any purpose with or without fee is hereby granted, provided that the
-copyright notice and this permission notice appear in all copies.
+Permission to use, copy, modify, and/or distribute this
+software for any purpose with or without fee is hereby
+granted, provided that the copyright notice and this
+permission notice appear in all copies.
 
-THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL
-WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED
-WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE
-AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL
-DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR
-PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER
-TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
-PERFORMANCE OF THIS SOFTWARE.
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS
+ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO
+EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER
+RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION,
+ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE
+OF THIS SOFTWARE.
 
     Copyright (c) 2008 - 2018, Charles Childers
     Copyright (c) 2012 - 2013, Michal J Wallace
@@ -1561,6 +1667,7 @@ PERFORMANCE OF THIS SOFTWARE.
     Copyright (c) 2009 - 2010, JGL
     Copyright (c) 2010 - 2011, Marc Simpson
     Copyright (c) 2011 - 2012, Oleksandr Kozachuk
+    Copyright (c) 2018,        Kiyoshi Yoneda
     Copyright (c) 2010,        Jay Skeer
     Copyright (c) 2010,        Greg Copeland
     Copyright (c) 2011,        Aleksej Saushev
