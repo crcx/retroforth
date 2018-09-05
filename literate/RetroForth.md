@@ -611,6 +611,21 @@ This is something I've used for years. It's simple, but makes
 it easy to construct strings (as it writes a trailing ASCII
 null) and other simple structures.
 
+    | word            | used for                               |
+    | --------------- | -------------------------------------- |
+    | buffer:start    | return the first address in the buffer |
+    | buffer:end      | return the last address in the buffer  |
+    | buffer:add      | add a value to the end of the buffer   |
+    | buffer:get      | remove & return the last value         |
+    | buffer:empty    | remove all values from the buffer      |
+    | buffer:size     | return the number of stored values     |
+    | buffer:set      | set an address as the start of the     |
+    |                 | buffer                                 |
+    | buffer:preserve | preserve the current buffer pointers & |
+    |                 | execute a quotation that may set a new |
+    |                 | buffer. restores the saved pointers    |
+    |                 | when done                              |
+    
 ~~~
 {{
   :Buffer `0 ; data
@@ -631,13 +646,14 @@ null) and other simple structures.
 
 ## Strings
 
-And now for strings. Traditional Forth systems have a messy mix
-of strings. You have counted strings, address/length pairs, and
-sometimes other forms.
+Traditional Forth systems have a messy mix of strings. You have
+counted strings, address/length pairs, and sometimes other
+forms.
 
-Retro uses zero terminated strings. I know that counted strings
-are better in many ways, but I've used these for years and they
-are a workable approach.
+Retro uses zero terminated strings. Counted strings are better
+in many ways, but I've used these for years and they are a
+workable approach. (Though caution in needed to avoid buffer
+overflow).
 
 Temporary strings are allocated in a circular pool (`STRINGS`).
 This space can be altered as needed by adjusting these
@@ -672,12 +688,20 @@ will look like:
     d 100
     d 0
 
-The `s:skip` adjusts the Nga instruction pointer to skip to the
-code following the stored string.
+It'd be faster to compile a jump over the string instead. I use
+this approach as it makes it simpler to identify strings when
+debugging.
+
+`s:skip` is the helper function which adjusts the Nga instruction
+pointer to skip to the code following the stored string.
 
 ~~~
-:s:skip (-) pop [ fetch-next n:-zero? ] while n:dec push ;
-:s:keep (s-s) compiling? [ &s:skip class:word ] if here [ s, ] dip class:data ;
+:s:skip (-)
+  pop [ fetch-next n:-zero? ] while n:dec push ;
+
+:s:keep (s-s)
+  compiling? [ &s:skip compile:call ] if
+  here [ s, ] dip class:data ;
 ~~~
 
 And now a quick `'` prefix. (This will be replaced later). What
@@ -703,7 +727,7 @@ handle conversion of _ into spaces.
 
 `s:reverse` reverses the order of a string. E.g.,
 
-    'hello'  ->  'olleh'
+    'hello  ->  'olleh
 
 ~~~
 :s:reverse (s-s)

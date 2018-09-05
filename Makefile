@@ -112,13 +112,6 @@ bin/rre: bin/embedimage bin/extend interfaces/image.c interfaces/rre.c interface
 	mv cleanImage ngaImage
 	cd interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../bin/rre $(LIBM) rre.c
 
-# XXX: I am not sure if the Windows build works.
-rre_windows: bin/embedimage bin/extend interfaces/rre.c interface/image.c interfaces/rre_windows.forth
-	cp ngaImage cleanImage
-	./bin/extend interfaces/rre_windows.forth
-	./bin/embedimage >interfaces/rre_image_windows.c
-	mv cleanImage ngaImage
-
 bin/unu: tools/unu.c
 	$(CC) $(CFLAGS) $(LDFLAGS) -o bin/unu tools/unu.c
 
