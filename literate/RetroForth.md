@@ -208,8 +208,8 @@ backtick prefix for this.
   s:to-number , ; immediate
 ~~~
 
-It's traditional to have a word named `here` which returns the next
-free address in memory.
+It's traditional to have a word named `here` which returns the
+next free address in memory.
 
 ~~~
 :here  (-a)
@@ -672,7 +672,8 @@ variables.
     &Current v:inc
     @Current @TempStrings eq? [ #0 !Current ] if ;
 ---reveal---
-  :s:temp (s-s) dup s:length n:inc s:pointer swap copy s:pointer s:next ;
+  :s:temp (s-s) dup s:length n:inc s:pointer swap copy
+                s:pointer s:next ;
   :s:empty (-s) s:pointer s:next ;
 }}
 ~~~
@@ -741,7 +742,9 @@ Trimming removes leading (`s:trim-left`) or trailing
 both leading and trailing spaces.
 
 ~~~
-:s:trim-left (s-s) s:temp [ fetch-next [ #32 eq? ] [ n:-zero? ] bi and ] while n:dec ;
+:s:trim-left (s-s)
+  s:temp [ fetch-next [ #32 eq? ] [ n:-zero? ] bi and ] while
+  n:dec ;
 :s:trim-right (s-s) s:temp s:reverse s:trim-left s:reverse ;
 :s:trim (s-s) s:trim-right s:trim-left ;
 ~~~
@@ -783,15 +786,15 @@ finds the first instance of a character in a string.
   s:length over eq? [ drop #-1 ] if ;
 ~~~
 
-`s:contains-char?` returns a flag indicating whether or not a given
-character is in a string.
+`s:contains-char?` returns a flag indicating whether or not a
+given character is in a string.
 
 ~~~
 :s:contains-char? (sc-f) s:index-of #-1 -eq? ;
 ~~~
 
-`s:contains-string?` returns a flag indicating whether or not a given
-substring is in a string.
+`s:contains-string?` returns a flag indicating whether or not
+a given substring is in a string.
 
 ~~~
 {{
@@ -890,15 +893,17 @@ Copy a string, including the terminator.
 :s:copy (ss-) over s:length n:inc copy ;
 ~~~
 
-RETRO provides string constants for several ranges of characters that
-are of some general interest.
+RETRO provides string constants for several ranges of
+characters that are of some general interest.
 
 ~~~
 :s:DIGITS          (-s)  '0123456789 ;
 :s:ASCII-LOWERCASE (-s)  'abcdefghijklmnopqrstuvwxyz ;
 :s:ASCII-UPPERCASE (-s)  'ABCDEFGHIJKLMNOPQRSTUVWXYZ ;
-:s:ASCII-LETTERS   (-s)  'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ ;
-:s:PUNCTUATION     (-s)  '_!"#$%&'()*+,-./:;<=>?@[\]^`{|}~ $_ over store ;
+:s:ASCII-LETTERS   (-s)
+  'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ ;
+:s:PUNCTUATION     (-s)
+  '_!"#$%&'()*+,-./:;<=>?@[\]^`{|}~ $_ over store ;
 's:WHITESPACE d:create
   #32, #9 , #10 , #13 , #0 ,
 ~~~
@@ -972,9 +977,11 @@ The next few words perform simple transformations.
 ~~~
 :c:to-upper     (c-c) dup c:lowercase? 0; drop ASCII:SPACE - ;
 :c:to-lower     (c-c) dup c:uppercase? 0; drop ASCII:SPACE + ;
-:c:toggle-case  (c-c) dup c:lowercase? [ c:to-upper ] [ c:to-lower ] choose ;
 :c:to-string    (c-s) '. s:temp [ store ] sip ;
-:c:to-number    (c-n) dup c:digit? [ $0 - ] [ drop #0 ] choose ;
+:c:toggle-case  (c-c)
+  dup c:lowercase? [ c:to-upper ] [ c:to-lower ] choose ;
+:c:to-number    (c-n)
+  dup c:digit? [ $0 - ] [ drop #0 ] choose ;
 ~~~
 
 ## Back to Strings
@@ -1003,8 +1010,8 @@ Convert a decimal (base 10) number to a string.
 }}
 ~~~
 
-Now replace the old prefix:' with this one that can optionally turn
-underscores into spaces.
+Now replace the old prefix:' with this one that can optionally
+turn underscores into spaces.
 
 ~~~
 TRUE 'RewriteUnderscores var<n>
@@ -1034,9 +1041,9 @@ located.
   [ s:split-on-string swap here fetch + ] dip s:prepend s:append ;
 ~~~
 
-`s:tokenize` takes a string and a character to use as a separator. It
-splits the string into a set of substrings and returns a set containing
-pointers to each of them.
+`s:tokenize` takes a string and a character to use as a
+separator. It splits the string into a set of substrings and
+returns a set containing pointers to each of them.
 
 ~~~
 {{
@@ -1086,6 +1093,7 @@ The format language is simple:
     | \t | Replace with a TAB                        |
     | \\ | Replace with a single \                   |
     | \  | Replace with an underscore (_)            |
+    | \0 | Replace with NUL                          |
     | %c | Replace with a character on the stack     |
     | %s | Replace with a string on the stack        |
     | %n | Replace with the next number on the stack |
@@ -1094,9 +1102,10 @@ The format language is simple:
 {{
   :char (c-)
     ASCII:SPACE [ $_ buffer:add ] case
-    $r [ ASCII:CR buffer:add ] case
-    $n [ ASCII:LF buffer:add ] case
-    $t [ ASCII:HT buffer:add ] case
+    $r [ ASCII:CR  buffer:add ] case
+    $n [ ASCII:LF  buffer:add ] case
+    $t [ ASCII:HT  buffer:add ] case
+    $0 [ ASCII:NUL buffer:add ] case
     buffer:add ;
 
   :string (a-a)
@@ -1163,13 +1172,15 @@ be something like:
 In a traditional Forth this is similar in spirit to DOES>.
 
 ~~~
-:curry (vp-p) here [ swap compile:lit compile:call compile:ret ] dip ;
-:does  (q-)   d:last<xt> swap curry d:last d:xt store &class:word reclass ;
+:curry (vp-p)
+  here [ swap compile:lit compile:call compile:ret ] dip ;
+:does  (q-)
+  d:last<xt> swap curry d:last d:xt store &class:word reclass ;
 ~~~
 
 `d:for-each` is a combinator which runs a quote once for each
-header in the dictionary. A pointer to each header will be passed
-to the quote as it is run.
+header in the dictionary. A pointer to each header will be
+passed to the quote as it is run.
 
 This can be used for implementing `words`:
 
@@ -1269,7 +1280,8 @@ a `TRUE` flag for.
 ~~~
 :set:filter (aq-)
   [ over [ call ] dip swap [ , ] [ drop ] choose ] curry
-  here [ over fetch , set:for-each ] dip here over - n:dec over store ;
+  here [ over fetch , set:for-each ] dip
+  here over - n:dec over store ;
 ~~~
 
 Next are `set:contains?` and `set:contains-string?` which
@@ -1607,7 +1619,9 @@ current, and up to two outer loops as well.
   :J (-n) @LP &Index + n:dec fetch ;
   :K (-n) @LP &Index + #2 - fetch ;
   :times<with-index>
-    prep swap [ repeat 0; #1 - push &call sip pop next again ] call drop done ;
+    prep swap
+      [ repeat 0; n:dec push &call sip pop next again ] call
+    drop done ;
 }}
 ~~~
 
