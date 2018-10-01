@@ -112,6 +112,13 @@ bin/rre: bin/embedimage bin/extend interfaces/image.c interfaces/rre.c interface
 	mv cleanImage ngaImage
 	cd interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../bin/rre $(LIBM) rre.c
 
+bin/barebones: bin/embedimage bin/extend interfaces/image.c interfaces/barebones.c interfaces/barebones.forth
+	cp ngaImage cleanImage
+	./bin/extend interfaces/barebones.forth
+	./bin/embedimage >interfaces/barebones_image.c
+	mv cleanImage ngaImage
+	cd interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../bin/barebones barebones.c
+
 bin/unu: tools/unu.c
 	$(CC) $(CFLAGS) $(LDFLAGS) -o bin/unu tools/unu.c
 
