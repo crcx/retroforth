@@ -9,10 +9,10 @@ rm -f bin/extend
 rm -f bin/muri
 
 echo Build Toolchain
-$CC $CFLAGS tools/embedimage.c -o bin/embedimage
-$CC $CFLAGS tools/extend.c -o bin/extend
-$CC $CFLAGS tools/unu.c -o bin/unu
-$CC $CFLAGS tools/muri.c -o bin/muri
+cc -O2 tools/embedimage.c -o bin/embedimage
+cc -O2 tools/extend.c -o bin/extend
+cc -O2 tools/unu.c -o bin/unu
+cc -O2 tools/muri.c -o bin/muri
 
 echo Updating Sources
 ./bin/unu literate/Unu.md >tools/unu.c
@@ -31,20 +31,14 @@ cp ngaImage cleanImage
 ./bin/embedimage >interfaces/rre_image_unix.c
 mv cleanImage ngaImage
 
-echo Prepare Extended Image for Embedding [rre/windows]
-cp ngaImage cleanImage
-./bin/extend interfaces/rre_windows.forth
-./bin/embedimage >interfaces/rre_image_windows.c
-mv cleanImage ngaImage
-
 echo Compile repl
 cd interfaces
-$CC $CFLAGS -O3 repl.c -o ../bin/repl
+cc -O2 repl.c -o ../bin/repl
 cd ..
 
 echo Compile rre/unix
 cd interfaces
-$CC $CFLAGS -O3 -lm rre.c -o ../bin/rre
+cc -O2 rre.c -lm -o ../bin/rre
 cd ..
 
 echo "Update Glossary"
