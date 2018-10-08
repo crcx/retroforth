@@ -14,7 +14,7 @@ Features:
 
 ## Quick Start
 
-For FreeBSD, NetBSD, macOS, Linux:
+For most systems (FreeBSD, NetBSD, macOS, Linux):
 
     make
 
@@ -23,6 +23,15 @@ requires (n)curses, but you can ignore any build/link errors by
 doing:
 
     make -kis
+
+If you are building an an older Linux system and are running
+into problems, try using the `build.sh` script:
+
+    sh build.sh
+
+Or the alternate `Makefile.linux':
+
+    make -f Makefile.linux
 
 ## Executables
 
