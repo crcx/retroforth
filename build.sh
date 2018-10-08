@@ -8,15 +8,17 @@ rm -f bin/repl
 rm -f bin/extend
 rm -f bin/muri
 
-echo Build Toolchain
-cc -O2 tools/embedimage.c -o bin/embedimage
-cc -O2 tools/extend.c -o bin/extend
+echo Build Unu
 cc -O2 tools/unu.c -o bin/unu
-cc -O2 tools/muri.c -o bin/muri
 
 echo Updating Sources
 ./bin/unu literate/Unu.md >tools/unu.c
 ./bin/unu literate/Muri.md >tools/muri.c
+
+echo Build Toolchain
+cc -O2 tools/embedimage.c -o bin/embedimage
+cc -O2 tools/extend.c -o bin/extend
+cc -O2 tools/muri.c -o bin/muri
 
 echo Assemble ngaImage
 ./bin/muri literate/Rx.md
