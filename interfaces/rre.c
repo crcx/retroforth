@@ -1201,14 +1201,18 @@ void restore_term() {
 #define IO_TTY_GETC  1001
 
 void execute(CELL cell, int silent) {
-  CELL a, b;
+  CELL a, b, token;
   CELL opcode;
   rp = 1;
   ip = cell;
+  token = TIB;
   while (ip < IMAGE_SIZE) {
     if (ip == NotFound) {
       printf("\nERROR: Word Not Found: ");
-      printf("%s\n\n", string_extract(TIB));
+      printf("`%s`\n\n", string_extract(token));
+    }
+    if (ip == interpret) {
+      token = TOS;
     }
     opcode = memory[ip];
     if (ngaValidatePackedOpcodes(opcode) != 0) {
