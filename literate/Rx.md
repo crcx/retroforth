@@ -1,7 +1,7 @@
     ____  _   _
     || \\ \\ //
     ||_//  )x(
-    || \\ // \\ 2018.9
+    || \\ // \\ 2018.10
     a minimalist forth for nga
 
 *Rx* (*retro experimental*) is a minimal Forth implementation
@@ -39,11 +39,42 @@ it should be pretty easy to figure out.
 
 Packing of instructions lets me save space, but does require a
 little care. Instructions that modify the instruction pointer
-must be followed by NOP. These are: JUMP, CALL, CCALL, RETURN,
-and ZRET.
+should be followed by NOP. These are: JUMP, CALL, CCALL,
+RETURN, and ZRET. Additionally, if the instruction bundle
+contains a LIT, a value must be in the following cell. (One for
+each LIT in the bundle)
 
-Additionally, if the instruction bundle contains a LIT, a value
-must be in the following cell. (One for each LIT in the bundle)
+
+The reason for this relates to how Nga processes the opcodes.
+To illustrate, assume a stack with a couple of values:
+
+    #1 #2
+
+And a function that consumes two values before returning a
+some new ones:
+
+    :function * #3 ;
+
+If we were to use an instruction bundle like:
+
+    lit call add nop
+    function
+
+Nga will:
+
+    (1) push a pointer to the function to the stack
+    (2) setup a call to the function
+    (3) add the top values on the stack (#1 #2),
+        leaving a single value (#3)
+    (4) do nothing
+
+At this point the bundle is done, so control goes to the
+called function. But we now have only one value on the stack,
+so the stack underflows and Nga will crash.
+
+It's not forbidden, and this can be useful to improve code
+density, but exercise caution and be sure to keep track of
+this behavior to avoid hard to identify bugs.
 
 Muri uses the first two characters of each instruction name
 when composing the bundles, with NOP being named as two dots.
@@ -106,7 +137,7 @@ r 9999
 d 1536
 
 : Version
-d 201809
+d 201810
 ~~~
 
 Both of these are pointers. `Dictionary` points to the most

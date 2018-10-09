@@ -277,6 +277,7 @@ prefix:.	s-	-	-F	Interpret time: convert string to a floating point value. Compi
 prefix::	s-	-	-	Process token as a new definition.	Create a header pointing to `here` with the provided string as the name. Sets class to `class:word`.		class:macro	{n/a}	{n/a}	prefix	all	
 prefix:@	s-n	-	-	Fetch from a stored variable.	Fetch a value from a named variable.	Compile the code to fetch a value from a named variable into the current definition.	class:macro	{n/a}	{n/a}	prefix	all	
 prefix:`	s-	-	-	Process token as a bytecode.	Discard the string.	Convert the string to a number and use `,` to inline it into the current definition.	class:macro	{n/a}	{n/a}	prefix	all	
+prefix:|	s-?	-	-	This is similar to POSTPONE in ANS FORTH.	class:macro	{n/a}	{n/a}	prefix	all	
 push	n-	-n	-	Move a value from the data stack to the return stack.			class:macro	{n/a}	{n/a}	global	all	
 r	s-	-	-	Lookup a reference by name and inline its pointer to the current assembly segment.			class:word	{n/a}	{n/a}	global	all	
 reclass	a-	-	-	Change the class handler of the most recently defined word to the specified one.			class:word	{n/a}	{n/a}	global	all	

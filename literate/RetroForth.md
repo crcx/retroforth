@@ -423,6 +423,15 @@ Example:
   [ nip call #-1 ] [ drop #0 ] choose 0; pop drop drop ;
 ~~~
 
+## A Shortcut
+
+~~~
+:prefix:|
+  d:lookup [ d:xt fetch ] [ d:class fetch ] bi
+  compiling? [ [ class:data ] dip compile:call ]
+             [ call ] choose ; immediate
+~~~
+
 ## Conditionals
 
 Taking a break from combinators for a bit, I turn to some words
@@ -1354,8 +1363,8 @@ I'm defining a new `set:make` which wraps these.
 :set:make (q-a)
   set:from-results set:reverse ;
 
-:{ (-)  &[ call ; immediate
-:} (-a) &] call &set:make class:word ; immediate
+:{ (-)  |[ ; immediate
+:} (-a) |] |set:make ; immediate
 ~~~
 
 ## Muri: an assembler
