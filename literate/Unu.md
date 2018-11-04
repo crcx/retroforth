@@ -24,8 +24,9 @@ I use this for readability purposes.
 #define KiB * 1024
 ~~~
 
-
-### read_line(FILE *file, char *line_buffer)
+The `read_line` function is intended to read in a single line
+into a target buffer. This considers a line to end with either
+a `\n` or EOF.
 
 ~~~
 void read_line(FILE *file, char *line_buffer) {
@@ -50,13 +51,17 @@ void read_line(FILE *file, char *line_buffer) {
 }
 ~~~
 
-### extract(char *fname)
-
-The line buffer needs to be big enough for the longest lines in your source files. Here it's capped at 16KiB, which is sufficient for everything I've used Unu with so far.
+The line buffer needs to be big enough for the longest lines in
+your source files. Here it's set to 16KiB, which suffices for
+everything I've used Unu with so far.
 
 ~~~
 char source[16 KiB];
 ~~~
+
+Unu looks for Markdown style fenced blocks of code. It supports
+both backticks and tildes for this. This will return `1` if the
+line appears to be a start/stop of a fence, or `0` otherwise.
 
 ~~~
 int fenced(char *s)
@@ -67,7 +72,16 @@ int fenced(char *s)
   if (b == 0) return 1;
               return 0;
 }
+~~~
 
+The actual `extract` function is straightforward.
+
+* open the file
+* read each line
+  * if in a fenced region, write the lines to stdout
+* close the file
+
+~~~
 void extract(char *fname) {
   char *buffer = (char *)source;
   char fence[4];
@@ -95,7 +109,8 @@ void extract(char *fname) {
 }
 ~~~
 
-### main(int argc, char **argv)
+And finally, the main routine, which just runs `extract` on
+each specified file.
 
 ~~~
 int main(int argc, char **argv) {
