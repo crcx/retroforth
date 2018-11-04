@@ -2,11 +2,10 @@
   A personal, minimalistic forth
   Copyright (c) 2016 - 2018 Charles Childers
 
-  This is `rre`, short for `run retro and exit`. It's the basic
-  interface layer for Retro on FreeBSD, Linux and macOS.
+  This is the standard interface layer for Retro on Unix-like systems.
 
-  rre embeds the image file into the binary, so the compiled version
-  of this is all you need to have a functional system.
+  This embeds a copy of the image file into the binary, so the compiled
+  binary is all you need to have a functional system.
 
   I'll include commentary throughout the source, so read on.
   ---------------------------------------------------------------------*/
@@ -1470,9 +1469,6 @@ int main(int argc, char **argv) {
 
   int run_tests;
 
-  if (argc <= 1) return 0;                /* Guard clause: exit if no  */
-                                          /* arguments are passed.     */
-
   initialize();                           /* Initialize Nga & image    */
 
   sys_argc = argc;                        /* Point the global argc and */
@@ -1493,10 +1489,13 @@ int main(int argc, char **argv) {
   run_tests = 0;
   fsp = 0;
 
+  /* If no arguments are passed, start the listener */
+  if (argc <= 1) modes[FLAG_INTERACTIVE] = 1;
+
   for (i = 1; i < argc; i++) {
     if (strcmp(argv[i], "-h") == 0) {
       help();
-      exit(0);    
+      exit(0);
     } else if (strcmp(argv[i], "-i") == 0) {
       modes[FLAG_INTERACTIVE] = 1;
     } else if (strcmp(argv[i], "-c") == 0) {
