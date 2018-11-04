@@ -1,7 +1,7 @@
     ____  _   _
     || \\ \\ //
     ||_//  )x(
-    || \\ // \\ 2018.10
+    || \\ // \\ 2018.12
     a minimalist forth for nga
 
 *Rx* (*retro experimental*) is a minimal Forth implementation
@@ -137,7 +137,7 @@ r 9999
 d 1536
 
 : Version
-d 201810
+d 201812
 ~~~
 
 Both of these are pointers. `Dictionary` points to the most
@@ -145,8 +145,8 @@ recent dictionary entry. (See the *Dictionary* section at the
 end of this file.) `Heap` points to the next free address.
 This is hard coded to an address beyond the end of the Rx
 kernel. I adjust this as needed if the kernel grows or shinks
-significantly. See the *Interpreter &amp; Compiler* section
-for more on this.
+significantly. See the *Interpreter & Compiler* section for
+more on this.
 
 ## Nga Instruction Set
 
@@ -340,8 +340,8 @@ fields, and use the flag as the index. Defaults to the *false*
 entry, since a *true* flag is -1.
 
 Note that this requires that the flags be -1 (for TRUE) and 0
-(for FALSE). It's possible to make this more flexible, but at
-a significant performance hit, so I'm leaving it this way.
+(for FALSE). It's possible to make this more flexible, but at a
+significant performance hit, so I'm leaving it this way.
 
 ~~~
 : choice:true
@@ -567,7 +567,7 @@ i ju......
 
 : class:word:compile
 i lilica..
-d 2049 packed li/ca/../..
+d 2049      packed li/ca/../..
 r comma
 i liju....
 r comma
@@ -953,7 +953,7 @@ r Compiler
 d -1
 r Compiler
 i stlilica
-d 1793 packed li/ju/../..
+d 1793      packed li/ju/../..
 r comma
 i lifelili
 r Heap

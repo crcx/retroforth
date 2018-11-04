@@ -29,7 +29,7 @@ into problems, try using the `build.sh` script:
 
     sh build.sh
 
-Or the alternate `Makefile.linux':
+Or the alternate `Makefile.linux`:
 
     make -f Makefile.linux
 
@@ -37,33 +37,36 @@ Or the alternate `Makefile.linux':
 
 Binaries will be placed in the `bin` directory.
 
-### rre
+### retro
 
-Short for `run retro and exit`, this is the primary interface
-for RETRO. The `rre` interface is used to run the examples and
-Atua Gopher and HTTP servers that power forthworks.com.
+The primary executable is `retro`. This is used for running the
+examples and the Atua (gopher) & Casket (http) servers that
+power forthworks.com.
 
-`rre` embeds the RETRO image into the binary, making it trivial
+`retro` embeds the image into the binary, making it trivial
 to copy and deploy.
 
-The `rre` interface also extends the language with many new
+The `retro` interface also extends the language with many new
 words and vocabularies, adding scripting, file i/o, gopher, and
 floating point math support.
 
-### repl
+When run without any command line arguments, this will start
+the *listener*, a basic REPL for interactive use.
+
+### retro-repl
 
 This is a basic `read-evaluate-print-loop` for interactive use.
 It's intended for quick tests and as an easy starting point for
 new interfaces.
 
-The `repl` interface looks for the RETRO image (`ngaImage`) in
-the current working. If not found, this will use an embedded
-copy.
+The `retro-repl` interface looks for the RETRO image (normally
+`ngaImage`) in the current working directory. If not found,
+this will use an embedded copy.
 
-### ri
+### retro-ri
 
-`ri` is an interactive, (n)curses based interface inspired by
-the interface used around 2001 with RETRO4. It provides an
+`retro-ri` is an interactive, curses based interface inspired
+by the interface used around 2001 with RETRO4. It provides an
 output area and then an input area at the bottom. Input is
 processed as it is entered, and the top stack items appear to
 the right of the input.
@@ -76,7 +79,7 @@ the stack works.
 I provide proprietary versions of RETRO for iOS and macOS.
 These use a custom, dual pane editor-based environment and
 some platform specific words and extensions. They do use the
-same image and virtual machine as `rre`, `repl`, etc.
+same image and virtual machine as `retro`, `retro-repl`, etc.
 
 iOS:   https://itunes.apple.com/us/app/retro-forth-12/id1170943580?ls=1&mt=8
 
@@ -86,8 +89,8 @@ The macOS application is also availble for free, though the
 source is not published.
 
 Proceeds from these are used to pay for various project related
-expenses (vps, domains, hardware upgrades, and an occasional
-cup of tea).
+expenses (servers, domains, hardware upgrades, and an
+occasional cup of tea).
 
 ## Alternative Implementations
 

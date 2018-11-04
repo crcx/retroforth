@@ -7,7 +7,7 @@ LIBCURSES ?= -lcurses
 
 all: build
 
-build: bin/retro-embedimage bin/retro-extend bin/retro-injectimage-js bin/retro-muri bin/RETRO12.html bin/retro-ri bin/retro-rre bin/retro-repl bin/retro-unu
+build: bin/retro-embedimage bin/retro-extend bin/retro-injectimage-js bin/retro-muri bin/RETRO12.html bin/retro-ri bin/retro bin/retro-repl bin/retro-unu
 
 clean:
 	rm -f bin/retro-embedimage
@@ -17,7 +17,7 @@ clean:
 	rm -f bin/RETRO12.html
 	rm -f bin/retro-repl
 	rm -f bin/retro-ri
-	rm -f bin/retro-rre
+	rm -f bin/retro
 	rm -f bin/retro-unu
 
 install: build install-data install-docs install-examples
@@ -29,7 +29,7 @@ install: build install-data install-docs install-examples
 	install -c -m 755 bin/retro-muri $(DESTDIR)$(PREFIX)/bin/retro-muri
 	install -c -m 755 bin/retro-repl $(DESTDIR)$(PREFIX)/bin/retro-repl
 	install -c -m 755 bin/retro-ri $(DESTDIR)$(PREFIX)/bin/retro-ri
-	install -c -m 755 bin/retro-rre $(DESTDIR)$(PREFIX)/bin/retro-rre
+	install -c -m 755 bin/retro $(DESTDIR)$(PREFIX)/bin/retro
 	install -c -m 755 bin/retro-unu $(DESTDIR)$(PREFIX)/bin/retro-unu
 
 install-strip: build install-data install-docs install-examples
@@ -41,7 +41,7 @@ install-strip: build install-data install-docs install-examples
 	install -c -m 755 -s bin/retro-muri $(DESTDIR)$(PREFIX)/bin/retro-muri
 	install -c -m 755 -s bin/retro-repl $(DESTDIR)$(PREFIX)/bin/retro-repl
 	install -c -m 755 -s bin/retro-ri $(DESTDIR)$(PREFIX)/bin/retro-ri
-	install -c -m 755 -s bin/retro-rre $(DESTDIR)$(PREFIX)/bin/retro-rre
+	install -c -m 755 -s bin/retro $(DESTDIR)$(PREFIX)/bin/retro
 	install -c -m 755 -s bin/retro-unu $(DESTDIR)$(PREFIX)/bin/retro-unu
 
 install-data: bin/RETRO12.html
@@ -63,8 +63,8 @@ install-examples:
 	install -m 755 -d -- $(DESTDIR)$(EXAMPLESDIR)
 	cp -fpR example $(DESTDIR)$(EXAMPLESDIR)
 
-test: bin/retro-rre
-	./bin/retro-rre tests/test-core.forth
+test: bin/retro
+	./bin/retro tests/test-core.forth
 
 # Targets for development/interactive usage
 
@@ -105,12 +105,12 @@ bin/retro-repl: interfaces/repl.c interfaces/image.c
 bin/retro-ri: interfaces/ri.c interfaces/image.c
 	cd interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../bin/retro-ri $(LIBCURSES) ri.c
 
-bin/retro-rre: bin/retro-embedimage bin/retro-extend interfaces/image.c interfaces/rre.c interfaces/rre.forth
+bin/retro: bin/retro-embedimage bin/retro-extend interfaces/image.c interfaces/rre.c interfaces/rre.forth
 	cp ngaImage cleanImage
 	./bin/retro-extend interfaces/rre.forth
 	./bin/retro-embedimage >interfaces/rre_image_unix.c
 	mv cleanImage ngaImage
-	cd interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../bin/retro-rre $(LIBM) rre.c
+	cd interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../bin/retro $(LIBM) rre.c
 
 bin/retro-barebones: bin/retro-embedimage bin/retro-extend interfaces/image.c interfaces/barebones.c interfaces/barebones.forth
 	cp ngaImage cleanImage
@@ -122,10 +122,10 @@ bin/retro-barebones: bin/retro-embedimage bin/retro-extend interfaces/image.c in
 bin/retro-unu: tools/unu.c
 	$(CC) $(CFLAGS) $(LDFLAGS) -o bin/retro-unu tools/unu.c
 
-doc/Glossary.txt: bin/retro-rre words.tsv
+doc/Glossary.txt: bin/retro words.tsv
 	LC_ALL=C sort -o sorted.tsv words.tsv
 	mv sorted.tsv words.tsv
-	./bin/retro-rre glossary.forth export glossary >doc/Glossary.txt
+	./bin/retro glossary.forth export glossary >doc/Glossary.txt
 
 interfaces/image.c: bin/retro-embedimage bin/retro-extend bin/retro-muri literate/RetroForth.md literate/Rx.md
 	./bin/retro-muri literate/Rx.md
