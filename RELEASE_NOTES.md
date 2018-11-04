@@ -13,7 +13,7 @@ naming conflicts with other applications and packages.
     ri             retro-ri
     unu            retro-unu
 
-## Bug fixes:
+## Bug Fixes
 
 ## Build
 
@@ -32,12 +32,16 @@ naming conflicts with other applications and packages.
 - moved Windows implementation to `interfaces/windows`
 - now starts the listener when run w/o any arguments
 
-Other:
+## Tools
 
-Documentation:
+- added commentary to Unu
+
+## Other
+
+## Documentation
 
 - Glossary expanded to cover the new words
 
-Examples:
+## Examples
 
-Final Notes:
+## Final Notes

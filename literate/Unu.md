@@ -3,13 +3,18 @@
     unu
     (verb) (-hia) pull out, withdraw, draw out, extract.
 
-Unu is a tool for extracting fenced code blocks from Markdown documents.
+Unu is a tool for extracting fenced code blocks from Markdown
+documents.
 
-I always found documenting my projects to be annoying. Eventually I decided to start mixing the code into the commentary using Markdown. Unu is the tool I use to extract the sources from the original files. I've found that this makes it easier for me to keep the commentary up to date.
+I always found documenting my projects annoying. Eventually I
+decided to start mixing the code and commentary using Markdown.
+Unu is the tool I use to extract the sources from the original
+files. I've found that this makes it easier for me to keep the
+commentary up to date, and has lead to better commented code.
 
 ## The Code
 
-### Headers
+First, headers:
 
 ~~~
 #include <stdio.h>
@@ -121,7 +126,7 @@ int main(int argc, char **argv) {
     }
   }
   else
-    printf("unu\n(c) 2013-2017 charles childers\n\nTry:\n  %s filename\n", argv[0]);
+    printf("unu\n(c) 2013-2018 charles childers\n\nTry:\n  %s filename\n", argv[0]);
   return 0;
 }
 ~~~
