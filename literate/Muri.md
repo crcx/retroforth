@@ -1,8 +1,8 @@
 Muri is a minimalistic assembler for Nga.
 
-The standard assembler for Nga is Naje. This is an attempt at making a
-much smaller assembler at a cost of requiring more manual knowledge of
-the Nga virtual machine and its encodings.
+The standard assembler for Nga is Naje. This is an attempt at
+making a much smaller assembler at a cost of requiring more
+manual knowledge of the Nga virtual machine and its encodings.
 
 Input syntax
 
@@ -17,9 +17,10 @@ Directives are a single character. Muri recognizes:
 * **:** for creating a label
 * **r** for references to labels
 
-Instructions are packed up to four instructions per location. You can
-specify them using the first two characters of the instruction name.
-For a non operation, use '..' instead of 'no'.
+Instructions are packed up to four instructions per location.
+You can specify them using the first two characters of the
+instruction name. For a non operation, use '..' instead of
+'no'.
 
     0  nop        7  jump      14  gt        21  and
     1  lit <v>    8  call      15  fetch     22  or
@@ -45,10 +46,10 @@ An example of a small program:
     r square
     i en......
 
-As mentioned earlier this requires some knowledge of Nga architecture.
-While you can pack up to four instructions per location, you should not
-place anything after an instruction that modifies the instruction
-pointer. These are: ju, ca, cc, re, and zr.
+As mentioned earlier this requires knowledge of Nga architecture.
+While you can pack up to four instructions per location, you
+should not place anything after an instruction that modifies the
+instruction pointer. These are: ju, ca, cc, re, and zr.
 
 ----
 
@@ -61,7 +62,8 @@ The code begins with the necessary C headers.
 #include <string.h>
 ~~~
 
-And then a couple of constants that determine overall memory usage.
+And then a couple of constants that determine overall memory
+usage.
 
 ~~~
 #define KiB * 1024
@@ -78,8 +80,8 @@ int32_t Pointers[MAX_NAMES];
 int32_t np;
 ~~~
 
-And then the variables and array for the target memory and source
-buffer:
+And then the variables and array for the target memory and
+source buffer:
 
 ~~~
 char source[1 KiB];
@@ -103,9 +105,9 @@ void save() {
 }
 ~~~
 
-Next, functions related to the reference tables. We have two. The
-`lookup()` searches the tables for a name and returns either -1 (if not
-found) or the address that corresponds to it.
+Next, functions related to the reference tables. We have two.
+The `lookup()` searches the tables for a name and returns
+either -1 (if not found) or the address that corresponds to it.
 
 ~~~
 int32_t lookup(char *name) {
@@ -120,8 +122,8 @@ int32_t lookup(char *name) {
 }
 ~~~
 
-The second, `add_label()` handles adding a new label to the table. It
-also terminates the build if the label already exists.
+The second, `add_label()` handles adding a new label to the
+table. It also terminates the build if the label already exists.
 
 ~~~
 void add_label(char *name, int32_t slice) {
@@ -151,9 +153,9 @@ void read_line(FILE *file, char *line_buffer) {
 }
 ~~~
 
-This one is a little messy. It just checks a source string against the
-list of instructions and returns the corresponding opcode. It returns 0
-(nop) for anything unrecognized.
+This one is a little messy. It just checks a source string
+against the list of instructions and returns the corresponding
+opcode. It returns 0 (nop) for anything unrecognized.
 
 ~~~
 int32_t opcode_for(char *s) {
@@ -175,8 +177,8 @@ int32_t opcode_for(char *s) {
 }
 ~~~
 
-Now for the first pass. This lays down code, with dummy values for the
-references. They will be resolved in pass2().
+Now for the first pass. This lays down code, with dummy values
+for the references. They will be resolved in `pass2()`.
 
 ~~~
 void pass1(char *fname) {
@@ -238,9 +240,9 @@ void pass1(char *fname) {
 }
 ~~~
 
-The second pass skips over any instructions or data, but replaces the
-dummy values for each reference with the actual address (recorded as
-part of pass1()).
+The second pass skips over any instructions or data, but replaces
+the dummy values for each reference with the actual address
+(recorded as part of `pass1()`).
 
 ~~~
 void pass2(char *fname) {
@@ -290,7 +292,7 @@ int main(int argc, char **argv) {
     printf("Wrote %d cells to ngaImage\n", here);
   }
   else
-    printf("muri\n(c) 2017 charles childers\n\n%s filename\n", argv[0]);
+    printf("muri\n(c) 2017-2018 charles childers\n\n%s filename\n", argv[0]);
   return 0;
 }
 ~~~
