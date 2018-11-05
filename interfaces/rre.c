@@ -417,8 +417,8 @@ CELL ioReadFile() {
 
 CELL ioWriteFile() {
   CELL slot, c, r;
-  slot = data[sp]; sp--;
-  c = data[sp]; sp--;
+  slot = stack_pop();
+  c = stack_pop();
   r = fputc(c, ioFileHandles[slot]);
   return (r == EOF) ? 0 : 1;
 }
@@ -443,7 +443,7 @@ CELL ioCloseFile() {
   ---------------------------------------------------------------------*/
 
 CELL ioGetFilePosition() {
-  CELL slot = data[sp]; sp--;
+  CELL slot = stack_pop();
   return (CELL) ftell(ioFileHandles[slot]);
 }
 
@@ -456,8 +456,8 @@ CELL ioGetFilePosition() {
 
 CELL ioSetFilePosition() {
   CELL slot, pos, r;
-  slot = data[sp]; sp--;
-  pos  = data[sp]; sp--;
+  slot = stack_pop();
+  pos  = stack_pop();
   r = fseek(ioFileHandles[slot], pos, SEEK_SET);
   return r;
 }
@@ -473,7 +473,7 @@ CELL ioGetFileSize() {
   CELL slot, current, r, size;
   struct stat buffer;
   int    status;
-  slot = data[sp]; sp--;
+  slot = stack_pop();
   status = fstat(fileno(ioFileHandles[slot]), &buffer);
   if (!S_ISDIR(buffer.st_mode)) {
     current = ftell(ioFileHandles[slot]);
@@ -507,7 +507,7 @@ CELL ioDeleteFile() {
 
 void ioFlushFile() {
   CELL slot;
-  slot = data[sp]; sp--;
+  slot = stack_pop();
   fflush(ioFileHandles[slot]);
 }
 
@@ -574,8 +574,8 @@ CELL unixOpenPipe() {
   CELL slot, mode, name;
   char *request;
   slot = ioGetFileHandle();
-  mode = data[sp]; sp--;
-  name = data[sp]; sp--;
+  mode = stack_pop();
+  name = stack_pop();
   request = string_extract(name);
   if (slot > 0) {
     if (mode == 0)  ioFileHandles[slot] = popen(request, "r");
@@ -777,26 +777,26 @@ void unix_io_puts() {
 
 void ngaUnixUnit() {
   switch (stack_pop()) {
-      case RRE_UNIX_SYSTEM: unix_system();   break;
-      case RRE_UNIX_FORK:   unix_fork();     break;
-      case RRE_UNIX_EXEC0:  unix_exec0();    break;
-      case RRE_UNIX_EXEC1:  unix_exec1();    break;
-      case RRE_UNIX_EXEC2:  unix_exec2();    break;
-      case RRE_UNIX_EXEC3:  unix_exec3();    break;
-      case RRE_UNIX_EXIT:   unix_exit();     break;
-      case RRE_UNIX_GETPID: unix_getpid();   break;
-      case RRE_UNIX_WAIT:   unix_wait();     break;
-      case RRE_UNIX_KILL:   unix_kill();     break;
-      case RRE_UNIX_POPEN:  unixOpenPipe();  break;
-      case RRE_UNIX_PCLOSE: unixClosePipe(); break;
-      case RRE_UNIX_WRITE:  unix_write();    break;
-      case RRE_UNIX_CHDIR:  unix_chdir();    break;
-      case RRE_UNIX_GETENV: unix_getenv();   break;
-      case RRE_UNIX_PUTENV: unix_putenv();   break;
-      case RRE_UNIX_SLEEP:  unix_sleep();    break;
-      case RRE_UNIX_IO_PUTN: unix_io_putn(); break;
-      case RRE_UNIX_IO_PUTS: unix_io_puts(); break;
-      default:                           break;
+      case RRE_UNIX_SYSTEM:  unix_system();   break;
+      case RRE_UNIX_FORK:    unix_fork();     break;
+      case RRE_UNIX_EXEC0:   unix_exec0();    break;
+      case RRE_UNIX_EXEC1:   unix_exec1();    break;
+      case RRE_UNIX_EXEC2:   unix_exec2();    break;
+      case RRE_UNIX_EXEC3:   unix_exec3();    break;
+      case RRE_UNIX_EXIT:    unix_exit();     break;
+      case RRE_UNIX_GETPID:  unix_getpid();   break;
+      case RRE_UNIX_WAIT:    unix_wait();     break;
+      case RRE_UNIX_KILL:    unix_kill();     break;
+      case RRE_UNIX_POPEN:   unixOpenPipe();  break;
+      case RRE_UNIX_PCLOSE:  unixClosePipe(); break;
+      case RRE_UNIX_WRITE:   unix_write();    break;
+      case RRE_UNIX_CHDIR:   unix_chdir();    break;
+      case RRE_UNIX_GETENV:  unix_getenv();   break;
+      case RRE_UNIX_PUTENV:  unix_putenv();   break;
+      case RRE_UNIX_SLEEP:   unix_sleep();    break;
+      case RRE_UNIX_IO_PUTN: unix_io_putn();  break;
+      case RRE_UNIX_IO_PUTS: unix_io_puts();  break;
+      default:                                break;
   }
 }
 #endif
