@@ -43,15 +43,61 @@ The primary executable is `retro`. This is used for running the
 examples and the Atua (gopher) & Casket (http) servers that
 power forthworks.com.
 
-`retro` embeds the image into the binary, making it trivial
-to copy and deploy.
+The `retro` executable embeds the image into the binary, making
+it trivial to copy and deploy.
 
-The `retro` interface also extends the language with many new
-words and vocabularies, adding scripting, file i/o, gopher, and
+This interface layer also extends the language with many new
+words and vocabularies, adds scripting, file i/o, gopher, and
 floating point math support.
 
-When run without any command line arguments, this will start
-the *listener*, a basic REPL for interactive use.
+The `retro` executable can handle a variety of command line
+arguments:
+
+    retro
+
+Starts the *listener*, a basic REPL for interactive use.
+
+    retro -i
+
+Starts the *listener*, a basic REPL for interactive use.
+
+    retro -c
+
+Starts the *listener*, a basic REPL for interactive use. With
+`-c`, it runs in character breaking mode, where input is run
+as soon as a space or enter is encountered. This requires RETRO
+to have been built with TERMIOS support.
+
+    retro filename
+
+This will run the code in the specified file, then exit. This
+is also used to run programs as shell-type scripts using a
+header line like `#!/usr/bin/env retro`.
+
+    retro -i -f filename
+
+This will run the code in the specified file, then start the
+listener.
+
+    retro -c -f filename
+
+This will run the code in the specified file, then start the
+listener in character breaking mode.
+
+    retro -h
+
+Displays a summary of the command line arguments.
+
+Source files for use with `retro` are written with code in
+fenced blocks:
+
+    commentary here
+     
+    ~~~
+    code here
+    ~~~
+
+Anything outside the fenced blocks will be ignored.
 
 ### retro-repl
 
