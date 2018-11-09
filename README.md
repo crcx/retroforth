@@ -18,9 +18,9 @@ For most systems (FreeBSD, NetBSD, macOS, Linux):
 
     make
 
-You will need a standard C compiler and `make`. The `ri` binary
-requires (n)curses, but you can ignore any build/link errors by
-doing:
+You will need a standard C compiler and `make`. The `retro-ri`
+binary requires (n)curses, but you can ignore any build/link
+errors by doing:
 
     make -kis
 
