@@ -13,6 +13,15 @@ naming conflicts with other applications and packages.
     ri             retro-ri
     unu            retro-unu
 
+The addition of the new `|` prefix makes compiler macros
+easier to write. Contrast:
+
+    :IF   &[ class:macro ; immediate
+    :THEN &] class:macro &choose class:word ; immediate
+    
+    :IF   |[ ; immediate
+    :THEN |] |choose ; immediate
+
 ## Bug Fixes
 
 ## Build
@@ -24,6 +33,7 @@ naming conflicts with other applications and packages.
 - add `c:to-number`
 - minor optimizations throughout
 - `s:format` now treats `\0` as ASCII NUL
+- added `prefix:|` for use with compiler macros
 
 ## Interfaces
 
