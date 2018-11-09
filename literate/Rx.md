@@ -1262,7 +1262,7 @@ s choose
 : 0027
 r 0026
 r if
-r class:word
+r class:primitive
 s if
 : 0028
 r 0027
