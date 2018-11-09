@@ -167,6 +167,6 @@ int main(int argc, char **argv) {
     printf("Wrote %d cells to ngaImage\n", here);
   }
   else
-    printf("muri\n(c) 2017 charles childers\n\n%s filename\n", argv[0]);
+    printf("muri\n(c) 2017-2018 charles childers\n\n%s filename\n", argv[0]);
   return 0;
 }
