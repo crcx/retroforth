@@ -180,6 +180,10 @@ and `data` to tag data words.
 :data       (-)  &class:data  reclass ;
 ~~~
 
+~~~
+:primitive (-) &class:primitive reclass ;
+~~~
+
 ## Optimizations & Compiler Extensions
 
 I have a `compile` namespace for some low level words that
@@ -295,13 +299,24 @@ words: `push`, `pop`, `drop`, `swap`, and `dup`. There are
 quite a few more that are useful. Some of these are provided
 here.
 
+Most of these are implemented as raw bytecodes which can be
+inlined when used in definitions. The high level definitions
+are:
+
+    :tuck      (xy-yxy)   dup push swap pop ;
+    :over      (xy-xyx)   push dup pop swap ;
+    :nip       (xy-y)     swap drop ;
+    :drop-pair (nn-)      drop drop ;
+
+And the low level forms:
+
 ~~~
-:tuck      (xy-yxy)   dup push swap pop ;
-:over      (xy-xyx)   push dup pop swap ;
+:tuck      (xy-yxy)   `100926722 ; primitive
+:over      (xy-xyx)   `67502597  ; primitive
+:nip       (xy-y)     `772       ; primitive
+:drop-pair (nn-)      `771       ; primitive
+:?dup      (n-nn|n-n) `6402      ; primitive
 :dup-pair  (xy-xyxy)  over over ;
-:nip       (xy-y)     swap drop ;
-:drop-pair (nn-)      drop drop ;
-:?dup      (n-nn|n-n) dup 0; ;
 ~~~
 
 ## Combinators
@@ -472,8 +487,14 @@ And then some numeric comparators.
 
 `rot` rotates the top three values.
 
+High level:
+
+    :rot  (abc-bca)   [ swap ] dip swap ;
+
+And low level, for inlining:
+
 ~~~
-:rot  (abc-bca)   [ swap ] dip swap ;
+:rot (abc-bca) `67503109 ; primitive
 ~~~
 
 ## Numeric Operations
@@ -482,9 +503,15 @@ The core Rx language provides addition, subtraction,
 multiplication, and a combined division/remainder. Retro
 expands on this.
 
+I implement the division and remainder as low level words
+so they can be inlined. Here's the high level forms:
+
+    :/         (nq-d)  /mod nip ;
+    :mod       (nq-r)  /mod drop ;
+
 ~~~
-:/         (nq-d)  /mod nip ;
-:mod       (nq-r)  /mod drop ;
+:/         (nq-d)  `197652 ; primitive
+:mod       (nq-r)  `788    ; primitive
 :not       (n-n)   #-1 xor ;
 :n:pow     (bp-n)  #1 swap [ over * ] times nip ;
 :n:negate  (n-n)   #-1 * ;
