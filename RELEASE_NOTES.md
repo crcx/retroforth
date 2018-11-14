@@ -34,6 +34,7 @@ easier to write. Contrast:
 - minor optimizations throughout
 - `s:format` now treats `\0` as ASCII NUL
 - added `prefix:|` for use with compiler macros
+- inline some stack shufflers for better performance and code density
 
 ## Interfaces
 

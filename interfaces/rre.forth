@@ -362,19 +362,21 @@ once for each line in a file. This makes some things trivial. E.g., a simple
 # Interactive Listener
 
 ~~~
+'NoEcho var
 
 {{
   :version (-)    @Version #100 /mod n:put $. c:put n:put ;
   :eol?    (c-f)  [ ASCII:CR eq? ] [ ASCII:LF eq? ] [ ASCII:SPACE eq? ] tri or or ;
   :valid?  (s-sf) dup s:length n:-zero? ;
-  :ok      (-)    compiling? [ nl 'Ok_ s:put ] -if ;
+  :ok      (-)    @NoEcho not 0; drop compiling? [ nl 'Ok_ s:put ] -if ;
   :check-eof (c-c) dup [ #-1 eq? ] [ #4 eq? ] bi or [ 'bye d:lookup d:xt fetch call ] if ;
   :check-bs  (c-c) dup [ #8 eq? ] [ #127 eq? ] bi or [ buffer:get buffer:get drop-pair ] if ;
   :s:get      (-s) [ #1025 buffer:set
                      [ c:get dup buffer:add check-eof check-bs eol? ] until
                       buffer:start s:chop ] buffer:preserve ;
 ---reveal---
-  :banner  (-)    'RETRO_12_(rx- s:put version $) c:put nl
+  :banner  (-)    @NoEcho not 0; drop
+                  'RETRO_12_(rx- s:put version $) c:put nl
                   EOM n:put '_MAX,_TIB_@_1025,_Heap_@_ s:put here n:put nl ;
   :bye     (-)    #0 unix:exit ;
   :listen  (-)

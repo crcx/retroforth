@@ -1416,7 +1416,7 @@ void include_file(char *fname, int run_tests) {
 
 void help(char *exename) {
   printf("Scripting Usage: %s filename\n\n", exename);
-  printf("Interactive Usage: %s [-h] [-i] [-c] [-f filename] [-t]\n\n", exename);
+  printf("Interactive Usage: %s [-h] [-i] [-c] [-s] [-f filename] [-t]\n\n", exename);
   printf("Valid Arguments:\n\n");
   printf("  -h\n");
   printf("  Display this help text\n\n");
@@ -1424,6 +1424,8 @@ void help(char *exename) {
   printf("  Launches in interactive mode (line buffered)\n\n");
   printf("  -c\n");
   printf("  Launches in interactive mode (character buffered)\n\n");
+  printf("  -s\n");
+  printf("  Suppress the 'ok' prompt and keyboard echo in interactive mode\n\n");
   printf("  -f filename\n");
   printf("  Run the contents of the specified file\n\n");
   printf("  -t\n");
@@ -1459,7 +1461,7 @@ int arg_is(char *t) {
   ---------------------------------------------------------------------*/
 
 enum flags {
-  FLAG_HELP, FLAG_RUN_TESTS, FLAG_INCLUDE, FLAG_INTERACTIVE, FLAG_CBREAK
+  FLAG_HELP, FLAG_RUN_TESTS, FLAG_INCLUDE, FLAG_INTERACTIVE, FLAG_CBREAK, FLAG_SILENT
 };
 
 int main(int argc, char **argv) {
@@ -1502,6 +1504,8 @@ int main(int argc, char **argv) {
     } else if (strcmp(argv[i], "-c") == 0) {
       modes[FLAG_INTERACTIVE] = 1;
       modes[FLAG_CBREAK] = 1;
+    } else if (strcmp(argv[i], "-s") == 0) {
+      modes[FLAG_SILENT] = 1;
     } else if (strcmp(argv[i], "-f") == 0) {
       files[fsp] = argv[i + 1];
       fsp++;
@@ -1515,6 +1519,11 @@ int main(int argc, char **argv) {
   for (i = 0; i < fsp; i++) {
     if (strcmp(files[i], "\0") != 0)
       include_file(files[i], run_tests);
+  }
+
+
+  if (modes[FLAG_SILENT] == 1) {
+    memory[d_xt_for("NoEcho", Dictionary)] = -1;
   }
 
   if (modes[FLAG_INTERACTIVE] == 1) {
