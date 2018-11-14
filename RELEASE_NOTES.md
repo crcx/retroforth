@@ -27,6 +27,7 @@ easier to write. Contrast:
 ## Build
 
 - add `Makefile.linux` to help with building on some Linux systems
+- recreate `bin` if it's not present
 
 ## Core Language
 
@@ -42,6 +43,7 @@ easier to write. Contrast:
 
 - moved Windows implementation to `interfaces/windows`
 - now starts the listener when run w/o any arguments
+- added `-s` command line parameter to silence input echo & ok prompt
 
 ## Tools
 
