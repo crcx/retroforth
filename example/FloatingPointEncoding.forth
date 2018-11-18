@@ -30,15 +30,11 @@ n:MAX n:negate       'u:-INF const
 :u:clip  (u-u) u:MIN u:MAX n:limit ;
 ~~~
 
-Define the scaling factors. Adjust these as needed for your application.
-
-~~~
-:f:U1      (-|f:-b)  .1.e9 ;
-:f:BALANCE (-|f:-b)  .1. ; 
-~~~
-
 ~~~
 {{
+  :f:U1      (-|f:-b)  .1.e9 ;
+  :f:BALANCE (-|f:-b)  .1. ; 
+
   :f:scale   (-|f:a-b) f:U1 f:* ;
   :f:descale (-|f:a-b) f:U1 f:/ ;
 

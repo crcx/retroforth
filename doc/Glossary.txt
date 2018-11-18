@@ -47,23 +47,6 @@ Example #1:
 
 ----------------------------------------------------------------
 
--
-
-  Data:  nn-n
-  Addr:  -
-  Float: -
-
-Subtract `n1` from `n2` and return the difference.
-
-Class Handler: class:primitive | Namespace: global | Interface Layer: all
-
-Example #1:
-
-    #2 #1 -
-    #-10 #3 -
-
-----------------------------------------------------------------
-
 ---reveal---
 
   Data:  -
@@ -150,6 +133,23 @@ Class Handler: class:macro | Namespace: global | Interface Layer: all
 End the current definition.
 
 Class Handler: class:macro | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+;
+
+  Data:  nn-n
+  Addr:  -
+  Float: -
+
+Subtract `n1` from `n2` and return the difference.
+
+Class Handler: class:primitive | Namespace: global | Interface Layer: all
+
+Example #1:
+
+    #2 #1 -
+    #-10 #3 -
 
 ----------------------------------------------------------------
 
@@ -2219,6 +2219,18 @@ Class Handler: class:word | Namespace: f | Interface Layer: rre
 
 ----------------------------------------------------------------
 
+f:fetch
+
+  Data:  a-
+  Addr:  -
+  Float: -n
+
+{n/a}
+
+Class Handler: class:word | Namespace: {n/a} | Interface Layer: {n/a}
+
+----------------------------------------------------------------
+
 f:floor
 
   Data:  -
@@ -2415,6 +2427,18 @@ Class Handler: class:word | Namespace: f | Interface Layer: rre
 
 ----------------------------------------------------------------
 
+f:store
+
+  Data:  a-
+  Addr:  -
+  Float: n-
+
+{n/a}
+
+Class Handler: class:word | Namespace: {n/a} | Interface Layer: {n/a}
+
+----------------------------------------------------------------
+
 f:swap
 
   Data:  -
@@ -2460,6 +2484,18 @@ f:to-string
 Convert a floating point value into a string.
 
 Class Handler: class:word | Namespace: f | Interface Layer: rre
+
+----------------------------------------------------------------
+
+f:to-u
+
+  Data:  -u
+  Addr:  -
+  Float: n-
+
+{n/a}
+
+Class Handler: class:word | Namespace: {n/a} | Interface Layer: {n/a}
 
 ----------------------------------------------------------------
 
@@ -4603,6 +4639,174 @@ tuck
 Put a copy of the top item on the stack under the second one.
 
 Class Handler: class:word | Namespace: global | Interface Layer: all
+
+----------------------------------------------------------------
+
+u:-INF
+
+  Data:  -u
+  Addr:  -
+  Float: -
+
+{n/a}
+
+Class Handler: class:word | Namespace: {n/a} | Interface Layer: {n/a}
+
+----------------------------------------------------------------
+
+u:-inf?
+
+  Data:  u-f
+  Addr:  -
+  Float: -
+
+{n/a}
+
+Class Handler: class:word | Namespace: {n/a} | Interface Layer: {n/a}
+
+----------------------------------------------------------------
+
+u:INF
+
+  Data:  -u
+  Addr:  -
+  Float: -
+
+{n/a}
+
+Class Handler: class:word | Namespace: {n/a} | Interface Layer: {n/a}
+
+----------------------------------------------------------------
+
+u:MAX
+
+  Data:  -u
+  Addr:  -
+  Float: -
+
+{n/a}
+
+Class Handler: class:word | Namespace: {n/a} | Interface Layer: {n/a}
+
+----------------------------------------------------------------
+
+u:MIN
+
+  Data:  -u
+  Addr:  -
+  Float: -
+
+{n/a}
+
+Class Handler: class:word | Namespace: {n/a} | Interface Layer: {n/a}
+
+----------------------------------------------------------------
+
+u:NAN
+
+  Data:  -u
+  Addr:  -
+  Float: -
+
+{n/a}
+
+Class Handler: class:word | Namespace: {n/a} | Interface Layer: {n/a}
+
+----------------------------------------------------------------
+
+u:clip
+
+  Data:  u-U
+  Addr:  -
+  Float: -
+
+{n/a}
+
+Class Handler: class:word | Namespace: {n/a} | Interface Layer: {n/a}
+
+----------------------------------------------------------------
+
+u:inf?
+
+  Data:  u-f
+  Addr:  -
+  Float: -
+
+{n/a}
+
+Class Handler: class:word | Namespace: {n/a} | Interface Layer: {n/a}
+
+----------------------------------------------------------------
+
+u:max?
+
+  Data:  u-f
+  Addr:  -
+  Float: -
+
+{n/a}
+
+Class Handler: class:word | Namespace: {n/a} | Interface Layer: {n/a}
+
+----------------------------------------------------------------
+
+u:min?
+
+  Data:  u-f
+  Addr:  -
+  Float: -
+
+{n/a}
+
+Class Handler: class:word | Namespace: {n/a} | Interface Layer: {n/a}
+
+----------------------------------------------------------------
+
+u:n?
+
+  Data:  u-f
+  Addr:  -
+  Float: -
+
+{n/a}
+
+Class Handler: class:word | Namespace: {n/a} | Interface Layer: {n/a}
+
+----------------------------------------------------------------
+
+u:nan?
+
+  Data:  u-f
+  Addr:  -
+  Float: -
+
+{n/a}
+
+Class Handler: class:word | Namespace: {n/a} | Interface Layer: {n/a}
+
+----------------------------------------------------------------
+
+u:to-f
+
+  Data:  u-
+  Addr:  -
+  Float: -n
+
+{n/a}
+
+Class Handler: class:word | Namespace: {n/a} | Interface Layer: {n/a}
+
+----------------------------------------------------------------
+
+u:zero?
+
+  Data:  u-f
+  Addr:  -
+  Float: -
+
+{n/a}
+
+Class Handler: class:word | Namespace: {n/a} | Interface Layer: {n/a}
 
 ----------------------------------------------------------------
 

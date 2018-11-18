@@ -1,7 +1,6 @@
 *	nn-n	-	-	Multiply `n1` by `n2` and return the result.			class:primitive	    #2 #6 *\n    #-1 #100 *	{n/a}	global	all	
 +	nn-n	-	-	Add `n1` to `n2` and return the result.			class:primitive	    #1 #2 + 	{n/a}	global	all	
 ,	n-	-	-	Store the specified value into the memory at `here` and increment `Heap` by 1.			class:word	    $a , $b , $c , #0 ,	{n/a}	global	all	
--	nn-n	-	-	Subtract `n1` from `n2` and return the difference.			class:primitive	    #2 #1 -\n    #-10 #3 -	{n/a}	global	all	
 ---reveal---	-	-	-	Switch to the exposed (public) portion of a lexical namespace.			class:word	{n/a}	{n/a}	global	all	
 -eq?	nn-f	-	-	Compare two values for inequality. Returns `TRUE` if they are not equal or `FALSE` otherwise.			class:primitive	    #1 #2 -eq?\n    $a $b -eq?	{n/a}	global	all	
 -if	fq-	-	-	Execute the quotation if the flag is `FALSE`.			class:word	{n/a}	{n/a}	global	all	
@@ -9,6 +8,7 @@
 /mod	nm-op	-	-	Divide `n` by `m` and return the result and remainder.			class:primitive	{n/a}	{n/a}	global	all	
 0;	n-n || n-	-	-	If `n` is zero, drop `n` and exit the current word. If non-zero, leave `n` alone and allow execution to continue.			class:macro	{n/a}	{n/a}	global	all	
 ;	-	-	-	End the current definition.			class:macro	{n/a}	{n/a}	global	all	
+;	nn-n	-	-	Subtract `n1` from `n2` and return the difference.			class:primitive	    #2 #1 -\n    #-10 #3 -	{n/a}	global	all	
 ?dup	n-nn || n-n	-	-	Duplicate top value on stack if not zero. If zero, do nothing.			class:word	    #1 ?dup\n    #0 ?dup	{n/a}	global	all	
 ASCII:ACK	-n	-	-	Constant. Refers to specific ASCII code.			class:data	{n/a}	{n/a}	ASCII	all	
 ASCII:BEL	-n	-	-	Constant. Refers to specific ASCII code.			class:data	{n/a}	{n/a}	ASCII	all	
@@ -176,6 +176,7 @@ f:depth	-n	-	-	Return the number of items on the floating point stack.			class:w
 f:drop	-	-	F-	Discard the top item on the floating point stack.			class:word	{n/a}	{n/a}	f	rre	
 f:dup	-	-	F-FF	Duplicate the top item on the floating point stack.			class:word	{n/a}	{n/a}	f	rre	
 f:eq?	-f	-	FF-	Compare two floating point values for equality. Returns `TRUE` if they are equal or `FALSE` otherwise.			class:word	{n/a}	{n/a}	f	rre	
+f:fetch	a-	-	-n	{n/a}			class:word	{n/a}	{n/a}	{n/a}	{n/a}	{n/a}
 f:floor	-	-	F-F	Perform a mathmatical floor operation on the floating point value.			class:word	{n/a}	{n/a}	f	rre	
 f:gt?	-f	-	FF-	Compare two floating point values for greater than.			class:word	{n/a}	{n/a}	f	rre	
 f:inf?	-f	-	F-	Return `TRUE` if floating point value is INF or `FALSE` otherwise.			class:word	{n/a}	{n/a}	f	rre	
@@ -192,10 +193,12 @@ f:round	-	-	f-f	Round a floating point value.			class:word	{n/a}	{n/a}	f	rre
 f:sin	-	-	F-F	Return the sine of a floating point number.			class:word	{n/a}	{n/a}	f	rre	
 f:sqrt	-	-	F-F	Return the square root of a floating point number.			class:word	{n/a}	{n/a}	f	rre	
 f:square	-	-	f-f	Return the square of a floating point number.			class:word	{n/a}	{n/a}	f	rre	
+f:store	a-	-	n-	{n/a}			class:word	{n/a}	{n/a}	{n/a}	{n/a}	{n/a}
 f:swap	-	-	FG-GF	Exchange the top and second items on the floating point stack.			class:word	{n/a}	{n/a}	f	rre	
 f:tan	-	-	F-F	Return the tangent of a floating point number.			class:word	{n/a}	{n/a}	f	rre	
 f:to-number	-n	-	F-	Convert a floating point value into a number.			class:word	{n/a}	{n/a}	f	rre	
 f:to-string	-s	-	F-	Convert a floating point value into a string.			class:word	{n/a}	{n/a}	f	rre	
+f:to-u	-u	-	n-	{n/a}			class:word	{n/a}	{n/a}	{n/a}	{n/a}	{n/a}
 f:tuck	-	-	FG-GFG	Tuck a copy of the top floating point value under the second one.			class:word	{n/a}	{n/a}	f	rre	
 fetch	a-n	-	-	Fetch the value stored at the specified address.			class:primitive	    &Version fetch	{n/a}	global	all	
 fetch-next	a-an	-	-	Fetch the value stored at the specified address. Returns the next address and the value.			class:word	{n/a}	{n/a}	global	all	
@@ -361,6 +364,20 @@ tri	xqqq-?	-	-	Apply q1 against x, then q2 against a copy of x, and finally q3 a
 tri*	xyzqqq-?	-	-	Apply q1 against x, q2 against y, and q3 against z.			class:word	{n/a}	{n/a}	global	all	
 tri@	xyzq-?	-	-	Apply q against x, then against y, and finally against z.			class:word	{n/a}	{n/a}	global	all	
 tuck	nm-mnm	-	-	Put a copy of the top item on the stack under the second one.			class:word	{n/a}	{n/a}	global	all	
+u:-INF	-u	-	-	{n/a}			class:word	{n/a}	{n/a}	{n/a}	{n/a}	{n/a}
+u:-inf?	u-f	-	-	{n/a}			class:word	{n/a}	{n/a}	{n/a}	{n/a}	{n/a}
+u:INF	-u	-	-	{n/a}			class:word	{n/a}	{n/a}	{n/a}	{n/a}	{n/a}
+u:MAX	-u	-	-	{n/a}			class:word	{n/a}	{n/a}	{n/a}	{n/a}	{n/a}
+u:MIN	-u	-	-	{n/a}			class:word	{n/a}	{n/a}	{n/a}	{n/a}	{n/a}
+u:NAN	-u	-	-	{n/a}			class:word	{n/a}	{n/a}	{n/a}	{n/a}	{n/a}
+u:clip	u-U	-	-	{n/a}			class:word	{n/a}	{n/a}	{n/a}	{n/a}	{n/a}
+u:inf?	u-f	-	-	{n/a}			class:word	{n/a}	{n/a}	{n/a}	{n/a}	{n/a}
+u:max?	u-f	-	-	{n/a}			class:word	{n/a}	{n/a}	{n/a}	{n/a}	{n/a}
+u:min?	u-f	-	-	{n/a}			class:word	{n/a}	{n/a}	{n/a}	{n/a}	{n/a}
+u:n?	u-f	-	-	{n/a}			class:word	{n/a}	{n/a}	{n/a}	{n/a}	{n/a}
+u:nan?	u-f	-	-	{n/a}			class:word	{n/a}	{n/a}	{n/a}	{n/a}	{n/a}
+u:to-f	u-	-	-n	{n/a}			class:word	{n/a}	{n/a}	{n/a}	{n/a}	{n/a}
+u:zero?	u-f	-	-	{n/a}			class:word	{n/a}	{n/a}	{n/a}	{n/a}	{n/a}
 unix:chdir	s-	-	-	Change the current working directory to the specified one.			class:word	  '/etc unix:chdir	{n/a}	unix	rre	
 unix:exec0	s-	-	-	Execute a process by running the application specified by s.			class:word	{n/a}	{n/a}	unix	rre	
 unix:exec1	ss-	-	-	Execute a process by running the application specified by s1. Pass s2 as an argument.			class:word	{n/a}	{n/a}	unix	rre	
