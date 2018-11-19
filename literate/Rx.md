@@ -567,7 +567,7 @@ i ju......
 
 : class:word:compile
 i lilica..
-d 2049      packed li/ca/../..
+d 2049
 r comma
 i liju....
 r comma
@@ -953,7 +953,7 @@ r Compiler
 d -1
 r Compiler
 i stlilica
-d 1793      packed li/ju/../..
+d 1793
 r comma
 i lifelili
 r Heap
