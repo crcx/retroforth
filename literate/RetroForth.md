@@ -1392,10 +1392,10 @@ I'm defining a new `set:make` which wraps these.
 
 ~~~
 :set:make (q-a)
-  set:from-results set:reverse ;
+  set:counted-results set:reverse ;
 
-:{ (-)  |[ ; immediate
-:} (-a) |] |set:make ; immediate
+:{ (-)  |[ |depth |[ ; immediate
+:} (-a) |] |dip |depth |swap |- |n:dec |] |set:make ; immediate
 ~~~
 
 ## Muri: an assembler

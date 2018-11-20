@@ -30,6 +30,6 @@ Test matrix<xs>, should be "contained!" thrice.
 
 ```
 #30 #20 #10 #3 #1 'tester s:keep matrix<xs>
-[ tester #2 + #3 [ fetch-next swap ] times drop ] set:from-results
+{ tester #2 + #3 [ fetch-next swap ] times drop }
 [ { #10 #20 #30 } set:contains? [ 'contained! s:put sp nl ] if ] set:for-each
 ```
