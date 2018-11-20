@@ -4316,6 +4316,18 @@ Class Handler: class:word | Namespace: set | Interface Layer: all
 
 ----------------------------------------------------------------
 
+set:counted-results
+
+  Data:  q-a
+  Addr:  -
+  Float: -
+
+{n/a}
+
+Class Handler: class:word | Namespace: {n/a} | Interface Layer: {n/a}
+
+----------------------------------------------------------------
+
 set:dup
 
   Data:  a-b

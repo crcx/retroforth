@@ -338,6 +338,7 @@ s:trim-left	s-s	-	-	Trim leading whitespace from a string.			class:word	    '__h
 s:trim-right	s-s	-	-	Trim trailing whitespace from a string.			class:word	    '__hello__ s:trim-right	{n/a}	s	all	
 set:contains-string?	sa-f	-	-	Return `TRUE` if the string value is in the set or`FALSE` otherwise.			class:word	{n/a}	{n/a}	set	all	
 set:contains?	na-f	-	-	Return `TRUE` if the value is in the set or `FALSE` otherwise.			class:word	{n/a}	{n/a}	set	all	
+set:counted-results	q-a	-	-	{n/a}			class:word	{n/a}	{n/a}	{n/a}	{n/a}	{n/a}
 set:dup	a-b	-	-	Make a copy of a set. Return the address of the copy.			class:word	{n/a}	{n/a}	set	all	
 set:filter	aq-b	-	-	For each item in the initial set, run the specified quote. If the quote returns `TRUE`, copy the item into a new set. If `FALSE`, discard it. Returns a pointer to the new set.			class:word	{n/a}	{n/a}	set	all	
 set:for-each	aq-	-	-	Execute the quote once for each item in the set.			class:word	{n/a}	{n/a}	set	all	

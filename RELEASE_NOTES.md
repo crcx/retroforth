@@ -36,6 +36,8 @@ easier to write. Contrast:
 - `s:format` now treats `\0` as ASCII NUL
 - added `prefix:|` for use with compiler macros
 - inline some stack shufflers for better performance and code density
+- add `set:counted-results`
+- deprecate `set:from-results`
 
 ## Interfaces
 
@@ -50,6 +52,8 @@ easier to write. Contrast:
 ## Tools
 
 - added commentary to Unu
+- Retro implementation of Unu
+- Retro implementation of Muri
 
 ## Other
 
