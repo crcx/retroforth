@@ -4322,9 +4322,9 @@ set:counted-results
   Addr:  -
   Float: -
 
-{n/a}
+Run a quote and construct a new set from the returned values. The quote should return the values and the number of values to put into the set.
 
-Class Handler: class:word | Namespace: {n/a} | Interface Layer: {n/a}
+Class Handler: class:word | Namespace: set | Interface Layer: all
 
 ----------------------------------------------------------------
 
@@ -4370,7 +4370,7 @@ set:from-results
   Addr:  -
   Float: -
 
-Execute quote. Return a new set containing the values the quote leaves on the stack.
+Execute quote. Return a new set containing the values the quote leaves on the stack. This is deprecated and will be removed in 2019.
 
 Class Handler: class:word | Namespace: set | Interface Layer: all
 

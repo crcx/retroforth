@@ -338,11 +338,11 @@ s:trim-left	s-s	-	-	Trim leading whitespace from a string.			class:word	    '__h
 s:trim-right	s-s	-	-	Trim trailing whitespace from a string.			class:word	    '__hello__ s:trim-right	{n/a}	s	all	
 set:contains-string?	sa-f	-	-	Return `TRUE` if the string value is in the set or`FALSE` otherwise.			class:word	{n/a}	{n/a}	set	all	
 set:contains?	na-f	-	-	Return `TRUE` if the value is in the set or `FALSE` otherwise.			class:word	{n/a}	{n/a}	set	all	
-set:counted-results	q-a	-	-	{n/a}			class:word	{n/a}	{n/a}	{n/a}	{n/a}	{n/a}
+set:counted-results	q-a	-	-	Run a quote and construct a new set from the returned values. The quote should return the values and the number of values to put into the set.			class:word	{n/a}	{n/a}	set	all	
 set:dup	a-b	-	-	Make a copy of a set. Return the address of the copy.			class:word	{n/a}	{n/a}	set	all	
 set:filter	aq-b	-	-	For each item in the initial set, run the specified quote. If the quote returns `TRUE`, copy the item into a new set. If `FALSE`, discard it. Returns a pointer to the new set.			class:word	{n/a}	{n/a}	set	all	
 set:for-each	aq-	-	-	Execute the quote once for each item in the set.			class:word	{n/a}	{n/a}	set	all	
-set:from-results	q-a	-	-	Execute quote. Return a new set containing the values the quote leaves on the stack.			class:word	{n/a}	{n/a}	set	all	
+set:from-results	q-a	-	-	Execute quote. Return a new set containing the values the quote leaves on the stack. This is deprecated and will be removed in 2019.			class:word	{n/a}	{n/a}	set	all	
 set:from-string	s-a	-	-	Create a new set with the characters in the source string.			class:word	{n/a}	{n/a}	set	all	
 set:length	a-n	-	-	Return the length of a set.			class:word	{n/a}	{n/a}	set	all	
 set:make	q-a	-	-	Execute quote. Return a new set containing the values the quote leaves on the stack. This is identical to doing `set:from-results set:reverse`			class:word	{n/a}	{n/a}	set	all	
