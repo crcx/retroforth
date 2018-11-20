@@ -1282,8 +1282,7 @@ characters in given a string.
 
 ~~~
 :set:from-string (s-a)
-  s:reverse [ [ ] s:for-each ] curry
-  set:from-results ;
+  here [ dup s:length , [ , ] s:for-each ] dip ;
 ~~~
 
 A very crucial piece is `set:for-each`. This runs a quote once
@@ -1312,7 +1311,7 @@ set.
 Next is `set:filter`, which is extracts matching values from
 a set. This is used like:
 
-    [ #1 #2 #3 #4 #5 #6 #7 #8 ] set:from-results
+    { #1 #2 #3 #4 #5 #6 #7 #8 }
     [ n:even? ] set:filter
 
 It returns a new set with the values that the quote returned
@@ -1350,7 +1349,7 @@ set and construct a new set from the returned values.
 
 Example:
 
-    [ #1 #2 #3 ] set:from-results
+    { #1 #2 #3 }
     [ #10 * ] set:map
 
 ~~~
