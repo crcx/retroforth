@@ -22,13 +22,13 @@ You can specify them using the first two characters of the
 instruction name. For a non operation, use '..' instead of
 'no'.
 
-    0  nop        7  jump      14  gt        21  and
-    1  lit <v>    8  call      15  fetch     22  or
-    2  dup        9  ccall     16  store     23  xor
-    3  drop      10  return    17  add       24  shift
-    4  swap      11  eq        18  sub       25  zret
-    5  push      12  neq       19  mul       26  end
-    6  pop       13  lt        20  divmod
+    0  nop      7  jump      14  gt        21  and     28  iquery
+    1  lit <v>  8  call      15  fetch     22  or      29  iinteract
+    2  dup      9  ccall     16  store     23  xor
+    3  drop    10  return    17  add       24  shift
+    4  swap    11  eq        18  sub       25  zret
+    5  push    12  neq       19  mul       26  end
+    6  pop     13  lt        20  divmod    27  ienum
 
 E.g., for a sequence of dup, multiply, no-op, drop:
 
@@ -172,7 +172,8 @@ int32_t opcode_for(char *s) {
   if (strcmp(s, "di") == 0) return 20; if (strcmp(s, "an") == 0) return 21;
   if (strcmp(s, "or") == 0) return 22; if (strcmp(s, "xo") == 0) return 23;
   if (strcmp(s, "sh") == 0) return 24; if (strcmp(s, "zr") == 0) return 25;
-  if (strcmp(s, "en") == 0) return 26;
+  if (strcmp(s, "en") == 0) return 26; if (strcmp(s, "ie") == 0) return 27;
+  if (strcmp(s, "iq") == 0) return 28; if (strcmp(s, "ii") == 0) return 29;
   return 0;
 }
 ~~~

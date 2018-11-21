@@ -65,7 +65,8 @@ int32_t opcode_for(char *s) {
   if (strcmp(s, "di") == 0) return 20; if (strcmp(s, "an") == 0) return 21;
   if (strcmp(s, "or") == 0) return 22; if (strcmp(s, "xo") == 0) return 23;
   if (strcmp(s, "sh") == 0) return 24; if (strcmp(s, "zr") == 0) return 25;
-  if (strcmp(s, "en") == 0) return 26;
+  if (strcmp(s, "en") == 0) return 26; if (strcmp(s, "ie") == 0) return 27;
+  if (strcmp(s, "iq") == 0) return 28; if (strcmp(s, "ii") == 0) return 29;
   return 0;
 }
 void pass1(char *fname) {
