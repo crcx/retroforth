@@ -33,6 +33,10 @@ if the **END** instruction is run or end of memory is reached.
 
 Endian: the image files are stored in little endian format.
 
+I/O is not specified, but Nga does provide for adding this in a modular
+manner, using three instructions to enumerate, query, and interact
+with any devices provided.
+
 ## Legal
 
 Nga derives from my earlier work on Ngaro. The following block lists
@@ -60,6 +64,13 @@ Since the code is in C, we have to include some headers.
 #include <string.h>
 ~~~
 
+Nga uses a call table for dispatching instruction handlers. I define
+a type for this here, before starting the actual code.
+
+~~~
+typedef void (*Handler)(void);
+~~~
+
 ## Configuration
 
 To make it easier to adapt Nga to a specific target, we keep some
@@ -78,6 +89,7 @@ a much larger memory and stack space.
 #define IMAGE_SIZE   524288 * 16
 #define ADDRESSES    2048
 #define STACK_DEPTH  512
+#define NUM_DEVICES  0
 ~~~
 
 ## Numbering The Instructions
@@ -86,22 +98,23 @@ For this implementation an enum is used to name each of the
 instructions. For reference, here are the instructions and their
 corresponding values (in decimal):
 
-    0  nop        7  jump      14  gt        21  and
-    1  lit <v>    8  call      15  fetch     22  or
-    2  dup        9  ccall     16  store     23  xor
-    3  drop      10  return    17  add       24  shift
-    4  swap      11  eq        18  sub       25  zret
-    5  push      12  neq       19  mul       26  end
-    6  pop       13  lt        20  divmod
+    0  nop      7  jump      14  gt        21  and      28  io query
+    1  lit <v>  8  call      15  fetch     22  or       29  io interact
+    2  dup      9  ccall     16  store     23  xor
+    3  drop    10  return    17  add       24  shift
+    4  swap    11  eq        18  sub       25  zret
+    5  push    12  neq       19  mul       26  end
+    6  pop     13  lt        20  divmod    27  io enumerate
 
 ~~~
 enum vm_opcode {
   VM_NOP,  VM_LIT,    VM_DUP,   VM_DROP,    VM_SWAP,   VM_PUSH,  VM_POP,
   VM_JUMP, VM_CALL,   VM_CCALL, VM_RETURN,  VM_EQ,     VM_NEQ,   VM_LT,
   VM_GT,   VM_FETCH,  VM_STORE, VM_ADD,     VM_SUB,    VM_MUL,   VM_DIVMOD,
-  VM_AND,  VM_OR,     VM_XOR,   VM_SHIFT,   VM_ZRET,   VM_END
+  VM_AND,  VM_OR,     VM_XOR,   VM_SHIFT,   VM_ZRET,   VM_END,   VM_IO_ENUM,
+  VM_IO_QUERY,        VM_IO_INTERACT
 };
-#define NUM_OPS VM_END + 1
+#define NUM_OPS VM_IO_INTERACT + 1
 ~~~
 
 ## VM State
@@ -124,6 +137,13 @@ CELL sp, rp, ip;
 CELL data[STACK_DEPTH];
 CELL address[ADDRESSES];
 CELL memory[IMAGE_SIZE + 1];
+~~~
+
+For I/O devices, create the dispatch tables.
+
+~~~
+Handler IO_deviceHandlers[NUM_DEVICES + 1];
+Handler IO_queryHandlers[NUM_DEVICES + 1];
 ~~~
 
 ## A Little More Boilerplate
@@ -601,6 +621,39 @@ void inst_end() {
 }
 ~~~
 
+**I/O ENUMERATE** pushes a value to the stack indicating the number
+of provided devices.
+
+~~~
+void inst_ie() {
+  sp++;
+  TOS = NUM_DEVICES;
+}
+~~~
+
+**I/O QUERY** takes a value and returns two. The top stack item
+is an identifer for the type of device attached. The second indicates
+a device specific version number.
+
+~~~
+void inst_iq() {
+  CELL Device = TOS;
+  inst_drop();
+  IO_queryHandlers[Device]();
+}
+~~~
+
+**I/O INTERACT** takes a value indicating the desired device and
+performs an action with the device.
+
+~~~
+void inst_ii() {
+  CELL Device = TOS;
+  inst_drop();
+  IO_deviceHandlers[Device]();
+}
+~~~
+
 ## Instruction Handler
 
 In the past I handled the instructions via a big switch. With Nga, I
@@ -611,13 +664,12 @@ So first up, the jump table itself. Just a list of pointers to the
 instruction implementations, in the proper order.
 
 ~~~
-typedef void (*Handler)(void);
-
 Handler instructions[NUM_OPS] = {
   inst_nop, inst_lit, inst_dup, inst_drop, inst_swap, inst_push, inst_pop,
   inst_jump, inst_call, inst_ccall, inst_return, inst_eq, inst_neq, inst_lt,
   inst_gt, inst_fetch, inst_store, inst_add, inst_sub, inst_mul, inst_divmod,
-  inst_and, inst_or, inst_xor, inst_shift, inst_zret, inst_end
+  inst_and, inst_or, inst_xor, inst_shift, inst_zret, inst_end, inst_ie,
+  inst_iq, inst_ii
 };
 ~~~
 
@@ -670,7 +722,7 @@ int ngaValidatePackedOpcodes(CELL opcode) {
   int i;
   for (i = 0; i < 4; i++) {
     current = raw & 0xFF;
-    if (!(current >= 0 && current <= 26))
+    if (!(current >= 0 && current <= 29))
       valid = 0;
     raw = raw >> 8;
   }
