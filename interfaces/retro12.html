@@ -1,6 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-
-
-strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -52,7 +50,7 @@ strict.dtd">
 
   #listener {
     margin-top: 8pt;
-    width: 90%;
+    width: 85%;
     margin-left: 1%;
     background: #181818;
     color: #D6D6D6;
@@ -170,19 +168,23 @@ function Opcodes() {
     this.SHIFT = 24;
     this.ZERO_EXIT = 25;
     this.END = 26;
+    this.IE = 27;
+    this.IQ = 28;
+    this.II = 29;
 }
 var ip = 0;
 var data = new Stack(DATA_DEPTH);
 var address = new Stack(ADDRESS_DEPTH);
 var image = new Array(IMAGE_SIZE);
 var vm = new Opcodes();
-var instructions = new Array(vm.END);
+var instructions = new Array(vm.II + 1);
 
 function rxPrepareVM() {
     ip = 0;
     data.reset();
     address.reset();
 }
+
 instructions[vm.NOP] = function() {}
 instructions[vm.LIT] = function() {
     ip++;
@@ -345,6 +347,19 @@ instructions[vm.ZERO_EXIT] = function() {
 instructions[vm.END] = function() {
     ip = IMAGE_SIZE;
 }
+instructions[vm.IE] = function() {
+    data.push(1);
+}
+instructions[vm.IQ] = function() {
+    data.drop();
+    data.push(0);
+    data.push(0);
+}
+instructions[vm.II] = function() {
+    data.pop();
+    var s = String.fromCharCode(data.pop());
+    document.getElementById('console').value += s;
+}
 window.addEventListener('load', function(e) {
     rxPrepareVM();
 }, false);
@@ -363,7 +378,7 @@ function validatePackedOpcodes(opcode) {
     var i = 0;
     while (i < 4) {
         current = raw & 0xFF;
-        if (!current >= 0 && current <= 26)
+        if (!current >= 0 && current <= 29)
             valid = 0;
         raw = raw >> 8;
         i++;
@@ -413,15 +428,10 @@ function execute(offset) {
                 "err:notfound : " + string_extract(1471) + "\n";
         }
         if (validatePackedOpcodes(opcode) != 0) {
-            if (opcode == 1000) {
-                var s = String.fromCharCode(data.pop());
-                document.getElementById('console').value += s;
-            } else {
-                ngaProcessPackedOpcodes(opcode);
-            }
+            ngaProcessPackedOpcodes(opcode);
         } else {
-            console.log("Invalid instruction!");
-            console.log("At " + ip + ", opcode " + opcode);
+            alert("Invalid instruction!");
+            alert("At " + ip + ", opcode " + opcode);
         }
         if (address.sp == 0)
             ip = IMAGE_SIZE;
@@ -653,7 +663,7 @@ Define some words:
 
 ~~~
 :hello  (-)
-  'Hello_World! puts nl ;
+  'Hello_World! s:put nl ;
 
 :n:square  (n-m)
   dup * ;
@@ -669,9 +679,9 @@ hello
 Numbers must be prefixed with a # for RETRO to recognize them:
 
 ~~~
-#2 putn sp
-#3 putn sp
-#4 putn sp
+#2 n:put sp
+#3 n:put sp
+#4 n:put sp
 nl
 ~~~
 
@@ -685,13 +695,13 @@ Strings:
 
 ~~~
 'Use_underscores_in_place_of_spaces_in_strings
-puts nl
+s:put nl
 ~~~
 
 Strings also allow for formatted output:
 
 ~~~
-#3 #1 #2 '%n_+_%n_=_%n\n s:format puts
+#3 #1 #2 '%n_+_%n_=_%n\n s:format s:put
 ~~~
 
 Variables:
@@ -699,7 +709,7 @@ Variables:
 ~~~
 'Foo var
 #100 !Foo
-@Foo putn
+@Foo n:put
 ~~~
 
 Note that RETRO will only run code in a fenced block (starting and ending with ~~~). This allows for 
