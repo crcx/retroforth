@@ -48,7 +48,7 @@
 #include <sys/ioctl.h>
 #endif
 
-#define NUM_DEVICES  3
+#define NUM_DEVICES  4
 
 typedef void (*Handler)(void);
 
@@ -126,7 +126,6 @@ void evaluate(char *s, int silent);
 int not_eol(int ch);
 void read_token(FILE *file, char *token_buffer, int echo);
 void include_file(char *fname, int run_tests);
-void ngaGopherUnit();
 void ngaFloatingPointUnit();
 CELL ngaLoadImage(char *imageFile);
 void ngaPrepare();
@@ -937,96 +936,8 @@ void ngaFloatingPointUnit() {
   ---------------------------------------------------------------------*/
 
 #ifdef ENABLE_GOPHER
-
-/*---------------------------------------------------------------------
-  The first Gopher related function is `error()`, which prints an
-  error message and exits if there is a problem.
-  ---------------------------------------------------------------------*/
-
-void error(const char *msg) {
-  perror(msg);
-  exit(0);
-}
-
-
-/*---------------------------------------------------------------------
-  `gopher_fetch()` is the part that does all the real work.
-  ---------------------------------------------------------------------*/
-
-void gopher_fetch(char *host, CELL port, char *selector, CELL dest) {
-  int sockfd, portno, n;
-  struct sockaddr_in serv_addr;
-  struct hostent *server;
-  char data[128 * 1024 + 1];
-  char buffer[1025];
-
-  portno = (int)port;
-  sockfd = socket(AF_INET, SOCK_STREAM, 0);
-  if (sockfd < 0)
-    error("ERROR opening socket");
-
-  server = gethostbyname(host);
-  if (server == NULL) {
-    fprintf(stderr,"ERROR, no such host\n");
-    exit(0);
-  }
-
-  bzero(data, 128 * 1024 + 1);
-  bzero((char *) &serv_addr, sizeof(serv_addr));
-
-  serv_addr.sin_family = AF_INET;
-  bcopy((char *)server->h_addr,
-     (char *)&serv_addr.sin_addr.s_addr,
-     server->h_length);
-  serv_addr.sin_port = htons(portno);
-
-  if (connect(sockfd,(struct sockaddr *) &serv_addr,sizeof(serv_addr)) < 0)
-    error("ERROR connecting");
-
-  n = write(sockfd,selector,strlen(selector));
-  if (n < 0)
-     error("ERROR writing to socket");
-
-  n = write(sockfd,"\n",strlen("\n"));
-  if (n < 0)
-     error("ERROR writing to socket");
-
-  n = 1;
-  while (n > 0) {
-    bzero(buffer,1025);
-    n = read(sockfd,buffer,1024);
-    strcat(data, buffer);
-  }
-
-  close(sockfd);
-  string_inject(data, dest);
-  stack_push(strlen(data));
-}
-
-
-
-/*---------------------------------------------------------------------
-  The last Gopher function, `ngaGopherUnit()` pulls the values needed
-  from the stack and passes them to the `gopher_fetch()` function.
-
-  This will take the following from the stack (TOS to bottom):
-
-  Selector   (NULL terminated string)
-  Port       (Number)
-  Server     (NULL terminated string)
-  Buffer     (Pointer to memory that will hold the received file)
-  ---------------------------------------------------------------------*/
-
-void ngaGopherUnit() {
-  CELL port, dest;
-  char server[1025], selector[4097];
-  strcpy(selector, string_extract(stack_pop()));
-  port = stack_pop();
-  strcpy(server, string_extract(stack_pop()));
-  dest = stack_pop();
-  gopher_fetch(server, port, selector, dest);
-}
-
+void io_gopher_query();
+void io_gopher_handler();
 #endif
 
 
@@ -1097,9 +1008,6 @@ void execute(CELL cell, int silent) {
                     b = stack_pop();
                     stack_push(string_inject(sys_argv[a + 2], b));
                     break;
-#ifdef ENABLE_GOPHER
-        case -6200: ngaGopherUnit(); break;
-#endif
 #ifdef ENABLE_UNIX
         case -6300: ngaUnixUnit(); break;
 #endif
@@ -1328,6 +1236,8 @@ int main(int argc, char **argv) {
   IO_queryHandlers[1] = io_keyboard_query;
   IO_deviceHandlers[2] = io_filesystem_handler;
   IO_queryHandlers[2] = io_filesystem_query;
+  IO_deviceHandlers[3] = io_gopher_handler;
+  IO_queryHandlers[3] = io_gopher_query;
 
   sys_argc = argc;                        /* Point the global argc and */
   sys_argv = argv;                        /* argv to the actual ones   */

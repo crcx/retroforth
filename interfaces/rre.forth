@@ -141,27 +141,6 @@ Define the scaling factors. Adjust these as needed for your application.
 
 ---------------------------------------------------------------
 
-# Gopher
-
-RETRO has Gopher support via `gopher:get`.
-
-Takes:
-
-  destination
-  server name
-  port
-  selector
-
-Returns:
-
-  number of characters read
-
-~~~
-:gopher:get `-6200 ;
-~~~
-
----------------------------------------------------------------
-
 # Scripting: Command Line Arguments
 
 ~~~
