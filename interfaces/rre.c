@@ -48,7 +48,7 @@
 #include <sys/ioctl.h>
 #endif
 
-#define NUM_DEVICES  2
+#define NUM_DEVICES  3
 
 typedef void (*Handler)(void);
 
@@ -120,16 +120,6 @@ CELL d_class(CELL dt);
 CELL d_name(CELL dt);
 CELL d_lookup(CELL Dictionary, char *name);
 CELL d_xt_for(char *Name, CELL Dictionary);
-CELL ioGetFileHandle();
-CELL ioOpenFile();
-CELL ioReadFile();
-CELL ioWriteFile();
-CELL ioCloseFile();
-CELL ioGetFilePosition();
-CELL ioSetFilePosition();
-CELL ioGetFileSize();
-CELL ioDeleteFile();
-void ioFlushFile();
 void update_rx();
 void execute(CELL cell, int silent);
 void evaluate(char *s, int silent);
@@ -356,215 +346,10 @@ void io_keyboard_query() {
 #ifdef ENABLE_FILES
 
 #define MAX_OPEN_FILES   128
-#define RRE_FILE_OPEN    118
-#define RRE_FILE_CLOSE   119
-#define RRE_FILE_READ    120
-#define RRE_FILE_WRITE   121
-#define RRE_FILE_TELL    122
-#define RRE_FILE_SEEK    123
-#define RRE_FILE_SIZE    124
-#define RRE_FILE_DELETE  125
-#define RRE_FILE_FLUSH   126
-
-
-/*---------------------------------------------------------------------
-  I keep an array of file handles. RETRO will use the index number as
-  its representation of the file.
-  ---------------------------------------------------------------------*/
-
-FILE *ioFileHandles[MAX_OPEN_FILES];
-
-
-/*---------------------------------------------------------------------
-  `ioGetFileHandle()` returns a file handle, or 0 if there are no
-  available handle slots in the array.
-  ---------------------------------------------------------------------*/
-
-CELL ioGetFileHandle() {
-  CELL i;
-  for(i = 1; i < MAX_OPEN_FILES; i++)
-    if (ioFileHandles[i] == 0)
-      return i;
-  return 0;
-}
-
-
-/*---------------------------------------------------------------------
-  `ioOpenFile()` opens a file. This pulls from the RETRO data stack:
-
-  - mode     (number, TOS)
-  - filename (string, NOS)
-
-  Modes are:
-
-  | Mode | Corresponds To | Description          |
-  | ---- | -------------- | -------------------- |
-  |  0   | rb             | Open for reading     |
-  |  1   | w              | Open for writing     |
-  |  2   | a              | Open for append      |
-  |  3   | rb+            | Open for read/update |
-
-  The file name should be a NULL terminated string. This will attempt
-  to open the requested file and will return a handle (index number
-  into the `ioFileHandles` array).
-  ---------------------------------------------------------------------*/
-
-CELL ioOpenFile() {
-  CELL slot, mode, name;
-  char *request;
-  slot = ioGetFileHandle();
-  mode = data[sp]; sp--;
-  name = data[sp]; sp--;
-  request = string_extract(name);
-  if (slot > 0) {
-    if (mode == 0)  ioFileHandles[slot] = fopen(request, "rb");
-    if (mode == 1)  ioFileHandles[slot] = fopen(request, "w");
-    if (mode == 2)  ioFileHandles[slot] = fopen(request, "a");
-    if (mode == 3)  ioFileHandles[slot] = fopen(request, "rb+");
-  }
-  if (ioFileHandles[slot] == NULL) {
-    ioFileHandles[slot] = 0;
-    slot = 0;
-  }
-  stack_push(slot);
-  return slot;
-}
-
-
-/*---------------------------------------------------------------------
-  `ioReadFile()` reads a byte from a file. This takes a file pointer
-  from the stack and pushes the character that was read to the stack.
-  ---------------------------------------------------------------------*/
-
-CELL ioReadFile() {
-  CELL slot = stack_pop();
-  CELL c = fgetc(ioFileHandles[slot]);
-  return feof(ioFileHandles[slot]) ? 0 : c;
-}
-
-
-/*---------------------------------------------------------------------
-  `ioWriteFile()` writes a byte to a file. This takes a file pointer
-  (TOS) and a byte (NOS) from the stack. It does not return any values
-  on the stack.
-  ---------------------------------------------------------------------*/
-
-CELL ioWriteFile() {
-  CELL slot, c, r;
-  slot = stack_pop();
-  c = stack_pop();
-  r = fputc(c, ioFileHandles[slot]);
-  return (r == EOF) ? 0 : 1;
-}
-
-
-/*---------------------------------------------------------------------
-  `ioCloseFile()` closes a file. This takes a file handle from the
-  stack and does not return anything on the stack.
-  ---------------------------------------------------------------------*/
-
-CELL ioCloseFile() {
-  fclose(ioFileHandles[data[sp]]);
-  ioFileHandles[data[sp]] = 0;
-  sp--;
-  return 0;
-}
-
-
-/*---------------------------------------------------------------------
-  `ioGetFilePosition()` provides the current index into a file. This
-  takes the file handle from the stack and returns the offset.
-  ---------------------------------------------------------------------*/
-
-CELL ioGetFilePosition() {
-  CELL slot = stack_pop();
-  return (CELL) ftell(ioFileHandles[slot]);
-}
-
-
-/*---------------------------------------------------------------------
-  `ioSetFilePosition()` changes the current index into a file to the
-  specified one. This takes a file handle (TOS) and new offset (NOS)
-  from the stack.
-  ---------------------------------------------------------------------*/
-
-CELL ioSetFilePosition() {
-  CELL slot, pos, r;
-  slot = stack_pop();
-  pos  = stack_pop();
-  r = fseek(ioFileHandles[slot], pos, SEEK_SET);
-  return r;
-}
-
-
-/*---------------------------------------------------------------------
-  `ioGetFileSize()` returns the size of a file, or 0 if empty. If the
-  file is a directory, it returns -1. It takes a file handle from the
-  stack.
-  ---------------------------------------------------------------------*/
-
-CELL ioGetFileSize() {
-  CELL slot, current, r, size;
-  struct stat buffer;
-  int    status;
-  slot = stack_pop();
-  status = fstat(fileno(ioFileHandles[slot]), &buffer);
-  if (!S_ISDIR(buffer.st_mode)) {
-    current = ftell(ioFileHandles[slot]);
-    r = fseek(ioFileHandles[slot], 0, SEEK_END);
-    size = ftell(ioFileHandles[slot]);
-    fseek(ioFileHandles[slot], current, SEEK_SET);
-  } else {
-    r = -1;
-  }
-  return (r == 0) ? size : 0;
-}
-
-
-/*---------------------------------------------------------------------
-  `ioDeleteFile()` removes a file. This takes a file name (as a string)
-  from the stack.
-  ---------------------------------------------------------------------*/
-
-CELL ioDeleteFile() {
-  char *request;
-  CELL name = data[sp]; sp--;
-  request = string_extract(name);
-  return (unlink(request) == 0) ? -1 : 0;
-}
-
-
-/*---------------------------------------------------------------------
-  `ioFlushFile()` flushes any pending writes to disk. This takes a
-  file handle from the stack.
-  ---------------------------------------------------------------------*/
-
-void ioFlushFile() {
-  CELL slot;
-  slot = stack_pop();
-  fflush(ioFileHandles[slot]);
-}
-
-Handler FileActions[10] = {
-  ioOpenFile,
-  ioCloseFile,
-  ioReadFile,
-  ioWriteFile,
-  ioGetFilePosition,
-  ioSetFilePosition,
-  ioGetFileSize,
-  ioDeleteFile,
-  ioFlushFile
-};
-
-void io_filesystem_query() {
-  stack_push(0);
-  stack_push(4);
-}
-
-void io_filesystem_handler() {
-  FileActions[stack_pop()]();
-}
+extern FILE *ioFileHandles[MAX_OPEN_FILES];
+CELL ioGetFileHandle();
+void io_filesystem_query();
+void io_filesystem_handler();
 
 #endif
 
@@ -1304,17 +1089,6 @@ void execute(CELL cell, int silent) {
     } else {
       switch (opcode) {
         case -9999:        include_file(string_extract(stack_pop()), 0); break;
-#ifdef ENABLE_FILES
-        case RRE_FILE_OPEN:   ioOpenFile();                              break;
-        case RRE_FILE_CLOSE:  ioCloseFile();                             break;
-        case RRE_FILE_READ:   stack_push(ioReadFile());                  break;
-        case RRE_FILE_WRITE:  ioWriteFile();                             break;
-        case RRE_FILE_TELL:   stack_push(ioGetFilePosition());           break;
-        case RRE_FILE_SEEK:   ioSetFilePosition();                       break;
-        case RRE_FILE_SIZE:   stack_push(ioGetFileSize());               break;
-        case RRE_FILE_DELETE: ioDeleteFile();                            break;
-        case RRE_FILE_FLUSH:  ioFlushFile();                             break;
-#endif
 #ifdef ENABLE_FLOATING_POINT
         case -6000: ngaFloatingPointUnit(); break;
 #endif
@@ -1552,6 +1326,8 @@ int main(int argc, char **argv) {
   IO_queryHandlers[0] = generic_output_query;
   IO_deviceHandlers[1] = io_keyboard_handler;
   IO_queryHandlers[1] = io_keyboard_query;
+  IO_deviceHandlers[2] = io_filesystem_handler;
+  IO_queryHandlers[2] = io_filesystem_query;
 
   sys_argc = argc;                        /* Point the global argc and */
   sys_argv = argv;                        /* argv to the actual ones   */

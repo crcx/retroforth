@@ -1,0 +1,166 @@
+# File I/O
+
+~~~
+#2 'io:Filesystem var<n>
+:io:file-operation @io:Filesystem 0; as{ 'ii...... i }as ;
+~~~
+
+This implements words for interfacing with the POSIX file I/O words if
+you are using an interface supporting them. All of these are in the
+`file:` namespace.
+
+These are pretty much direct wrappers for fopen(), fclose(), etc.
+
+First up, constants for the file modes.
+
+| # | Used For           |
+| - | ------------------ | 
+| R | Mode for READING   |
+| W | Mode for WRITING   |
+| A | Mode for APPENDING |
+
+~~~
+#0 'file:R const
+#1 'file:W const
+#2 'file:A const
+#3 'file:R+ const
+~~~
+
+For opening a file, provide the file name and mode. This will return a
+number identifying the file handle.
+
+~~~
+:file:open  (sm-h) #0 io:file-operation ;
+~~~
+
+Given a file handle, close the file.
+
+~~~
+:file:close (h-) #1 io:file-operation ;
+~~~
+
+Given a file handle, read a character.
+
+~~~
+:file:read  (h-c) #2 io:file-operation ;
+~~~
+
+Write a character to an open file.
+
+~~~
+:file:write (ch-) #3 io:file-operation ;
+~~~
+
+Return the current pointer within a file.
+
+~~~
+:file:tell  (h-n) #4 io:file-operation ;
+~~~
+
+Move the file pointer to the specified location.
+
+~~~
+:file:seek  (nh-) #5 io:file-operation ;
+~~~
+
+Return the size of the opened file.
+
+~~~
+:file:size  (h-n) #6 io:file-operation ;
+~~~
+
+Given a file name, delete the file.
+
+~~~
+:file:delete (s-) #7 io:file-operation ;
+~~~
+
+Flush pending writes to disk.
+
+~~~
+:file:flush (f-) #8 io:file-operation ;
+~~~
+
+Given a file name, return `TRUE` if it exists or `FALSE` otherwise.
+
+~~~
+:file:exists?  (s-f)
+  file:R file:open dup n:-zero?
+  [ file:close TRUE ]
+  [ drop FALSE ] choose ;
+~~~
+
+~~~
+:file:open<for-reading> (s-nn)
+  file:R file:open dup file:size swap ;
+
+:file:open<for-append> (s-nn)
+  file:A file:open dup file:size swap ;
+
+:file:open<for-writing> (s-n)
+  file:W file:open ;
+~~~
+
+With that out of the way, we can begin building higher level functionality.
+
+The first of these reads a line from the file. This is read to `here`; move
+it somewhere safe if you need to keep it around.
+
+The second goes with it. The `for-each-line` word will invoke a combinator
+once for each line in a file. This makes some things trivial. E.g., a simple
+'cat' implementation could be as simple as:
+
+  'filename [ s:put nl ] file:for-each-line
+
+~~~
+{{
+  'FID var
+  'Size var
+  'Action var
+  'Buffer var
+  :-eof? (-f) @FID file:tell @Size lt? ;
+  :preserve (q-) &FID [ &Size [ call ] v:preserve ] v:preserve ;
+---reveal---
+  :file:read-line (f-s)
+    !FID
+    [ here dup !Buffer buffer:set
+      [ @FID file:read dup buffer:add
+        [ ASCII:CR eq? ] [ ASCII:LF eq? ] [ ASCII:NUL eq? ] tri or or ] until
+        buffer:get drop ] buffer:preserve
+    @Buffer ;
+
+  :file:for-each-line (sq-)
+    [ !Action
+      file:open<for-reading> !FID !Size
+      [ @FID file:read-line @Action call -eof? ] while
+      @FID file:close
+    ] preserve ;
+}}
+~~~
+
+`file:slurp` reads a file into a buffer.
+
+~~~
+{{
+  'FID var
+  'Size var
+---reveal---
+  :file:slurp (as-)
+    [ file:open<for-reading> !FID !Size
+      buffer:set
+      @Size [ @FID file:read buffer:add ] times
+      @FID file:close
+    ] buffer:preserve ;
+}}
+~~~
+
+~~~
+{{
+  'FID var
+---reveal---
+  :file:spew (ss-)
+    file:open<for-writing> !FID
+    [ @FID file:write ] s:for-each
+    @FID file:close ; 
+}}
+~~~

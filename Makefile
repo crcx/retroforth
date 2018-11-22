@@ -105,15 +105,16 @@ bin/RETRO12.html: bin/retro-injectimage-js
 bin/retro-repl: interfaces/repl.c interfaces/image.c
 	cd interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../bin/retro-repl repl.c
 
-bin/retro-ri: interfaces/ri.c interfaces/image.c
-	cd interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../bin/retro-ri $(LIBCURSES) ri.c
+bin/retro-ri: interfaces/ri.c interfaces/image.c interfaces/io_filesystem.c
+	cd interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../bin/retro-ri $(LIBCURSES) io_filesystem.c ri.c
 
-bin/retro: bin/retro-embedimage bin/retro-extend interfaces/image.c interfaces/rre.c interfaces/rre.forth
+bin/retro: bin/retro-embedimage bin/retro-extend interfaces/image.c interfaces/rre.c interfaces/rre.forth interfaces/io_filesystem.c interfaces/io_filesystem.c
 	cp ngaImage cleanImage
 	./bin/retro-extend interfaces/rre.forth
+	./bin/retro-extend interfaces/io_filesystem.forth
 	./bin/retro-embedimage >interfaces/rre_image_unix.c
 	mv cleanImage ngaImage
-	cd interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../bin/retro $(LIBM) rre.c
+	cd interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../bin/retro $(LIBM) io_filesystem.c rre.c
 
 bin/retro-barebones: bin/retro-embedimage bin/retro-extend interfaces/image.c interfaces/barebones.c interfaces/barebones.forth
 	cp ngaImage cleanImage
