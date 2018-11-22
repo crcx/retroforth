@@ -1,5 +1,6 @@
 // ********************************************************
 //  Copyright (c) 2016 Rob Judd <judd@ob-wan.com>
+//  Copyright (c) 2018 Charles Childers <crc@forthworks.com>
 //  Based on C version by Charles Childers et al
 //  ISC License - see included file LICENSE
 // ********************************************************
@@ -284,6 +285,27 @@ begin
   ip := IMAGE_SIZE - 1;
 end;
 
+procedure inst_in();
+begin
+  inc(sp);
+  TOS := 1;
+end;
+
+procedure inst_iq();
+begin
+  TOS := 0;
+  inc(sp);
+  TOS := 0;
+end;
+
+procedure inst_ii();
+begin
+  inst_drop();
+  write(Char(data[sp]));
+  dec(sp);
+end;
+
+
 procedure ngaProcessOpcode(opcode : Cell);
 begin
   case opcode of
@@ -314,6 +336,9 @@ begin
     24 : inst_shift();
     25 : inst_zret();
     26 : inst_end();
+    27 : inst_in();
+    28 : inst_iq();
+    29 : inst_ii();
   end;
 end;
 
