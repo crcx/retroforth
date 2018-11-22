@@ -64,6 +64,12 @@ CELL memory[IMAGE_SIZE + 1];      /* The memory for the image          */
 #define TORS address[rp]          /* Shortcut for top item on address stack */
 
 
+#define NUM_DEVICES  1
+
+typedef void (*Handler)(void);
+
+Handler IO_deviceHandlers[NUM_DEVICES + 1];
+Handler IO_queryHandlers[NUM_DEVICES + 1];
 
 /*---------------------------------------------------------------------
   Moving forward, a few variables. These are updated to point to the
@@ -97,7 +103,7 @@ void read_token(char *token_buffer, int echo);
 CELL ngaLoadImage(char *imageFile);
 void ngaPrepare();
 void ngaProcessOpcode(CELL opcode);
-void ngaProcessPackedOpcodes(int opcode);
+void ngaProcessPackedOpcodes(CELL opcode);
 int ngaValidatePackedOpcodes(CELL opcode);
 
 
@@ -262,6 +268,20 @@ void update_rx() {
 
 
 /*---------------------------------------------------------------------
+  This is an implementation of the generic output device. It's set to
+  write output to the standard display.
+  ---------------------------------------------------------------------*/
+
+void generic_output() {
+  putchar(stack_pop());
+}
+
+void generic_output_query() {
+  stack_push(0);
+  stack_push(0);
+}
+
+/*---------------------------------------------------------------------
   With these out of the way, I implement `execute`, which takes an
   address and runs the code at it. This has a couple of interesting
   bits.
@@ -273,8 +293,6 @@ void update_rx() {
   This will also exit if the address stack depth is zero (meaning that
   the word being run, and it's dependencies) are finished.
   ---------------------------------------------------------------------*/
-
-#define IO_TTY_PUTC  1000
 
 void execute(int cell) {
   CELL opcode;
@@ -289,15 +307,9 @@ void execute(int cell) {
     if (ngaValidatePackedOpcodes(opcode) != 0) {
       ngaProcessPackedOpcodes(opcode);
     } else {
-      switch (opcode) {
-        case IO_TTY_PUTC:
-          putchar(stack_pop());
-          break;
-        default:
-          retro_puts("Invalid instruction!\n");
-          retro_puts("System halted.\n");
-          while(1);
-      }
+      retro_puts("Invalid instruction!\n");
+      retro_puts("System halted.\n");
+      while(1);
     }
     ip++;
     if (rp == 0)
@@ -368,6 +380,8 @@ void read_token(char *token_buffer, int echo) {
 
 int main(int argc, char **argv) {
   char input[1024];
+  IO_deviceHandlers[0] = generic_output;
+  IO_queryHandlers[0] = generic_output_query;
   ngaPrepare();
   for (CELL i = 0; i < ngaImageCells; i++)
     memory[i] = ngaImage[i];
@@ -383,7 +397,7 @@ int main(int argc, char **argv) {
 
 
 /* Nga ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   Copyright (c) 2008 - 2017, Charles Childers
+   Copyright (c) 2008 - 2018, Charles Childers
    Copyright (c) 2009 - 2010, Luke Parrish
    Copyright (c) 2010,        Marc Simpson
    Copyright (c) 2010,        Jay Skeer
@@ -394,10 +408,21 @@ enum vm_opcode {
   VM_NOP,  VM_LIT,    VM_DUP,   VM_DROP,    VM_SWAP,   VM_PUSH,  VM_POP,
   VM_JUMP, VM_CALL,   VM_CCALL, VM_RETURN,  VM_EQ,     VM_NEQ,   VM_LT,
   VM_GT,   VM_FETCH,  VM_STORE, VM_ADD,     VM_SUB,    VM_MUL,   VM_DIVMOD,
-  VM_AND,  VM_OR,     VM_XOR,   VM_SHIFT,   VM_ZRET,   VM_END
+  VM_AND,  VM_OR,     VM_XOR,   VM_SHIFT,   VM_ZRET,   VM_END,   VM_IE,
+  VM_IQ,   VM_II
 };
-#define NUM_OPS VM_END + 1
+#define NUM_OPS VM_II + 1
 
+#ifndef NUM_DEVICES
+#define NUM_DEVICES 0
+#endif
+
+CELL ngaLoadImage(char *imageFile) {
+  CELL i;
+  for (i = 0; i < ngaImageCells; i++)
+    memory[i] = ngaImage[i];
+  return i;
+}
 
 void ngaPrepare() {
   ip = sp = rp = 0;
@@ -430,7 +455,7 @@ void inst_drop() {
 }
 
 void inst_swap() {
-  int a;
+  CELL a;
   a = TOS;
   TOS = NOS;
   NOS = a;
@@ -461,7 +486,7 @@ void inst_call() {
 }
 
 void inst_ccall() {
-  int a, b;
+  CELL a, b;
   a = TOS; inst_drop();  /* False */
   b = TOS; inst_drop();  /* Flag  */
   if (b != 0) {
@@ -531,7 +556,7 @@ void inst_mul() {
 }
 
 void inst_divmod() {
-  int a, b;
+  CELL a, b;
   a = TOS;
   b = NOS;
   TOS = b / a;
@@ -579,16 +604,34 @@ void inst_end() {
   ip = IMAGE_SIZE;
 }
 
-typedef void (*Handler)(void);
+void inst_ie() {
+  sp++;
+  TOS = NUM_DEVICES;
+}
+
+void inst_iq() {
+  CELL Device = TOS;
+  inst_drop();
+  IO_queryHandlers[Device]();
+}
+
+void inst_ii() {
+  CELL Device = TOS;
+  inst_drop();
+  IO_deviceHandlers[Device]();
+}
+
 Handler instructions[NUM_OPS] = {
   inst_nop, inst_lit, inst_dup, inst_drop, inst_swap, inst_push, inst_pop,
   inst_jump, inst_call, inst_ccall, inst_return, inst_eq, inst_neq, inst_lt,
   inst_gt, inst_fetch, inst_store, inst_add, inst_sub, inst_mul, inst_divmod,
-  inst_and, inst_or, inst_xor, inst_shift, inst_zret, inst_end
+  inst_and, inst_or, inst_xor, inst_shift, inst_zret, inst_end, inst_ie,
+  inst_iq, inst_ii
 };
 
 void ngaProcessOpcode(CELL opcode) {
-  instructions[opcode]();
+  if (opcode != 0)
+    instructions[opcode]();
 }
 
 int ngaValidatePackedOpcodes(CELL opcode) {
@@ -598,14 +641,14 @@ int ngaValidatePackedOpcodes(CELL opcode) {
   int i;
   for (i = 0; i < 4; i++) {
     current = raw & 0xFF;
-    if (!(current >= 0 && current <= 26))
+    if (!(current >= 0 && current <= 29))
       valid = 0;
     raw = raw >> 8;
   }
   return valid;
 }
 
-void ngaProcessPackedOpcodes(int opcode) {
+void ngaProcessPackedOpcodes(CELL opcode) {
   CELL raw = opcode;
   int i;
   for (i = 0; i < 4; i++) {
