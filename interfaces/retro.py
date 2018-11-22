@@ -251,8 +251,9 @@ def execute(word, output = 'console'):
     global ip, memory, stack, address
     ip = word
     address.append(0)
+    notfound = memory[findEntry('err:notfound') + 1]
     while ip < 100000 and len(address) > 0:
-        if ip == memory[findEntry('err:notfound') + 1]:
+        if ip == notfound:
             print('ERROR: word not found!')
         opcode = memory[ip]
         if validateOpcode(opcode):
@@ -269,12 +270,6 @@ def execute(word, output = 'console'):
             ip = 2000000
         ip = ip + 1
     return
-
-def words():
-    header = memory[2]
-    while (header != 0):
-        print(header, extractString(header + 3))
-        header = memory[header]
 
 def load_image():
     global memory
