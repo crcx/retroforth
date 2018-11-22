@@ -39,6 +39,12 @@ easier to write. Contrast:
 - add `set:counted-results`
 - deprecate `set:from-results`
 
+## Nga
+
+- add `ie` (i/o enumerate)
+- add `iq` (i/o query)
+- add `ii` (i/o interact)
+
 ## Interfaces
 
 ### retro (formerly rre)
@@ -54,6 +60,7 @@ easier to write. Contrast:
 - added commentary to Unu
 - Retro implementation of Unu
 - Retro implementation of Muri
+- added Muri support for I/O instructions
 
 ## Other
 

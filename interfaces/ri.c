@@ -77,6 +77,12 @@ CELL memory[IMAGE_SIZE + 1];      /* The memory for the image          */
 #define NOS  data[sp-1]           /* Shortcut for second item on stack */
 #define TORS address[rp]          /* Shortcut for top item on address stack */
 
+#define NUM_DEVICES  1
+
+typedef void (*Handler)(void);
+
+Handler IO_deviceHandlers[NUM_DEVICES + 1];
+Handler IO_queryHandlers[NUM_DEVICES + 1];
 
 /*---------------------------------------------------------------------
   `ri` embeds the image into the binary. This includes the image data
@@ -292,7 +298,14 @@ void update_rx() {
   the word being run, and it's dependencies) are finished.
   ---------------------------------------------------------------------*/
 
-#define IO_TTY_PUTC  1000
+void generic_output() {
+  wprintw(output, "%c", stack_pop());
+}
+
+void generic_output_query() {
+  stack_push(0);
+  stack_push(0);
+}
 
 void execute(CELL cell) {
   CELL opcode;
@@ -308,12 +321,9 @@ void execute(CELL cell) {
     } else if (opcode >= 0 && opcode < 27) {
       ngaProcessOpcode(opcode);
     } else {
-      switch (opcode) {
-        case IO_TTY_PUTC:  wprintw(output, "%c", stack_pop());        break;
-        default:   wprintw(output, "Invalid instruction!\n");
-                   wprintw(output, "At %d, opcode %d\n", ip, opcode);
-                   exit(1);
-      }
+      wprintw(output, "Invalid instruction!\n");
+      wprintw(output, "At %d, opcode %d\n", ip, opcode);
+      exit(1);
     }
     ip++;
     if (rp == 0)
@@ -428,6 +438,8 @@ int main() {
   int n = 0;                           /* Index to input buffer      */
 
   ngaPrepare();
+  IO_deviceHandlers[0] = generic_output;
+  IO_queryHandlers[0] = generic_output_query;
 
   for (n = 0; n < ngaImageCells; n++)  /* Copy the embedded image to */
     memory[n] = ngaImage[n];           /* the Nga VM memory          */
@@ -489,14 +501,20 @@ enum vm_opcode {
   VM_NOP,  VM_LIT,    VM_DUP,   VM_DROP,    VM_SWAP,   VM_PUSH,  VM_POP,
   VM_JUMP, VM_CALL,   VM_CCALL, VM_RETURN,  VM_EQ,     VM_NEQ,   VM_LT,
   VM_GT,   VM_FETCH,  VM_STORE, VM_ADD,     VM_SUB,    VM_MUL,   VM_DIVMOD,
-  VM_AND,  VM_OR,     VM_XOR,   VM_SHIFT,   VM_ZRET,   VM_END
+  VM_AND,  VM_OR,     VM_XOR,   VM_SHIFT,   VM_ZRET,   VM_END,   VM_IE,
+  VM_IQ,   VM_II
 };
-#define NUM_OPS VM_END + 1
+#define NUM_OPS VM_II + 1
+
+#ifndef NUM_DEVICES
+#define NUM_DEVICES 0
+#endif
 
 CELL ngaLoadImage(char *imageFile) {
   FILE *fp;
   CELL imageSize;
   long fileLen;
+  CELL i;
   if ((fp = fopen(imageFile, "rb")) != NULL) {
     /* Determine length (in cells) */
     fseek(fp, 0, SEEK_END);
@@ -507,8 +525,9 @@ CELL ngaLoadImage(char *imageFile) {
     fclose(fp);
   }
   else {
-    printf("Unable to find the ngaImage!\n");
-    exit(1);
+    for (i = 0; i < ngaImageCells; i++)
+      memory[i] = ngaImage[i];
+    imageSize = i;
   }
   return imageSize;
 }
@@ -693,12 +712,29 @@ void inst_end() {
   ip = IMAGE_SIZE;
 }
 
-typedef void (*Handler)(void);
+void inst_ie() {
+  sp++;
+  TOS = NUM_DEVICES;
+}
+
+void inst_iq() {
+  CELL Device = TOS;
+  inst_drop();
+  IO_queryHandlers[Device]();
+}
+
+void inst_ii() {
+  CELL Device = TOS;
+  inst_drop();
+  IO_deviceHandlers[Device]();
+}
+
 Handler instructions[NUM_OPS] = {
   inst_nop, inst_lit, inst_dup, inst_drop, inst_swap, inst_push, inst_pop,
   inst_jump, inst_call, inst_ccall, inst_return, inst_eq, inst_neq, inst_lt,
   inst_gt, inst_fetch, inst_store, inst_add, inst_sub, inst_mul, inst_divmod,
-  inst_and, inst_or, inst_xor, inst_shift, inst_zret, inst_end
+  inst_and, inst_or, inst_xor, inst_shift, inst_zret, inst_end, inst_ie,
+  inst_iq, inst_ii
 };
 
 void ngaProcessOpcode(CELL opcode) {
@@ -713,7 +749,7 @@ int ngaValidatePackedOpcodes(CELL opcode) {
   int i;
   for (i = 0; i < 4; i++) {
     current = raw & 0xFF;
-    if (!(current >= 0 && current <= 26))
+    if (!(current >= 0 && current <= 29))
       valid = 0;
     raw = raw >> 8;
   }

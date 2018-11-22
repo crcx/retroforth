@@ -48,6 +48,13 @@
 #include <sys/ioctl.h>
 #endif
 
+#define NUM_DEVICES  1
+
+typedef void (*Handler)(void);
+
+Handler IO_deviceHandlers[NUM_DEVICES + 1];
+Handler IO_queryHandlers[NUM_DEVICES + 1];
+
 /*---------------------------------------------------------------------
   First, a few constants relating to the image format and memory
   layout. If you modify the kernel (Rx.md), these will need to be
@@ -318,6 +325,16 @@ void update_rx() {
   The RRE file model is intended to be similar to that of the standard
   C libraries and wraps fopen(), fclose(), etc.
   ---------------------------------------------------------------------*/
+
+void generic_output() {
+  putc(stack_pop(), stdout);
+  fflush(stdout);
+}
+
+void generic_output_query() {
+  stack_push(0);
+  stack_push(0);
+}
 
 #ifdef ENABLE_FILES
 
@@ -1476,6 +1493,8 @@ int main(int argc, char **argv) {
                                           /* arguments are passed.     */
 
   initialize();                           /* Initialize Nga & image    */
+  IO_deviceHandlers[0] = generic_output;
+  IO_queryHandlers[0] = generic_output_query;
 
   sys_argc = argc;                        /* Point the global argc and */
   sys_argv = argv;                        /* argv to the actual ones   */
@@ -1553,14 +1572,23 @@ enum vm_opcode {
   VM_NOP,  VM_LIT,    VM_DUP,   VM_DROP,    VM_SWAP,   VM_PUSH,  VM_POP,
   VM_JUMP, VM_CALL,   VM_CCALL, VM_RETURN,  VM_EQ,     VM_NEQ,   VM_LT,
   VM_GT,   VM_FETCH,  VM_STORE, VM_ADD,     VM_SUB,    VM_MUL,   VM_DIVMOD,
-  VM_AND,  VM_OR,     VM_XOR,   VM_SHIFT,   VM_ZRET,   VM_END
+  VM_AND,  VM_OR,     VM_XOR,   VM_SHIFT,   VM_ZRET,   VM_END,   VM_IE,
+  VM_IQ,   VM_II
 };
-#define NUM_OPS VM_END + 1
+#define NUM_OPS VM_II + 1
+
+#ifndef NUM_DEVICES
+#define NUM_DEVICES 0
+#endif
+
+//Handler IO_deviceHandlers[NUM_DEVICES + 1];
+//Handler IO_queryHandlers[NUM_DEVICES + 1];
 
 CELL ngaLoadImage(char *imageFile) {
   FILE *fp;
   CELL imageSize;
   long fileLen;
+  CELL i;
   if ((fp = fopen(imageFile, "rb")) != NULL) {
     /* Determine length (in cells) */
     fseek(fp, 0, SEEK_END);
@@ -1571,8 +1599,9 @@ CELL ngaLoadImage(char *imageFile) {
     fclose(fp);
   }
   else {
-    printf("Unable to find the image file (named `%s`)!\n", imageFile);
-    exit(1);
+    for (i = 0; i < ngaImageCells; i++)
+      memory[i] = ngaImage[i];
+    imageSize = i;
   }
   return imageSize;
 }
@@ -1592,29 +1621,19 @@ void inst_nop() {
 
 void inst_lit() {
   sp++;
-  if (sp >= STACK_DEPTH) {
-    printf("Data stack overflow.\n");
-    exit(1);
-  }
   ip++;
   TOS = memory[ip];
 }
 
 void inst_dup() {
   sp++;
-  if (sp >= STACK_DEPTH) {
-    printf("Data stack overflow.\n");
-    exit(1);
-  }
   data[sp] = NOS;
 }
 
 void inst_drop() {
   data[sp] = 0;
-  if (--sp < 0) {
-    printf("Data stack underflow!\n");
-    exit(1);
-  }
+   if (--sp < 0)
+     ip = IMAGE_SIZE;
 }
 
 void inst_swap() {
@@ -1632,15 +1651,8 @@ void inst_push() {
 
 void inst_pop() {
   sp++;
-  if (sp >= STACK_DEPTH) {
-    printf("Data stack overflow.\n");
-    exit(1);
-  }
   TOS = TORS;
-  if (--rp < 0) {
-    printf("Address stack underflow!\n");
-    exit(1);
-  }
+  rp--;
 }
 
 void inst_jump() {
@@ -1668,10 +1680,7 @@ void inst_ccall() {
 
 void inst_return() {
   ip = TORS;
-  if (--rp < 0) {
-    printf("Address stack underflow!\n");
-    exit(1);
-  }
+  rp--;
 }
 
 void inst_eq() {
@@ -1709,8 +1718,7 @@ void inst_store() {
     inst_drop();
     inst_drop();
   } else {
-    printf("Attempt to store outside of memory bounds\n");
-    exit(1);
+    ip = IMAGE_SIZE;
   }
 }
 
@@ -1778,12 +1786,29 @@ void inst_end() {
   ip = IMAGE_SIZE;
 }
 
-typedef void (*Handler)(void);
+void inst_ie() {
+  sp++;
+  TOS = NUM_DEVICES;
+}
+
+void inst_iq() {
+  CELL Device = TOS;
+  inst_drop();
+  IO_queryHandlers[Device]();
+}
+
+void inst_ii() {
+  CELL Device = TOS;
+  inst_drop();
+  IO_deviceHandlers[Device]();
+}
+
 Handler instructions[NUM_OPS] = {
   inst_nop, inst_lit, inst_dup, inst_drop, inst_swap, inst_push, inst_pop,
   inst_jump, inst_call, inst_ccall, inst_return, inst_eq, inst_neq, inst_lt,
   inst_gt, inst_fetch, inst_store, inst_add, inst_sub, inst_mul, inst_divmod,
-  inst_and, inst_or, inst_xor, inst_shift, inst_zret, inst_end
+  inst_and, inst_or, inst_xor, inst_shift, inst_zret, inst_end, inst_ie,
+  inst_iq, inst_ii
 };
 
 void ngaProcessOpcode(CELL opcode) {
@@ -1798,7 +1823,7 @@ int ngaValidatePackedOpcodes(CELL opcode) {
   int i;
   for (i = 0; i < 4; i++) {
     current = raw & 0xFF;
-    if (!(current >= 0 && current <= 26))
+    if (!(current >= 0 && current <= 29))
       valid = 0;
     raw = raw >> 8;
   }

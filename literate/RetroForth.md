@@ -1500,7 +1500,9 @@ number.
     'di [ #20 ] s:case  'an [ #21 ] s:case
     'or [ #22 ] s:case  'xo [ #23 ] s:case
     'sh [ #24 ] s:case  'zr [ #25 ] s:case
-    'en [ #26 ] s:case  drop #0 ;
+    'en [ #26 ] s:case  'ie [ #27 ] s:case
+    'iq [ #28 ] s:case  'ii [ #29 ] s:case
+    drop #0 ;
 ~~~
 
 I use `pack` to combine the individual parts of the instruction
@@ -1671,7 +1673,7 @@ A Retro system is only required to provide a single I/O word to
 the user: a word to push a single character to the output log.
 
 ~~~
-:c:put (c-) `1000 ;
+:c:put (c-) as{ 'liii.... i #0 d }as ;
 ~~~
 
 This can be used to implement words that push other items to
