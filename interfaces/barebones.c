@@ -21,6 +21,13 @@ CELL memory[IMAGE_SIZE + 1];      /* The memory for the image          */
 #define NOS  data[sp-1]           /* Shortcut for second item on stack */
 #define TORS address[rp]          /* Shortcut for top item on address stack */
 
+#define NUM_DEVICES  2
+
+typedef void (*Handler)(void);
+
+Handler IO_deviceHandlers[NUM_DEVICES + 1];
+Handler IO_queryHandlers[NUM_DEVICES + 1];
+
 #include "barebones_image.c"
 
 CELL stack_pop();
@@ -42,8 +49,25 @@ void stack_push(CELL value) {
   data[sp] = value;
 }
 
-#define IO_TTY_PUTC  1000
-#define IO_TTY_GETC  1001
+void generic_output() {
+  putc(stack_pop(), stdout);
+  fflush(stdout);
+}
+
+void generic_output_query() {
+  stack_push(0);
+  stack_push(0);
+}
+
+void generic_input() {
+  stack_push(getc(stdin));
+  if (TOS == 127) TOS = 8;
+}
+
+void generic_input_query() {
+  stack_push(0);
+  stack_push(1);
+}
 
 void execute(CELL cell) {
   CELL opcode;
@@ -54,19 +78,8 @@ void execute(CELL cell) {
     if (ngaValidatePackedOpcodes(opcode) != 0) {
       ngaProcessPackedOpcodes(opcode);
     } else {
-      switch (opcode) {
-        case IO_TTY_PUTC:
-          putc(stack_pop(), stdout);
-          fflush(stdout);
-          break;
-        case IO_TTY_GETC:
-          stack_push(getc(stdin));
-          if (TOS == 127) TOS = 8;
-          break;
-        default:
-          printf("Invalid instruction!\n");
-          exit(1);
-      }
+      printf("Invalid instruction!\n");
+      exit(1);
     }
     ip++;
     if (rp == 0)
@@ -75,6 +88,10 @@ void execute(CELL cell) {
 }
 
 int main(int argc, char **argv) {
+  IO_deviceHandlers[0] = generic_output;
+  IO_deviceHandlers[1] = generic_input;
+  IO_queryHandlers[0] = generic_output_query;
+  IO_queryHandlers[1] = generic_input_query;
   ngaPrepare();
   ngaLoadImage();
   execute(0);
@@ -94,14 +111,35 @@ enum vm_opcode {
   VM_NOP,  VM_LIT,    VM_DUP,   VM_DROP,    VM_SWAP,   VM_PUSH,  VM_POP,
   VM_JUMP, VM_CALL,   VM_CCALL, VM_RETURN,  VM_EQ,     VM_NEQ,   VM_LT,
   VM_GT,   VM_FETCH,  VM_STORE, VM_ADD,     VM_SUB,    VM_MUL,   VM_DIVMOD,
-  VM_AND,  VM_OR,     VM_XOR,   VM_SHIFT,   VM_ZRET,   VM_END
+  VM_AND,  VM_OR,     VM_XOR,   VM_SHIFT,   VM_ZRET,   VM_END,   VM_IE,
+  VM_IQ,   VM_II
 };
-#define NUM_OPS VM_END + 1
+#define NUM_OPS VM_II + 1
 
-CELL ngaLoadImage() {
-  for (int i = 0; i < ngaImageCells; i++)
-    memory[i] = ngaImage[i];
-  return ngaImageCells;
+#ifndef NUM_DEVICES
+#define NUM_DEVICES 0
+#endif
+
+CELL ngaLoadImage(char *imageFile) {
+  FILE *fp;
+  CELL imageSize;
+  long fileLen;
+  CELL i;
+  if ((fp = fopen(imageFile, "rb")) != NULL) {
+    /* Determine length (in cells) */
+    fseek(fp, 0, SEEK_END);
+    fileLen = ftell(fp) / sizeof(CELL);
+    rewind(fp);
+    /* Read the file into memory */
+    imageSize = fread(&memory, sizeof(CELL), fileLen, fp);
+    fclose(fp);
+  }
+  else {
+    for (i = 0; i < ngaImageCells; i++)
+      memory[i] = ngaImage[i];
+    imageSize = i;
+  }
+  return imageSize;
 }
 
 void ngaPrepare() {
@@ -284,12 +322,29 @@ void inst_end() {
   ip = IMAGE_SIZE;
 }
 
-typedef void (*Handler)(void);
+void inst_ie() {
+  sp++;
+  TOS = NUM_DEVICES;
+}
+
+void inst_iq() {
+  CELL Device = TOS;
+  inst_drop();
+  IO_queryHandlers[Device]();
+}
+
+void inst_ii() {
+  CELL Device = TOS;
+  inst_drop();
+  IO_deviceHandlers[Device]();
+}
+
 Handler instructions[NUM_OPS] = {
   inst_nop, inst_lit, inst_dup, inst_drop, inst_swap, inst_push, inst_pop,
   inst_jump, inst_call, inst_ccall, inst_return, inst_eq, inst_neq, inst_lt,
   inst_gt, inst_fetch, inst_store, inst_add, inst_sub, inst_mul, inst_divmod,
-  inst_and, inst_or, inst_xor, inst_shift, inst_zret, inst_end
+  inst_and, inst_or, inst_xor, inst_shift, inst_zret, inst_end, inst_ie,
+  inst_iq, inst_ii
 };
 
 void ngaProcessOpcode(CELL opcode) {
@@ -304,7 +359,7 @@ int ngaValidatePackedOpcodes(CELL opcode) {
   int i;
   for (i = 0; i < 4; i++) {
     current = raw & 0xFF;
-    if (!(current >= 0 && current <= 26))
+    if (!(current >= 0 && current <= 29))
       valid = 0;
     raw = raw >> 8;
   }
