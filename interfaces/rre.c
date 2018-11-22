@@ -48,7 +48,7 @@
 #include <sys/ioctl.h>
 #endif
 
-#define NUM_DEVICES  4
+#define NUM_DEVICES  5
 
 typedef void (*Handler)(void);
 
@@ -126,7 +126,6 @@ void evaluate(char *s, int silent);
 int not_eol(int ch);
 void read_token(FILE *file, char *token_buffer, int echo);
 void include_file(char *fname, int run_tests);
-void ngaFloatingPointUnit();
 CELL ngaLoadImage(char *imageFile);
 void ngaPrepare();
 void ngaProcessOpcode(CELL opcode);
@@ -650,281 +649,8 @@ void ngaUnixUnit() {
   ---------------------------------------------------------------------*/
 
 #ifdef ENABLE_FLOATING_POINT
-
-/*---------------------------------------------------------------------
-  I have a stack of floating point values ("floats") and a stack
-  pointer (`fsp`).  
-  ---------------------------------------------------------------------*/
-
-double Floats[8192];
-CELL fsp;
-
-
-/*---------------------------------------------------------------------
-  The first two functions push a float to the stack and pop a value off
-  the stack.
-  ---------------------------------------------------------------------*/
-
-void float_push(double value) {
-    fsp++;
-    Floats[fsp] = value;
-}
-
-double float_pop() {
-    fsp--;
-    return Floats[fsp + 1];
-}
-
-
-/*---------------------------------------------------------------------
-  RETRO operates on 32-bit signed integer values. This function just
-  pops a number from the data stack, casts it to a float, and pushes it
-  to the float stack.
-  ---------------------------------------------------------------------*/
-void float_from_number() {
-    float_push((double)stack_pop());
-}
-
-
-/*---------------------------------------------------------------------
-  To get a float from a string in the image, I provide this function.
-  I cheat: using `atof()` takes care of the details, so I don't have
-  to.
-  ---------------------------------------------------------------------*/
-void float_from_string() {
-    float_push(atof(string_extract(stack_pop())));
-}
-
-
-/*---------------------------------------------------------------------
-  Converting a floating point into a string is slightly more work. Here
-  I pass it off to `snprintf()` to deal with.
-  ---------------------------------------------------------------------*/
-void float_to_string() {
-    snprintf(string_data, 8192, "%f", float_pop());
-    string_inject(string_data, stack_pop());
-}
-
-
-/*---------------------------------------------------------------------
-  Converting a floating point back into a standard number requires a
-  little care due to the signed nature. This makes adjustments for the
-  max & min value, and then casts (rounding) the float back to a normal
-  number.
-  ---------------------------------------------------------------------*/
-
-void float_to_number() {
-    double a = float_pop();
-    if (a > 2147483647)
-      a = 2147483647;
-    if (a < -2147483648)
-      a = -2147483648;
-    stack_push((CELL)round(a));
-}
-
-
-/*---------------------------------------------------------------------
-  Now I get to define a bunch of functions that operate on floats.
-  These provide the basic math, and wrappers around functionality in
-  libm.
-  ---------------------------------------------------------------------*/
-
-void float_add() {
-    double a = float_pop();
-    double b = float_pop();
-    float_push(a+b);
-}
-
-void float_sub() {
-    double a = float_pop();
-    double b = float_pop();
-    float_push(b-a);
-}
-
-void float_mul() {
-    double a = float_pop();
-    double b = float_pop();
-    float_push(a*b);
-}
-
-void float_div() {
-    double a = float_pop();
-    double b = float_pop();
-    float_push(b/a);
-}
-
-void float_floor() {
-    float_push(floor(float_pop()));
-}
-
-void float_ceil() {
-    float_push(ceil(float_pop()));
-}
-
-void float_eq() {
-    double a = float_pop();
-    double b = float_pop();
-    if (a == b)
-        stack_push(-1);
-    else
-        stack_push(0);
-}
-
-void float_neq() {
-    double a = float_pop();
-    double b = float_pop();
-    if (a != b)
-        stack_push(-1);
-    else
-        stack_push(0);
-}
-
-void float_lt() {
-    double a = float_pop();
-    double b = float_pop();
-    if (b < a)
-        stack_push(-1);
-    else
-        stack_push(0);
-}
-
-void float_gt() {
-    double a = float_pop();
-    double b = float_pop();
-    if (b > a)
-        stack_push(-1);
-    else
-        stack_push(0);
-}
-
-void float_depth() {
-    stack_push(fsp);
-}
-
-void float_dup() {
-    double a = float_pop();
-    float_push(a);
-    float_push(a);
-}
-
-void float_drop() {
-    float_pop();
-}
-
-void float_swap() {
-    double a = float_pop();
-    double b = float_pop();
-    float_push(a);
-    float_push(b);
-}
-
-void float_log() {
-    double a = float_pop();
-    double b = float_pop();
-    float_push(log(b) / log(a));
-}
-
-void float_sqrt() {
-  float_push(sqrt(float_pop()));
-}
-
-void float_pow() {
-    double a = float_pop();
-    double b = float_pop();
-    float_push(pow(b, a));
-}
-
-void float_sin() {
-  float_push(sin(float_pop()));
-}
-
-void float_cos() {
-  float_push(cos(float_pop()));
-}
-
-void float_tan() {
-  float_push(tan(float_pop()));
-}
-
-void float_asin() {
-  float_push(asin(float_pop()));
-}
-
-void float_acos() {
-  float_push(acos(float_pop()));
-}
-
-void float_atan() {
-  float_push(atan(float_pop()));
-}
-
-
-/*---------------------------------------------------------------------
-  With this finally done, I implement the FPU instructions.
-  ---------------------------------------------------------------------*/
-Handler FloatHandlers[] = {
-  float_from_number,
-  float_from_string,
-  float_to_number,
-  float_to_string,
-  float_add,
-  float_sub,
-  float_mul,
-  float_div,
-  float_floor,
-  float_ceil,
-  float_sqrt,
-  float_eq,
-  float_neq,
-  float_lt,
-  float_gt,
-  float_depth,
-  float_dup,
-  float_drop,
-  float_swap,
-  float_log,
-  float_pow,
-  float_sin,
-  float_tan,
-  float_cos,
-  float_asin,
-  float_acos,
-  float_atan
-};
-
-void ngaFloatingPointUnit() {
-  switch (stack_pop()) {
-    case 0:  float_from_number();  break;
-    case 1:  float_from_string();  break;
-    case 2:  float_to_string();    break;
-    case 3:  float_add();          break;
-    case 4:  float_sub();          break;
-    case 5:  float_mul();          break;
-    case 6:  float_div();          break;
-    case 7:  float_floor();        break;
-    case 8:  float_eq();           break;
-    case 9:  float_neq();          break;
-    case 10: float_lt();           break;
-    case 11: float_gt();           break;
-    case 12: float_depth();        break;
-    case 13: float_dup();          break;
-    case 14: float_drop();         break;
-    case 15: float_swap();         break;
-    case 16: float_log();          break;
-    case 17: float_pow();          break;
-    case 18: float_to_number();    break;
-    case 19: float_sin();          break;
-    case 20: float_cos();          break;
-    case 21: float_tan();          break;
-    case 22: float_asin();         break;
-    case 23: float_acos();         break;
-    case 24: float_atan();         break;
-    case 25: float_ceil();         break;
-    case 26: float_sqrt();         break;
-    default:                       break;
-  }
-}
-
+void io_floatingpoint_query();
+void io_floatingpoint_handler();
 #endif
 
 
@@ -1000,9 +726,6 @@ void execute(CELL cell, int silent) {
     } else {
       switch (opcode) {
         case -9999:        include_file(string_extract(stack_pop()), 0); break;
-#ifdef ENABLE_FLOATING_POINT
-        case -6000: ngaFloatingPointUnit(); break;
-#endif
         case -6100: stack_push(sys_argc - 2); break;
         case -6101: a = stack_pop();
                     b = stack_pop();
@@ -1238,6 +961,8 @@ int main(int argc, char **argv) {
   IO_queryHandlers[2] = io_filesystem_query;
   IO_deviceHandlers[3] = io_gopher_handler;
   IO_queryHandlers[3] = io_gopher_query;
+  IO_deviceHandlers[4] = io_floatingpoint_handler;
+  IO_queryHandlers[4] = io_floatingpoint_query;
 
   sys_argc = argc;                        /* Point the global argc and */
   sys_argv = argv;                        /* argv to the actual ones   */
