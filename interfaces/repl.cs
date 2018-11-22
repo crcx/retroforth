@@ -2,7 +2,7 @@
  * Nga Virtual Machine & Interface for RETRO 12
  *
  * Copyright (c) 2009-2011, Simon Waite
- * Copyright (c) 2009-2017, Charles Childers
+ * Copyright (c) 2009-2018, Charles Childers
 */
 
 using System;
@@ -31,7 +31,8 @@ namespace Nga
       VM_FETCH,    VM_STORE,      VM_ADD,
       VM_SUB,      VM_MUL,        VM_DIVMOD,
       VM_AND,      VM_OR,         VM_XOR,
-      VM_SHIFT,    VM_ZRET,       VM_END
+      VM_SHIFT,    VM_ZRET,       VM_END,
+      VM_IE,       VM_IQ,         VM_II
     }
 
     string rxGetString(int starting)
@@ -273,6 +274,18 @@ namespace Nga
         case OpCodes.VM_END:
           ip = 524288 * 16;
           break;
+        case OpCodes.VM_IE:
+          data[sp] = 1;
+          break;
+        case OpCodes.VM_IQ:
+          data[sp++] = 0;
+          data[sp] = 0;
+          break;
+        case OpCodes.VM_II:
+          sp--;
+          char c = (char)data[sp--];
+          Console.Write(c);
+          break;
         default:
           ip = 524288 * 16;
           break;
@@ -285,7 +298,7 @@ namespace Nga
       int valid = -1;
       for (int i = 0; i < 4; i++) {
         current = raw & 0xFF;
-        if (!(current >= 0 && current <= 26))
+        if (!(current >= 0 && current <= 29))
           valid = 0;
         raw = raw >> 8;
       }
@@ -329,12 +342,7 @@ public void executeFunction(int cell) {
     if (ngaValidatePackedOpcodes(opcode) != 0) {
       ngaProcessPackedOpcodes(opcode);
     } else {
-      if (opcode == 1000) {
-        char c = (char)data[sp--];
-        Console.Write(c);
-      } else {
-        ngaProcessOpcode(opcode);
-      }
+      ngaProcessOpcode(opcode);
     }
     ip++;
     if (rsp == 0)
