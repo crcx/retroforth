@@ -40,28 +40,19 @@ def findEntry(named):
 def rxGetInput():
     return ord(sys.stdin.read(1))
 
-def rxDisplayCharacter(target):
+def rxDisplayCharacter():
     global stack
-    if target == 'console':
-        if stack[-1] > 0 and stack[-1] < 128:
-            if stack[-1] == 8:
-                sys.stdout.write(chr(stack.pop()))
-                sys.stdout.write(chr(32))
-                sys.stdout.write(chr(8))
-            else:
-                sys.stdout.write(chr(stack.pop()))
+    if stack[-1] > 0 and stack[-1] < 128:
+        if stack[-1] == 8:
+            sys.stdout.write(chr(stack.pop()))
+            sys.stdout.write(chr(32))
+            sys.stdout.write(chr(8))
         else:
-            sys.stdout.write("\033[2J\033[1;1H")
-            stack.pop()
-        sys.stdout.flush()
-        return ''
+            sys.stdout.write(chr(stack.pop()))
     else:
-        return str(chr(stack.pop()))
-
-def processOpcode(opcode):
-    global ip, stack, address, memory
-    if   opcode ==  0:   # nop
-        pass
+        sys.stdout.write("\033[2J\033[1;1H")
+        stack.pop()
+    sys.stdout.flush()
 
 def i_no():
     pass
@@ -216,14 +207,26 @@ def i_en():
     global ip, memory, stack, address
     ip = 9000000
 
-instructions = [i_no, i_li, i_du, i_dr, i_sw, i_pu, i_po, i_ju, i_ca, i_cc, i_re, i_eq, i_ne, i_lt, i_gt, i_fe, i_st, i_ad, i_su, i_mu, i_di, i_an, i_or, i_xo, i_sh, i_zr, i_en]
+def i_ie():
+    stack.push(1)
+
+def i_iq():
+    stack.pop()
+    stack.push(0)
+    stack.push(0)
+
+def i_ii():
+    stack.pop()
+    rxDisplayCharacter()
+
+instructions = [i_no, i_li, i_du, i_dr, i_sw, i_pu, i_po, i_ju, i_ca, i_cc, i_re, i_eq, i_ne, i_lt, i_gt, i_fe, i_st, i_ad, i_su, i_mu, i_di, i_an, i_or, i_xo, i_sh, i_zr, i_en, i_ie, i_iq, i_ii]
 
 def validateOpcode(opcode):
     I0 = opcode & 0xFF
     I1 = (opcode >> 8) & 0xFF
     I2 = (opcode >> 16) & 0xFF
     I3 = (opcode >> 24) & 0xFF
-    if (I0 >= 0 and I0 <= 26) and (I1 >= 0 and I1 <= 26) and (I2 >= 0 and I2 <= 26) and (I3 >= 0 and I3 <= 26):
+    if (I0 >= 0 and I0 <= 29) and (I1 >= 0 and I1 <= 29) and (I2 >= 0 and I2 <= 29) and (I3 >= 0 and I3 <= 29):
         return True
     else:
         return False
@@ -246,7 +249,6 @@ def injectString( s, to ):
 
 def execute(word, output = 'console'):
     global ip, memory, stack, address
-    TOB = ''
     ip = word
     address.append(0)
     while ip < 100000 and len(address) > 0:
@@ -263,13 +265,10 @@ def execute(word, output = 'console'):
             if I2 != 0: instructions[I2]()
             if I3 != 0: instructions[I3]()
         else:
-            if opcode == 1000:
-                TOB = TOB + rxDisplayCharacter(output)
-            else:
-                print('Invalid Bytecode', opcode, ip)
-                ip = 2000000
+            print('Invalid Bytecode', opcode, ip)
+            ip = 2000000
         ip = ip + 1
-    return TOB
+    return
 
 def words():
     header = memory[2]
