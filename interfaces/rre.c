@@ -48,7 +48,7 @@
 #include <sys/ioctl.h>
 #endif
 
-#define NUM_DEVICES  1
+#define NUM_DEVICES  2
 
 typedef void (*Handler)(void);
 
@@ -151,7 +151,7 @@ int ngaValidatePackedOpcodes(CELL opcode);
 
 char **sys_argv;
 int sys_argc;
-
+int silence_input;
 
 /*---------------------------------------------------------------------
   Now to the fun stuff: interfacing with the virtual machine. There are
@@ -334,6 +334,23 @@ void generic_output() {
 void generic_output_query() {
   stack_push(0);
   stack_push(0);
+}
+
+
+void io_keyboard_handler() {
+  stack_push(getc(stdin));
+  if (TOS == 127) TOS = 8;
+#ifdef USE_TERMIOS
+  if (silence_input != -1) {
+    putc(TOS, stdout);
+    fflush(stdout);
+  }
+#endif
+}
+
+void io_keyboard_query() {
+  stack_push(0);
+  stack_push(1);
 }
 
 #ifdef ENABLE_FILES
@@ -526,6 +543,27 @@ void ioFlushFile() {
   CELL slot;
   slot = stack_pop();
   fflush(ioFileHandles[slot]);
+}
+
+Handler FileActions[10] = {
+  ioOpenFile,
+  ioCloseFile,
+  ioReadFile,
+  ioWriteFile,
+  ioGetFilePosition,
+  ioSetFilePosition,
+  ioGetFileSize,
+  ioDeleteFile,
+  ioFlushFile
+};
+
+void io_filesystem_query() {
+  stack_push(0);
+  stack_push(4);
+}
+
+void io_filesystem_handler() {
+  FileActions[stack_pop()]();
 }
 
 #endif
@@ -1040,6 +1078,35 @@ void float_atan() {
 /*---------------------------------------------------------------------
   With this finally done, I implement the FPU instructions.
   ---------------------------------------------------------------------*/
+Handler FloatHandlers[] = {
+  float_from_number,
+  float_from_string,
+  float_to_number,
+  float_to_string,
+  float_add,
+  float_sub,
+  float_mul,
+  float_div,
+  float_floor,
+  float_ceil,
+  float_sqrt,
+  float_eq,
+  float_neq,
+  float_lt,
+  float_gt,
+  float_depth,
+  float_dup,
+  float_drop,
+  float_swap,
+  float_log,
+  float_pow,
+  float_sin,
+  float_tan,
+  float_cos,
+  float_asin,
+  float_acos,
+  float_atan
+};
 
 void ngaFloatingPointUnit() {
   switch (stack_pop()) {
@@ -1214,12 +1281,10 @@ void restore_term() {
   the word being run, and it's dependencies) are finished.
   ---------------------------------------------------------------------*/
 
-#define IO_TTY_PUTC  1000
-#define IO_TTY_GETC  1001
-
 void execute(CELL cell, int silent) {
   CELL a, b, token;
   CELL opcode;
+  silence_input = silent;
   rp = 1;
   ip = cell;
   token = TIB;
@@ -1238,16 +1303,6 @@ void execute(CELL cell, int silent) {
       ngaProcessOpcode(opcode);
     } else {
       switch (opcode) {
-        case IO_TTY_PUTC:  putc(stack_pop(), stdout); fflush(stdout); break;
-        case IO_TTY_GETC:  stack_push(getc(stdin));
-                           if (TOS == 127) TOS = 8;
-#ifdef USE_TERMIOS
-                           if (silent != -1) {
-                             putc(TOS, stdout);
-                             fflush(stdout);
-                           }
-#endif
-        break;
         case -9999:        include_file(string_extract(stack_pop()), 0); break;
 #ifdef ENABLE_FILES
         case RRE_FILE_OPEN:   ioOpenFile();                              break;
@@ -1495,6 +1550,8 @@ int main(int argc, char **argv) {
   initialize();                           /* Initialize Nga & image    */
   IO_deviceHandlers[0] = generic_output;
   IO_queryHandlers[0] = generic_output_query;
+  IO_deviceHandlers[1] = io_keyboard_handler;
+  IO_queryHandlers[1] = io_keyboard_query;
 
   sys_argc = argc;                        /* Point the global argc and */
   sys_argv = argv;                        /* argv to the actual ones   */

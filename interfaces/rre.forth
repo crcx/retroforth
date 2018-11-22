@@ -5,7 +5,7 @@ This is a set of extensions for RRE.
 # Console Input
 
 ~~~
-:c:get (-c) `1001 ;
+:c:get (-c) as{ 'liii.... i #1 d }as ;
 ~~~
 
 ---------------------------------------------------------------
