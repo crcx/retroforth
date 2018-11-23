@@ -77,19 +77,44 @@ CELL memory[IMAGE_SIZE + 1];      /* The memory for the image          */
 #define NOS  data[sp-1]           /* Shortcut for second item on stack */
 #define TORS address[rp]          /* Shortcut for top item on address stack */
 
-#define NUM_DEVICES  1
+
+void generic_output();
+void generic_output_query();
+void io_keyboard_handler();
+void io_keyboard_query();
+void io_filesystem_query();
+void io_filesystem_handler();
+void io_unix_query();
+void io_unix_handler();
+void io_floatingpoint_query();
+void io_floatingpoint_handler();
+void io_gopher_query();
+void io_gopher_handler();
+void io_scripting_handler();
+void io_scripting_query();
+
+#define NUM_DEVICES  3
 
 typedef void (*Handler)(void);
 
-Handler IO_deviceHandlers[NUM_DEVICES + 1];
-Handler IO_queryHandlers[NUM_DEVICES + 1];
+Handler IO_deviceHandlers[NUM_DEVICES + 1] = {
+  generic_output,
+  io_filesystem_handler,
+  io_floatingpoint_handler,
+};
+
+Handler IO_queryHandlers[NUM_DEVICES + 1] = {
+  generic_output_query,
+  io_filesystem_query,
+  io_floatingpoint_query,
+};
 
 /*---------------------------------------------------------------------
   `ri` embeds the image into the binary. This includes the image data
   (converted to a .c file by an external tool).
   ---------------------------------------------------------------------*/
 
-#include "image.c"
+#include "ri_image.c"
 
 
 /*---------------------------------------------------------------------
@@ -438,8 +463,6 @@ int main() {
   int n = 0;                           /* Index to input buffer      */
 
   ngaPrepare();
-  IO_deviceHandlers[0] = generic_output;
-  IO_queryHandlers[0] = generic_output_query;
 
   for (n = 0; n < ngaImageCells; n++)  /* Copy the embedded image to */
     memory[n] = ngaImage[n];           /* the Nga VM memory          */

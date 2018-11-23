@@ -105,8 +105,13 @@ bin/RETRO12.html: bin/retro-injectimage-js
 bin/retro-repl: interfaces/repl.c interfaces/image.c
 	cd interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../bin/retro-repl repl.c
 
-bin/retro-ri: interfaces/ri.c interfaces/image.c interfaces/io_filesystem.c
-	cd interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../bin/retro-ri $(LIBCURSES) io_filesystem.c ri.c
+bin/retro-ri: interfaces/ri.c interfaces/image.c interfaces/io_filesystem.c interfaces/io_filesystem.forth interfaces/io_floatingpoint.c interfaces/io_floatingpoint.forth
+	cp ngaImage cleanImage
+	./bin/retro-extend interfaces/io_filesystem.forth
+	./bin/retro-extend interfaces/io_floatingpoint.forth
+	./bin/retro-embedimage >interfaces/ri_image.c
+	mv cleanImage ngaImage
+	cd interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../bin/retro-ri $(LIBCURSES) $(LIBM) io_filesystem.c io_floatingpoint.c ri.c
 
 bin/retro: bin/retro-embedimage bin/retro-extend interfaces/image.c interfaces/rre.c interfaces/rre.forth interfaces/io_filesystem.c interfaces/io_filesystem.forth interfaces/io_gopher.c interfaces/io_gopher.forth interfaces/io_floatingpoint.c interfaces/io_floatingpoint.forth interfaces/io_unix_syscalls.c interfaces/io_unix_syscalls.forth
 	cp ngaImage cleanImage
