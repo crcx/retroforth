@@ -48,7 +48,7 @@
 #include <sys/ioctl.h>
 #endif
 
-#define NUM_DEVICES  5
+#define NUM_DEVICES  6
 
 typedef void (*Handler)(void);
 
@@ -324,7 +324,6 @@ void generic_output_query() {
   stack_push(0);
 }
 
-
 void io_keyboard_handler() {
   stack_push(getc(stdin));
   if (TOS == 127) TOS = 8;
@@ -342,13 +341,8 @@ void io_keyboard_query() {
 }
 
 #ifdef ENABLE_FILES
-
-#define MAX_OPEN_FILES   128
-extern FILE *ioFileHandles[MAX_OPEN_FILES];
-CELL ioGetFileHandle();
 void io_filesystem_query();
 void io_filesystem_handler();
-
 #endif
 
 
@@ -359,284 +353,8 @@ void io_filesystem_handler();
   ---------------------------------------------------------------------*/
 
 #ifdef ENABLE_UNIX
-
-/*---------------------------------------------------------------------
-  First step is to define the instruction values for each of these.
-  ---------------------------------------------------------------------*/
-
-#define RRE_UNIX_SYSTEM -8000
-#define RRE_UNIX_FORK   -8001
-#define RRE_UNIX_EXIT   -8002
-#define RRE_UNIX_GETPID -8003
-#define RRE_UNIX_EXEC0  -8004	
-#define RRE_UNIX_EXEC1  -8005
-#define RRE_UNIX_EXEC2  -8006
-#define RRE_UNIX_EXEC3  -8007
-#define RRE_UNIX_WAIT   -8008
-#define RRE_UNIX_KILL   -8009
-#define RRE_UNIX_POPEN  -8010
-#define RRE_UNIX_PCLOSE -8011
-#define RRE_UNIX_WRITE  -8012
-#define RRE_UNIX_CHDIR  -8013
-#define RRE_UNIX_GETENV -8014
-#define RRE_UNIX_PUTENV -8015
-#define RRE_UNIX_SLEEP  -8016
-#define RRE_UNIX_IO_PUTN -8100
-#define RRE_UNIX_IO_PUTS -8101
-
-
-/*---------------------------------------------------------------------
-  `unixOpenPipe()` is like `ioOpenFile()`, but for pipes. This pulls
-  from the data stack:
-
-  - mode       (number, TOS)
-  - executable (string, NOS)
-
-  Modes are:
-
-  | Mode | Corresponds To | Description          |
-  | ---- | -------------- | -------------------- |
-  |  0   | r              | Open for reading     |
-  |  1   | w              | Open for writing     |
-  |  3   | r+             | Open for read/update |
-
-  The file name should be a NULL terminated string. This will attempt
-  to open the requested file and will return a handle (index number
-  into the `ioFileHandles` array).
-
-  Once opened, you can use the standard file words to read/write to the
-  process.
-  ---------------------------------------------------------------------*/
-
-CELL unixOpenPipe() {
-  CELL slot, mode, name;
-  char *request;
-  slot = ioGetFileHandle();
-  mode = stack_pop();
-  name = stack_pop();
-  request = string_extract(name);
-  if (slot > 0) {
-    if (mode == 0)  ioFileHandles[slot] = popen(request, "r");
-    if (mode == 1)  ioFileHandles[slot] = popen(request, "w");
-    if (mode == 3)  ioFileHandles[slot] = popen(request, "r+");
-  }
-  if (ioFileHandles[slot] == NULL) {
-    ioFileHandles[slot] = 0;
-    slot = 0;
-  }
-  stack_push(slot);
-  return slot;
-}
-
-
-/*---------------------------------------------------------------------
-  `unixClosePipe()` closes an open pipe. This takes a file handle from
-  the stack.
-  ---------------------------------------------------------------------*/
-
-CELL unixClosePipe() {
-  pclose(ioFileHandles[data[sp]]);
-  ioFileHandles[data[sp]] = 0;
-  sp--;
-  return 0;
-}
-
-
-/*---------------------------------------------------------------------
-  `unix_system()` executes a shell command. This takes a string and
-  will execute it by calling the shell, returning to RRE after
-  execution completes.
-  ---------------------------------------------------------------------*/
-
-void unix_system() {
-  system(string_extract(stack_pop()));
-}
-
-
-/*---------------------------------------------------------------------
-  `unix_fork()` creates a new process. This returns a new process ID on
-  the stack.
-  ---------------------------------------------------------------------*/
-
-void unix_fork() {
-  stack_push(fork());
-}
-
-
-/*---------------------------------------------------------------------
-  UNIX provides `execl` to execute a file, with various forms for
-  arguments provided.
-
-  RRE wraps this in several functions, one for each number of passed
-  arguments. See the Glossary for details on what each takes from the
-  stack. Each of these will return the error code if the execution
-  fails.
-  ---------------------------------------------------------------------*/
-
-void unix_exec0() {
-  char path[1024];
-  strcpy(path, string_extract(stack_pop()));
-  execl(path, path, (char *)0);
-  stack_push(errno);
-}
-
-void unix_exec1() {
-  char path[1024];
-  char arg0[1024];
-  strcpy(arg0, string_extract(stack_pop()));
-  strcpy(path, string_extract(stack_pop()));
-  execl(path, path, arg0, (char *)0);
-  stack_push(errno);
-}
-
-void unix_exec2() {
-  char path[1024];
-  char arg0[1024], arg1[1024];
-  strcpy(arg1, string_extract(stack_pop()));
-  strcpy(arg0, string_extract(stack_pop()));
-  strcpy(path, string_extract(stack_pop()));
-  execl(path, path, arg0, arg1, (char *)0);
-  stack_push(errno);
-}
-
-void unix_exec3() {
-  char path[1024];
-  char arg0[1024], arg1[1024], arg2[1024];
-  strcpy(arg2, string_extract(stack_pop()));
-  strcpy(arg1, string_extract(stack_pop()));
-  strcpy(arg0, string_extract(stack_pop()));
-  strcpy(path, string_extract(stack_pop()));
-  execl(path, path, arg0, arg1, arg2, (char *)0);
-  stack_push(errno);
-}
-
-
-/*---------------------------------------------------------------------
-  `unix_exit()` exits RRE with a return code of the top value on the
-  stack.
-  ---------------------------------------------------------------------*/
-
-void unix_exit() {
-  exit(stack_pop());
-}
-
-
-/*---------------------------------------------------------------------
-  ---------------------------------------------------------------------*/
-
-void unix_getpid() {
-  stack_push(getpid());
-}
-
-
-/*---------------------------------------------------------------------
-  ---------------------------------------------------------------------*/
-
-void unix_wait() {
-  CELL a;
-  stack_push(wait(&a));
-}
-
-
-/*---------------------------------------------------------------------
-  ---------------------------------------------------------------------*/
-
-void unix_kill() {
-  CELL a;
-  a = stack_pop();
-  kill(stack_pop(), a);
-}
-
-
-/*---------------------------------------------------------------------
-  ---------------------------------------------------------------------*/
-
-void unix_write() {
-  CELL a, b, c;
-  c = stack_pop();
-  b = stack_pop();
-  a = stack_pop();
-  write(fileno(ioFileHandles[c]), string_extract(a), b);
-}
-
-
-/*---------------------------------------------------------------------
-  ---------------------------------------------------------------------*/
-
-void unix_chdir() {
-  chdir(string_extract(stack_pop()));
-}
-
-
-/*---------------------------------------------------------------------
-  ---------------------------------------------------------------------*/
-
-void unix_getenv() {
-  CELL a, b;
-  a = stack_pop();
-  b = stack_pop();
-  string_inject(getenv(string_extract(b)), a);
-}
-
-
-/*---------------------------------------------------------------------
-  ---------------------------------------------------------------------*/
-
-void unix_putenv() {
-  putenv(string_extract(stack_pop()));
-}
-
-
-/*---------------------------------------------------------------------
-  ---------------------------------------------------------------------*/
-
-void unix_sleep() {
-  sleep(stack_pop());
-}
-
-
-/*---------------------------------------------------------------------
-  ---------------------------------------------------------------------*/
-
-void unix_io_putn() {
-  printf("%ld", (long)stack_pop());
-}
-
-/*---------------------------------------------------------------------
-  ---------------------------------------------------------------------*/
-
-void unix_io_puts() {
-  printf("%s", string_extract(stack_pop()));
-}
-
-
-/*---------------------------------------------------------------------
-  ---------------------------------------------------------------------*/
-
-void ngaUnixUnit() {
-  switch (stack_pop()) {
-      case RRE_UNIX_SYSTEM:  unix_system();   break;
-      case RRE_UNIX_FORK:    unix_fork();     break;
-      case RRE_UNIX_EXEC0:   unix_exec0();    break;
-      case RRE_UNIX_EXEC1:   unix_exec1();    break;
-      case RRE_UNIX_EXEC2:   unix_exec2();    break;
-      case RRE_UNIX_EXEC3:   unix_exec3();    break;
-      case RRE_UNIX_EXIT:    unix_exit();     break;
-      case RRE_UNIX_GETPID:  unix_getpid();   break;
-      case RRE_UNIX_WAIT:    unix_wait();     break;
-      case RRE_UNIX_KILL:    unix_kill();     break;
-      case RRE_UNIX_POPEN:   unixOpenPipe();  break;
-      case RRE_UNIX_PCLOSE:  unixClosePipe(); break;
-      case RRE_UNIX_WRITE:   unix_write();    break;
-      case RRE_UNIX_CHDIR:   unix_chdir();    break;
-      case RRE_UNIX_GETENV:  unix_getenv();   break;
-      case RRE_UNIX_PUTENV:  unix_putenv();   break;
-      case RRE_UNIX_SLEEP:   unix_sleep();    break;
-      case RRE_UNIX_IO_PUTN: unix_io_putn();  break;
-      case RRE_UNIX_IO_PUTS: unix_io_puts();  break;
-      default:                                break;
-  }
-}
+void io_unix_query();
+void io_unix_handler();
 #endif
 
 
@@ -725,15 +443,12 @@ void execute(CELL cell, int silent) {
       ngaProcessOpcode(opcode);
     } else {
       switch (opcode) {
-        case -9999:        include_file(string_extract(stack_pop()), 0); break;
+        case -9999: include_file(string_extract(stack_pop()), 0); break;
         case -6100: stack_push(sys_argc - 2); break;
         case -6101: a = stack_pop();
                     b = stack_pop();
                     stack_push(string_inject(sys_argv[a + 2], b));
                     break;
-#ifdef ENABLE_UNIX
-        case -6300: ngaUnixUnit(); break;
-#endif
         default:   printf("Invalid instruction!\n");
                    printf("At %d, opcode %d\n", ip, opcode);
 #ifdef USE_TERMIOS
@@ -963,6 +678,8 @@ int main(int argc, char **argv) {
   IO_queryHandlers[3] = io_gopher_query;
   IO_deviceHandlers[4] = io_floatingpoint_handler;
   IO_queryHandlers[4] = io_floatingpoint_query;
+  IO_deviceHandlers[5] = io_unix_handler;
+  IO_queryHandlers[5] = io_unix_query;
 
   sys_argc = argc;                        /* Point the global argc and */
   sys_argv = argv;                        /* argv to the actual ones   */

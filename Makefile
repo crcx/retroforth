@@ -108,15 +108,16 @@ bin/retro-repl: interfaces/repl.c interfaces/image.c
 bin/retro-ri: interfaces/ri.c interfaces/image.c interfaces/io_filesystem.c
 	cd interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../bin/retro-ri $(LIBCURSES) io_filesystem.c ri.c
 
-bin/retro: bin/retro-embedimage bin/retro-extend interfaces/image.c interfaces/rre.c interfaces/rre.forth interfaces/io_filesystem.c interfaces/io_filesystem.c interfaces/io_gopher.c interfaces/io_gopher.forth interfaces/io_floatingpoint.c interfaces/io_floatingpoint.forth
+bin/retro: bin/retro-embedimage bin/retro-extend interfaces/image.c interfaces/rre.c interfaces/rre.forth interfaces/io_filesystem.c interfaces/io_filesystem.c interfaces/io_gopher.c interfaces/io_gopher.forth interfaces/io_floatingpoint.c interfaces/io_floatingpoint.forth interfaces/io_unix_syscalls.c interfaces/io_unix_syscalls.forth
 	cp ngaImage cleanImage
-	./bin/retro-extend interfaces/rre.forth
 	./bin/retro-extend interfaces/io_filesystem.forth
 	./bin/retro-extend interfaces/io_gopher.forth
 	./bin/retro-extend interfaces/io_floatingpoint.forth
+	./bin/retro-extend interfaces/io_unix_syscalls.forth
+	./bin/retro-extend interfaces/rre.forth
 	./bin/retro-embedimage >interfaces/rre_image_unix.c
 	mv cleanImage ngaImage
-	cd interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../bin/retro $(LIBM) io_filesystem.c io_gopher.c io_floatingpoint.c rre.c
+	cd interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../bin/retro $(LIBM) io_filesystem.c io_gopher.c io_floatingpoint.c io_unix_syscalls.c rre.c
 
 bin/retro-barebones: bin/retro-embedimage bin/retro-extend interfaces/image.c interfaces/barebones.c interfaces/barebones.forth
 	cp ngaImage cleanImage
