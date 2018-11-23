@@ -10,13 +10,11 @@ This is a set of extensions for RRE.
 
 ---------------------------------------------------------------
 
----------------------------------------------------------------
-
 # Scripting: Command Line Arguments
 
 ~~~
-:sys:argc (-n) `-6100 ;
-:sys:argv (n-s) s:empty swap `-6101 ;
+:sys:argc (-n)  #1 as{ 'liii.... i #6 d }as ;
+:sys:argv (n-s) s:empty swap #0 as{ 'liii.... i #6 d }as ;
 ~~~
 
 # Interactive Listener
@@ -45,7 +43,7 @@ This is a set of extensions for RRE.
 ~~~
 
 ~~~
-:include (s-) `-9999 ;
+:include (s-) #2 as{ 'liii.... i #6 d }as ;
 ~~~
 
 ~~~

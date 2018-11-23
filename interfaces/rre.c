@@ -48,7 +48,7 @@
 #include <sys/ioctl.h>
 #endif
 
-#define NUM_DEVICES  6
+#define NUM_DEVICES  7
 
 typedef void (*Handler)(void);
 
@@ -408,6 +408,36 @@ void restore_term() {
 #endif
 
 
+void scripting_arg() {
+  CELL a, b;
+  a = stack_pop();
+  b = stack_pop();
+  stack_push(string_inject(sys_argv[a + 2], b));
+}
+
+void scripting_arg_count() {
+  stack_push(sys_argc - 2);
+}
+
+void scripting_include() {
+  include_file(string_extract(stack_pop()), 0);
+}
+
+Handler ScriptingActions[] = {
+  scripting_arg,
+  scripting_arg_count,
+  scripting_include
+};
+
+void io_scripting_query() {
+  stack_push(0);
+  stack_push(9);
+}
+
+void io_scripting_handler() {
+  ScriptingActions[stack_pop()]();
+}
+
 /*---------------------------------------------------------------------
   With these out of the way, I implement `execute`, which takes an
   address and runs the code at it. This has a couple of interesting
@@ -439,23 +469,13 @@ void execute(CELL cell, int silent) {
     opcode = memory[ip];
     if (ngaValidatePackedOpcodes(opcode) != 0) {
       ngaProcessPackedOpcodes(opcode);
-    } else if (opcode >= 0 && opcode < 27) {
-      ngaProcessOpcode(opcode);
     } else {
-      switch (opcode) {
-        case -9999: include_file(string_extract(stack_pop()), 0); break;
-        case -6100: stack_push(sys_argc - 2); break;
-        case -6101: a = stack_pop();
-                    b = stack_pop();
-                    stack_push(string_inject(sys_argv[a + 2], b));
-                    break;
-        default:   printf("Invalid instruction!\n");
-                   printf("At %d, opcode %d\n", ip, opcode);
+      printf("Invalid instruction!\n");
+      printf("At %d, opcode %d\n", ip, opcode);
 #ifdef USE_TERMIOS
-                   restore_term();
+      restore_term();
 #endif
-                   exit(1);
-      }
+      exit(1);
     }
     ip++;
     if (rp == 0)
@@ -680,6 +700,8 @@ int main(int argc, char **argv) {
   IO_queryHandlers[4] = io_floatingpoint_query;
   IO_deviceHandlers[5] = io_unix_handler;
   IO_queryHandlers[5] = io_unix_query;
+  IO_deviceHandlers[6] = io_scripting_handler;
+  IO_queryHandlers[6] = io_scripting_query;
 
   sys_argc = argc;                        /* Point the global argc and */
   sys_argv = argv;                        /* argv to the actual ones   */
