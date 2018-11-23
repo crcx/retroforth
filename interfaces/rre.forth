@@ -2,10 +2,21 @@
 
 This is a set of extensions for RRE.
 
+# I/O Extensions
+
 # Console Input
 
 ~~~
-:c:get (-c) as{ 'liii.... i #1 d }as ;
+{{
+  'io:Keyboard var
+  :identify
+    @io:Keyboard n:zero? [
+      #1 io:scan-for dup n:negative?
+      [ drop 'IO_DEVICE_TYPE_0001_NOT_FOUND s:put nl ]
+      [ !io:Keyboard ] choose ] if ;
+  ---reveal---
+  :c:get (-c) identify @io:Keyboard io:invoke ;
+}}
 ~~~
 
 ---------------------------------------------------------------
@@ -13,8 +24,18 @@ This is a set of extensions for RRE.
 # Scripting: Command Line Arguments
 
 ~~~
-:sys:argc (-n)  #1 as{ 'liii.... i #6 d }as ;
-:sys:argv (n-s) s:empty swap #0 as{ 'liii.... i #6 d }as ;
+{{
+  'io:Scripting var
+  :identify
+    @io:Scripting n:zero? [
+      #9 io:scan-for dup n:negative?
+      [ drop 'IO_DEVICE_TYPE_0009_NOT_FOUND s:put nl ]
+      [ !io:Scripting ] choose ] if ;
+---reveal---
+  :sys:argc (-n)               identify #0 @io:Scripting io:invoke ;
+  :sys:argv (n-s) s:empty swap identify #1 @io:Scripting io:invoke ;
+  :include  (s-)               identify #2 @io:Scripting io:invoke  ;
+}}
 ~~~
 
 # Interactive Listener
@@ -40,10 +61,6 @@ This is a set of extensions for RRE.
   :listen  (-)
     ok repeat s:get valid? [ interpret ok ] [ drop ] choose again ;
 }}
-~~~
-
-~~~
-:include (s-) #2 as{ 'liii.... i #6 d }as ;
 ~~~
 
 ~~~

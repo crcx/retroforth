@@ -2913,6 +2913,54 @@ Example #1:
 
 ----------------------------------------------------------------
 
+io:enumerate
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Return the number of I/O devices.
+
+Class Handler: class:word | Namespace: {n/a} | Interface Layer: all
+
+----------------------------------------------------------------
+
+io:invoke
+
+  Data:  n-
+  Addr:  -
+  Float: -
+
+Invoke an interaction with an I/O device.
+
+Class Handler: class:word | Namespace: {n/a} | Interface Layer: all
+
+----------------------------------------------------------------
+
+io:query
+
+  Data:  n-mN
+  Addr:  -
+  Float: -
+
+Ask an I/O device to identify itself. Returns a version (m) and device ID (N).
+
+Class Handler: class:word | Namespace: {n/a} | Interface Layer: all
+
+----------------------------------------------------------------
+
+io:scan-for
+
+  Data:  n-m
+  Addr:  -
+  Float: -
+
+Scan the I/O devices for a device with a specified ID. Returns the device number, or -1 if not found.
+
+Class Handler: class:word | Namespace: {n/a} | Interface Layer: all
+
+----------------------------------------------------------------
+
 ios:list-fonts
 
   Data:  -

@@ -1669,11 +1669,28 @@ current, and up to two outer loops as well.
 
 ## I/O
 
+~~~
+:io:enumerate (-n)   as{ 'ie...... i }as ;
+:io:query     (n-mN) as{ 'iq...... i }as ;
+:io:invoke    (n-)   as{ 'ii...... i }as ;
+
+{{
+  'Slot var
+---reveal---
+  :io:scan-for  (n-m)
+    #-1 !Slot
+    io:enumerate [ I io:query nip over eq?
+                   [ I !Slot ] if ] times<with-index>
+    drop @Slot ;
+}}
+~~~
+
 A Retro system is only required to provide a single I/O word to
 the user: a word to push a single character to the output log.
+This is always mapped to device 0, and is exposed as `c:putc`.
 
 ~~~
-:c:put (c-) as{ 'liii.... i #0 d }as ;
+:c:put (c-) #0 io:invoke ;
 ~~~
 
 This can be used to implement words that push other items to

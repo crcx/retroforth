@@ -4,8 +4,16 @@ The `unix:` namespace contains words for interacting with the
 host operating system.
 
 ~~~
-#5 'io:UnixSyscall var<n>
-:io:unix-syscall @io:UnixSyscall 0; as{ 'ii...... i }as ;
+{{
+  'io:UnixSyscall var
+  :identify
+    @io:UnixSyscall n:zero? [
+      #8 io:scan-for dup n:negative?
+      [ drop 'IO_DEVICE_TYPE_0008_NOT_FOUND s:put nl ]
+      [ !io:UnixSyscall ] choose ] if ;
+  ---reveal---
+  :io:unix-syscall identify @io:UnixSyscall io:invoke ;
+}}
 ~~~
 
 `unix:system` runs another application using the system shell

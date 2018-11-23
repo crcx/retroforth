@@ -1,8 +1,16 @@
 # File I/O
 
 ~~~
-#2 'io:Filesystem var<n>
-:io:file-operation @io:Filesystem 0; as{ 'ii...... i }as ;
+{{
+  'io:Filesystem var
+  :identify
+    @io:Filesystem n:zero? [
+      #4 io:scan-for dup n:negative?
+      [ drop 'IO_DEVICE_TYPE_0004_NOT_FOUND s:put nl ]
+      [ !io:Filesystem ] choose ] if ;
+  ---reveal---
+  :io:file-operation identify @io:Filesystem io:invoke ;
+}}
 ~~~
 
 This implements words for interfacing with the POSIX file I/O words if

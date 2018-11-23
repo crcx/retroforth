@@ -10,21 +10,7 @@
 
   I'll include commentary throughout the source, so read on.
   ---------------------------------------------------------------------*/
-
-
-/*---------------------------------------------------------------------
-  RRE provides numerous extensions to RETRO. Support for these can be
-  enabled/disabled here. (Note that this won't remove the words, just
-  support for them. You should also edit `rre.forth` to remove anything
-  you don't want/need after making changes here).
-  ---------------------------------------------------------------------*/
-
-#define ENABLE_FILES
-#define ENABLE_FLOATING_POINT
-#define ENABLE_UNIX
-#define ENABLE_GOPHER
-#define USE_TERMIOS
-
+  
 /*---------------------------------------------------------------------
   Begin by including the various C headers needed.
   ---------------------------------------------------------------------*/
@@ -43,17 +29,52 @@
 #include <sys/wait.h>
 #include <signal.h>
 
+#define USE_TERMIOS
+
 #ifdef USE_TERMIOS
 #include <termios.h>
 #include <sys/ioctl.h>
 #endif
 
+
+void generic_output();
+void generic_output_query();
+void io_keyboard_handler();
+void io_keyboard_query();
+void io_filesystem_query();
+void io_filesystem_handler();
+void io_unix_query();
+void io_unix_handler();
+void io_floatingpoint_query();
+void io_floatingpoint_handler();
+void io_gopher_query();
+void io_gopher_handler();
+void io_scripting_handler();
+void io_scripting_query();
+
 #define NUM_DEVICES  7
 
 typedef void (*Handler)(void);
 
-Handler IO_deviceHandlers[NUM_DEVICES + 1];
-Handler IO_queryHandlers[NUM_DEVICES + 1];
+Handler IO_deviceHandlers[NUM_DEVICES + 1] = {
+  generic_output,
+  io_keyboard_handler,
+  io_filesystem_handler,
+  io_floatingpoint_handler,
+  io_scripting_handler,
+  io_unix_handler,
+  io_gopher_handler
+};
+
+Handler IO_queryHandlers[NUM_DEVICES + 1] = {
+  generic_output_query,
+  io_keyboard_query,
+  io_filesystem_query,
+  io_floatingpoint_query,
+  io_scripting_query,
+  io_unix_query,
+  io_gopher_query
+};
 
 /*---------------------------------------------------------------------
   First, a few constants relating to the image format and memory
@@ -340,50 +361,6 @@ void io_keyboard_query() {
   stack_push(1);
 }
 
-#ifdef ENABLE_FILES
-void io_filesystem_query();
-void io_filesystem_handler();
-#endif
-
-
-/*---------------------------------------------------------------------
-  UNIX. Or Linux. Or BSD. Or whatever. This section adds functions for
-  interacting with the host OS. It's tested on FreeBSD and Linux, but
-  likely won't work on Windows or any other host not supporting POSIX.
-  ---------------------------------------------------------------------*/
-
-#ifdef ENABLE_UNIX
-void io_unix_query();
-void io_unix_handler();
-#endif
-
-
-/*---------------------------------------------------------------------
-  Floating Point.
-
-  I kind of dislike floating point (it's tricky, and not as precise as
-  fixed point), but it is useful for certain things. I include support
-  for it as it's been requested frequently by my users.
-  ---------------------------------------------------------------------*/
-
-#ifdef ENABLE_FLOATING_POINT
-void io_floatingpoint_query();
-void io_floatingpoint_handler();
-#endif
-
-
-/*---------------------------------------------------------------------
-  Gopher Support
-
-  I'm a big fan of Gopher, so RRE provides support for fetching files
-  via the Gopher protocol.
-  ---------------------------------------------------------------------*/
-
-#ifdef ENABLE_GOPHER
-void io_gopher_query();
-void io_gopher_handler();
-#endif
-
 
 /*---------------------------------------------------------------------
   ---------------------------------------------------------------------*/
@@ -424,8 +401,8 @@ void scripting_include() {
 }
 
 Handler ScriptingActions[] = {
-  scripting_arg,
   scripting_arg_count,
+  scripting_arg,
   scripting_include
 };
 
@@ -688,20 +665,6 @@ int main(int argc, char **argv) {
                                           /* arguments are passed.     */
 
   initialize();                           /* Initialize Nga & image    */
-  IO_deviceHandlers[0] = generic_output;
-  IO_queryHandlers[0] = generic_output_query;
-  IO_deviceHandlers[1] = io_keyboard_handler;
-  IO_queryHandlers[1] = io_keyboard_query;
-  IO_deviceHandlers[2] = io_filesystem_handler;
-  IO_queryHandlers[2] = io_filesystem_query;
-  IO_deviceHandlers[3] = io_gopher_handler;
-  IO_queryHandlers[3] = io_gopher_query;
-  IO_deviceHandlers[4] = io_floatingpoint_handler;
-  IO_queryHandlers[4] = io_floatingpoint_query;
-  IO_deviceHandlers[5] = io_unix_handler;
-  IO_queryHandlers[5] = io_unix_query;
-  IO_deviceHandlers[6] = io_scripting_handler;
-  IO_queryHandlers[6] = io_scripting_query;
 
   sys_argc = argc;                        /* Point the global argc and */
   sys_argv = argv;                        /* argv to the actual ones   */

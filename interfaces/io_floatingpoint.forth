@@ -1,6 +1,14 @@
 ~~~
-#4 'io:FloatingPoint var<n>
-:io:float-operation @io:FloatingPoint 0; as{ 'ii...... i }as ;
+{{
+  'io:FloatingPoint var
+  :identify
+    @io:FloatingPoint n:zero? [
+      #2 io:scan-for dup n:negative?
+      [ drop 'IO_DEVICE_TYPE_0002_NOT_FOUND s:put nl ]
+      [ !io:FloatingPoint ] choose ] if ;
+  ---reveal---
+  :io:float-operation identify @io:FloatingPoint io:invoke ;
+}}
 ~~~
 
 # Floating Point
