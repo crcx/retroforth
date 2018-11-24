@@ -11,7 +11,7 @@ couple rushedly written tests.
   :fill (na--a)  [ store-next ] times ;
 ---reveal---
   :matrix (nms--a) create initialise ;
-  :matrix<xs> (x1xn...nms--a) prepare matrix swap fill drop ;
+  :matrix<xs> (xn...x1nms-) prepare matrix swap fill drop ;
 }}
 ~~~
 
