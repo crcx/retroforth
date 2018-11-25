@@ -32,32 +32,24 @@ n:MAX n:negate       'u:-INF const
 
 ~~~
 {{
-  :f:U1      (-|f:-b)  .1.e9 ;
-  :f:BALANCE (-|f:-b)  .1. ; 
-
-  :f:scale   (-|f:a-b) f:U1 f:* ;
-  :f:descale (-|f:a-b) f:U1 f:/ ;
-
-  :f:encode (-|f:a-b)__n/(s_+_n_)
-    f:BALANCE f:over f:+ f:/ ;
-
-  :f:decode (-|f:a-b)_su/(1_-_u_)
-    .1. f:over f:- f:/ f:BALANCE f:* ;
+  :s .10.0e-4 ;
+  :f:encode .0.5 f:power s .-1.0 f:power f:* ;
+  :f:decode f:square s f:square f:* ;
 
 ---reveal---
 
   :f:to-u  (-u|f:a-)
-    f:dup f:encode f:scale f:round f:to-number u:clip
+    f:dup f:encode f:round f:to-number u:clip
     f:dup f:nan? [ drop u:NAN ] if
     f:dup f:inf? [ drop u:INF ] if
     f:dup f:-inf? [ drop u:-INF ] if
     f:drop ;
 
   :u:to-f  (u-|f:-b)
-    n:to-float f:descale f:decode ;
+    n:to-float f:decode ;
 
   :u:to-f  (u-|f:-b)
-    dup n:to-float f:descale f:decode
+    dup n:to-float f:decode
     dup u:nan?  [ f:drop f:NAN ] if
     dup u:inf?  [ f:drop f:INF ] if
     dup u:-inf? [ f:drop f:-INF ] if
