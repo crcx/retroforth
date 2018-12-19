@@ -283,13 +283,11 @@ The `gopher:icon` displays an indicator for menu items.
   [ PATH DEFAULT-INDEX s:append &Server-Info v:on ] choose
 ;
 
-:gopher:read-file (f-s)
+:gopher:read-file (f-)
   file:R file:open !FID
-  buffer buffer:set
   @FID file:size !Size
-  @Size [ @FID file:read buffer:add ] times
+  @Size [ @FID file:read c:put ] times
   @FID file:close
-  buffer
 ;
 ~~~
 
@@ -329,8 +327,7 @@ bytes to stdout, fixing this issue.
 
 ~~~
 :gopher:send (p-)
-  requested-file get-mime-type 'Content-type:_ s:put s:put eol eol
-  @Size [ fetch-next c:put ] times drop ;
+  requested-file get-mime-type 'Content-type:_ s:put s:put eol eol ;
 ~~~
 
 The only thing left is the top level server.
@@ -342,7 +339,7 @@ The only thing left is the top level server.
   gopher:file-for-request
   @Server-Info
   [ gopher:generate-index ]
-  [ gopher:read-file gopher:send ] choose
+  [ gopher:send gopher:read-file ] choose
 ;
 ~~~
 

@@ -34,7 +34,6 @@ Atua needs to know:
 '/home/crc/atua s:keep 'PATH   const
 '/gophermap     s:keep 'DEFAULT-INDEX const
 #1024  'MAX-SELECTOR-LENGTH    const
-#1000000 #4 * 'MAX-FILE-SIZE   const
 'forthworks.com s:keep 'SERVER const
 '70             s:keep 'PORT   const
 ~~~
@@ -199,11 +198,9 @@ the index footer.
 
 :gopher:read-file (f-s)
   file:R file:open !FID
-  buffer buffer:set
   @FID file:size !Size
-  @Size [ @FID file:read buffer:add ] times
+  @Size [ @FID file:read c:put ] times
   @FID file:close
-  buffer
 ;
 
 :gopher:line (s-)
@@ -222,16 +219,6 @@ the index footer.
 ;
 ~~~
 
-In a prior version of this I used `s:put` to send the content. That
-stopped at the first zero value, which kept it from working with
-binary data. I added `gopher:send` to send the `Size` number of
-bytes to stdout, fixing this issue.
-
-~~~
-:gopher:send (p-)
-  @Size [ fetch-next c:put ] times drop ;
-~~~
-
 The only thing left is the top level server.
 
 ~~~
@@ -243,7 +230,7 @@ The only thing left is the top level server.
     '------------------------------------------- gopher:i
     'forthworks.com:70_/_atua_/_running_on_retro gopher:i 
     '. s:put eol ]
-  [ gopher:read-file gopher:send ] choose
+  [ gopher:read-file ] choose
 ;
 ~~~
 
