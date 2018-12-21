@@ -710,7 +710,7 @@ variables.
 ---reveal---
   :s:temp (s-s) dup s:length n:inc s:pointer swap copy
                 s:pointer s:next ;
-  :s:empty (-s) s:pointer s:next ;
+  :s:empty (-s) s:pointer s:next #0 over store ;
 }}
 ~~~
 
