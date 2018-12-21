@@ -95,9 +95,9 @@ Handler IO_queryHandlers[NUM_DEVICES + 1] = {
   ---------------------------------------------------------------------*/
 
 #define CELL         int32_t      /* Cell size (32 bit, signed integer */
-#define IMAGE_SIZE   524288 * 8   /* Amount of RAM. 4MiB by default.  */
-#define ADDRESSES    2048         /* Depth of address stack            */
+#define IMAGE_SIZE   524288 * 8   /* Amount of RAM. 4MiB by default.   */
 #define STACK_DEPTH  512          /* Depth of data stack               */
+#define ADDRESSES    STACK_DEPTH * 3 /* Depth of address stack         */
 
 CELL sp, rp, ip;                  /* Data, address, instruction pointers */
 CELL data[STACK_DEPTH];           /* The data stack                    */

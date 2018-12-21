@@ -44,6 +44,8 @@ void ngaProcessOpcode(CELL opcode);
 void ngaProcessPackedOpcodes(int opcode);
 int ngaValidatePackedOpcodes(CELL opcode);
 
+CELL max_sp, max_rsp;
+
 /* This assumes some knowledge of the ngaImage format for the
    Retro language. If things change there, these will need to
    be adjusted to match. */
@@ -119,12 +121,15 @@ int include_file(char *fname) {
 void stats() {
   update_rx();
   printf("-> Image Size: %d\n", Heap);
+  printf("MAX SP: %d, RP: %d\n", max_sp, max_rsp);
 }
 
 int main(int argc, char **argv) {
   int tokens;
   FILE *fp;
   ngaPrepare();
+  max_sp = 0;
+  max_rsp = 0;
   ngaLoadImage("ngaImage");
   stats();
   dump_stack();
@@ -256,6 +261,8 @@ void execute(int cell) {
       }
     }
     ip++;
+    if (sp > max_sp) max_sp = sp;
+    if (rp > max_rsp) max_rsp = rp;
     if (rp == 0)
       ip = IMAGE_SIZE;
   }
