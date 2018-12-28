@@ -202,6 +202,9 @@ Now for the instructions. Taking a cue from the C implementation, I have a separ
 :i:sh from-stack from-stack swap shift to-stack ;
 :i:zr dup n:zero? [ drop i:re ] if ;
 :i:en ;
+:i:ie #1 to-stack ;
+:i:iq from-stack #0 eq? [ #0 dup to-stack to-stack ] if ;
+:i:ii from-stack #0 eq? [ from-stack c:put ] if ;
 ~~~
 
 With the instructions defined, populate the jump table. The order is crucial as the opcode number will be the index into this table.
@@ -211,14 +214,14 @@ With the instructions defined, populate the jump table. The order is crucial as 
   &i:no ,  &i:li ,  &i:du ,  &i:dr ,  &i:sw ,  &i:pu ,  &i:po ,
   &i:ju ,  &i:ca ,  &i:cc ,  &i:re ,  &i:eq ,  &i:ne ,  &i:lt ,
   &i:gt ,  &i:fe ,  &i:st ,  &i:ad ,  &i:su ,  &i:mu ,  &i:di ,
-  &i:an ,  &i:or ,  &i:xo ,  &i:sh ,  &i:zr ,  &i:re ,
+  &i:an ,  &i:or ,  &i:xo ,  &i:sh ,  &i:zr ,  &i:en , &i:ie , &i:iq , &i:ii ,
 ~~~
 
 With the populated table of instructions, implementing a `process-single-opcode` is easy. This will check the instruction to make sure it's valid, then call the corresponding handler in the instruction table. If not valid, this will report an error.
 
 ~~~
 :process-single-opcode (n-)
-  dup #0 #26 n:between?
+  dup #0 #29 n:between?
   [ &Instructions + fetch call ]
   [ 'Invalid_Instruction:_%n_! s:format s:put nl ] choose ;
 ~~~
