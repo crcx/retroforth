@@ -1,48 +1,44 @@
-Autopsy is a debugging tool for RETRO. This is a fresh implementation for RETRO 12 and is intended to be a useful debugging tool.
+                 _                        
+      __ _ _   _| |_ ___  _ __  ___ _   _ 
+     / _` | | | | __/ _ \| '_ \/ __| | | |
+    | (_| | |_| | || (_) | |_) \__ | |_| |
+     \__,_|\__,_|\__\___/| .__/|___/\__, |
+                         |_|        |___/ 
 
-In implementing this, I identified the core elements I wanted:
+Autopsy is a set of debugging tools for RETRO.
 
-- the ability to study memory
-
-  - dumps
-  - disassembly
-
-- the ability to edit memory
-
-  - provided by RETRO already via fetch/store and the assembler
-
-- the ability to run a word in a sandbox
-- the ability to single step through a word
-- the ability to profile instruction frequency
-- the ability to watch specific variables and memory locations
-
-This is more ambitious than my prior debuggers. But as I intend to use RETRO 12 for years to come, it'll be a necessary and worthwhile tool.
-
-So some background on the internals.
+# Background
 
 RETRO runs on a virtual machine called Nga. The instruction set is MISC inspired, consisting of just 30 instructions:
 
-    0  nop      7  jump     14  gt      21  and   27  ienum
-    1  lit <v>  8  call     15  fetch   22  or    28  iquery
-    2  dup      9  ccall    16  store   23  xor   29  iinvoke
-    3  drop    10  return   17  add     24  shift
-    4  swap    11  eq       18  sub     25  zret
-    5  push    12  neq      19  mul     26  end
-    6  pop     13  lt       20  divmod
+    0  nop       10  return     20  divmod
+    1  lit <v>   11  eq         21  and
+    2  dup       12  neq        22  or
+    3  drop      13  lt         23  xor
+    4  swap      14  gt         24  shift
+    5  push      15  fetch      25  zret
+    6  pop       16  store      26  end
+    7  jump      17  add        27  ienumerate
+    8  call      18  subtract   28  iquery
+    9  ccall     19  multiply   29  iinvoke
 
-Four instructions are packed per 32-bit memory location. The assembler allows the instructions to be specified like:
+The first two characters of each instruction name are sufficient to identify the instruction.
+
+Nga exposes memory as an array of 32-bit signed integers. Each memory location can store four instructions. The assembler expects the instructions to be named using their two character identifiers. E.g.,
 
     'lica.... i
     #100 d
 
-I shorten the instructions to two letter abbreviations, with '..' for 'nop' and then construct a string with all of these. This will be used to resolve names. The ?? at the end will be used for unidentified instructions.
+# Disassembly
+
+I use  '..' for 'no(p)' and then construct a string with all of these. This will be used to resolve names. The ?? at the end will be used for unidentified instructions.
 
 ~~~
 '..lidudrswpupojucaccreeqneltgtfestadsumudianorxoshzrenieiqii??
 'INST s:const
 ~~~
 
-Since instructions are packed, I need to unpack them before I can run the individual instructions. I implement `unpack` for this.
+Since instructions are packed, I need to unpack them before I can run or display the individual instructions. I implement `unpack` for this.
 
 ~~~
 {{
@@ -70,10 +66,10 @@ Now it's possible to write words to display instruction bundles. The formats are
   unpack #4 [ name-for c:put c:put ] times ;
 ~~~
 
-So now I'm ready to write a disassembler. I'll provide an output setup like this:
+So now I'm ready to write an actual disassembler. I'll provide an output setup like this:
 
-    address 'instructionbundle i
-    address #value d [possibly reference]
+    (address) 'instructionbundle i
+    (address) #value d (possibly_`reference`)
 
 If the value corresponds to a word in the `Dictionary`, the disassembler will display a message indicating the possible name that corresponds to the value.
 
@@ -146,13 +142,15 @@ And now to tie it all together:
   ] times drop ;
 ~~~
 
+# Execution Trace and Single Stepper
+
 Ok, now on to the fun bit: execution trace and single stepping through a word.
 
 This entails writing an implementation of Nga in RETRO. So to start, setup space for the data and address ("return") stacks, as well as variables for the stack pointers and instruction pointer.
 
 ~~~
-'DataStack d:create  #1024 allot
-'ReturnStack d:create  #1024 allot
+'DataStack d:create    #128 allot
+'ReturnStack d:create  #768 allot
 'SP var
 'RP var
 'IP var
@@ -212,11 +210,11 @@ With the instructions defined, populate the jump table. The order is crucial as 
 
 ~~~
 'Instructions d:create
-  &i:no ,  &i:li ,  &i:du ,  &i:dr ,  &i:sw ,  &i:pu ,  &i:po ,
-  &i:ju ,  &i:ca ,  &i:cc ,  &i:re ,  &i:eq ,  &i:ne ,  &i:lt ,
-  &i:gt ,  &i:fe ,  &i:st ,  &i:ad ,  &i:su ,  &i:mu ,  &i:di ,
-  &i:an ,  &i:or ,  &i:xo ,  &i:sh ,  &i:zr ,  &i:en ,  &i:ie ,
-  &i:iq ,  &i:ii ,
+  &i:no ,  &i:li ,  &i:du ,  &i:dr ,  &i:sw ,  &i:pu ,
+  &i:po ,  &i:ju ,  &i:ca ,  &i:cc ,  &i:re ,  &i:eq ,
+  &i:ne ,  &i:lt ,  &i:gt ,  &i:fe ,  &i:st ,  &i:ad ,
+  &i:su ,  &i:mu ,  &i:di ,  &i:an ,  &i:or ,  &i:xo ,
+  &i:sh ,  &i:zr ,  &i:en ,  &i:ie ,  &i:iq ,  &i:ii ,
 ~~~
 
 With the populated table of instructions, implementing a `process-single-opcode` is easy. This will check the instruction to make sure it's valid, then call the corresponding handler in the instruction table. If not valid, this will report an error.
@@ -302,9 +300,7 @@ The `trace` will empty the step counter and display the number of steps used.
   @Steps '%n_steps_taken\n s:format s:put ;
 ~~~
 
-==================================================
-
-Tests
+# Tests
 
 ~~~
 :test
