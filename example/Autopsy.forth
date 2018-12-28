@@ -20,7 +20,7 @@ This is more ambitious than my prior debuggers. But as I intend to use RETRO 12 
 
 So some background on the internals.
 
-RETRO runs on a virtual machine called Nga. The instruction set is MISC inspired, consisting of just 27 instructions:
+RETRO runs on a virtual machine called Nga. The instruction set is MISC inspired, consisting of just 30 instructions:
 
     0  nop      7  jump     14  gt      21  and   27  ienum
     1  lit <v>  8  call     15  fetch   22  or    28  iquery
@@ -112,7 +112,8 @@ I split out each type (instruction, reference/raw, and data) into a separate han
 
 :render-ref  (n-)
   dup d:lookup-xt n:-zero?
-    [ dup render-data tab tab d:lookup-xt d:name '[possibly_`%s`] s:format s:put ]
+    [ dup render-data
+      d:lookup-xt d:name '\t\t(possibly\_`%s`) s:format s:put ]
     [     render-data ] choose ;
 ~~~
 
@@ -140,7 +141,7 @@ And now to tie it all together:
     [ dup d:lookup-xt n:-zero?
       [ dup d:lookup-xt d:name nl s:put nl ] if ] if
     fetch-next
-    over n:put sp      (address)
+    over $( c:put n:put $) c:put sp (address)
     render-packed nl  (inst_or_data)
   ] times drop ;
 ~~~
@@ -214,7 +215,8 @@ With the instructions defined, populate the jump table. The order is crucial as 
   &i:no ,  &i:li ,  &i:du ,  &i:dr ,  &i:sw ,  &i:pu ,  &i:po ,
   &i:ju ,  &i:ca ,  &i:cc ,  &i:re ,  &i:eq ,  &i:ne ,  &i:lt ,
   &i:gt ,  &i:fe ,  &i:st ,  &i:ad ,  &i:su ,  &i:mu ,  &i:di ,
-  &i:an ,  &i:or ,  &i:xo ,  &i:sh ,  &i:zr ,  &i:en , &i:ie , &i:iq , &i:ii ,
+  &i:an ,  &i:or ,  &i:xo ,  &i:sh ,  &i:zr ,  &i:en ,  &i:ie ,
+  &i:iq ,  &i:ii ,
 ~~~
 
 With the populated table of instructions, implementing a `process-single-opcode` is easy. This will check the instruction to make sure it's valid, then call the corresponding handler in the instruction table. If not valid, this will report an error.
