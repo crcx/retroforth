@@ -22,13 +22,13 @@ So some background on the internals.
 
 RETRO runs on a virtual machine called Nga. The instruction set is MISC inspired, consisting of just 27 instructions:
 
-    0  nop        7  jump      14  gt        21  and
-    1  lit <v>    8  call      15  fetch     22  or
-    2  dup        9  ccall     16  store     23  xor
-    3  drop      10  return    17  add       24  shift
-    4  swap      11  eq        18  sub       25  zret
-    5  push      12  neq       19  mul       26  end
-    6  pop       13  lt        20  divmod
+    0  nop      7  jump     14  gt      21  and   27  ienum
+    1  lit <v>  8  call     15  fetch   22  or    28  iquery
+    2  dup      9  ccall    16  store   23  xor   29  iinvoke
+    3  drop    10  return   17  add     24  shift
+    4  swap    11  eq       18  sub     25  zret
+    5  push    12  neq      19  mul     26  end
+    6  pop     13  lt       20  divmod
 
 Four instructions are packed per 32-bit memory location. The assembler allows the instructions to be specified like:
 
@@ -38,7 +38,7 @@ Four instructions are packed per 32-bit memory location. The assembler allows th
 I shorten the instructions to two letter abbreviations, with '..' for 'nop' and then construct a string with all of these. This will be used to resolve names. The ?? at the end will be used for unidentified instructions.
 
 ~~~
-'..lidudrswpupojucaccreeqneltgtfestadsumudianorxoshzren??
+'..lidudrswpupojucaccreeqneltgtfestadsumudianorxoshzrenieiqii??
 'INST s:const
 ~~~
 
@@ -61,7 +61,7 @@ Now it's possible to write words to display instruction bundles. The formats are
 
 ~~~
 :name-for (n-cc)
-  #27 n:min #2 * &INST + fetch-next swap fetch swap ;
+  #30 n:min #2 * &INST + fetch-next swap fetch swap ;
 
 :display:bundle<raw> (n-)
   unpack '%n,%n,%n,%n s:format s:put ;
@@ -95,8 +95,8 @@ To actually display a bundle, I need to decide on what it is. So I have a `valid
 ~~~
 :valid? (n-f)
   unpack
-  [ #0 #26 n:between? ] bi@ and
-  [ [ #0 #26 n:between? ] bi@ and ] dip and ;
+  [ #0 #29 n:between? ] bi@ and
+  [ [ #0 #29 n:between? ] bi@ and ] dip and ;
 ~~~
 
 With this and the `LitCount`, I can determine how to render a bundle.
@@ -134,6 +134,7 @@ And now to tie it all together:
 'TryToIdentifyWords var
 
 :disassemble (an-)
+  #0 !LitCount
   [
     @TryToIdentifyWords
     [ dup d:lookup-xt n:-zero?
