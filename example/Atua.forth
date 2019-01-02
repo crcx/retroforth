@@ -64,7 +64,7 @@ it checks for. This suffices for a Gopher server though.
   [ ASCII:CR eq? ] [ ASCII:LF eq? ] [ ASCII:HT eq? ] tri or or ;
 :s:get (a-)
   buffer:set
-  [ c:get dup buffer:add eol? not ] while ;
+  #0 [ n:inc c:get dup buffer:add eol? not over #255 lt? and ] while drop ;
 ~~~
 
 # Gopher Namespace
