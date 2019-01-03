@@ -14,7 +14,7 @@ Features:
 
 ## Quick Start
 
-For most systems (FreeBSD, NetBSD, macOS, Linux):
+For most systems (FreeBSD, NetBSD, OpenBSD, macOS, Linux):
 
     make
 
