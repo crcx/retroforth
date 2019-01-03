@@ -31,11 +31,10 @@ Atua needs to know:
 - The maximum file size
 
 ~~~
-'/home/crc/atua s:keep 'PATH   const
-'/gophermap     s:keep 'DEFAULT-INDEX const
-#1024  'MAX-SELECTOR-LENGTH    const
-'forthworks.com s:keep 'SERVER const
-'70             s:keep 'PORT   const
+'/home/crc/atua 'PATH           s:const
+'/gophermap     'DEFAULT-INDEX  s:const
+'forthworks.com 'SERVER         s:const
+'70             'PORT           s:const
 ~~~
 
 # I/O Words
@@ -80,7 +79,7 @@ variables and buffers are kept private.
 
 ~~~
 'Selector d:create
-  MAX-SELECTOR-LENGTH n:inc allot
+  #255 n:inc allot
 
 :buffer here ;
 ~~~
