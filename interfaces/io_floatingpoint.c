@@ -1,3 +1,8 @@
+/* RETRO --------------------------------------------------------------
+  A personal, minimalistic forth
+  Copyright (c) 2016 - 2019 Charles Childers
+  --------------------------------------------------------------------- */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>

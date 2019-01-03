@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 # Nga: a Virtual Machine
-# Copyright (c) 2010 - 2018, Charles Childers
+# Copyright (c) 2010 - 2019, Charles Childers
 # Optimizations and process() rewrite by Greg Copeland
 # -----------------------------------------------------
 

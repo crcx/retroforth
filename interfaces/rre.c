@@ -1,6 +1,6 @@
 /* RETRO --------------------------------------------------------------
   A personal, minimalistic forth
-  Copyright (c) 2016 - 2018 Charles Childers
+  Copyright (c) 2016 - 2019 Charles Childers
 
   This is `rre`, short for `run retro and exit`. It's the basic
   interface layer for Retro on FreeBSD, Linux and macOS.
@@ -96,7 +96,7 @@ Handler IO_queryHandlers[NUM_DEVICES + 1] = {
 
 #define CELL         int32_t      /* Cell size (32 bit, signed integer */
 #define IMAGE_SIZE   524288 * 8   /* Amount of RAM. 4MiB by default.   */
-#define STACK_DEPTH  512          /* Depth of data stack               */
+#define STACK_DEPTH  4096         /* Depth of data stack               */
 #define ADDRESSES    STACK_DEPTH * 3 /* Depth of address stack         */
 
 CELL sp, rp, ip;                  /* Data, address, instruction pointers */

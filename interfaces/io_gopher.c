@@ -1,4 +1,7 @@
-/*---------------------------------------------------------------------
+/* RETRO --------------------------------------------------------------
+  A personal, minimalistic forth
+  Copyright (c) 2016 - 2019 Charles Childers
+
   Gopher Support
 
   I'm a big fan of Gopher, so RRE provides support for fetching files

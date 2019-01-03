@@ -1,6 +1,6 @@
 /* RETRO --------------------------------------------------------------
   A personal, minimalistic forth
-  Copyright (c) 2016 - 2018 Charles Childers
+  Copyright (c) 2016 - 2019 Charles Childers
 
   This implements a file I/O device for use with RETRO.
   ---------------------------------------------------------------------*/

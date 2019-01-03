@@ -1,6 +1,6 @@
 /* RETRO -------------------------------------------------------------
   A personal, minimalistic forth
-  Copyright (c) 2016 - 2018 Charles Childers
+  Copyright (c) 2016 - 2019 Charles Childers
   ---------------------------------------------------------------------*/
 
 #include <stdio.h>
