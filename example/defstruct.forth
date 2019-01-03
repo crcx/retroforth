@@ -9,8 +9,8 @@ This can be useful, so I'm doing something similar here.
   :make-helper (nsq-)  [ d:create , ] dip does ;
   :make-struct (ns-)   d:create , [ here swap fetch allot ] does ;
 ---reveal---
-  :defstruct (sq-)
-    set:make dup set:length
+  :defstruct (sa-)
+    dup set:length
     [ n:dec swap
       [ 'ab 'aabab reorder
         '@ s:append [ fetch + fetch ] make-helper
@@ -23,12 +23,12 @@ This can be useful, so I'm doing something similar here.
 
 
 ~~~
-'book [ 'title 'author 'subject 'book-id ] defstruct
+'book { 'title 'author 'subject 'book-id } defstruct
 
 book 'A const
-'The_Hobbit     s:keep &A title!
-'J.R.R._Tolkien s:keep &A author!
-'Fantasy        s:keep &A subject!
+"The_Hobbit     &A title!
+"J.R.R._Tolkien &A author!
+"Fantasy        &A subject!
 
 :info (a-)
   [ subject@ ] [ author@ ] [ title@ ] tri
