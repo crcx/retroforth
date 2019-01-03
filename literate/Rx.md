@@ -1,7 +1,7 @@
     ____  _   _
     || \\ \\ //
     ||_//  )x(
-    || \\ // \\ 2018.12
+    || \\ // \\ 2019.1
     a minimalist forth for nga
 
 *Rx* (*retro experimental*) is a minimal Forth implementation
@@ -137,7 +137,7 @@ r 9999
 d 1536
 
 : Version
-d 201812
+d 201901
 ~~~
 
 Both of these are pointers. `Dictionary` points to the most
@@ -1473,7 +1473,7 @@ s err:notfound
 
 ## Legalities
 
-Rx is Copyright (c) 2016-2018, Charles Childers
+Rx is Copyright (c) 2016-2019, Charles Childers
 
 Permission to use, copy, modify, and/or distribute this software
 for any purpose with or without fee is hereby granted, provided
