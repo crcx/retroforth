@@ -28,7 +28,6 @@ install: build install-data install-docs install-examples
 	install -c -m 755 bin/retro-embedimage $(DESTDIR)$(PREFIX)/bin/retro-embedimage
 	install -c -m 755 bin/retro-extend $(DESTDIR)$(PREFIX)/bin/retro-extend
 	install -c -m 755 bin/retro-injectimage-js $(DESTDIR)$(PREFIX)/bin/retro-injectimage-js
-	install -c -m 755 bin/retro-listener $(DESTDIR)$(PREFIX)/bin/retro-listener
 	install -c -m 755 bin/retro-muri $(DESTDIR)$(PREFIX)/bin/retro-muri
 	install -c -m 755 bin/retro-repl $(DESTDIR)$(PREFIX)/bin/retro-repl
 	install -c -m 755 bin/retro-ri $(DESTDIR)$(PREFIX)/bin/retro-ri
@@ -40,7 +39,6 @@ install-strip: build install-data install-docs install-examples
 	install -c -m 755 -s bin/retro-embedimage $(DESTDIR)$(PREFIX)/bin/retro-embedimage
 	install -c -m 755 -s bin/retro-extend $(DESTDIR)$(PREFIX)/bin/retro-extend
 	install -c -m 755 -s bin/retro-injectimage-js $(DESTDIR)$(PREFIX)/bin/retro-injectimage-js
-	install -c -m 755 bin/retro-listener $(DESTDIR)$(PREFIX)/bin/retro-listener
 	install -c -m 755 -s bin/retro-muri $(DESTDIR)$(PREFIX)/bin/retro-muri
 	install -c -m 755 -s bin/retro-repl $(DESTDIR)$(PREFIX)/bin/retro-repl
 	install -c -m 755 -s bin/retro-ri $(DESTDIR)$(PREFIX)/bin/retro-ri
