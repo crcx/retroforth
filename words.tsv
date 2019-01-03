@@ -275,6 +275,7 @@ pb:length	-n	-	-	Return the length of the string on the pasteboard.			class:word
 pb:set	s-	-	-	Copy a string to the pasteboard.			class:word	{n/a}	{n/a}	pb	iOS	{n/a}
 pop	-n	n-	-	Move a value from the return stack to the data stack.			class:macro	{n/a}	{n/a}	global	all	
 prefix:!	ns-	-	-	Store a value into a variable.	Store a value into the named variable.	Compile the code to store a value into a named variable.	class:macro	{n/a}	{n/a}	prefix	all	
+prefix:"	s-s	-	-	Process token as a string.	Keep string as permanent. If `RewriteUnderscores` is `TRUE`, replace all instances of _ with space.	Keep string as permanent. If `RewriteUnderscores` is `TRUE`, replace all instances of _ with space. Then compile the string into the current definition.	class:macro	{n/a}	{n/a}	prefix	all	
 prefix:#	s-n	-	-	Process token as a number.	Convert the string into a number and leave on the stack.	Convert the string into a number and compile into the current definition as a literal.	class:macro	{n/a}	{n/a}	prefix	all	
 prefix:$	s-c	-	-	Process token as an ASCII character.	Fetch first character from string. Leave on stack.	Fetch first character from the string. Compile into the current definition as  literal.	class:macro	{n/a}	{n/a}	prefix	all	
 prefix:&	s-a	-	-	Return a pointer to a named item.	Lookup name in dictionary, return contents of the xt field on the stack.	Lookup name in dictionary, compile code to push the contents of the xt field into the current definition.	class:macro	{n/a}	{n/a}	prefix	all	

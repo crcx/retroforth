@@ -3488,6 +3488,24 @@ Class Handler: class:macro | Namespace: prefix | Interface Layer: all
 
 ----------------------------------------------------------------
 
+prefix:"
+
+  Data:  s-s
+  Addr:  -
+  Float: -
+
+Process token as a string.
+
+Interpret Time:
+  Keep string as permanent. If `RewriteUnderscores` is `TRUE`, replace all instances of _ with space.
+
+Compile Time:
+  Keep string as permanent. If `RewriteUnderscores` is `TRUE`, replace all instances of _ with space. Then compile the string into the current definition.
+
+Class Handler: class:macro | Namespace: prefix | Interface Layer: all
+
+----------------------------------------------------------------
+
 prefix:#
 
   Data:  s-n

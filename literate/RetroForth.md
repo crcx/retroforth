@@ -1058,6 +1058,7 @@ TRUE 'RewriteUnderscores var<n>
     @RewriteUnderscores [ &sub s:map ] if &prefix:' call ;
 ---reveal---
   :prefix:' rewrite ; immediate
+  :prefix:" rewrite s:keep ; immediate
 }}
 ~~~
 
