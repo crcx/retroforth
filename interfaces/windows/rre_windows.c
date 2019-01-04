@@ -17,17 +17,12 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
+//#include <unistd.h>
 #include <string.h>
 #include <math.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <netdb.h>
 #include <errno.h>
-#include <sys/wait.h>
-#include <signal.h>
 
 #ifdef USE_TERMIOS
 #include <termios.h>
@@ -111,7 +106,7 @@ CELL memory[IMAGE_SIZE + 1];      /* The memory for the image          */
   data (converted to a .c file by an external tool).
   ---------------------------------------------------------- */
 
-#include "rre_image_unix.c"
+#include "rre_image.c"
 
 
 /* ------------------------------------------------------------
