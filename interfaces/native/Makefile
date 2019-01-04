@@ -28,5 +28,5 @@ native386:
 	ld -nostdlib -m elf_i386_fbsd -n -e_start -T 386flat.ld 386.o retro.o -o bin/rf.386flat
 
 clean:
-	rm *.o
+	rm -f *.o
 #	rm bin/rf.*

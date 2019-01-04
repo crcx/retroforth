@@ -1,8 +1,5 @@
-   ___ ___ _____ ___  ___      __  _  _   _ _____ _____   _____ 
-  | _ \ __|_   _| _ \/ _ \    / / | \| | /_\_   _|_ _\ \ / / __|
-  |   / _|  | | |   / (_) |  / /  | .` |/ _ \| |  | | \ V /| _| 
-  |_|_\___| |_| |_|_\\___/  /_/   |_|\_/_/ \_\_| |___| \_/ |___|
-
+RETRO/NATIVE
+---------------------------------------------------------------
 This directory contains some experiments in building a RETRO
 system to run directly on hardware. As a stepping stone, it
 also includes some builds which require a host kernel, but no

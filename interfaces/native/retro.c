@@ -1,6 +1,6 @@
 /* RETRO -------------------------------------------------------------
   A personal, minimalistic forth
-  Copyright (c) 2016 - 2018 Charles Childers
+  Copyright (c) 2016 - 2019 Charles Childers
 
   This is the `repl`, a basic interactive interface for RETRO. It is
   intended to be simple and very minimalistic, providing the minimal
@@ -386,7 +386,7 @@ int main(int argc, char **argv) {
   for (CELL i = 0; i < ngaImageCells; i++)
     memory[i] = ngaImage[i];
   update_rx();
-  retro_puts("RETRO Listener (c) 2016-2018, Charles Childers\n\n");
+  retro_puts("RETRO Listener (c) 2016-2019, Charles Childers\n\n");
   while(1) {
     Dictionary = memory[2];
     read_token(input, 0);
@@ -397,7 +397,7 @@ int main(int argc, char **argv) {
 
 
 /* Nga ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   Copyright (c) 2008 - 2018, Charles Childers
+   Copyright (c) 2008 - 2019, Charles Childers
    Copyright (c) 2009 - 2010, Luke Parrish
    Copyright (c) 2010,        Marc Simpson
    Copyright (c) 2010,        Jay Skeer
