@@ -1,11 +1,11 @@
-/* RETRO: a personal, minimalistic forth
+/* RETRO ------------------------------------------------------
+  A personal, minimalistic forth
+  Copyright (c) 2016 - 2019 Charles Childers
 
    This is a quick interface layer that loads and runs a
    source file, then saves a new image file. It's used to
    merge the `retro.forth` into the base `rx` image.
-
-   Copyright (c) 2016 - 2019, Charles Childers
-   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+  ---------------------------------------------------------- */
 
 #include <stdio.h>
 #include <stdint.h>

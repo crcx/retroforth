@@ -1,7 +1,7 @@
-/* RETRO -------------------------------------------------------------
+/* RETRO ------------------------------------------------------
   A personal, minimalistic forth
   Copyright (c) 2016 - 2019 Charles Childers
-  ---------------------------------------------------------------------*/
+  ---------------------------------------------------------- */
 
 #include <stdio.h>
 #include <stdint.h>
@@ -100,7 +100,7 @@ int main(int argc, char **argv) {
 
 
 /* Nga ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   Copyright (c) 2008 - 2018, Charles Childers
+   Copyright (c) 2008 - 2019, Charles Childers
    Copyright (c) 2009 - 2010, Luke Parrish
    Copyright (c) 2010,        Marc Simpson
    Copyright (c) 2010,        Jay Skeer

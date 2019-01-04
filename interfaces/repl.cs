@@ -2,7 +2,7 @@
  * Nga Virtual Machine & Interface for RETRO 12
  *
  * Copyright (c) 2009-2011, Simon Waite
- * Copyright (c) 2009-2018, Charles Childers
+ * Copyright (c) 2009-2019, Charles Childers
 */
 
 using System;

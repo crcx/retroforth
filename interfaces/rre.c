@@ -1,19 +1,19 @@
-/* RETRO --------------------------------------------------------------
+/* RETRO ------------------------------------------------------
   A personal, minimalistic forth
   Copyright (c) 2016 - 2019 Charles Childers
 
   This is `rre`, short for `run retro and exit`. It's the basic
   interface layer for Retro on FreeBSD, Linux and macOS.
 
-  rre embeds the image file into the binary, so the compiled version
-  of this is all you need to have a functional system.
+  rre embeds the image file into the binary, so the compiled
+  version of this is all you need to have a functional system.
 
   I'll include commentary throughout the source, so read on.
-  ---------------------------------------------------------------------*/
+  ---------------------------------------------------------- */
   
-/*---------------------------------------------------------------------
+/* ------------------------------------------------------------
   Begin by including the various C headers needed.
-  ---------------------------------------------------------------------*/
+  ---------------------------------------------------------- */
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -76,11 +76,11 @@ Handler IO_queryHandlers[NUM_DEVICES + 1] = {
   io_gopher_query
 };
 
-/*---------------------------------------------------------------------
-  First, a few constants relating to the image format and memory
-  layout. If you modify the kernel (Rx.md), these will need to be
-  altered to match your memory layout.
-  ---------------------------------------------------------------------*/
+/* ------------------------------------------------------------
+  First, a few constants relating to the image format and
+  memory layout. If you modify the kernel (Rx.md), these will
+  need to be altered to match your memory layout.
+  ---------------------------------------------------------- */
 
 #define TIB            1025
 #define D_OFFSET_LINK     0
@@ -89,10 +89,10 @@ Handler IO_queryHandlers[NUM_DEVICES + 1] = {
 #define D_OFFSET_NAME     3
 
 
-/*---------------------------------------------------------------------
-  Next we get into some things that relate to the Nga virtual machine
-  that RETRO runs on.
-  ---------------------------------------------------------------------*/
+/* ------------------------------------------------------------
+  Next we get into some things that relate to the Nga virtual
+  machine that RETRO runs on.
+  ---------------------------------------------------------- */
 
 #define CELL         int32_t      /* Cell size (32 bit, signed integer */
 #define IMAGE_SIZE   524288 * 8   /* Amount of RAM. 4MiB by default.   */
@@ -108,28 +108,27 @@ CELL memory[IMAGE_SIZE + 1];      /* The memory for the image          */
 #define NOS  data[sp-1]           /* Shortcut for second item on stack */
 #define TORS address[rp]          /* Shortcut for top item on address stack */
 
-
-/*---------------------------------------------------------------------
-  RRE embeds the image into the binary. This includes the image data
-  (converted to a .c file by an external tool).
-  ---------------------------------------------------------------------*/
+/* ------------------------------------------------------------
+  RRE embeds the image into the binary. This includes the image
+  data (converted to a .c file by an external tool).
+  ---------------------------------------------------------- */
 
 #include "rre_image_unix.c"
 
 
-/*---------------------------------------------------------------------
-  Moving forward, a few variables. These are updated to point to the
-  latest values in the image.
-  ---------------------------------------------------------------------*/
+/* ------------------------------------------------------------
+  Moving forward, a few variables. These are updated to point
+  to the latest values in the image.
+  ---------------------------------------------------------- */
 
 CELL Dictionary;
 CELL NotFound;
 CELL interpret;
 
 
-/*---------------------------------------------------------------------
+/* ------------------------------------------------------------
   Function prototypes.
-  ---------------------------------------------------------------------*/
+  ---------------------------------------------------------- */
 
 CELL stack_pop();
 void stack_push(CELL value);
@@ -154,24 +153,24 @@ void ngaProcessPackedOpcodes(CELL opcode);
 int ngaValidatePackedOpcodes(CELL opcode);
 
 
-/*---------------------------------------------------------------------
+/* ------------------------------------------------------------
   Declare global variables related to I/O.
-  ---------------------------------------------------------------------*/
+  ---------------------------------------------------------- */
 
 char **sys_argv;
 int sys_argc;
 int silence_input;
 
-/*---------------------------------------------------------------------
-  Now to the fun stuff: interfacing with the virtual machine. There are
-  a things I like to have here:
+/* ------------------------------------------------------------
+  Now to the fun stuff: interfacing with the virtual machine.
+  There are a things I like to have here:
 
   - push a value to the stack
   - pop a value off the stack
   - extract a string from the image
   - inject a string into the image.
   - lookup dictionary headers and access dictionary fields
-  ---------------------------------------------------------------------*/
+  ---------------------------------------------------------- */
 
 
 /*---------------------------------------------------------------------
