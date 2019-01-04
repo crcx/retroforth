@@ -118,7 +118,7 @@ bin/retro: bin/retro-embedimage bin/retro-extend interfaces/image.c interfaces/r
 	./bin/retro-extend interfaces/io_floatingpoint.forth
 	./bin/retro-extend interfaces/io_unix_syscalls.forth
 	./bin/retro-extend interfaces/rre.forth
-	./bin/retro-embedimage >interfaces/rre_image_unix.c
+	./bin/retro-embedimage >interfaces/rre_image.c
 	mv cleanImage ngaImage
 	cd interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../bin/retro $(LIBM) io_filesystem.c io_gopher.c io_floatingpoint.c io_unix_syscalls.c rre.c
 
