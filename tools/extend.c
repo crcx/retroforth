@@ -14,7 +14,7 @@
 #include <string.h>
 
 #define CELL         int32_t
-#define IMAGE_SIZE   524288 * 16
+#define IMAGE_SIZE   524288 * 4
 #define ADDRESSES    2048
 #define STACK_DEPTH  512
 
