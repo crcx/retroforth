@@ -1,15 +1,11 @@
-/*  ____   ____ ______ ____    ___
-    || \\ ||    | || | || \\  // \\
-    ||_// ||==    ||   ||_// ((   ))
-    || \\ ||___   ||   || \\  \\_//
-    a personal, minimalistic forth
+/* RETRO: a personal, minimalistic forth
 
-    This is a quick interface layer that loads and runs a
-    source file, then saves a new image file. It's used to
-    merge the `retro.forth` into the base `rx` image.
+   This is a quick interface layer that loads and runs a
+   source file, then saves a new image file. It's used to
+   merge the `retro.forth` into the base `rx` image.
 
-    Copyright (c) 2016, 2017 Charles Childers
-*/
+   Copyright (c) 2016 - 2019, Charles Childers
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
 #include <stdio.h>
 #include <stdint.h>
@@ -22,13 +18,25 @@
 #define ADDRESSES    2048
 #define STACK_DEPTH  512
 
+#define NUM_DEVICES  1
+
+typedef void (*Handler)(void);
+
+Handler IO_deviceHandlers[NUM_DEVICES + 1];
+Handler IO_queryHandlers[NUM_DEVICES + 1];
+
 enum vm_opcode {
   VM_NOP,  VM_LIT,    VM_DUP,   VM_DROP,    VM_SWAP,   VM_PUSH,  VM_POP,
   VM_JUMP, VM_CALL,   VM_CCALL, VM_RETURN,  VM_EQ,     VM_NEQ,   VM_LT,
   VM_GT,   VM_FETCH,  VM_STORE, VM_ADD,     VM_SUB,    VM_MUL,   VM_DIVMOD,
-  VM_AND,  VM_OR,     VM_XOR,   VM_SHIFT,   VM_ZRET,   VM_END
+  VM_AND,  VM_OR,     VM_XOR,   VM_SHIFT,   VM_ZRET,   VM_END,   VM_IE,
+  VM_IQ,   VM_II
 };
-#define NUM_OPS VM_END + 1
+#define NUM_OPS VM_II + 1
+
+#ifndef NUM_DEVICES
+#define NUM_DEVICES 0
+#endif
 
 CELL sp, rp, ip;
 CELL data[STACK_DEPTH];
@@ -76,6 +84,16 @@ void evaluate(char *s);
 int not_eol(int ch);
 void read_token(FILE *file, char *token_buffer, int echo);
 char *read_token_str(char *s, char *token_buffer, int echo);
+
+void generic_output() {
+  putc(stack_pop(), stdout);
+  fflush(stdout);
+}
+
+void generic_output_query() {
+  stack_push(0);
+  stack_push(0);
+}
 
 void dump_stack() {
   CELL i;
@@ -127,6 +145,8 @@ void stats() {
 int main(int argc, char **argv) {
   int tokens;
   FILE *fp;
+  IO_deviceHandlers[0] = generic_output;
+  IO_queryHandlers[0] = generic_output_query;
   ngaPrepare();
   max_sp = 0;
   max_rsp = 0;
@@ -236,29 +256,19 @@ void update_rx() {
 }
 
 
-/* The `execute` function runs a word in the Retro image.
-   It also handles the additional I/O instructions. */
+/* The `execute` function runs a word in the Retro image. */
 
-void execute(int cell) {
+void execute(CELL cell) {
   CELL opcode;
   rp = 1;
   ip = cell;
   while (ip < IMAGE_SIZE) {
-    if (ip == notfound) {
-      printf("%s ?\n", string_extract(TIB));
-    }
     opcode = memory[ip];
     if (ngaValidatePackedOpcodes(opcode) != 0) {
       ngaProcessPackedOpcodes(opcode);
-    } else if (opcode >= 0 && opcode < 27) {
-      ngaProcessOpcode(opcode);
     } else {
-      switch (opcode) {
-        case IO_TTY_PUTC:  putc(stack_pop(), stdout); fflush(stdout); break;
-        default:   printf("Invalid instruction!\n");
-                   printf("At %d, opcode %d\n", ip, opcode);
-                   exit(1);
-      }
+      printf("Invalid instruction!\n");
+      exit(1);
     }
     ip++;
     if (sp > max_sp) max_sp = sp;
@@ -403,7 +413,7 @@ void inst_drop() {
 }
 
 void inst_swap() {
-  int a;
+  CELL a;
   a = TOS;
   TOS = NOS;
   NOS = a;
@@ -434,7 +444,7 @@ void inst_call() {
 }
 
 void inst_ccall() {
-  int a, b;
+  CELL a, b;
   a = TOS; inst_drop();  /* False */
   b = TOS; inst_drop();  /* Flag  */
   if (b != 0) {
@@ -479,9 +489,13 @@ void inst_fetch() {
 }
 
 void inst_store() {
-  memory[TOS] = NOS;
-  inst_drop();
-  inst_drop();
+  if (TOS <= IMAGE_SIZE && TOS >= 0) {
+    memory[TOS] = NOS;
+    inst_drop();
+    inst_drop();
+  } else {
+    ip = IMAGE_SIZE;
+  }
 }
 
 void inst_add() {
@@ -500,7 +514,7 @@ void inst_mul() {
 }
 
 void inst_divmod() {
-  int a, b;
+  CELL a, b;
   a = TOS;
   b = NOS;
   TOS = b / a;
@@ -548,13 +562,29 @@ void inst_end() {
   ip = IMAGE_SIZE;
 }
 
-typedef void (*Handler)(void);
+void inst_ie() {
+  sp++;
+  TOS = NUM_DEVICES;
+}
+
+void inst_iq() {
+  CELL Device = TOS;
+  inst_drop();
+  IO_queryHandlers[Device]();
+}
+
+void inst_ii() {
+  CELL Device = TOS;
+  inst_drop();
+  IO_deviceHandlers[Device]();
+}
 
 Handler instructions[NUM_OPS] = {
   inst_nop, inst_lit, inst_dup, inst_drop, inst_swap, inst_push, inst_pop,
   inst_jump, inst_call, inst_ccall, inst_return, inst_eq, inst_neq, inst_lt,
   inst_gt, inst_fetch, inst_store, inst_add, inst_sub, inst_mul, inst_divmod,
-  inst_and, inst_or, inst_xor, inst_shift, inst_zret, inst_end
+  inst_and, inst_or, inst_xor, inst_shift, inst_zret, inst_end, inst_ie,
+  inst_iq, inst_ii
 };
 
 void ngaProcessOpcode(CELL opcode) {
@@ -569,14 +599,14 @@ int ngaValidatePackedOpcodes(CELL opcode) {
   int i;
   for (i = 0; i < 4; i++) {
     current = raw & 0xFF;
-    if (!(current >= 0 && current <= 26))
+    if (!(current >= 0 && current <= 29))
       valid = 0;
     raw = raw >> 8;
   }
   return valid;
 }
 
-void ngaProcessPackedOpcodes(int opcode) {
+void ngaProcessPackedOpcodes(CELL opcode) {
   CELL raw = opcode;
   int i;
   for (i = 0; i < 4; i++) {
