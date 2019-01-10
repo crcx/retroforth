@@ -104,29 +104,29 @@ bin/retro-repl: interfaces/repl.c interfaces/image.c
 	cd interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../bin/retro-repl repl.c
 
 bin/retro-ri: interfaces/ri.c interfaces/image.c interfaces/io_filesystem.c interfaces/io_filesystem.forth interfaces/io_floatingpoint.c interfaces/io_floatingpoint.forth
-	cp ngaImage cleanImage
-	./bin/retro-extend interfaces/io_filesystem.forth
-	./bin/retro-extend interfaces/io_floatingpoint.forth
-	./bin/retro-embedimage >interfaces/ri_image.c
-	mv cleanImage ngaImage
+	cp ngaImage ri.image
+	./bin/retro-extend ri.image interfaces/io_filesystem.forth
+	./bin/retro-extend ri.image interfaces/io_floatingpoint.forth
+	./bin/retro-embedimage ri.image >interfaces/ri_image.c
+	rm ri.image
 	cd interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../bin/retro-ri $(LIBCURSES) $(LIBM) io_filesystem.c io_floatingpoint.c ri.c
 
 bin/retro: bin/retro-embedimage bin/retro-extend interfaces/image.c interfaces/rre.c interfaces/rre.forth interfaces/io_filesystem.c interfaces/io_filesystem.forth interfaces/io_gopher.c interfaces/io_gopher.forth interfaces/io_floatingpoint.c interfaces/io_floatingpoint.forth interfaces/io_unix_syscalls.c interfaces/io_unix_syscalls.forth
-	cp ngaImage cleanImage
-	./bin/retro-extend interfaces/io_filesystem.forth
-	./bin/retro-extend interfaces/io_gopher.forth
-	./bin/retro-extend interfaces/io_floatingpoint.forth
-	./bin/retro-extend interfaces/io_unix_syscalls.forth
-	./bin/retro-extend interfaces/rre.forth
-	./bin/retro-embedimage >interfaces/rre_image.c
-	mv cleanImage ngaImage
+	cp ngaImage rre.image
+	./bin/retro-extend rre.image interfaces/io_filesystem.forth
+	./bin/retro-extend rre.image interfaces/io_gopher.forth
+	./bin/retro-extend rre.image interfaces/io_floatingpoint.forth
+	./bin/retro-extend rre.image interfaces/io_unix_syscalls.forth
+	./bin/retro-extend rre.image interfaces/rre.forth
+	./bin/retro-embedimage rre.image >interfaces/rre_image.c
+	rm rre.image
 	cd interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../bin/retro $(LIBM) io_filesystem.c io_gopher.c io_floatingpoint.c io_unix_syscalls.c rre.c
 
 bin/retro-barebones: bin/retro-embedimage bin/retro-extend interfaces/image.c interfaces/barebones.c interfaces/barebones.forth
-	cp ngaImage cleanImage
-	./bin/retro-extend interfaces/barebones.forth
-	./bin/retro-embedimage >interfaces/barebones_image.c
-	mv cleanImage ngaImage
+	cp ngaImage barebones.image
+	./bin/retro-extend barebones.image interfaces/barebones.forth
+	./bin/retro-embedimage barebones.image >interfaces/barebones_image.c
+	rm barebones.image
 	cd interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../bin/retro-barebones barebones.c
 
 bin/retro-unu: tools/unu.c
@@ -139,5 +139,5 @@ doc/Glossary.txt: bin/retro words.tsv
 
 interfaces/image.c: bin/retro-embedimage bin/retro-extend bin/retro-muri literate/RetroForth.md literate/Rx.md
 	./bin/retro-muri literate/Rx.md
-	./bin/retro-extend literate/RetroForth.md
-	./bin/retro-embedimage > interfaces/image.c
+	./bin/retro-extend ngaImage literate/RetroForth.md
+	./bin/retro-embedimage ngaImage > interfaces/image.c

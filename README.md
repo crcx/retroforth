@@ -25,11 +25,7 @@ errors by doing:
     make -kis
 
 If you are building an an older Linux system and are running
-into problems, try using the `build.sh` script:
-
-    sh build.sh
-
-Or the alternate `Makefile.linux`:
+into problems, try using the alternative Makefile:
 
     make -f Makefile.linux
 
@@ -52,10 +48,6 @@ floating point math support.
 
 The `retro` executable can handle a variety of command line
 arguments:
-
-    retro
-
-Starts the *listener*, a basic REPL for interactive use.
 
     retro -i
 

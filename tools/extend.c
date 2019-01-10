@@ -150,14 +150,14 @@ int main(int argc, char **argv) {
   ngaPrepare();
   max_sp = 0;
   max_rsp = 0;
-  ngaLoadImage("ngaImage");
+  ngaLoadImage(argv[1]);
   stats();
   dump_stack();
   printf("-> Process code from %s\n", argv[1]);
-  tokens = include_file(argv[1]);
+  tokens = include_file(argv[2]);
   printf("   %d tokens\n", tokens);
   stats();
-  if ((fp = fopen("ngaImage", "wb")) == NULL) {
+  if ((fp = fopen(argv[1], "wb")) == NULL) {
     printf("Unable to save the ngaImage!\n");
     exit(2);
   }
