@@ -109,7 +109,7 @@ void gopher_fetch(char *host, CELL port, char *selector, CELL dest) {
   while (n > 0) {
     bzero(buffer,1025);
     n = read(sockfd,buffer,1024);
-    strcat(data, buffer);
+    strlcat(data, buffer, (128 * 1024) + 1);
   }
 
   close(sockfd);
