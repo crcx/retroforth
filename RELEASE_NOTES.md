@@ -9,6 +9,8 @@
 ## Core Language
 
 - remove `set:from-results`
+- add `if;`
+- add `-if;`
 
 ## Nga
 

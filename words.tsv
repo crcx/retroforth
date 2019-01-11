@@ -4,6 +4,7 @@
 ---reveal---	-	-	-	Switch to the exposed (public) portion of a lexical namespace.			class:word	{n/a}	{n/a}	global	all	
 -eq?	nn-f	-	-	Compare two values for inequality. Returns `TRUE` if they are not equal or `FALSE` otherwise.			class:primitive	    #1 #2 -eq?\n    $a $b -eq?	{n/a}	global	all	
 -if	fq-	-	-	Execute the quotation if the flag is `FALSE`.			class:word	{n/a}	{n/a}	global	all	
+-if;	fq-	-	-	Execute the quotation if the flag is `FALSE`. If false, also exit the word.			class:word	{n/a}	{n/a}	global	all	
 /	mn-o	-	-	Divide `m` by `n` and return the result.			class:word	{n/a}	{n/a}	global	all	
 /mod	nm-op	-	-	Divide `n` by `m` and return the result and remainder.			class:primitive	{n/a}	{n/a}	global	all	
 0;	n-n || n-	-	-	If `n` is zero, drop `n` and exit the current word. If non-zero, leave `n` alone and allow execution to continue.			class:macro	{n/a}	{n/a}	global	all	
@@ -230,6 +231,7 @@ gteq?	nn-f	-	-	Compare n1 and n2. Return `TRUE` if n1 is greater than or equal t
 here	-a	-	-	Return the next free address in memory.			class:word	{n/a}	{n/a}	global	all	
 i	s-	-	-	Assemble the instructions specified by the string into the current assembly scope.			class:word	{n/a}	{n/a}	global	all	
 if	fq-	-	-	Execute the quote if the flag is `TRUE`.			class:word	{n/a}	{n/a}	global	all	
+if;	fq-	-	-	Execute the quotation if the flag is `TRUE`. If true, also exit the word.			class:word	{n/a}	{n/a}	global	all	
 immediate	-	-	-	Change the class of the most recently defined word to `class:macro`.			class:word	{n/a}	{n/a}	global	all	
 include	s-	-	-	Run the code in the specified file. 			class:word	{n/a}	{n/a}	global	rre	
 interpret	s-	-	-	Interpret a single input token.			class:word	    '#100 interpret\n    'words interpret	{n/a}	global	all	

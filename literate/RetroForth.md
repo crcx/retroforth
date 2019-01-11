@@ -469,6 +469,11 @@ provide here.
 :gteq?  (nn-f)  dup-pair eq? [ gt? ] dip or ;
 ~~~
 
+~~~
+:if;   (qf-)  over [  if ] dip     0; pop drop-pair ;
+:-if;  (qf-)  over [ -if ] dip not 0; pop drop-pair ;
+~~~
+
 And then some numeric comparators.
 
 ~~~
