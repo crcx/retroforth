@@ -104,13 +104,16 @@ bin/RETRO12.html: bin/retro-injectimage-js
 bin/retro-repl: interfaces/repl.c interfaces/image.c
 	cd interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../bin/retro-repl repl.c
 
-bin/retro-ri: interfaces/ri.c interfaces/image.c interfaces/io_filesystem.c interfaces/io_filesystem.forth interfaces/io_floatingpoint.c interfaces/io_floatingpoint.forth
+bin/retro-ri: bin/retro-embedimage bin/retro-extend interfaces/image.c interfaces/ri.c interfaces/ri.forth interfaces/io_filesystem.c interfaces/io_filesystem.forth interfaces/io_gopher.c interfaces/io_gopher.forth interfaces/io_floatingpoint.c interfaces/io_floatingpoint.forth interfaces/io_unix_syscalls.c interfaces/io_unix_syscalls.forth
 	cp ngaImage ri.image
 	./bin/retro-extend ri.image interfaces/io_filesystem.forth
+	./bin/retro-extend ri.image interfaces/io_gopher.forth
 	./bin/retro-extend ri.image interfaces/io_floatingpoint.forth
+	./bin/retro-extend ri.image interfaces/io_unix_syscalls.forth
+	./bin/retro-extend ri.image interfaces/ri.forth
 	./bin/retro-embedimage ri.image >interfaces/ri_image.c
 	rm ri.image
-	cd interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../bin/retro-ri $(LIBCURSES) $(LIBM) io_filesystem.c io_floatingpoint.c ri.c
+	cd interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../bin/retro-ri $(LIBCURSES) $(LIBM) io_filesystem.c io_gopher.c io_floatingpoint.c io_unix_syscalls.c ri.c
 
 bin/retro: bin/retro-embedimage bin/retro-extend interfaces/image.c interfaces/rre.c interfaces/rre.forth interfaces/io_filesystem.c interfaces/io_filesystem.forth interfaces/io_gopher.c interfaces/io_gopher.forth interfaces/io_floatingpoint.c interfaces/io_floatingpoint.forth interfaces/io_unix_syscalls.c interfaces/io_unix_syscalls.forth
 	cp ngaImage rre.image

@@ -105,7 +105,7 @@ void io_gopher_handler();
 void io_scripting_handler();
 void io_scripting_query();
 
-#define NUM_DEVICES  3
+#define NUM_DEVICES  7
 
 typedef void (*Handler)(void);
 
@@ -113,13 +113,18 @@ Handler IO_deviceHandlers[NUM_DEVICES + 1] = {
   generic_output,
   io_filesystem_handler,
   io_floatingpoint_handler,
+  io_unix_handler,
+  io_gopher_handler
 };
 
 Handler IO_queryHandlers[NUM_DEVICES + 1] = {
   generic_output_query,
   io_filesystem_query,
   io_floatingpoint_query,
+  io_unix_query,
+  io_gopher_query
 };
+
 
 /*---------------------------------------------------------------------
   `ri` embeds the image into the binary. This includes the image data
