@@ -1738,7 +1738,7 @@ passed
 -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
 
 ~~~
-'set:from-results Testing
+'set:counted-results Testing
 passed
 ~~~
 

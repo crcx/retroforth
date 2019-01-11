@@ -1263,19 +1263,13 @@ we wrap this as `set:length`:
 :set:length (a-n) fetch ;
 ~~~
 
+The first couple of words are used to create sets. The first,
+`set:counted-results` executes a quote which returns values
+and a count. It then creates a set with the provided data.
+
 ~~~
 :set:counted-results (q-a)
   call here [ dup , &, times ] dip ;
-~~~
-
-The first couple of words are used to create sets. The first,
-`set:from-results` executes a quote and constructs a set from
-the returned values.
-
-~~~
-:set:from-results (q-a)
-  depth [ call ] dip depth swap -
-  here [ dup , [ , ] times ] dip ;
 ~~~
 
 The second, `set:from-string`, creates a new string with the
@@ -1360,7 +1354,7 @@ Example:
 ~~~
 
 You can use `set:reverse` to make a copy of a set with the
-values reversed. This can be useful after a `set:from-results`.
+values reversed.
 
 ~~~
 :set:reverse (a-a)
@@ -1388,7 +1382,7 @@ and return a new value.
 ~~~
 
 When making a set, I often want the values in the original
-order. The `set:from-results set:reverse` is a bit long, so
+order. The `set:counted-results set:reverse` is a bit long, so
 I'm defining a new `set:make` which wraps these.
 
 ~~~
