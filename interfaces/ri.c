@@ -1,8 +1,8 @@
 /* RETRO -------------------------------------------------------------
   A personal, minimalistic forth
-  Copyright (c) 2016 - 2019 Charles Childers
+  Copyright (c) 2016 - 2018 Charles Childers
 
-  This is `ri`, an interactive, full screen, console based interface
+  This is `ri`, an inteActiveInstance, full screen, console based interface
   for RETRO, modeled after the original interface from RETRO4. The
   screen is laid out as follows:
 
@@ -64,7 +64,7 @@
   ---------------------------------------------------------------------*/
 
 #define CELL         int32_t      /* Cell size (32 bit, signed integer */
-#define IMAGE_SIZE   524288 * 8   /* Amount of RAM. 4MiB by default.   */
+#define IMAGE_SIZE   524288       /* Amount of RAM. 512k cells         */
 #define ADDRESSES    1024         /* Depth of address stack            */
 #define STACK_DEPTH  128          /* Depth of data stack               */
 
@@ -72,6 +72,18 @@ CELL sp, rp, ip;                  /* Data, address, instruction pointers */
 CELL data[STACK_DEPTH];           /* The data stack                    */
 CELL address[ADDRESSES];          /* The address stack                 */
 CELL memory[IMAGE_SIZE + 1];      /* The memory for the image          */
+
+typedef struct {
+  CELL sp, rp, ip;                /* Data, address, instruction pointers */
+  CELL data[STACK_DEPTH];         /* The data stack                  */
+  CELL address[ADDRESSES];        /* The address stack               */
+  CELL memory[IMAGE_SIZE + 1];    /* The memory for the image        */
+} RetroInstance;
+
+RetroInstance Pristine;
+RetroInstance Instances[5];
+
+int ActiveInstance;
 
 #define TOS  data[sp]             /* Shortcut for top item on stack    */
 #define NOS  data[sp-1]           /* Shortcut for second item on stack */
@@ -184,6 +196,54 @@ CELL stack_pop() {
 void stack_push(CELL value) {
   sp++;
   data[sp] = value;
+}
+
+char *output_cache(int n) {
+  switch(n) {
+    case 0: return "/tmp/ri.output1"; break;
+    case 1: return "/tmp/ri.output2"; break;
+    case 2: return "/tmp/ri.output3"; break;
+    case 3: return "/tmp/ri.output4"; break;
+    case 4: return "/tmp/ri.output5"; break;
+  }
+  return "";
+}
+
+
+void swap_image(int to) {
+  int i;
+
+  char *target = output_cache(ActiveInstance);
+
+  for (i = 0; i < IMAGE_SIZE; i++)
+    Instances[ActiveInstance].memory[i] = memory[i];
+  for (i = 0; i < STACK_DEPTH; i++)
+    Instances[ActiveInstance].data[i] = data[i];
+  for (i = 0; i < ADDRESSES; i++)
+    Instances[ActiveInstance].address[i] = address[i];
+  Instances[ActiveInstance].sp = sp;
+  Instances[ActiveInstance].rp = rp;
+  Instances[ActiveInstance].ip = ip;
+  FILE *f = fopen(target, "w");
+  putwin(output, f);
+  fclose(f);
+
+  target = output_cache(to);
+
+  for (i = 0; i < IMAGE_SIZE; i++)
+    memory[i] = Instances[to].memory[i];
+  for (i = 0; i < STACK_DEPTH; i++)
+    data[i] = Instances[to].data[i];
+  for (i = 0; i < ADDRESSES; i++)
+    address[i] = Instances[to].address[i];
+  sp = Instances[to].sp;
+  rp = Instances[to].rp;
+  ip = Instances[to].ip;
+  f = fopen(target, "r");
+  output = getwin(f);
+  fclose(f);
+
+  ActiveInstance = to;
 }
 
 
@@ -381,7 +441,8 @@ void evaluate(char *s) {
 void dump_stack() {
   CELL i;
   wclear(stack);
-  wprintw(stack, "D:%d ", sp);
+  wprintw(stack, "I:%d | H:%d | ", ActiveInstance + 1, memory[3]);
+  wprintw(stack, "D:%d | ", sp);
   if (sp == 0)
     return;
   for (i = sp; i > 0 && i != sp - 12; i--)
@@ -400,22 +461,26 @@ void setup_interface() {
   initscr();
   start_color();
   init_pair(1, COLOR_WHITE, COLOR_BLUE);
-  init_pair(2, COLOR_BLACK, COLOR_WHITE);
+  init_pair(2, COLOR_GREEN, COLOR_BLACK);
+  init_pair(3, COLOR_GREEN, COLOR_BLACK);
   printw("first");
   refresh();
   cbreak();
 
   back = newwin(LINES - 1, COLS, 0, 0);
-  output = newwin(LINES - 1, COLS, 0, 0);
-  input = newwin(1, COLS / 2, LINES - 1, 0);
-  stack = newwin(1, COLS / 2, LINES - 1, COLS / 2);
+//  output = newwin(LINES - 1, COLS, 0, 0);
+//  input = newwin(1, COLS / 2, LINES - 1, 0);
+//  stack = newwin(1, COLS / 2, LINES - 1, COLS / 2);
+  output = newwin(LINES - 2, COLS, 0, 0);
+  input = newwin(1, COLS, LINES - 1, 0);
+  stack = newwin(1, COLS, LINES - 2, 0);
   scrollok(output, TRUE);
   scrollok(input, TRUE);
   keypad(input, TRUE);
 
-  wbkgd(input, COLOR_PAIR(1) | A_BOLD);
+  wbkgd(input, COLOR_PAIR(2) | A_BOLD);
   wbkgd(stack, COLOR_PAIR(1));
-  wbkgd(output, COLOR_PAIR(2));
+  wbkgd(output, COLOR_PAIR(3));
 
   wrefresh(back);
   wrefresh(output);
@@ -430,15 +495,13 @@ void setup_interface() {
   ---------------------------------------------------------------------*/
 
 void start_screen() {
-  wprintw(output, "Welcome to RETRO\n");
+  wprintw(output, "Welcome to RETRO!\n");
   wprintw(output, "\n");
-  wprintw(output, "Input appears on the bottom left.\n");
-  wprintw(output, "The stack appears on the bottom right.\n");
-  wprintw(output, "Output appears here.\n");
+  wprintw(output, "Some tips:\n\n - TAB to clear the display\n");
+  wprintw(output, " - CTRL+d to exit\n");
+  wprintw(output, " - Input is run when you hit SPACE\n");
   wprintw(output, "\n");
-  wprintw(output, "TAB    to clear output.\n");
-  wprintw(output, "CTRL+D to exit.\n");
-  wprintw(output, "SPACE  to run input.\n");
+  wprintw(output, "Use /1 to /5 to switch instances and /reload to restart the current instance\n");
   wprintw(output, "\n");
 
   wrefresh(output);
@@ -462,16 +525,36 @@ int main() {
   char c[1024];                        /* Input buffer               */
   int n = 0;                           /* Index to input buffer      */
 
+  int target;
+
   ngaPrepare();
 
   for (n = 0; n < ngaImageCells; n++)  /* Copy the embedded image to */
     memory[n] = ngaImage[n];           /* the Nga VM memory          */
   n = 0;
 
+
+  int i;
+  for (i = 0; i < IMAGE_SIZE; i++) {
+    Instances[0].memory[i] = memory[i];
+    Instances[1].memory[i] = memory[i];
+    Instances[2].memory[i] = memory[i];
+    Instances[3].memory[i] = memory[i];
+    Instances[4].memory[i] = memory[i];
+    Pristine.memory[i] = memory[i];
+  }
+
   update_rx();
 
   setup_interface();
   start_screen();
+
+  FILE *f;
+  f = fopen("/tmp/ri.output1", "w");  putwin(output, f);  fclose(f);
+  f = fopen("/tmp/ri.output2", "w");  putwin(output, f);  fclose(f);
+  f = fopen("/tmp/ri.output3", "w");  putwin(output, f);  fclose(f);
+  f = fopen("/tmp/ri.output4", "w");  putwin(output, f);  fclose(f);
+  f = fopen("/tmp/ri.output5", "w");  putwin(output, f);  fclose(f);
 
   while ((ch = wgetch(input)) != CTRL('d')) {
     switch (ch) {
@@ -489,6 +572,38 @@ int main() {
       case 10:                         /* ENTER or SPACE = evaluate  */
       case 13:
       case 32:
+        if (strlen(c) == 2 && c[0] == '/') {
+          switch(c[1]) {
+            case '1': target = 0; break;
+            case '2': target = 1; break;
+            case '3': target = 2; break;
+            case '4': target = 3; break;
+            case '5': target = 4; break;
+          }
+          swap_image(target);
+          update_rx();
+          n = 0;
+          c[0] = '\0';
+          wrefresh(output);
+          wclear(input);
+          wrefresh(input);
+          dump_stack();
+          wrefresh(stack);
+          break;
+        }
+        if (strcmp(c, "/reload") == 0) {
+          for (i = 0; i < IMAGE_SIZE; i++)
+            memory[i] = Pristine.memory[i];
+          sp = 0;
+          n = 0;
+          c[0] = '\0';
+          update_rx();
+          wrefresh(output);
+          wclear(input);
+          wrefresh(input);
+          dump_stack();
+          wrefresh(stack);
+        }
         evaluate(c);
         n = 0;
         c[0] = '\0';
@@ -508,6 +623,11 @@ int main() {
   }
 
   endwin();
+  unlink("/tmp/ri.output1");
+  unlink("/tmp/ri.output2");
+  unlink("/tmp/ri.output3");
+  unlink("/tmp/ri.output4");
+  unlink("/tmp/ri.output5");
   exit(0);
 }
 
