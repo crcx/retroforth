@@ -132,13 +132,13 @@ int include_file(char *fname) {
 
 void extract_runtime(char *src) {
   char buffer[4096];
-  sprintf(buffer, "objcopy -O binary --only-section=.runtime --set-section-flags .runtime=alloc %s a.out", src);
+  snprintf(buffer, 4096, "objcopy -O binary --only-section=.runtime --set-section-flags .runtime=alloc %s a.out", src);
   system(buffer);
 }
 
 void extract_image(char *src) {
   char buffer[4096];
-  sprintf(buffer, "objcopy -O binary --only-section=.ngaImage --set-section-flags .ngaImage=alloc %s __ngaImage", src);
+  snprintf(buffer, 4096, "objcopy -O binary --only-section=.ngaImage --set-section-flags .ngaImage=alloc %s __ngaImage", src);
   system(buffer);
 }
 

@@ -15,14 +15,17 @@
 ## Interfaces
 
 - use strlcpy, strlcat instead of strcpy and strcat
+- add retro-compiler
 
-### retro (formerly rre)
+### retro
 
-### retro.py
+### retro-compiler
 
-### barebones
+- new interface for creating turnkey executables
 
-### listener
+### retro-ri
+
+- support switching between multiple copies of the image
 
 ## Tools
 
