@@ -153,7 +153,7 @@ int main(int argc, char **argv) {
   ngaLoadImage(argv[1]);
   stats();
   dump_stack();
-  printf("-> Process code from %s\n", argv[1]);
+  printf("-> Process code from %s\n", argv[2]);
   tokens = include_file(argv[2]);
   printf("   %d tokens\n", tokens);
   stats();
