@@ -139,38 +139,38 @@ void unix_fork() {
   ---------------------------------------------------------------------*/
 
 void unix_exec0() {
-  char path[1024];
-  strcpy(path, string_extract(stack_pop()));
+  char path[1025];
+  strlcpy(path, string_extract(stack_pop()), 1024);
   execl(path, path, (char *)0);
   stack_push(errno);
 }
 
 void unix_exec1() {
-  char path[1024];
-  char arg0[1024];
-  strcpy(arg0, string_extract(stack_pop()));
-  strcpy(path, string_extract(stack_pop()));
+  char path[1025];
+  char arg0[1025];
+  strlcpy(arg0, string_extract(stack_pop()), 1024);
+  strlcpy(path, string_extract(stack_pop()), 1024);
   execl(path, path, arg0, (char *)0);
   stack_push(errno);
 }
 
 void unix_exec2() {
-  char path[1024];
-  char arg0[1024], arg1[1024];
-  strcpy(arg1, string_extract(stack_pop()));
-  strcpy(arg0, string_extract(stack_pop()));
-  strcpy(path, string_extract(stack_pop()));
+  char path[1025];
+  char arg0[1025], arg1[1025];
+  strlcpy(arg1, string_extract(stack_pop()), 1024);
+  strlcpy(arg0, string_extract(stack_pop()), 1024);
+  strlcpy(path, string_extract(stack_pop()), 1024);
   execl(path, path, arg0, arg1, (char *)0);
   stack_push(errno);
 }
 
 void unix_exec3() {
-  char path[1024];
-  char arg0[1024], arg1[1024], arg2[1024];
-  strcpy(arg2, string_extract(stack_pop()));
-  strcpy(arg1, string_extract(stack_pop()));
-  strcpy(arg0, string_extract(stack_pop()));
-  strcpy(path, string_extract(stack_pop()));
+  char path[1025];
+  char arg0[1025], arg1[1025], arg2[1025];
+  strlcpy(arg2, string_extract(stack_pop()), 1024);
+  strlcpy(arg1, string_extract(stack_pop()), 1024);
+  strlcpy(arg0, string_extract(stack_pop()), 1024);
+  strlcpy(path, string_extract(stack_pop()), 1024);
   execl(path, path, arg0, arg1, arg2, (char *)0);
   stack_push(errno);
 }

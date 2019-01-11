@@ -134,9 +134,9 @@ void gopher_fetch(char *host, CELL port, char *selector, CELL dest) {
 void ngaGopherUnit() {
   CELL port, dest;
   char server[1025], selector[4097];
-  strcpy(selector, string_extract(stack_pop()));
+  strlcpy(selector, string_extract(stack_pop()), 4096);
   port = stack_pop();
-  strcpy(server, string_extract(stack_pop()));
+  strlcpy(server, string_extract(stack_pop()), 1024);
   dest = stack_pop();
   gopher_fetch(server, port, selector, dest);
 }
