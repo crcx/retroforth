@@ -23,6 +23,7 @@ clean:
 	rm -f bin/retro
 	rm -f bin/retro-compiler
 	rm -f bin/retro-unu
+	rm -f interfaces/io/*.o
 
 install: build install-data install-docs install-examples
 	install -m 755 -d -- $(DESTDIR)$(PREFIX)/bin
@@ -104,29 +105,29 @@ bin/RETRO12.html: bin/retro-injectimage-js
 bin/retro-repl: interfaces/repl.c interfaces/image.c
 	cd interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../bin/retro-repl repl.c
 
-bin/retro-ri: bin/retro-embedimage bin/retro-extend interfaces/image.c interfaces/ri.c interfaces/ri.forth interfaces/io_filesystem.c interfaces/io_filesystem.forth interfaces/io_gopher.c interfaces/io_gopher.forth interfaces/io_floatingpoint.c interfaces/io_floatingpoint.forth interfaces/io_unix_syscalls.c interfaces/io_unix_syscalls.forth
+bin/retro-ri: io ioforth bin/retro-embedimage bin/retro-extend interfaces/image.c interfaces/ri.c interfaces/ri.forth
 	cp ngaImage ri.image
-	./bin/retro-extend ri.image interfaces/io_filesystem.forth
-	./bin/retro-extend ri.image interfaces/io_gopher.forth
-	./bin/retro-extend ri.image interfaces/io_floatingpoint.forth
-	./bin/retro-extend ri.image interfaces/io_unix_syscalls.forth
+	./bin/retro-extend ri.image interfaces/io/io_filesystem.forth
+	./bin/retro-extend ri.image interfaces/io/io_gopher.forth
+	./bin/retro-extend ri.image interfaces/io/io_floatingpoint.forth
+	./bin/retro-extend ri.image interfaces/io/io_unix_syscalls.forth
 	./bin/retro-extend ri.image interfaces/ri.forth
 	./bin/retro-embedimage ri.image >interfaces/ri_image.c
 	rm ri.image
-	cd interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../bin/retro-ri $(LIBCURSES) $(LIBM) io_filesystem.c io_gopher.c io_floatingpoint.c io_unix_syscalls.c ri.c
+	cd interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../bin/retro-ri $(LIBCURSES) $(LIBM) ri.c io/filesystem.o io/floatingpoint.o io/gopher.o io/unix.o
 
-bin/retro: bin/retro-embedimage bin/retro-extend interfaces/image.c interfaces/rre.c interfaces/rre.forth interfaces/io_filesystem.c interfaces/io_filesystem.forth interfaces/io_gopher.c interfaces/io_gopher.forth interfaces/io_floatingpoint.c interfaces/io_floatingpoint.forth interfaces/io_unix_syscalls.c interfaces/io_unix_syscalls.forth
+bin/retro: io ioforth bin/retro-embedimage bin/retro-extend interfaces/image.c interfaces/rre.c interfaces/rre.forth
 	cp ngaImage rre.image
-	./bin/retro-extend rre.image interfaces/io_filesystem.forth
-	./bin/retro-extend rre.image interfaces/io_gopher.forth
-	./bin/retro-extend rre.image interfaces/io_floatingpoint.forth
-	./bin/retro-extend rre.image interfaces/io_unix_syscalls.forth
+	./bin/retro-extend rre.image interfaces/io/io_filesystem.forth
+	./bin/retro-extend rre.image interfaces/io/io_gopher.forth
+	./bin/retro-extend rre.image interfaces/io/io_floatingpoint.forth
+	./bin/retro-extend rre.image interfaces/io/io_unix_syscalls.forth
 	./bin/retro-extend rre.image interfaces/rre.forth
 	./bin/retro-embedimage rre.image >interfaces/rre_image.c
 	rm rre.image
-	cd interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../bin/retro $(LIBM) io_filesystem.c io_gopher.c io_floatingpoint.c io_unix_syscalls.c rre.c
+	cd interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../bin/retro $(LIBM) rre.c io/filesystem.o io/floatingpoint.o io/gopher.o io/unix.o
 
-bin/retro-barebones: bin/retro-embedimage bin/retro-extend interfaces/image.c interfaces/barebones.c interfaces/barebones.forth
+bin/retro-barebones: io ioforth bin/retro-embedimage bin/retro-extend interfaces/image.c interfaces/barebones.c interfaces/barebones.forth
 	cp ngaImage barebones.image
 	./bin/retro-extend barebones.image interfaces/barebones.forth
 	./bin/retro-embedimage barebones.image >interfaces/barebones_image.c
@@ -146,11 +147,19 @@ interfaces/image.c: bin/retro-embedimage bin/retro-extend bin/retro-muri literat
 	./bin/retro-extend ngaImage literate/RetroForth.md
 	./bin/retro-embedimage ngaImage > interfaces/image.c
 
-bin/retro-compiler: bin/retro-extend interfaces/image.c interfaces/retro-compiler.c interfaces/retro-compiler-runtime.c interfaces/io_filesystem.c interfaces/io_filesystem.forth
+bin/retro-compiler: io ioforth bin/retro-extend interfaces/image.c interfaces/retro-compiler.c interfaces/retro-compiler-runtime.c
 	cp ngaImage runtime.image
-	./bin/retro-extend runtime.image interfaces/io_filesystem.forth
-	cd interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../retro-compiler-runtime $(LIBM) io_filesystem.c retro-compiler-runtime.c
+	./bin/retro-extend runtime.image interfaces/io/io_filesystem.forth
+	cd interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../retro-compiler-runtime $(LIBM) retro-compiler-runtime.c io/filesystem.o
 	cd interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../bin/retro-compiler retro-compiler.c
 	objcopy --add-section .ngaImage=runtime.image --set-section-flags .ngaImage=noload,readonly bin/retro-compiler
 	objcopy --add-section .runtime=retro-compiler-runtime --set-section-flags .runtime=noload,readonly bin/retro-compiler
 	rm runtime.image retro-compiler-runtime
+
+ioforth: interfaces/io/io_filesystem.forth interfaces/io/io_floatingpoint.forth interfaces/io/io_gopher.forth interfaces/io/io_unix_syscalls.forth
+
+io: interfaces/io/io_filesystem.c interfaces/io/io_floatingpoint.c interfaces/io/io_gopher.c interfaces/io/io_unix_syscalls.c
+	cd interfaces/io && $(CC) $(CFLAGS) -c -o filesystem.o io_filesystem.c
+	cd interfaces/io && $(CC) $(CFLAGS) -c -o floatingpoint.o io_floatingpoint.c
+	cd interfaces/io && $(CC) $(CFLAGS) -c -o gopher.o io_gopher.c
+	cd interfaces/io && $(CC) $(CFLAGS) -c -o unix.o io_unix_syscalls.c
