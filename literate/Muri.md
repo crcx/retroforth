@@ -128,7 +128,7 @@ table. It also terminates the build if the label already exists.
 ~~~
 void add_label(char *name, int32_t slice) {
   if (lookup(name) == -1) {
-    strcpy(Labels[np], name);
+    strlcpy(Labels[np], name, STRING_LEN);
     Pointers[np] = slice;
     np++;
   } else {

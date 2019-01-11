@@ -33,7 +33,7 @@ int32_t lookup(char *name) {
 }
 void add_label(char *name, int32_t slice) {
   if (lookup(name) == -1) {
-    strcpy(Labels[np], name);
+    strlcpy(Labels[np], name, STRING_LEN);
     Pointers[np] = slice;
     np++;
   } else {
@@ -168,6 +168,6 @@ int main(int argc, char **argv) {
     printf("Wrote %d cells to ngaImage\n", here);
   }
   else
-    printf("muri\n(c) 2017-2018 charles childers\n\n%s filename\n", argv[0]);
+    printf("muri\n(c) 2017-2019 charles childers\n\n%s filename\n", argv[0]);
   return 0;
 }
