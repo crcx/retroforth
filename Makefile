@@ -7,7 +7,7 @@ LIBCURSES ?= -lcurses
 
 all: build
 
-build: dirs bin/retro-embedimage bin/retro-extend bin/retro-injectimage-js bin/retro-muri bin/RETRO12.html bin/retro-ri bin/retro bin/retro-repl bin/retro-unu
+build: dirs bin/retro-embedimage bin/retro-extend bin/retro-injectimage-js bin/retro-muri bin/RETRO12.html bin/retro-ri bin/retro bin/retro-repl bin/retro-unu bin/retro-compiler
 
 dirs:
 	mkdir -p bin
@@ -21,6 +21,7 @@ clean:
 	rm -f bin/retro-repl
 	rm -f bin/retro-ri
 	rm -f bin/retro
+	rm -f bin/retro-compiler
 	rm -f bin/retro-unu
 
 install: build install-data install-docs install-examples
@@ -141,3 +142,12 @@ interfaces/image.c: bin/retro-embedimage bin/retro-extend bin/retro-muri literat
 	./bin/retro-muri literate/Rx.md
 	./bin/retro-extend ngaImage literate/RetroForth.md
 	./bin/retro-embedimage ngaImage > interfaces/image.c
+
+bin/retro-compiler: bin/retro-extend interfaces/image.c interfaces/retro-compiler.c interfaces/retro-compiler-runtime.c interfaces/io_filesystem.c interfaces/io_filesystem.forth
+	cp ngaImage runtime.image
+	./bin/retro-extend runtime.image interfaces/io_filesystem.forth
+	cd interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../retro-compiler-runtime $(LIBM) io_filesystem.c retro-compiler-runtime.c
+	cd interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../bin/retro-compiler retro-compiler.c
+	objcopy --add-section .ngaImage=runtime.image --set-section-flags .ngaImage=noload,readonly bin/retro-compiler
+	objcopy --add-section .runtime=retro-compiler-runtime --set-section-flags .runtime=noload,readonly bin/retro-compiler
+	rm runtime.image retro-compiler-runtime
