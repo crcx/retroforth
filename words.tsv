@@ -108,6 +108,7 @@ class:data	n- || n-n	-	-	Class handler for data structures.	Keep the address or 
 class:macro	a-	-	-	Class handler for compiler macros (immediate words)	Execute the function at the provided address.	Execute the function at the provided address.	class:word	{n/a}	{n/a}	class	all	
 class:primitive	a-	-	-	Class handler for primitive words (words which map to Nga instructions)	Execute the function.	Compile the machine code in the definiton into the current definition.	class:word	{n/a}	{n/a}	class	all	
 class:word	a-	-	-	Class handler for normal words.	Execute the function at the provided address.	Compile a call to the specified address into the current definition.	class:word	{n/a}	{n/a}	class	all	
+class:word	{n/a}	{n/a}	set	all	
 clock:day	-n	-	-	Return the current day.			class:word	{n/a}	{n/a}	clock	iOS	
 clock:hour	-n	-	-	Return the current hour.			class:word	{n/a}	{n/a}	clock	iOS	
 clock:minute	-n	-	-	Return the current minute.			class:word	{n/a}	{n/a}	clock	iOS	
@@ -347,10 +348,9 @@ set:counted-results	q-a	-	-	Run a quote and construct a new set from the returne
 set:dup	a-b	-	-	Make a copy of a set. Return the address of the copy.			class:word	{n/a}	{n/a}	set	all	
 set:filter	aq-b	-	-	For each item in the initial set, run the specified quote. If the quote returns `TRUE`, copy the item into a new set. If `FALSE`, discard it. Returns a pointer to the new set.			class:word	{n/a}	{n/a}	set	all	
 set:for-each	aq-	-	-	Execute the quote once for each item in the set.			class:word	{n/a}	{n/a}	set	all	
-set:from-results	q-a	-	-	Execute quote. Return a new set containing the values the quote leaves on the stack. This is deprecated and will be removed in 2019.			class:word	{n/a}	{n/a}	set	all	
 set:from-string	s-a	-	-	Create a new set with the characters in the source string.			class:word	{n/a}	{n/a}	set	all	
 set:length	a-n	-	-	Return the length of a set.			class:word	{n/a}	{n/a}	set	all	
-set:make	q-a	-	-	Execute quote. Return a new set containing the values the quote leaves on the stack. This is identical to doing `set:from-results set:reverse`			class:word	{n/a}	{n/a}	set	all	
+set:make	q-a	-	-	Execute quote. Return a new set containing the values the quote leaves on the stack. This is identical to doing `set:counted-results set:reverse`			
 set:map	aq-	-	-	Execute quote once for each item in the set. Constructs a new set from the value returned by the quote.			class:word	{n/a}	{n/a}	set	all	
 set:nth	an-b	-	-	Return the actual address of the nth item in the set.			class:word	{n/a}	{n/a}	set	all	
 set:reduce	pnq-n	-	-	Takes a set, a starting value, and a quote. This will apply the quote to each item in the set; the quote should consume two values and return one.			class:word	{n/a}	{n/a}	set	all	
@@ -417,7 +417,7 @@ var	s-	-	-	Create a variable. The variable is initialized to 0.			class:word	   
 var<n>	ns-	-	-	Create a variable with the specified initial value.			class:word	    #10 'Base var<n>\n	{n/a}	global	all	
 while	q-	-	-	Execute quote repeatedly while the quote returns a `TRUE` value. The quote should return a flag of either `TRUE` or `FALSE`, though `while` will treat any non-zero value as `TRUE`.			class:word	    #10 [ dup n:put nl n:dec dup n:-zero? ] while	{n/a}	global	all	
 xor	mn-o	-	-	Perform a bitwise XOR operation.			class:primitive	{n/a}	{n/a}	global	all	
-{	-	-	-	Begin a set. This is intended to make creating sets a bit cleaner than using a quotation and `set:from-results`.			class:word	{n/a}	{n/a}	set	all	
+{	-	-	-	Begin a set. This is intended to make creating sets a bit cleaner than using a quotation and `set:counteh-results`.			class:word	{n/a}	{n/a}	set	all	
 {{	-	-	-	Begin a lexically scoped area.			class:word	{n/a}	{n/a}	global	all	
 }	-a	-	-	Complete a set begun by `{`. Returns a pointer to the data.			class:word	{n/a}	{n/a}	set	all	
 }as	f-	-	-	End an assembly section.			class:macro	{n/a}	{n/a}	global	all	

@@ -2,7 +2,6 @@
 
 ## Bug Fixes
 
-
 ## Build
 
 - parallel builds now work
@@ -15,6 +14,8 @@
 
 ## Interfaces
 
+- use strlcpy, strlcat instead of strcpy and strcat
+
 ### retro (formerly rre)
 
 ### retro.py
@@ -24,6 +25,8 @@
 ### listener
 
 ## Tools
+
+- use strlcpy, strlcat instead of strcpy and strcat
 
 ## Other
 
