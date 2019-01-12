@@ -719,8 +719,8 @@ int main(int argc, char **argv) {
 #ifdef USE_TERMIOS
     if (modes[FLAG_CBREAK] == 1) prepare_term();
 #endif
-    if (modes[FLAG_CBREAK] == 1) while (1) execute(d_xt_for("listen", Dictionary), 0);
-    if (modes[FLAG_CBREAK] == 0) while (1) execute(d_xt_for("listen", Dictionary), -1);
+    if (modes[FLAG_CBREAK] == 1) while (1) execute(0, 0);
+    if (modes[FLAG_CBREAK] == 0) while (1) execute(0, -1);
 #ifdef USE_TERMIOS
     if (modes[FLAG_CBREAK] == 1) restore_term();
 #endif

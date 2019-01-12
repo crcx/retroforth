@@ -61,6 +61,8 @@ This is a set of extensions for RRE.
   :listen  (-)
     ok repeat s:get valid? [ interpret ok ] [ drop ] choose again ;
 }}
+
+&listen #1 store
 ~~~
 
 ~~~
