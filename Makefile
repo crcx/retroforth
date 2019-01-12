@@ -7,7 +7,7 @@ LIBCURSES ?= -lcurses
 
 all: build
 
-build: dirs bin/retro-embedimage bin/retro-extend bin/retro-injectimage-js bin/retro-muri bin/RETRO12.html bin/retro-ri bin/retro bin/retro-repl bin/retro-unu bin/retro-compiler
+build: dirs bin/retro-embedimage bin/retro-extend bin/retro-injectimage-js bin/retro-muri bin/RETRO12.html bin/retro-ri bin/retro bin/retro-repl bin/retro-unu
 
 dirs:
 	mkdir -p bin
