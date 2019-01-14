@@ -15,6 +15,11 @@ freebsd64:
 	nasm -f elf64 fbsd64.s
 	ld -nostdlib -m elf_x86_64_fbsd fbsd64.o retro.o -o bin/rf.bsd64
 
+openbsd:
+	cc -m64 -static -fno-pie -c retro.c
+	nasm -f elf64 obsd64.s
+	ld -fno-pie -e _start -static obsd64.o retro.o -o bin/rf.bsd64
+
 linux:
 	cc -m32 -c retro.c
 	nasm -f elf linux.s
