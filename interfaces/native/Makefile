@@ -16,9 +16,9 @@ freebsd64:
 	ld -nostdlib -m elf_x86_64_fbsd fbsd64.o retro.o -o bin/rf.bsd64
 
 openbsd:
-	cc -m64 -static -fno-pie -c retro.c
+	cc -m64 -fno-pie -fno-pic -c retro.c
 	nasm -f elf64 obsd64.s
-	ld -fno-pie -e _start -static obsd64.o retro.o -o bin/rf.bsd64
+	cc -fno-pie -fno-pic -e _start -static obsd64.o retro.o -o bin/rf.bsd64
 
 linux:
 	cc -m32 -c retro.c
@@ -27,10 +27,10 @@ linux:
 #	brandelf -t Linux bin/rf.linux
 
 native386:
-	cc -m32 -c retro.c
+	cc -fno-pie -m32 -c retro.c
 	nasm -f elf 386.s
-	ld -nostdlib -m elf_i386_fbsd -n -T 386.ld 386.o retro.o -o bin/rf.386
-	ld -nostdlib -m elf_i386_fbsd -n -e_start -T 386flat.ld 386.o retro.o -o bin/rf.386flat
+	ld -nostdlib -m elf_i386 -n -T 386.ld 386.o retro.o -o bin/rf.386
+	ld -nostdlib -m elf_i386 -n -e_start -T 386flat.ld 386.o retro.o -o bin/rf.386flat
 
 clean:
 	rm -f *.o
