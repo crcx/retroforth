@@ -1,4 +1,4 @@
-#!/usr/bin/rre
+#!/usr/bin/retro
 
 # Atua-WWW: A Gopher Server for the Web
 
