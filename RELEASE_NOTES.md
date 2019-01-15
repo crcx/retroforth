@@ -40,5 +40,6 @@
 ## Examples
 
 - add DisplayNames.forth
+- add KeyValueStore.forth
 
 ## Final Notes
