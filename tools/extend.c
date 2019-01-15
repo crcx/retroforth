@@ -136,12 +136,6 @@ int include_file(char *fname) {
   return tokens;
 }
 
-void stats() {
-  update_rx();
-  printf("-> Image Size: %d\n", Heap);
-  printf("MAX SP: %d, RP: %d\n", max_sp, max_rsp);
-}
-
 int main(int argc, char **argv) {
   int tokens;
   FILE *fp;
@@ -151,12 +145,15 @@ int main(int argc, char **argv) {
   max_sp = 0;
   max_rsp = 0;
   ngaLoadImage(argv[1]);
-  stats();
+  update_rx();
+  printf("Initial Image Size: %d\n", Heap);
   dump_stack();
-  printf("-> Process code from %s\n", argv[2]);
+  printf("   Process code from %s\n", argv[2]);
   tokens = include_file(argv[2]);
   printf("   %d tokens\n", tokens);
-  stats();
+  update_rx();
+  printf("New Image Size: %d\n", Heap);
+  printf("MAX SP: %d, RP: %d\n", max_sp, max_rsp);
   if ((fp = fopen(argv[1], "wb")) == NULL) {
     printf("Unable to save the ngaImage!\n");
     exit(2);

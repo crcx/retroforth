@@ -19,68 +19,16 @@
 #include <math.h>
 #include <sys/types.h>
 
-/* ------------------------------------------------------------
-  First, a few constants relating to the image format and
-  memory layout. If you modify the kernel (Rx.md), these will
-  need to be altered to match your memory layout.
-  ---------------------------------------------------------- */
-
-#define TIB            1025
-#define D_OFFSET_LINK     0
-#define D_OFFSET_XT       1
-#define D_OFFSET_CLASS    2
-#define D_OFFSET_NAME     3
-
+#include "image-functions.h"
 
 /* ------------------------------------------------------------
-  Next we get into some things that relate to the Nga virtual
-  machine that RETRO runs on.
-  ---------------------------------------------------------- */
-
-#define CELL         int32_t      /* Cell size (32 bit, signed integer */
-#define IMAGE_SIZE   524288 * 8   /* Amount of RAM. 4MiB by default.   */
-#define STACK_DEPTH  4096         /* Depth of data stack               */
-#define ADDRESSES    STACK_DEPTH * 3 /* Depth of address stack         */
-
-extern CELL sp, rp, ip;           /* Data, address, instruction pointers */
-extern CELL data[STACK_DEPTH];      /* The data stack                    */
-extern CELL address[ADDRESSES];     /* The address stack                 */
-extern CELL memory[IMAGE_SIZE + 1]; /* The memory for the image          */
-
-#define TOS  data[sp]             /* Shortcut for top item on stack    */
-#define NOS  data[sp-1]           /* Shortcut for second item on stack */
-#define TORS address[rp]          /* Shortcut for top item on address stack */
-
-
-/* ------------------------------------------------------------
-  Moving forward, a few variables. These are updated to point
-  to the latest values in the image.
+  A few variables. These are updated to point to the latest
+  corresponding values in the image.
   ---------------------------------------------------------- */
 
 CELL Dictionary;
 CELL NotFound;
 CELL interpret;
-
-
-/* ------------------------------------------------------------
-  Function prototypes.
-  ---------------------------------------------------------- */
-
-CELL stack_pop();
-void stack_push(CELL value);
-CELL string_inject(char *str, CELL buffer);
-char *string_extract(CELL at);
-CELL d_link(CELL dt);
-CELL d_xt(CELL dt);
-CELL d_class(CELL dt);
-CELL d_name(CELL dt);
-CELL d_lookup(CELL Dictionary, char *name);
-CELL d_xt_for(char *Name, CELL Dictionary);
-void update_rx();
-void execute(CELL cell);
-void ngaProcessOpcode(CELL opcode);
-void ngaProcessPackedOpcodes(CELL opcode);
-int ngaValidatePackedOpcodes(CELL opcode);
 
 
 /* ------------------------------------------------------------

@@ -114,7 +114,7 @@ bin/retro-ri: io ioforth bin/retro-embedimage bin/retro-extend interfaces/image.
 	./bin/retro-extend ri.image interfaces/ri.forth
 	./bin/retro-embedimage ri.image >interfaces/ri_image.c
 	rm ri.image
-	cd interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../bin/retro-ri $(LIBCURSES) $(LIBM) ri.c io/filesystem.o io/floatingpoint.o io/gopher.o io/unix.o
+	cd interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../bin/retro-ri $(LIBCURSES) $(LIBM) ri.c image-functions.c io/filesystem.o io/floatingpoint.o io/gopher.o io/unix.o
 
 bin/retro: io ioforth bin/retro-embedimage bin/retro-extend interfaces/image.c interfaces/rre.c interfaces/rre.forth
 	cp ngaImage rre.image
