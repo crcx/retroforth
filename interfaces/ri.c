@@ -108,16 +108,6 @@ Handler IO_queryHandlers[NUM_DEVICES + 1] = {
 #include "ri_image.c"
 
 
-/*---------------------------------------------------------------------
-  Moving forward, a few variables. These are updated to point to the
-  latest values in the image.
-  ---------------------------------------------------------------------*/
-
-CELL Dictionary;
-CELL NotFound;
-CELL Interpret;
-CELL Compiler;
-
 
 /*---------------------------------------------------------------------
   Now define WINDOW structures for the various interface regions.
@@ -240,7 +230,7 @@ void ri_evaluate(char *s) {
   update_rx();
   string_inject(s, TIB);
   stack_push(TIB);
-  ri_execute(Interpret);
+  ri_execute(interpret);
 }
 
 
@@ -414,6 +404,7 @@ int main() {
           wrefresh(stack);
         }
         ri_evaluate(c);
+        wrefresh(output);
         n = 0;
         c[0] = '\0';
         update_rx();

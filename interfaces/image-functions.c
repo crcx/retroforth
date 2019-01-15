@@ -26,6 +26,7 @@
   corresponding values in the image.
   ---------------------------------------------------------- */
 
+CELL Compiler;
 CELL Dictionary;
 CELL NotFound;
 CELL interpret;
@@ -191,6 +192,7 @@ void update_rx() {
   Dictionary = memory[2];
   interpret = d_xt_for("interpret", Dictionary);
   NotFound = d_xt_for("err:notfound", Dictionary);
+  Compiler = d_xt_for("err:notfound", Compiler);
 }
 
 
