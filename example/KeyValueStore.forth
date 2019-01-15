@@ -49,10 +49,12 @@ This could be improved:
 - factor out the update and add entry actions
 
 ~~~
+:kv:update-entry  (vsD-)  kv:lookup kv:value store ;
+:kv:add-entry     (vsD-)  here over [ [ fetch , , , ] dip ] dip store ;
+
 :kv:set   (vsD-)
   dup-pair kv:lookup n:-zero?
-  [ kv:lookup kv:value store ]
-  [ here over [ [ fetch , , , ] dip ] dip store ] choose ;
+  [ kv:update-entry ] [ kv:add-entry ] choose ;
 ~~~
 
 The last word is `kv:get`, which returns the contents of the
