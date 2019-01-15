@@ -227,7 +227,6 @@ void ri_execute(CELL cell) {
 
 void ri_evaluate(char *s) {
   if (strlen(s) == 0) return;
-  update_rx();
   string_inject(s, TIB);
   stack_push(TIB);
   ri_execute(interpret);

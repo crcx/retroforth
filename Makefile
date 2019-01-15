@@ -125,7 +125,7 @@ bin/retro: io ioforth bin/retro-embedimage bin/retro-extend interfaces/image.c i
 	./bin/retro-extend rre.image interfaces/rre.forth
 	./bin/retro-embedimage rre.image >interfaces/rre_image.c
 	rm rre.image
-	cd interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../bin/retro $(LIBM) rre.c io/filesystem.o io/floatingpoint.o io/gopher.o io/unix.o
+	cd interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../bin/retro $(LIBM) rre.c image-functions.c io/filesystem.o io/floatingpoint.o io/gopher.o io/unix.o
 
 bin/retro-barebones: io ioforth bin/retro-embedimage bin/retro-extend interfaces/image.c interfaces/barebones.c interfaces/barebones.forth
 	cp ngaImage barebones.image
