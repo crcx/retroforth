@@ -8,19 +8,12 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define CELL         int32_t      /* Cell size (32 bit, signed integer */
-#define IMAGE_SIZE   524288 * 8   /* Amount of RAM. 4MiB by default.   */
-#define ADDRESSES    1024         /* Depth of address stack            */
-#define STACK_DEPTH  128          /* Depth of data stack               */
+#include "image-functions.h"
 
 CELL sp, rp, ip;                  /* Data, address, instruction pointers */
 CELL data[STACK_DEPTH];           /* The data stack                    */
 CELL address[ADDRESSES];          /* The address stack                 */
 CELL memory[IMAGE_SIZE + 1];      /* The memory for the image          */
-
-#define TOS  data[sp]             /* Shortcut for top item on stack    */
-#define NOS  data[sp-1]           /* Shortcut for second item on stack */
-#define TORS address[rp]          /* Shortcut for top item on address stack */
 
 #define NUM_DEVICES 3
 
@@ -33,23 +26,7 @@ void io_filesystem_handler();
 void io_filesystem_query();
 
 void loadEmbeddedImage(char *arg);
-CELL stack_pop();
-void stack_push(CELL value);
-void execute(CELL cell);
 void ngaPrepare();
-void ngaProcessOpcode(CELL opcode);
-void ngaProcessPackedOpcodes(CELL opcode);
-int ngaValidatePackedOpcodes(CELL opcode);
-
-CELL stack_pop() {
-  sp--;
-  return data[sp + 1];
-}
-
-void stack_push(CELL value) {
-  sp++;
-  data[sp] = value;
-}
 
 void generic_output() {
   putc(stack_pop(), stdout);
@@ -69,34 +46,6 @@ void generic_input() {
 void generic_input_query() {
   stack_push(0);
   stack_push(1);
-}
-
-void execute(CELL cell) {
-  CELL opcode;
-  rp = 1;
-  ip = cell;
-  while (ip < IMAGE_SIZE) {
-    opcode = memory[ip];
-    if (ngaValidatePackedOpcodes(opcode) != 0) {
-      ngaProcessPackedOpcodes(opcode);
-    } else {
-      printf("Invalid instruction!\n");
-      exit(1);
-    }
-    ip++;
-    if (rp == 0)
-      ip = IMAGE_SIZE;
-  }
-}
-
-char string_data[8192];
-char *string_extract(int at) {
-  CELL starting = at;
-  CELL i = 0;
-  while(memory[starting] && i < 8192)
-    string_data[i++] = (char)memory[starting++];
-  string_data[i] = 0;
-  return (char *)string_data;
 }
 
 int main(int argc, char **argv) {
