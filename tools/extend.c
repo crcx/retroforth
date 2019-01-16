@@ -61,8 +61,8 @@ CELL max_sp, max_rsp;
 #define D_OFFSET_CLASS    2
 #define D_OFFSET_NAME     3
 
-extern CELL Dictionary, Heap, Compiler;
-extern CELL notfound;
+CELL Dictionary, Heap, Compiler;
+CELL notfound, interpret;
 
 CELL stack_pop();
 void stack_push(CELL value);
@@ -160,12 +160,7 @@ int main(int argc, char **argv) {
   return 0;
 }
 
-CELL Dictionary, Heap, Compiler;
-CELL notfound;
-
 /* Some I/O Parameters */
-
-#define IO_TTY_PUTC  1000
 
 CELL stack_pop() {
   sp--;
@@ -247,6 +242,7 @@ void update_rx() {
   Heap = memory[3];
   Compiler = d_xt_for("Compiler", Dictionary);
   notfound = d_xt_for("err:notfound", Dictionary);
+  interpret = d_xt_for("interpret", Dictionary);
 }
 
 
@@ -277,11 +273,8 @@ void execute(CELL cell) {
    to process it. */
 
 void evaluate(char *s) {
-  CELL interpret;
   if (strlen(s) == 0)
     return;
-  update_rx();
-  interpret = d_xt_for("interpret", Dictionary);
   string_inject(s, TIB);
   stack_push(TIB);
   execute(interpret);
