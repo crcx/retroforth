@@ -5,6 +5,9 @@ EXAMPLESDIR ?= $(PREFIX)/share/examples/RETRO12
 LIBM ?= -lm
 LIBCURSES ?= -lcurses
 
+RREIO ?= io/filesystem.o io/floatingpoint.o io/gopher.o io/unix.o
+RIIO ?= io/filesystem.o io/floatingpoint.o io/gopher.o io/unix.o
+
 all: build
 
 build: dirs bin/retro-embedimage bin/retro-extend bin/retro-injectimage-js bin/retro-muri bin/RETRO12.html bin/retro-ri bin/retro bin/retro-repl bin/retro-unu
@@ -13,17 +16,8 @@ dirs:
 	mkdir -p bin
 
 clean:
-	rm -f bin/retro-embedimage
-	rm -f bin/retro-extend
-	rm -f bin/retro-injectimage-js
-	rm -f bin/retro-muri
-	rm -f bin/RETRO12.html
-	rm -f bin/retro-repl
-	rm -f bin/retro-ri
-	rm -f bin/retro
-	rm -f bin/retro-compiler
-	rm -f bin/retro-unu
-	rm -f interfaces/io/*.o
+	rm -f bin/*
+	find . -name "*.o" -type f -delete
 
 install: build install-data install-docs install-examples
 	install -m 755 -d -- $(DESTDIR)$(PREFIX)/bin
@@ -105,21 +99,21 @@ bin/RETRO12.html: bin/retro-injectimage-js
 bin/retro-repl: interfaces/repl.c interfaces/image.c
 	cd interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../bin/retro-repl repl.c
 
-bin/retro-ri: io ioforth bin/retro-embedimage bin/retro-extend interfaces/image.c interfaces/ri.c interfaces/ri.forth
+bin/retro-ri: io bin/retro-embedimage bin/retro-extend interfaces/ri_image.c interfaces/ri.c interfaces/ri.forth interfaces/image-functions.o
 	cp ngaImage ri.image
 	./bin/retro-extend ri.image interfaces/io/io_filesystem.forth interfaces/io/io_gopher.forth interfaces/io/io_floatingpoint.forth interfaces/io/io_unix_syscalls.forth interfaces/ri.forth
 	./bin/retro-embedimage ri.image >interfaces/ri_image.c
 	rm ri.image
-	cd interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../bin/retro-ri $(LIBCURSES) $(LIBM) ri.c image-functions.c io/filesystem.o io/floatingpoint.o io/gopher.o io/unix.o
+	cd interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../bin/retro-ri $(LIBCURSES) $(LIBM) ri.c image-functions.o $(RIIO)
 
-bin/retro: io ioforth bin/retro-embedimage bin/retro-extend interfaces/image.c interfaces/rre.c interfaces/rre.forth
+bin/retro: io bin/retro-embedimage bin/retro-extend interfaces/image.c interfaces/rre.c interfaces/rre.forth interfaces/image-functions.o
 	cp ngaImage rre.image
 	./bin/retro-extend rre.image interfaces/io/io_filesystem.forth interfaces/io/io_gopher.forth interfaces/io/io_floatingpoint.forth interfaces/io/io_unix_syscalls.forth interfaces/rre.forth
 	./bin/retro-embedimage rre.image >interfaces/rre_image.c
 	rm rre.image
-	cd interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../bin/retro $(LIBM) rre.c image-functions.c io/filesystem.o io/floatingpoint.o io/gopher.o io/unix.o
+	cd interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../bin/retro $(LIBM) rre.c image-functions.o $(RREIO)
 
-bin/retro-barebones: io ioforth bin/retro-embedimage bin/retro-extend interfaces/image.c interfaces/barebones.c interfaces/barebones.forth
+bin/retro-barebones: bin/retro-embedimage bin/retro-extend interfaces/image.c interfaces/barebones.c interfaces/barebones.forth
 	cp ngaImage barebones.image
 	./bin/retro-extend barebones.image interfaces/barebones.forth
 	./bin/retro-embedimage barebones.image >interfaces/barebones_image.c
@@ -139,7 +133,7 @@ interfaces/image.c: bin/retro-embedimage bin/retro-extend bin/retro-muri literat
 	./bin/retro-extend ngaImage literate/RetroForth.md
 	./bin/retro-embedimage ngaImage > interfaces/image.c
 
-bin/retro-compiler: io ioforth bin/retro-extend interfaces/image.c interfaces/retro-compiler.c interfaces/retro-compiler-runtime.c
+bin/retro-compiler: io bin/retro-extend interfaces/image.c interfaces/retro-compiler.c interfaces/retro-compiler-runtime.c interfaces/image-functions.o
 	cp ngaImage runtime.image
 	./bin/retro-extend runtime.image interfaces/io/io_filesystem.forth
 	cd interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../retro-compiler-runtime $(LIBM) retro-compiler-runtime.c image-functions.c io/filesystem.o
@@ -148,10 +142,19 @@ bin/retro-compiler: io ioforth bin/retro-extend interfaces/image.c interfaces/re
 	objcopy --add-section .runtime=retro-compiler-runtime --set-section-flags .runtime=noload,readonly bin/retro-compiler
 	rm runtime.image retro-compiler-runtime
 
-ioforth: interfaces/io/io_filesystem.forth interfaces/io/io_floatingpoint.forth interfaces/io/io_gopher.forth interfaces/io/io_unix_syscalls.forth
+io: interfaces/io/filesystem.o interfaces/io/floatingpoint.o interfaces/io/gopher.o interfaces/io/unix.o
 
-io: interfaces/io/io_filesystem.c interfaces/io/io_floatingpoint.c interfaces/io/io_gopher.c interfaces/io/io_unix_syscalls.c
+interfaces/image-functions.o: interfaces/image-functions.c interfaces/image-functions.h
+	cd interfaces && $(CC) $(CFLAGS) -c -o image-functions.o image-functions.c
+
+interfaces/io/filesystem.o: interfaces/io/io_filesystem.forth interfaces/io/io_filesystem.c
 	cd interfaces/io && $(CC) $(CFLAGS) -c -o filesystem.o io_filesystem.c
+
+interfaces/io/floatingpoint.o: interfaces/io/io_floatingpoint.forth interfaces/io/io_floatingpoint.c
 	cd interfaces/io && $(CC) $(CFLAGS) -c -o floatingpoint.o io_floatingpoint.c
+
+interfaces/io/gopher.o: interfaces/io/io_gopher.forth interfaces/io/io_gopher.c
 	cd interfaces/io && $(CC) $(CFLAGS) -c -o gopher.o io_gopher.c
+
+interfaces/io/unix.o: interfaces/io/io_unix_syscalls.forth interfaces/io/io_unix_syscalls.c
 	cd interfaces/io && $(CC) $(CFLAGS) -c -o unix.o io_unix_syscalls.c
