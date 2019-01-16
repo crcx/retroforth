@@ -483,6 +483,9 @@ r comma
 definition. As with `comma:opcode`, this uses a `jump` to
 eliminate the final tail call.
 
+    :($) fetch-next 0; , ($) ;
+    :s,  ($) drop 0 , ;
+
 ~~~
 : ($)
 i lica....
@@ -520,7 +523,7 @@ function and sets the `Compiler` to an off state (0). This
 just needs to compile in a RET.
 
 ~~~
-: t-;
+: ;
 i lilica..
 r _ret
 r comma:opcode
@@ -944,7 +947,7 @@ the nested blocks, in addition to properly setting and
 restoring the `Compiler` state.
 
 ~~~
-: t-[
+: [
 i lifeliad
 r Heap
 d 2
@@ -963,7 +966,7 @@ i ca......
 i lifere..
 r Heap
 
-: t-]
+: ]
 i lilica..
 r _ret
 r comma:opcode
@@ -1010,7 +1013,7 @@ i liliju..
 r _jump
 r comma:opcode
 
-: t-0;
+: 0;
 i liliju..
 r _zret
 r comma:opcode
@@ -1021,12 +1024,12 @@ move a value to/from the address stack. These are compiler
 macros.
 
 ~~~
-: t-push
+: push
 i liliju..
 r _push
 r comma:opcode
 
-: t-pop
+: pop
 i liliju..
 r _pop
 r comma:opcode
@@ -1216,17 +1219,17 @@ r class:primitive
 s shift
 : 0018
 r 0017
-r t-push
+r push
 r class:macro
 s push
 : 0019
 r 0018
-r t-pop
+r pop
 r class:macro
 s pop
 : 0020
 r 0019
-r t-0;
+r 0;
 r class:macro
 s 0;
 : 0021
@@ -1296,17 +1299,17 @@ r class:word
 s s,
 : 0034
 r 0033
-r t-;
+r ;
 r class:macro
 s ;
 : 0035
 r 0034
-r t-[
+r [
 r class:macro
 s [
 : 0036
 r 0035
-r t-]
+r ]
 r class:macro
 s ]
 : 0037
