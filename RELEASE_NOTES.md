@@ -32,6 +32,11 @@
 ## Tools
 
 - use strlcpy, strlcat instead of strcpy and strcat
+- retro-extend: cleaner output
+- retro-extend: remove unused code
+- retro-extend: allow multiple files
+- retro-extend: reduce memory usage
+- retro-extend: fix potential buffer overrun
 
 ## Other
 

@@ -2,9 +2,9 @@
   A personal, minimalistic forth
   Copyright (c) 2016 - 2019 Charles Childers
 
-   This is a quick interface layer that loads and runs a
-   source file, then saves a new image file. It's used to
-   merge the `retro.forth` into the base `rx` image.
+  This is a quick interface layer that loads and runs a
+  source file, then saves a new image file. It's used to
+  merge the `retro.forth` into the base `rx` image.
   ---------------------------------------------------------- */
 
 #include <stdio.h>
@@ -14,7 +14,7 @@
 #include <string.h>
 
 #define CELL         int32_t
-#define IMAGE_SIZE   524288 * 4
+#define IMAGE_SIZE   524288
 #define ADDRESSES    2048
 #define STACK_DEPTH  512
 
@@ -26,17 +26,14 @@ Handler IO_deviceHandlers[NUM_DEVICES + 1];
 Handler IO_queryHandlers[NUM_DEVICES + 1];
 
 enum vm_opcode {
-  VM_NOP,  VM_LIT,    VM_DUP,   VM_DROP,    VM_SWAP,   VM_PUSH,  VM_POP,
-  VM_JUMP, VM_CALL,   VM_CCALL, VM_RETURN,  VM_EQ,     VM_NEQ,   VM_LT,
-  VM_GT,   VM_FETCH,  VM_STORE, VM_ADD,     VM_SUB,    VM_MUL,   VM_DIVMOD,
-  VM_AND,  VM_OR,     VM_XOR,   VM_SHIFT,   VM_ZRET,   VM_END,   VM_IE,
-  VM_IQ,   VM_II
+  VM_NOP,     VM_LIT,    VM_DUP,   VM_DROP,    VM_SWAP,
+  VM_PUSH,    VM_POP,    VM_JUMP,  VM_CALL,    VM_CCALL,
+  VM_RETURN,  VM_EQ,     VM_NEQ,   VM_LT,      VM_GT,
+  VM_FETCH,   VM_STORE,  VM_ADD,   VM_SUB,     VM_MUL,
+  VM_DIVMOD,  VM_AND,    VM_OR,    VM_XOR,     VM_SHIFT,
+  VM_ZRET,    VM_END,    VM_IE,    VM_IQ,      VM_II
 };
 #define NUM_OPS VM_II + 1
-
-#ifndef NUM_DEVICES
-#define NUM_DEVICES 0
-#endif
 
 CELL sp, rp, ip;
 CELL data[STACK_DEPTH];
@@ -82,8 +79,7 @@ void update_rx();
 void execute(int cell);
 void evaluate(char *s);
 int not_eol(int ch);
-void read_token(FILE *file, char *token_buffer, int echo);
-char *read_token_str(char *s, char *token_buffer, int echo);
+void read_token(FILE *file, char *token_buffer, int echo, int max);
 
 void generic_output() {
   putc(stack_pop(), stdout);
@@ -111,7 +107,7 @@ void dump_stack() {
 
 int include_file(char *fname) {
   FILE *fp;
-  char source[64000];
+  char source[2049];
   int inBlock = 0;
   int tokens = 0;
   fp = fopen(fname, "r");
@@ -119,7 +115,7 @@ int include_file(char *fname) {
     return 0;
   while (!feof(fp))
   {
-    read_token(fp, source, 0);
+    read_token(fp, source, 0, 2048);
     if (strcmp(source, "~~~") == 0) {
       if (inBlock == 0)
         inBlock = 1;
@@ -128,16 +124,16 @@ int include_file(char *fname) {
     } else {
       if (inBlock == 1) {
         evaluate(source);
+        tokens++;
       }
     }
-    tokens++;
   }
   fclose(fp);
   return tokens;
 }
 
 int main(int argc, char **argv) {
-  int tokens;
+  int tokens, i;
   FILE *fp;
   IO_deviceHandlers[0] = generic_output;
   IO_queryHandlers[0] = generic_output_query;
@@ -148,9 +144,10 @@ int main(int argc, char **argv) {
   update_rx();
   printf("Initial Image Size: %d\n", Heap);
   dump_stack();
-  printf("   Process code from %s\n", argv[2]);
-  tokens = include_file(argv[2]);
-  printf("   %d tokens\n", tokens);
+  for (i = 2; i < argc; i++) {
+    tokens = include_file(argv[i]);
+    printf("   + %d tokens from %s\n", tokens, argv[i]);
+  }
   update_rx();
   printf("New Image Size: %d\n", Heap);
   printf("MAX SP: %d, RP: %d\n", max_sp, max_rsp);
@@ -300,7 +297,7 @@ int not_eol(int ch) {
   return (ch != (char)10) && (ch != (char)13) && (ch != (char)32) && (ch != EOF) && (ch != 0);
 }
 
-void read_token(FILE *file, char *token_buffer, int echo) {
+void read_token(FILE *file, char *token_buffer, int echo, int max) {
   int ch, count;
   ch = getc(file);
   if (echo != 0)
@@ -318,6 +315,9 @@ void read_token(FILE *file, char *token_buffer, int echo) {
     } else {
       token_buffer[count++] = ch;
     }
+    if (count == max) {
+      break;
+    }
     ch = getc(file);
     if (echo != 0)
       putchar(ch);
@@ -325,31 +325,6 @@ void read_token(FILE *file, char *token_buffer, int echo) {
   token_buffer[count] = '\0';
 }
 
-char *read_token_str(char *s, char *token_buffer, int echo) {
-  int ch, count;
-  ch = (char)*s++;
-  if (echo != 0)
-    putchar(ch);
-  count = 0;
-  while (not_eol(ch))
-  {
-    if ((ch == 8 || ch == 127) && count > 0) {
-      count--;
-      if (echo != 0) {
-        putchar(8);
-        putchar(32);
-        putchar(8);
-      }
-    } else {
-      token_buffer[count++] = ch;
-    }
-    ch = (char)*s++;
-    if (echo != 0)
-      putchar(ch);
-  }
-  token_buffer[count] = '\0';
-  return s;
-}
 
 /* Nga ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
    Copyright (c) 2008 - 2017, Charles Childers

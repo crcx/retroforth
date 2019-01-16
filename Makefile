@@ -107,22 +107,14 @@ bin/retro-repl: interfaces/repl.c interfaces/image.c
 
 bin/retro-ri: io ioforth bin/retro-embedimage bin/retro-extend interfaces/image.c interfaces/ri.c interfaces/ri.forth
 	cp ngaImage ri.image
-	./bin/retro-extend ri.image interfaces/io/io_filesystem.forth
-	./bin/retro-extend ri.image interfaces/io/io_gopher.forth
-	./bin/retro-extend ri.image interfaces/io/io_floatingpoint.forth
-	./bin/retro-extend ri.image interfaces/io/io_unix_syscalls.forth
-	./bin/retro-extend ri.image interfaces/ri.forth
+	./bin/retro-extend ri.image interfaces/io/io_filesystem.forth interfaces/io/io_gopher.forth interfaces/io/io_floatingpoint.forth interfaces/io/io_unix_syscalls.forth interfaces/ri.forth
 	./bin/retro-embedimage ri.image >interfaces/ri_image.c
 	rm ri.image
 	cd interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../bin/retro-ri $(LIBCURSES) $(LIBM) ri.c image-functions.c io/filesystem.o io/floatingpoint.o io/gopher.o io/unix.o
 
 bin/retro: io ioforth bin/retro-embedimage bin/retro-extend interfaces/image.c interfaces/rre.c interfaces/rre.forth
 	cp ngaImage rre.image
-	./bin/retro-extend rre.image interfaces/io/io_filesystem.forth
-	./bin/retro-extend rre.image interfaces/io/io_gopher.forth
-	./bin/retro-extend rre.image interfaces/io/io_floatingpoint.forth
-	./bin/retro-extend rre.image interfaces/io/io_unix_syscalls.forth
-	./bin/retro-extend rre.image interfaces/rre.forth
+	./bin/retro-extend rre.image interfaces/io/io_filesystem.forth interfaces/io/io_gopher.forth interfaces/io/io_floatingpoint.forth interfaces/io/io_unix_syscalls.forth interfaces/rre.forth
 	./bin/retro-embedimage rre.image >interfaces/rre_image.c
 	rm rre.image
 	cd interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../bin/retro $(LIBM) rre.c image-functions.c io/filesystem.o io/floatingpoint.o io/gopher.o io/unix.o
