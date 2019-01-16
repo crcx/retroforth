@@ -5,6 +5,7 @@
 ## Build
 
 - parallel builds now work
+- refactor Makefile
 
 ## Core Language
 
@@ -46,5 +47,6 @@
 
 - add DisplayNames.forth
 - add KeyValueStore.forth
+- switch to dvorak key bindings in Roo.forth
 
 ## Final Notes

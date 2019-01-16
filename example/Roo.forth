@@ -17,7 +17,7 @@ Some architectural notes:
 - editor commands are just normal words in the dictionary
 - this uses ANSI escape sequences and so requires a traditional terminal
   or terminal emulator
-
+- dvorak based key bindings
 
 
 ## Configuration
@@ -171,11 +171,11 @@ My default keymap will be (subject to change!):
 
     `    Switch modes
     h    Cursor left
-    j    Cursor down
-    k    Cursor up
-    l    Cursor right
+    t    Cursor down
+    s    Cursor up
+    s    Cursor right
     H    Previous block
-    L    Next block
+    S    Next block
     e    Evaluate block
     q    Quit
 
@@ -218,11 +218,11 @@ commands:
 
 ~~~
 :roo:c:H &Current-Block v:dec load-block ;
-:roo:c:L &Current-Block v:inc load-block ;
+:roo:c:S &Current-Block v:inc load-block ;
 :roo:c:h cursor-left ;
-:roo:c:j cursor-down ;
-:roo:c:k cursor-up ;
-:roo:c:l cursor-right ;
+:roo:c:t cursor-down ;
+:roo:c:n cursor-up ;
+:roo:c:s cursor-right ;
 :roo:c:e &Block s:evaluate ;
 :roo:c:` toggle-mode ;
 ~~~
@@ -312,7 +312,7 @@ edit
 
 
 EOF
-rre /tmp/_roo.forth
+retro /tmp/_roo.forth
 rm -f /tmp/_roo.forth
 stty -cbreak
 
