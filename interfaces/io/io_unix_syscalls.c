@@ -17,6 +17,8 @@
 #include <sys/wait.h>
 #include <signal.h>
 
+#include "strl.h"
+
 typedef void (*Handler)(void);
 
 /*---------------------------------------------------------------------

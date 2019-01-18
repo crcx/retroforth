@@ -62,6 +62,13 @@ The code begins with the necessary C headers.
 #include <string.h>
 ~~~
 
+The glibc on Linux does not provide strlcpy or strlcat. I
+include the OpenBSD versions of these if compiling with glibc.
+
+~~~
+#include "strl.h"
+~~~
+
 And then a couple of constants that determine overall memory
 usage.
 

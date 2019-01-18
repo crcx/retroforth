@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <string.h>
+#include "strl.h"
 #define KiB * 1024
 #define MAX_NAMES 1024
 #define STRING_LEN 64
