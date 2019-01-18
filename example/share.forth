@@ -1,0 +1,46 @@
+#!/usr/bin/env retro
+
+This is a small tool I wrote to let me quickly share code on IRC
+or via other channels.
+
+First, get the MD5 of the source. Start by construting a pipe:
+
+~~~
+#0 sys:argv 'md5_%s s:format file:R unix:popen 'FID const
+~~~
+
+Then read in until past the prolog (MD5 filename = ...):
+
+~~~
+[ FID file:read $= eq? ] until FID file:read drop
+~~~
+
+And then read in the sum and close the pipe. The sum in kept
+in a string constant MD5.
+
+~~~
+#1000 [ FID file:read , ] here &times dip s:chop 'MD5 s:const
+FID unix:pclose
+~~~
+
+Next, I construct string constants for the destination file
+and URL's for Gopher and HTTPS.
+
+~~~
+MD5 '/home/crc/public/%s        s:format 'DEST s:const
+MD5 'http://forth.works/%s      s:format 'HTTP s:const
+MD5 'gopher://forth.works/0/%s  s:format 'GOPH s:const
+~~~
+
+Then copy the source file to the destination directory.
+
+~~~
+here #0 sys:argv file:slurp here DEST file:spew
+~~~
+
+And finally display the URL's.
+
+~~~
+HTTP s:put nl
+GOPH s:put nl
+~~~

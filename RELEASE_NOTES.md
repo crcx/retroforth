@@ -50,6 +50,7 @@
 - add KeyValueStore.forth
 - add net_fetch.forth
 - add Save_and_Restore_Stack.forth
+- add share.forth and shared.forth
 - switch to dvorak key bindings in Roo.forth
 
 ## Final Notes
