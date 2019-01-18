@@ -18,13 +18,14 @@
 ## Interfaces
 
 - use strlcpy, strlcat instead of strcpy and strcat
+- include copies of the above for users of glibc
 - add retro-compiler
 
 ### retro
 
 ### retro-compiler
 
-- new interface for creating turnkey executables
+- new interface for creating turnkey executables on bsd, linux
 
 ### retro-ri
 
@@ -48,5 +49,6 @@
 - add DisplayNames.forth
 - add KeyValueStore.forth
 - switch to dvorak key bindings in Roo.forth
+- add net_fetch.forth
 
 ## Final Notes
