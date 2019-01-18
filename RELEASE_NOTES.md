@@ -48,7 +48,8 @@
 
 - add DisplayNames.forth
 - add KeyValueStore.forth
-- switch to dvorak key bindings in Roo.forth
 - add net_fetch.forth
+- add Save_and_Restore_Stack.forth
+- switch to dvorak key bindings in Roo.forth
 
 ## Final Notes
