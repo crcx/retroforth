@@ -55,6 +55,7 @@
 - add net_fetch.forth
 - add Save_and_Restore_Stack.forth
 - add share.forth and shared.forth
+- add paste.forth
 - switch to dvorak key bindings in Roo.forth
 - remove Hooks.forth (now in core language)
 
