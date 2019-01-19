@@ -109,7 +109,6 @@ class:data	n- || n-n	-	-	Class handler for data structures.	Keep the address or 
 class:macro	a-	-	-	Class handler for compiler macros (immediate words)	Execute the function at the provided address.	Execute the function at the provided address.	class:word	{n/a}	{n/a}	class	all	
 class:primitive	a-	-	-	Class handler for primitive words (words which map to Nga instructions)	Execute the function.	Compile the machine code in the definiton into the current definition.	class:word	{n/a}	{n/a}	class	all	
 class:word	a-	-	-	Class handler for normal words.	Execute the function at the provided address.	Compile a call to the specified address into the current definition.	class:word	{n/a}	{n/a}	class	all	
-class:word	{n/a}	{n/a}	set	all	
 clock:day	-n	-	-	Return the current day.			class:word	{n/a}	{n/a}	clock	iOS	
 clock:hour	-n	-	-	Return the current hour.			class:word	{n/a}	{n/a}	clock	iOS	
 clock:minute	-n	-	-	Return the current minute.			class:word	{n/a}	{n/a}	clock	iOS	
@@ -121,12 +120,6 @@ compile:jump	a-	-	-	Compile a jump to the specified address into the current def
 compile:lit	n-	-	-	Compile the code to push a number to the stack into the current definition.			class:word	{n/a}	{n/a}	compile	all	
 compile:ret	-	-	-	Compile a return instruction into the current definition.			class:word	{n/a}	{n/a}	compile	all	
 compiling?	-f	-	-	Return `TRUE` if compiler is on or `FALSE` otherwise.			class:word	{n/a}	{n/a}	global	all	
-config:set-editor-font	s-	-	-	Set the font to use in the editor. If the font fails to load, RETRO will fall back to a safe default.			class:word	{n/a}	{n/a}	config	iOS	
-config:set-editor-size	n-	-	-	Set the size of the font to use in the editor.			class:word	{n/a}	{n/a}	config	iOS	
-config:set-output-font	s-	-	-	Set the font to use in output area. If the font fails to load, RETRO will fall back to a safe default.			class:word	{n/a}	{n/a}	config	iOS	
-config:set-output-size	n-	-	-	Set the size of the font to use in the output area.			class:word	{n/a}	{n/a}	config	iOS	
-config:set-toolbar-font	s-	-	-	Set the font to use in the toolbar. If the font fails to load, RETRO will fall back to a safe default.			class:word	{n/a}	{n/a}	config	iOS	
-config:set-toolbar-size	n-	-	-	Set the size of the font to use in the toolbar.			class:word	{n/a}	{n/a}	config	iOS	
 const	ns-	-	-	Create a constant returning the specified value.			class:word	{n/a}	{n/a}	global	all	
 copy	sdl-	-	-	Copy `l` cells from memory at `s` to the memory at `d`. These should not overlap.			class:word	{n/a}	{n/a}	global	all	
 curry	nq-q	-	-	Bind a value to a function and return a new quote that calls the bound action.			class:word	{n/a}	{n/a}	global	all	
@@ -352,7 +345,7 @@ set:filter	aq-b	-	-	For each item in the initial set, run the specified quote. I
 set:for-each	aq-	-	-	Execute the quote once for each item in the set.			class:word	{n/a}	{n/a}	set	all	
 set:from-string	s-a	-	-	Create a new set with the characters in the source string.			class:word	{n/a}	{n/a}	set	all	
 set:length	a-n	-	-	Return the length of a set.			class:word	{n/a}	{n/a}	set	all	
-set:make	q-a	-	-	Execute quote. Return a new set containing the values the quote leaves on the stack. This is identical to doing `set:counted-results set:reverse`			
+set:make	q-a	-	-	Execute quote. Return a new set containing the values the quote leaves on the stack. This is identical to doing `set:counted-results set:reverse`			class:word	{n/a}	{n/a}	set	all	
 set:map	aq-	-	-	Execute quote once for each item in the set. Constructs a new set from the value returned by the quote.			class:word	{n/a}	{n/a}	set	all	
 set:nth	an-b	-	-	Return the actual address of the nth item in the set.			class:word	{n/a}	{n/a}	set	all	
 set:reduce	pnq-n	-	-	Takes a set, a starting value, and a quote. This will apply the quote to each item in the set; the quote should consume two values and return one.			class:word	{n/a}	{n/a}	set	all	
