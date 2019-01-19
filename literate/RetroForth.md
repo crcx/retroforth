@@ -1667,6 +1667,36 @@ current, and up to two outer loops as well.
 }}
 ~~~
 
+## Hooks
+
+In RETRO 11, nearly all definitions could be temporarily
+replaced by leaving space at the start for compiling in a
+jump. In the current RETRO I do not do this, though the
+technique is still useful, especially with I/O. These next
+few words provide a means of doing this in RETRO 12.
+
+To allow a word to be overridden, add a call to `hook` as
+the first word in the definition. This will compile a jump
+to the actual definition start. 
+
+~~~
+:hook (-)  #1793 , here n:inc , ; immediate
+~~~
+
+`set-hook` takes a pointer to the new word or quote and a
+pointer to the hook to replace. It alters the jump target.
+
+~~~
+:set-hook (aa-) n:inc store ;
+~~~
+
+The final word, `unhook`, resets the jump target to the
+original one.
+
+~~~
+:unhook (a-) n:inc dup n:inc swap store ;
+~~~
+
 ## I/O
 
 ~~~
@@ -1690,18 +1720,18 @@ the user: a word to push a single character to the output log.
 This is always mapped to device 0, and is exposed as `c:putc`.
 
 ~~~
-:c:put (c-) #0 io:invoke ;
+:c:put (c-) hook #0 io:invoke ;
 ~~~
 
 This can be used to implement words that push other items to
 the log.
 
 ~~~
-:nl   (-)  ASCII:LF c:put ;
-:sp   (-)  ASCII:SPACE c:put ;
-:tab  (-)  ASCII:HT c:put ;
-:s:put (s-) [ c:put ] s:for-each ;
-:n:put (n-) n:to-string s:put ;
+:nl    (-)   ASCII:LF    c:put ;
+:sp    (-)   ASCII:SPACE c:put ;
+:tab   (-)   ASCII:HT    c:put ;
+:s:put (s-)  &c:put s:for-each ;
+:n:put (n-)  n:to-string s:put ;
 ~~~
 
 An interface layer may provide additional I/O words, but these

@@ -12,6 +12,10 @@
 - remove `set:from-results`
 - add `if;`
 - add `-if;`
+- add `hook`
+- add `set-hook`
+- add `unhook`
+- `c:put` primitive is a hookable word
 
 ## Nga
 
@@ -52,5 +56,6 @@
 - add Save_and_Restore_Stack.forth
 - add share.forth and shared.forth
 - switch to dvorak key bindings in Roo.forth
+- remove Hooks.forth (now in core language)
 
 ## Final Notes

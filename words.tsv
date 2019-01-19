@@ -222,6 +222,7 @@ gopher:get	asns-n	-	-	Takes an address, a server, a port, and a selector. Fetch 
 gt?	nn-f	-	-	Compare n1 and n2. Return `TRUE` if n1 is greater than n2, or `FALSE` otherwise.			class:primitive	{n/a}	{n/a}	global	all	
 gteq?	nn-f	-	-	Compare n1 and n2. Return `TRUE` if n1 is greater than or equal to n2, or `FALSE` otherwise.			class:word	{n/a}	{n/a}	global	all	
 here	-a	-	-	Return the next free address in memory.			class:word	{n/a}	{n/a}	global	all	
+hook	-	-	-	Add a hook point into the current word. This should only be used as the first word in a definition.			class:macro	    :foo hook ;	{n/a}	{n/a}	global	all	
 i	s-	-	-	Assemble the instructions specified by the string into the current assembly scope.			class:word	{n/a}	{n/a}	global	all	
 if	fq-	-	-	Execute the quote if the flag is `TRUE`.			class:word	{n/a}	{n/a}	global	all	
 if;	fq-	-	-	Execute the quotation if the flag is `TRUE`. If true, also exit the word.			class:word	{n/a}	{n/a}	global	all	
@@ -337,6 +338,7 @@ s:tokenize-on-string	ss-a	-	-	Takes a string (s1) and a substring (s2)  use as a
 s:trim	s-s	-	-	Trim leading and trailing whitespace from a string.			class:word	    '__hello__ s:trim	{n/a}	s	all	
 s:trim-left	s-s	-	-	Trim leading whitespace from a string.			class:word	    '__hello__ s:trim-left	{n/a}	s	all	
 s:trim-right	s-s	-	-	Trim trailing whitespace from a string.			class:word	    '__hello__ s:trim-right	{n/a}	s	all	
+set-hook	aa-	-	-	Patch the hook point in a2 to point to a1.			class:word	    :foo hook ;\n    :bar #1 ;\n    &bar &foo set-hook	{n/a}	global	all	
 set:contains-string?	sa-f	-	-	Return `TRUE` if the string value is in the set or`FALSE` otherwise.			class:word	{n/a}	{n/a}	set	all	
 set:contains?	na-f	-	-	Return `TRUE` if the value is in the set or `FALSE` otherwise.			class:word	{n/a}	{n/a}	set	all	
 set:counted-results	q-a	-	-	Run a quote and construct a new set from the returned values. The quote should return the values and the number of values to put into the set.			class:word	{n/a}	{n/a}	set	all	
@@ -379,6 +381,7 @@ u:n?	u-f	-	-	{n/a}			class:word	{n/a}	{n/a}	{n/a}	{n/a}	{n/a}
 u:nan?	u-f	-	-	{n/a}			class:word	{n/a}	{n/a}	{n/a}	{n/a}	{n/a}
 u:to-f	u-	-	-n	{n/a}			class:word	{n/a}	{n/a}	{n/a}	{n/a}	{n/a}
 u:zero?	u-f	-	-	{n/a}			class:word	{n/a}	{n/a}	{n/a}	{n/a}	{n/a}
+unhook	a-	-	-	Reset the hook point in a1 to the default definition.			class:word	    :foo hook #1 ;\n    :bar #2 ;\n    &bar &foo set-hook\n    &foo unhook	{n/a}	global	all	
 unix:chdir	s-	-	-	Change the current working directory to the specified one.			class:word	  '/etc unix:chdir	{n/a}	unix	rre	
 unix:exec0	s-	-	-	Execute a process by running the application specified by s.			class:word	{n/a}	{n/a}	unix	rre	
 unix:exec1	ss-	-	-	Execute a process by running the application specified by s1. Pass s2 as an argument.			class:word	{n/a}	{n/a}	unix	rre	
