@@ -51,6 +51,7 @@ All other devices are optional and can be specified in any order.
 0007 | Network: Sockets |                            |
 0008 | Syscalls: Unix   |                            |
 0009 | Scripting Hooks  |                            |
+0010 | Random Number    |                            |
 
 # Device Details
 
@@ -122,3 +123,5 @@ requires additional values.
     |           |       | and request selector (s2). The   |
     |           |       | returned data is stored at the   |
     |           |       | destination address (a).         |
+
+## 0010: Random Number Generator
