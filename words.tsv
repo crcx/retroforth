@@ -255,6 +255,7 @@ n:odd?	n-f	-	-	Return `TRUE` if number is odd, or `FALSE` if not.			class:word	{
 n:positive?	n-f	-	-	Return `TRUE` if number is positive, or `FALSE` if not.			class:word	{n/a}	{n/a}	n	all	
 n:pow	bp-n	-	-	Return base (b) to power (p).			class:word	{n/a}	{n/a}	n	all	
 n:put	n-	-	-	Display a number.			class:word	{n/a}	{n/a}	global	all	
+n:random	-n	-	-	Return a random number			class:word	    n:random n:put	{n/a}	n	rre, ri	
 n:sqrt	n-m	-	-	Return the square root of a number.			class:word	{n/a}	{n/a}	n	all	
 n:square	n-m	-	-	Return the square of a number.			class:word	{n/a}	{n/a}	n	all	
 n:strictly-positive?	n-f	-	-	Return TRUE if number is greater than zero or FALSE if it is zero or less.			class:word	{n/a}	{n/a}	n	all	

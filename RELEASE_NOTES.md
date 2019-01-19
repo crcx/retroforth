@@ -24,8 +24,11 @@
 - use strlcpy, strlcat instead of strcpy and strcat
 - include copies of the above for users of glibc
 - add retro-compiler
+- add random number generator
 
 ### retro
+
+- add random number generator
 
 ### retro-compiler
 
@@ -34,6 +37,7 @@
 ### retro-ri
 
 - support switching between multiple copies of the image
+- add random number generator
 
 ## Tools
 
