@@ -54,6 +54,7 @@
 
 ## Examples
 
+- add Buffer.forth
 - add CaptureOutput.forth
 - add DisplayNames.forth
 - add KeyValueStore.forth
