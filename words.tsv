@@ -287,6 +287,8 @@ prefix:|	s-	-	-	POSTPONE equivilent.	Discard the string.	Convert the string to a
 primitive	-	-	-	Change the class of the most recently defined word to `class:primitive`.			class:word	{n/a}	{n/a}	global	all	
 push	n-	-n	-	Move a value from the data stack to the return stack.			class:macro	{n/a}	{n/a}	global	all	
 r	s-	-	-	Lookup a reference by name and inline its pointer to the current assembly segment.			class:word	{n/a}	{n/a}	global	all	
+random:xoroshiro128**	-n	-	-	Return a random number using xoroshiro128**			class:word	    {n/a}	{n/a}	random	rre, ri	
+random:xoroshiro128**:set-seed	n-	-	-	Seed random:xoroshiro128** with the specified value			class:word	    {n/a}	{n/a}	random	rre, ri	
 reclass	a-	-	-	Change the class handler of the most recently defined word to the specified one.			class:word	{n/a}	{n/a}	global	all	
 reorder	...ss-?	-	-	Restructure the order of items on the stack.			class:word	{n/a}	{n/a}	global	all	
 repeat	-	-	-	Begin an unconditional loop.			class:macro	{n/a}	{n/a}	global	all	
