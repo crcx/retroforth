@@ -402,6 +402,8 @@ void help(char *exename) {
   printf("  Suppress the 'ok' prompt and keyboard echo in interactive mode\n\n");
   printf("  -f filename\n");
   printf("  Run the contents of the specified file\n\n");
+  printf("  -u filename\n");
+  printf("  Use the image in the specified file instead of the internal one\n\n");
   printf("  -t\n");
   printf("  Run tests (in ``` blocks) in any loaded files\n\n");
 }
@@ -484,6 +486,9 @@ int main(int argc, char **argv) {
       files[fsp] = argv[i + 1];
       fsp++;
       i++;
+    } else if (strcmp(argv[i], "-u") == 0) {
+      i++;
+      ngaLoadImage(argv[i]);
     } else if (strcmp(argv[i], "-t") == 0) {
       modes[FLAG_RUN_TESTS] = 1;
       run_tests = 1;

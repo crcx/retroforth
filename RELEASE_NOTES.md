@@ -29,6 +29,8 @@
 ### retro
 
 - add random number generator
+- add `-u filename` startup parameter to allow selection of
+  image file
 
 ### retro-compiler
 
