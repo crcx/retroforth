@@ -5,6 +5,36 @@
 This is an application for looking up and updating the
 documentation for the words provided by RETRO.
 
+# Prepare for Command Line Processing
+
+This application can take a variable number of arguments.
+
+I first check to make sure at least one was passed. If
+not, just exit.
+
+~~~
+sys:argc n:zero? [ #0 unix:exit ] if
+~~~
+
+If execution reaches this point there's at least one
+argument. I use a loop to store arguments into an array.
+
+~~~
+'Args d:create #32 allot
+#0 sys:argc
+  [ dup sys:argv s:keep over &Args + store n:inc ] times
+  drop
+~~~
+
+And then populate constants for each one I care about.
+
+~~~
+#0 &Args + fetch 'QUERY s:const
+#1 &Args + fetch 'TARGET s:const
+#2 &Args + fetch 'TARGET2 s:const 
+~~~
+
+
 # Data Set
 
 I like plain text formats, so the data is stored as a
@@ -46,21 +76,23 @@ a specific field.
   @SourceLine swap skip ASCII:HT s:split nip ;
 ~~~
 
-And then named words to access each field.
+And then named words to access each field I'm using a set to
+generate these. It makes it easier to add fields later.
+
+The other way would be to define them manually:
+
+    :field:name #0 select ;
+    :field:dstack #1 select ;
+    ...
 
 ~~~
-:field:name   (-s) #0 select ;
-:field:dstack (-s) #1 select ;
-:field:astack (-s) #2 select ;
-:field:fstack (-s) #3 select ;
-:field:descr  (-s) #4 select ;
-:field:itime  (-s) #5 select ;
-:field:ctime  (-s) #6 select ;
-:field:class  (-s) #7 select ;
-:field:ex1    (-s) #8 select ;
-:field:ex2    (-s) #9 select ;
-:field:namespace (-s) #10 select ;
-:field:interface (-s) #11 select ;
+#0 { 'name        'dstack     'astack     'fstack
+     'descr       'itime      'ctime      'class
+     'ex1         'ex2        'namespace  'interface }
+
+[ 'field: s:prepend d:create
+  dup compile:lit &select compile:call compile:ret
+  &class:word reclass n:inc ] set:for-each drop
 ~~~
 
 # Display an Entry
@@ -85,49 +117,38 @@ the description.
 Note to self: This is horribly messy and should be rewritten.
 
 ~~~
-:s:put<formatted> (s-)  s:format s:put ;
-
-:display-result
-  field:name   s:put nl nl
-  field:dstack '__Data:__%s\n s:put<formatted>
-  field:astack '__Addr:__%s\n s:put<formatted>
-  field:fstack '__Float:_%s\n s:put<formatted> nl
-  field:descr  '%s\n\n        s:put<formatted>
-  field:itime s:length n:zero? [ field:itime 'Interpret_Time:\n__%s\n\n s:put<formatted> ] -if
-  field:ctime s:length n:zero? [ field:ctime 'Compile_Time:\n__%s\n\n   s:put<formatted> ] -if
-  field:interface field:namespace field:class
-  'Class_Handler:_%s_|_Namespace:_%s_|_Interface_Layer:_%s\n\n s:put<formatted>
-  field:ex1 '{n/a} s:eq? [ field:ex1 s:format 'Example_#1:\n\n%s\n\n s:put<formatted> ] -if
-  field:ex2 '{n/a} s:eq? [ field:ex2 s:format 'Example_#2:\n\n%s\n\n s:put<formatted> ] -if ;
-~~~
-
-# Prepare for Command Line Processing
-
-This application can take a variable number of arguments.
-
-I first check to make sure at least one was passed. If
-not, just exit.
-
-~~~
-sys:argc n:zero? [ #0 unix:exit ] if
-~~~
-
-If execution reaches this point there's at least one
-argument. I use a loop to store arguments into an array.
-
-~~~
-'Args d:create #32 allot
-#0 sys:argc
-  [ dup sys:argv s:keep over &Args + store n:inc ] times
-  drop
-~~~
-
-And then populate constants for each one I care about.
-
-~~~
-#0 &Args + fetch 'QUERY s:const
-#1 &Args + fetch 'TARGET s:const
-#2 &Args + fetch 'TARGET2 s:const 
+{{
+  :s:putfmt (s-)   s:format s:put ;
+  :name            field:name    '%s\n\n           s:putfmt ;
+  :data            field:dstack  '__Data:__%s\n    s:putfmt ;
+  :address         field:astack  '__Addr:__%s\n    s:putfmt ;
+  :float           field:fstack  '__Float:_%s\n\n  s:putfmt ;
+  :description     field:descr   '%s\n\n           s:putfmt ;
+  :interpret-time  field:itime s:length 0; drop
+                   field:itime   'Interpret_Time:\n__%s\n\n s:putfmt ;
+  :compile-time    field:ctime s:length 0; drop
+                   field:ctime   'Compile_Time:\n__%s\n\n   s:putfmt ;
+  :|                               '_|_ s:put ;
+  :class           field:class     'Class:_%s     s:putfmt ;
+  :namespace       field:namespace 'Namespace:_%s s:putfmt ;
+  :interface       field:interface 'Interface_Layer:_%s s:putfmt ;
+  :example1        field:ex1 '{n/a} s:eq? not 0; drop
+                   field:ex1 s:format '\nExample_#1:\n\n%s\n\n s:putfmt ;
+  :example2        field:ex2 '{n/a} s:eq? not 0; drop
+                   field:ex2 s:format '\nExample_#1:\n\n%s\n\n s:putfmt ;
+---reveal---
+  :display-result
+    name
+      data    (stack)
+      address (stack)
+      float   (stack)
+    description
+    interpret-time
+    compile-time
+    class | namespace | interface nl
+    example1
+    example2 ;
+}}
 ~~~
 
 # Interactions

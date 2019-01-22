@@ -6,7 +6,7 @@
 
 Multiply `n1` by `n2` and return the result.
 
-Class Handler: class:primitive | Namespace: global | Interface Layer: all
+Class: class:primitive | Namespace: global | Interface Layer: all
 
 Example #1:
 
@@ -23,7 +23,7 @@ Example #1:
 
 Add `n1` to `n2` and return the result.
 
-Class Handler: class:primitive | Namespace: global | Interface Layer: all
+Class: class:primitive | Namespace: global | Interface Layer: all
 
 Example #1:
 
@@ -39,7 +39,7 @@ Example #1:
 
 Store the specified value into the memory at `here` and increment `Heap` by 1.
 
-Class Handler: class:word | Namespace: global | Interface Layer: all
+Class: class:word | Namespace: global | Interface Layer: all
 
 Example #1:
 
@@ -55,8 +55,7 @@ Example #1:
 
 Switch to the exposed (public) portion of a lexical namespace.
 
-Class Handler: class:word | Namespace: global | Interface Layer: all
-
+Class: class:word | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 -eq?
@@ -67,7 +66,7 @@ Class Handler: class:word | Namespace: global | Interface Layer: all
 
 Compare two values for inequality. Returns `TRUE` if they are not equal or `FALSE` otherwise.
 
-Class Handler: class:primitive | Namespace: global | Interface Layer: all
+Class: class:primitive | Namespace: global | Interface Layer: all
 
 Example #1:
 
@@ -84,8 +83,7 @@ Example #1:
 
 Execute the quotation if the flag is `FALSE`.
 
-Class Handler: class:word | Namespace: global | Interface Layer: all
-
+Class: class:word | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 -if;
@@ -96,8 +94,7 @@ Class Handler: class:word | Namespace: global | Interface Layer: all
 
 Execute the quotation if the flag is `FALSE`. If false, also exit the word.
 
-Class Handler: class:word | Namespace: global | Interface Layer: all
-
+Class: class:word | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 /
@@ -108,8 +105,7 @@ Class Handler: class:word | Namespace: global | Interface Layer: all
 
 Divide `m` by `n` and return the result.
 
-Class Handler: class:word | Namespace: global | Interface Layer: all
-
+Class: class:word | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 /mod
@@ -120,8 +116,7 @@ Class Handler: class:word | Namespace: global | Interface Layer: all
 
 Divide `n` by `m` and return the result and remainder.
 
-Class Handler: class:primitive | Namespace: global | Interface Layer: all
-
+Class: class:primitive | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 0;
@@ -132,8 +127,7 @@ Class Handler: class:primitive | Namespace: global | Interface Layer: all
 
 If `n` is zero, drop `n` and exit the current word. If non-zero, leave `n` alone and allow execution to continue.
 
-Class Handler: class:macro | Namespace: global | Interface Layer: all
-
+Class: class:macro | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 ;
@@ -144,8 +138,7 @@ Class Handler: class:macro | Namespace: global | Interface Layer: all
 
 End the current definition.
 
-Class Handler: class:macro | Namespace: global | Interface Layer: all
-
+Class: class:macro | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 ;
@@ -156,7 +149,7 @@ Class Handler: class:macro | Namespace: global | Interface Layer: all
 
 Subtract `n1` from `n2` and return the difference.
 
-Class Handler: class:primitive | Namespace: global | Interface Layer: all
+Class: class:primitive | Namespace: global | Interface Layer: all
 
 Example #1:
 
@@ -173,7 +166,7 @@ Example #1:
 
 Duplicate top value on stack if not zero. If zero, do nothing.
 
-Class Handler: class:word | Namespace: global | Interface Layer: all
+Class: class:word | Namespace: global | Interface Layer: all
 
 Example #1:
 
@@ -190,8 +183,7 @@ ASCII:ACK
 
 Constant. Refers to specific ASCII code.
 
-Class Handler: class:data | Namespace: ASCII | Interface Layer: all
-
+Class: class:data | Namespace: ASCII | Interface Layer: all
 ----------------------------------------------------------------
 
 ASCII:BEL
@@ -202,8 +194,7 @@ ASCII:BEL
 
 Constant. Refers to specific ASCII code.
 
-Class Handler: class:data | Namespace: ASCII | Interface Layer: all
-
+Class: class:data | Namespace: ASCII | Interface Layer: all
 ----------------------------------------------------------------
 
 ASCII:BS
@@ -214,8 +205,7 @@ ASCII:BS
 
 Constant. Refers to specific ASCII code.
 
-Class Handler: class:data | Namespace: ASCII | Interface Layer: all
-
+Class: class:data | Namespace: ASCII | Interface Layer: all
 ----------------------------------------------------------------
 
 ASCII:CAN
@@ -226,8 +216,7 @@ ASCII:CAN
 
 Constant. Refers to specific ASCII code.
 
-Class Handler: class:data | Namespace: ASCII | Interface Layer: all
-
+Class: class:data | Namespace: ASCII | Interface Layer: all
 ----------------------------------------------------------------
 
 ASCII:CR
@@ -238,8 +227,7 @@ ASCII:CR
 
 Constant. Refers to specific ASCII code.
 
-Class Handler: class:data | Namespace: ASCII | Interface Layer: all
-
+Class: class:data | Namespace: ASCII | Interface Layer: all
 ----------------------------------------------------------------
 
 ASCII:DC1
@@ -250,8 +238,7 @@ ASCII:DC1
 
 Constant. Refers to specific ASCII code.
 
-Class Handler: class:data | Namespace: ASCII | Interface Layer: all
-
+Class: class:data | Namespace: ASCII | Interface Layer: all
 ----------------------------------------------------------------
 
 ASCII:DC2
@@ -262,8 +249,7 @@ ASCII:DC2
 
 Constant. Refers to specific ASCII code.
 
-Class Handler: class:data | Namespace: ASCII | Interface Layer: all
-
+Class: class:data | Namespace: ASCII | Interface Layer: all
 ----------------------------------------------------------------
 
 ASCII:DC3
@@ -274,8 +260,7 @@ ASCII:DC3
 
 Constant. Refers to specific ASCII code.
 
-Class Handler: class:data | Namespace: ASCII | Interface Layer: all
-
+Class: class:data | Namespace: ASCII | Interface Layer: all
 ----------------------------------------------------------------
 
 ASCII:DC4
@@ -286,8 +271,7 @@ ASCII:DC4
 
 Constant. Refers to specific ASCII code.
 
-Class Handler: class:data | Namespace: ASCII | Interface Layer: all
-
+Class: class:data | Namespace: ASCII | Interface Layer: all
 ----------------------------------------------------------------
 
 ASCII:DEL
@@ -298,8 +282,7 @@ ASCII:DEL
 
 Constant. Refers to specific ASCII code.
 
-Class Handler: class:data | Namespace: ASCII | Interface Layer: all
-
+Class: class:data | Namespace: ASCII | Interface Layer: all
 ----------------------------------------------------------------
 
 ASCII:DLE
@@ -310,8 +293,7 @@ ASCII:DLE
 
 Constant. Refers to specific ASCII code.
 
-Class Handler: class:data | Namespace: ASCII | Interface Layer: all
-
+Class: class:data | Namespace: ASCII | Interface Layer: all
 ----------------------------------------------------------------
 
 ASCII:EM
@@ -322,8 +304,7 @@ ASCII:EM
 
 Constant. Refers to specific ASCII code.
 
-Class Handler: class:data | Namespace: ASCII | Interface Layer: all
-
+Class: class:data | Namespace: ASCII | Interface Layer: all
 ----------------------------------------------------------------
 
 ASCII:ENQ
@@ -334,8 +315,7 @@ ASCII:ENQ
 
 Constant. Refers to specific ASCII code.
 
-Class Handler: class:data | Namespace: ASCII | Interface Layer: all
-
+Class: class:data | Namespace: ASCII | Interface Layer: all
 ----------------------------------------------------------------
 
 ASCII:EOT
@@ -346,8 +326,7 @@ ASCII:EOT
 
 Constant. Refers to specific ASCII code.
 
-Class Handler: class:data | Namespace: ASCII | Interface Layer: all
-
+Class: class:data | Namespace: ASCII | Interface Layer: all
 ----------------------------------------------------------------
 
 ASCII:ESC
@@ -358,8 +337,7 @@ ASCII:ESC
 
 Constant. Refers to specific ASCII code.
 
-Class Handler: class:data | Namespace: ASCII | Interface Layer: all
-
+Class: class:data | Namespace: ASCII | Interface Layer: all
 ----------------------------------------------------------------
 
 ASCII:ETB
@@ -370,8 +348,7 @@ ASCII:ETB
 
 Constant. Refers to specific ASCII code.
 
-Class Handler: class:data | Namespace: ASCII | Interface Layer: all
-
+Class: class:data | Namespace: ASCII | Interface Layer: all
 ----------------------------------------------------------------
 
 ASCII:ETX
@@ -382,8 +359,7 @@ ASCII:ETX
 
 Constant. Refers to specific ASCII code.
 
-Class Handler: class:data | Namespace: ASCII | Interface Layer: all
-
+Class: class:data | Namespace: ASCII | Interface Layer: all
 ----------------------------------------------------------------
 
 ASCII:FF
@@ -394,8 +370,7 @@ ASCII:FF
 
 Constant. Refers to specific ASCII code.
 
-Class Handler: class:data | Namespace: ASCII | Interface Layer: all
-
+Class: class:data | Namespace: ASCII | Interface Layer: all
 ----------------------------------------------------------------
 
 ASCII:FS
@@ -406,8 +381,7 @@ ASCII:FS
 
 Constant. Refers to specific ASCII code.
 
-Class Handler: class:data | Namespace: ASCII | Interface Layer: all
-
+Class: class:data | Namespace: ASCII | Interface Layer: all
 ----------------------------------------------------------------
 
 ASCII:GS
@@ -418,8 +392,7 @@ ASCII:GS
 
 Constant. Refers to specific ASCII code.
 
-Class Handler: class:data | Namespace: ASCII | Interface Layer: all
-
+Class: class:data | Namespace: ASCII | Interface Layer: all
 ----------------------------------------------------------------
 
 ASCII:HT
@@ -430,8 +403,7 @@ ASCII:HT
 
 Constant. Refers to specific ASCII code.
 
-Class Handler: class:data | Namespace: ASCII | Interface Layer: all
-
+Class: class:data | Namespace: ASCII | Interface Layer: all
 ----------------------------------------------------------------
 
 ASCII:LF
@@ -442,8 +414,7 @@ ASCII:LF
 
 Constant. Refers to specific ASCII code.
 
-Class Handler: class:data | Namespace: ASCII | Interface Layer: all
-
+Class: class:data | Namespace: ASCII | Interface Layer: all
 ----------------------------------------------------------------
 
 ASCII:NAK
@@ -454,8 +425,7 @@ ASCII:NAK
 
 Constant. Refers to specific ASCII code.
 
-Class Handler: class:data | Namespace: ASCII | Interface Layer: all
-
+Class: class:data | Namespace: ASCII | Interface Layer: all
 ----------------------------------------------------------------
 
 ASCII:NUL
@@ -466,8 +436,7 @@ ASCII:NUL
 
 Constant. Refers to specific ASCII code.
 
-Class Handler: class:data | Namespace: ASCII | Interface Layer: all
-
+Class: class:data | Namespace: ASCII | Interface Layer: all
 ----------------------------------------------------------------
 
 ASCII:RS
@@ -478,8 +447,7 @@ ASCII:RS
 
 Constant. Refers to specific ASCII code.
 
-Class Handler: class:data | Namespace: ASCII | Interface Layer: all
-
+Class: class:data | Namespace: ASCII | Interface Layer: all
 ----------------------------------------------------------------
 
 ASCII:SI
@@ -490,8 +458,7 @@ ASCII:SI
 
 Constant. Refers to specific ASCII code.
 
-Class Handler: class:data | Namespace: ASCII | Interface Layer: all
-
+Class: class:data | Namespace: ASCII | Interface Layer: all
 ----------------------------------------------------------------
 
 ASCII:SO
@@ -502,8 +469,7 @@ ASCII:SO
 
 Constant. Refers to specific ASCII code.
 
-Class Handler: class:data | Namespace: ASCII | Interface Layer: all
-
+Class: class:data | Namespace: ASCII | Interface Layer: all
 ----------------------------------------------------------------
 
 ASCII:SOH
@@ -514,8 +480,7 @@ ASCII:SOH
 
 Constant. Refers to specific ASCII code.
 
-Class Handler: class:data | Namespace: ASCII | Interface Layer: all
-
+Class: class:data | Namespace: ASCII | Interface Layer: all
 ----------------------------------------------------------------
 
 ASCII:SPACE
@@ -526,8 +491,7 @@ ASCII:SPACE
 
 Constant. Refers to specific ASCII code.
 
-Class Handler: class:data | Namespace: ASCII | Interface Layer: all
-
+Class: class:data | Namespace: ASCII | Interface Layer: all
 ----------------------------------------------------------------
 
 ASCII:STX
@@ -538,8 +502,7 @@ ASCII:STX
 
 Constant. Refers to specific ASCII code.
 
-Class Handler: class:data | Namespace: ASCII | Interface Layer: all
-
+Class: class:data | Namespace: ASCII | Interface Layer: all
 ----------------------------------------------------------------
 
 ASCII:SUB
@@ -550,8 +513,7 @@ ASCII:SUB
 
 Constant. Refers to specific ASCII code.
 
-Class Handler: class:data | Namespace: ASCII | Interface Layer: all
-
+Class: class:data | Namespace: ASCII | Interface Layer: all
 ----------------------------------------------------------------
 
 ASCII:SYN
@@ -562,8 +524,7 @@ ASCII:SYN
 
 Constant. Refers to specific ASCII code.
 
-Class Handler: class:data | Namespace: ASCII | Interface Layer: all
-
+Class: class:data | Namespace: ASCII | Interface Layer: all
 ----------------------------------------------------------------
 
 ASCII:US
@@ -574,8 +535,7 @@ ASCII:US
 
 Constant. Refers to specific ASCII code.
 
-Class Handler: class:data | Namespace: ASCII | Interface Layer: all
-
+Class: class:data | Namespace: ASCII | Interface Layer: all
 ----------------------------------------------------------------
 
 ASCII:VT
@@ -586,8 +546,7 @@ ASCII:VT
 
 Constant. Refers to specific ASCII code.
 
-Class Handler: class:data | Namespace: ASCII | Interface Layer: all
-
+Class: class:data | Namespace: ASCII | Interface Layer: all
 ----------------------------------------------------------------
 
 Compiler
@@ -598,8 +557,7 @@ Compiler
 
 Variable. Holds the compiler state. If TRUE, the compiler is active. If FALSE, it is not.
 
-Class Handler: class:data | Namespace: global | Interface Layer: all
-
+Class: class:data | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 Dictionary
@@ -610,8 +568,7 @@ Dictionary
 
 Variable. Holds a pointer to the most recent dictionary header.
 
-Class Handler: class:data | Namespace: global | Interface Layer: all
-
+Class: class:data | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 EOM
@@ -622,8 +579,7 @@ EOM
 
 Constant. Returns the last addressable memory address.
 
-Class Handler: class:word | Namespace: global | Interface Layer: all
-
+Class: class:word | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 FALSE
@@ -634,8 +590,7 @@ FALSE
 
 Returns `0`, the value used to indicate a FALSE result.
 
-Class Handler: class:word | Namespace: global | Interface Layer: all
-
+Class: class:word | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 FREE
@@ -646,8 +601,7 @@ FREE
 
 Returns the number of cells available to your application. This is the amount of memory, less the already consumed portion and buffers mapped for RETRO's internal use.
 
-Class Handler: class:word | Namespace: global | Interface Layer: all
-
+Class: class:word | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 Heap
@@ -658,8 +612,7 @@ Heap
 
 Variable. Holds the address of the next available cell.
 
-Class Handler: class:data | Namespace: global | Interface Layer: all
-
+Class: class:data | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 I
@@ -670,8 +623,7 @@ I
 
 Access the loop index for the current loop. (For loops made using `times<with-index>`)
 
-Class Handler: class:word | Namespace: global | Interface Layer: all
-
+Class: class:word | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 J
@@ -682,8 +634,7 @@ J
 
 Access the parent loop index for the current loop. (For loops made using `times<with-index>`)
 
-Class Handler: class:word | Namespace: global | Interface Layer: all
-
+Class: class:word | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 K
@@ -694,8 +645,7 @@ K
 
 Access the grandparent loop index for the current loop. (For loops made using `times<with-index>`)
 
-Class Handler: class:word | Namespace: global | Interface Layer: all
-
+Class: class:word | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 RewriteUnderscores
@@ -706,8 +656,7 @@ RewriteUnderscores
 
 Variable. When set to `TRUE`, RETRO will replace underscores in strings with spaces. When `FALSE`, RETRO does not.
 
-Class Handler: class:data | Namespace: global | Interface Layer: all
-
+Class: class:data | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 STRINGS
@@ -718,8 +667,7 @@ STRINGS
 
 Return the address of the start of the temporary string pool.
 
-Class Handler: class:word | Namespace: global | Interface Layer: all
-
+Class: class:word | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 ScopeList
@@ -730,8 +678,7 @@ ScopeList
 
 Variable. This holds some information used by `{{` and `}}`.
 
-Class Handler: class:data | Namespace: global | Interface Layer: all
-
+Class: class:data | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 TRUE
@@ -742,8 +689,7 @@ TRUE
 
 Returns `-1`, the value used to indicate a TRUE result.
 
-Class Handler: class:word | Namespace: global | Interface Layer: all
-
+Class: class:word | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 TempStringMax
@@ -754,8 +700,7 @@ TempStringMax
 
 Variable. Holds the maximum length of a temporary string.
 
-Class Handler: class:data | Namespace: global | Interface Layer: all
-
+Class: class:data | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 TempStrings
@@ -766,8 +711,7 @@ TempStrings
 
 Variable. Holds the number of temporary strings.
 
-Class Handler: class:data | Namespace: global | Interface Layer: all
-
+Class: class:data | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 Version
@@ -778,8 +722,7 @@ Version
 
 Variable. This stores the version number.
 
-Class Handler: class:data | Namespace: global | Interface Layer: all
-
+Class: class:data | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 [
@@ -790,8 +733,7 @@ Class Handler: class:data | Namespace: global | Interface Layer: all
 
 Begin a quotation.
 
-Class Handler: class:macro | Namespace: global | Interface Layer: all
-
+Class: class:macro | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 ]
@@ -802,8 +744,7 @@ Class Handler: class:macro | Namespace: global | Interface Layer: all
 
 End a quotation.
 
-Class Handler: class:macro | Namespace: global | Interface Layer: all
-
+Class: class:macro | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 again
@@ -814,8 +755,7 @@ again
 
 Close an unconditional loop. Branches back to the prior `repeat`.
 
-Class Handler: class:macro | Namespace: global | Interface Layer: all
-
+Class: class:macro | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 allot
@@ -826,7 +766,7 @@ allot
 
 Allocate the specified number of cells from the `Heap`.
 
-Class Handler: class:word | Namespace: global | Interface Layer: all
+Class: class:word | Namespace: global | Interface Layer: all
 
 Example #1:
 
@@ -842,8 +782,7 @@ and
 
 Perform a bitwise AND operation between the two provided values.
 
-Class Handler: class:primitive | Namespace: global | Interface Layer: all
-
+Class: class:primitive | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 as{
@@ -854,8 +793,7 @@ as{
 
 Begin an assembly section.
 
-Class Handler: class:macro | Namespace: global | Interface Layer: all
-
+Class: class:macro | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 banner
@@ -866,8 +804,7 @@ banner
 
 Display a welcome message on startup.
 
-Class Handler: class:word | Namespace: global | Interface Layer: rre
-
+Class: class:word | Namespace: global | Interface Layer: rre
 ----------------------------------------------------------------
 
 bi
@@ -878,7 +815,7 @@ bi
 
 Execute q1 against x, then execute q2 against a copy of x.
 
-Class Handler: class:word | Namespace: global | Interface Layer: all
+Class: class:word | Namespace: global | Interface Layer: all
 
 Example #1:
 
@@ -894,7 +831,7 @@ bi*
 
 Execute q1 against x and q2 against y.
 
-Class Handler: class:word | Namespace: global | Interface Layer: all
+Class: class:word | Namespace: global | Interface Layer: all
 
 Example #1:
 
@@ -910,7 +847,7 @@ bi@
 
 Execute q against x, then execute q against y.
 
-Class Handler: class:word | Namespace: global | Interface Layer: all
+Class: class:word | Namespace: global | Interface Layer: all
 
 Example #1:
 
@@ -926,8 +863,7 @@ buffer:add
 
 Append a value to the current buffer.
 
-Class Handler: class:word | Namespace: buffer | Interface Layer: all
-
+Class: class:word | Namespace: buffer | Interface Layer: all
 ----------------------------------------------------------------
 
 buffer:empty
@@ -938,8 +874,7 @@ buffer:empty
 
 Reset the current buffer to an empty state.
 
-Class Handler: class:word | Namespace: buffer | Interface Layer: all
-
+Class: class:word | Namespace: buffer | Interface Layer: all
 ----------------------------------------------------------------
 
 buffer:end
@@ -950,8 +885,7 @@ buffer:end
 
 Return a pointer to the current end of the active buffer.
 
-Class Handler: class:word | Namespace: buffer | Interface Layer: all
-
+Class: class:word | Namespace: buffer | Interface Layer: all
 ----------------------------------------------------------------
 
 buffer:get
@@ -962,8 +896,7 @@ buffer:get
 
 Remove the last value from the current buffer.
 
-Class Handler: class:word | Namespace: buffer | Interface Layer: all
-
+Class: class:word | Namespace: buffer | Interface Layer: all
 ----------------------------------------------------------------
 
 buffer:preserve
@@ -974,8 +907,7 @@ buffer:preserve
 
 Save and restore the current buffer before and after executing the specified quote.
 
-Class Handler: class:word | Namespace: buffer | Interface Layer: all
-
+Class: class:word | Namespace: buffer | Interface Layer: all
 ----------------------------------------------------------------
 
 buffer:set
@@ -986,8 +918,7 @@ buffer:set
 
 Assign a new buffer as the current one.
 
-Class Handler: class:word | Namespace: buffer | Interface Layer: all
-
+Class: class:word | Namespace: buffer | Interface Layer: all
 ----------------------------------------------------------------
 
 buffer:size
@@ -998,8 +929,7 @@ buffer:size
 
 Return the number of cells in the buffer.
 
-Class Handler: class:word | Namespace: buffer | Interface Layer: all
-
+Class: class:word | Namespace: buffer | Interface Layer: all
 ----------------------------------------------------------------
 
 buffer:start
@@ -1010,8 +940,7 @@ buffer:start
 
 Return the start address of the current buffer.
 
-Class Handler: class:word | Namespace: buffer | Interface Layer: all
-
+Class: class:word | Namespace: buffer | Interface Layer: all
 ----------------------------------------------------------------
 
 bye
@@ -1022,8 +951,7 @@ bye
 
 Exit RETRO.
 
-Class Handler: class:word | Namespace: global | Interface Layer: rre
-
+Class: class:word | Namespace: global | Interface Layer: rre
 ----------------------------------------------------------------
 
 c:-consonant?
@@ -1034,8 +962,7 @@ c:-consonant?
 
 Return TRUE if character is a not consonant or FALSE otherwise.
 
-Class Handler: class:word | Namespace: c | Interface Layer: all
-
+Class: class:word | Namespace: c | Interface Layer: all
 ----------------------------------------------------------------
 
 c:-digit?
@@ -1046,8 +973,7 @@ c:-digit?
 
 Return TRUE if character is a not numeric digit or FALSE otherwise.
 
-Class Handler: class:word | Namespace: c | Interface Layer: all
-
+Class: class:word | Namespace: c | Interface Layer: all
 ----------------------------------------------------------------
 
 c:-lowercase?
@@ -1058,8 +984,7 @@ c:-lowercase?
 
 Return TRUE if character is not lowercase or FALSE otherwise.
 
-Class Handler: class:word | Namespace: c | Interface Layer: all
-
+Class: class:word | Namespace: c | Interface Layer: all
 ----------------------------------------------------------------
 
 c:-uppercase?
@@ -1070,8 +995,7 @@ c:-uppercase?
 
 Return TRUE if character is not uppercase or FALSE otherwise.
 
-Class Handler: class:word | Namespace: c | Interface Layer: all
-
+Class: class:word | Namespace: c | Interface Layer: all
 ----------------------------------------------------------------
 
 c:-visible?
@@ -1082,8 +1006,7 @@ c:-visible?
 
 Return TRUE if character is not printable or FALSE otherwise.
 
-Class Handler: class:word | Namespace: c | Interface Layer: all
-
+Class: class:word | Namespace: c | Interface Layer: all
 ----------------------------------------------------------------
 
 c:-vowel?
@@ -1094,8 +1017,7 @@ c:-vowel?
 
 Return TRUE if character is not a vowel or FALSE otherwise.
 
-Class Handler: class:word | Namespace: c | Interface Layer: all
-
+Class: class:word | Namespace: c | Interface Layer: all
 ----------------------------------------------------------------
 
 c:-whitespace?
@@ -1106,8 +1028,7 @@ c:-whitespace?
 
 Return TRUE if character is not whitespace, or FALSE otherwise.
 
-Class Handler: class:word | Namespace: c | Interface Layer: all
-
+Class: class:word | Namespace: c | Interface Layer: all
 ----------------------------------------------------------------
 
 c:consonant?
@@ -1118,8 +1039,7 @@ c:consonant?
 
 Return TRUE if character is a consonant or FALSE otherwise.
 
-Class Handler: class:word | Namespace: c | Interface Layer: all
-
+Class: class:word | Namespace: c | Interface Layer: all
 ----------------------------------------------------------------
 
 c:digit?
@@ -1130,8 +1050,7 @@ c:digit?
 
 Return TRUE if character is a numeric digit or FALSE otherwise.
 
-Class Handler: class:word | Namespace: c | Interface Layer: all
-
+Class: class:word | Namespace: c | Interface Layer: all
 ----------------------------------------------------------------
 
 c:get
@@ -1142,8 +1061,7 @@ c:get
 
 Read a single keypress.
 
-Class Handler: class:word | Namespace: global | Interface Layer: rre
-
+Class: class:word | Namespace: global | Interface Layer: rre
 ----------------------------------------------------------------
 
 c:letter?
@@ -1154,8 +1072,7 @@ c:letter?
 
 Return TRUE if character is an ASCII letter or FALSE otherwise.
 
-Class Handler: class:word | Namespace: c | Interface Layer: all
-
+Class: class:word | Namespace: c | Interface Layer: all
 ----------------------------------------------------------------
 
 c:lowercase?
@@ -1166,8 +1083,7 @@ c:lowercase?
 
 Return TRUE if character is lowercase or FALSE otherwise.
 
-Class Handler: class:word | Namespace: c | Interface Layer: all
-
+Class: class:word | Namespace: c | Interface Layer: all
 ----------------------------------------------------------------
 
 c:put
@@ -1178,8 +1094,7 @@ c:put
 
 Display a single character.
 
-Class Handler: class:word | Namespace: global | Interface Layer: all
-
+Class: class:word | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 c:to-lower
@@ -1190,8 +1105,7 @@ c:to-lower
 
 Convert character to lowercase equivalent.
 
-Class Handler: class:word | Namespace: c | Interface Layer: all
-
+Class: class:word | Namespace: c | Interface Layer: all
 ----------------------------------------------------------------
 
 c:to-number
@@ -1202,8 +1116,7 @@ c:to-number
 
 Convert an ASCII digit character into the corresponding decimal value
 
-Class Handler: class:word | Namespace: global | Interface Layer: all
-
+Class: class:word | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 c:to-string
@@ -1214,8 +1127,7 @@ c:to-string
 
 Convert character into a string.
 
-Class Handler: class:word | Namespace: c | Interface Layer: all
-
+Class: class:word | Namespace: c | Interface Layer: all
 ----------------------------------------------------------------
 
 c:to-upper
@@ -1226,8 +1138,7 @@ c:to-upper
 
 Convert character to uppercase equivalent.
 
-Class Handler: class:word | Namespace: c | Interface Layer: all
-
+Class: class:word | Namespace: c | Interface Layer: all
 ----------------------------------------------------------------
 
 c:toggle-case
@@ -1238,8 +1149,7 @@ c:toggle-case
 
 Convert an ASCII character to the opposite case.
 
-Class Handler: class:word | Namespace: c | Interface Layer: all
-
+Class: class:word | Namespace: c | Interface Layer: all
 ----------------------------------------------------------------
 
 c:uppercase?
@@ -1250,8 +1160,7 @@ c:uppercase?
 
 Return TRUE if character is uppercase or FALSE otherwise.
 
-Class Handler: class:word | Namespace: c | Interface Layer: all
-
+Class: class:word | Namespace: c | Interface Layer: all
 ----------------------------------------------------------------
 
 c:visible?
@@ -1262,8 +1171,7 @@ c:visible?
 
 Return TRUE if character is printable or FALSE otherwise.
 
-Class Handler: class:word | Namespace: c | Interface Layer: all
-
+Class: class:word | Namespace: c | Interface Layer: all
 ----------------------------------------------------------------
 
 c:vowel?
@@ -1274,8 +1182,7 @@ c:vowel?
 
 Return TRUE if character is a vowel or FALSE otherwise.
 
-Class Handler: class:word | Namespace: c | Interface Layer: all
-
+Class: class:word | Namespace: c | Interface Layer: all
 ----------------------------------------------------------------
 
 c:whitespace?
@@ -1286,8 +1193,7 @@ c:whitespace?
 
 Return TRUE if character is whitespace, or FALSE otherwise.
 
-Class Handler: class:word | Namespace: c | Interface Layer: all
-
+Class: class:word | Namespace: c | Interface Layer: all
 ----------------------------------------------------------------
 
 call
@@ -1298,8 +1204,7 @@ call
 
 Call a function.
 
-Class Handler: class:primitive | Namespace: global | Interface Layer: all
-
+Class: class:primitive | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 case
@@ -1310,8 +1215,7 @@ case
 
 If `n` is equal to `m`, drop both and execute the specified quote before exiting the calling word. If not equal, leave `n` on the stack and let execution continue.
 
-Class Handler: class:word | Namespace: global | Interface Layer: all
-
+Class: class:word | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 choose
@@ -1322,8 +1226,7 @@ choose
 
 Execute q1 if the flag is true (-1) or q2 if the flag is false (0). Only these flags are valid when using `choose`.
 
-Class Handler: class:word | Namespace: global | Interface Layer: all
-
+Class: class:word | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 class:data
@@ -1340,8 +1243,7 @@ Interpret Time:
 Compile Time:
   Compile the value or address as a literal into the current definition.
 
-Class Handler: class:word | Namespace: class | Interface Layer: all
-
+Class: class:word | Namespace: class | Interface Layer: all
 ----------------------------------------------------------------
 
 class:macro
@@ -1358,8 +1260,7 @@ Interpret Time:
 Compile Time:
   Execute the function at the provided address.
 
-Class Handler: class:word | Namespace: class | Interface Layer: all
-
+Class: class:word | Namespace: class | Interface Layer: all
 ----------------------------------------------------------------
 
 class:primitive
@@ -1376,8 +1277,7 @@ Interpret Time:
 Compile Time:
   Compile the machine code in the definiton into the current definition.
 
-Class Handler: class:word | Namespace: class | Interface Layer: all
-
+Class: class:word | Namespace: class | Interface Layer: all
 ----------------------------------------------------------------
 
 class:word
@@ -1394,8 +1294,7 @@ Interpret Time:
 Compile Time:
   Compile a call to the specified address into the current definition.
 
-Class Handler: class:word | Namespace: class | Interface Layer: all
-
+Class: class:word | Namespace: class | Interface Layer: all
 ----------------------------------------------------------------
 
 clock:day
@@ -1406,8 +1305,7 @@ clock:day
 
 Return the current day.
 
-Class Handler: class:word | Namespace: clock | Interface Layer: iOS
-
+Class: class:word | Namespace: clock | Interface Layer: iOS
 ----------------------------------------------------------------
 
 clock:hour
@@ -1418,8 +1316,7 @@ clock:hour
 
 Return the current hour.
 
-Class Handler: class:word | Namespace: clock | Interface Layer: iOS
-
+Class: class:word | Namespace: clock | Interface Layer: iOS
 ----------------------------------------------------------------
 
 clock:minute
@@ -1430,8 +1327,7 @@ clock:minute
 
 Return the current minute.
 
-Class Handler: class:word | Namespace: clock | Interface Layer: iOS
-
+Class: class:word | Namespace: clock | Interface Layer: iOS
 ----------------------------------------------------------------
 
 clock:month
@@ -1442,8 +1338,7 @@ clock:month
 
 Return the current month.
 
-Class Handler: class:word | Namespace: clock | Interface Layer: iOS
-
+Class: class:word | Namespace: clock | Interface Layer: iOS
 ----------------------------------------------------------------
 
 clock:second
@@ -1454,8 +1349,7 @@ clock:second
 
 Return the current second.
 
-Class Handler: class:word | Namespace: clock | Interface Layer: iOS
-
+Class: class:word | Namespace: clock | Interface Layer: iOS
 ----------------------------------------------------------------
 
 clock:year
@@ -1466,8 +1360,7 @@ clock:year
 
 Return the current year.
 
-Class Handler: class:word | Namespace: clock | Interface Layer: iOS
-
+Class: class:word | Namespace: clock | Interface Layer: iOS
 ----------------------------------------------------------------
 
 compile:call
@@ -1478,8 +1371,7 @@ compile:call
 
 Compile a call to the specified address into the current definition.
 
-Class Handler: class:word | Namespace: compile | Interface Layer: all
-
+Class: class:word | Namespace: compile | Interface Layer: all
 ----------------------------------------------------------------
 
 compile:jump
@@ -1490,8 +1382,7 @@ compile:jump
 
 Compile a jump to the specified address into the current definition.
 
-Class Handler: class:word | Namespace: compile | Interface Layer: all
-
+Class: class:word | Namespace: compile | Interface Layer: all
 ----------------------------------------------------------------
 
 compile:lit
@@ -1502,8 +1393,7 @@ compile:lit
 
 Compile the code to push a number to the stack into the current definition.
 
-Class Handler: class:word | Namespace: compile | Interface Layer: all
-
+Class: class:word | Namespace: compile | Interface Layer: all
 ----------------------------------------------------------------
 
 compile:ret
@@ -1514,8 +1404,7 @@ compile:ret
 
 Compile a return instruction into the current definition.
 
-Class Handler: class:word | Namespace: compile | Interface Layer: all
-
+Class: class:word | Namespace: compile | Interface Layer: all
 ----------------------------------------------------------------
 
 compiling?
@@ -1526,8 +1415,7 @@ compiling?
 
 Return `TRUE` if compiler is on or `FALSE` otherwise.
 
-Class Handler: class:word | Namespace: global | Interface Layer: all
-
+Class: class:word | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 const
@@ -1538,8 +1426,7 @@ const
 
 Create a constant returning the specified value.
 
-Class Handler: class:word | Namespace: global | Interface Layer: all
-
+Class: class:word | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 copy
@@ -1550,8 +1437,7 @@ copy
 
 Copy `l` cells from memory at `s` to the memory at `d`. These should not overlap.
 
-Class Handler: class:word | Namespace: global | Interface Layer: all
-
+Class: class:word | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 curry
@@ -1562,8 +1448,7 @@ curry
 
 Bind a value to a function and return a new quote that calls the bound action.
 
-Class Handler: class:word | Namespace: global | Interface Layer: all
-
+Class: class:word | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 d
@@ -1574,8 +1459,7 @@ d
 
 Inline a numeric value to the current assembly segment.
 
-Class Handler: class:word | Namespace: global | Interface Layer: all
-
+Class: class:word | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 d:add-header
@@ -1586,8 +1470,7 @@ d:add-header
 
 Create a header. Provide a string (s) for the name, a pointer to the class handler (a1) and a pointer to the word definition (a2) Generally this won't be used directly.
 
-Class Handler: class:word | Namespace: d | Interface Layer: all
-
+Class: class:word | Namespace: d | Interface Layer: all
 ----------------------------------------------------------------
 
 d:class
@@ -1598,8 +1481,7 @@ d:class
 
 Given a dictionary header, return the class field.
 
-Class Handler: class:word | Namespace: d | Interface Layer: all
-
+Class: class:word | Namespace: d | Interface Layer: all
 ----------------------------------------------------------------
 
 d:create
@@ -1610,8 +1492,7 @@ d:create
 
 Create a new dictionary header named the specified string. The new header will point to `here` and have a class of `class:data`.
 
-Class Handler: class:word | Namespace: d | Interface Layer: all
-
+Class: class:word | Namespace: d | Interface Layer: all
 ----------------------------------------------------------------
 
 d:for-each
@@ -1622,8 +1503,7 @@ d:for-each
 
 Execute the specified quote once for each header in the dictionary. Before running the quote, this also pushes a pointer to the header onto the stack.
 
-Class Handler: class:word | Namespace: d | Interface Layer: all
-
+Class: class:word | Namespace: d | Interface Layer: all
 ----------------------------------------------------------------
 
 d:last
@@ -1634,8 +1514,7 @@ d:last
 
 Return the most recent dictionary header.
 
-Class Handler: class:word | Namespace: d | Interface Layer: all
-
+Class: class:word | Namespace: d | Interface Layer: all
 ----------------------------------------------------------------
 
 d:last<class>
@@ -1646,8 +1525,7 @@ d:last<class>
 
 Return a pointer to the class field of the most recent dictionary header.
 
-Class Handler: class:word | Namespace: d | Interface Layer: all
-
+Class: class:word | Namespace: d | Interface Layer: all
 ----------------------------------------------------------------
 
 d:last<name>
@@ -1658,8 +1536,7 @@ d:last<name>
 
 Return a pointer to the name field of the most recent dictionary header.
 
-Class Handler: class:word | Namespace: d | Interface Layer: all
-
+Class: class:word | Namespace: d | Interface Layer: all
 ----------------------------------------------------------------
 
 d:last<xt>
@@ -1670,8 +1547,7 @@ d:last<xt>
 
 Return a pointer to the xt field of the most recent dictionary header.
 
-Class Handler: class:word | Namespace: d | Interface Layer: all
-
+Class: class:word | Namespace: d | Interface Layer: all
 ----------------------------------------------------------------
 
 d:link
@@ -1682,8 +1558,7 @@ d:link
 
 Given a dictionary header, return the link field.
 
-Class Handler: class:word | Namespace: d | Interface Layer: all
-
+Class: class:word | Namespace: d | Interface Layer: all
 ----------------------------------------------------------------
 
 d:lookup
@@ -1694,8 +1569,7 @@ d:lookup
 
 Lookup the specified name in the dictionary and return a pointer to its dictionary header. This returns zero if the word is not found.
 
-Class Handler: class:word | Namespace: d | Interface Layer: all
-
+Class: class:word | Namespace: d | Interface Layer: all
 ----------------------------------------------------------------
 
 d:lookup-xt
@@ -1706,8 +1580,7 @@ d:lookup-xt
 
 Lookup the specified address in the dictionary and return a pointer to its dictionary header. This returns zero if the word is not found.
 
-Class Handler: class:word | Namespace: d | Interface Layer: all
-
+Class: class:word | Namespace: d | Interface Layer: all
 ----------------------------------------------------------------
 
 d:name
@@ -1718,8 +1591,7 @@ d:name
 
 Given a dictionary header, return the name field.
 
-Class Handler: class:word | Namespace: d | Interface Layer: all
-
+Class: class:word | Namespace: d | Interface Layer: all
 ----------------------------------------------------------------
 
 d:words
@@ -1730,8 +1602,7 @@ d:words
 
 Display a list of all named items in the `Dictionary`.
 
-Class Handler: class:word | Namespace: global | Interface Layer: all
-
+Class: class:word | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 d:words-with
@@ -1742,8 +1613,7 @@ d:words-with
 
 Display a list of all named items in the `Dictionary` that contain the provided substring.
 
-Class Handler: class:word | Namespace: global | Interface Layer: all
-
+Class: class:word | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 d:xt
@@ -1754,8 +1624,7 @@ d:xt
 
 Given a dictionary header, return the xt field.
 
-Class Handler: class:word | Namespace: d | Interface Layer: all
-
+Class: class:word | Namespace: d | Interface Layer: all
 ----------------------------------------------------------------
 
 data
@@ -1766,8 +1635,7 @@ data
 
 Change the class of the most recently defined word to `class:data`.
 
-Class Handler: class:word | Namespace: global | Interface Layer: all
-
+Class: class:word | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 depth
@@ -1778,8 +1646,7 @@ depth
 
 Return the number of items on the stack.
 
-Class Handler: class:word | Namespace: global | Interface Layer: all
-
+Class: class:word | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 dip
@@ -1790,8 +1657,7 @@ dip
 
 Temporarily remove n from the stack, execute the quotation, and then restore n to the stack.
 
-Class Handler: class:word | Namespace: global | Interface Layer: all
-
+Class: class:word | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 does
@@ -1802,8 +1668,7 @@ does
 
 Attach an action to the most recently created word. This is used in a manner similar to CREATE/DOES> in traditional Forth.
 
-Class Handler: class:word | Namespace: global | Interface Layer: all
-
+Class: class:word | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 drop
@@ -1814,8 +1679,7 @@ drop
 
 Discard the top value on the stack.
 
-Class Handler: class:primitive | Namespace: global | Interface Layer: all
-
+Class: class:primitive | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 drop-pair
@@ -1826,8 +1690,7 @@ drop-pair
 
 Remove top two items on the stack.
 
-Class Handler: class:word | Namespace: global | Interface Layer: all
-
+Class: class:word | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 dump-stack
@@ -1838,8 +1701,7 @@ dump-stack
 
 Display the items on the data stack.
 
-Class Handler: class:word | Namespace: global | Interface Layer: all
-
+Class: class:word | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 dup
@@ -1850,8 +1712,7 @@ dup
 
 Duplicate the top item on the stack.
 
-Class Handler: class:primitive | Namespace: global | Interface Layer: all
-
+Class: class:primitive | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 dup-pair
@@ -1862,8 +1723,7 @@ dup-pair
 
 Duplicate the top two items on the stack.
 
-Class Handler: class:word | Namespace: global | Interface Layer: all
-
+Class: class:word | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 eq?
@@ -1874,7 +1734,7 @@ eq?
 
 Compare two values for equality. Returns `TRUE` if they are equal or `FALSE` otherwise.
 
-Class Handler: class:primitive | Namespace: global | Interface Layer: all
+Class: class:primitive | Namespace: global | Interface Layer: all
 
 Example #1:
 
@@ -1891,8 +1751,7 @@ err:notfound
 
 Error handler. Called when a word is not found by `interpret`.
 
-Class Handler: class:word | Namespace: err | Interface Layer: all
-
+Class: class:word | Namespace: err | Interface Layer: all
 ----------------------------------------------------------------
 
 f:*
@@ -1903,7 +1762,7 @@ f:*
 
 Multiply two floating point numbers, returning the result.
 
-Class Handler: class:word | Namespace: f | Interface Layer: rre
+Class: class:word | Namespace: f | Interface Layer: rre
 
 Example #1:
 
@@ -1919,7 +1778,7 @@ f:+
 
 Add two floating point numbers, returning the result.
 
-Class Handler: class:word | Namespace: f | Interface Layer: rre
+Class: class:word | Namespace: f | Interface Layer: rre
 
 Example #1:
 
@@ -1935,7 +1794,7 @@ f:-
 
 Subtract F2 from F1 returing the result.
 
-Class Handler: class:word | Namespace: f | Interface Layer: rre
+Class: class:word | Namespace: f | Interface Layer: rre
 
 Example #1:
 
@@ -1951,8 +1810,7 @@ f:-INF
 
 Return a value corresponding to negative infinity
 
-Class Handler: class:word | Namespace: f | Interface Layer: rre
-
+Class: class:word | Namespace: f | Interface Layer: rre
 ----------------------------------------------------------------
 
 f:-eq?
@@ -1963,8 +1821,7 @@ f:-eq?
 
 Compare two floating point values for inequality. Returns `TRUE` if they are not equal or `FALSE` otherwise.
 
-Class Handler: class:word | Namespace: f | Interface Layer: rre
-
+Class: class:word | Namespace: f | Interface Layer: rre
 ----------------------------------------------------------------
 
 f:-inf?
@@ -1975,8 +1832,7 @@ f:-inf?
 
 Return `TRUE` if floating point value is -INF or `FALSE` otherwise.
 
-Class Handler: class:word | Namespace: f | Interface Layer: rre
-
+Class: class:word | Namespace: f | Interface Layer: rre
 ----------------------------------------------------------------
 
 f:/
@@ -1987,8 +1843,7 @@ f:/
 
 Divide floating point value F1 by F2.
 
-Class Handler: class:word | Namespace: f | Interface Layer: rre
-
+Class: class:word | Namespace: f | Interface Layer: rre
 ----------------------------------------------------------------
 
 f:E
@@ -1999,8 +1854,7 @@ f:E
 
 Return the floating point value for Euler's number.
 
-Class Handler: class:word | Namespace: f | Interface Layer: rre
-
+Class: class:word | Namespace: f | Interface Layer: rre
 ----------------------------------------------------------------
 
 f:INF
@@ -2011,8 +1865,7 @@ f:INF
 
 Return a value corresponding to positive infinity
 
-Class Handler: class:word | Namespace: f | Interface Layer: rre
-
+Class: class:word | Namespace: f | Interface Layer: rre
 ----------------------------------------------------------------
 
 f:NAN
@@ -2023,8 +1876,7 @@ f:NAN
 
 Return a value corresponding to NaN
 
-Class Handler: class:word | Namespace: f | Interface Layer: rre
-
+Class: class:word | Namespace: f | Interface Layer: rre
 ----------------------------------------------------------------
 
 f:PI
@@ -2035,8 +1887,7 @@ f:PI
 
 Return the floating point value for PI.
 
-Class Handler: class:word | Namespace: f | Interface Layer: rre
-
+Class: class:word | Namespace: f | Interface Layer: rre
 ----------------------------------------------------------------
 
 f:abs
@@ -2047,8 +1898,7 @@ f:abs
 
 Return the absolute value for a floating point value.
 
-Class Handler: class:word | Namespace: f | Interface Layer: rre
-
+Class: class:word | Namespace: f | Interface Layer: rre
 ----------------------------------------------------------------
 
 f:acos
@@ -2059,8 +1909,7 @@ f:acos
 
 Return the arc cosine of a floating point number.
 
-Class Handler: class:word | Namespace: f | Interface Layer: rre
-
+Class: class:word | Namespace: f | Interface Layer: rre
 ----------------------------------------------------------------
 
 f:asin
@@ -2071,8 +1920,7 @@ f:asin
 
 Return the arc sine of a floating point number.
 
-Class Handler: class:word | Namespace: f | Interface Layer: rre
-
+Class: class:word | Namespace: f | Interface Layer: rre
 ----------------------------------------------------------------
 
 f:atan
@@ -2083,8 +1931,7 @@ f:atan
 
 Return the arc tangent of a floating point number.
 
-Class Handler: class:word | Namespace: f | Interface Layer: rre
-
+Class: class:word | Namespace: f | Interface Layer: rre
 ----------------------------------------------------------------
 
 f:ceiling
@@ -2095,8 +1942,7 @@ f:ceiling
 
 Return the smallest integral value greater than or equal to the specified value.
 
-Class Handler: class:word | Namespace: f | Interface Layer: rre
-
+Class: class:word | Namespace: f | Interface Layer: rre
 ----------------------------------------------------------------
 
 f:cos
@@ -2107,8 +1953,7 @@ f:cos
 
 Return the cosine of a floating point number.
 
-Class Handler: class:word | Namespace: f | Interface Layer: rre
-
+Class: class:word | Namespace: f | Interface Layer: rre
 ----------------------------------------------------------------
 
 f:depth
@@ -2119,8 +1964,7 @@ f:depth
 
 Return the number of items on the floating point stack.
 
-Class Handler: class:word | Namespace: f | Interface Layer: rre
-
+Class: class:word | Namespace: f | Interface Layer: rre
 ----------------------------------------------------------------
 
 f:drop
@@ -2131,8 +1975,7 @@ f:drop
 
 Discard the top item on the floating point stack.
 
-Class Handler: class:word | Namespace: f | Interface Layer: rre
-
+Class: class:word | Namespace: f | Interface Layer: rre
 ----------------------------------------------------------------
 
 f:dup
@@ -2143,8 +1986,7 @@ f:dup
 
 Duplicate the top item on the floating point stack.
 
-Class Handler: class:word | Namespace: f | Interface Layer: rre
-
+Class: class:word | Namespace: f | Interface Layer: rre
 ----------------------------------------------------------------
 
 f:eq?
@@ -2155,8 +1997,7 @@ f:eq?
 
 Compare two floating point values for equality. Returns `TRUE` if they are equal or `FALSE` otherwise.
 
-Class Handler: class:word | Namespace: f | Interface Layer: rre
-
+Class: class:word | Namespace: f | Interface Layer: rre
 ----------------------------------------------------------------
 
 f:fetch
@@ -2167,8 +2008,7 @@ f:fetch
 
 {n/a}
 
-Class Handler: class:word | Namespace: {n/a} | Interface Layer: {n/a}
-
+Class: class:word | Namespace: {n/a} | Interface Layer: {n/a}
 ----------------------------------------------------------------
 
 f:floor
@@ -2179,8 +2019,7 @@ f:floor
 
 Perform a mathmatical floor operation on the floating point value.
 
-Class Handler: class:word | Namespace: f | Interface Layer: rre
-
+Class: class:word | Namespace: f | Interface Layer: rre
 ----------------------------------------------------------------
 
 f:gt?
@@ -2191,8 +2030,7 @@ f:gt?
 
 Compare two floating point values for greater than.
 
-Class Handler: class:word | Namespace: f | Interface Layer: rre
-
+Class: class:word | Namespace: f | Interface Layer: rre
 ----------------------------------------------------------------
 
 f:inf?
@@ -2203,8 +2041,7 @@ f:inf?
 
 Return `TRUE` if floating point value is INF or `FALSE` otherwise.
 
-Class Handler: class:word | Namespace: f | Interface Layer: rre
-
+Class: class:word | Namespace: f | Interface Layer: rre
 ----------------------------------------------------------------
 
 f:log
@@ -2215,8 +2052,7 @@ f:log
 
 Return log(F1) for base F2 for floating point values.
 
-Class Handler: class:word | Namespace: f | Interface Layer: rre
-
+Class: class:word | Namespace: f | Interface Layer: rre
 ----------------------------------------------------------------
 
 f:lt?
@@ -2227,8 +2063,7 @@ f:lt?
 
 Compare two floating point values for less than.
 
-Class Handler: class:word | Namespace: f | Interface Layer: rre
-
+Class: class:word | Namespace: f | Interface Layer: rre
 ----------------------------------------------------------------
 
 f:nan?
@@ -2239,8 +2074,7 @@ f:nan?
 
 Return `TRUE` if floating point value is NaN or `FALSE` otherwise.
 
-Class Handler: class:word | Namespace: f | Interface Layer: rre
-
+Class: class:word | Namespace: f | Interface Layer: rre
 ----------------------------------------------------------------
 
 f:negate
@@ -2251,7 +2085,7 @@ f:negate
 
 Invert the sign of the floating point value.
 
-Class Handler: class:word | Namespace: f | Interface Layer: rre
+Class: class:word | Namespace: f | Interface Layer: rre
 
 Example #1:
 
@@ -2267,8 +2101,7 @@ f:negative?
 
 Return `TRUE` if floating point value is negative or `FALSE` if not.
 
-Class Handler: class:word | Namespace: f | Interface Layer: rre
-
+Class: class:word | Namespace: f | Interface Layer: rre
 ----------------------------------------------------------------
 
 f:over
@@ -2279,8 +2112,7 @@ f:over
 
 Put a copy of the second floating point value over the top one.
 
-Class Handler: class:word | Namespace: f | Interface Layer: rre
-
+Class: class:word | Namespace: f | Interface Layer: rre
 ----------------------------------------------------------------
 
 f:positive?
@@ -2291,8 +2123,7 @@ f:positive?
 
 Return `TRUE` if floating point value is positive or `FALSE` otherwise.
 
-Class Handler: class:word | Namespace: f | Interface Layer: rre
-
+Class: class:word | Namespace: f | Interface Layer: rre
 ----------------------------------------------------------------
 
 f:power
@@ -2303,8 +2134,7 @@ f:power
 
 Return F1^F2 for floating point values.
 
-Class Handler: class:word | Namespace: f | Interface Layer: rre
-
+Class: class:word | Namespace: f | Interface Layer: rre
 ----------------------------------------------------------------
 
 f:put
@@ -2315,8 +2145,7 @@ f:put
 
 Display a floating point number.
 
-Class Handler: class:word | Namespace: global | Interface Layer: rre
-
+Class: class:word | Namespace: global | Interface Layer: rre
 ----------------------------------------------------------------
 
 f:round
@@ -2327,8 +2156,7 @@ f:round
 
 Round a floating point value.
 
-Class Handler: class:word | Namespace: f | Interface Layer: rre
-
+Class: class:word | Namespace: f | Interface Layer: rre
 ----------------------------------------------------------------
 
 f:sin
@@ -2339,8 +2167,7 @@ f:sin
 
 Return the sine of a floating point number.
 
-Class Handler: class:word | Namespace: f | Interface Layer: rre
-
+Class: class:word | Namespace: f | Interface Layer: rre
 ----------------------------------------------------------------
 
 f:sqrt
@@ -2351,8 +2178,7 @@ f:sqrt
 
 Return the square root of a floating point number.
 
-Class Handler: class:word | Namespace: f | Interface Layer: rre
-
+Class: class:word | Namespace: f | Interface Layer: rre
 ----------------------------------------------------------------
 
 f:square
@@ -2363,8 +2189,7 @@ f:square
 
 Return the square of a floating point number.
 
-Class Handler: class:word | Namespace: f | Interface Layer: rre
-
+Class: class:word | Namespace: f | Interface Layer: rre
 ----------------------------------------------------------------
 
 f:store
@@ -2375,8 +2200,7 @@ f:store
 
 {n/a}
 
-Class Handler: class:word | Namespace: {n/a} | Interface Layer: {n/a}
-
+Class: class:word | Namespace: {n/a} | Interface Layer: {n/a}
 ----------------------------------------------------------------
 
 f:swap
@@ -2387,8 +2211,7 @@ f:swap
 
 Exchange the top and second items on the floating point stack.
 
-Class Handler: class:word | Namespace: f | Interface Layer: rre
-
+Class: class:word | Namespace: f | Interface Layer: rre
 ----------------------------------------------------------------
 
 f:tan
@@ -2399,8 +2222,7 @@ f:tan
 
 Return the tangent of a floating point number.
 
-Class Handler: class:word | Namespace: f | Interface Layer: rre
-
+Class: class:word | Namespace: f | Interface Layer: rre
 ----------------------------------------------------------------
 
 f:to-number
@@ -2411,8 +2233,7 @@ f:to-number
 
 Convert a floating point value into a number.
 
-Class Handler: class:word | Namespace: f | Interface Layer: rre
-
+Class: class:word | Namespace: f | Interface Layer: rre
 ----------------------------------------------------------------
 
 f:to-string
@@ -2423,8 +2244,7 @@ f:to-string
 
 Convert a floating point value into a string.
 
-Class Handler: class:word | Namespace: f | Interface Layer: rre
-
+Class: class:word | Namespace: f | Interface Layer: rre
 ----------------------------------------------------------------
 
 f:to-u
@@ -2435,8 +2255,7 @@ f:to-u
 
 {n/a}
 
-Class Handler: class:word | Namespace: {n/a} | Interface Layer: {n/a}
-
+Class: class:word | Namespace: {n/a} | Interface Layer: {n/a}
 ----------------------------------------------------------------
 
 f:tuck
@@ -2447,8 +2266,7 @@ f:tuck
 
 Tuck a copy of the top floating point value under the second one.
 
-Class Handler: class:word | Namespace: f | Interface Layer: rre
-
+Class: class:word | Namespace: f | Interface Layer: rre
 ----------------------------------------------------------------
 
 fetch
@@ -2459,7 +2277,7 @@ fetch
 
 Fetch the value stored at the specified address.
 
-Class Handler: class:primitive | Namespace: global | Interface Layer: all
+Class: class:primitive | Namespace: global | Interface Layer: all
 
 Example #1:
 
@@ -2475,8 +2293,7 @@ fetch-next
 
 Fetch the value stored at the specified address. Returns the next address and the value.
 
-Class Handler: class:word | Namespace: global | Interface Layer: all
-
+Class: class:word | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 file:A
@@ -2487,8 +2304,7 @@ file:A
 
 Constant for opening a file in APPEND mode.
 
-Class Handler: class:data | Namespace: file | Interface Layer: rre
-
+Class: class:data | Namespace: file | Interface Layer: rre
 ----------------------------------------------------------------
 
 file:R
@@ -2499,8 +2315,7 @@ file:R
 
 Constant for opening a file in READ mode.
 
-Class Handler: class:data | Namespace: file | Interface Layer: rre
-
+Class: class:data | Namespace: file | Interface Layer: rre
 ----------------------------------------------------------------
 
 file:R+
@@ -2511,8 +2326,7 @@ file:R+
 
 Constant for opening a file in READ & WRITE mode.
 
-Class Handler: class:data | Namespace: file | Interface Layer: rre
-
+Class: class:data | Namespace: file | Interface Layer: rre
 ----------------------------------------------------------------
 
 file:W
@@ -2523,8 +2337,7 @@ file:W
 
 Constant for opening a file in WRITE mode.
 
-Class Handler: class:data | Namespace: file | Interface Layer: rre
-
+Class: class:data | Namespace: file | Interface Layer: rre
 ----------------------------------------------------------------
 
 file:close
@@ -2535,8 +2348,7 @@ file:close
 
 Given a file handle, close the file.
 
-Class Handler: class:word | Namespace: file | Interface Layer: rre
-
+Class: class:word | Namespace: file | Interface Layer: rre
 ----------------------------------------------------------------
 
 file:delete
@@ -2547,8 +2359,7 @@ file:delete
 
 Delete the named file.
 
-Class Handler: class:word | Namespace: file | Interface Layer: rre
-
+Class: class:word | Namespace: file | Interface Layer: rre
 ----------------------------------------------------------------
 
 file:exists?
@@ -2559,8 +2370,7 @@ file:exists?
 
 Given a file name, return `TRUE` if it exists or `FALSE` if it does not.
 
-Class Handler: class:word | Namespace: file | Interface Layer: rre
-
+Class: class:word | Namespace: file | Interface Layer: rre
 ----------------------------------------------------------------
 
 file:flush
@@ -2571,8 +2381,7 @@ file:flush
 
 Given a file handle, flush any pending writes to disk.
 
-Class Handler: class:word | Namespace: file | Interface Layer: rre
-
+Class: class:word | Namespace: file | Interface Layer: rre
 ----------------------------------------------------------------
 
 file:for-each-line
@@ -2583,8 +2392,7 @@ file:for-each-line
 
 Given a file name, open it and run the quote once for each line in the file.
 
-Class Handler: class:word | Namespace: file | Interface Layer: rre
-
+Class: class:word | Namespace: file | Interface Layer: rre
 ----------------------------------------------------------------
 
 file:open
@@ -2595,7 +2403,7 @@ file:open
 
 Open a named file (s) with the given mode (m). Returns a handle identifying the file.
 
-Class Handler: class:word | Namespace: file | Interface Layer: rre
+Class: class:word | Namespace: file | Interface Layer: rre
 
 Example #1:
 
@@ -2611,8 +2419,7 @@ file:open<for-append>
 
 Open a file for reading & writing. Returns the size (NOS) and a file ID (TOS)
 
-Class Handler: class:word | Namespace: file | Interface Layer: rre
-
+Class: class:word | Namespace: file | Interface Layer: rre
 ----------------------------------------------------------------
 
 file:open<for-reading>
@@ -2623,8 +2430,7 @@ file:open<for-reading>
 
 Open a file for reading. Returns the size (NOS) and a file ID (TOS)
 
-Class Handler: class:word | Namespace: file | Interface Layer: rre
-
+Class: class:word | Namespace: file | Interface Layer: rre
 ----------------------------------------------------------------
 
 file:open<for-writing>
@@ -2635,8 +2441,7 @@ file:open<for-writing>
 
 Open a file for reading. Returns the file ID
 
-Class Handler: class:word | Namespace: file | Interface Layer: rre
-
+Class: class:word | Namespace: file | Interface Layer: rre
 ----------------------------------------------------------------
 
 file:read
@@ -2647,8 +2452,7 @@ file:read
 
 Given a file handle, read and return the next character in it.
 
-Class Handler: class:word | Namespace: file | Interface Layer: rre
-
+Class: class:word | Namespace: file | Interface Layer: rre
 ----------------------------------------------------------------
 
 file:read-line
@@ -2659,8 +2463,7 @@ file:read-line
 
 Given a file handle, read a line and return a pointer to it.
 
-Class Handler: class:word | Namespace: file | Interface Layer: rre
-
+Class: class:word | Namespace: file | Interface Layer: rre
 ----------------------------------------------------------------
 
 file:seek
@@ -2671,8 +2474,7 @@ file:seek
 
 Move the current offset into a file to the specified one.
 
-Class Handler: class:word | Namespace: file | Interface Layer: rre
-
+Class: class:word | Namespace: file | Interface Layer: rre
 ----------------------------------------------------------------
 
 file:size
@@ -2683,8 +2485,7 @@ file:size
 
 Given a file handle, return the size of the file (in bytes).
 
-Class Handler: class:word | Namespace: file | Interface Layer: rre
-
+Class: class:word | Namespace: file | Interface Layer: rre
 ----------------------------------------------------------------
 
 file:slurp
@@ -2695,8 +2496,7 @@ file:slurp
 
 Given an address and a file name, read the file contents into memory starting at the address.
 
-Class Handler: class:word | Namespace: file | Interface Layer: rre
-
+Class: class:word | Namespace: file | Interface Layer: rre
 ----------------------------------------------------------------
 
 file:spew
@@ -2707,8 +2507,7 @@ file:spew
 
 Given a string (s1) and a file name (s2), write the string into the file, replacing any existing cotent.
 
-Class Handler: class:word | Namespace: file | Interface Layer: rre
-
+Class: class:word | Namespace: file | Interface Layer: rre
 ----------------------------------------------------------------
 
 file:tell
@@ -2719,8 +2518,7 @@ file:tell
 
 Given a file handle, return the current offset in the file.
 
-Class Handler: class:word | Namespace: file | Interface Layer: rre
-
+Class: class:word | Namespace: file | Interface Layer: rre
 ----------------------------------------------------------------
 
 file:write
@@ -2731,8 +2529,7 @@ file:write
 
 Write a character to the file represented by the handle.
 
-Class Handler: class:word | Namespace: file | Interface Layer: rre
-
+Class: class:word | Namespace: file | Interface Layer: rre
 ----------------------------------------------------------------
 
 gopher:get
@@ -2743,7 +2540,7 @@ gopher:get
 
 Takes an address, a server, a port, and a selector. Fetch the resource and store it at address. Return the number of bytes received.
 
-Class Handler: class:word | Namespace: gopher | Interface Layer: rre
+Class: class:word | Namespace: gopher | Interface Layer: rre
 
 Example #1:
 
@@ -2760,8 +2557,7 @@ gt?
 
 Compare n1 and n2. Return `TRUE` if n1 is greater than n2, or `FALSE` otherwise.
 
-Class Handler: class:primitive | Namespace: global | Interface Layer: all
-
+Class: class:primitive | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 gteq?
@@ -2772,8 +2568,7 @@ gteq?
 
 Compare n1 and n2. Return `TRUE` if n1 is greater than or equal to n2, or `FALSE` otherwise.
 
-Class Handler: class:word | Namespace: global | Interface Layer: all
-
+Class: class:word | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 here
@@ -2784,8 +2579,7 @@ here
 
 Return the next free address in memory.
 
-Class Handler: class:word | Namespace: global | Interface Layer: all
-
+Class: class:word | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 hook
@@ -2796,7 +2590,7 @@ hook
 
 Add a hook point into the current word. This should only be used as the first word in a definition.
 
-Class Handler: class:macro | Namespace: {n/a} | Interface Layer: global
+Class: class:macro | Namespace: {n/a} | Interface Layer: global
 
 Example #1:
 
@@ -2812,8 +2606,7 @@ i
 
 Assemble the instructions specified by the string into the current assembly scope.
 
-Class Handler: class:word | Namespace: global | Interface Layer: all
-
+Class: class:word | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 if
@@ -2824,8 +2617,7 @@ if
 
 Execute the quote if the flag is `TRUE`.
 
-Class Handler: class:word | Namespace: global | Interface Layer: all
-
+Class: class:word | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 if;
@@ -2836,8 +2628,7 @@ if;
 
 Execute the quotation if the flag is `TRUE`. If true, also exit the word.
 
-Class Handler: class:word | Namespace: global | Interface Layer: all
-
+Class: class:word | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 immediate
@@ -2848,8 +2639,7 @@ immediate
 
 Change the class of the most recently defined word to `class:macro`.
 
-Class Handler: class:word | Namespace: global | Interface Layer: all
-
+Class: class:word | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 include
@@ -2860,8 +2650,7 @@ include
 
 Run the code in the specified file. 
 
-Class Handler: class:word | Namespace: global | Interface Layer: rre
-
+Class: class:word | Namespace: global | Interface Layer: rre
 ----------------------------------------------------------------
 
 interpret
@@ -2872,7 +2661,7 @@ interpret
 
 Interpret a single input token.
 
-Class Handler: class:word | Namespace: global | Interface Layer: all
+Class: class:word | Namespace: global | Interface Layer: all
 
 Example #1:
 
@@ -2889,8 +2678,7 @@ io:enumerate
 
 Return the number of I/O devices.
 
-Class Handler: class:word | Namespace: {n/a} | Interface Layer: all
-
+Class: class:word | Namespace: {n/a} | Interface Layer: all
 ----------------------------------------------------------------
 
 io:invoke
@@ -2901,8 +2689,7 @@ io:invoke
 
 Invoke an interaction with an I/O device.
 
-Class Handler: class:word | Namespace: {n/a} | Interface Layer: all
-
+Class: class:word | Namespace: {n/a} | Interface Layer: all
 ----------------------------------------------------------------
 
 io:query
@@ -2913,8 +2700,7 @@ io:query
 
 Ask an I/O device to identify itself. Returns a version (m) and device ID (N).
 
-Class Handler: class:word | Namespace: {n/a} | Interface Layer: all
-
+Class: class:word | Namespace: {n/a} | Interface Layer: all
 ----------------------------------------------------------------
 
 io:scan-for
@@ -2925,8 +2711,7 @@ io:scan-for
 
 Scan the I/O devices for a device with a specified ID. Returns the device number, or -1 if not found.
 
-Class Handler: class:word | Namespace: {n/a} | Interface Layer: all
-
+Class: class:word | Namespace: {n/a} | Interface Layer: all
 ----------------------------------------------------------------
 
 ios:list-fonts
@@ -2937,8 +2722,7 @@ ios:list-fonts
 
 Display a list of all installed fonts.
 
-Class Handler: class:word | Namespace: ios | Interface Layer: iOS
-
+Class: class:word | Namespace: ios | Interface Layer: iOS
 ----------------------------------------------------------------
 
 listen
@@ -2949,8 +2733,7 @@ listen
 
 Run interactive "listener" (a REPL).
 
-Class Handler: class:word | Namespace: global | Interface Layer: rre
-
+Class: class:word | Namespace: global | Interface Layer: rre
 ----------------------------------------------------------------
 
 lt?
@@ -2961,8 +2744,7 @@ lt?
 
 Compare n1 and n2. Return `TRUE` if n1 is less than n2, or `FALSE` otherwise.
 
-Class Handler: class:primitive | Namespace: global | Interface Layer: all
-
+Class: class:primitive | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 lteq?
@@ -2973,8 +2755,7 @@ lteq?
 
 Compare n1 and n2. Return `TRUE` if n1 is less than or equal to n2, or `FALSE` otherwise.
 
-Class Handler: class:word | Namespace: global | Interface Layer: all
-
+Class: class:word | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 mod
@@ -2985,8 +2766,7 @@ mod
 
 Divide `n` by `m` and return the remainder.
 
-Class Handler: class:word | Namespace: global | Interface Layer: all
-
+Class: class:word | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 n:-zero?
@@ -2997,8 +2777,7 @@ n:-zero?
 
 Return `TRUE` if number is not zero, or `FALSE` otherwise.
 
-Class Handler: class:word | Namespace: n | Interface Layer: all
-
+Class: class:word | Namespace: n | Interface Layer: all
 ----------------------------------------------------------------
 
 n:MAX
@@ -3009,8 +2788,7 @@ n:MAX
 
 Return the maximum value that will fit in a cell.
 
-Class Handler: class:word | Namespace: n | Interface Layer: all
-
+Class: class:word | Namespace: n | Interface Layer: all
 ----------------------------------------------------------------
 
 n:MIN
@@ -3021,8 +2799,7 @@ n:MIN
 
 Return the minimum value that will fit in a cell.
 
-Class Handler: class:word | Namespace: n | Interface Layer: all
-
+Class: class:word | Namespace: n | Interface Layer: all
 ----------------------------------------------------------------
 
 n:abs
@@ -3033,7 +2810,7 @@ n:abs
 
 Return the absolute value of a number.
 
-Class Handler: class:word | Namespace: n | Interface Layer: all
+Class: class:word | Namespace: n | Interface Layer: all
 
 Example #1:
 
@@ -3051,7 +2828,7 @@ n:between?
 
 Return TRUE if number is between the lower (l) and upper (u) bounds. If not, return FALSE. This is inclusive of the limits.
 
-Class Handler: class:word | Namespace: n | Interface Layer: all
+Class: class:word | Namespace: n | Interface Layer: all
 
 Example #1:
 
@@ -3068,7 +2845,7 @@ n:dec
 
 Decrement n by one.
 
-Class Handler: class:word | Namespace: n | Interface Layer: all
+Class: class:word | Namespace: n | Interface Layer: all
 
 Example #1:
 
@@ -3084,7 +2861,7 @@ n:even?
 
 Return `TRUE` if number is even, or `FALSE` if not.
 
-Class Handler: class:word | Namespace: n | Interface Layer: all
+Class: class:word | Namespace: n | Interface Layer: all
 
 Example #1:
 
@@ -3101,7 +2878,7 @@ n:inc
 
 Increment n by one.
 
-Class Handler: class:word | Namespace: n | Interface Layer: all
+Class: class:word | Namespace: n | Interface Layer: all
 
 Example #1:
 
@@ -3117,7 +2894,7 @@ n:limit
 
 Return n if it is within the lower (l) and upper (u) bounds. If outside the bounds, return the closes boundary value.
 
-Class Handler: class:word | Namespace: n | Interface Layer: all
+Class: class:word | Namespace: n | Interface Layer: all
 
 Example #1:
 
@@ -3134,7 +2911,7 @@ n:max
 
 Return the greater of two values.
 
-Class Handler: class:word | Namespace: n | Interface Layer: all
+Class: class:word | Namespace: n | Interface Layer: all
 
 Example #1:
 
@@ -3151,7 +2928,7 @@ n:min
 
 Return the lesser of two values.
 
-Class Handler: class:word | Namespace: n | Interface Layer: all
+Class: class:word | Namespace: n | Interface Layer: all
 
 Example #1:
 
@@ -3168,7 +2945,7 @@ n:negate
 
 Invert the sign of a number.
 
-Class Handler: class:word | Namespace: n | Interface Layer: all
+Class: class:word | Namespace: n | Interface Layer: all
 
 Example #1:
 
@@ -3185,8 +2962,7 @@ n:negative?
 
 Return `TRUE` if number is negative, or `FALSE` if not.
 
-Class Handler: class:word | Namespace: n | Interface Layer: all
-
+Class: class:word | Namespace: n | Interface Layer: all
 ----------------------------------------------------------------
 
 n:odd?
@@ -3197,8 +2973,7 @@ n:odd?
 
 Return `TRUE` if number is odd, or `FALSE` if not.
 
-Class Handler: class:word | Namespace: n | Interface Layer: all
-
+Class: class:word | Namespace: n | Interface Layer: all
 ----------------------------------------------------------------
 
 n:positive?
@@ -3209,8 +2984,7 @@ n:positive?
 
 Return `TRUE` if number is positive, or `FALSE` if not.
 
-Class Handler: class:word | Namespace: n | Interface Layer: all
-
+Class: class:word | Namespace: n | Interface Layer: all
 ----------------------------------------------------------------
 
 n:pow
@@ -3221,8 +2995,7 @@ n:pow
 
 Return base (b) to power (p).
 
-Class Handler: class:word | Namespace: n | Interface Layer: all
-
+Class: class:word | Namespace: n | Interface Layer: all
 ----------------------------------------------------------------
 
 n:put
@@ -3233,8 +3006,7 @@ n:put
 
 Display a number.
 
-Class Handler: class:word | Namespace: global | Interface Layer: all
-
+Class: class:word | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 n:random
@@ -3245,7 +3017,7 @@ n:random
 
 Return a random number
 
-Class Handler: class:word | Namespace: n | Interface Layer: rre, ri
+Class: class:word | Namespace: n | Interface Layer: rre, ri
 
 Example #1:
 
@@ -3261,8 +3033,7 @@ n:sqrt
 
 Return the square root of a number.
 
-Class Handler: class:word | Namespace: n | Interface Layer: all
-
+Class: class:word | Namespace: n | Interface Layer: all
 ----------------------------------------------------------------
 
 n:square
@@ -3273,8 +3044,7 @@ n:square
 
 Return the square of a number.
 
-Class Handler: class:word | Namespace: n | Interface Layer: all
-
+Class: class:word | Namespace: n | Interface Layer: all
 ----------------------------------------------------------------
 
 n:strictly-positive?
@@ -3285,8 +3055,7 @@ n:strictly-positive?
 
 Return TRUE if number is greater than zero or FALSE if it is zero or less.
 
-Class Handler: class:word | Namespace: n | Interface Layer: all
-
+Class: class:word | Namespace: n | Interface Layer: all
 ----------------------------------------------------------------
 
 n:to-float
@@ -3297,8 +3066,7 @@ n:to-float
 
 Convert a number into a floating point value.
 
-Class Handler: class:word | Namespace: n | Interface Layer: rre
-
+Class: class:word | Namespace: n | Interface Layer: rre
 ----------------------------------------------------------------
 
 n:to-string
@@ -3309,8 +3077,7 @@ n:to-string
 
 Convert a number into a string.
 
-Class Handler: class:word | Namespace: n | Interface Layer: all
-
+Class: class:word | Namespace: n | Interface Layer: all
 ----------------------------------------------------------------
 
 n:zero?
@@ -3321,8 +3088,7 @@ n:zero?
 
 Return `TRUE` if number is zero, or `FALSE` otherwise.
 
-Class Handler: class:word | Namespace: n | Interface Layer: all
-
+Class: class:word | Namespace: n | Interface Layer: all
 ----------------------------------------------------------------
 
 nip
@@ -3333,8 +3099,7 @@ nip
 
 Remove the second item from the stack.
 
-Class Handler: class:word | Namespace: global | Interface Layer: all
-
+Class: class:word | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 nl
@@ -3345,8 +3110,7 @@ nl
 
 Display a newline.
 
-Class Handler: class:word | Namespace: global | Interface Layer: all
-
+Class: class:word | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 not
@@ -3357,8 +3121,7 @@ not
 
 Perform a logical NOT operation.
 
-Class Handler: class:word | Namespace: global | Interface Layer: all
-
+Class: class:word | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 or
@@ -3369,8 +3132,7 @@ or
 
 Perform a bitwise OR between the provided values.
 
-Class Handler: class:primitive | Namespace: global | Interface Layer: all
-
+Class: class:primitive | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 over
@@ -3381,8 +3143,7 @@ over
 
 Put a copy of n over m.
 
-Class Handler: class:word | Namespace: global | Interface Layer: all
-
+Class: class:word | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 parse-until
@@ -3393,7 +3154,7 @@ parse-until
 
 Read input from stdin (via `c:get`) until the returned character is matched by the quote. Returns a string.
 
-Class Handler: class:word | Namespace: all | Interface Layer: rre
+Class: class:word | Namespace: all | Interface Layer: rre
 
 Example #1:
 
@@ -3410,8 +3171,7 @@ pb:get
 
 Copy a string from the pasteboard to the specified address.
 
-Class Handler: class:word | Namespace: pb | Interface Layer: iOS
-
+Class: class:word | Namespace: pb | Interface Layer: iOS
 ----------------------------------------------------------------
 
 pb:length
@@ -3422,9 +3182,9 @@ pb:length
 
 Return the length of the string on the pasteboard.
 
-Class Handler: class:word | Namespace: {n/a} | Interface Layer: iOS
+Class: class:word | Namespace: {n/a} | Interface Layer: iOS
 
-Example #2:
+Example #1:
 
 pb
 
@@ -3438,8 +3198,7 @@ pb:set
 
 Copy a string to the pasteboard.
 
-Class Handler: class:word | Namespace: pb | Interface Layer: iOS
-
+Class: class:word | Namespace: pb | Interface Layer: iOS
 ----------------------------------------------------------------
 
 pop
@@ -3450,8 +3209,7 @@ pop
 
 Move a value from the return stack to the data stack.
 
-Class Handler: class:macro | Namespace: global | Interface Layer: all
-
+Class: class:macro | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 prefix:!
@@ -3468,8 +3226,7 @@ Interpret Time:
 Compile Time:
   Compile the code to store a value into a named variable.
 
-Class Handler: class:macro | Namespace: prefix | Interface Layer: all
-
+Class: class:macro | Namespace: prefix | Interface Layer: all
 ----------------------------------------------------------------
 
 prefix:"
@@ -3486,8 +3243,7 @@ Interpret Time:
 Compile Time:
   Keep string as permanent. If `RewriteUnderscores` is `TRUE`, replace all instances of _ with space. Then compile the string into the current definition.
 
-Class Handler: class:macro | Namespace: prefix | Interface Layer: all
-
+Class: class:macro | Namespace: prefix | Interface Layer: all
 ----------------------------------------------------------------
 
 prefix:#
@@ -3504,8 +3260,7 @@ Interpret Time:
 Compile Time:
   Convert the string into a number and compile into the current definition as a literal.
 
-Class Handler: class:macro | Namespace: prefix | Interface Layer: all
-
+Class: class:macro | Namespace: prefix | Interface Layer: all
 ----------------------------------------------------------------
 
 prefix:$
@@ -3522,8 +3277,7 @@ Interpret Time:
 Compile Time:
   Fetch first character from the string. Compile into the current definition as  literal.
 
-Class Handler: class:macro | Namespace: prefix | Interface Layer: all
-
+Class: class:macro | Namespace: prefix | Interface Layer: all
 ----------------------------------------------------------------
 
 prefix:&
@@ -3540,8 +3294,7 @@ Interpret Time:
 Compile Time:
   Lookup name in dictionary, compile code to push the contents of the xt field into the current definition.
 
-Class Handler: class:macro | Namespace: prefix | Interface Layer: all
-
+Class: class:macro | Namespace: prefix | Interface Layer: all
 ----------------------------------------------------------------
 
 prefix:'
@@ -3558,8 +3311,7 @@ Interpret Time:
 Compile Time:
   Move string into temporary buffer. If `RewriteUnderscores` is `TRUE`, replace all instances of _ with space. Then compile the string into the current definition.
 
-Class Handler: class:macro | Namespace: prefix | Interface Layer: all
-
+Class: class:macro | Namespace: prefix | Interface Layer: all
 ----------------------------------------------------------------
 
 prefix:(
@@ -3576,8 +3328,7 @@ Interpret Time:
 Compile Time:
   Discard the string.
 
-Class Handler: class:macro | Namespace: prefix | Interface Layer: all
-
+Class: class:macro | Namespace: prefix | Interface Layer: all
 ----------------------------------------------------------------
 
 prefix:.
@@ -3588,8 +3339,7 @@ prefix:.
 
 Interpret time: convert string to a floating point value. Compile time: convert string to a floating point value and compile code to push this value to the float stack.
 
-Class Handler: class:macro | Namespace: prefix | Interface Layer: rre
-
+Class: class:macro | Namespace: prefix | Interface Layer: rre
 ----------------------------------------------------------------
 
 prefix::
@@ -3603,8 +3353,7 @@ Process token as a new definition.
 Interpret Time:
   Create a header pointing to `here` with the provided string as the name. Sets class to `class:word`.
 
-Class Handler: class:macro | Namespace: prefix | Interface Layer: all
-
+Class: class:macro | Namespace: prefix | Interface Layer: all
 ----------------------------------------------------------------
 
 prefix:@
@@ -3621,8 +3370,7 @@ Interpret Time:
 Compile Time:
   Compile the code to fetch a value from a named variable into the current definition.
 
-Class Handler: class:macro | Namespace: prefix | Interface Layer: all
-
+Class: class:macro | Namespace: prefix | Interface Layer: all
 ----------------------------------------------------------------
 
 prefix:`
@@ -3639,8 +3387,7 @@ Interpret Time:
 Compile Time:
   Convert the string to a number and use `,` to inline it into the current definition.
 
-Class Handler: class:macro | Namespace: prefix | Interface Layer: all
-
+Class: class:macro | Namespace: prefix | Interface Layer: all
 ----------------------------------------------------------------
 
 prefix:|
@@ -3657,8 +3404,7 @@ Interpret Time:
 Compile Time:
   Convert the string to a number and use `,` to inline it into the current definition.
 
-Class Handler: class:macro | Namespace: prefix | Interface Layer: all
-
+Class: class:macro | Namespace: prefix | Interface Layer: all
 ----------------------------------------------------------------
 
 primitive
@@ -3669,8 +3415,7 @@ primitive
 
 Change the class of the most recently defined word to `class:primitive`.
 
-Class Handler: class:word | Namespace: global | Interface Layer: all
-
+Class: class:word | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 push
@@ -3681,8 +3426,7 @@ push
 
 Move a value from the data stack to the return stack.
 
-Class Handler: class:macro | Namespace: global | Interface Layer: all
-
+Class: class:macro | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 r
@@ -3693,8 +3437,7 @@ r
 
 Lookup a reference by name and inline its pointer to the current assembly segment.
 
-Class Handler: class:word | Namespace: global | Interface Layer: all
-
+Class: class:word | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 random:mersenne
@@ -3705,7 +3448,7 @@ random:mersenne
 
 Return a random number using a mersenne shifter
 
-Class Handler: class:word | Namespace: random | Interface Layer: rre, ri
+Class: class:word | Namespace: random | Interface Layer: rre, ri
 
 Example #1:
 
@@ -3721,7 +3464,7 @@ random:mersenne:set-seed
 
 Seed random:mersenne with the specified value
 
-Class Handler: class:word | Namespace: random | Interface Layer: rre, ri
+Class: class:word | Namespace: random | Interface Layer: rre, ri
 
 Example #1:
 
@@ -3737,7 +3480,7 @@ random:xoroshiro128**
 
 Return a random number using xoroshiro128**
 
-Class Handler: class:word | Namespace: random | Interface Layer: rre, ri
+Class: class:word | Namespace: random | Interface Layer: rre, ri
 
 Example #1:
 
@@ -3753,7 +3496,7 @@ random:xoroshiro128**:set-seed
 
 Seed random:xoroshiro128** with the specified value
 
-Class Handler: class:word | Namespace: random | Interface Layer: rre, ri
+Class: class:word | Namespace: random | Interface Layer: rre, ri
 
 Example #1:
 
@@ -3769,8 +3512,7 @@ reclass
 
 Change the class handler of the most recently defined word to the specified one.
 
-Class Handler: class:word | Namespace: global | Interface Layer: all
-
+Class: class:word | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 reorder
@@ -3781,8 +3523,7 @@ reorder
 
 Restructure the order of items on the stack.
 
-Class Handler: class:word | Namespace: global | Interface Layer: all
-
+Class: class:word | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 repeat
@@ -3793,8 +3534,7 @@ repeat
 
 Begin an unconditional loop.
 
-Class Handler: class:macro | Namespace: global | Interface Layer: all
-
+Class: class:macro | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 reset
@@ -3805,8 +3545,7 @@ reset
 
 Remove all items from the stack.
 
-Class Handler: class:word | Namespace: global | Interface Layer: all
-
+Class: class:word | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 rot
@@ -3817,8 +3556,7 @@ rot
 
 Rotate the top three values.
 
-Class Handler: class:word | Namespace: global | Interface Layer: all
-
+Class: class:word | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 s,
@@ -3829,8 +3567,7 @@ s,
 
 Compile the code needed to push a string pointer to the stack and inline the string data into the current definition.
 
-Class Handler: class:word | Namespace: global | Interface Layer: all
-
+Class: class:word | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 s:ASCII-LETTERS
@@ -3841,8 +3578,7 @@ s:ASCII-LETTERS
 
 Constant. Returns a string of the ASCII letters (upper and lower case)
 
-Class Handler: class:data | Namespace: s | Interface Layer: all
-
+Class: class:data | Namespace: s | Interface Layer: all
 ----------------------------------------------------------------
 
 s:ASCII-LOWERCASE
@@ -3853,8 +3589,7 @@ s:ASCII-LOWERCASE
 
 Constant. Returns a string of the ASCII letters in lowercase
 
-Class Handler: class:data | Namespace: s | Interface Layer: all
-
+Class: class:data | Namespace: s | Interface Layer: all
 ----------------------------------------------------------------
 
 s:ASCII-UPPERCASE
@@ -3865,8 +3600,7 @@ s:ASCII-UPPERCASE
 
 Constant. Returns a string of the ASCII letters in uppercase
 
-Class Handler: class:data | Namespace: s | Interface Layer: all
-
+Class: class:data | Namespace: s | Interface Layer: all
 ----------------------------------------------------------------
 
 s:DIGITS
@@ -3877,8 +3611,7 @@ s:DIGITS
 
 Constant. Return a string of characters recognized as numeric digits.
 
-Class Handler: class:data | Namespace: s | Interface Layer: all
-
+Class: class:data | Namespace: s | Interface Layer: all
 ----------------------------------------------------------------
 
 s:PUNCTUATION
@@ -3889,8 +3622,7 @@ s:PUNCTUATION
 
 Constant. Return a string of characters recognized as punctuation.
 
-Class Handler: class:data | Namespace: s | Interface Layer: all
-
+Class: class:data | Namespace: s | Interface Layer: all
 ----------------------------------------------------------------
 
 s:WHITESPACE
@@ -3901,8 +3633,7 @@ s:WHITESPACE
 
 Constant. Returns a string of characters recognized as whitespace.
 
-Class Handler: class:data | Namespace: s | Interface Layer: all
-
+Class: class:data | Namespace: s | Interface Layer: all
 ----------------------------------------------------------------
 
 s:append
@@ -3913,8 +3644,7 @@ s:append
 
 Return a new string consisting of s1 followed by s2.
 
-Class Handler: class:word | Namespace: s | Interface Layer: all
-
+Class: class:word | Namespace: s | Interface Layer: all
 ----------------------------------------------------------------
 
 s:case
@@ -3925,8 +3655,7 @@ s:case
 
 If the `s` matches `S`, discard `s` and run the quote before exiting the caller. If they do not match, discard the quote and leave `s` on the stack.
 
-Class Handler: class:word | Namespace: s | Interface Layer: all
-
+Class: class:word | Namespace: s | Interface Layer: all
 ----------------------------------------------------------------
 
 s:chop
@@ -3937,8 +3666,7 @@ s:chop
 
 Remove the last character from a string.
 
-Class Handler: class:word | Namespace: s | Interface Layer: all
-
+Class: class:word | Namespace: s | Interface Layer: all
 ----------------------------------------------------------------
 
 s:const
@@ -3949,8 +3677,7 @@ s:const
 
 Create a constant named s2, returning a pointer to s1. This will use `s:keep` to preserve the original string.
 
-Class Handler: class:word | Namespace: s | Interface Layer: all
-
+Class: class:word | Namespace: s | Interface Layer: all
 ----------------------------------------------------------------
 
 s:contains-char?
@@ -3961,8 +3688,7 @@ s:contains-char?
 
 Return `TRUE` if the character is present in the string or `FALSE` otherwise.
 
-Class Handler: class:word | Namespace: s | Interface Layer: all
-
+Class: class:word | Namespace: s | Interface Layer: all
 ----------------------------------------------------------------
 
 s:contains-string?
@@ -3973,8 +3699,7 @@ s:contains-string?
 
 Return `TRUE` if the second string is present in the first string or `FALSE` otherwise.
 
-Class Handler: class:word | Namespace: s | Interface Layer: all
-
+Class: class:word | Namespace: s | Interface Layer: all
 ----------------------------------------------------------------
 
 s:copy
@@ -3985,8 +3710,7 @@ s:copy
 
 Copy a string (s) to a destination (a). This will include the terminator character when copying.
 
-Class Handler: class:word | Namespace: s | Interface Layer: all
-
+Class: class:word | Namespace: s | Interface Layer: all
 ----------------------------------------------------------------
 
 s:empty
@@ -3997,8 +3721,7 @@ s:empty
 
 Return an empty string.
 
-Class Handler: class:word | Namespace: s | Interface Layer: all
-
+Class: class:word | Namespace: s | Interface Layer: all
 ----------------------------------------------------------------
 
 s:eq?
@@ -4009,7 +3732,7 @@ s:eq?
 
 Compare two strings for equality. Return `TRUE` if identical or `FALSE` if not.
 
-Class Handler: class:word | Namespace: s | Interface Layer: all
+Class: class:word | Namespace: s | Interface Layer: all
 
 Example #1:
 
@@ -4026,8 +3749,7 @@ s:evaluate
 
 Evaluate string as if it was typed into the interpreter.
 
-Class Handler: class:word | Namespace: s | Interface Layer: all
-
+Class: class:word | Namespace: s | Interface Layer: all
 ----------------------------------------------------------------
 
 s:filter
@@ -4038,8 +3760,7 @@ s:filter
 
 Execute the quote once for each value in the string. If the quote returns `TRUE`, append the value into a new string. If `FALSE` the value will be discarded.
 
-Class Handler: class:word | Namespace: s | Interface Layer: all
-
+Class: class:word | Namespace: s | Interface Layer: all
 ----------------------------------------------------------------
 
 s:for-each
@@ -4050,8 +3771,7 @@ s:for-each
 
 Execute the quote once for each value in the string.
 
-Class Handler: class:word | Namespace: s | Interface Layer: all
-
+Class: class:word | Namespace: s | Interface Layer: all
 ----------------------------------------------------------------
 
 s:format
@@ -4062,8 +3782,7 @@ s:format
 
 Construct a new string using the template passed and items from the stack.
 
-Class Handler: class:word | Namespace: s | Interface Layer: all
-
+Class: class:word | Namespace: s | Interface Layer: all
 ----------------------------------------------------------------
 
 s:get
@@ -4074,8 +3793,7 @@ s:get
 
 Read input from standard in (via `c:get`) until a CR or LF is encountered. Returns a strig.
 
-Class Handler: class:word | Namespace: all | Interface Layer: rre
-
+Class: class:word | Namespace: all | Interface Layer: rre
 ----------------------------------------------------------------
 
 s:hash
@@ -4086,8 +3804,7 @@ s:hash
 
 Calculate a hash value for a string. This uses the djb2 algorithm.
 
-Class Handler: class:word | Namespace: s | Interface Layer: all
-
+Class: class:word | Namespace: s | Interface Layer: all
 ----------------------------------------------------------------
 
 s:index-of
@@ -4098,8 +3815,7 @@ s:index-of
 
 Return the location of the first instance of the specified character in the string.
 
-Class Handler: class:word | Namespace: s | Interface Layer: all
-
+Class: class:word | Namespace: s | Interface Layer: all
 ----------------------------------------------------------------
 
 s:index-of-string
@@ -4110,8 +3826,7 @@ s:index-of-string
 
 Return the location of the first instance of the specified substring (s2) in the string (s1). Returns -1 if not found.
 
-Class Handler: class:word | Namespace: s | Interface Layer: all
-
+Class: class:word | Namespace: s | Interface Layer: all
 ----------------------------------------------------------------
 
 s:keep
@@ -4122,8 +3837,7 @@ s:keep
 
 Store a string into the heap and return a pointer to the start of it.
 
-Class Handler: class:word | Namespace: s | Interface Layer: all
-
+Class: class:word | Namespace: s | Interface Layer: all
 ----------------------------------------------------------------
 
 s:left
@@ -4134,8 +3848,7 @@ s:left
 
 Return a new string containing the first `n` characters from the source string.
 
-Class Handler: class:word | Namespace: s | Interface Layer: all
-
+Class: class:word | Namespace: s | Interface Layer: all
 ----------------------------------------------------------------
 
 s:length
@@ -4146,8 +3859,7 @@ s:length
 
 Return the number of characters in a string, excluding the NULL terminator.
 
-Class Handler: class:word | Namespace: s | Interface Layer: all
-
+Class: class:word | Namespace: s | Interface Layer: all
 ----------------------------------------------------------------
 
 s:map
@@ -4158,8 +3870,7 @@ s:map
 
 Execute the specified quote once for each character in the string. Builds a new string from the return value of the quote. The quote should return only one value.
 
-Class Handler: class:word | Namespace: s | Interface Layer: all
-
+Class: class:word | Namespace: s | Interface Layer: all
 ----------------------------------------------------------------
 
 s:prepend
@@ -4170,8 +3881,7 @@ s:prepend
 
 Return a new string consisting of s2 followed by s1.
 
-Class Handler: class:word | Namespace: s | Interface Layer: all
-
+Class: class:word | Namespace: s | Interface Layer: all
 ----------------------------------------------------------------
 
 s:put
@@ -4182,8 +3892,7 @@ s:put
 
 Display a string.
 
-Class Handler: class:word | Namespace: global | Interface Layer: all
-
+Class: class:word | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 s:replace
@@ -4194,8 +3903,7 @@ s:replace
 
 Replace the first instance of s2 in s1 with s3.
 
-Class Handler: class:word | Namespace: s | Interface Layer: all
-
+Class: class:word | Namespace: s | Interface Layer: all
 ----------------------------------------------------------------
 
 s:reverse
@@ -4206,8 +3914,7 @@ s:reverse
 
 Reverse the order of ASCII characters in a string.
 
-Class Handler: class:word | Namespace: s | Interface Layer: all
-
+Class: class:word | Namespace: s | Interface Layer: all
 ----------------------------------------------------------------
 
 s:right
@@ -4218,8 +3925,7 @@ s:right
 
 Return a new string containing the specified number of characters from the right side of the string.
 
-Class Handler: class:word | Namespace: s | Interface Layer: all
-
+Class: class:word | Namespace: s | Interface Layer: all
 ----------------------------------------------------------------
 
 s:skip
@@ -4230,8 +3936,7 @@ s:skip
 
 Internal helper function used to skip over a string in a definition.
 
-Class Handler: class:word | Namespace: s | Interface Layer: all
-
+Class: class:word | Namespace: s | Interface Layer: all
 ----------------------------------------------------------------
 
 s:split
@@ -4242,8 +3947,7 @@ s:split
 
 Split a string on the first occurrance of the specified character.
 
-Class Handler: class:word | Namespace: s | Interface Layer: all
-
+Class: class:word | Namespace: s | Interface Layer: all
 ----------------------------------------------------------------
 
 s:split-on-string
@@ -4254,7 +3958,7 @@ s:split-on-string
 
 Split a string on the first occurrance of the specified string. After the split, the top stack item will be the part of the string before the specified subsring, and the second item will be the rest of the original string.
 
-Class Handler: class:word | Namespace: s | Interface Layer: all
+Class: class:word | Namespace: s | Interface Layer: all
 
 Example #1:
 
@@ -4270,8 +3974,7 @@ s:substr
 
 Extract a substring from the specified string. This will take the characters starting at `f` and extend `l` characters in length.
 
-Class Handler: class:word | Namespace: s | Interface Layer: all
-
+Class: class:word | Namespace: s | Interface Layer: all
 ----------------------------------------------------------------
 
 s:temp
@@ -4282,8 +3985,7 @@ s:temp
 
 Move a string into the temporary string buffers.
 
-Class Handler: class:word | Namespace: s | Interface Layer: all
-
+Class: class:word | Namespace: s | Interface Layer: all
 ----------------------------------------------------------------
 
 s:to-float
@@ -4294,8 +3996,7 @@ s:to-float
 
 Convert a string representation into a floating point value.
 
-Class Handler: class:word | Namespace: s | Interface Layer: rre
-
+Class: class:word | Namespace: s | Interface Layer: rre
 ----------------------------------------------------------------
 
 s:to-lower
@@ -4306,8 +4007,7 @@ s:to-lower
 
 Convert uppercase ASCII characters in a string to lowercase.
 
-Class Handler: class:word | Namespace: s | Interface Layer: all
-
+Class: class:word | Namespace: s | Interface Layer: all
 ----------------------------------------------------------------
 
 s:to-number
@@ -4318,8 +4018,7 @@ s:to-number
 
 Convert a string to a number.
 
-Class Handler: class:word | Namespace: s | Interface Layer: all
-
+Class: class:word | Namespace: s | Interface Layer: all
 ----------------------------------------------------------------
 
 s:to-upper
@@ -4330,8 +4029,7 @@ s:to-upper
 
 Convert lowercase ASCII characters in a string to uppercase.
 
-Class Handler: class:word | Namespace: s | Interface Layer: all
-
+Class: class:word | Namespace: s | Interface Layer: all
 ----------------------------------------------------------------
 
 s:tokenize
@@ -4342,8 +4040,7 @@ s:tokenize
 
 Takes a string and a character to use as a separator. It splits the string into a set of substrings and returns a set containing pointers to each of them.
 
-Class Handler: class:word | Namespace: {n/a} | Interface Layer: {n/a}
-
+Class: class:word | Namespace: {n/a} | Interface Layer: {n/a}
 ----------------------------------------------------------------
 
 s:tokenize-on-string
@@ -4354,8 +4051,7 @@ s:tokenize-on-string
 
 Takes a string (s1) and a substring (s2)  use as a separator. It splits the string into a set of substrings and returns a set containing pointers to each of them.
 
-Class Handler: class:word | Namespace: {n/a} | Interface Layer: {n/a}
-
+Class: class:word | Namespace: {n/a} | Interface Layer: {n/a}
 ----------------------------------------------------------------
 
 s:trim
@@ -4366,7 +4062,7 @@ s:trim
 
 Trim leading and trailing whitespace from a string.
 
-Class Handler: class:word | Namespace: s | Interface Layer: all
+Class: class:word | Namespace: s | Interface Layer: all
 
 Example #1:
 
@@ -4382,7 +4078,7 @@ s:trim-left
 
 Trim leading whitespace from a string.
 
-Class Handler: class:word | Namespace: s | Interface Layer: all
+Class: class:word | Namespace: s | Interface Layer: all
 
 Example #1:
 
@@ -4398,7 +4094,7 @@ s:trim-right
 
 Trim trailing whitespace from a string.
 
-Class Handler: class:word | Namespace: s | Interface Layer: all
+Class: class:word | Namespace: s | Interface Layer: all
 
 Example #1:
 
@@ -4414,7 +4110,7 @@ set-hook
 
 Patch the hook point in a2 to point to a1.
 
-Class Handler: class:word | Namespace: global | Interface Layer: all
+Class: class:word | Namespace: global | Interface Layer: all
 
 Example #1:
 
@@ -4432,8 +4128,7 @@ set:contains-string?
 
 Return `TRUE` if the string value is in the set or`FALSE` otherwise.
 
-Class Handler: class:word | Namespace: set | Interface Layer: all
-
+Class: class:word | Namespace: set | Interface Layer: all
 ----------------------------------------------------------------
 
 set:contains?
@@ -4444,8 +4139,7 @@ set:contains?
 
 Return `TRUE` if the value is in the set or `FALSE` otherwise.
 
-Class Handler: class:word | Namespace: set | Interface Layer: all
-
+Class: class:word | Namespace: set | Interface Layer: all
 ----------------------------------------------------------------
 
 set:counted-results
@@ -4456,8 +4150,7 @@ set:counted-results
 
 Run a quote and construct a new set from the returned values. The quote should return the values and the number of values to put into the set.
 
-Class Handler: class:word | Namespace: set | Interface Layer: all
-
+Class: class:word | Namespace: set | Interface Layer: all
 ----------------------------------------------------------------
 
 set:dup
@@ -4468,8 +4161,7 @@ set:dup
 
 Make a copy of a set. Return the address of the copy.
 
-Class Handler: class:word | Namespace: set | Interface Layer: all
-
+Class: class:word | Namespace: set | Interface Layer: all
 ----------------------------------------------------------------
 
 set:filter
@@ -4480,8 +4172,7 @@ set:filter
 
 For each item in the initial set, run the specified quote. If the quote returns `TRUE`, copy the item into a new set. If `FALSE`, discard it. Returns a pointer to the new set.
 
-Class Handler: class:word | Namespace: set | Interface Layer: all
-
+Class: class:word | Namespace: set | Interface Layer: all
 ----------------------------------------------------------------
 
 set:for-each
@@ -4492,8 +4183,7 @@ set:for-each
 
 Execute the quote once for each item in the set.
 
-Class Handler: class:word | Namespace: set | Interface Layer: all
-
+Class: class:word | Namespace: set | Interface Layer: all
 ----------------------------------------------------------------
 
 set:from-string
@@ -4504,8 +4194,7 @@ set:from-string
 
 Create a new set with the characters in the source string.
 
-Class Handler: class:word | Namespace: set | Interface Layer: all
-
+Class: class:word | Namespace: set | Interface Layer: all
 ----------------------------------------------------------------
 
 set:length
@@ -4516,8 +4205,7 @@ set:length
 
 Return the length of a set.
 
-Class Handler: class:word | Namespace: set | Interface Layer: all
-
+Class: class:word | Namespace: set | Interface Layer: all
 ----------------------------------------------------------------
 
 set:make
@@ -4528,8 +4216,7 @@ set:make
 
 Execute quote. Return a new set containing the values the quote leaves on the stack. This is identical to doing `set:counted-results set:reverse`
 
-Class Handler: class:word | Namespace: set | Interface Layer: all
-
+Class: class:word | Namespace: set | Interface Layer: all
 ----------------------------------------------------------------
 
 set:map
@@ -4540,8 +4227,7 @@ set:map
 
 Execute quote once for each item in the set. Constructs a new set from the value returned by the quote.
 
-Class Handler: class:word | Namespace: set | Interface Layer: all
-
+Class: class:word | Namespace: set | Interface Layer: all
 ----------------------------------------------------------------
 
 set:nth
@@ -4552,8 +4238,7 @@ set:nth
 
 Return the actual address of the nth item in the set.
 
-Class Handler: class:word | Namespace: set | Interface Layer: all
-
+Class: class:word | Namespace: set | Interface Layer: all
 ----------------------------------------------------------------
 
 set:reduce
@@ -4564,8 +4249,7 @@ set:reduce
 
 Takes a set, a starting value, and a quote. This will apply the quote to each item in the set; the quote should consume two values and return one.
 
-Class Handler: class:word | Namespace: set | Interface Layer: all
-
+Class: class:word | Namespace: set | Interface Layer: all
 ----------------------------------------------------------------
 
 set:reverse
@@ -4576,8 +4260,7 @@ set:reverse
 
 Reverse the order of items in a set. This will return a new set.
 
-Class Handler: class:word | Namespace: set | Interface Layer: all
-
+Class: class:word | Namespace: set | Interface Layer: all
 ----------------------------------------------------------------
 
 shift
@@ -4588,8 +4271,7 @@ shift
 
 Peform a bitwise shift of m by n bits. If n is positive, shift right. If negative, the shift will be to the left.
 
-Class Handler: class:primitive | Namespace: global | Interface Layer: all
-
+Class: class:primitive | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 sip
@@ -4600,8 +4282,7 @@ sip
 
 Run quote. After execution completes, put a copy of n back on top of the stack.
 
-Class Handler: class:word | Namespace: global | Interface Layer: all
-
+Class: class:word | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 sp
@@ -4612,7 +4293,7 @@ sp
 
 Display a space (`ASCII:SPACE`)
 
-Class Handler: class:word | Namespace: global | Interface Layer: all
+Class: class:word | Namespace: global | Interface Layer: all
 
 Example #1:
 
@@ -4629,7 +4310,7 @@ store
 
 Store a value into the specified address.
 
-Class Handler: class:primitive | Namespace: global | Interface Layer: all
+Class: class:primitive | Namespace: global | Interface Layer: all
 
 Example #1:
 
@@ -4646,8 +4327,7 @@ store-next
 
 Store a value into the specified address and return the next address.
 
-Class Handler: class:word | Namespace: global | Interface Layer: all
-
+Class: class:word | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 swap
@@ -4658,8 +4338,7 @@ swap
 
 Exchange the position of the top two items on the stack
 
-Class Handler: class:primitive | Namespace: global | Interface Layer: all
-
+Class: class:primitive | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 sys:argc
@@ -4670,8 +4349,7 @@ sys:argc
 
 Return the number of arguments passed to the program.
 
-Class Handler: class:word | Namespace: sys | Interface Layer: rre
-
+Class: class:word | Namespace: sys | Interface Layer: rre
 ----------------------------------------------------------------
 
 sys:argv
@@ -4682,8 +4360,7 @@ sys:argv
 
 Given an argument number, return the argument as a string.
 
-Class Handler: class:word | Namespace: sys | Interface Layer: rre
-
+Class: class:word | Namespace: sys | Interface Layer: rre
 ----------------------------------------------------------------
 
 tab
@@ -4694,8 +4371,7 @@ tab
 
 Display a tab (`ASCII:HT`)
 
-Class Handler: class:word | Namespace: global | Interface Layer: all
-
+Class: class:word | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 times
@@ -4706,7 +4382,7 @@ times
 
 Run the specified quote the specified number of times.
 
-Class Handler: class:word | Namespace: global | Interface Layer: all
+Class: class:word | Namespace: global | Interface Layer: all
 
 Example #1:
 
@@ -4722,8 +4398,7 @@ times<with-index>
 
 Run a quote the specified number of times, tracking the loop index in `I`.
 
-Class Handler: class:word | Namespace: global | Interface Layer: all
-
+Class: class:word | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 tri
@@ -4734,8 +4409,7 @@ tri
 
 Apply q1 against x, then q2 against a copy of x, and finally q3 against another copy of x.
 
-Class Handler: class:word | Namespace: global | Interface Layer: all
-
+Class: class:word | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 tri*
@@ -4746,8 +4420,7 @@ tri*
 
 Apply q1 against x, q2 against y, and q3 against z.
 
-Class Handler: class:word | Namespace: global | Interface Layer: all
-
+Class: class:word | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 tri@
@@ -4758,8 +4431,7 @@ tri@
 
 Apply q against x, then against y, and finally against z.
 
-Class Handler: class:word | Namespace: global | Interface Layer: all
-
+Class: class:word | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 tuck
@@ -4770,8 +4442,7 @@ tuck
 
 Put a copy of the top item on the stack under the second one.
 
-Class Handler: class:word | Namespace: global | Interface Layer: all
-
+Class: class:word | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 u:-INF
@@ -4782,8 +4453,7 @@ u:-INF
 
 {n/a}
 
-Class Handler: class:word | Namespace: {n/a} | Interface Layer: {n/a}
-
+Class: class:word | Namespace: {n/a} | Interface Layer: {n/a}
 ----------------------------------------------------------------
 
 u:-inf?
@@ -4794,8 +4464,7 @@ u:-inf?
 
 {n/a}
 
-Class Handler: class:word | Namespace: {n/a} | Interface Layer: {n/a}
-
+Class: class:word | Namespace: {n/a} | Interface Layer: {n/a}
 ----------------------------------------------------------------
 
 u:INF
@@ -4806,8 +4475,7 @@ u:INF
 
 {n/a}
 
-Class Handler: class:word | Namespace: {n/a} | Interface Layer: {n/a}
-
+Class: class:word | Namespace: {n/a} | Interface Layer: {n/a}
 ----------------------------------------------------------------
 
 u:MAX
@@ -4818,8 +4486,7 @@ u:MAX
 
 {n/a}
 
-Class Handler: class:word | Namespace: {n/a} | Interface Layer: {n/a}
-
+Class: class:word | Namespace: {n/a} | Interface Layer: {n/a}
 ----------------------------------------------------------------
 
 u:MIN
@@ -4830,8 +4497,7 @@ u:MIN
 
 {n/a}
 
-Class Handler: class:word | Namespace: {n/a} | Interface Layer: {n/a}
-
+Class: class:word | Namespace: {n/a} | Interface Layer: {n/a}
 ----------------------------------------------------------------
 
 u:NAN
@@ -4842,8 +4508,7 @@ u:NAN
 
 {n/a}
 
-Class Handler: class:word | Namespace: {n/a} | Interface Layer: {n/a}
-
+Class: class:word | Namespace: {n/a} | Interface Layer: {n/a}
 ----------------------------------------------------------------
 
 u:clip
@@ -4854,8 +4519,7 @@ u:clip
 
 {n/a}
 
-Class Handler: class:word | Namespace: {n/a} | Interface Layer: {n/a}
-
+Class: class:word | Namespace: {n/a} | Interface Layer: {n/a}
 ----------------------------------------------------------------
 
 u:inf?
@@ -4866,8 +4530,7 @@ u:inf?
 
 {n/a}
 
-Class Handler: class:word | Namespace: {n/a} | Interface Layer: {n/a}
-
+Class: class:word | Namespace: {n/a} | Interface Layer: {n/a}
 ----------------------------------------------------------------
 
 u:max?
@@ -4878,8 +4541,7 @@ u:max?
 
 {n/a}
 
-Class Handler: class:word | Namespace: {n/a} | Interface Layer: {n/a}
-
+Class: class:word | Namespace: {n/a} | Interface Layer: {n/a}
 ----------------------------------------------------------------
 
 u:min?
@@ -4890,8 +4552,7 @@ u:min?
 
 {n/a}
 
-Class Handler: class:word | Namespace: {n/a} | Interface Layer: {n/a}
-
+Class: class:word | Namespace: {n/a} | Interface Layer: {n/a}
 ----------------------------------------------------------------
 
 u:n?
@@ -4902,8 +4563,7 @@ u:n?
 
 {n/a}
 
-Class Handler: class:word | Namespace: {n/a} | Interface Layer: {n/a}
-
+Class: class:word | Namespace: {n/a} | Interface Layer: {n/a}
 ----------------------------------------------------------------
 
 u:nan?
@@ -4914,8 +4574,7 @@ u:nan?
 
 {n/a}
 
-Class Handler: class:word | Namespace: {n/a} | Interface Layer: {n/a}
-
+Class: class:word | Namespace: {n/a} | Interface Layer: {n/a}
 ----------------------------------------------------------------
 
 u:to-f
@@ -4926,8 +4585,7 @@ u:to-f
 
 {n/a}
 
-Class Handler: class:word | Namespace: {n/a} | Interface Layer: {n/a}
-
+Class: class:word | Namespace: {n/a} | Interface Layer: {n/a}
 ----------------------------------------------------------------
 
 u:zero?
@@ -4938,8 +4596,7 @@ u:zero?
 
 {n/a}
 
-Class Handler: class:word | Namespace: {n/a} | Interface Layer: {n/a}
-
+Class: class:word | Namespace: {n/a} | Interface Layer: {n/a}
 ----------------------------------------------------------------
 
 unhook
@@ -4950,7 +4607,7 @@ unhook
 
 Reset the hook point in a1 to the default definition.
 
-Class Handler: class:word | Namespace: global | Interface Layer: all
+Class: class:word | Namespace: global | Interface Layer: all
 
 Example #1:
 
@@ -4969,7 +4626,7 @@ unix:chdir
 
 Change the current working directory to the specified one.
 
-Class Handler: class:word | Namespace: unix | Interface Layer: rre
+Class: class:word | Namespace: unix | Interface Layer: rre
 
 Example #1:
 
@@ -4985,8 +4642,7 @@ unix:exec0
 
 Execute a process by running the application specified by s.
 
-Class Handler: class:word | Namespace: unix | Interface Layer: rre
-
+Class: class:word | Namespace: unix | Interface Layer: rre
 ----------------------------------------------------------------
 
 unix:exec1
@@ -4997,8 +4653,7 @@ unix:exec1
 
 Execute a process by running the application specified by s1. Pass s2 as an argument.
 
-Class Handler: class:word | Namespace: unix | Interface Layer: rre
-
+Class: class:word | Namespace: unix | Interface Layer: rre
 ----------------------------------------------------------------
 
 unix:exec2
@@ -5009,8 +4664,7 @@ unix:exec2
 
 Execute a process by running the application specified by s1. Pass s2 and s3 as arguments.
 
-Class Handler: class:word | Namespace: unix | Interface Layer: rre
-
+Class: class:word | Namespace: unix | Interface Layer: rre
 ----------------------------------------------------------------
 
 unix:exec3
@@ -5021,8 +4675,7 @@ unix:exec3
 
 Execute a process by running the application specified by s1. Pass s2, s3, and s4 as arguments.
 
-Class Handler: class:word | Namespace: unix | Interface Layer: rre
-
+Class: class:word | Namespace: unix | Interface Layer: rre
 ----------------------------------------------------------------
 
 unix:exit
@@ -5033,8 +4686,7 @@ unix:exit
 
 Exit the current process, returning the specified return code.
 
-Class Handler: class:word | Namespace: unix | Interface Layer: rre
-
+Class: class:word | Namespace: unix | Interface Layer: rre
 ----------------------------------------------------------------
 
 unix:fork
@@ -5045,8 +4697,7 @@ unix:fork
 
 Fork the current process. Returns a PID.
 
-Class Handler: class:word | Namespace: unix | Interface Layer: rre
-
+Class: class:word | Namespace: unix | Interface Layer: rre
 ----------------------------------------------------------------
 
 unix:getenv
@@ -5057,7 +4708,7 @@ unix:getenv
 
 Get an environment variable. Provide the name and an address to store it in.
 
-Class Handler: class:word | Namespace: unix | Interface Layer: rre
+Class: class:word | Namespace: unix | Interface Layer: rre
 
 Example #1:
 
@@ -5073,8 +4724,7 @@ unix:getpid
 
 Return the PID of the current process.
 
-Class Handler: class:word | Namespace: unix | Interface Layer: rre
-
+Class: class:word | Namespace: unix | Interface Layer: rre
 ----------------------------------------------------------------
 
 unix:io:n:put
@@ -5085,8 +4735,7 @@ unix:io:n:put
 
 Display a number (in base 10) to the standard output device. This is faster than `n:put`, but not portable.
 
-Class Handler: class:word | Namespace: unix:io | Interface Layer: rre
-
+Class: class:word | Namespace: unix:io | Interface Layer: rre
 ----------------------------------------------------------------
 
 unix:io:s:put
@@ -5097,8 +4746,7 @@ unix:io:s:put
 
 Display a string to stdout. This is faster than `s:put`, but not portable.
 
-Class Handler: class:word | Namespace: unix:io | Interface Layer: rre
-
+Class: class:word | Namespace: unix:io | Interface Layer: rre
 ----------------------------------------------------------------
 
 unix:kill
@@ -5109,8 +4757,7 @@ unix:kill
 
 Terminates a process. Takes a process and a signal to send.
 
-Class Handler: class:word | Namespace: unix | Interface Layer: rre
-
+Class: class:word | Namespace: unix | Interface Layer: rre
 ----------------------------------------------------------------
 
 unix:pclose
@@ -5121,8 +4768,7 @@ unix:pclose
 
 Close a pipe.
 
-Class Handler: class:word | Namespace: unix | Interface Layer: rre
-
+Class: class:word | Namespace: unix | Interface Layer: rre
 ----------------------------------------------------------------
 
 unix:popen
@@ -5133,8 +4779,7 @@ unix:popen
 
 Open a pipe. Takes a command to run, and a file mode (`file:R` or `file:W`; `file:R+` may work on some systems). Returns a file ID usable with words in the `file:` namespace.
 
-Class Handler: class:word | Namespace: unix | Interface Layer: rre
-
+Class: class:word | Namespace: unix | Interface Layer: rre
 ----------------------------------------------------------------
 
 unix:putenv
@@ -5145,7 +4790,7 @@ unix:putenv
 
 Takes a string in the form `name=value` and sets an environment variable named `name` to `value`.
 
-Class Handler: class:word | Namespace: unix | Interface Layer: rre
+Class: class:word | Namespace: unix | Interface Layer: rre
 
 Example #1:
 
@@ -5161,8 +4806,7 @@ unix:sleep
 
 Sleep for the specified number of seconds.
 
-Class Handler: class:word | Namespace: unix | Interface Layer: rre
-
+Class: class:word | Namespace: unix | Interface Layer: rre
 ----------------------------------------------------------------
 
 unix:system
@@ -5173,7 +4817,7 @@ unix:system
 
 Runs another application using the system shell and returns after execution is completed.
 
-Class Handler: class:word | Namespace: unix | Interface Layer: rre
+Class: class:word | Namespace: unix | Interface Layer: rre
 
 Example #1:
 
@@ -5189,8 +4833,7 @@ unix:wait
 
 Waits for a child process to complete. This maps to the wait() system call.
 
-Class Handler: class:word | Namespace: unix | Interface Layer: rre
-
+Class: class:word | Namespace: unix | Interface Layer: rre
 ----------------------------------------------------------------
 
 unix:write
@@ -5201,8 +4844,7 @@ unix:write
 
 Write a string to the specified file handle.
 
-Class Handler: class:word | Namespace: unix | Interface Layer: rre
-
+Class: class:word | Namespace: unix | Interface Layer: rre
 ----------------------------------------------------------------
 
 until
@@ -5213,7 +4855,7 @@ until
 
 Execute quote repeatedly while the quote returns a value of `FALSE`. The quote should return a flag of either `TRUE` or `FALSE`, though `until` will treat any non-zero value as `TRUE`.
 
-Class Handler: class:word | Namespace: global | Interface Layer: all
+Class: class:word | Namespace: global | Interface Layer: all
 
 Example #1:
 
@@ -5229,8 +4871,7 @@ v:dec
 
 Decrement the value stored at the specified address by 1.
 
-Class Handler: class:word | Namespace: v | Interface Layer: all
-
+Class: class:word | Namespace: v | Interface Layer: all
 ----------------------------------------------------------------
 
 v:dec-by
@@ -5241,8 +4882,7 @@ v:dec-by
 
 Decrement the value stored at the specified address by the specified value.
 
-Class Handler: class:word | Namespace: v | Interface Layer: all
-
+Class: class:word | Namespace: v | Interface Layer: all
 ----------------------------------------------------------------
 
 v:inc
@@ -5253,8 +4893,7 @@ v:inc
 
 Increment the value stored at the specified address by 1.
 
-Class Handler: class:word | Namespace: v | Interface Layer: all
-
+Class: class:word | Namespace: v | Interface Layer: all
 ----------------------------------------------------------------
 
 v:inc-by
@@ -5265,8 +4904,7 @@ v:inc-by
 
 Increment the value stored at the specified address by the specified value.
 
-Class Handler: class:word | Namespace: v | Interface Layer: all
-
+Class: class:word | Namespace: v | Interface Layer: all
 ----------------------------------------------------------------
 
 v:limit
@@ -5277,8 +4915,7 @@ v:limit
 
 Fetch the value stored at the address, then run `n:limit` against it, using the specified lower and upper bounds. Then store the resulting value back to the original address.
 
-Class Handler: class:word | Namespace: v | Interface Layer: all
-
+Class: class:word | Namespace: v | Interface Layer: all
 ----------------------------------------------------------------
 
 v:off
@@ -5289,8 +4926,7 @@ v:off
 
 Set a variable to 0.
 
-Class Handler: class:word | Namespace: v | Interface Layer: all
-
+Class: class:word | Namespace: v | Interface Layer: all
 ----------------------------------------------------------------
 
 v:on
@@ -5301,8 +4937,7 @@ v:on
 
 Set a variable to -1.
 
-Class Handler: class:word | Namespace: v | Interface Layer: all
-
+Class: class:word | Namespace: v | Interface Layer: all
 ----------------------------------------------------------------
 
 v:preserve
@@ -5313,8 +4948,7 @@ v:preserve
 
 Make a copy of the value at the address, then run the quote. Once the quote completes, restore the address to the specified value.
 
-Class Handler: class:word | Namespace: v | Interface Layer: all
-
+Class: class:word | Namespace: v | Interface Layer: all
 ----------------------------------------------------------------
 
 v:update-using
@@ -5325,8 +4959,7 @@ v:update-using
 
 Fetch a value from the specified address, then run the quotation with this value on the stack. Afterwards, store the returned value at the original address.
 
-Class Handler: class:word | Namespace: v | Interface Layer: all
-
+Class: class:word | Namespace: v | Interface Layer: all
 ----------------------------------------------------------------
 
 var
@@ -5337,7 +4970,7 @@ var
 
 Create a variable. The variable is initialized to 0.
 
-Class Handler: class:word | Namespace: global | Interface Layer: all
+Class: class:word | Namespace: global | Interface Layer: all
 
 Example #1:
 
@@ -5353,7 +4986,7 @@ var<n>
 
 Create a variable with the specified initial value.
 
-Class Handler: class:word | Namespace: global | Interface Layer: all
+Class: class:word | Namespace: global | Interface Layer: all
 
 Example #1:
 
@@ -5370,7 +5003,7 @@ while
 
 Execute quote repeatedly while the quote returns a `TRUE` value. The quote should return a flag of either `TRUE` or `FALSE`, though `while` will treat any non-zero value as `TRUE`.
 
-Class Handler: class:word | Namespace: global | Interface Layer: all
+Class: class:word | Namespace: global | Interface Layer: all
 
 Example #1:
 
@@ -5386,8 +5019,7 @@ xor
 
 Perform a bitwise XOR operation.
 
-Class Handler: class:primitive | Namespace: global | Interface Layer: all
-
+Class: class:primitive | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 {
@@ -5398,8 +5030,7 @@ Class Handler: class:primitive | Namespace: global | Interface Layer: all
 
 Begin a set. This is intended to make creating sets a bit cleaner than using a quotation and `set:counteh-results`.
 
-Class Handler: class:word | Namespace: set | Interface Layer: all
-
+Class: class:word | Namespace: set | Interface Layer: all
 ----------------------------------------------------------------
 
 {{
@@ -5410,8 +5041,7 @@ Class Handler: class:word | Namespace: set | Interface Layer: all
 
 Begin a lexically scoped area.
 
-Class Handler: class:word | Namespace: global | Interface Layer: all
-
+Class: class:word | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 }
@@ -5422,8 +5052,7 @@ Class Handler: class:word | Namespace: global | Interface Layer: all
 
 Complete a set begun by `{`. Returns a pointer to the data.
 
-Class Handler: class:word | Namespace: set | Interface Layer: all
-
+Class: class:word | Namespace: set | Interface Layer: all
 ----------------------------------------------------------------
 
 }as
@@ -5434,8 +5063,7 @@ Class Handler: class:word | Namespace: set | Interface Layer: all
 
 End an assembly section.
 
-Class Handler: class:macro | Namespace: global | Interface Layer: all
-
+Class: class:macro | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
 }}
@@ -5446,7 +5074,6 @@ Class Handler: class:macro | Namespace: global | Interface Layer: all
 
 End a lexically scoped area.
 
-Class Handler: class:word | Namespace: global | Interface Layer: all
-
+Class: class:word | Namespace: global | Interface Layer: all
 ----------------------------------------------------------------
 
