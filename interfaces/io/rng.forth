@@ -29,14 +29,20 @@ XOR/rotate/shift/rotate PNRG (See http://xoshiro.di.unimi.it/)
   :rotl (x--) !k [ @k n:negate shift ] [ #32 @k - shift ] bi or ;
   :res** (--n) @s0 #5 * #7 rotl #9 * ;
 ---reveal---
-  :random:xoroshiro128**  (-n)
-    @s1 #-9 shift !t
-    @s0 @s2 xor !s2
-    @s1 @s3 xor !s3
-    @s2 @s1 xor !s1
-    @s3 @s0 xor !s0
-    @t  @s2 xor !s2
-    @s3 #11 rotl !s3 
+  :random:xoroshiro128** (-n)
+    @s1 dup #-9 shift push
+    @s3 @s0 @s2
+    as{
+      'pudupoxo i
+      'pupu.... i
+      'pudupoxo i
+      'swposwpo i
+      'dupuxopu i
+      'pudupoxo i
+      'popopoxo i
+    }as
+    !s2 !s1 !s0
+    #11 rotl !s3
     res** ;
   :random:xoroshiro128**:set-seed (n-)
     seed #100 [ random:xoroshiro128** drop ] times ;
