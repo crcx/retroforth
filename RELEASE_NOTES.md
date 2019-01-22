@@ -52,6 +52,8 @@
 
 ## Documentation
 
+- add man pages
+
 ## Examples
 
 - add Buffer.forth
