@@ -1,3 +1,7 @@
+## Random Value
+
+Return a random value from /dev/urandom
+
 ~~~
 {{
   :random:byte 
@@ -36,5 +40,106 @@ XOR/rotate/shift/rotate PNRG (See http://xoshiro.di.unimi.it/)
     res** ;
   :random:xoroshiro128**:set-seed (n-)
     seed #100 [ random:xoroshiro128** drop ] times ;
+}}
+~~~
+
+## Mersenne Twister
+
+This is adapted from Samuel A. Falvo II's implementation. The
+original commentary follows:
+
+    As taken from ttp://en.wikipedia.org/wiki/Mersenne_twister 
+
+    I am aware of Wil Baden's sources, but I had difficulty 
+    getting it to compile under SwiftForth out of the box. 
+
+    This module exposes the following API: 
+
+    seeded ( uSeed -- ) 
+      Seeds the random number generator with the provided 32-bit,
+      unsigned value. 
+
+    probability ( -- u ) 
+      Returns a random value that falls in the range [0, 
+      $FFFFFFFF]. 
+
+    All other definitions are safe to shadow/redefine elsewhere. 
+
+    Copyright (c) 2010, Samuel A. Falvo II 
+    All rights reserved. 
+
+    Redistribution and use in source and binary forms, with or 
+    without modification, are permitted provided that the following 
+    conditions are met: 
+ 
+    * Redistributions of source code must retain the above copyright 
+      notice, this list of conditions and the following disclaimer. 
+ 
+    * Redistributions in binary form must reproduce the above 
+      copyright notice, this list of conditions and the following 
+      disclaimer in the documentation and/or other materials 
+      provided with the distribution. 
+
+    * Neither the name of Samuel A. Falvo II, Falvo Technical 
+      Solutions, nor the names of its contributors may be used to 
+      endorse or promote products derived from this software 
+      without specific prior written permission. 
+ 
+    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND 
+    CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, 
+    INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF 
+    MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE 
+    DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR 
+    CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, 
+    SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT 
+    LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF 
+    USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED 
+    AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT 
+    LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING 
+    IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF 
+    THE POSSIBILITY OF SUCH DAMAGE. 
+
+In adapting this, some concessions were made since RETRO only
+has signed 32-bit values.
+
+    random:mersenne:set-seed (n-) 
+      Seeds the random number generator with the provided 32-bit,
+      unsigned value. 
+
+    random:mersenne (-n) 
+      Returns a random value that falls in the range [0, 
+      n:MAX]. 
+
+~~~
+{{
+  'States d:create  #625 allot
+  'Index  var
+
+  :reset (n-)
+    &States over n:dec + dup fetch #30 shift swap fetch
+    xor #1812433253 * over + n:MAX and swap &States + store ;
+
+  :randomized (-)
+    #1 [ dup reset n:inc dup #624 gt? ] until drop ;
+
+  :y (n-y)
+    dup n:inc #624 mod &States + fetch n:MAX and
+    swap &States + fetch #-31 shift + ;
+
+  :altered (n-) 
+    dup y dup #1 and #1073741823 *
+    [ #2 / over #397 + #624 mod &States + fetch xor ] dip
+  xor swap &States + store ;
+
+  :scrambled (-)
+    #0 [ dup altered n:inc dup #624 gt? ] until drop ;
+---reveal---
+  :random:mersenne:set-seed (n-) 
+    !States  #0 !Index  randomized ;
+
+  :random:mersenne (-n)
+    @Index n:zero? &scrambled if @Index &States + fetch
+    dup #11 shift xor dup #-7 shift #1073741823 and xor dup #-15 shift
+    #2011365376 and xor dup #18 shift xor @Index n:inc #624 mod !Index ;
 }}
 ~~~

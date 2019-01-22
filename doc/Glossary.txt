@@ -3697,6 +3697,38 @@ Class Handler: class:word | Namespace: global | Interface Layer: all
 
 ----------------------------------------------------------------
 
+random:mersenne
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Return a random number using a mersenne shifter
+
+Class Handler: class:word | Namespace: random | Interface Layer: rre, ri
+
+Example #1:
+
+    {n/a}
+
+----------------------------------------------------------------
+
+random:mersenne:set-seed
+
+  Data:  n-
+  Addr:  -
+  Float: -
+
+Seed random:mersenne with the specified value
+
+Class Handler: class:word | Namespace: random | Interface Layer: rre, ri
+
+Example #1:
+
+    {n/a}
+
+----------------------------------------------------------------
+
 random:xoroshiro128**
 
   Data:  -n
