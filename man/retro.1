@@ -6,15 +6,27 @@
 .Nd "a modern, pragmatic forth development system"
 .Sh SYNOPSIS
 .Nm
-[options]
+.Op Fl h
+.Op Fl i 
+.Op Fl t
+.Op Fl f Ar filename
+.Op Fl u Ar filename
+.Op Ar filename Ar script-args
 .Sh DESCRIPTION
-RETRO is a modern, pragmatic Forth drawing influences from many
-sources. It's clean, elegant, tiny, and easy to grasp and adapt
-to various uses.
+RETRO is a modern, pragmatic Forth drawing influences from many sources.
+It's clean, elegant, tiny, and easy to grasp and adapt to various uses.
 
 .Nm
-is the main interface for interacting with
-Retro. It provides both an interactive and a 
-scripting model.
+is the main interface for interacting with Retro. It provides both
+an interactive and a scripting  model.
+.Sh OPTIONS
+.Bl -tag -width -indent
+.It Fl h Display a help screen
+.It Fl i Start Retro in interactive mode
+.It Fl t Run any test blocks in the loaded files
+.It Fl f Ar filename Run any code blocks in the specified file
+.It Fl u Ar filename Load and use the specified image file rather than the integral one
+.It filename script-args Run code blocks in a single file. Pass script-args to the code being run.
+.El
 .Sh AUTHORS
 .An Charles Childers Aq Mt crc@forthworks.com

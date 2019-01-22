@@ -2,6 +2,7 @@ PREFIX ?= /usr/local
 DATADIR ?= $(PREFIX)/share/RETRO12
 DOCSDIR ?= $(PREFIX)/share/doc/RETRO12
 EXAMPLESDIR ?= $(PREFIX)/share/examples/RETRO12
+MANDIR ?= $(PREFIX)/man/man1
 LIBM ?= -lm
 LIBCURSES ?= -lcurses
 
@@ -19,7 +20,7 @@ clean:
 	rm -f bin/*
 	find . -name "*.o" -type f -delete
 
-install: build install-data install-docs install-examples
+install: build install-data install-docs install-examples install-manpages
 	install -m 755 -d -- $(DESTDIR)$(PREFIX)/bin
 	install -c -m 755 bin/retro-embedimage $(DESTDIR)$(PREFIX)/bin/retro-embedimage
 	install -c -m 755 bin/retro-extend $(DESTDIR)$(PREFIX)/bin/retro-extend
@@ -59,6 +60,13 @@ install-docs:
 install-examples:
 	install -m 755 -d -- $(DESTDIR)$(EXAMPLESDIR)
 	cp -fpR example $(DESTDIR)$(EXAMPLESDIR)
+
+install-manpages:
+	install -c -m 644 man/retro.1 $(MANDIR)/retro.1
+	install -c -m 644 man/retro-ri.1 $(MANDIR)/retro-ri.1
+	install -c -m 644 man/retro-unu.1 $(MANDIR)/retro-unu.1
+	install -c -m 644 man/retro-muri.1 $(MANDIR)/retro-muri.1
+
 
 test: bin/retro
 	./bin/retro tests/test-core.forth
