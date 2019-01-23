@@ -118,8 +118,6 @@ If there are specific notes on interpret or compile time
 actions, or any examples, they will be displayed after
 the description.
 
-Note to self: This is horribly messy and should be rewritten.
-
 ~~~
 {{
   :s:putfmt (s-)   s:format s:put ;
@@ -154,6 +152,42 @@ Note to self: This is horribly messy and should be rewritten.
     example2 ;
 }}
 ~~~
+
+~~~
+{{
+  :s:putfmt (s-)   s:format s:put ;
+  :name            field:name    '<h1>%s</h1>\n\n           s:putfmt ;
+  :data            field:dstack  '<p>__Data:__%s</p>\n    s:putfmt ;
+  :address         field:astack  '<p>__Addr:__%s</p>\n    s:putfmt ;
+  :float           field:fstack  '<p>__Float:_%s</p>\n\n  s:putfmt ;
+  :description     field:descr   '<p>%s\n\n</p>           s:putfmt ;
+  :interpret-time  field:itime s:length 0; drop
+                   field:itime   '<p>Interpret_Time:\n__%s</p>\n\n s:putfmt ;
+  :compile-time    field:ctime s:length 0; drop
+                   field:ctime   '<p>Compile_Time:\n__%s</p>\n\n   s:putfmt ;
+  :|                               '_|_ s:put ;
+  :class           field:class     '<p>Class:_%s     s:putfmt ;
+  :namespace       field:namespace 'Namespace:_%s s:putfmt ;
+  :interface       field:interface 'Interface_Layer:_%s</p> s:putfmt ;
+  :example1        field:ex1 '{n/a} s:eq? not 0; drop
+                   field:ex1 s:format '<xmp>\nExample_#1:\n\n%s\n\n</xmp> s:putfmt ;
+  :example2        field:ex2 '{n/a} s:eq? not 0; drop
+                   field:ex2 s:format '<xmp>\nExample_#1:\n\n%s\n\n</xmp> s:putfmt ;
+---reveal---
+  :display-result<HTML>
+    name
+      data    (stack)
+      address (stack)
+      float   (stack)
+    description
+    interpret-time
+    compile-time
+    class | namespace | interface nl
+    example1
+    example2 ;
+}}
+~~~
+
 
 # Interactions
 
@@ -416,6 +450,13 @@ separator bar between each entry.
   [ s:keep !SourceLine display-result horizontal-line ] file:for-each-line ;
 ~~~
 
+### HTML
+
+~~~
+:export-html
+  'words.tsv [ s:keep !SourceLine  display-result<HTML> '<hr/> s:put nl ] file:for-each-line ;
+~~~
+
 ### TSV
 
 I also provide for exporting the tab separated file itself. This will
@@ -451,6 +492,7 @@ to use.
 :export-data
   TARGET
   'glossary [ export-glossary ] s:case
+  'html     [ export-html     ] s:case
   'tsv      [ export-tsv      ] s:case
   drop ;
 ~~~
