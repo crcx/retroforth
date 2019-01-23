@@ -184,15 +184,19 @@ There are five primary roles:
 ## Missing Words
 
 ~~~
-'GlossaryNames d:create  #4097 allot
+{{
+  'GlossaryNames d:create  #4097 allot
 
-:populate-names
-  #1 'words.tsv [ !SourceLine field:name s:keep over &GlossaryNames + store n:inc ] file:for-each-line
-  n:dec &GlossaryNames store ;
-
-:display-missing
-  'GLOSSARY-TOOL d:lookup fetch !Dictionary
-  populate-names [ d:name dup &GlossaryNames set:contains-string? [ drop ] [ s:put nl ] choose ] d:for-each ;
+  :restrict-scope  'GLOSSARY-TOOL d:lookup fetch !Dictionary ;
+  :record-name     !SourceLine field:name s:keep over &GlossaryNames + store ;
+  :populate-names  #1 'words.tsv [ record-name n:inc ] file:for-each-line
+                   n:dec &GlossaryNames store ;
+  :in-set?         dup &GlossaryNames set:contains-string? ;
+---reveal---
+  :display-missing
+    restrict-scope populate-names 
+    populate-names [ d:name in-set? [ drop ] [ s:put nl ] choose ] d:for-each ;
+}}
 ~~~
 
 
