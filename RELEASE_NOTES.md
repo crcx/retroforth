@@ -62,6 +62,7 @@
 - add CaptureOutput.forth
 - add DisplayNames.forth
 - add KeyValueStore.forth
+- add Marker.forth
 - add net_fetch.forth
 - add paste.forth
 - add Paste_to_Sprunge.forth
