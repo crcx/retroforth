@@ -47,6 +47,22 @@ Example #1:
 
 ------------------------------------------------------------------------
 
+-
+
+  Data:  nn-n
+  Addr:  -
+  Float: -
+
+Subtract `n2` from `n1` and return the result.
+
+Class: class:primitive | Namespace: global | Interface Layer: all
+
+Example #1:
+
+    #2 #1 - 
+
+------------------------------------------------------------------------
+
 ---reveal---
 
   Data:  -
@@ -646,6 +662,17 @@ K
 Access the grandparent loop index for the current loop. (For loops made using `times<with-index>`)
 
 Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+NoEcho
+
+  Data:  -a
+  Addr:  -
+  Float: -
+
+Variable. If TRUE, allow display of the "ok" prompt and startup banner.
+
+Class: class:word | Namespace: global | Interface Layer: rre
 ------------------------------------------------------------------------
 
 RewriteUnderscores
@@ -2681,6 +2708,28 @@ Return the number of I/O devices.
 Class: class:word | Namespace: {n/a} | Interface Layer: all
 ------------------------------------------------------------------------
 
+io:file-operation
+
+  Data:  ...n-
+  Addr:  -
+  Float: -
+
+Trigger a file I/O operation. This is not intended to be used directly.
+
+Class: class:word | Namespace: io | Interface Layer: rre
+------------------------------------------------------------------------
+
+io:float-operation
+
+  Data:  ...n-
+  Addr:  -
+  Float: -
+
+Trigger a floating point operation. This is not intended to be used directly.
+
+Class: class:word | Namespace: io | Interface Layer: rre
+------------------------------------------------------------------------
+
 io:invoke
 
   Data:  n-
@@ -2712,6 +2761,17 @@ io:scan-for
 Scan the I/O devices for a device with a specified ID. Returns the device number, or -1 if not found.
 
 Class: class:word | Namespace: {n/a} | Interface Layer: all
+------------------------------------------------------------------------
+
+io:unix-syscall
+
+  Data:  ...n-
+  Addr:  -
+  Float: -
+
+Trigger a Unix system call. This is not intended to be used directly.
+
+Class: class:word | Namespace: io | Interface Layer: rre
 ------------------------------------------------------------------------
 
 ios:list-fonts
