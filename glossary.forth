@@ -170,6 +170,7 @@ There are five primary roles:
 * export data
 * list missing words
 
+
 ## Describe a Word
 
 ~~~
@@ -178,6 +179,7 @@ There are five primary roles:
 :find-and-display-entry
  'words.tsv [ s:keep !SourceLine matched? [ display-result ] if ] file:for-each-line ;
 ~~~
+
 
 ## Missing Words
 
@@ -193,6 +195,7 @@ There are five primary roles:
   populate-names [ d:name dup &GlossaryNames set:contains-string? [ drop ] [ s:put nl ] choose ] d:for-each ;
 ~~~
 
+
 ## Add a Word
 
 This just adds a stub to the end of the words.tsv file.
@@ -200,14 +203,19 @@ You'll need to run the edit commands for each field to
 fully populate it.
 
 ~~~
-'FADD var
-
-:add-word
-  'words.tsv file:A file:open !FADD
-  TARGET '%s\t-\t-\t-\t{n/a}\t\t\tclass:word\t{n/a}\t{n/a}\t{n/a}\t{n/a}\t{n/a}\n s:format
-  [ @FADD file:write ] s:for-each
-  @FADD file:close ;
+{{
+  'ADD var
+  :template '%s\t-\t-\t-\t{n/a}\t\t\tclass:word\t{n/a}\t{n/a}\t{n/a}\t{n/a}\t{n/a}\n ;
+  :prepare  'words.tsv file:A file:open !ADD ;
+  :cleanup  @ADD file:close ;
+---reveal---
+  :add-word
+    prepare
+    TARGET template s:format [ @ADD file:write ] s:for-each
+    cleanup ;
+}}
 ~~~
+
 
 ## Delete a Word
 
