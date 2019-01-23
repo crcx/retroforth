@@ -16,6 +16,10 @@ not, just exit.
 sys:argc n:zero? [ #0 unix:exit ] if
 ~~~
 
+~~~
+:GLOSSARY-TOOL ;
+~~~
+
 If execution reaches this point there's at least one
 argument. I use a loop to store arguments into an array
 named `Args`.
@@ -172,6 +176,19 @@ There are five primary roles:
 
 :find-and-display-entry
  'words.tsv [ s:keep !SourceLine matched? [ display-result ] if ] file:for-each-line ;
+~~~
+
+## Missing Words
+
+~~~
+'GlossaryNames d:create  #4097 allot
+
+:populate-names
+  #1 'words.tsv [ !SourceLine field:name s:keep over &GlossaryNames + store n:inc ] file:for-each-line
+  n:dec &GlossaryNames store ;
+:display-missing
+  'GLOSSARY-TOOL d:lookup fetch !Dictionary
+  populate-names [ d:name dup &GlossaryNames set:contains-string? [ drop ] [ s:put nl ] choose ] d:for-each ;
 ~~~
 
 ## Add a Word
@@ -406,6 +423,7 @@ to use.
   'add_<wordname> s:put nl
   'edit_<field>_<wordname> s:put nl
   'export_<format> s:put nl
+  'missing s:put nl
   #32 [ $- c:put ] times nl
   'Editor_Fields: s:put nl
   '__name\n__dstack\n__astack\n__fstack\n s:format s:put
@@ -540,7 +558,8 @@ handle each case.
   'edit     [ handle-edit            ] s:case
   'add      [ add-word               ] s:case
   'delete   [ delete-entry           ] s:case
-  'serve    [ gopher:serve  ] s:case
+  'serve    [ gopher:serve           ] s:case
+  'missing  [ display-missing        ] s:case 
   drop show-help ;
 ~~~
 

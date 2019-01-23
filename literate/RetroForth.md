@@ -1337,7 +1337,7 @@ a flag.
     [ over eq? @F or !F ] set:for-each
     drop @F ;
 
-  :set:contains-string? (na-f)
+  :set:contains-string? (sa-f)
     &F v:off
     [ over s:eq? @F or !F ] set:for-each
     drop @F ;
