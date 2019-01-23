@@ -16,13 +16,17 @@ not, just exit.
 sys:argc n:zero? [ #0 unix:exit ] if
 ~~~
 
+To identify missing words, I need to be able to restrict the
+dictionary to the words prior to the ones added in this file.
+I define a placeholder that I can rely on as the first word,
+so I can patch the `Dictionary` as needed later.
+
 ~~~
 :GLOSSARY-TOOL ;
 ~~~
 
-If execution reaches this point there's at least one
-argument. I use a loop to store arguments into an array
-named `Args`.
+If execution reaches this point there's at least one argument. 
+I use a loop to store arguments into an array named `Args`.
 
 ~~~
 'Args d:create #32 allot
@@ -31,7 +35,9 @@ named `Args`.
   drop
 ~~~
 
-And then populate constants for each one I care about.
+Of the arguments, I only care about the first three. I am
+making copies of these here under names I can refer to
+later.
 
 ~~~
 #0 &Args + fetch 'QUERY   s:const
@@ -40,11 +46,11 @@ And then populate constants for each one I care about.
 ~~~
 
 
-# Data Set
+# Data File
 
-I like plain text formats, so the data is stored as a
-text file, with one line per word. Each line has a number
-of fields. These are tab separated. The fields are:
+I like plain text formats, so the data is stored as a plain text
+file, with one line per word. Each line has a number of fields.
+These are tab separated. The fields are:
 
     | name                       | 0
     | data stack                 | 1
@@ -59,42 +65,27 @@ of fields. These are tab separated. The fields are:
     | namespace                  | 10
     | interface                  | 11
 
-I use a variable named `SourceLine` to point to the
-current line contents.
+I use a variable named `SourceLine` to point to the current line
+contents.
 
 ~~~
 'SourceLine var
 ~~~
 
+I next define words to access each field. This involves helpers
+to skip over fields I'm not intersted in, a word to return a 
+specific field, and the top level wrappers over these.
+
+Rather than manually enter each of the field accessors, I am
+just listing them in a set and constructing the words via some
+simple code.
+
 ~~~
 {{
-~~~
-
-And a helper word to skip a specified number of fields.
-
-~~~
   :skip (n-) [ ASCII:HT s:split drop n:inc ] times ;
-~~~
-
-Then it's easy to add words to return each individual
-field. I use `skip` to implement `select`, which selects
-a specific field.
-
-~~~
   :select   (n-s)
     @SourceLine swap skip ASCII:HT s:split nip ;
-~~~
 
-And then named words to access each field I'm using a set to
-generate these. It makes it easier to add fields later.
-
-The other way would be to define them manually:
-
-    :field:name #0 select ;
-    :field:dstack #1 select ;
-    ...
-
-~~~
 ---reveal---
 
   #0 { 'name        'dstack     'astack     'fstack
@@ -106,6 +97,7 @@ The other way would be to define them manually:
     &class:word reclass n:inc ] set:for-each drop
 }}
 ~~~
+
 
 # Display an Entry
 
