@@ -168,6 +168,7 @@ There are five primary roles:
 * delete word
 * edit word
 * export data
+* list missing words
 
 ## Describe a Word
 
@@ -186,6 +187,7 @@ There are five primary roles:
 :populate-names
   #1 'words.tsv [ !SourceLine field:name s:keep over &GlossaryNames + store n:inc ] file:for-each-line
   n:dec &GlossaryNames store ;
+
 :display-missing
   'GLOSSARY-TOOL d:lookup fetch !Dictionary
   populate-names [ d:name dup &GlossaryNames set:contains-string? [ drop ] [ s:put nl ] choose ] d:for-each ;
@@ -210,15 +212,18 @@ fully populate it.
 ## Delete a Word
 
 ~~~
-'FNEW var
-
-:matched? (-f) field:name TARGET s:eq? ;
-
-:delete-entry
-  'words.new file:W file:open !FNEW
-  'words.tsv [ s:keep !SourceLine matched? [ @SourceLine [ @FNEW file:write ] s:for-each ASCII:LF @FNEW file:write ] -if ] file:for-each-line
-  @FNEW file:close
-  'mv_words.new_words.tsv unix:system ;
+{{
+  'NEW var
+  :matched? (-f) field:name TARGET s:eq? ;
+  :prepare       '/tmp/words.new file:W file:open !NEW ;
+  :keep-entry    @SourceLine [ @NEW file:write ] s:for-each ASCII:LF @NEW file:write ;
+  :cleanup       @NEW file:close 'mv_/tmp/words.new_words.tsv unix:system ;
+---reveal---
+  :delete-entry
+    prepare
+    'words.tsv [ s:keep !SourceLine matched? [ keep-entry ] -if ] file:for-each-line
+    cleanup ;
+}}
 ~~~
 
 ## Edit a Word
