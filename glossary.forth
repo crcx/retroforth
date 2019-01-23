@@ -157,11 +157,13 @@ the description.
 {{
   :s:putfmt (s-)   s:format s:put ;
   :s:putfmtx (s-)  s:format [ $< [ '&lt; s:put ] case $> [ '&gt; s:put ] case $& [ '&amp; s:put ] case c:put  ] s:for-each ;
-  :name            field:name    '<h1>%s</h1>\n\n           s:putfmtx ;
-  :data            field:dstack  '<p>__Data:__%s</p>\n    s:putfmt ;
-  :address         field:astack  '<p>__Addr:__%s</p>\n    s:putfmt ;
-  :float           field:fstack  '<p>__Float:_%s</p>\n\n  s:putfmt ;
-  :description     field:descr   '<p>%s\n\n</p>           s:putfmtx ;
+  :h1              '<h1> s:put s:putfmtx '</h1> ;
+  :p               '<p> s:put s:putfmtx '</p> ;
+  :name            field:name    '%s           h1 ;
+  :data            field:dstack  '__Data:__%s\n p   ;
+  :address         field:astack  '__Addr:__%s\n p   ; 
+  :float           field:fstack  '__Float:_%s\n\n p ;
+  :description     field:descr   '%s\n\n    p ;
   :interpret-time  field:itime s:length 0; drop
                    field:itime   '<p>Interpret_Time:\n__%s</p>\n\n s:putfmt ;
   :compile-time    field:ctime s:length 0; drop
