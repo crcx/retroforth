@@ -73,7 +73,7 @@ test: bin/retro
 
 # Targets for development/interactive usage
 
-glossary: doc/Glossary.txt
+glossary: doc/Glossary.txt doc/Glossary.html
 
 image: interfaces/image.c
 
@@ -135,6 +135,11 @@ doc/Glossary.txt: bin/retro words.tsv
 	LC_ALL=C sort -o sorted.tsv words.tsv
 	mv sorted.tsv words.tsv
 	./bin/retro glossary.forth export glossary >doc/Glossary.txt
+
+doc/Glossary.html: bin/retro words.tsv
+	LC_ALL=C sort -o sorted.tsv words.tsv
+	mv sorted.tsv words.tsv
+	./bin/retro glossary.forth export html >doc/Glossary.html
 
 interfaces/image.c: bin/retro-embedimage bin/retro-extend bin/retro-muri literate/RetroForth.md literate/Rx.md
 	./bin/retro-muri literate/Rx.md

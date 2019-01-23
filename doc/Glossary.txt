@@ -2016,9 +2016,9 @@ f:fetch
   Addr:  -
   Float: -n
 
-{n/a}
+Fetch a stored floating point value.
 
-Class: class:word | Namespace: {n/a} | Interface Layer: {n/a}
+Class: class:word | Namespace: f | Interface Layer: rre
 ------------------------------------------------------------------------
 
 f:floor
@@ -2208,9 +2208,9 @@ f:store
   Addr:  -
   Float: n-
 
-{n/a}
+Store a floating point value to the specified memory location.
 
-Class: class:word | Namespace: {n/a} | Interface Layer: {n/a}
+Class: class:word | Namespace: f | Interface Layer: rre
 ------------------------------------------------------------------------
 
 f:swap
@@ -2263,9 +2263,9 @@ f:to-u
   Addr:  -
   Float: n-
 
-{n/a}
+Encode the floating point value to an integer.
 
-Class: class:word | Namespace: {n/a} | Interface Layer: {n/a}
+Class: class:word | Namespace: f | Interface Layer: rre
 ------------------------------------------------------------------------
 
 f:tuck
@@ -2600,7 +2600,7 @@ hook
 
 Add a hook point into the current word. This should only be used as the first word in a definition.
 
-Class: class:macro | Namespace: {n/a} | Interface Layer: global
+Class: class:macro | Namespace: global | Interface Layer: global
 
 Example #1:
 
@@ -2688,7 +2688,7 @@ io:enumerate
 
 Return the number of I/O devices.
 
-Class: class:word | Namespace: {n/a} | Interface Layer: all
+Class: class:word | Namespace: io | Interface Layer: all
 ------------------------------------------------------------------------
 
 io:file-operation
@@ -2721,7 +2721,7 @@ io:invoke
 
 Invoke an interaction with an I/O device.
 
-Class: class:word | Namespace: {n/a} | Interface Layer: all
+Class: class:word | Namespace: io | Interface Layer: all
 ------------------------------------------------------------------------
 
 io:query
@@ -2732,7 +2732,7 @@ io:query
 
 Ask an I/O device to identify itself. Returns a version (m) and device ID (N).
 
-Class: class:word | Namespace: {n/a} | Interface Layer: all
+Class: class:word | Namespace: io | Interface Layer: all
 ------------------------------------------------------------------------
 
 io:scan-for
@@ -2743,7 +2743,7 @@ io:scan-for
 
 Scan the I/O devices for a device with a specified ID. Returns the device number, or -1 if not found.
 
-Class: class:word | Namespace: {n/a} | Interface Layer: all
+Class: class:word | Namespace: io | Interface Layer: all
 ------------------------------------------------------------------------
 
 io:unix-syscall
@@ -3225,7 +3225,7 @@ pb:length
 
 Return the length of the string on the pasteboard.
 
-Class: class:word | Namespace: {n/a} | Interface Layer: iOS
+Class: class:word | Namespace: pb | Interface Layer: iOS
 
 Example #1:
 
@@ -3241,7 +3241,7 @@ pb:set
 
 Copy a string to the pasteboard.
 
-Class: class:word | Namespace: pb | Interface Layer: iOS
+Class: class:word | Namespace: pb\n | Interface Layer: iOS
 ------------------------------------------------------------------------
 
 pop
@@ -4063,7 +4063,7 @@ s:tokenize
 
 Takes a string and a character to use as a separator. It splits the string into a set of substrings and returns a set containing pointers to each of them.
 
-Class: class:word | Namespace: {n/a} | Interface Layer: {n/a}
+Class: class:word | Namespace: s | Interface Layer: all
 ------------------------------------------------------------------------
 
 s:tokenize-on-string
@@ -4074,7 +4074,7 @@ s:tokenize-on-string
 
 Takes a string (s1) and a substring (s2)  use as a separator. It splits the string into a set of substrings and returns a set containing pointers to each of them.
 
-Class: class:word | Namespace: {n/a} | Interface Layer: {n/a}
+Class: class:word | Namespace: s | Interface Layer: all
 ------------------------------------------------------------------------
 
 s:trim
@@ -4474,9 +4474,9 @@ u:-INF
   Addr:  -
   Float: -
 
-{n/a}
+Constant. Negative infinity.  For encoded floating point values.
 
-Class: class:word | Namespace: {n/a} | Interface Layer: {n/a}
+Class: class:word | Namespace: u | Interface Layer: rre
 ------------------------------------------------------------------------
 
 u:-inf?
@@ -4485,9 +4485,9 @@ u:-inf?
   Addr:  -
   Float: -
 
-{n/a}
+Is encoded value negative infinity?
 
-Class: class:word | Namespace: {n/a} | Interface Layer: {n/a}
+Class: class:word | Namespace: u | Interface Layer: rre
 ------------------------------------------------------------------------
 
 u:INF
@@ -4496,9 +4496,9 @@ u:INF
   Addr:  -
   Float: -
 
-{n/a}
+Constant. Infinity. For encoded floating point values.
 
-Class: class:word | Namespace: {n/a} | Interface Layer: {n/a}
+Class: class:word | Namespace: u | Interface Layer: rre
 ------------------------------------------------------------------------
 
 u:MAX
@@ -4507,9 +4507,9 @@ u:MAX
   Addr:  -
   Float: -
 
-{n/a}
+Constant. Maximum value. For encoded floating point values.
 
-Class: class:word | Namespace: {n/a} | Interface Layer: {n/a}
+Class: class:word | Namespace: u | Interface Layer: rre
 ------------------------------------------------------------------------
 
 u:MIN
@@ -4518,9 +4518,9 @@ u:MIN
   Addr:  -
   Float: -
 
-{n/a}
+Constant. Minimum value. For encoded floating point values.
 
-Class: class:word | Namespace: {n/a} | Interface Layer: {n/a}
+Class: class:word | Namespace: u | Interface Layer: rre
 ------------------------------------------------------------------------
 
 u:NAN
@@ -4529,9 +4529,9 @@ u:NAN
   Addr:  -
   Float: -
 
-{n/a}
+Constant. Not a Number. For encoded floating point values.
 
-Class: class:word | Namespace: {n/a} | Interface Layer: {n/a}
+Class: class:word | Namespace: u | Interface Layer: rre
 ------------------------------------------------------------------------
 
 u:clip
@@ -4542,7 +4542,7 @@ u:clip
 
 {n/a}
 
-Class: class:word | Namespace: {n/a} | Interface Layer: {n/a}
+Class: class:word | Namespace: u | Interface Layer: rre
 ------------------------------------------------------------------------
 
 u:inf?
@@ -4551,9 +4551,9 @@ u:inf?
   Addr:  -
   Float: -
 
-{n/a}
+Is encoded value infinity?
 
-Class: class:word | Namespace: {n/a} | Interface Layer: {n/a}
+Class: class:word | Namespace: u | Interface Layer: rre
 ------------------------------------------------------------------------
 
 u:max?
@@ -4562,9 +4562,9 @@ u:max?
   Addr:  -
   Float: -
 
-{n/a}
+Is encoded value at the maximum?
 
-Class: class:word | Namespace: {n/a} | Interface Layer: {n/a}
+Class: class:word | Namespace: u | Interface Layer: rre
 ------------------------------------------------------------------------
 
 u:min?
@@ -4573,9 +4573,9 @@ u:min?
   Addr:  -
   Float: -
 
-{n/a}
+Is encoded value at the minimum?
 
-Class: class:word | Namespace: {n/a} | Interface Layer: {n/a}
+Class: class:word | Namespace: u | Interface Layer: rre
 ------------------------------------------------------------------------
 
 u:n?
@@ -4586,7 +4586,7 @@ u:n?
 
 {n/a}
 
-Class: class:word | Namespace: {n/a} | Interface Layer: {n/a}
+Class: class:word | Namespace: u | Interface Layer: rre
 ------------------------------------------------------------------------
 
 u:nan?
@@ -4595,9 +4595,9 @@ u:nan?
   Addr:  -
   Float: -
 
-{n/a}
+Is encoded value a Nan?
 
-Class: class:word | Namespace: {n/a} | Interface Layer: {n/a}
+Class: class:word | Namespace: u | Interface Layer: ree
 ------------------------------------------------------------------------
 
 u:to-f
@@ -4606,9 +4606,9 @@ u:to-f
   Addr:  -
   Float: -n
 
-{n/a}
+Decode an encoded floating point value.
 
-Class: class:word | Namespace: {n/a} | Interface Layer: {n/a}
+Class: class:word | Namespace: rre | Interface Layer: rre
 ------------------------------------------------------------------------
 
 u:zero?
@@ -4619,7 +4619,7 @@ u:zero?
 
 {n/a}
 
-Class: class:word | Namespace: {n/a} | Interface Layer: {n/a}
+Class: class:word | Namespace: u | Interface Layer: rre
 ------------------------------------------------------------------------
 
 unhook

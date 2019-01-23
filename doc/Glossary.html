@@ -2366,10 +2366,10 @@ Example #1:
 <p>  Float: -n
 
 </p>
-<p>{n/a}
+<p>Fetch a stored floating point value.
 
 </p>
-<p>Class: class:word | Namespace: {n/a} | Interface Layer: {n/a}</p>
+<p>Class: class:word | Namespace: f | Interface Layer: rre</p>
 <hr/>
 <h1>f:floor</h1>
 <p>  Data:  -
@@ -2592,10 +2592,10 @@ Example #1:
 <p>  Float: n-
 
 </p>
-<p>{n/a}
+<p>Store a floating point value to the specified memory location.
 
 </p>
-<p>Class: class:word | Namespace: {n/a} | Interface Layer: {n/a}</p>
+<p>Class: class:word | Namespace: f | Interface Layer: rre</p>
 <hr/>
 <h1>f:swap</h1>
 <p>  Data:  -
@@ -2657,10 +2657,10 @@ Example #1:
 <p>  Float: n-
 
 </p>
-<p>{n/a}
+<p>Encode the floating point value to an integer.
 
 </p>
-<p>Class: class:word | Namespace: {n/a} | Interface Layer: {n/a}</p>
+<p>Class: class:word | Namespace: f | Interface Layer: rre</p>
 <hr/>
 <h1>f:tuck</h1>
 <p>  Data:  -
@@ -3053,7 +3053,7 @@ Example #1:
 <p>Add a hook point into the current word. This should only be used as the first word in a definition.
 
 </p>
-<p>Class: class:macro | Namespace: {n/a} | Interface Layer: global</p>
+<p>Class: class:macro | Namespace: global | Interface Layer: global</p>
 <xmp>
 Example #1:
 
@@ -3155,7 +3155,7 @@ Example #1:
 <p>Return the number of I/O devices.
 
 </p>
-<p>Class: class:word | Namespace: {n/a} | Interface Layer: all</p>
+<p>Class: class:word | Namespace: io | Interface Layer: all</p>
 <hr/>
 <h1>io:file-operation</h1>
 <p>  Data:  ...n-
@@ -3194,7 +3194,7 @@ Example #1:
 <p>Invoke an interaction with an I/O device.
 
 </p>
-<p>Class: class:word | Namespace: {n/a} | Interface Layer: all</p>
+<p>Class: class:word | Namespace: io | Interface Layer: all</p>
 <hr/>
 <h1>io:query</h1>
 <p>  Data:  n-mN
@@ -3207,7 +3207,7 @@ Example #1:
 <p>Ask an I/O device to identify itself. Returns a version (m) and device ID (N).
 
 </p>
-<p>Class: class:word | Namespace: {n/a} | Interface Layer: all</p>
+<p>Class: class:word | Namespace: io | Interface Layer: all</p>
 <hr/>
 <h1>io:scan-for</h1>
 <p>  Data:  n-m
@@ -3220,7 +3220,7 @@ Example #1:
 <p>Scan the I/O devices for a device with a specified ID. Returns the device number, or -1 if not found.
 
 </p>
-<p>Class: class:word | Namespace: {n/a} | Interface Layer: all</p>
+<p>Class: class:word | Namespace: io | Interface Layer: all</p>
 <hr/>
 <h1>io:unix-syscall</h1>
 <p>  Data:  ...n-
@@ -3778,7 +3778,7 @@ Example #1:
 <p>Return the length of the string on the pasteboard.
 
 </p>
-<p>Class: class:word | Namespace: {n/a} | Interface Layer: iOS</p>
+<p>Class: class:word | Namespace: pb | Interface Layer: iOS</p>
 <xmp>
 Example #1:
 
@@ -3796,7 +3796,7 @@ pb
 <p>Copy a string to the pasteboard.
 
 </p>
-<p>Class: class:word | Namespace: pb | Interface Layer: iOS</p>
+<p>Class: class:word | Namespace: pb\n | Interface Layer: iOS</p>
 <hr/>
 <h1>pop</h1>
 <p>  Data:  -n
@@ -4754,7 +4754,7 @@ Example #1:
 <p>Takes a string and a character to use as a separator. It splits the string into a set of substrings and returns a set containing pointers to each of them.
 
 </p>
-<p>Class: class:word | Namespace: {n/a} | Interface Layer: {n/a}</p>
+<p>Class: class:word | Namespace: s | Interface Layer: all</p>
 <hr/>
 <h1>s:tokenize-on-string</h1>
 <p>  Data:  ss-a
@@ -4767,7 +4767,7 @@ Example #1:
 <p>Takes a string (s1) and a substring (s2)  use as a separator. It splits the string into a set of substrings and returns a set containing pointers to each of them.
 
 </p>
-<p>Class: class:word | Namespace: {n/a} | Interface Layer: {n/a}</p>
+<p>Class: class:word | Namespace: s | Interface Layer: all</p>
 <hr/>
 <h1>s:trim</h1>
 <p>  Data:  s-s
@@ -5232,10 +5232,10 @@ Example #1:
 <p>  Float: -
 
 </p>
-<p>{n/a}
+<p>Constant. Negative infinity.  For encoded floating point values.
 
 </p>
-<p>Class: class:word | Namespace: {n/a} | Interface Layer: {n/a}</p>
+<p>Class: class:word | Namespace: u | Interface Layer: rre</p>
 <hr/>
 <h1>u:-inf?</h1>
 <p>  Data:  u-f
@@ -5245,10 +5245,10 @@ Example #1:
 <p>  Float: -
 
 </p>
-<p>{n/a}
+<p>Is encoded value negative infinity?
 
 </p>
-<p>Class: class:word | Namespace: {n/a} | Interface Layer: {n/a}</p>
+<p>Class: class:word | Namespace: u | Interface Layer: rre</p>
 <hr/>
 <h1>u:INF</h1>
 <p>  Data:  -u
@@ -5258,10 +5258,10 @@ Example #1:
 <p>  Float: -
 
 </p>
-<p>{n/a}
+<p>Constant. Infinity. For encoded floating point values.
 
 </p>
-<p>Class: class:word | Namespace: {n/a} | Interface Layer: {n/a}</p>
+<p>Class: class:word | Namespace: u | Interface Layer: rre</p>
 <hr/>
 <h1>u:MAX</h1>
 <p>  Data:  -u
@@ -5271,10 +5271,10 @@ Example #1:
 <p>  Float: -
 
 </p>
-<p>{n/a}
+<p>Constant. Maximum value. For encoded floating point values.
 
 </p>
-<p>Class: class:word | Namespace: {n/a} | Interface Layer: {n/a}</p>
+<p>Class: class:word | Namespace: u | Interface Layer: rre</p>
 <hr/>
 <h1>u:MIN</h1>
 <p>  Data:  -u
@@ -5284,10 +5284,10 @@ Example #1:
 <p>  Float: -
 
 </p>
-<p>{n/a}
+<p>Constant. Minimum value. For encoded floating point values.
 
 </p>
-<p>Class: class:word | Namespace: {n/a} | Interface Layer: {n/a}</p>
+<p>Class: class:word | Namespace: u | Interface Layer: rre</p>
 <hr/>
 <h1>u:NAN</h1>
 <p>  Data:  -u
@@ -5297,10 +5297,10 @@ Example #1:
 <p>  Float: -
 
 </p>
-<p>{n/a}
+<p>Constant. Not a Number. For encoded floating point values.
 
 </p>
-<p>Class: class:word | Namespace: {n/a} | Interface Layer: {n/a}</p>
+<p>Class: class:word | Namespace: u | Interface Layer: rre</p>
 <hr/>
 <h1>u:clip</h1>
 <p>  Data:  u-U
@@ -5313,7 +5313,7 @@ Example #1:
 <p>{n/a}
 
 </p>
-<p>Class: class:word | Namespace: {n/a} | Interface Layer: {n/a}</p>
+<p>Class: class:word | Namespace: u | Interface Layer: rre</p>
 <hr/>
 <h1>u:inf?</h1>
 <p>  Data:  u-f
@@ -5323,10 +5323,10 @@ Example #1:
 <p>  Float: -
 
 </p>
-<p>{n/a}
+<p>Is encoded value infinity?
 
 </p>
-<p>Class: class:word | Namespace: {n/a} | Interface Layer: {n/a}</p>
+<p>Class: class:word | Namespace: u | Interface Layer: rre</p>
 <hr/>
 <h1>u:max?</h1>
 <p>  Data:  u-f
@@ -5336,10 +5336,10 @@ Example #1:
 <p>  Float: -
 
 </p>
-<p>{n/a}
+<p>Is encoded value at the maximum?
 
 </p>
-<p>Class: class:word | Namespace: {n/a} | Interface Layer: {n/a}</p>
+<p>Class: class:word | Namespace: u | Interface Layer: rre</p>
 <hr/>
 <h1>u:min?</h1>
 <p>  Data:  u-f
@@ -5349,10 +5349,10 @@ Example #1:
 <p>  Float: -
 
 </p>
-<p>{n/a}
+<p>Is encoded value at the minimum?
 
 </p>
-<p>Class: class:word | Namespace: {n/a} | Interface Layer: {n/a}</p>
+<p>Class: class:word | Namespace: u | Interface Layer: rre</p>
 <hr/>
 <h1>u:n?</h1>
 <p>  Data:  u-f
@@ -5365,7 +5365,7 @@ Example #1:
 <p>{n/a}
 
 </p>
-<p>Class: class:word | Namespace: {n/a} | Interface Layer: {n/a}</p>
+<p>Class: class:word | Namespace: u | Interface Layer: rre</p>
 <hr/>
 <h1>u:nan?</h1>
 <p>  Data:  u-f
@@ -5375,10 +5375,10 @@ Example #1:
 <p>  Float: -
 
 </p>
-<p>{n/a}
+<p>Is encoded value a Nan?
 
 </p>
-<p>Class: class:word | Namespace: {n/a} | Interface Layer: {n/a}</p>
+<p>Class: class:word | Namespace: u | Interface Layer: ree</p>
 <hr/>
 <h1>u:to-f</h1>
 <p>  Data:  u-
@@ -5388,10 +5388,10 @@ Example #1:
 <p>  Float: -n
 
 </p>
-<p>{n/a}
+<p>Decode an encoded floating point value.
 
 </p>
-<p>Class: class:word | Namespace: {n/a} | Interface Layer: {n/a}</p>
+<p>Class: class:word | Namespace: rre | Interface Layer: rre</p>
 <hr/>
 <h1>u:zero?</h1>
 <p>  Data:  u-f
@@ -5404,7 +5404,7 @@ Example #1:
 <p>{n/a}
 
 </p>
-<p>Class: class:word | Namespace: {n/a} | Interface Layer: {n/a}</p>
+<p>Class: class:word | Namespace: u | Interface Layer: rre</p>
 <hr/>
 <h1>unhook</h1>
 <p>  Data:  a-
