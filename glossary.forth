@@ -161,25 +161,26 @@ the description.
   :h1              '<h1> s:put s:putfmtx '</h1> s:put nl ;
   :div             '<div_style='margin-left:_1em;'> s:put call '</div> s:put nl ;
   :p               '<p> s:put s:putfmtx '</p> s:put nl ;
-  :b               '<p><b> s:put s:putfmtx '</b> s:put sp ;
+  :b               '<b> s:put s:putfmtx '</b> s:put sp ;
+  :bp              '<p><b> s:put s:putfmtx '</b> s:put sp ;
   :t               s:putfmtx '</p> s:put nl ;
   :name            field:name    '%s     h1 ;
-  :data            field:dstack  'Data:  b  '%s t ;
-  :address         field:astack  'Addr:  b  '%s t ; 
-  :float           field:fstack  'Float: b  '%s t ;
+  :data            field:dstack  'Data:  bp  '%s t ;
+  :address         field:astack  'Addr:  bp  '%s t ; 
+  :float           field:fstack  'Float: bp  '%s t ;
   :description     field:descr   '%s     p ;
   :interpret-time  field:itime s:length 0; drop
                    field:itime   '<p>Interpret_Time:\n__%s</p>\n\n s:putfmt ;
   :compile-time    field:ctime s:length 0; drop
                    field:ctime   '<p>Compile_Time:\n__%s</p>\n\n   s:putfmt ;
   :|                               '_|_ s:put ;
-  :class           field:class     '<p>Class:_%s     s:putfmt ;
-  :namespace       field:namespace 'Namespace:_%s s:putfmt ;
-  :interface       field:interface 'Interface_Layer:_%s</p> s:putfmt ;
+  :class           field:class     'Class: b '%s t ;
+  :namespace       field:namespace 'Namespace: b '%s t ;
+  :interface       field:interface 'Interface_Layer: 'b '%s t ;
   :example1        field:ex1 '{n/a} s:eq? not 0; drop
-                   field:ex1 s:format 'Example: p '<xmp>%s</xmp> s:putfmt ;
+                   field:ex1 s:format 'Example: bp '_ t '<xmp>%s</xmp> s:putfmt ;
   :example2        field:ex2 '{n/a} s:eq? not 0; drop
-                   field:ex2 s:format 'Example p '<xmp>%s</xmp> s:putfmt ;
+                   field:ex2 s:format 'Example bp '_ t '<xmp>%s</xmp> s:putfmt ;
 ---reveal---
   :display-result<HTML>
     name
