@@ -157,8 +157,8 @@ the description.
 {{
   :s:putfmt (s-)   s:format s:put ;
   :s:putfmtx (s-)  s:format [ $< [ '&lt; s:put ] case $> [ '&gt; s:put ] case $& [ '&amp; s:put ] case c:put  ] s:for-each ;
-  :h1              '<h1> s:put s:putfmtx '</h1> ;
-  :p               '<p> s:put s:putfmtx '</p> ;
+  :h1              '<h1> s:put s:putfmtx '</h1> s:put nl ;
+  :p               '<p> s:put s:putfmtx '</p> s:put nl ;
   :name            field:name    '%s           h1 ;
   :data            field:dstack  '__Data:__%s\n p   ;
   :address         field:astack  '__Addr:__%s\n p   ; 
