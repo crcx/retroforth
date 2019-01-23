@@ -3509,11 +3509,6 @@ random:mersenne
 Return a random number using a mersenne shifter
 
 Class: class:word | Namespace: random | Interface Layer: rre, ri
-
-Example #1:
-
-    {n/a}
-
 ------------------------------------------------------------------------
 
 random:mersenne:set-seed
@@ -3525,11 +3520,6 @@ random:mersenne:set-seed
 Seed random:mersenne with the specified value
 
 Class: class:word | Namespace: random | Interface Layer: rre, ri
-
-Example #1:
-
-    {n/a}
-
 ------------------------------------------------------------------------
 
 random:xoroshiro128**
@@ -3541,11 +3531,6 @@ random:xoroshiro128**
 Return a random number using xoroshiro128**
 
 Class: class:word | Namespace: random | Interface Layer: rre, ri
-
-Example #1:
-
-    {n/a}
-
 ------------------------------------------------------------------------
 
 random:xoroshiro128**:set-seed
@@ -3557,11 +3542,6 @@ random:xoroshiro128**:set-seed
 Seed random:xoroshiro128** with the specified value
 
 Class: class:word | Namespace: random | Interface Layer: rre, ri
-
-Example #1:
-
-    {n/a}
-
 ------------------------------------------------------------------------
 
 reclass
