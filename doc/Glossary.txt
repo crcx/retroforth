@@ -157,23 +157,6 @@ End the current definition.
 Class: class:macro | Namespace: global | Interface Layer: all
 ------------------------------------------------------------------------
 
-;
-
-  Data:  nn-n
-  Addr:  -
-  Float: -
-
-Subtract `n1` from `n2` and return the difference.
-
-Class: class:primitive | Namespace: global | Interface Layer: all
-
-Example #1:
-
-    #2 #1 -
-    #-10 #3 -
-
-------------------------------------------------------------------------
-
 ?dup
 
   Data:  n-nn || n-n

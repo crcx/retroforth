@@ -10,7 +10,6 @@
 /mod	nm-op	-	-	Divide `n` by `m` and return the result and remainder.			class:primitive	{n/a}	{n/a}	global	all	
 0;	n-n || n-	-	-	If `n` is zero, drop `n` and exit the current word. If non-zero, leave `n` alone and allow execution to continue.			class:macro	{n/a}	{n/a}	global	all	
 ;	-	-	-	End the current definition.			class:macro	{n/a}	{n/a}	global	all	
-;	nn-n	-	-	Subtract `n1` from `n2` and return the difference.			class:primitive	    #2 #1 -\n    #-10 #3 -	{n/a}	global	all	
 ?dup	n-nn || n-n	-	-	Duplicate top value on stack if not zero. If zero, do nothing.			class:word	    #1 ?dup\n    #0 ?dup	{n/a}	global	all	
 ASCII:ACK	-n	-	-	Constant. Refers to specific ASCII code.			class:data	{n/a}	{n/a}	ASCII	all	
 ASCII:BEL	-n	-	-	Constant. Refers to specific ASCII code.			class:data	{n/a}	{n/a}	ASCII	all	
