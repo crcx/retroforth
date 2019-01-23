@@ -155,42 +155,44 @@ the description.
 
 ~~~
 {{
-  :later           pop pop swap push push ;
+  :header          '<h1> s:put call '</h1> s:put nl ;
+  :paragraph       '<p>  s:put call '</p>  s:put nl ;
+  :div             '<div_style='margin-left:_1em;'> s:put call '</div> s:put nl ;
+  :br              '<br> s:put nl ;
   :s:putfmt (s-)   s:format s:put ;
   :s:putfmtx (s-)  s:format [ $< [ '&lt; s:put ] case $> [ '&gt; s:put ] case $& [ '&amp; s:put ] case c:put  ] s:for-each ;
   :h1              '<h1> s:put s:putfmtx '</h1> s:put nl ;
-  :div             '<div_style='margin-left:_1em;'> s:put call '</div> s:put nl ;
   :p               '<p> s:put s:putfmtx '</p> s:put nl ;
   :b               '<b> s:put s:putfmtx '</b> s:put sp ;
   :bp              '<p><b> s:put s:putfmtx '</b> s:put sp ;
   :t               s:putfmtx '</p> s:put nl ;
-  :name            field:name    '%s     h1 ;
-  :data            field:dstack  'Data:  bp  '%s t ;
-  :address         field:astack  'Addr:  bp  '%s t ; 
-  :float           field:fstack  'Float: bp  '%s t ;
-  :description     field:descr   '%s     p ;
+  :name            field:name  '%s s:putfmtx ;
+  :data            field:dstack  'Data:  b  '%s s:putfmtx ;
+  :address         field:astack  'Addr:  b  '%s s:putfmtx ; 
+  :float           field:fstack  'Float: b  '%s s:putfmtx ;
+  :description     field:descr   '%s     s:putfmtx ;
   :interpret-time  field:itime s:length 0; drop
                    field:itime   '<p>Interpret_Time:\n__%s</p>\n\n s:putfmt ;
   :compile-time    field:ctime s:length 0; drop
                    field:ctime   '<p>Compile_Time:\n__%s</p>\n\n   s:putfmt ;
   :|                               '_|_ s:put ;
-  :class           field:class     'Class: b '%s s:putfmt ;
-  :namespace       field:namespace 'Namespace: b '%s s:putfmt ;
-  :interface       field:interface 'Interface_Layer: b '%s t ;
+  :class           field:class     'Class:           b '%s s:putfmt ;
+  :namespace       field:namespace 'Namespace:       b '%s s:putfmt ;
+  :interface       field:interface 'Interface_Layer: b '%s s:putfmt ;
   :example1        field:ex1 '{n/a} s:eq? not 0; drop
                    field:ex1 s:format 'Example: bp '_ t '<xmp>%s</xmp> s:putfmt ;
   :example2        field:ex2 '{n/a} s:eq? not 0; drop
                    field:ex2 s:format 'Example bp '_ t '<xmp>%s</xmp> s:putfmt ;
 ---reveal---
   :display-result<HTML>
-    name
-    [ data    (stack)
-      address (stack)
-      float   (stack) ] div
-    description
+    [ name ] header
+    [ [ data    (stack) br
+        address (stack) br
+        float   (stack) ] paragraph ] div
+    [ description ] paragraph
     interpret-time
     compile-time
-    class | namespace | interface
+    [ class | namespace | interface ] paragraph
     example1
     example2 ;
 }}

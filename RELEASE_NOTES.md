@@ -54,6 +54,8 @@
 
 ## Documentation
 
+- refactor glossary tool
+- add HTML version of the Glossary
 - add man pages
 
 ## Examples
