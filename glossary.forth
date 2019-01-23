@@ -155,15 +155,19 @@ the description.
 
 ~~~
 {{
+  :later           pop pop swap push push ;
   :s:putfmt (s-)   s:format s:put ;
   :s:putfmtx (s-)  s:format [ $< [ '&lt; s:put ] case $> [ '&gt; s:put ] case $& [ '&amp; s:put ] case c:put  ] s:for-each ;
   :h1              '<h1> s:put s:putfmtx '</h1> s:put nl ;
+  :div             '<div_style='margin-left:_1em;'> s:put call '</div> s:put nl ;
   :p               '<p> s:put s:putfmtx '</p> s:put nl ;
-  :name            field:name    '%s           h1 ;
-  :data            field:dstack  '__Data:__%s\n p   ;
-  :address         field:astack  '__Addr:__%s\n p   ; 
-  :float           field:fstack  '__Float:_%s\n\n p ;
-  :description     field:descr   '%s\n\n    p ;
+  :b               '<p><b> s:put s:putfmtx '</b> s:put sp ;
+  :t               s:putfmtx '</p> s:put nl ;
+  :name            field:name    '%s     h1 ;
+  :data            field:dstack  'Data:  b  '%s t ;
+  :address         field:astack  'Addr:  b  '%s t ; 
+  :float           field:fstack  'Float: b  '%s t ;
+  :description     field:descr   '%s     p ;
   :interpret-time  field:itime s:length 0; drop
                    field:itime   '<p>Interpret_Time:\n__%s</p>\n\n s:putfmt ;
   :compile-time    field:ctime s:length 0; drop
@@ -173,15 +177,15 @@ the description.
   :namespace       field:namespace 'Namespace:_%s s:putfmt ;
   :interface       field:interface 'Interface_Layer:_%s</p> s:putfmt ;
   :example1        field:ex1 '{n/a} s:eq? not 0; drop
-                   field:ex1 s:format '<xmp>\nExample_#1:\n\n%s\n\n</xmp> s:putfmt ;
+                   field:ex1 s:format 'Example: p '<xmp>%s</xmp> s:putfmt ;
   :example2        field:ex2 '{n/a} s:eq? not 0; drop
-                   field:ex2 s:format '<xmp>\nExample_#1:\n\n%s\n\n</xmp> s:putfmt ;
+                   field:ex2 s:format 'Example p '<xmp>%s</xmp> s:putfmt ;
 ---reveal---
   :display-result<HTML>
     name
-      data    (stack)
+    [ data    (stack)
       address (stack)
-      float   (stack)
+      float   (stack) ] div
     description
     interpret-time
     compile-time
