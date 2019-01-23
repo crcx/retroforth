@@ -456,26 +456,34 @@ to use.
 
 ~~~
 :show-help
-  'RETRO_Glossary_Tool s:put nl
-  #32 [ $- c:put ] times nl
-  'describe_<wordname> s:put nl
-  'delete_<wordname> s:put nl
-  'add_<wordname> s:put nl
-  'edit_<field>_<wordname> s:put nl
-  'export_<format> s:put nl
-  'missing s:put nl
-  #32 [ $- c:put ] times nl
-  'Editor_Fields: s:put nl
-  '__name\n__dstack\n__astack\n__fstack\n s:format s:put
-  '__descr\n__itime\n__ctime\n__class\n s:format s:put
-  '__ex1\n__ex2\n__namespace\n__interface\n s:format s:put
-  #32 [ $- c:put ] times nl
-  'Export_Formats: s:put nl
-  '__glossary s:put nl
-  '__tsv      s:put nl
-  #32 [ $- c:put ] times nl
-
-;
+  { 'RETRO_Glossary_Tool
+    '--------------------------------
+    'describe_<wordname>
+    'delete_<wordname>
+    'add_<wordname>
+    'edit_<field>_<wordname>
+    'export_<format>
+    'missing
+    '--------------------------------
+    'Editor_Fields:
+    '__name
+    '__dstack
+    '__astack
+    '__fstack
+    '__descr
+    '__itime
+    '__ctime
+    '__class
+    '__ex1
+    '__ex2
+    '__namespace
+    '__interface
+    '--------------------------------
+    'Export_Formats:
+    '__glossary
+    '__tsv
+    '--------------------------------
+  } [ s:put nl ] set:for-each ;
 ~~~
 
 
