@@ -174,9 +174,9 @@ the description.
   :compile-time    field:ctime s:length 0; drop
                    field:ctime   '<p>Compile_Time:\n__%s</p>\n\n   s:putfmt ;
   :|                               '_|_ s:put ;
-  :class           field:class     'Class: b '%s t ;
-  :namespace       field:namespace 'Namespace: b '%s t ;
-  :interface       field:interface 'Interface_Layer: 'b '%s t ;
+  :class           field:class     'Class: b '%s s:putfmt ;
+  :namespace       field:namespace 'Namespace: b '%s s:putfmt ;
+  :interface       field:interface 'Interface_Layer: b '%s t ;
   :example1        field:ex1 '{n/a} s:eq? not 0; drop
                    field:ex1 s:format 'Example: bp '_ t '<xmp>%s</xmp> s:putfmt ;
   :example2        field:ex2 '{n/a} s:eq? not 0; drop
@@ -190,7 +190,7 @@ the description.
     description
     interpret-time
     compile-time
-    class | namespace | interface nl
+    class | namespace | interface
     example1
     example2 ;
 }}

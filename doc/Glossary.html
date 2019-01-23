@@ -4,10 +4,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Multiply `n1` by `n2` and return the result.</p>
-<b>Class:</b> class:primitive</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:primitive | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <p><b>Example:</b>  </p>
 <xmp>    #2 #6 *
     #-1 #100 *</xmp><hr/>
@@ -17,10 +14,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Add `n1` to `n2` and return the result.</p>
-<b>Class:</b> class:primitive</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:primitive | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <p><b>Example:</b>  </p>
 <xmp>    #1 #2 + </xmp><hr/>
 <h1>,</h1>
@@ -29,10 +23,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Store the specified value into the memory at `here` and increment `Heap` by 1.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <p><b>Example:</b>  </p>
 <xmp>    $a , $b , $c , #0 ,</xmp><hr/>
 <h1>-</h1>
@@ -41,10 +32,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Subtract `n2` from `n1` and return the result.</p>
-<b>Class:</b> class:primitive</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:primitive | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <p><b>Example:</b>  </p>
 <xmp>    #2 #1 - </xmp><hr/>
 <h1>---reveal---</h1>
@@ -53,10 +41,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Switch to the exposed (public) portion of a lexical namespace.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>-eq?</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> nn-f</p>
@@ -64,10 +49,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Compare two values for inequality. Returns `TRUE` if they are not equal or `FALSE` otherwise.</p>
-<b>Class:</b> class:primitive</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:primitive | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <p><b>Example:</b>  </p>
 <xmp>    #1 #2 -eq?
     $a $b -eq?</xmp><hr/>
@@ -77,10 +59,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Execute the quotation if the flag is `FALSE`.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>-if;</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> fq-</p>
@@ -88,10 +67,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Execute the quotation if the flag is `FALSE`. If false, also exit the word.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>/</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> mn-o</p>
@@ -99,10 +75,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Divide `m` by `n` and return the result.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>/mod</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> nm-op</p>
@@ -110,10 +83,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Divide `n` by `m` and return the result and remainder.</p>
-<b>Class:</b> class:primitive</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:primitive | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>0;</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> n-n || n-</p>
@@ -121,10 +91,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>If `n` is zero, drop `n` and exit the current word. If non-zero, leave `n` alone and allow execution to continue.</p>
-<b>Class:</b> class:macro</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:macro | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>;</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -</p>
@@ -132,10 +99,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>End the current definition.</p>
-<b>Class:</b> class:macro</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:macro | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>?dup</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> n-nn || n-n</p>
@@ -143,10 +107,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Duplicate top value on stack if not zero. If zero, do nothing.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <p><b>Example:</b>  </p>
 <xmp>    #1 ?dup
     #0 ?dup</xmp><hr/>
@@ -156,10 +117,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Constant. Refers to specific ASCII code.</p>
-<b>Class:</b> class:data</p>
- | <b>Namespace:</b> ASCII</p>
- | b</p>
-
+<b>Class:</b> class:data | <b>Namespace:</b> ASCII | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>ASCII:BEL</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -n</p>
@@ -167,10 +125,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Constant. Refers to specific ASCII code.</p>
-<b>Class:</b> class:data</p>
- | <b>Namespace:</b> ASCII</p>
- | b</p>
-
+<b>Class:</b> class:data | <b>Namespace:</b> ASCII | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>ASCII:BS</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -n</p>
@@ -178,10 +133,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Constant. Refers to specific ASCII code.</p>
-<b>Class:</b> class:data</p>
- | <b>Namespace:</b> ASCII</p>
- | b</p>
-
+<b>Class:</b> class:data | <b>Namespace:</b> ASCII | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>ASCII:CAN</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -n</p>
@@ -189,10 +141,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Constant. Refers to specific ASCII code.</p>
-<b>Class:</b> class:data</p>
- | <b>Namespace:</b> ASCII</p>
- | b</p>
-
+<b>Class:</b> class:data | <b>Namespace:</b> ASCII | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>ASCII:CR</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -n</p>
@@ -200,10 +149,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Constant. Refers to specific ASCII code.</p>
-<b>Class:</b> class:data</p>
- | <b>Namespace:</b> ASCII</p>
- | b</p>
-
+<b>Class:</b> class:data | <b>Namespace:</b> ASCII | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>ASCII:DC1</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -n</p>
@@ -211,10 +157,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Constant. Refers to specific ASCII code.</p>
-<b>Class:</b> class:data</p>
- | <b>Namespace:</b> ASCII</p>
- | b</p>
-
+<b>Class:</b> class:data | <b>Namespace:</b> ASCII | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>ASCII:DC2</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -n</p>
@@ -222,10 +165,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Constant. Refers to specific ASCII code.</p>
-<b>Class:</b> class:data</p>
- | <b>Namespace:</b> ASCII</p>
- | b</p>
-
+<b>Class:</b> class:data | <b>Namespace:</b> ASCII | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>ASCII:DC3</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -n</p>
@@ -233,10 +173,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Constant. Refers to specific ASCII code.</p>
-<b>Class:</b> class:data</p>
- | <b>Namespace:</b> ASCII</p>
- | b</p>
-
+<b>Class:</b> class:data | <b>Namespace:</b> ASCII | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>ASCII:DC4</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -n</p>
@@ -244,10 +181,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Constant. Refers to specific ASCII code.</p>
-<b>Class:</b> class:data</p>
- | <b>Namespace:</b> ASCII</p>
- | b</p>
-
+<b>Class:</b> class:data | <b>Namespace:</b> ASCII | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>ASCII:DEL</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -n</p>
@@ -255,10 +189,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Constant. Refers to specific ASCII code.</p>
-<b>Class:</b> class:data</p>
- | <b>Namespace:</b> ASCII</p>
- | b</p>
-
+<b>Class:</b> class:data | <b>Namespace:</b> ASCII | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>ASCII:DLE</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -n</p>
@@ -266,10 +197,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Constant. Refers to specific ASCII code.</p>
-<b>Class:</b> class:data</p>
- | <b>Namespace:</b> ASCII</p>
- | b</p>
-
+<b>Class:</b> class:data | <b>Namespace:</b> ASCII | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>ASCII:EM</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -n</p>
@@ -277,10 +205,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Constant. Refers to specific ASCII code.</p>
-<b>Class:</b> class:data</p>
- | <b>Namespace:</b> ASCII</p>
- | b</p>
-
+<b>Class:</b> class:data | <b>Namespace:</b> ASCII | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>ASCII:ENQ</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -n</p>
@@ -288,10 +213,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Constant. Refers to specific ASCII code.</p>
-<b>Class:</b> class:data</p>
- | <b>Namespace:</b> ASCII</p>
- | b</p>
-
+<b>Class:</b> class:data | <b>Namespace:</b> ASCII | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>ASCII:EOT</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -n</p>
@@ -299,10 +221,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Constant. Refers to specific ASCII code.</p>
-<b>Class:</b> class:data</p>
- | <b>Namespace:</b> ASCII</p>
- | b</p>
-
+<b>Class:</b> class:data | <b>Namespace:</b> ASCII | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>ASCII:ESC</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -n</p>
@@ -310,10 +229,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Constant. Refers to specific ASCII code.</p>
-<b>Class:</b> class:data</p>
- | <b>Namespace:</b> ASCII</p>
- | b</p>
-
+<b>Class:</b> class:data | <b>Namespace:</b> ASCII | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>ASCII:ETB</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -n</p>
@@ -321,10 +237,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Constant. Refers to specific ASCII code.</p>
-<b>Class:</b> class:data</p>
- | <b>Namespace:</b> ASCII</p>
- | b</p>
-
+<b>Class:</b> class:data | <b>Namespace:</b> ASCII | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>ASCII:ETX</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -n</p>
@@ -332,10 +245,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Constant. Refers to specific ASCII code.</p>
-<b>Class:</b> class:data</p>
- | <b>Namespace:</b> ASCII</p>
- | b</p>
-
+<b>Class:</b> class:data | <b>Namespace:</b> ASCII | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>ASCII:FF</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -n</p>
@@ -343,10 +253,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Constant. Refers to specific ASCII code.</p>
-<b>Class:</b> class:data</p>
- | <b>Namespace:</b> ASCII</p>
- | b</p>
-
+<b>Class:</b> class:data | <b>Namespace:</b> ASCII | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>ASCII:FS</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -n</p>
@@ -354,10 +261,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Constant. Refers to specific ASCII code.</p>
-<b>Class:</b> class:data</p>
- | <b>Namespace:</b> ASCII</p>
- | b</p>
-
+<b>Class:</b> class:data | <b>Namespace:</b> ASCII | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>ASCII:GS</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -n</p>
@@ -365,10 +269,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Constant. Refers to specific ASCII code.</p>
-<b>Class:</b> class:data</p>
- | <b>Namespace:</b> ASCII</p>
- | b</p>
-
+<b>Class:</b> class:data | <b>Namespace:</b> ASCII | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>ASCII:HT</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -n</p>
@@ -376,10 +277,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Constant. Refers to specific ASCII code.</p>
-<b>Class:</b> class:data</p>
- | <b>Namespace:</b> ASCII</p>
- | b</p>
-
+<b>Class:</b> class:data | <b>Namespace:</b> ASCII | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>ASCII:LF</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -n</p>
@@ -387,10 +285,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Constant. Refers to specific ASCII code.</p>
-<b>Class:</b> class:data</p>
- | <b>Namespace:</b> ASCII</p>
- | b</p>
-
+<b>Class:</b> class:data | <b>Namespace:</b> ASCII | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>ASCII:NAK</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -n</p>
@@ -398,10 +293,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Constant. Refers to specific ASCII code.</p>
-<b>Class:</b> class:data</p>
- | <b>Namespace:</b> ASCII</p>
- | b</p>
-
+<b>Class:</b> class:data | <b>Namespace:</b> ASCII | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>ASCII:NUL</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -n</p>
@@ -409,10 +301,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Constant. Refers to specific ASCII code.</p>
-<b>Class:</b> class:data</p>
- | <b>Namespace:</b> ASCII</p>
- | b</p>
-
+<b>Class:</b> class:data | <b>Namespace:</b> ASCII | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>ASCII:RS</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -n</p>
@@ -420,10 +309,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Constant. Refers to specific ASCII code.</p>
-<b>Class:</b> class:data</p>
- | <b>Namespace:</b> ASCII</p>
- | b</p>
-
+<b>Class:</b> class:data | <b>Namespace:</b> ASCII | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>ASCII:SI</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -n</p>
@@ -431,10 +317,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Constant. Refers to specific ASCII code.</p>
-<b>Class:</b> class:data</p>
- | <b>Namespace:</b> ASCII</p>
- | b</p>
-
+<b>Class:</b> class:data | <b>Namespace:</b> ASCII | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>ASCII:SO</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -n</p>
@@ -442,10 +325,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Constant. Refers to specific ASCII code.</p>
-<b>Class:</b> class:data</p>
- | <b>Namespace:</b> ASCII</p>
- | b</p>
-
+<b>Class:</b> class:data | <b>Namespace:</b> ASCII | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>ASCII:SOH</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -n</p>
@@ -453,10 +333,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Constant. Refers to specific ASCII code.</p>
-<b>Class:</b> class:data</p>
- | <b>Namespace:</b> ASCII</p>
- | b</p>
-
+<b>Class:</b> class:data | <b>Namespace:</b> ASCII | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>ASCII:SPACE</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -n</p>
@@ -464,10 +341,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Constant. Refers to specific ASCII code.</p>
-<b>Class:</b> class:data</p>
- | <b>Namespace:</b> ASCII</p>
- | b</p>
-
+<b>Class:</b> class:data | <b>Namespace:</b> ASCII | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>ASCII:STX</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -n</p>
@@ -475,10 +349,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Constant. Refers to specific ASCII code.</p>
-<b>Class:</b> class:data</p>
- | <b>Namespace:</b> ASCII</p>
- | b</p>
-
+<b>Class:</b> class:data | <b>Namespace:</b> ASCII | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>ASCII:SUB</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -n</p>
@@ -486,10 +357,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Constant. Refers to specific ASCII code.</p>
-<b>Class:</b> class:data</p>
- | <b>Namespace:</b> ASCII</p>
- | b</p>
-
+<b>Class:</b> class:data | <b>Namespace:</b> ASCII | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>ASCII:SYN</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -n</p>
@@ -497,10 +365,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Constant. Refers to specific ASCII code.</p>
-<b>Class:</b> class:data</p>
- | <b>Namespace:</b> ASCII</p>
- | b</p>
-
+<b>Class:</b> class:data | <b>Namespace:</b> ASCII | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>ASCII:US</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -n</p>
@@ -508,10 +373,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Constant. Refers to specific ASCII code.</p>
-<b>Class:</b> class:data</p>
- | <b>Namespace:</b> ASCII</p>
- | b</p>
-
+<b>Class:</b> class:data | <b>Namespace:</b> ASCII | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>ASCII:VT</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -n</p>
@@ -519,10 +381,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Constant. Refers to specific ASCII code.</p>
-<b>Class:</b> class:data</p>
- | <b>Namespace:</b> ASCII</p>
- | b</p>
-
+<b>Class:</b> class:data | <b>Namespace:</b> ASCII | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>Compiler</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -a</p>
@@ -530,10 +389,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Variable. Holds the compiler state. If TRUE, the compiler is active. If FALSE, it is not.</p>
-<b>Class:</b> class:data</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:data | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>Dictionary</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -a</p>
@@ -541,10 +397,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Variable. Holds a pointer to the most recent dictionary header.</p>
-<b>Class:</b> class:data</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:data | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>EOM</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -n</p>
@@ -552,10 +405,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Constant. Returns the last addressable memory address.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>FALSE</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -n</p>
@@ -563,10 +413,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Returns `0`, the value used to indicate a FALSE result.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>FREE</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -n</p>
@@ -574,10 +421,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Returns the number of cells available to your application. This is the amount of memory, less the already consumed portion and buffers mapped for RETRO's internal use.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>Heap</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -a</p>
@@ -585,10 +429,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Variable. Holds the address of the next available cell.</p>
-<b>Class:</b> class:data</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:data | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>I</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -n</p>
@@ -596,10 +437,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Access the loop index for the current loop. (For loops made using `times&lt;with-index&gt;`)</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>J</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -n</p>
@@ -607,10 +445,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Access the parent loop index for the current loop. (For loops made using `times&lt;with-index&gt;`)</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>K</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -n</p>
@@ -618,10 +453,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Access the grandparent loop index for the current loop. (For loops made using `times&lt;with-index&gt;`)</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>NoEcho</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -a</p>
@@ -629,10 +461,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Variable. If TRUE, allow display of the "ok" prompt and startup banner.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>RewriteUnderscores</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -a</p>
@@ -640,10 +469,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Variable. When set to `TRUE`, RETRO will replace underscores in strings with spaces. When `FALSE`, RETRO does not.</p>
-<b>Class:</b> class:data</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:data | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>STRINGS</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -a</p>
@@ -651,10 +477,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Return the address of the start of the temporary string pool.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>ScopeList</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -a</p>
@@ -662,10 +485,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Variable. This holds some information used by `{{` and `}}`.</p>
-<b>Class:</b> class:data</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:data | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>TRUE</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -n</p>
@@ -673,10 +493,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Returns `-1`, the value used to indicate a TRUE result.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>TempStringMax</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -a</p>
@@ -684,10 +501,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Variable. Holds the maximum length of a temporary string.</p>
-<b>Class:</b> class:data</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:data | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>TempStrings</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -a</p>
@@ -695,10 +509,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Variable. Holds the number of temporary strings.</p>
-<b>Class:</b> class:data</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:data | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>Version</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -a</p>
@@ -706,10 +517,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Variable. This stores the version number.</p>
-<b>Class:</b> class:data</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:data | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>[</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -</p>
@@ -717,10 +525,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Begin a quotation.</p>
-<b>Class:</b> class:macro</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:macro | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>]</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -</p>
@@ -728,10 +533,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>End a quotation.</p>
-<b>Class:</b> class:macro</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:macro | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>again</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -</p>
@@ -739,10 +541,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Close an unconditional loop. Branches back to the prior `repeat`.</p>
-<b>Class:</b> class:macro</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:macro | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>allot</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> n-</p>
@@ -750,10 +549,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Allocate the specified number of cells from the `Heap`.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <p><b>Example:</b>  </p>
 <xmp>    'Buffer d:create  #100 allot</xmp><hr/>
 <h1>and</h1>
@@ -762,10 +558,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Perform a bitwise AND operation between the two provided values.</p>
-<b>Class:</b> class:primitive</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:primitive | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>as{</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -f</p>
@@ -773,10 +566,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Begin an assembly section.</p>
-<b>Class:</b> class:macro</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:macro | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>banner</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -</p>
@@ -784,10 +574,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Display a welcome message on startup.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>bi</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> xqq-?</p>
@@ -795,10 +582,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Execute q1 against x, then execute q2 against a copy of x.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <p><b>Example:</b>  </p>
 <xmp>    #100 [ #10 * ] [ #10 - ] bi</xmp><hr/>
 <h1>bi*</h1>
@@ -807,10 +591,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Execute q1 against x and q2 against y.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <p><b>Example:</b>  </p>
 <xmp>    #10 #20 [ #2 * ] [ #10 / ] bi*</xmp><hr/>
 <h1>bi@</h1>
@@ -819,10 +600,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Execute q against x, then execute q against y.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <p><b>Example:</b>  </p>
 <xmp>    #10 #20 [ #3 * ] bi@</xmp><hr/>
 <h1>buffer:add</h1>
@@ -831,10 +609,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Append a value to the current buffer.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> buffer</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> buffer | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>buffer:empty</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -</p>
@@ -842,10 +617,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Reset the current buffer to an empty state.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> buffer</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> buffer | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>buffer:end</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -a</p>
@@ -853,10 +625,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Return a pointer to the current end of the active buffer.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> buffer</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> buffer | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>buffer:get</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -n</p>
@@ -864,10 +633,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Remove the last value from the current buffer.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> buffer</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> buffer | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>buffer:preserve</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> q-</p>
@@ -875,10 +641,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Save and restore the current buffer before and after executing the specified quote.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> buffer</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> buffer | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>buffer:set</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> a-</p>
@@ -886,10 +649,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Assign a new buffer as the current one.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> buffer</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> buffer | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>buffer:size</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -n</p>
@@ -897,10 +657,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Return the number of cells in the buffer.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> buffer</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> buffer | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>buffer:start</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -a</p>
@@ -908,10 +665,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Return the start address of the current buffer.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> buffer</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> buffer | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>bye</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -</p>
@@ -919,10 +673,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Exit RETRO.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>c:-consonant?</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> c-f</p>
@@ -930,10 +681,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Return TRUE if character is a not consonant or FALSE otherwise.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> c</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> c | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>c:-digit?</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> c-f</p>
@@ -941,10 +689,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Return TRUE if character is a not numeric digit or FALSE otherwise.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> c</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> c | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>c:-lowercase?</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> c-f</p>
@@ -952,10 +697,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Return TRUE if character is not lowercase or FALSE otherwise.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> c</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> c | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>c:-uppercase?</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> c-f</p>
@@ -963,10 +705,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Return TRUE if character is not uppercase or FALSE otherwise.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> c</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> c | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>c:-visible?</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> c-f</p>
@@ -974,10 +713,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Return TRUE if character is not printable or FALSE otherwise.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> c</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> c | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>c:-vowel?</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> c-f</p>
@@ -985,10 +721,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Return TRUE if character is not a vowel or FALSE otherwise.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> c</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> c | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>c:-whitespace?</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> c-f</p>
@@ -996,10 +729,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Return TRUE if character is not whitespace, or FALSE otherwise.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> c</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> c | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>c:consonant?</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> c-f</p>
@@ -1007,10 +737,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Return TRUE if character is a consonant or FALSE otherwise.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> c</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> c | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>c:digit?</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> c-f</p>
@@ -1018,10 +745,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Return TRUE if character is a numeric digit or FALSE otherwise.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> c</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> c | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>c:get</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -c</p>
@@ -1029,10 +753,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Read a single keypress.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>c:letter?</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> c-f</p>
@@ -1040,10 +761,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Return TRUE if character is an ASCII letter or FALSE otherwise.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> c</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> c | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>c:lowercase?</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> c-f</p>
@@ -1051,10 +769,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Return TRUE if character is lowercase or FALSE otherwise.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> c</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> c | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>c:put</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> c-</p>
@@ -1062,10 +777,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Display a single character.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>c:to-lower</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> c-c</p>
@@ -1073,10 +785,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Convert character to lowercase equivalent.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> c</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> c | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>c:to-number</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> c-n</p>
@@ -1084,10 +793,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Convert an ASCII digit character into the corresponding decimal value</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>c:to-string</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> c-s</p>
@@ -1095,10 +801,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Convert character into a string.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> c</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> c | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>c:to-upper</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> c-c</p>
@@ -1106,10 +809,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Convert character to uppercase equivalent.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> c</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> c | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>c:toggle-case</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> c-c</p>
@@ -1117,10 +817,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Convert an ASCII character to the opposite case.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> c</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> c | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>c:uppercase?</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> c-f</p>
@@ -1128,10 +825,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Return TRUE if character is uppercase or FALSE otherwise.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> c</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> c | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>c:visible?</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> c-f</p>
@@ -1139,10 +833,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Return TRUE if character is printable or FALSE otherwise.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> c</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> c | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>c:vowel?</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> c-f</p>
@@ -1150,10 +841,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Return TRUE if character is a vowel or FALSE otherwise.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> c</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> c | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>c:whitespace?</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> c-f</p>
@@ -1161,10 +849,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Return TRUE if character is whitespace, or FALSE otherwise.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> c</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> c | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>call</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> a-</p>
@@ -1172,10 +857,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Call a function.</p>
-<b>Class:</b> class:primitive</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:primitive | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>case</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> nmq- || nmq-n</p>
@@ -1183,10 +865,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>If `n` is equal to `m`, drop both and execute the specified quote before exiting the calling word. If not equal, leave `n` on the stack and let execution continue.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>choose</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> fqq-</p>
@@ -1194,10 +873,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Execute q1 if the flag is true (-1) or q2 if the flag is false (0). Only these flags are valid when using `choose`.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>class:data</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> n- || n-n</p>
@@ -1211,10 +887,7 @@
 <p>Compile Time:
   Compile the value or address as a literal into the current definition.</p>
 
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> class</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> class | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>class:macro</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> a-</p>
@@ -1228,10 +901,7 @@
 <p>Compile Time:
   Execute the function at the provided address.</p>
 
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> class</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> class | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>class:primitive</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> a-</p>
@@ -1245,10 +915,7 @@
 <p>Compile Time:
   Compile the machine code in the definiton into the current definition.</p>
 
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> class</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> class | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>class:word</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> a-</p>
@@ -1262,10 +929,7 @@
 <p>Compile Time:
   Compile a call to the specified address into the current definition.</p>
 
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> class</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> class | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>clock:day</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -n</p>
@@ -1273,10 +937,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Return the current day.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> clock</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> clock | <b>Interface Layer:</b> iOS</p>
 <hr/>
 <h1>clock:hour</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -n</p>
@@ -1284,10 +945,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Return the current hour.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> clock</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> clock | <b>Interface Layer:</b> iOS</p>
 <hr/>
 <h1>clock:minute</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -n</p>
@@ -1295,10 +953,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Return the current minute.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> clock</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> clock | <b>Interface Layer:</b> iOS</p>
 <hr/>
 <h1>clock:month</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -n</p>
@@ -1306,10 +961,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Return the current month.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> clock</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> clock | <b>Interface Layer:</b> iOS</p>
 <hr/>
 <h1>clock:second</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -n</p>
@@ -1317,10 +969,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Return the current second.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> clock</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> clock | <b>Interface Layer:</b> iOS</p>
 <hr/>
 <h1>clock:year</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -n</p>
@@ -1328,10 +977,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Return the current year.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> clock</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> clock | <b>Interface Layer:</b> iOS</p>
 <hr/>
 <h1>compile:call</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> a-</p>
@@ -1339,10 +985,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Compile a call to the specified address into the current definition.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> compile</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> compile | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>compile:jump</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> a-</p>
@@ -1350,10 +993,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Compile a jump to the specified address into the current definition.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> compile</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> compile | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>compile:lit</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> n-</p>
@@ -1361,10 +1001,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Compile the code to push a number to the stack into the current definition.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> compile</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> compile | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>compile:ret</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -</p>
@@ -1372,10 +1009,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Compile a return instruction into the current definition.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> compile</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> compile | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>compiling?</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -f</p>
@@ -1383,10 +1017,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Return `TRUE` if compiler is on or `FALSE` otherwise.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>const</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> ns-</p>
@@ -1394,10 +1025,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Create a constant returning the specified value.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>copy</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> sdl-</p>
@@ -1405,10 +1033,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Copy `l` cells from memory at `s` to the memory at `d`. These should not overlap.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>curry</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> nq-q</p>
@@ -1416,10 +1041,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Bind a value to a function and return a new quote that calls the bound action.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>d</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> n-</p>
@@ -1427,10 +1049,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Inline a numeric value to the current assembly segment.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>d:add-header</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> saa-</p>
@@ -1438,10 +1057,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Create a header. Provide a string (s) for the name, a pointer to the class handler (a1) and a pointer to the word definition (a2) Generally this won't be used directly.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> d</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> d | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>d:class</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> d-a</p>
@@ -1449,10 +1065,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Given a dictionary header, return the class field.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> d</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> d | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>d:create</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> s-</p>
@@ -1460,10 +1073,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Create a new dictionary header named the specified string. The new header will point to `here` and have a class of `class:data`.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> d</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> d | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>d:for-each</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> q-</p>
@@ -1471,10 +1081,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Execute the specified quote once for each header in the dictionary. Before running the quote, this also pushes a pointer to the header onto the stack.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> d</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> d | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>d:last</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -d</p>
@@ -1482,10 +1089,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Return the most recent dictionary header.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> d</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> d | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>d:last&lt;class&gt;</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -a</p>
@@ -1493,10 +1097,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Return a pointer to the class field of the most recent dictionary header.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> d</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> d | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>d:last&lt;name&gt;</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -s</p>
@@ -1504,10 +1105,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Return a pointer to the name field of the most recent dictionary header.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> d</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> d | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>d:last&lt;xt&gt;</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -a</p>
@@ -1515,10 +1113,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Return a pointer to the xt field of the most recent dictionary header.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> d</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> d | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>d:link</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> d-a</p>
@@ -1526,10 +1121,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Given a dictionary header, return the link field.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> d</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> d | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>d:lookup</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> s-d</p>
@@ -1537,10 +1129,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Lookup the specified name in the dictionary and return a pointer to its dictionary header. This returns zero if the word is not found.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> d</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> d | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>d:lookup-xt</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> a-d</p>
@@ -1548,10 +1137,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Lookup the specified address in the dictionary and return a pointer to its dictionary header. This returns zero if the word is not found.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> d</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> d | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>d:name</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> d-s</p>
@@ -1559,10 +1145,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Given a dictionary header, return the name field.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> d</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> d | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>d:words</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -</p>
@@ -1570,10 +1153,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Display a list of all named items in the `Dictionary`.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>d:words-with</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> s-</p>
@@ -1581,10 +1161,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Display a list of all named items in the `Dictionary` that contain the provided substring.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>d:xt</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> d-a</p>
@@ -1592,10 +1169,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Given a dictionary header, return the xt field.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> d</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> d | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>data</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -</p>
@@ -1603,10 +1177,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Change the class of the most recently defined word to `class:data`.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>depth</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -n</p>
@@ -1614,10 +1185,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Return the number of items on the stack.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>dip</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> nq-n</p>
@@ -1625,10 +1193,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Temporarily remove n from the stack, execute the quotation, and then restore n to the stack.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>does</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> q-</p>
@@ -1636,10 +1201,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Attach an action to the most recently created word. This is used in a manner similar to CREATE/DOES&gt; in traditional Forth.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>drop</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> n-</p>
@@ -1647,10 +1209,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Discard the top value on the stack.</p>
-<b>Class:</b> class:primitive</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:primitive | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>drop-pair</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> nn-</p>
@@ -1658,10 +1217,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Remove top two items on the stack.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>dump-stack</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -</p>
@@ -1669,10 +1225,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Display the items on the data stack.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>dup</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> n-nn</p>
@@ -1680,10 +1233,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Duplicate the top item on the stack.</p>
-<b>Class:</b> class:primitive</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:primitive | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>dup-pair</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> nm-nmnm</p>
@@ -1691,10 +1241,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Duplicate the top two items on the stack.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>eq?</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> nn-f</p>
@@ -1702,10 +1249,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Compare two values for equality. Returns `TRUE` if they are equal or `FALSE` otherwise.</p>
-<b>Class:</b> class:primitive</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:primitive | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <p><b>Example:</b>  </p>
 <xmp>    #1 #2 eq?
     $a $b eq?</xmp><hr/>
@@ -1715,10 +1259,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Error handler. Called when a word is not found by `interpret`.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> err</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> err | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>f:*</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -</p>
@@ -1726,10 +1267,7 @@
 <p><b>Float:</b> FF-F</p>
 </div>
 <p>Multiply two floating point numbers, returning the result.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> f</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> f | <b>Interface Layer:</b> rre</p>
 <p><b>Example:</b>  </p>
 <xmp>    .3.1415 .22 f:*</xmp><hr/>
 <h1>f:+</h1>
@@ -1738,10 +1276,7 @@
 <p><b>Float:</b> FF-F</p>
 </div>
 <p>Add two floating point numbers, returning the result.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> f</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> f | <b>Interface Layer:</b> rre</p>
 <p><b>Example:</b>  </p>
 <xmp>    .3.1 .22 f:+</xmp><hr/>
 <h1>f:-</h1>
@@ -1750,10 +1285,7 @@
 <p><b>Float:</b> FF-F</p>
 </div>
 <p>Subtract F2 from F1 returing the result.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> f</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> f | <b>Interface Layer:</b> rre</p>
 <p><b>Example:</b>  </p>
 <xmp>    .22.3 .0.12 f:-</xmp><hr/>
 <h1>f:-INF</h1>
@@ -1762,10 +1294,7 @@
 <p><b>Float:</b> -n</p>
 </div>
 <p>Return a value corresponding to negative infinity</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> f</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> f | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>f:-eq?</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -f</p>
@@ -1773,10 +1302,7 @@
 <p><b>Float:</b> FF-</p>
 </div>
 <p>Compare two floating point values for inequality. Returns `TRUE` if they are not equal or `FALSE` otherwise.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> f</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> f | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>f:-inf?</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -f</p>
@@ -1784,10 +1310,7 @@
 <p><b>Float:</b> F-</p>
 </div>
 <p>Return `TRUE` if floating point value is -INF or `FALSE` otherwise.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> f</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> f | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>f:/</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -</p>
@@ -1795,10 +1318,7 @@
 <p><b>Float:</b> FF-F</p>
 </div>
 <p>Divide floating point value F1 by F2.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> f</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> f | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>f:E</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -</p>
@@ -1806,10 +1326,7 @@
 <p><b>Float:</b> -F</p>
 </div>
 <p>Return the floating point value for Euler's number.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> f</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> f | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>f:INF</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -</p>
@@ -1817,10 +1334,7 @@
 <p><b>Float:</b> -n</p>
 </div>
 <p>Return a value corresponding to positive infinity</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> f</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> f | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>f:NAN</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -</p>
@@ -1828,10 +1342,7 @@
 <p><b>Float:</b> -n</p>
 </div>
 <p>Return a value corresponding to NaN</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> f</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> f | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>f:PI</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -</p>
@@ -1839,10 +1350,7 @@
 <p><b>Float:</b> -F</p>
 </div>
 <p>Return the floating point value for PI.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> f</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> f | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>f:abs</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -</p>
@@ -1850,10 +1358,7 @@
 <p><b>Float:</b> F-F</p>
 </div>
 <p>Return the absolute value for a floating point value.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> f</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> f | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>f:acos</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -</p>
@@ -1861,10 +1366,7 @@
 <p><b>Float:</b> f-f</p>
 </div>
 <p>Return the arc cosine of a floating point number.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> f</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> f | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>f:asin</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -</p>
@@ -1872,10 +1374,7 @@
 <p><b>Float:</b> f-f</p>
 </div>
 <p>Return the arc sine of a floating point number.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> f</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> f | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>f:atan</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -</p>
@@ -1883,10 +1382,7 @@
 <p><b>Float:</b> f-f</p>
 </div>
 <p>Return the arc tangent of a floating point number.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> f</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> f | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>f:ceiling</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -</p>
@@ -1894,10 +1390,7 @@
 <p><b>Float:</b> F-F</p>
 </div>
 <p>Return the smallest integral value greater than or equal to the specified value.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> f</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> f | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>f:cos</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -</p>
@@ -1905,10 +1398,7 @@
 <p><b>Float:</b> f-f</p>
 </div>
 <p>Return the cosine of a floating point number.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> f</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> f | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>f:depth</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -n</p>
@@ -1916,10 +1406,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Return the number of items on the floating point stack.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> f</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> f | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>f:drop</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -</p>
@@ -1927,10 +1414,7 @@
 <p><b>Float:</b> F-</p>
 </div>
 <p>Discard the top item on the floating point stack.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> f</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> f | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>f:dup</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -</p>
@@ -1938,10 +1422,7 @@
 <p><b>Float:</b> F-FF</p>
 </div>
 <p>Duplicate the top item on the floating point stack.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> f</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> f | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>f:eq?</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -f</p>
@@ -1949,10 +1430,7 @@
 <p><b>Float:</b> FF-</p>
 </div>
 <p>Compare two floating point values for equality. Returns `TRUE` if they are equal or `FALSE` otherwise.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> f</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> f | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>f:fetch</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> a-</p>
@@ -1960,10 +1438,7 @@
 <p><b>Float:</b> -n</p>
 </div>
 <p>Fetch a stored floating point value.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> f</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> f | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>f:floor</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -</p>
@@ -1971,10 +1446,7 @@
 <p><b>Float:</b> F-F</p>
 </div>
 <p>Perform a mathmatical floor operation on the floating point value.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> f</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> f | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>f:gt?</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -f</p>
@@ -1982,10 +1454,7 @@
 <p><b>Float:</b> FF-</p>
 </div>
 <p>Compare two floating point values for greater than.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> f</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> f | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>f:inf?</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -f</p>
@@ -1993,10 +1462,7 @@
 <p><b>Float:</b> F-</p>
 </div>
 <p>Return `TRUE` if floating point value is INF or `FALSE` otherwise.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> f</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> f | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>f:log</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -</p>
@@ -2004,10 +1470,7 @@
 <p><b>Float:</b> FF-F</p>
 </div>
 <p>Return log(F1) for base F2 for floating point values.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> f</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> f | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>f:lt?</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -f</p>
@@ -2015,10 +1478,7 @@
 <p><b>Float:</b> FF-</p>
 </div>
 <p>Compare two floating point values for less than.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> f</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> f | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>f:nan?</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -f</p>
@@ -2026,10 +1486,7 @@
 <p><b>Float:</b> F-</p>
 </div>
 <p>Return `TRUE` if floating point value is NaN or `FALSE` otherwise.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> f</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> f | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>f:negate</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -</p>
@@ -2037,10 +1494,7 @@
 <p><b>Float:</b> F-F</p>
 </div>
 <p>Invert the sign of the floating point value.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> f</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> f | <b>Interface Layer:</b> rre</p>
 <p><b>Example:</b>  </p>
 <xmp>    .3.1415 f:negate</xmp><hr/>
 <h1>f:negative?</h1>
@@ -2049,10 +1503,7 @@
 <p><b>Float:</b> F-</p>
 </div>
 <p>Return `TRUE` if floating point value is negative or `FALSE` if not.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> f</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> f | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>f:over</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -</p>
@@ -2060,10 +1511,7 @@
 <p><b>Float:</b> FG-FGF</p>
 </div>
 <p>Put a copy of the second floating point value over the top one.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> f</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> f | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>f:positive?</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -f</p>
@@ -2071,10 +1519,7 @@
 <p><b>Float:</b> F-</p>
 </div>
 <p>Return `TRUE` if floating point value is positive or `FALSE` otherwise.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> f</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> f | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>f:power</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -</p>
@@ -2082,10 +1527,7 @@
 <p><b>Float:</b> FF-F</p>
 </div>
 <p>Return F1^F2 for floating point values.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> f</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> f | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>f:put</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -</p>
@@ -2093,10 +1535,7 @@
 <p><b>Float:</b> F-</p>
 </div>
 <p>Display a floating point number.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>f:round</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -</p>
@@ -2104,10 +1543,7 @@
 <p><b>Float:</b> f-f</p>
 </div>
 <p>Round a floating point value.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> f</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> f | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>f:sin</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -</p>
@@ -2115,10 +1551,7 @@
 <p><b>Float:</b> F-F</p>
 </div>
 <p>Return the sine of a floating point number.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> f</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> f | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>f:sqrt</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -</p>
@@ -2126,10 +1559,7 @@
 <p><b>Float:</b> F-F</p>
 </div>
 <p>Return the square root of a floating point number.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> f</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> f | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>f:square</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -</p>
@@ -2137,10 +1567,7 @@
 <p><b>Float:</b> f-f</p>
 </div>
 <p>Return the square of a floating point number.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> f</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> f | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>f:store</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> a-</p>
@@ -2148,10 +1575,7 @@
 <p><b>Float:</b> n-</p>
 </div>
 <p>Store a floating point value to the specified memory location.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> f</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> f | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>f:swap</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -</p>
@@ -2159,10 +1583,7 @@
 <p><b>Float:</b> FG-GF</p>
 </div>
 <p>Exchange the top and second items on the floating point stack.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> f</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> f | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>f:tan</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -</p>
@@ -2170,10 +1591,7 @@
 <p><b>Float:</b> F-F</p>
 </div>
 <p>Return the tangent of a floating point number.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> f</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> f | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>f:to-number</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -n</p>
@@ -2181,10 +1599,7 @@
 <p><b>Float:</b> F-</p>
 </div>
 <p>Convert a floating point value into a number.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> f</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> f | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>f:to-string</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -s</p>
@@ -2192,10 +1607,7 @@
 <p><b>Float:</b> F-</p>
 </div>
 <p>Convert a floating point value into a string.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> f</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> f | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>f:to-u</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -u</p>
@@ -2203,10 +1615,7 @@
 <p><b>Float:</b> n-</p>
 </div>
 <p>Encode the floating point value to an integer.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> f</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> f | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>f:tuck</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -</p>
@@ -2214,10 +1623,7 @@
 <p><b>Float:</b> FG-GFG</p>
 </div>
 <p>Tuck a copy of the top floating point value under the second one.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> f</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> f | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>fetch</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> a-n</p>
@@ -2225,10 +1631,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Fetch the value stored at the specified address.</p>
-<b>Class:</b> class:primitive</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:primitive | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <p><b>Example:</b>  </p>
 <xmp>    &Version fetch</xmp><hr/>
 <h1>fetch-next</h1>
@@ -2237,10 +1640,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Fetch the value stored at the specified address. Returns the next address and the value.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>file:A</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -n</p>
@@ -2248,10 +1648,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Constant for opening a file in APPEND mode.</p>
-<b>Class:</b> class:data</p>
- | <b>Namespace:</b> file</p>
- | b</p>
-
+<b>Class:</b> class:data | <b>Namespace:</b> file | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>file:R</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -n</p>
@@ -2259,10 +1656,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Constant for opening a file in READ mode.</p>
-<b>Class:</b> class:data</p>
- | <b>Namespace:</b> file</p>
- | b</p>
-
+<b>Class:</b> class:data | <b>Namespace:</b> file | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>file:R+</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -n</p>
@@ -2270,10 +1664,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Constant for opening a file in READ &amp; WRITE mode.</p>
-<b>Class:</b> class:data</p>
- | <b>Namespace:</b> file</p>
- | b</p>
-
+<b>Class:</b> class:data | <b>Namespace:</b> file | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>file:W</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -n</p>
@@ -2281,10 +1672,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Constant for opening a file in WRITE mode.</p>
-<b>Class:</b> class:data</p>
- | <b>Namespace:</b> file</p>
- | b</p>
-
+<b>Class:</b> class:data | <b>Namespace:</b> file | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>file:close</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> h-</p>
@@ -2292,10 +1680,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Given a file handle, close the file.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> file</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> file | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>file:delete</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> s-</p>
@@ -2303,10 +1688,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Delete the named file.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> file</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> file | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>file:exists?</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> s-f</p>
@@ -2314,10 +1696,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Given a file name, return `TRUE` if it exists or `FALSE` if it does not.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> file</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> file | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>file:flush</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> h-</p>
@@ -2325,10 +1704,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Given a file handle, flush any pending writes to disk.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> file</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> file | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>file:for-each-line</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> sq-</p>
@@ -2336,10 +1712,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Given a file name, open it and run the quote once for each line in the file.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> file</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> file | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>file:open</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> sm-h</p>
@@ -2347,10 +1720,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Open a named file (s) with the given mode (m). Returns a handle identifying the file.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> file</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> file | <b>Interface Layer:</b> rre</p>
 <p><b>Example:</b>  </p>
 <xmp>  '/etc/motd file:R file:open</xmp><hr/>
 <h1>file:open&lt;for-append&gt;</h1>
@@ -2359,10 +1729,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Open a file for reading &amp; writing. Returns the size (NOS) and a file ID (TOS)</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> file</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> file | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>file:open&lt;for-reading&gt;</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> s-nn</p>
@@ -2370,10 +1737,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Open a file for reading. Returns the size (NOS) and a file ID (TOS)</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> file</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> file | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>file:open&lt;for-writing&gt;</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> s-nn</p>
@@ -2381,10 +1745,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Open a file for reading. Returns the file ID</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> file</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> file | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>file:read</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> h-c</p>
@@ -2392,10 +1753,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Given a file handle, read and return the next character in it.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> file</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> file | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>file:read-line</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> f-s</p>
@@ -2403,10 +1761,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Given a file handle, read a line and return a pointer to it.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> file</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> file | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>file:seek</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> nh-</p>
@@ -2414,10 +1769,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Move the current offset into a file to the specified one.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> file</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> file | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>file:size</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> h-n</p>
@@ -2425,10 +1777,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Given a file handle, return the size of the file (in bytes).</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> file</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> file | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>file:slurp</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> as-</p>
@@ -2436,10 +1785,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Given an address and a file name, read the file contents into memory starting at the address.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> file</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> file | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>file:spew</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> ss-</p>
@@ -2447,10 +1793,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Given a string (s1) and a file name (s2), write the string into the file, replacing any existing cotent.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> file</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> file | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>file:tell</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> h-n</p>
@@ -2458,10 +1801,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Given a file handle, return the current offset in the file.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> file</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> file | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>file:write</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> ch-</p>
@@ -2469,10 +1809,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Write a character to the file represented by the handle.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> file</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> file | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>gopher:get</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> asns-n</p>
@@ -2480,10 +1817,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Takes an address, a server, a port, and a selector. Fetch the resource and store it at address. Return the number of bytes received.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> gopher</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> gopher | <b>Interface Layer:</b> rre</p>
 <p><b>Example:</b>  </p>
 <xmp>    here 'forthworks.com #70 '/ gopher:get
     here s:put</xmp><hr/>
@@ -2493,10 +1827,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Compare n1 and n2. Return `TRUE` if n1 is greater than n2, or `FALSE` otherwise.</p>
-<b>Class:</b> class:primitive</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:primitive | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>gteq?</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> nn-f</p>
@@ -2504,10 +1835,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Compare n1 and n2. Return `TRUE` if n1 is greater than or equal to n2, or `FALSE` otherwise.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>here</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -a</p>
@@ -2515,10 +1843,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Return the next free address in memory.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>hook</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -</p>
@@ -2526,10 +1851,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Add a hook point into the current word. This should only be used as the first word in a definition.</p>
-<b>Class:</b> class:macro</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:macro | <b>Namespace:</b> global | <b>Interface Layer:</b> global</p>
 <p><b>Example:</b>  </p>
 <xmp>    :foo hook ;</xmp><hr/>
 <h1>i</h1>
@@ -2538,10 +1860,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Assemble the instructions specified by the string into the current assembly scope.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>if</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> fq-</p>
@@ -2549,10 +1868,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Execute the quote if the flag is `TRUE`.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>if;</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> fq-</p>
@@ -2560,10 +1876,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Execute the quotation if the flag is `TRUE`. If true, also exit the word.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>immediate</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -</p>
@@ -2571,10 +1884,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Change the class of the most recently defined word to `class:macro`.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>include</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> s-</p>
@@ -2582,10 +1892,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Run the code in the specified file. </p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>interpret</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> s-</p>
@@ -2593,10 +1900,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Interpret a single input token.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <p><b>Example:</b>  </p>
 <xmp>    '#100 interpret
     'words interpret</xmp><hr/>
@@ -2606,10 +1910,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Return the number of I/O devices.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> io</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> io | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>io:file-operation</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> ...n-</p>
@@ -2617,10 +1918,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Trigger a file I/O operation. This is not intended to be used directly.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> io</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> io | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>io:float-operation</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> ...n-</p>
@@ -2628,10 +1926,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Trigger a floating point operation. This is not intended to be used directly.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> io</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> io | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>io:invoke</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> n-</p>
@@ -2639,10 +1934,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Invoke an interaction with an I/O device.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> io</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> io | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>io:query</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> n-mN</p>
@@ -2650,10 +1942,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Ask an I/O device to identify itself. Returns a version (m) and device ID (N).</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> io</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> io | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>io:scan-for</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> n-m</p>
@@ -2661,10 +1950,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Scan the I/O devices for a device with a specified ID. Returns the device number, or -1 if not found.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> io</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> io | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>io:unix-syscall</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> ...n-</p>
@@ -2672,10 +1958,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Trigger a Unix system call. This is not intended to be used directly.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> io</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> io | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>ios:list-fonts</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -</p>
@@ -2683,10 +1966,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Display a list of all installed fonts.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> ios</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> ios | <b>Interface Layer:</b> iOS</p>
 <hr/>
 <h1>listen</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -</p>
@@ -2694,10 +1974,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Run interactive "listener" (a REPL).</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>lt?</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> nn-f</p>
@@ -2705,10 +1982,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Compare n1 and n2. Return `TRUE` if n1 is less than n2, or `FALSE` otherwise.</p>
-<b>Class:</b> class:primitive</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:primitive | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>lteq?</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> nn-f</p>
@@ -2716,10 +1990,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Compare n1 and n2. Return `TRUE` if n1 is less than or equal to n2, or `FALSE` otherwise.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>mod</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> nm-o</p>
@@ -2727,10 +1998,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Divide `n` by `m` and return the remainder.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>n:-zero?</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> n-f</p>
@@ -2738,10 +2006,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Return `TRUE` if number is not zero, or `FALSE` otherwise.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> n</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> n | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>n:MAX</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -n</p>
@@ -2749,10 +2014,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Return the maximum value that will fit in a cell.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> n</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> n | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>n:MIN</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -n</p>
@@ -2760,10 +2022,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Return the minimum value that will fit in a cell.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> n</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> n | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>n:abs</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> n-n</p>
@@ -2771,10 +2030,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Return the absolute value of a number.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> n</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> n | <b>Interface Layer:</b> all</p>
 <p><b>Example:</b>  </p>
 <xmp>    #10 n:abs
     #-10 n:abs
@@ -2785,10 +2041,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Return TRUE if number is between the lower (l) and upper (u) bounds. If not, return FALSE. This is inclusive of the limits.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> n</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> n | <b>Interface Layer:</b> all</p>
 <p><b>Example:</b>  </p>
 <xmp>    #3 #1 #100 n:between?
     $q $a $b   n:between?</xmp><hr/>
@@ -2798,10 +2051,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Decrement n by one.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> n</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> n | <b>Interface Layer:</b> all</p>
 <p><b>Example:</b>  </p>
 <xmp>    #100 n:dec</xmp><hr/>
 <h1>n:even?</h1>
@@ -2810,10 +2060,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Return `TRUE` if number is even, or `FALSE` if not.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> n</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> n | <b>Interface Layer:</b> all</p>
 <p><b>Example:</b>  </p>
 <xmp>    #12 n:even?
     #11 n:even?</xmp><hr/>
@@ -2823,10 +2070,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Increment n by one.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> n</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> n | <b>Interface Layer:</b> all</p>
 <p><b>Example:</b>  </p>
 <xmp>    #100 n:inc</xmp><hr/>
 <h1>n:limit</h1>
@@ -2835,10 +2079,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Return n if it is within the lower (l) and upper (u) bounds. If outside the bounds, return the closes boundary value.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> n</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> n | <b>Interface Layer:</b> all</p>
 <p><b>Example:</b>  </p>
 <xmp>    #-10 #5 #8 n:limit
     #10  #1 #15 n:limit</xmp><hr/>
@@ -2848,10 +2089,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Return the greater of two values.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> n</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> n | <b>Interface Layer:</b> all</p>
 <p><b>Example:</b>  </p>
 <xmp>    #1 #7 n:max
     #-8 #-10 n:max</xmp><hr/>
@@ -2861,10 +2099,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Return the lesser of two values.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> n</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> n | <b>Interface Layer:</b> all</p>
 <p><b>Example:</b>  </p>
 <xmp>    #1 #7 n:min
     #-8 #-10 n:min</xmp><hr/>
@@ -2874,10 +2109,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Invert the sign of a number.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> n</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> n | <b>Interface Layer:</b> all</p>
 <p><b>Example:</b>  </p>
 <xmp>    #10 n:negate
     #-10 n:negate</xmp><hr/>
@@ -2887,10 +2119,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Return `TRUE` if number is negative, or `FALSE` if not.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> n</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> n | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>n:odd?</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> n-f</p>
@@ -2898,10 +2127,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Return `TRUE` if number is odd, or `FALSE` if not.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> n</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> n | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>n:positive?</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> n-f</p>
@@ -2909,10 +2135,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Return `TRUE` if number is positive, or `FALSE` if not.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> n</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> n | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>n:pow</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> bp-n</p>
@@ -2920,10 +2143,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Return base (b) to power (p).</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> n</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> n | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>n:put</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> n-</p>
@@ -2931,10 +2151,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Display a number.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>n:random</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -n</p>
@@ -2942,10 +2159,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Return a random number</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> n</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> n | <b>Interface Layer:</b> rre, ri</p>
 <p><b>Example:</b>  </p>
 <xmp>    n:random n:put</xmp><hr/>
 <h1>n:sqrt</h1>
@@ -2954,10 +2168,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Return the square root of a number.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> n</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> n | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>n:square</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> n-m</p>
@@ -2965,10 +2176,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Return the square of a number.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> n</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> n | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>n:strictly-positive?</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> n-f</p>
@@ -2976,10 +2184,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Return TRUE if number is greater than zero or FALSE if it is zero or less.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> n</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> n | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>n:to-float</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> n-</p>
@@ -2987,10 +2192,7 @@
 <p><b>Float:</b> -F</p>
 </div>
 <p>Convert a number into a floating point value.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> n</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> n | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>n:to-string</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> n-s</p>
@@ -2998,10 +2200,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Convert a number into a string.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> n</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> n | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>n:zero?</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> n-f</p>
@@ -3009,10 +2208,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Return `TRUE` if number is zero, or `FALSE` otherwise.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> n</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> n | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>nip</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> nm-m</p>
@@ -3020,10 +2216,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Remove the second item from the stack.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>nl</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -</p>
@@ -3031,10 +2224,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Display a newline.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>not</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> n-m</p>
@@ -3042,10 +2232,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Perform a logical NOT operation.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>or</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> mn-o</p>
@@ -3053,10 +2240,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Perform a bitwise OR between the provided values.</p>
-<b>Class:</b> class:primitive</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:primitive | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>over</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> nm-nmn</p>
@@ -3064,10 +2248,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Put a copy of n over m.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>parse-until</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> q-s</p>
@@ -3075,10 +2256,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Read input from stdin (via `c:get`) until the returned character is matched by the quote. Returns a string.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> all</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> all | <b>Interface Layer:</b> rre</p>
 <p><b>Example:</b>  </p>
 <xmp>  :read-until-period (-s)
     [ $. eq? ] parse-until ;</xmp><hr/>
@@ -3088,10 +2266,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Copy a string from the pasteboard to the specified address.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> pb</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> pb | <b>Interface Layer:</b> iOS</p>
 <hr/>
 <h1>pb:length</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -n</p>
@@ -3099,10 +2274,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Return the length of the string on the pasteboard.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> pb</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> pb | <b>Interface Layer:</b> iOS</p>
 <p><b>Example</b>  </p>
 <xmp>pb</xmp><hr/>
 <h1>pb:set</h1>
@@ -3111,10 +2283,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Copy a string to the pasteboard.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> pb\n</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> pb\n | <b>Interface Layer:</b> iOS</p>
 <hr/>
 <h1>pop</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -n</p>
@@ -3122,10 +2291,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Move a value from the return stack to the data stack.</p>
-<b>Class:</b> class:macro</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:macro | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>prefix:!</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> ns-</p>
@@ -3139,10 +2305,7 @@
 <p>Compile Time:
   Compile the code to store a value into a named variable.</p>
 
-<b>Class:</b> class:macro</p>
- | <b>Namespace:</b> prefix</p>
- | b</p>
-
+<b>Class:</b> class:macro | <b>Namespace:</b> prefix | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>prefix:"</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> s-s</p>
@@ -3156,10 +2319,7 @@
 <p>Compile Time:
   Keep string as permanent. If `RewriteUnderscores` is `TRUE`, replace all instances of _ with space. Then compile the string into the current definition.</p>
 
-<b>Class:</b> class:macro</p>
- | <b>Namespace:</b> prefix</p>
- | b</p>
-
+<b>Class:</b> class:macro | <b>Namespace:</b> prefix | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>prefix:#</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> s-n</p>
@@ -3173,10 +2333,7 @@
 <p>Compile Time:
   Convert the string into a number and compile into the current definition as a literal.</p>
 
-<b>Class:</b> class:macro</p>
- | <b>Namespace:</b> prefix</p>
- | b</p>
-
+<b>Class:</b> class:macro | <b>Namespace:</b> prefix | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>prefix:$</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> s-c</p>
@@ -3190,10 +2347,7 @@
 <p>Compile Time:
   Fetch first character from the string. Compile into the current definition as  literal.</p>
 
-<b>Class:</b> class:macro</p>
- | <b>Namespace:</b> prefix</p>
- | b</p>
-
+<b>Class:</b> class:macro | <b>Namespace:</b> prefix | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>prefix:&amp;</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> s-a</p>
@@ -3207,10 +2361,7 @@
 <p>Compile Time:
   Lookup name in dictionary, compile code to push the contents of the xt field into the current definition.</p>
 
-<b>Class:</b> class:macro</p>
- | <b>Namespace:</b> prefix</p>
- | b</p>
-
+<b>Class:</b> class:macro | <b>Namespace:</b> prefix | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>prefix:'</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> s-s</p>
@@ -3224,10 +2375,7 @@
 <p>Compile Time:
   Move string into temporary buffer. If `RewriteUnderscores` is `TRUE`, replace all instances of _ with space. Then compile the string into the current definition.</p>
 
-<b>Class:</b> class:macro</p>
- | <b>Namespace:</b> prefix</p>
- | b</p>
-
+<b>Class:</b> class:macro | <b>Namespace:</b> prefix | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>prefix:(</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> s-</p>
@@ -3241,10 +2389,7 @@
 <p>Compile Time:
   Discard the string.</p>
 
-<b>Class:</b> class:macro</p>
- | <b>Namespace:</b> prefix</p>
- | b</p>
-
+<b>Class:</b> class:macro | <b>Namespace:</b> prefix | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>prefix:.</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> s-</p>
@@ -3252,10 +2397,7 @@
 <p><b>Float:</b> -F</p>
 </div>
 <p>Interpret time: convert string to a floating point value. Compile time: convert string to a floating point value and compile code to push this value to the float stack.</p>
-<b>Class:</b> class:macro</p>
- | <b>Namespace:</b> prefix</p>
- | b</p>
-
+<b>Class:</b> class:macro | <b>Namespace:</b> prefix | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>prefix::</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> s-</p>
@@ -3266,10 +2408,7 @@
 <p>Interpret Time:
   Create a header pointing to `here` with the provided string as the name. Sets class to `class:word`.</p>
 
-<b>Class:</b> class:macro</p>
- | <b>Namespace:</b> prefix</p>
- | b</p>
-
+<b>Class:</b> class:macro | <b>Namespace:</b> prefix | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>prefix:@</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> s-n</p>
@@ -3283,10 +2422,7 @@
 <p>Compile Time:
   Compile the code to fetch a value from a named variable into the current definition.</p>
 
-<b>Class:</b> class:macro</p>
- | <b>Namespace:</b> prefix</p>
- | b</p>
-
+<b>Class:</b> class:macro | <b>Namespace:</b> prefix | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>prefix:`</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> s-</p>
@@ -3300,10 +2436,7 @@
 <p>Compile Time:
   Convert the string to a number and use `,` to inline it into the current definition.</p>
 
-<b>Class:</b> class:macro</p>
- | <b>Namespace:</b> prefix</p>
- | b</p>
-
+<b>Class:</b> class:macro | <b>Namespace:</b> prefix | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>prefix:|</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> s-</p>
@@ -3317,10 +2450,7 @@
 <p>Compile Time:
   Convert the string to a number and use `,` to inline it into the current definition.</p>
 
-<b>Class:</b> class:macro</p>
- | <b>Namespace:</b> prefix</p>
- | b</p>
-
+<b>Class:</b> class:macro | <b>Namespace:</b> prefix | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>primitive</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -</p>
@@ -3328,10 +2458,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Change the class of the most recently defined word to `class:primitive`.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>push</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> n-</p>
@@ -3339,10 +2466,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Move a value from the data stack to the return stack.</p>
-<b>Class:</b> class:macro</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:macro | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>r</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> s-</p>
@@ -3350,10 +2474,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Lookup a reference by name and inline its pointer to the current assembly segment.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>random:mersenne</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -n</p>
@@ -3361,10 +2482,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Return a random number using a mersenne shifter</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> random</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> random | <b>Interface Layer:</b> rre, ri</p>
 <hr/>
 <h1>random:mersenne:set-seed</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> n-</p>
@@ -3372,10 +2490,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Seed random:mersenne with the specified value</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> random</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> random | <b>Interface Layer:</b> rre, ri</p>
 <hr/>
 <h1>random:xoroshiro128**</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -n</p>
@@ -3383,10 +2498,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Return a random number using xoroshiro128**</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> random</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> random | <b>Interface Layer:</b> rre, ri</p>
 <hr/>
 <h1>random:xoroshiro128**:set-seed</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> n-</p>
@@ -3394,10 +2506,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Seed random:xoroshiro128** with the specified value</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> random</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> random | <b>Interface Layer:</b> rre, ri</p>
 <hr/>
 <h1>reclass</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> a-</p>
@@ -3405,10 +2514,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Change the class handler of the most recently defined word to the specified one.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>reorder</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> ...ss-?</p>
@@ -3416,10 +2522,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Restructure the order of items on the stack.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>repeat</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -</p>
@@ -3427,10 +2530,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Begin an unconditional loop.</p>
-<b>Class:</b> class:macro</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:macro | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>reset</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> ...-</p>
@@ -3438,10 +2538,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Remove all items from the stack.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>rot</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> abc-bca</p>
@@ -3449,10 +2546,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Rotate the top three values.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>s,</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> s-</p>
@@ -3460,10 +2554,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Compile the code needed to push a string pointer to the stack and inline the string data into the current definition.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>s:ASCII-LETTERS</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -s</p>
@@ -3471,10 +2562,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Constant. Returns a string of the ASCII letters (upper and lower case)</p>
-<b>Class:</b> class:data</p>
- | <b>Namespace:</b> s</p>
- | b</p>
-
+<b>Class:</b> class:data | <b>Namespace:</b> s | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>s:ASCII-LOWERCASE</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -s</p>
@@ -3482,10 +2570,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Constant. Returns a string of the ASCII letters in lowercase</p>
-<b>Class:</b> class:data</p>
- | <b>Namespace:</b> s</p>
- | b</p>
-
+<b>Class:</b> class:data | <b>Namespace:</b> s | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>s:ASCII-UPPERCASE</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -s</p>
@@ -3493,10 +2578,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Constant. Returns a string of the ASCII letters in uppercase</p>
-<b>Class:</b> class:data</p>
- | <b>Namespace:</b> s</p>
- | b</p>
-
+<b>Class:</b> class:data | <b>Namespace:</b> s | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>s:DIGITS</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -s</p>
@@ -3504,10 +2586,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Constant. Return a string of characters recognized as numeric digits.</p>
-<b>Class:</b> class:data</p>
- | <b>Namespace:</b> s</p>
- | b</p>
-
+<b>Class:</b> class:data | <b>Namespace:</b> s | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>s:PUNCTUATION</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -s</p>
@@ -3515,10 +2594,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Constant. Return a string of characters recognized as punctuation.</p>
-<b>Class:</b> class:data</p>
- | <b>Namespace:</b> s</p>
- | b</p>
-
+<b>Class:</b> class:data | <b>Namespace:</b> s | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>s:WHITESPACE</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -s</p>
@@ -3526,10 +2602,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Constant. Returns a string of characters recognized as whitespace.</p>
-<b>Class:</b> class:data</p>
- | <b>Namespace:</b> s</p>
- | b</p>
-
+<b>Class:</b> class:data | <b>Namespace:</b> s | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>s:append</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> ss-s</p>
@@ -3537,10 +2610,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Return a new string consisting of s1 followed by s2.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> s</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> s | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>s:case</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> sSq- || sSq-s</p>
@@ -3548,10 +2618,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>If the `s` matches `S`, discard `s` and run the quote before exiting the caller. If they do not match, discard the quote and leave `s` on the stack.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> s</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> s | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>s:chop</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> s-s</p>
@@ -3559,10 +2626,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Remove the last character from a string.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> s</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> s | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>s:const</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> ss-</p>
@@ -3570,10 +2634,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Create a constant named s2, returning a pointer to s1. This will use `s:keep` to preserve the original string.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> s</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> s | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>s:contains-char?</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> sc-f</p>
@@ -3581,10 +2642,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Return `TRUE` if the character is present in the string or `FALSE` otherwise.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> s</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> s | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>s:contains-string?</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> ss-f</p>
@@ -3592,10 +2650,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Return `TRUE` if the second string is present in the first string or `FALSE` otherwise.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> s</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> s | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>s:copy</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> sa-</p>
@@ -3603,10 +2658,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Copy a string (s) to a destination (a). This will include the terminator character when copying.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> s</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> s | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>s:empty</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -s</p>
@@ -3614,10 +2666,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Return an empty string.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> s</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> s | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>s:eq?</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> ss-f</p>
@@ -3625,10 +2674,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Compare two strings for equality. Return `TRUE` if identical or `FALSE` if not.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> s</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> s | <b>Interface Layer:</b> all</p>
 <p><b>Example:</b>  </p>
 <xmp>    'hello 'again s:eq?
     'test  'test  s:eq?</xmp><hr/>
@@ -3638,10 +2684,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Evaluate string as if it was typed into the interpreter.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> s</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> s | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>s:filter</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> sq-s</p>
@@ -3649,10 +2692,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Execute the quote once for each value in the string. If the quote returns `TRUE`, append the value into a new string. If `FALSE` the value will be discarded.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> s</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> s | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>s:for-each</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> sq-</p>
@@ -3660,10 +2700,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Execute the quote once for each value in the string.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> s</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> s | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>s:format</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> ...s-s</p>
@@ -3671,10 +2708,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Construct a new string using the template passed and items from the stack.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> s</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> s | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>s:get</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -s</p>
@@ -3682,10 +2716,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Read input from standard in (via `c:get`) until a CR or LF is encountered. Returns a strig.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> all</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> all | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>s:hash</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> s-n</p>
@@ -3693,10 +2724,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Calculate a hash value for a string. This uses the djb2 algorithm.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> s</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> s | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>s:index-of</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> sc-n</p>
@@ -3704,10 +2732,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Return the location of the first instance of the specified character in the string.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> s</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> s | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>s:index-of-string</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> ss-n</p>
@@ -3715,10 +2740,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Return the location of the first instance of the specified substring (s2) in the string (s1). Returns -1 if not found.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> s</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> s | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>s:keep</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> s-s</p>
@@ -3726,10 +2748,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Store a string into the heap and return a pointer to the start of it.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> s</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> s | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>s:left</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> sn-s</p>
@@ -3737,10 +2756,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Return a new string containing the first `n` characters from the source string.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> s</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> s | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>s:length</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> s-n</p>
@@ -3748,10 +2764,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Return the number of characters in a string, excluding the NULL terminator.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> s</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> s | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>s:map</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> sq-s</p>
@@ -3759,10 +2772,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Execute the specified quote once for each character in the string. Builds a new string from the return value of the quote. The quote should return only one value.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> s</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> s | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>s:prepend</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> ss-s</p>
@@ -3770,10 +2780,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Return a new string consisting of s2 followed by s1.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> s</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> s | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>s:put</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> s-</p>
@@ -3781,10 +2788,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Display a string.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>s:replace</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> sss-s</p>
@@ -3792,10 +2796,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Replace the first instance of s2 in s1 with s3.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> s</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> s | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>s:reverse</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> s-s</p>
@@ -3803,10 +2804,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Reverse the order of ASCII characters in a string.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> s</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> s | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>s:right</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> sn-s</p>
@@ -3814,10 +2812,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Return a new string containing the specified number of characters from the right side of the string.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> s</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> s | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>s:skip</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -</p>
@@ -3825,10 +2820,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Internal helper function used to skip over a string in a definition.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> s</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> s | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>s:split</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> sc-ss</p>
@@ -3836,10 +2828,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Split a string on the first occurrance of the specified character.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> s</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> s | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>s:split-on-string</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> ss-ss</p>
@@ -3847,10 +2836,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Split a string on the first occurrance of the specified string. After the split, the top stack item will be the part of the string before the specified subsring, and the second item will be the rest of the original string.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> s</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> s | <b>Interface Layer:</b> all</p>
 <p><b>Example:</b>  </p>
 <xmp>  'Hello_Brave_World! 'Brave s:split-on-string s:put nl s:put nl</xmp><hr/>
 <h1>s:substr</h1>
@@ -3859,10 +2845,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Extract a substring from the specified string. This will take the characters starting at `f` and extend `l` characters in length.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> s</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> s | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>s:temp</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> s-s</p>
@@ -3870,10 +2853,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Move a string into the temporary string buffers.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> s</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> s | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>s:to-float</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> s-</p>
@@ -3881,10 +2861,7 @@
 <p><b>Float:</b> -F</p>
 </div>
 <p>Convert a string representation into a floating point value.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> s</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> s | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>s:to-lower</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> s-s</p>
@@ -3892,10 +2869,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Convert uppercase ASCII characters in a string to lowercase.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> s</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> s | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>s:to-number</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> s-n</p>
@@ -3903,10 +2877,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Convert a string to a number.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> s</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> s | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>s:to-upper</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> s-s</p>
@@ -3914,10 +2885,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Convert lowercase ASCII characters in a string to uppercase.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> s</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> s | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>s:tokenize</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> sc-a</p>
@@ -3925,10 +2893,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Takes a string and a character to use as a separator. It splits the string into a set of substrings and returns a set containing pointers to each of them.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> s</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> s | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>s:tokenize-on-string</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> ss-a</p>
@@ -3936,10 +2901,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Takes a string (s1) and a substring (s2)  use as a separator. It splits the string into a set of substrings and returns a set containing pointers to each of them.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> s</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> s | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>s:trim</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> s-s</p>
@@ -3947,10 +2909,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Trim leading and trailing whitespace from a string.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> s</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> s | <b>Interface Layer:</b> all</p>
 <p><b>Example:</b>  </p>
 <xmp>    '__hello__ s:trim</xmp><hr/>
 <h1>s:trim-left</h1>
@@ -3959,10 +2918,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Trim leading whitespace from a string.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> s</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> s | <b>Interface Layer:</b> all</p>
 <p><b>Example:</b>  </p>
 <xmp>    '__hello__ s:trim-left</xmp><hr/>
 <h1>s:trim-right</h1>
@@ -3971,10 +2927,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Trim trailing whitespace from a string.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> s</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> s | <b>Interface Layer:</b> all</p>
 <p><b>Example:</b>  </p>
 <xmp>    '__hello__ s:trim-right</xmp><hr/>
 <h1>set-hook</h1>
@@ -3983,10 +2936,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Patch the hook point in a2 to point to a1.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <p><b>Example:</b>  </p>
 <xmp>    :foo hook ;
     :bar #1 ;
@@ -3997,10 +2947,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Return `TRUE` if the string value is in the set or`FALSE` otherwise.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> set</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> set | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>set:contains?</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> na-f</p>
@@ -4008,10 +2955,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Return `TRUE` if the value is in the set or `FALSE` otherwise.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> set</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> set | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>set:counted-results</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> q-a</p>
@@ -4019,10 +2963,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Run a quote and construct a new set from the returned values. The quote should return the values and the number of values to put into the set.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> set</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> set | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>set:dup</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> a-b</p>
@@ -4030,10 +2971,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Make a copy of a set. Return the address of the copy.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> set</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> set | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>set:filter</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> aq-b</p>
@@ -4041,10 +2979,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>For each item in the initial set, run the specified quote. If the quote returns `TRUE`, copy the item into a new set. If `FALSE`, discard it. Returns a pointer to the new set.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> set</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> set | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>set:for-each</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> aq-</p>
@@ -4052,10 +2987,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Execute the quote once for each item in the set.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> set</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> set | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>set:from-string</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> s-a</p>
@@ -4063,10 +2995,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Create a new set with the characters in the source string.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> set</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> set | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>set:length</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> a-n</p>
@@ -4074,10 +3003,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Return the length of a set.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> set</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> set | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>set:make</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> q-a</p>
@@ -4085,10 +3011,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Execute quote. Return a new set containing the values the quote leaves on the stack. This is identical to doing `set:counted-results set:reverse`</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> set</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> set | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>set:map</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> aq-</p>
@@ -4096,10 +3019,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Execute quote once for each item in the set. Constructs a new set from the value returned by the quote.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> set</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> set | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>set:nth</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> an-b</p>
@@ -4107,10 +3027,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Return the actual address of the nth item in the set.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> set</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> set | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>set:reduce</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> pnq-n</p>
@@ -4118,10 +3035,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Takes a set, a starting value, and a quote. This will apply the quote to each item in the set; the quote should consume two values and return one.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> set</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> set | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>set:reverse</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> a-b</p>
@@ -4129,10 +3043,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Reverse the order of items in a set. This will return a new set.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> set</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> set | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>shift</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> mn-o</p>
@@ -4140,10 +3051,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Peform a bitwise shift of m by n bits. If n is positive, shift right. If negative, the shift will be to the left.</p>
-<b>Class:</b> class:primitive</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:primitive | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>sip</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> nq-n</p>
@@ -4151,10 +3059,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Run quote. After execution completes, put a copy of n back on top of the stack.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>sp</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -</p>
@@ -4162,10 +3067,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Display a space (`ASCII:SPACE`)</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <p><b>Example:</b>  </p>
 <xmp>    :spaces (n-)  [ sp ] times ;
     #12 spaces</xmp><hr/>
@@ -4175,10 +3077,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Store a value into the specified address.</p>
-<b>Class:</b> class:primitive</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:primitive | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <p><b>Example:</b>  </p>
 <xmp>    'Base var
     #10 &Base store</xmp><hr/>
@@ -4188,10 +3087,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Store a value into the specified address and return the next address.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>swap</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> nm-mn</p>
@@ -4199,10 +3095,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Exchange the position of the top two items on the stack</p>
-<b>Class:</b> class:primitive</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:primitive | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>sys:argc</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -n</p>
@@ -4210,10 +3103,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Return the number of arguments passed to the program.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> sys</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> sys | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>sys:argv</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> n-s</p>
@@ -4221,10 +3111,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Given an argument number, return the argument as a string.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> sys</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> sys | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>tab</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -</p>
@@ -4232,10 +3119,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Display a tab (`ASCII:HT`)</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>times</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> nq-</p>
@@ -4243,10 +3127,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Run the specified quote the specified number of times.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <p><b>Example:</b>  </p>
 <xmp>    #12 [ $- c:put ] times</xmp><hr/>
 <h1>times&lt;with-index&gt;</h1>
@@ -4255,10 +3136,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Run a quote the specified number of times, tracking the loop index in `I`.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>tri</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> xqqq-?</p>
@@ -4266,10 +3144,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Apply q1 against x, then q2 against a copy of x, and finally q3 against another copy of x.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>tri*</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> xyzqqq-?</p>
@@ -4277,10 +3152,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Apply q1 against x, q2 against y, and q3 against z.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>tri@</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> xyzq-?</p>
@@ -4288,10 +3160,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Apply q against x, then against y, and finally against z.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>tuck</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> nm-mnm</p>
@@ -4299,10 +3168,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Put a copy of the top item on the stack under the second one.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>u:-INF</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -u</p>
@@ -4310,10 +3176,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Constant. Negative infinity.  For encoded floating point values.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> u</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> u | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>u:-inf?</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> u-f</p>
@@ -4321,10 +3184,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Is encoded value negative infinity?</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> u</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> u | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>u:INF</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -u</p>
@@ -4332,10 +3192,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Constant. Infinity. For encoded floating point values.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> u</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> u | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>u:MAX</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -u</p>
@@ -4343,10 +3200,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Constant. Maximum value. For encoded floating point values.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> u</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> u | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>u:MIN</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -u</p>
@@ -4354,10 +3208,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Constant. Minimum value. For encoded floating point values.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> u</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> u | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>u:NAN</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -u</p>
@@ -4365,10 +3216,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Constant. Not a Number. For encoded floating point values.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> u</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> u | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>u:clip</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> u-U</p>
@@ -4376,10 +3224,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>{n/a}</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> u</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> u | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>u:inf?</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> u-f</p>
@@ -4387,10 +3232,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Is encoded value infinity?</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> u</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> u | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>u:max?</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> u-f</p>
@@ -4398,10 +3240,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Is encoded value at the maximum?</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> u</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> u | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>u:min?</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> u-f</p>
@@ -4409,10 +3248,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Is encoded value at the minimum?</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> u</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> u | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>u:n?</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> u-f</p>
@@ -4420,10 +3256,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>{n/a}</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> u</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> u | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>u:nan?</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> u-f</p>
@@ -4431,10 +3264,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Is encoded value a Nan?</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> u</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> u | <b>Interface Layer:</b> ree</p>
 <hr/>
 <h1>u:to-f</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> u-</p>
@@ -4442,10 +3272,7 @@
 <p><b>Float:</b> -n</p>
 </div>
 <p>Decode an encoded floating point value.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> rre</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> rre | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>u:zero?</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> u-f</p>
@@ -4453,10 +3280,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>{n/a}</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> u</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> u | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>unhook</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> a-</p>
@@ -4464,10 +3288,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Reset the hook point in a1 to the default definition.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <p><b>Example:</b>  </p>
 <xmp>    :foo hook #1 ;
     :bar #2 ;
@@ -4479,10 +3300,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Change the current working directory to the specified one.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> unix</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> unix | <b>Interface Layer:</b> rre</p>
 <p><b>Example:</b>  </p>
 <xmp>  '/etc unix:chdir</xmp><hr/>
 <h1>unix:exec0</h1>
@@ -4491,10 +3309,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Execute a process by running the application specified by s.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> unix</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> unix | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>unix:exec1</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> ss-</p>
@@ -4502,10 +3317,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Execute a process by running the application specified by s1. Pass s2 as an argument.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> unix</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> unix | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>unix:exec2</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> sss-</p>
@@ -4513,10 +3325,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Execute a process by running the application specified by s1. Pass s2 and s3 as arguments.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> unix</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> unix | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>unix:exec3</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> ssss-</p>
@@ -4524,10 +3333,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Execute a process by running the application specified by s1. Pass s2, s3, and s4 as arguments.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> unix</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> unix | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>unix:exit</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> n-</p>
@@ -4535,10 +3341,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Exit the current process, returning the specified return code.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> unix</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> unix | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>unix:fork</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -n</p>
@@ -4546,10 +3349,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Fork the current process. Returns a PID.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> unix</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> unix | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>unix:getenv</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> sa-</p>
@@ -4557,10 +3357,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Get an environment variable. Provide the name and an address to store it in.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> unix</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> unix | <b>Interface Layer:</b> rre</p>
 <p><b>Example:</b>  </p>
 <xmp>  'SHELL s:empty [ unix:getenv ] sip s:put nl</xmp><hr/>
 <h1>unix:getpid</h1>
@@ -4569,10 +3366,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Return the PID of the current process.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> unix</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> unix | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>unix:io:n:put</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> n-</p>
@@ -4580,10 +3374,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Display a number (in base 10) to the standard output device. This is faster than `n:put`, but not portable.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> unix:io</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> unix:io | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>unix:io:s:put</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> s-</p>
@@ -4591,10 +3382,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Display a string to stdout. This is faster than `s:put`, but not portable.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> unix:io</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> unix:io | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>unix:kill</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> nn-</p>
@@ -4602,10 +3390,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Terminates a process. Takes a process and a signal to send.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> unix</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> unix | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>unix:pclose</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> n-</p>
@@ -4613,10 +3398,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Close a pipe.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> unix</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> unix | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>unix:popen</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> sn-n</p>
@@ -4624,10 +3406,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Open a pipe. Takes a command to run, and a file mode (`file:R` or `file:W`; `file:R+` may work on some systems). Returns a file ID usable with words in the `file:` namespace.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> unix</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> unix | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>unix:putenv</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> s-</p>
@@ -4635,10 +3414,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Takes a string in the form `name=value` and sets an environment variable named `name` to `value`.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> unix</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> unix | <b>Interface Layer:</b> rre</p>
 <p><b>Example:</b>  </p>
 <xmp>  'EDITOR=vi unix:putenv</xmp><hr/>
 <h1>unix:sleep</h1>
@@ -4647,10 +3423,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Sleep for the specified number of seconds.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> unix</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> unix | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>unix:system</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> s-</p>
@@ -4658,10 +3431,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Runs another application using the system shell and returns after execution is completed.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> unix</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> unix | <b>Interface Layer:</b> rre</p>
 <p><b>Example:</b>  </p>
 <xmp>  'ls_-lh_/etc unix:system</xmp><hr/>
 <h1>unix:wait</h1>
@@ -4670,10 +3440,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Waits for a child process to complete. This maps to the wait() system call.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> unix</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> unix | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>unix:write</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> sh-</p>
@@ -4681,10 +3448,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Write a string to the specified file handle.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> unix</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> unix | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>until</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> q-</p>
@@ -4692,10 +3456,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Execute quote repeatedly while the quote returns a value of `FALSE`. The quote should return a flag of either `TRUE` or `FALSE`, though `until` will treat any non-zero value as `TRUE`.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <p><b>Example:</b>  </p>
 <xmp>    #10 [ dup n:put nl n:dec dup n:zero? ] until</xmp><hr/>
 <h1>v:dec</h1>
@@ -4704,10 +3465,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Decrement the value stored at the specified address by 1.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> v</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> v | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>v:dec-by</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> na-</p>
@@ -4715,10 +3473,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Decrement the value stored at the specified address by the specified value.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> v</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> v | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>v:inc</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> a-</p>
@@ -4726,10 +3481,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Increment the value stored at the specified address by 1.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> v</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> v | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>v:inc-by</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> na-</p>
@@ -4737,10 +3489,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Increment the value stored at the specified address by the specified value.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> v</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> v | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>v:limit</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> alu-</p>
@@ -4748,10 +3497,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Fetch the value stored at the address, then run `n:limit` against it, using the specified lower and upper bounds. Then store the resulting value back to the original address.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> v</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> v | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>v:off</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> a-</p>
@@ -4759,10 +3505,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Set a variable to 0.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> v</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> v | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>v:on</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> a-</p>
@@ -4770,10 +3513,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Set a variable to -1.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> v</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> v | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>v:preserve</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> aq-</p>
@@ -4781,10 +3521,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Make a copy of the value at the address, then run the quote. Once the quote completes, restore the address to the specified value.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> v</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> v | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>v:update-using</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> aq-</p>
@@ -4792,10 +3529,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Fetch a value from the specified address, then run the quotation with this value on the stack. Afterwards, store the returned value at the original address.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> v</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> v | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>var</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> s-</p>
@@ -4803,10 +3537,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Create a variable. The variable is initialized to 0.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <p><b>Example:</b>  </p>
 <xmp>    'Base var</xmp><hr/>
 <h1>var&lt;n&gt;</h1>
@@ -4815,10 +3546,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Create a variable with the specified initial value.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <p><b>Example:</b>  </p>
 <xmp>    #10 'Base var<n>
 </xmp><hr/>
@@ -4828,10 +3556,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Execute quote repeatedly while the quote returns a `TRUE` value. The quote should return a flag of either `TRUE` or `FALSE`, though `while` will treat any non-zero value as `TRUE`.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <p><b>Example:</b>  </p>
 <xmp>    #10 [ dup n:put nl n:dec dup n:-zero? ] while</xmp><hr/>
 <h1>xor</h1>
@@ -4840,10 +3565,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Perform a bitwise XOR operation.</p>
-<b>Class:</b> class:primitive</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:primitive | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>{</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -</p>
@@ -4851,10 +3573,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Begin a set. This is intended to make creating sets a bit cleaner than using a quotation and `set:counteh-results`.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> set</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> set | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>{{</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -</p>
@@ -4862,10 +3581,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Begin a lexically scoped area.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>}</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -a</p>
@@ -4873,10 +3589,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>Complete a set begun by `{`. Returns a pointer to the data.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> set</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> set | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>}as</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> f-</p>
@@ -4884,10 +3597,7 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>End an assembly section.</p>
-<b>Class:</b> class:macro</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:macro | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>}}</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -</p>
@@ -4895,10 +3605,5 @@
 <p><b>Float:</b> -</p>
 </div>
 <p>End a lexically scoped area.</p>
-<b>Class:</b> class:word</p>
- | <b>Namespace:</b> global</p>
- | b</p>
-
+<b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
-
-Stack: 4178944 15980 4183040 15980 4187136 15980 4191232 15980 4178944 15980 4192768 15980 4180480 15980 4177920 15980 4191744 15980 4189184 15980 4186624 15980 4184064 15980 4181504 15980 4185600 15980 4183040 15980 4180480 15980 4177920 15980 4191744 15980 4189184 15980 4186624 15980 4184064 15980 4181504 15980 4178944 15980 4192768 15980 4190208 15980 4187648 15980 4185088 15980 4182528 15980 4179968 15980 4193792 15980 4191232 15980 4188672 15980 4186112 15980 4183552 15980 4180992 15980 4178432 15980 4192256 15980 4189696 15980 4187136 15980 4184576 15980 4182016 15980 4179456 15980 4193280 15980 4190720 15980 4188160 15980 4185600 15980 4183040 15980 4180480 15980 4177920 15980 4191744 15980 4189184 15980 4186624 15980 4184064 15980 4181504 15980 4178944 15980 4192768 15980 4190208 15980 4187648 15980 4185088 15980 4182528 15980 4179968 15980 4193792 15980 4191232 15980 4188672 15980 4186112 15980 4183552 15980 4180992 15980 4178432 15980 4182528 15980 4179968 15980 4193792 15980 4191232 15980 4178944 15980 4183040 15980 4187136 15980 4184576 15980 4182016 15980 4179456 15980 4193280 15980 4190720 15980 4188160 15980 4185600 15980 4183040 15980 4180480 15980 4177920 15980 4191744 15980 4189184 15980 4186624 15980 4184064 15980 4181504 15980 4178944 15980 4192768 15980 4190208 15980 4187648 15980 4185088 15980 4182528 15980 4179968 15980 4193792 15980 4191232 15980 4188672 15980 4186112 15980 4183552 15980 4180992 15980 4178432 15980 4192256 15980 4189696 15980 4187136 15980 4184576 15980 4189696 15980 4178432 15980 4183552 15980 4188672 15980 4186112 15980 4183552 15980 4180992 15980 4178432 15980 4192256 15980 4189696 15980 4187136 15980 4184576 15980 4182016 15980 4179456 15980 4193280 15980 4190720 15980 4188160 15980 4185600 15980 4183040 15980 4180480 15980 4177920 15980 4191744 15980 4189184 15980 4186624 15980 4184064 15980 4181504 15980 4178944 15980 4192768 15980 4190208 15980 4187648 15980 4185088 15980 4182528 15980 4179968 15980 4193792 15980 4191232 15980 4188672 15980 4186112 15980 4183552 15980 4180992 15980 4178432 15980 4192256 15980 4189696 15980 4187136 15980 4184576 15980 4188672 15980 4186112 15980 4190208 15980 4177920 15980 4182016 15980 4179456 15980 4193280 15980 4190720 15980 4188160 15980 4185600 15980 4183040 15980 4180480 15980 4177920 15980 4191744 15980 4189184 15980 4186624 15980 4184064 15980 4181504 15980 4178944 15980 4192768 15980 4190208 15980 4187648 15980 4185088 15980 4182528 15980 4179968 15980 4193792 15980 4191232 15980 4188672 15980 4186112 15980 4183552 15980 4187648 15980 4185088 15980 4182528 15980 4179968 15980 4193792 15980 4191232 15980 4188672 15980 4186112 15980 4183552 15980 4180992 15980 4178432 15980 4192256 15980 4189696 15980 4187136 15980 4184576 15980 4182016 15980 4179456 15980 4183552 15980 4180992 15980 4178432 15980 4192256 15980 4189696 15980 4187136 15980 4184576 15980 4182016 15980 4179456 15980 4193280 15980 4190720 15980 4178432 15980 4192256 15980 4189696 15980 4187136 15980 4184576 15980 4182016 15980 4179456 15980 4193280 15980 4190720 15980 4188160 15980 4185600 15980 4183040 15980 4187136 15980 4184576 15980 4182016 15980 4179456 15980 4183552 15980 4180992 15980 4178432 15980 4192256 15980 4189696 15980 4187136 15980 4191232 15980 4188672 15980 4186112 15980 4183552 15980 4180992 15980 4178432 15980 4192256 15980 4189696 15980 4187136 15980 4184576 15980 4182016 15980 4179456 15980 4193280 15980 4190720 15980 4188160 15980 4185600 15980 4189696 15980 4193792 15980 4181504 15980 4185600 15980 4189696 15980 4193792 15980 4181504 15980 4185600 15980 4189696 15980 4187136 15980 4184576 15980 4182016 15980 4179456 15980 4193280 15980 4180992 15980 4178432 15980 4192256 15980 4189696 15980 4187136 15980 4184576 15980 4182016 15980 4179456 15980 4193280 15980 4190720 15980 4188160 15980 4185600 15980 4189696 15980 4187136 15980 4191744 15980 4189184 15980 4177920 15980 4183040 15980 4188160 15980 4193280 15980 4182016 15980 4187136 15980 4192256 15980 4189696 15980 4190720 15980 4179456 15980 4184576 15980 4189696 15980 4187136 15980 4184576 15980 4182016 15980 4179456 15980 4193280 15980 4190720 15980 4188160 15980 4185600 15980 4183040 15980 4180480 15980 4177920 15980 4191744 15980 4189184 15980 4186624 15980 4184064 15980 4181504 15980 4178944 15980 4192768 15980 4190208 15980 4187648 15980 4185088 15980 4182528 15980 4179968 15980 4193792 15980 4191232 15980 4188672 15980 4186112 15980 4183552 15980 4187648 15980 4185088 15980 4182528 15980 4179968 15980 4193792 15980 4191232 15980 4188672 15980 4186112 15980 4183552 15980 4180992 15980 4178432 15980 4192256 15980 4189696 15980 4187136 15980 4184576 15980 4182016 15980 4179456 15980 4193280 15980 4190720 15980 4188160 15980 4192256 15980 4189696 15980 4187136 15980 4184576 15980 4182016 15980 4179456 15980 4193280 15980 4190720 15980 4188160 15980 4192256 15980 4179968 15980 4184064 15980 4188160 15980 4185600 15980 4183040 15980 4180480 15980 4177920 15980 4191744 15980 4189184 15980 4186624 15980 4184064 15980 4181504 15980 4178944 15980 4192768 15980 4190208 15980 4187648 15980 4185088 15980 4182528 15980 4186624 15980 4190720 15980 4188160 15980 4185600 15980 4183040 15980 4180480 15980 4177920 15980 4182016 15980 4179456 15980 4193280 15980 4190720 15980 4188160 15980 4185600 15980 4183040 15980 4180480 15980 4177920 15980 4191744 15980 4189184 15980 4186624 15980 4184064 15980 4181504 15980 4178944 15980 4192768 15980 4190208 15980 4187648 15980 4185088 15980 4182528 15980 4186624 15980 4190720 15980 4188160 15980 4185600 15980 4183040 15980 4180480 15980 4177920 15980 4191744 15980 4179456 15980 4193280 15980 4190720 15980 4188160 15980 4185600 15980 4183040 15980 4180480 15980 4184576 15980 4182016 15980 4186112 15980 4183552 15980 4180992 15980 4185088 15980 4182528 15980 4179968 15980 4193792 15980 4191232 15980 4188672 15980 4186112 15980 4183552 15980 4180992 15980 4178432 15980 4182528 15980 4186624 15980 4190720 15980 4188160 15980 4185600 15980 4183040 15980 4180480 15980 4177920 [ TOS: 15980 ]
