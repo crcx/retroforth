@@ -17,7 +17,8 @@ sys:argc n:zero? [ #0 unix:exit ] if
 ~~~
 
 If execution reaches this point there's at least one
-argument. I use a loop to store arguments into an array.
+argument. I use a loop to store arguments into an array
+named `Args`.
 
 ~~~
 'Args d:create #32 allot
@@ -29,8 +30,8 @@ argument. I use a loop to store arguments into an array.
 And then populate constants for each one I care about.
 
 ~~~
-#0 &Args + fetch 'QUERY s:const
-#1 &Args + fetch 'TARGET s:const
+#0 &Args + fetch 'QUERY   s:const
+#1 &Args + fetch 'TARGET  s:const
 #2 &Args + fetch 'TARGET2 s:const 
 ~~~
 
@@ -229,18 +230,19 @@ when done.
 
 ~~~
 :delete-temporary
-  '/tmp/glossary.name      file:delete
-  '/tmp/glossary.dstack    file:delete
-  '/tmp/glossary.astack    file:delete
-  '/tmp/glossary.fstack    file:delete
-  '/tmp/glossary.descr     file:delete
-  '/tmp/glossary.itime     file:delete
-  '/tmp/glossary.ctime     file:delete
-  '/tmp/glossary.class     file:delete
-  '/tmp/glossary.ex1       file:delete
-  '/tmp/glossary.ex2       file:delete
-  '/tmp/glossary.namespace file:delete
-  '/tmp/glossary.interface file:delete ;
+  { '/tmp/glossary.name
+    '/tmp/glossary.dstack
+    '/tmp/glossary.astack
+    '/tmp/glossary.fstack
+    '/tmp/glossary.descr
+    '/tmp/glossary.itime
+    '/tmp/glossary.ctime
+    '/tmp/glossary.class
+    '/tmp/glossary.ex1
+    '/tmp/glossary.ex2
+    '/tmp/glossary.namespace
+    '/tmp/glossary.interface }
+  [ file:delete ] set:for-each ;
 ~~~
 
 Cleaning the edited data is necessary. This entails:
@@ -328,7 +330,8 @@ Next, get the editor from the $EDITOR environment variable.
   'words.new file:W file:open !FOUT
   'words.tsv
   [ s:keep !SourceLine field:name TARGET2 s:eq?
-    [ select-field generate-entry ] [ @SourceLine write-line ] choose write-nl
+    [ select-field generate-entry ]
+    [ @SourceLine  write-line     ] choose write-nl
   ] file:for-each-line
   @FOUT file:close delete-temporary
   'mv_words.new_words.tsv unix:system ;
@@ -345,9 +348,12 @@ The glossary file consists of the documentation for each word, with a
 separator bar between each entry.
 
 ~~~
+:horizontal-line
+  #72 [ $- c:put ] times nl nl ;
+
 :export-glossary
  'words.tsv
-  [ s:keep !SourceLine display-result #64 [ $- c:put ] times nl nl ] file:for-each-line ;
+  [ s:keep !SourceLine display-result horizontal-line ] file:for-each-line ;
 ~~~
 
 ### TSV
@@ -358,19 +364,19 @@ you edit/save the TSV data with a spreadsheet application.
 
 ~~~
 :display-fields
-  field:name s:put tab
-  field:dstack s:put tab
-  field:astack s:put tab
-  field:fstack s:put tab
-  field:descr s:put tab
-  field:itime s:put tab
-  field:ctime s:put tab
-  field:class s:put tab
-  field:ex1 s:put tab
-  field:ex2 s:put tab
-  field:namespace s:put tab
-  field:interface s:put tab
-  nl ;
+  { &field:name
+    &field:dstack
+    &field:astack
+    &field:fstack
+    &field:descr
+    &field:itime
+    &field:ctime
+    &field:class
+    &field:ex1
+    &field:ex2
+    &field:namespace
+    &field:interface }
+  [ call s:put tab ] set:for-each nl ;
 
 :export-tsv
   'words.tsv [ s:keep !SourceLine display-fields ] file:for-each-line ;
