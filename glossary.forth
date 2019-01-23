@@ -153,6 +153,9 @@ the description.
 }}
 ~~~
 
+I also have an HTML display option. This is used with the HTML
+export and (eventually) ePub.
+
 ~~~
 {{
   :s:putfmt (s-)   s:format s:put ;
@@ -446,54 +449,57 @@ Next, get the editor from the $EDITOR environment variable.
 
 ## Export Data
 
-In addition to providing a readable piece of documentation for each word,
-I provide the ability to export the data into a few formats.
+In addition to providing a readable piece of documentation for each
+word, I provide the ability to export the data into a few formats.
 
 ### Glossary
 
-The glossary file consists of the documentation for each word, with a
-separator bar between each entry.
+The glossary file consists of the documentation for each word, with
+a separator bar between each entry.
+
+#### Text
 
 ~~~
-:horizontal-line
-  #72 [ $- c:put ] times nl nl ;
-
-:export-glossary
- 'words.tsv
-  [ s:keep !SourceLine display-result horizontal-line ] file:for-each-line ;
+{{
+  :horizontal-line #72 [ $- c:put ] times nl nl ;
+  :export-glossary
+    'words.tsv
+    [ s:keep !SourceLine display-result horizontal-line ] file:for-each-line ;
 ~~~
 
-### HTML
+#### HTML
 
 ~~~
-:export-html
-  'words.tsv [ s:keep !SourceLine  display-result<HTML> '<hr/> s:put nl ] file:for-each-line ;
+  :export-html
+    'words.tsv [ s:keep !SourceLine
+                 display-result<HTML> '<hr/> s:put nl ] file:for-each-line ;
 ~~~
 
-### TSV
+#### TSV
 
 I also provide for exporting the tab separated file itself. This will
 strip out fields beyond the standard set, which can save some space if
 you edit/save the TSV data with a spreadsheet application.
 
 ~~~
-:display-fields
-  { &field:name
-    &field:dstack
-    &field:astack
-    &field:fstack
-    &field:descr
-    &field:itime
-    &field:ctime
-    &field:class
-    &field:ex1
-    &field:ex2
-    &field:namespace
-    &field:interface }
-  [ call s:put tab ] set:for-each nl ;
+  :display-fields
+    { &field:name
+      &field:dstack
+      &field:astack
+      &field:fstack
+      &field:descr
+      &field:itime
+      &field:ctime
+      &field:class
+      &field:ex1
+      &field:ex2
+      &field:namespace
+      &field:interface }
+    [ call s:put tab ] set:for-each nl ;
 
-:export-tsv
-  'words.tsv [ s:keep !SourceLine display-fields ] file:for-each-line ;
+  :export-tsv
+    'words.tsv [ s:keep !SourceLine display-fields ] file:for-each-line ;
+---reveal---
 ~~~
 
 ### Handle Exports
@@ -502,13 +508,14 @@ This is a second level command processor for deciding which export format
 to use.
 
 ~~~
-:export-data
-  TARGET
-  'glossary [ export-glossary ] s:case
-  'html     [ export-html     ] s:case
-  'tsv      [ export-tsv      ] s:case
-  drop ;
+  :export-data
+    TARGET
+    'glossary [ export-glossary ] s:case
+    'html     [ export-html     ] s:case
+    'tsv      [ export-tsv      ] s:case
+    drop ;
 ~~~
+
 
 ## Help
 
@@ -550,7 +557,8 @@ to use.
 This tool embeds a tiny Gopher and HTTP server designed to run
 under inetd.
 
-First, set the port and server to use. I default to 9999 and forthworks.com.
+First, set the port and server to use. I default to 9999 and
+forthworks.com.
 
 ~~~
 #9999           'PORT     const
@@ -631,12 +639,12 @@ And then the actual top level server.
 :css (-)
   { '<style>
     'tt,_a,_pre,_xmp_{_white-space:_pre;_}
-    '*_{_font-family:_monospace;_color:_#aaa;_background:_#121212;_font-size:_large;_}
+    '*_{_font-family:_monospace;_color:_#aaa;_background:_#121212;_}
     'a_{_color:_#EE7600;_}
     '</style>
   } [ s:put sp ] set:for-each ;
 
-:entry '<xmp> s:put display-result '</xmp> s:put nl ;
+:entry display-result<HTML> ;
 
 :http:display (-)
   #0 'words.tsv [ s:keep !SourceLine dup-pair eq? [ entry ] if n:inc ] file:for-each-line drop-pair ;
