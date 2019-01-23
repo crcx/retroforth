@@ -184,6 +184,17 @@ There are five primary roles:
 
 ## Missing Words
 
+Finding missing words is pretty easy. I read the names for each
+entry in the words data file into a set, then use the `d:for-each`
+combinator to see if the words in the dictionary are in the data
+file.
+
+If they are not, this will display the word names.
+
+To ensure this doesn't report the glossary words I use the patch
+point from earlier to set the dictionary to the original state
+before doing the checks.
+
 ~~~
 {{
   'GlossaryNames d:create  #4097 allot
@@ -203,9 +214,9 @@ There are five primary roles:
 
 ## Add a Word
 
-This just adds a stub to the end of the words.tsv file.
-You'll need to run the edit commands for each field to
-fully populate it.
+This just adds a stub to the end of the words.tsv file. You'll
+need to run the edit commands for each field to fully populate
+it.
 
 ~~~
 {{
@@ -292,15 +303,15 @@ Cleaning the edited data is necessary. This entails:
 - converting internal newlines and tabs to escape sequences
 
 ~~~
+  :clean-trailing dup s:length over + n:dec
+                  fetch [ ASCII:LF eq? ] [ ASCII:CR eq? ] bi or [ s:chop ] if ;
+  :clean-internal [ ASCII:LF [ $\ , $n , ] case
+                    ASCII:CR [ $\ , $n , ] case
+                    ASCII:HT [ $\ , $t , ] case
+                    ,
+                  ] s:for-each #0 , ;
   :clean
-    dup s:length over + n:dec
-    fetch [ ASCII:LF eq? ] [ ASCII:CR eq? ] bi or [ s:chop ] if
-    here [ [ ASCII:LF [ $\ , $n , ] case
-             ASCII:CR [ $\ , $n , ] case
-             ASCII:HT [ $\ , $t , ] case
-             ,
-           ] s:for-each #0 ,
-         ] dip ;
+    clean-trailing here [ clean-internal ] dip ;
 ~~~
 
 After an edit, I need to reassemble the pieces and write them out to
