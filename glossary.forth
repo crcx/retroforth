@@ -66,10 +66,14 @@ current line contents.
 'SourceLine var
 ~~~
 
+~~~
+{{
+~~~
+
 And a helper word to skip a specified number of fields.
 
 ~~~
-:skip (n-) [ ASCII:HT s:split drop n:inc ] times ;
+  :skip (n-) [ ASCII:HT s:split drop n:inc ] times ;
 ~~~
 
 Then it's easy to add words to return each individual
@@ -77,8 +81,8 @@ field. I use `skip` to implement `select`, which selects
 a specific field.
 
 ~~~
-:select   (n-s)
-  @SourceLine swap skip ASCII:HT s:split nip ;
+  :select   (n-s)
+    @SourceLine swap skip ASCII:HT s:split nip ;
 ~~~
 
 And then named words to access each field I'm using a set to
@@ -91,13 +95,16 @@ The other way would be to define them manually:
     ...
 
 ~~~
-#0 { 'name        'dstack     'astack     'fstack
-     'descr       'itime      'ctime      'class
-     'ex1         'ex2        'namespace  'interface }
+---reveal---
 
-[ 'field: s:prepend d:create
-  dup compile:lit &select compile:call compile:ret
-  &class:word reclass n:inc ] set:for-each drop
+  #0 { 'name        'dstack     'astack     'fstack
+       'descr       'itime      'ctime      'class
+       'ex1         'ex2        'namespace  'interface }
+
+  [ 'field: s:prepend d:create
+    dup compile:lit &select compile:call compile:ret
+    &class:word reclass n:inc ] set:for-each drop
+}}
 ~~~
 
 # Display an Entry
@@ -174,10 +181,12 @@ There are five primary roles:
 ## Describe a Word
 
 ~~~
-:matched? (-f) field:name TARGET s:eq? ;
-
-:find-and-display-entry
- 'words.tsv [ s:keep !SourceLine matched? [ display-result ] if ] file:for-each-line ;
+{{
+  :matched? (-f) field:name TARGET s:eq? ;
+---reveal---
+  :find-and-display-entry
+   'words.tsv [ s:keep !SourceLine matched? [ display-result ] if ] file:for-each-line ;
+}}
 ~~~
 
 
@@ -249,39 +258,40 @@ Editing is a bit tricky. To keep things as simple as possible, I export
 each field to a separate file under `/tmp/`.
 
 ~~~
-:export-fields
-  field:name      '/tmp/glossary.name      file:spew
-  field:dstack    '/tmp/glossary.dstack    file:spew
-  field:astack    '/tmp/glossary.astack    file:spew
-  field:fstack    '/tmp/glossary.fstack    file:spew
-  field:descr     '/tmp/glossary.descr     file:spew
-  field:itime     '/tmp/glossary.itime     file:spew
-  field:ctime     '/tmp/glossary.ctime     file:spew
-  field:class     '/tmp/glossary.class     file:spew
-  field:ex1       '/tmp/glossary.ex1       file:spew
-  field:ex2       '/tmp/glossary.ex2       file:spew
-  field:namespace '/tmp/glossary.namespace file:spew
-  field:interface '/tmp/glossary.interface file:spew ;
+{{
+  :export-fields
+    field:name      '/tmp/glossary.name      file:spew
+    field:dstack    '/tmp/glossary.dstack    file:spew
+    field:astack    '/tmp/glossary.astack    file:spew
+    field:fstack    '/tmp/glossary.fstack    file:spew
+    field:descr     '/tmp/glossary.descr     file:spew
+    field:itime     '/tmp/glossary.itime     file:spew
+    field:ctime     '/tmp/glossary.ctime     file:spew
+    field:class     '/tmp/glossary.class     file:spew
+    field:ex1       '/tmp/glossary.ex1       file:spew
+    field:ex2       '/tmp/glossary.ex2       file:spew
+    field:namespace '/tmp/glossary.namespace file:spew
+    field:interface '/tmp/glossary.interface file:spew ;
 ~~~
 
 Since I'm dumping a bunch of files into `/tmp/`, I also clean up
 when done.
 
 ~~~
-:delete-temporary
-  { '/tmp/glossary.name
-    '/tmp/glossary.dstack
-    '/tmp/glossary.astack
-    '/tmp/glossary.fstack
-    '/tmp/glossary.descr
-    '/tmp/glossary.itime
-    '/tmp/glossary.ctime
-    '/tmp/glossary.class
-    '/tmp/glossary.ex1
-    '/tmp/glossary.ex2
-    '/tmp/glossary.namespace
-    '/tmp/glossary.interface }
-  [ file:delete ] set:for-each ;
+  :delete-temporary
+    { '/tmp/glossary.name
+      '/tmp/glossary.dstack
+      '/tmp/glossary.astack
+      '/tmp/glossary.fstack
+      '/tmp/glossary.descr
+      '/tmp/glossary.itime
+      '/tmp/glossary.ctime
+      '/tmp/glossary.class
+      '/tmp/glossary.ex1
+      '/tmp/glossary.ex2
+      '/tmp/glossary.namespace
+      '/tmp/glossary.interface }
+    [ file:delete ] set:for-each ;
 ~~~
 
 Cleaning the edited data is necessary. This entails:
@@ -290,90 +300,97 @@ Cleaning the edited data is necessary. This entails:
 - converting internal newlines and tabs to escape sequences
 
 ~~~
-:clean
-  dup s:length over + n:dec
+  :clean
+    dup s:length over + n:dec
     fetch [ ASCII:LF eq? ] [ ASCII:CR eq? ] bi or [ s:chop ] if
-  here [ [ ASCII:LF [ $\ , $n , ] case
-           ASCII:CR [ $\ , $n , ] case
-           ASCII:HT [ $\ , $t , ] case
-           ,
-         ] s:for-each #0 ,
-       ] dip ;
+    here [ [ ASCII:LF [ $\ , $n , ] case
+             ASCII:CR [ $\ , $n , ] case
+             ASCII:HT [ $\ , $t , ] case
+             ,
+           ] s:for-each #0 ,
+         ] dip ;
 ~~~
 
 After an edit, I need to reassemble the pieces and write them out to
 the file. I'll use `FOUT` as a variable for the file ID.
 
 ~~~
-'FOUT var
+  'FOUT var
 ~~~
 
 And provide a word like `s:put` that writes to this:
 
 ~~~
-:write-line (s-) [ @FOUT file:write ] s:for-each ;
-:write-nl   (-)  ASCII:LF @FOUT file:write ;
+  :write-line (s-) [ @FOUT file:write ] s:for-each ;
+  :write-nl   (-)  ASCII:LF @FOUT file:write ;
 ~~~
 
 ~~~
-:generate-entry
-  s:empty [ '/tmp/glossary.fstack    file:slurp ] sip clean s:keep
-  s:empty [ '/tmp/glossary.astack    file:slurp ] sip clean s:keep
-  s:empty [ '/tmp/glossary.dstack    file:slurp ] sip clean s:keep
-  s:empty [ '/tmp/glossary.name      file:slurp ] sip clean s:keep
-  '%s\t%s\t%s\t%s\t s:format write-line
-  s:empty [ '/tmp/glossary.class     file:slurp ] sip clean s:keep
-  s:empty [ '/tmp/glossary.ctime     file:slurp ] sip clean s:keep
-  s:empty [ '/tmp/glossary.itime     file:slurp ] sip clean s:keep
-  s:empty [ '/tmp/glossary.descr     file:slurp ] sip clean s:keep
-  '%s\t%s\t%s\t%s\t s:format write-line
-  s:empty [ '/tmp/glossary.interface file:slurp ] sip clean s:keep
-  s:empty [ '/tmp/glossary.namespace file:slurp ] sip clean s:keep
-  s:empty [ '/tmp/glossary.ex2       file:slurp ] sip clean s:keep
-  s:empty [ '/tmp/glossary.ex1       file:slurp ] sip clean s:keep
-  '%s\t%s\t%s\t%s\t s:format write-line ;
+  :generate-entry
+    s:empty [ '/tmp/glossary.fstack    file:slurp ] sip clean s:keep
+    s:empty [ '/tmp/glossary.astack    file:slurp ] sip clean s:keep
+    s:empty [ '/tmp/glossary.dstack    file:slurp ] sip clean s:keep
+    s:empty [ '/tmp/glossary.name      file:slurp ] sip clean s:keep
+    '%s\t%s\t%s\t%s\t s:format write-line
+    s:empty [ '/tmp/glossary.class     file:slurp ] sip clean s:keep
+    s:empty [ '/tmp/glossary.ctime     file:slurp ] sip clean s:keep
+    s:empty [ '/tmp/glossary.itime     file:slurp ] sip clean s:keep
+    s:empty [ '/tmp/glossary.descr     file:slurp ] sip clean s:keep
+    '%s\t%s\t%s\t%s\t s:format write-line
+    s:empty [ '/tmp/glossary.interface file:slurp ] sip clean s:keep
+    s:empty [ '/tmp/glossary.namespace file:slurp ] sip clean s:keep
+    s:empty [ '/tmp/glossary.ex2       file:slurp ] sip clean s:keep
+    s:empty [ '/tmp/glossary.ex1       file:slurp ] sip clean s:keep
+    '%s\t%s\t%s\t%s\t s:format write-line ;
 ~~~
 
 Next, get the editor from the $EDITOR environment variable.
 
 ~~~
-'EDITOR s:empty [ unix:getenv ] sip 'EDITOR s:const
+  'EDITOR s:empty [ unix:getenv ] sip 'EDITOR s:const
 ~~~
 
 ~~~
-:edit:field (s-)
-  EDITOR '%s_/tmp/glossary.%s s:format unix:system ;
+  :edit:field (s-)
+    EDITOR '%s_/tmp/glossary.%s s:format unix:system ;
 ~~~
 
 ~~~
-:select-field
-  export-fields
-  TARGET
-  'name      [ 'name      edit:field ] s:case
-  'dstack    [ 'dstack    edit:field ] s:case
-  'astack    [ 'astack    edit:field ] s:case
-  'fstack    [ 'fstack    edit:field ] s:case
-  'descr     [ 'descr     edit:field ] s:case
-  'itime     [ 'itime     edit:field ] s:case
-  'ctime     [ 'ctime     edit:field ] s:case
-  'class     [ 'class     edit:field ] s:case
-  'ex1       [ 'ex1       edit:field ] s:case
-  'ex2       [ 'ex2       edit:field ] s:case
-  'namespace [ 'namespace edit:field ] s:case
-  'interface [ 'interface edit:field ] s:case
-  drop ;
+  :select-field
+    export-fields
+    TARGET
+    'name      [ 'name      edit:field ] s:case
+    'dstack    [ 'dstack    edit:field ] s:case
+    'astack    [ 'astack    edit:field ] s:case
+    'fstack    [ 'fstack    edit:field ] s:case
+    'descr     [ 'descr     edit:field ] s:case
+    'itime     [ 'itime     edit:field ] s:case
+    'ctime     [ 'ctime     edit:field ] s:case
+    'class     [ 'class     edit:field ] s:case
+    'ex1       [ 'ex1       edit:field ] s:case
+    'ex2       [ 'ex2       edit:field ] s:case
+    'namespace [ 'namespace edit:field ] s:case
+    'interface [ 'interface edit:field ] s:case
+    drop ;
 ~~~
 
 ~~~
-:handle-edit
-  'words.new file:W file:open !FOUT
-  'words.tsv
-  [ s:keep !SourceLine field:name TARGET2 s:eq?
-    [ select-field generate-entry ]
-    [ @SourceLine  write-line     ] choose write-nl
-  ] file:for-each-line
-  @FOUT file:close delete-temporary
-  'mv_words.new_words.tsv unix:system ;
+  :prepare '/tmp/words.new file:W file:open !FOUT ;
+  :cleanup 'mv_/tmp/words.new_words.tsv unix:system ;
+~~~
+
+~~~
+---reveal---
+  :handle-edit
+    prepare
+    'words.tsv
+    [ s:keep !SourceLine field:name TARGET2 s:eq?
+      [ select-field generate-entry ]
+      [ @SourceLine  write-line     ] choose write-nl
+    ] file:for-each-line
+    @FOUT file:close delete-temporary
+    cleanup ;
+}}
 ~~~
 
 
