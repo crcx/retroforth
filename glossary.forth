@@ -223,6 +223,10 @@ fully populate it.
 
 ## Delete a Word
 
+This works by reading each line and writing them to a new file.
+Entries that match the word to delete are discarded. The new
+file then replaces the original `words.tsv`.
+
 ~~~
 {{
   'NEW var
@@ -237,6 +241,7 @@ fully populate it.
     cleanup ;
 }}
 ~~~
+
 
 ## Edit a Word
 
@@ -371,6 +376,7 @@ Next, get the editor from the $EDITOR environment variable.
   'mv_words.new_words.tsv unix:system ;
 ~~~
 
+
 ## Export Data
 
 In addition to providing a readable piece of documentation for each word,
@@ -455,15 +461,17 @@ to use.
 ;
 ~~~
 
+
 # Gopher and HTTP Server
 
 This tool embeds a tiny Gopher and HTTP server designed to run
 under inetd.
 
-First, set the port to use. I default to 9999.
+First, set the port and server to use. I default to 9999 and forthworks.com.
 
 ~~~
-#9999 'GOPHER-PORT const
+#9999           'PORT     const
+'forthworks.com 'DOMAIN s:const
 ~~~
 
 Next, words to display the main index (when requesting / or an
@@ -479,7 +487,7 @@ this.
 
 ~~~
 :display-entry (-)
-  GOPHER-PORT field:name dup '0%s\t/desc_%s\tforthworks.com\t%n\r\n s:format s:put ;
+  PORT DOMAIN field:name dup '0%s\t/desc_%s\t%s\t%n\r\n s:format s:put ;
 ~~~
 
 Next, `gopher:list-words` which iterates over each entry,
@@ -509,7 +517,7 @@ this to build an index.
     buffer:add ] s:for-each buffer:start s:temp ;
 
 :display-entry (n-n)
-  field:name sanitize over '<a_href="/%n">%s</a><br> s:format s:put ;
+  field:name sanitize over '<a_href="/%n">%s</a><br>\n s:format s:put ;
 
 :http:list-words (-)
   #0 'words.tsv [ s:keep !SourceLine display-entry n:inc ] file:for-each-line drop ;
@@ -538,17 +546,22 @@ And then the actual top level server.
   #1024 allot
 
 :css (-)
-  '<style>tt,_a,_pre,_xmp_{_white-space:_pre;_} s:put
-  '_*_{_font-family:_monospace;_color:_#aaa;_background:_#121212;_font-size:_large;_}_a_{_color:_#EE7600;_} 
-s:put
-  '</style> s:put nl ;
+  { '<style>
+    'tt,_a,_pre,_xmp_{_white-space:_pre;_}
+    '*_{_font-family:_monospace;_color:_#aaa;_background:_#121212;_font-size:_large;_}
+    'a_{_color:_#EE7600;_}
+    '</style>
+  } [ s:put sp ] set:for-each ;
+
+:entry '<xmp> s:put display-result '</xmp> s:put nl ;
 
 :http:display (-)
-  #0 'words.tsv [ s:keep !SourceLine dup-pair eq? [ '<xmp> s:put display-result '</xmp> s:put ] if n:inc ] file:for-each-line drop-pair ;
+  #0 'words.tsv [ s:keep !SourceLine dup-pair eq? [ entry ] if n:inc ] file:for-each-line drop-pair ;
 
 :handle-http
   css
-  '<h2><a_href="http://forthworks.com:9999">RETRO_Glossary</a></h2><hr> s:put nl
+  PORT DOMAIN
+  '<h2><a_href="http://%s:%n">RETRO_Glossary</a></h2><hr> s:format s:put nl
   &Selector ASCII:SPACE s:tokenize #1 set:nth fetch
   dup s:length #1 eq?
     [ drop http:list-words ]
