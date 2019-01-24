@@ -577,16 +577,21 @@ So `display-entry` constructs these. The selectors chosen are
 this.
 
 ~~~
-:display-entry (-)
-  PORT DOMAIN field:name dup '0%s\t/desc_%s\t%s\t%n\r\n s:format s:put ;
+{{
+  :display-entry (-)
+    $0 c:put field:name s:put tab
+    '/desc_ s:put field:name s:put tab
+    DOMAIN s:put tab
+    PORT   n:put
+    '\r\n  s:format s:put ;
 ~~~
 
 Next, `gopher:list-words` which iterates over each entry,
 generating the directory line for each.
 
 ~~~
-:gopher:list-words (-)
-  'words.tsv [ s:keep !SourceLine display-entry ] file:for-each-line ;
+  :gopher:list-words (-)
+    'words.tsv [ s:keep !SourceLine display-entry ] file:for-each-line ;
 ~~~
 
 With the Gopher side of the index taken care of, I turn my
@@ -600,70 +605,84 @@ the HTML for each line, and an `http:list-words` which uses
 this to build an index.
 
 ~~~
-:sanitize (s-s)
-  here buffer:set
-  [ $< [ '&lt;  [ buffer:add ] s:for-each ] case
-    $> [ '&gt;  [ buffer:add ] s:for-each ] case
-    $& [ '&amp; [ buffer:add ] s:for-each ] case
-    buffer:add ] s:for-each buffer:start s:temp ;
+  :sanitize (s-s)
+    here buffer:set
+    [ $< [ '&lt;  [ buffer:add ] s:for-each ] case
+      $> [ '&gt;  [ buffer:add ] s:for-each ] case
+      $& [ '&amp; [ buffer:add ] s:for-each ] case
+      buffer:add ] s:for-each buffer:start s:temp ;
 
-:display-entry (n-n)
-  field:name sanitize over '<a_href="/%n">%s</a><br>\n s:format s:put ;
+  :display-entry (n-n)
+    field:name sanitize over '<a_href="/%n">%s</a><br>\n s:format s:put ;
 
-:http:list-words (-)
-  #0 'words.tsv [ s:keep !SourceLine display-entry n:inc ] file:for-each-line drop ;
+  :http:list-words (-)
+    #0 'words.tsv [ s:keep !SourceLine display-entry n:inc ] file:for-each-line drop ;
 ~~~
 
 Next, words to display a specific word.
 
 ~~~
-'Target var
-:matched? (-f) field:name @Target s:eq? ;
+  'Target var
+  :matched? (-f) field:name @Target s:eq? ;
 
-:gopher:display
- 'words.tsv [ s:keep !SourceLine matched? [ display-result ] if ] file:for-each-line ;
+  :gopher:display
+   'words.tsv [ s:keep !SourceLine matched? [ display-result ] if ] file:for-each-line ;
 ~~~
 
 And then the actual top level server.
 
 ~~~
-:eol? (c-f)
-  [ ASCII:CR eq? ] [ ASCII:LF eq? ] [ ASCII:HT eq? ] tri or or ;
+  :eol? (c-f)
+    [ ASCII:CR eq? ] [ ASCII:LF eq? ] [ ASCII:HT eq? ] tri or or ;
 
-:s:get (a-)
-  buffer:set [ c:get dup buffer:add eol? not ] while ;
+  :s:get (a-)
+    buffer:set [ c:get dup buffer:add eol? not ] while ;
 
-'Selector d:create
-  #1024 allot
+  'Selector d:create
+    #1024 allot
 
-:css (-)
-  { '<style>
-    'tt,_a,_pre,_xmp_{_white-space:_pre;_}
-    '*_{_font-family:_monospace;_color:_#aaa;_background:_#121212;_}
-    'a_{_color:_#EE7600;_}
-    '</style>
-  } [ s:put sp ] set:for-each ;
+  :css (-)
+    { '<style>
+      'tt,_a,_pre,_xmp_{_white-space:_pre;_}
+      '*_{_font-family:_monospace;_color:_#aaa;_background:_#121212;_}
+      'a_{_color:_#EE7600;_}
+      '</style>
+    } [ s:put sp ] set:for-each ;
 
-:entry display-result<HTML> ;
+  :entry display-result<HTML> ;
 
-:http:display (-)
-  #0 'words.tsv [ s:keep !SourceLine dup-pair eq? [ entry ] if n:inc ] file:for-each-line drop-pair ;
+  :http:display (-)
+    #0 'words.tsv [ s:keep !SourceLine dup-pair eq? [ entry ] if n:inc ] file:for-each-line drop-pair ;
 
-:handle-http
-  css
-  PORT DOMAIN
-  '<h2><a_href="http://%s:%n">RETRO_Glossary</a></h2><hr> s:format s:put nl
-  &Selector ASCII:SPACE s:tokenize #1 set:nth fetch
-  dup s:length #1 eq?
-    [ drop http:list-words ]
-    [ n:inc s:to-number http:display ] choose ;
+  :send-http-headers
+    'HTTP/1.0_200_OK\nContent-Type:_text/html\n\n s:format s:put ;
 
-:gopher:serve
-  &Selector s:get
-  &Selector #0 #5 s:substr
-  '/desc [ &Selector ASCII:SPACE s:tokenize #1 set:nth fetch s:chop s:keep !Target gopher:display ] s:case
-  'GET_/ [ 'HTTP/1.0_200_OK\nContent-Type:_text/html\n\n s:format s:put handle-http ] s:case
-  drop gopher:list-words ;
+  :page-header
+    css
+    '<h2> s:put 
+    PORT DOMAIN '<a_href="http://%s:%n">RETRO_Glossary</a> s:format s:put
+    '</h2><hr> s:put nl ;
+
+  :handle-http
+    page-header
+    &Selector ASCII:SPACE s:tokenize #1 set:nth fetch
+    dup s:length #1 eq?
+      [ drop http:list-words ]
+      [ n:inc s:to-number http:display ] choose ;
+
+  :handle-gopher
+    &Selector ASCII:SPACE s:tokenize #1 set:nth fetch
+    s:chop s:keep dup s:put !Target gopher:display ;
+
+---reveal---
+
+  :server
+    &Selector s:get
+    &Selector #0 #5 s:substr
+    '/desc [ handle-gopher ] s:case
+    'GET_/ [ send-http-headers handle-http ] s:case
+    drop gopher:list-words ;
+}}
 ~~~
 
 # Finish
@@ -679,7 +698,7 @@ handle each case.
   'edit     [ handle-edit            ] s:case
   'add      [ add-word               ] s:case
   'delete   [ delete-entry           ] s:case
-  'serve    [ gopher:serve           ] s:case
+  'serve    [ server                 ] s:case
   'missing  [ display-missing        ] s:case 
   drop show-help ;
 ~~~
