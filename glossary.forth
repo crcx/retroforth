@@ -204,6 +204,34 @@ export and (eventually) ePub.
 }}
 ~~~
 
+This is a concise summary of a word.
+
+~~~
+{{
+  &Dictionary [ 'GLOSSARY-TOOL d:lookup fetch !Dictionary
+                #0 [ d:name s:length n:max ] d:for-each ] v:preserve
+  'MAX-LENGTH const
+  :pad s:length MAX-LENGTH swap - &sp times ;
+  :s:putfmt (s-)   s:format s:put ;
+  :name            field:name    dup s:put pad ;
+  :data            field:dstack  '__D:_%s    s:putfmt ;
+  :address         field:astack  '__A:_%s    s:putfmt ;
+  :float           field:fstack  '__F:_%s    s:putfmt ;
+  :description     field:descr   '\n%s\n\n   s:putfmt ;
+---reveal---
+  :display-concise-result
+    name
+      data    (stack)
+      address (stack)
+      float   (stack)
+    description ;
+  :display-concise-result<stack-only>
+    name
+      data    (stack)
+      address (stack)
+      float   (stack) nl ;
+}}
+~~~
 
 # Interactions
 
@@ -465,6 +493,15 @@ a separator bar between each entry.
   :export-glossary
     'words.tsv
     [ s:keep !SourceLine display-result horizontal-line ] file:for-each-line ;
+
+  :export-concise
+    'words.tsv
+    [ s:keep !SourceLine display-concise-result ] file:for-each-line ;
+
+  :export-concise-stack
+    'words.tsv
+    [ s:keep !SourceLine display-concise-result ] file:for-each-line ;
+
 ~~~
 
 #### HTML
@@ -510,9 +547,11 @@ to use.
 ~~~
   :export-data
     TARGET
-    'glossary [ export-glossary ] s:case
-    'html     [ export-html     ] s:case
-    'tsv      [ export-tsv      ] s:case
+    'concise        [ export-concise       ] s:case
+    'concise-stack  [ export-concise-stack ] s:case
+    'glossary       [ export-glossary      ] s:case
+    'html           [ export-html          ] s:case
+    'tsv            [ export-tsv           ] s:case
     drop ;
 ~~~
 
