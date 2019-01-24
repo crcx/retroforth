@@ -584,8 +584,8 @@ to use.
     '__interface
     '--------------------------------
     'Export_Formats:
-    '__glossary
-    '__tsv
+    '__glossary____concise
+    '__tsv_________concise-stack
     '--------------------------------
   } [ s:put nl ] set:for-each ;
 ~~~

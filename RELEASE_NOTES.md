@@ -56,6 +56,7 @@
 
 - refactor glossary tool
 - add HTML version of the Glossary
+- add more concise text copies of the Glossary
 - add man pages
 
 ## Examples
@@ -63,6 +64,7 @@
 - add Buffer.forth
 - add CaptureOutput.forth
 - add DisplayNames.forth
+- add HTML.forth
 - add KeyValueStore.forth
 - add Marker.forth
 - add net_fetch.forth
