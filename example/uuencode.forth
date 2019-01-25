@@ -1,0 +1,124 @@
+#!/usr/bin/env retro
+
+# uuencode
+
+This is an implementation of `uuencode` in Retro. This takes a
+file name and renders the uuencoded data to standard output.
+
+
+## Prep Work
+
+First, determine the size of the file.
+
+~~~
+#0 sys:argv file:R file:open
+&file:size &file:close bi 'SIZE const
+~~~
+
+With this, I can create a buffer to hold the file and read it
+into memory.
+
+~~~
+'Data d:create  SIZE allot
+&Data #0 sys:argv file:slurp
+~~~
+
+
+## The Header
+
+A uuencoded file starts with a header line of the form:
+
+    begin <mode> <file><newline>
+
+I am hard coding the mode as 0644.
+
+~~~
+:header (-) #0 sys:argv 'begin_0644_%s1\n s:format s:put ;
+~~~
+
+
+## Data Encoding
+
+Here's how uuencoding works:
+
+* Three characters are packed into a cell.
+
+    Cat = (C) 01000011 (a) 01100001 (t) 01110100
+
+* This is divided into a quartet of six bit values.
+
+    Cat = 010000 110110 000101 110100
+
+* 32 is added to each, yielding a printable character.
+* At this point, "Cat" has become 0V%T.
+
+So the basic encoding words will need to pack a cell and
+then unpack it into characters.
+
+~~~
+:mask  #63 and ;
+:to-char #32 + ;
+
+:decode (n-)
+  dup #18 shift mask to-char c:put
+  dup #12 shift mask to-char c:put
+  dup #6  shift mask to-char c:put
+                mask to-char c:put ;
+
+:pack
+  #0 [ fetch-next ] dip + #-8 shift
+     [ fetch-next ] dip + #-8 shift
+     [ fetch-next ] dip + ;
+~~~
+
+The actual conversion is pretty easy. Output is given as
+lines, starting with an encoded length followed by the
+encoded data. The encoded length is just the actual value
+with 32 added to it and displayed as an ASCII character.
+
+Lines are 45 unencoded characters in length, so will start
+with an `M`, except for the last one, which may be shorter.
+
+So:a
+
+~~~
+:full-line       $M c:put #15 [ pack decode ] times nl ;
+:remaining-size  SIZE #45 mod #32 + c:put ;
+:partial-line    SIZE #45 mod #3 / [ pack decode ] times ;
+:final-bundle    SIZE #45 mod #3 mod
+                 #2 [ fetch-next #-16 shift swap fetch #-8 shift + decode ] case
+                 #1 [ fetch      #-16 shift                        decode ] case
+                 drop ;   
+~~~
+
+And then using the factors to do the conversion:
+
+~~~
+:convert
+  &Data
+  SIZE #45 / &full-line times
+  remaining-size partial-line final-bundle nl ;
+~~~
+
+
+## The Footer
+
+A uuencoded file ends with two lines:
+
+   `
+   end
+
+The backtick is used to denote a line with a length of zero
+characters.
+
+~~~
+:footer $` c:put nl 'end s:put nl ;
+~~~
+
+
+## Run Everything
+
+~~~
+:uuencode header convert footer ;
+uuencode
+~~~
