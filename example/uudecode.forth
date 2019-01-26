@@ -1,0 +1,72 @@
+#!/usr/bin/env retro
+
+# uudecode
+
+This is an implementation of `uudecode` in Retro. This takes a
+file name and renders the decoded data to standard output.
+
+I'm taking shortcuts in implementing this. Since it only writes
+to the standard output, I'm going to ignore the `begin ...`
+header as well as the footer. The words I define here will use
+`pop drop` to exit the calling function.
+
+~~~
+:discard-header dup #0 #5 s:substr 'begin s:eq? 0; pop drop-pair drop ;
+:discard-empty  dup fetch $` eq? 0; pop drop-pair drop ;
+:discard-end    dup #0 #3 s:substr 'end   s:eq? 0; pop drop-pair drop ;
+~~~
+
+Now for decoding. uuencode bundles three values into four six bit
+characters. I read in four characters, shifting them into position.
+The six bit characters are incremented by 32 to make sure they fall
+into the printable range, so I also decrement them while packing.
+
+~~~
+:gather
+  #0 [ fetch-next #32 - #63 and #-18 shift ] dip +
+     [ fetch-next #32 - #63 and #-12 shift ] dip +
+     [ fetch-next #32 - #63 and #-6  shift ] dip +
+     [ fetch-next #32 - #63 and            ] dip + ;
+~~~
+
+The decode process then is to take each bundle and split it back
+into 8-bit characters. This is a simple bit of shifting and masking.
+
+~~~
+:decode
+    [ #16 shift #255 and c:put ]
+    [ #8 shift  #255 and c:put ]
+    [           #255 and c:put ] tri ;
+~~~
+
+Iterating over the input file is fairly straightforward. I'm using
+the `file:for-each-line` combinator to take care of splitting the
+input into lines.
+
+An input line consists of a character indicating the number of
+unencoded characters in the line and then the encoded data. As
+with the encoded data, the length is raised by 32 to push it
+into the printable character set.
+
+~~~
+:length  fetch-next #32 - ;
+~~~
+
+I define a word to iterate over the encoded data in a line.
+This will divide the actual length by 3, then gather the
+data and decode it.
+
+~~~
+:full-line    #3 / [ gather decode ] times drop ;
+~~~
+
+Finally, load the file and iterate over each line.
+
+~~~
+#0 sys:argv
+[ s:keep
+  discard-header discard-empty discard-end
+  fetch-next #32 - dup #45 eq?
+  [ full-line ]
+  [ #3 / [ gather decode ] times  gather decode drop ] choose ] file:for-each-line
+~~~

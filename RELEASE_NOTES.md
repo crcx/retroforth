@@ -73,6 +73,7 @@
 - add Save_and_Restore_Stack.forth
 - add share.forth and shared.forth
 - add uuencode.forth
+- add uudecode.forth
 - switch to dvorak key bindings in Roo.forth
 - remove Hooks.forth (now in core language)
 
