@@ -1961,6 +1961,17 @@ Example #1:
 
 ------------------------------------------------------------------------
 
+f:case
+
+  Data:  q-
+  Addr:  -
+  Float: nm-n
+
+If `n` is equal to `m`, drop both and execute the specified quote before exiting the calling word. If not equal, leave `n` on the stack and let execution continue.
+
+Class: class:word | Namespace: f | Interface Layer: rre
+------------------------------------------------------------------------
+
 f:ceiling
 
   Data:  -

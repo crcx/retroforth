@@ -75,6 +75,8 @@
 :f:between? (f:nlu-n) f:rot f:dup f:push f:rot f:rot f:limit f:pop f:eq? ;
 :f:inc   (f:n-n)   .1 f:+ ;
 :f:dec   (f:n-n)   .1 f:- ;
+:f:case  (f:ff-,q-)
+  f:over f:eq? [ f:drop call #-1 ] [ drop #0 ] choose 0; pop drop-pair ;
 ~~~
 
 ---------------------------------------------------------------

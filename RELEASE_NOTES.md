@@ -33,6 +33,7 @@
 - add f:between?
 - add f:inc
 - add f:dec
+- add f:case
 - improved f:tuck
 - improved f:over
 
