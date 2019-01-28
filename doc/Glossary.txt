@@ -1915,7 +1915,7 @@ f:acos
 
   Data:  -
   Addr:  -
-  Float: f-f
+  Float: F-F
 
 Return the arc cosine of a floating point number.
 
@@ -1926,7 +1926,7 @@ f:asin
 
   Data:  -
   Addr:  -
-  Float: f-f
+  Float: F-F
 
 Return the arc sine of a floating point number.
 
@@ -1937,7 +1937,7 @@ f:atan
 
   Data:  -
   Addr:  -
-  Float: f-f
+  Float: F-F
 
 Return the arc tangent of a floating point number.
 
@@ -1959,7 +1959,7 @@ f:cos
 
   Data:  -
   Addr:  -
-  Float: f-f
+  Float: F-F
 
 Return the cosine of a floating point number.
 
@@ -1988,6 +1988,17 @@ Discard the top item on the floating point stack.
 Class: class:word | Namespace: f | Interface Layer: rre
 ------------------------------------------------------------------------
 
+f:drop-pair
+
+  Data:  -
+  Addr:  -
+  Float: FF-
+
+Remove top two items on the stack.
+
+Class: class:word | Namespace: f | Interface Layer: rre
+------------------------------------------------------------------------
+
 f:dup
 
   Data:  -
@@ -1995,6 +2006,17 @@ f:dup
   Float: F-FF
 
 Duplicate the top item on the floating point stack.
+
+Class: class:word | Namespace: f | Interface Layer: rre
+------------------------------------------------------------------------
+
+f:dup-pair
+
+  Data:  -
+  Addr:  -
+  Float: nm-nmnm
+
+Duplicate the top two items on the stack.
 
 Class: class:word | Namespace: f | Interface Layer: rre
 ------------------------------------------------------------------------
@@ -2114,6 +2136,17 @@ Return `TRUE` if floating point value is negative or `FALSE` if not.
 Class: class:word | Namespace: f | Interface Layer: rre
 ------------------------------------------------------------------------
 
+f:nip
+
+  Data:  -
+  Addr:  -
+  Float: NM-M
+
+Remove the second item from the stack.
+
+Class: class:word | Namespace: f | Interface Layer: rre
+------------------------------------------------------------------------
+
 f:over
 
   Data:  -
@@ -2121,6 +2154,17 @@ f:over
   Float: FG-FGF
 
 Put a copy of the second floating point value over the top one.
+
+Class: class:word | Namespace: f | Interface Layer: rre
+------------------------------------------------------------------------
+
+f:pop
+
+  Data:  -
+  Addr:  -
+  Float: -F
+
+Pop a floating point value from the alternate stack.
 
 Class: class:word | Namespace: f | Interface Layer: rre
 ------------------------------------------------------------------------
@@ -2143,6 +2187,17 @@ f:power
   Float: FF-F
 
 Return F1^F2 for floating point values.
+
+Class: class:word | Namespace: f | Interface Layer: rre
+------------------------------------------------------------------------
+
+f:push
+
+  Data:  -
+  Addr:  -
+  Float: F-
+
+Push a floating point value to an alternative stack.
 
 Class: class:word | Namespace: f | Interface Layer: rre
 ------------------------------------------------------------------------
@@ -2275,6 +2330,17 @@ f:tuck
   Float: FG-GFG
 
 Tuck a copy of the top floating point value under the second one.
+
+Class: class:word | Namespace: f | Interface Layer: rre
+------------------------------------------------------------------------
+
+f:tuck
+
+  Data:  -
+  Addr:  -
+  Float: nm-mnm
+
+Put a copy of the top item on the stack under the second one.
 
 Class: class:word | Namespace: f | Interface Layer: rre
 ------------------------------------------------------------------------

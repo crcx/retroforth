@@ -1405,7 +1405,7 @@
 <h1>f:acos</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -<br>
 <b>Addr:</b> -<br>
-<b>Float:</b> f-f</p>
+<b>Float:</b> F-F</p>
 </div>
 <p>Return the arc cosine of a floating point number.</p>
 <p><b>Class:</b> class:word | <b>Namespace:</b> f | <b>Interface Layer:</b> rre</p>
@@ -1413,7 +1413,7 @@
 <h1>f:asin</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -<br>
 <b>Addr:</b> -<br>
-<b>Float:</b> f-f</p>
+<b>Float:</b> F-F</p>
 </div>
 <p>Return the arc sine of a floating point number.</p>
 <p><b>Class:</b> class:word | <b>Namespace:</b> f | <b>Interface Layer:</b> rre</p>
@@ -1421,7 +1421,7 @@
 <h1>f:atan</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -<br>
 <b>Addr:</b> -<br>
-<b>Float:</b> f-f</p>
+<b>Float:</b> F-F</p>
 </div>
 <p>Return the arc tangent of a floating point number.</p>
 <p><b>Class:</b> class:word | <b>Namespace:</b> f | <b>Interface Layer:</b> rre</p>
@@ -1437,7 +1437,7 @@
 <h1>f:cos</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -<br>
 <b>Addr:</b> -<br>
-<b>Float:</b> f-f</p>
+<b>Float:</b> F-F</p>
 </div>
 <p>Return the cosine of a floating point number.</p>
 <p><b>Class:</b> class:word | <b>Namespace:</b> f | <b>Interface Layer:</b> rre</p>
@@ -1458,12 +1458,28 @@
 <p>Discard the top item on the floating point stack.</p>
 <p><b>Class:</b> class:word | <b>Namespace:</b> f | <b>Interface Layer:</b> rre</p>
 <hr/>
+<h1>f:drop-pair</h1>
+<div style='margin-left: 1em;'><p><b>Data:</b> -<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> FF-</p>
+</div>
+<p>Remove top two items on the stack.</p>
+<p><b>Class:</b> class:word | <b>Namespace:</b> f | <b>Interface Layer:</b> rre</p>
+<hr/>
 <h1>f:dup</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -<br>
 <b>Addr:</b> -<br>
 <b>Float:</b> F-FF</p>
 </div>
 <p>Duplicate the top item on the floating point stack.</p>
+<p><b>Class:</b> class:word | <b>Namespace:</b> f | <b>Interface Layer:</b> rre</p>
+<hr/>
+<h1>f:dup-pair</h1>
+<div style='margin-left: 1em;'><p><b>Data:</b> -<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> nm-nmnm</p>
+</div>
+<p>Duplicate the top two items on the stack.</p>
 <p><b>Class:</b> class:word | <b>Namespace:</b> f | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>f:eq?</h1>
@@ -1550,12 +1566,28 @@
 <p>Return `TRUE` if floating point value is negative or `FALSE` if not.</p>
 <p><b>Class:</b> class:word | <b>Namespace:</b> f | <b>Interface Layer:</b> rre</p>
 <hr/>
+<h1>f:nip</h1>
+<div style='margin-left: 1em;'><p><b>Data:</b> -<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> NM-M</p>
+</div>
+<p>Remove the second item from the stack.</p>
+<p><b>Class:</b> class:word | <b>Namespace:</b> f | <b>Interface Layer:</b> rre</p>
+<hr/>
 <h1>f:over</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -<br>
 <b>Addr:</b> -<br>
 <b>Float:</b> FG-FGF</p>
 </div>
 <p>Put a copy of the second floating point value over the top one.</p>
+<p><b>Class:</b> class:word | <b>Namespace:</b> f | <b>Interface Layer:</b> rre</p>
+<hr/>
+<h1>f:pop</h1>
+<div style='margin-left: 1em;'><p><b>Data:</b> -<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -F</p>
+</div>
+<p>Pop a floating point value from the alternate stack.</p>
 <p><b>Class:</b> class:word | <b>Namespace:</b> f | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>f:positive?</h1>
@@ -1572,6 +1604,14 @@
 <b>Float:</b> FF-F</p>
 </div>
 <p>Return F1^F2 for floating point values.</p>
+<p><b>Class:</b> class:word | <b>Namespace:</b> f | <b>Interface Layer:</b> rre</p>
+<hr/>
+<h1>f:push</h1>
+<div style='margin-left: 1em;'><p><b>Data:</b> -<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> F-</p>
+</div>
+<p>Push a floating point value to an alternative stack.</p>
 <p><b>Class:</b> class:word | <b>Namespace:</b> f | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>f:put</h1>
@@ -1668,6 +1708,14 @@
 <b>Float:</b> FG-GFG</p>
 </div>
 <p>Tuck a copy of the top floating point value under the second one.</p>
+<p><b>Class:</b> class:word | <b>Namespace:</b> f | <b>Interface Layer:</b> rre</p>
+<hr/>
+<h1>f:tuck</h1>
+<div style='margin-left: 1em;'><p><b>Data:</b> -<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> nm-mnm</p>
+</div>
+<p>Put a copy of the top item on the stack under the second one.</p>
 <p><b>Class:</b> class:word | <b>Namespace:</b> f | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>fetch</h1>

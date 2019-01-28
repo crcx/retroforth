@@ -170,9 +170,9 @@ f:ceiling	-	-	F-F	Return the smallest integral value greater than or equal to th
 f:cos	-	-	F-F	Return the cosine of a floating point number.			class:word	{n/a}	{n/a}	f	rre	
 f:depth	-n	-	-	Return the number of items on the floating point stack.			class:word	{n/a}	{n/a}	f	rre	
 f:drop	-	-	F-	Discard the top item on the floating point stack.			class:word	{n/a}	{n/a}	f	rre	
+f:drop-pair	-	-	FF-	Remove top two items on the stack.			class:word	{n/a}	{n/a}	f	rre	
 f:dup	-	-	F-FF	Duplicate the top item on the floating point stack.			class:word	{n/a}	{n/a}	f	rre	
-f:push	-	-	F-	Push a floating point value to an alternative stack.			class:word	{n/a}	{n/a}	f	rre	
-f:pop	-	-	-F	Pop a floating point value from the alternate stack.			class:word	{n/a}	{n/a}	f	rre	
+f:dup-pair	-	-	nm-nmnm	Duplicate the top two items on the stack.			class:word	{n/a}	{n/a}	f	rre	
 f:eq?	-f	-	FF-	Compare two floating point values for equality. Returns `TRUE` if they are equal or `FALSE` otherwise.			class:word	{n/a}	{n/a}	f	rre	
 f:fetch	a-	-	-n	Fetch a stored floating point value.			class:word	{n/a}	{n/a}	f	rre	
 f:floor	-	-	F-F	Perform a mathmatical floor operation on the floating point value.			class:word	{n/a}	{n/a}	f	rre	
@@ -183,9 +183,12 @@ f:lt?	-f	-	FF-	Compare two floating point values for less than.			class:word	{n/
 f:nan?	-f	-	F-	Return `TRUE` if floating point value is NaN or `FALSE` otherwise.			class:word	{n/a}	{n/a}	f	rre	
 f:negate	-	-	F-F	Invert the sign of the floating point value.			class:word	    .3.1415 f:negate	{n/a}	f	rre	
 f:negative?	-f	-	F-	Return `TRUE` if floating point value is negative or `FALSE` if not.			class:word	{n/a}	{n/a}	f	rre	
+f:nip	-	-	NM-M	Remove the second item from the stack.			class:word	{n/a}	{n/a}	f	rre	
 f:over	-	-	FG-FGF	Put a copy of the second floating point value over the top one.			class:word	{n/a}	{n/a}	f	rre	
+f:pop	-	-	-F	Pop a floating point value from the alternate stack.			class:word	{n/a}	{n/a}	f	rre	
 f:positive?	-f	-	F-	Return `TRUE` if floating point value is positive or `FALSE` otherwise.			class:word	{n/a}	{n/a}	f	rre	
 f:power	-	-	FF-F	Return F1^F2 for floating point values.			class:word	{n/a}	{n/a}	f	rre	
+f:push	-	-	F-	Push a floating point value to an alternative stack.			class:word	{n/a}	{n/a}	f	rre	
 f:put	-	-	F-	Display a floating point number.			class:word	{n/a}	{n/a}	global	rre	
 f:round	-	-	f-f	Round a floating point value.			class:word	{n/a}	{n/a}	f	rre	
 f:sin	-	-	F-F	Return the sine of a floating point number.			class:word	{n/a}	{n/a}	f	rre	
@@ -198,6 +201,7 @@ f:to-number	-n	-	F-	Convert a floating point value into a number.			class:word	{
 f:to-string	-s	-	F-	Convert a floating point value into a string.			class:word	{n/a}	{n/a}	f	rre	
 f:to-u	-u	-	n-	Encode the floating point value to an integer.			class:word	{n/a}	{n/a}	f	rre	
 f:tuck	-	-	FG-GFG	Tuck a copy of the top floating point value under the second one.			class:word	{n/a}	{n/a}	f	rre	
+f:tuck	-	-	nm-mnm	Put a copy of the top item on the stack under the second one.			class:word	{n/a}	{n/a}	f	rre	
 fetch	a-n	-	-	Fetch the value stored at the specified address.			class:primitive	    &Version fetch	{n/a}	global	all	
 fetch-next	a-an	-	-	Fetch the value stored at the specified address. Returns the next address and the value.			class:word	{n/a}	{n/a}	global	all	
 file:A	-n	-	-	Constant for opening a file in APPEND mode.			class:data	{n/a}	{n/a}	file	rre	

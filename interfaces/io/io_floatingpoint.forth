@@ -44,8 +44,11 @@
 :f:push  (f:f-)     #27 io:float-operation ;
 :f:pop   (f:-f)     #28 io:float-operation ;
 :f:square (f:n-m)   f:dup f:* ;
-:f:over  (f:ab-aba) f:to-string f:dup s:to-float f:swap ;
-:f:tuck  (f:ab-bab) f:swap f:over ;
+:f:over  (f:ab-aba) f:push f:dup f:pop f:swap ;
+:f:tuck  (f:ab-bab) f:dup f:push p;pop f:swap ;
+:f:nip   (f:ab-b)   f:swap f:drop ;
+:f:drop-pair (f:ab-) f:drop f:drop ;
+:f:dup-pair (f:ab-abab) f:over f:over ;
 :f:positive? (-f__f:a-) #0 n:to-float f:gt? ;
 :f:negative? (-f__f:a-) #0 n:to-float f:lt? ;
 :f:negate (f:a-b)  #-1 n:to-float f:* ;
