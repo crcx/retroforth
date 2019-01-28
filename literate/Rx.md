@@ -1065,6 +1065,7 @@ something to report the error.
 : err:notfound
 i liju....
 r _nop
+i re......
 ~~~
 
 `call:dt` takes a dictionary token and pushes the contents of
