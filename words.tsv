@@ -190,6 +190,7 @@ f:positive?	-f	-	F-	Return `TRUE` if floating point value is positive or `FALSE`
 f:power	-	-	FF-F	Return F1^F2 for floating point values.			class:word	{n/a}	{n/a}	f	rre	
 f:push	-	-	F-	Push a floating point value to an alternative stack.			class:word	{n/a}	{n/a}	f	rre	
 f:put	-	-	F-	Display a floating point number.			class:word	{n/a}	{n/a}	global	rre	
+f:rot	-	-	abc-bca	Rotate the top three values.			class:word	{n/a}	{n/a}	f	rre	
 f:round	-	-	f-f	Round a floating point value.			class:word	{n/a}	{n/a}	f	rre	
 f:sin	-	-	F-F	Return the sine of a floating point number.			class:word	{n/a}	{n/a}	f	rre	
 f:sqrt	-	-	F-F	Return the square root of a floating point number.			class:word	{n/a}	{n/a}	f	rre	

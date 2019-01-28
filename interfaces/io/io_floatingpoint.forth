@@ -49,6 +49,7 @@
 :f:nip   (f:ab-b)   f:swap f:drop ;
 :f:drop-pair (f:ab-) f:drop f:drop ;
 :f:dup-pair (f:ab-abab) f:over f:over ;
+:f:rot  (f:abc-bca)  f:push f:swap f:pop f:swap ;
 :f:positive? (-f__f:a-) #0 n:to-float f:gt? ;
 :f:negative? (-f__f:a-) #0 n:to-float f:lt? ;
 :f:negate (f:a-b)  #-1 n:to-float f:* ;
