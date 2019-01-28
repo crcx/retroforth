@@ -58,6 +58,9 @@ CELL string_inject(char *str, CELL buffer);
 double Floats[8192];
 CELL fsp;
 
+double AFloats[8192];
+CELL afsp;
+
 
 /*---------------------------------------------------------------------
   The first two functions push a float to the stack and pop a value off
@@ -72,6 +75,16 @@ void float_push(double value) {
 double float_pop() {
     fsp--;
     return Floats[fsp + 1];
+}
+
+void float_to_alt() {
+  afsp++;
+  AFloats[afsp] = float_pop();
+}
+
+void float_from_alt() {
+  afsp--;
+  float_push(AFloats[afsp + 1]);
 }
 
 
@@ -288,11 +301,13 @@ Handler FloatHandlers[] = {
   float_cos,
   float_asin,
   float_acos,
-  float_atan
+  float_atan,
+  float_to_alt,
+  float_from_alt
 };
 
 void io_floatingpoint_query() {
-  stack_push(0);
+  stack_push(1);
   stack_push(2);
 }
 

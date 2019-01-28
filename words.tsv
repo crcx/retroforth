@@ -163,14 +163,16 @@ f:INF	-	-	-n	Return a value corresponding to positive infinity			class:word	{n/a
 f:NAN	-	-	-n	Return a value corresponding to NaN			class:word	{n/a}	{n/a}	f	rre	
 f:PI	-	-	-F	Return the floating point value for PI.			class:word	{n/a}	{n/a}	f	rre	
 f:abs	-	-	F-F	Return the absolute value for a floating point value.			class:word	{n/a}	{n/a}	f	rre	
-f:acos	-	-	f-f	Return the arc cosine of a floating point number.			class:word	{n/a}	{n/a}	f	rre	
-f:asin	-	-	f-f	Return the arc sine of a floating point number.			class:word	{n/a}	{n/a}	f	rre	
-f:atan	-	-	f-f	Return the arc tangent of a floating point number.			class:word	{n/a}	{n/a}	f	rre	
+f:acos	-	-	F-F	Return the arc cosine of a floating point number.			class:word	{n/a}	{n/a}	f	rre	
+f:asin	-	-	F-F	Return the arc sine of a floating point number.			class:word	{n/a}	{n/a}	f	rre	
+f:atan	-	-	F-F	Return the arc tangent of a floating point number.			class:word	{n/a}	{n/a}	f	rre	
 f:ceiling	-	-	F-F	Return the smallest integral value greater than or equal to the specified value.			class:word	{n/a}	{n/a}	f	rre	
-f:cos	-	-	f-f	Return the cosine of a floating point number.			class:word	{n/a}	{n/a}	f	rre	
+f:cos	-	-	F-F	Return the cosine of a floating point number.			class:word	{n/a}	{n/a}	f	rre	
 f:depth	-n	-	-	Return the number of items on the floating point stack.			class:word	{n/a}	{n/a}	f	rre	
 f:drop	-	-	F-	Discard the top item on the floating point stack.			class:word	{n/a}	{n/a}	f	rre	
 f:dup	-	-	F-FF	Duplicate the top item on the floating point stack.			class:word	{n/a}	{n/a}	f	rre	
+f:push	-	-	F-	Push a floating point value to an alternative stack.			class:word	{n/a}	{n/a}	f	rre	
+f:pop	-	-	-F	Pop a floating point value from the alternate stack.			class:word	{n/a}	{n/a}	f	rre	
 f:eq?	-f	-	FF-	Compare two floating point values for equality. Returns `TRUE` if they are equal or `FALSE` otherwise.			class:word	{n/a}	{n/a}	f	rre	
 f:fetch	a-	-	-n	Fetch a stored floating point value.			class:word	{n/a}	{n/a}	f	rre	
 f:floor	-	-	F-F	Perform a mathmatical floor operation on the floating point value.			class:word	{n/a}	{n/a}	f	rre	

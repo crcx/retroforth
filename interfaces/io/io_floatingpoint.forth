@@ -41,6 +41,8 @@
 :f:asin  (f:f-f)    #24 io:float-operation ;
 :f:acos  (f:f-f)    #25 io:float-operation ;
 :f:atan  (f:f-f)    #26 io:float-operation ;
+:f:push  (f:f-)     #27 io:float-operation ;
+:f:pop   (f:-f)     #28 io:float-operation ;
 :f:square (f:n-m)   f:dup f:* ;
 :f:over  (f:ab-aba) f:to-string f:dup s:to-float f:swap ;
 :f:tuck  (f:ab-bab) f:swap f:over ;
