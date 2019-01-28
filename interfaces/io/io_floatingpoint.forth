@@ -69,6 +69,12 @@
   f:dup f:negative?
   [ .0.5 f:- f:ceiling ]
   [ .0.5 f:+ f:floor   ] choose ;
+:f:min   (f:nn-n)  f:dup-pair f:lt? &f:drop &f:nip choose ;
+:f:max   (f:nn-n)  f:dup-pair f:gt? &f:drop &f:nip choose ;
+:f:limit (f:nlu-n) f:swap f:push f:min f:pop f:max ;
+:f:between? (f:nlu-n) f:rot f:dup f:push f:rot f:rot f:limit f:pop f:eq? ;
+:f:inc   (f:n-n)   .1 f:+ ;
+:f:dec   (f:n-n)   .1 f:- ;
 ~~~
 
 ---------------------------------------------------------------

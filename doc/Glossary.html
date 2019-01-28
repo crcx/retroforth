@@ -1426,6 +1426,19 @@
 <p>Return the arc tangent of a floating point number.</p>
 <p><b>Class:</b> class:word | <b>Namespace:</b> f | <b>Interface Layer:</b> rre</p>
 <hr/>
+<h1>f:between?</h1>
+<div style='margin-left: 1em;'><p><b>Data:</b> -f<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> nlu-</p>
+</div>
+<p>Return TRUE if number is between the lower (l) and upper (u) bounds. If not, return FALSE. This is inclusive of the limits.</p>
+<p><b>Class:</b> class:word | <b>Namespace:</b> f | <b>Interface Layer:</b> rre</p>
+<p><b>Example:</b> <br>
+<br>
+<xmp>    .3 .1 .100 f:between?
+    .100 .200 .300   f:between?</xmp>
+</p>
+<hr/>
 <h1>f:ceiling</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -<br>
 <b>Addr:</b> -<br>
@@ -1441,6 +1454,18 @@
 </div>
 <p>Return the cosine of a floating point number.</p>
 <p><b>Class:</b> class:word | <b>Namespace:</b> f | <b>Interface Layer:</b> rre</p>
+<hr/>
+<h1>f:dec</h1>
+<div style='margin-left: 1em;'><p><b>Data:</b> -<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> n-m</p>
+</div>
+<p>Decrement n by one.</p>
+<p><b>Class:</b> class:word | <b>Namespace:</b> f | <b>Interface Layer:</b> rre</p>
+<p><b>Example:</b> <br>
+<br>
+<xmp>    .100 f:dec</xmp>
+</p>
 <hr/>
 <h1>f:depth</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -n<br>
@@ -1514,6 +1539,18 @@
 <p>Compare two floating point values for greater than.</p>
 <p><b>Class:</b> class:word | <b>Namespace:</b> f | <b>Interface Layer:</b> rre</p>
 <hr/>
+<h1>f:inc</h1>
+<div style='margin-left: 1em;'><p><b>Data:</b> -<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> n-m</p>
+</div>
+<p>Increment n by one.</p>
+<p><b>Class:</b> class:word | <b>Namespace:</b> f | <b>Interface Layer:</b> rre</p>
+<p><b>Example:</b> <br>
+<br>
+<xmp>    .100 f:inc</xmp>
+</p>
+<hr/>
 <h1>f:inf?</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -f<br>
 <b>Addr:</b> -<br>
@@ -1521,6 +1558,19 @@
 </div>
 <p>Return `TRUE` if floating point value is INF or `FALSE` otherwise.</p>
 <p><b>Class:</b> class:word | <b>Namespace:</b> f | <b>Interface Layer:</b> rre</p>
+<hr/>
+<h1>f:limit</h1>
+<div style='margin-left: 1em;'><p><b>Data:</b> -<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> nlu-m</p>
+</div>
+<p>Return n if it is within the lower (l) and upper (u) bounds. If outside the bounds, return the closes boundary value.</p>
+<p><b>Class:</b> class:word | <b>Namespace:</b> f | <b>Interface Layer:</b> rre</p>
+<p><b>Example:</b> <br>
+<br>
+<xmp>    .-10 .5 .8 f:limit
+    .10  .1 .15 f:limit</xmp>
+</p>
 <hr/>
 <h1>f:log</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -<br>
@@ -1537,6 +1587,32 @@
 </div>
 <p>Compare two floating point values for less than.</p>
 <p><b>Class:</b> class:word | <b>Namespace:</b> f | <b>Interface Layer:</b> rre</p>
+<hr/>
+<h1>f:max</h1>
+<div style='margin-left: 1em;'><p><b>Data:</b> -<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> mn-o</p>
+</div>
+<p>Return the greater of two values.</p>
+<p><b>Class:</b> class:word | <b>Namespace:</b> f | <b>Interface Layer:</b> rre</p>
+<p><b>Example:</b> <br>
+<br>
+<xmp>    .1 .7 f:max
+    .-8 .-10 f:max</xmp>
+</p>
+<hr/>
+<h1>f:min</h1>
+<div style='margin-left: 1em;'><p><b>Data:</b> -<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> mn-o</p>
+</div>
+<p>Return the lesser of two values.</p>
+<p><b>Class:</b> class:word | <b>Namespace:</b> f | <b>Interface Layer:</b> rre</p>
+<p><b>Example:</b> <br>
+<br>
+<xmp>    .1 .7 f:min
+    .-8 .-10 f:min</xmp>
+</p>
 <hr/>
 <h1>f:nan?</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -f<br>
@@ -2249,7 +2325,7 @@
 <b>Float:</b> -</p>
 </div>
 <p>Invert the sign of a number.</p>
-<p><b>Class:</b> class:word | <b>Namespace:</b> n | <b>Interface Layer:</b> all</p>
+<p><b>Class:</b> class:word | <b>Namespace:</b> n | <b>Interface Layer:</b> rre</p>
 <p><b>Example:</b> <br>
 <br>
 <xmp>    #10 n:negate

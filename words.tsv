@@ -166,8 +166,10 @@ f:abs	-	-	F-F	Return the absolute value for a floating point value.			class:word
 f:acos	-	-	F-F	Return the arc cosine of a floating point number.			class:word	{n/a}	{n/a}	f	rre	
 f:asin	-	-	F-F	Return the arc sine of a floating point number.			class:word	{n/a}	{n/a}	f	rre	
 f:atan	-	-	F-F	Return the arc tangent of a floating point number.			class:word	{n/a}	{n/a}	f	rre	
+f:between?	-f	-	nlu-	Return TRUE if number is between the lower (l) and upper (u) bounds. If not, return FALSE. This is inclusive of the limits.			class:word	    .3 .1 .100 f:between?\n    .100 .200 .300   f:between?	{n/a}	f	rre	
 f:ceiling	-	-	F-F	Return the smallest integral value greater than or equal to the specified value.			class:word	{n/a}	{n/a}	f	rre	
 f:cos	-	-	F-F	Return the cosine of a floating point number.			class:word	{n/a}	{n/a}	f	rre	
+f:dec	-	-	n-m	Decrement n by one.			class:word	    .100 f:dec	{n/a}	f	rre	
 f:depth	-n	-	-	Return the number of items on the floating point stack.			class:word	{n/a}	{n/a}	f	rre	
 f:drop	-	-	F-	Discard the top item on the floating point stack.			class:word	{n/a}	{n/a}	f	rre	
 f:drop-pair	-	-	FF-	Remove top two items on the stack.			class:word	{n/a}	{n/a}	f	rre	
@@ -177,9 +179,13 @@ f:eq?	-f	-	FF-	Compare two floating point values for equality. Returns `TRUE` if
 f:fetch	a-	-	-n	Fetch a stored floating point value.			class:word	{n/a}	{n/a}	f	rre	
 f:floor	-	-	F-F	Perform a mathmatical floor operation on the floating point value.			class:word	{n/a}	{n/a}	f	rre	
 f:gt?	-f	-	FF-	Compare two floating point values for greater than.			class:word	{n/a}	{n/a}	f	rre	
+f:inc	-	-	n-m	Increment n by one.			class:word	    .100 f:inc	{n/a}	f	rre	
 f:inf?	-f	-	F-	Return `TRUE` if floating point value is INF or `FALSE` otherwise.			class:word	{n/a}	{n/a}	f	rre	
+f:limit	-	-	nlu-m	Return n if it is within the lower (l) and upper (u) bounds. If outside the bounds, return the closes boundary value.			class:word	    .-10 .5 .8 f:limit\n    .10  .1 .15 f:limit	{n/a}	f	rre	
 f:log	-	-	FF-F	Return log(F1) for base F2 for floating point values.			class:word	{n/a}	{n/a}	f	rre	
 f:lt?	-f	-	FF-	Compare two floating point values for less than.			class:word	{n/a}	{n/a}	f	rre	
+f:max	-	-	mn-o	Return the greater of two values.			class:word	    .1 .7 f:max\n    .-8 .-10 f:max	{n/a}	f	rre	
+f:min	-	-	mn-o	Return the lesser of two values.			class:word	    .1 .7 f:min\n    .-8 .-10 f:min	{n/a}	f	rre	
 f:nan?	-f	-	F-	Return `TRUE` if floating point value is NaN or `FALSE` otherwise.			class:word	{n/a}	{n/a}	f	rre	
 f:negate	-	-	F-F	Invert the sign of the floating point value.			class:word	    .3.1415 f:negate	{n/a}	f	rre	
 f:negative?	-f	-	F-	Return `TRUE` if floating point value is negative or `FALSE` if not.			class:word	{n/a}	{n/a}	f	rre	
@@ -260,7 +266,7 @@ n:inc	n-m	-	-	Increment n by one.			class:word	    #100 n:inc	{n/a}	n	all
 n:limit	nlu-m	-	-	Return n if it is within the lower (l) and upper (u) bounds. If outside the bounds, return the closes boundary value.			class:word	    #-10 #5 #8 n:limit\n    #10  #1 #15 n:limit	{n/a}	n	all	
 n:max	mn-o	-	-	Return the greater of two values.			class:word	    #1 #7 n:max\n    #-8 #-10 n:max	{n/a}	n	all	
 n:min	mn-o	-	-	Return the lesser of two values.			class:word	    #1 #7 n:min\n    #-8 #-10 n:min	{n/a}	n	all	
-n:negate	n-n	-	-	Invert the sign of a number.			class:word	    #10 n:negate\n    #-10 n:negate	{n/a}	n	all	
+n:negate	n-n	-	-	Invert the sign of a number.			class:word	    #10 n:negate\n    #-10 n:negate	{n/a}	n	rre	
 n:negative?	n-f	-	-	Return `TRUE` if number is negative, or `FALSE` if not.			class:word	{n/a}	{n/a}	n	all	
 n:odd?	n-f	-	-	Return `TRUE` if number is odd, or `FALSE` if not.			class:word	{n/a}	{n/a}	n	all	
 n:positive?	n-f	-	-	Return `TRUE` if number is positive, or `FALSE` if not.			class:word	{n/a}	{n/a}	n	all	

@@ -17,6 +17,25 @@
 - add `unhook`
 - `c:put` primitive is a hookable word
 
+## I/O and Extensions
+
+### Floating Point
+
+- add f:push
+- add f:pop
+- add f:dup-pair
+- add f:drop-pair
+- add f:rot
+- add f:nip
+- add f:min
+- add f:max
+- add f:limit
+- add f:between?
+- add f:inc
+- add f:dec
+- improved f:tuck
+- improved f:over
+
 ## Nga
 
 ## Interfaces

@@ -1944,6 +1944,23 @@ Return the arc tangent of a floating point number.
 Class: class:word | Namespace: f | Interface Layer: rre
 ------------------------------------------------------------------------
 
+f:between?
+
+  Data:  -f
+  Addr:  -
+  Float: nlu-
+
+Return TRUE if number is between the lower (l) and upper (u) bounds. If not, return FALSE. This is inclusive of the limits.
+
+Class: class:word | Namespace: f | Interface Layer: rre
+
+Example #1:
+
+    .3 .1 .100 f:between?
+    .100 .200 .300   f:between?
+
+------------------------------------------------------------------------
+
 f:ceiling
 
   Data:  -
@@ -1964,6 +1981,22 @@ f:cos
 Return the cosine of a floating point number.
 
 Class: class:word | Namespace: f | Interface Layer: rre
+------------------------------------------------------------------------
+
+f:dec
+
+  Data:  -
+  Addr:  -
+  Float: n-m
+
+Decrement n by one.
+
+Class: class:word | Namespace: f | Interface Layer: rre
+
+Example #1:
+
+    .100 f:dec
+
 ------------------------------------------------------------------------
 
 f:depth
@@ -2065,6 +2098,22 @@ Compare two floating point values for greater than.
 Class: class:word | Namespace: f | Interface Layer: rre
 ------------------------------------------------------------------------
 
+f:inc
+
+  Data:  -
+  Addr:  -
+  Float: n-m
+
+Increment n by one.
+
+Class: class:word | Namespace: f | Interface Layer: rre
+
+Example #1:
+
+    .100 f:inc
+
+------------------------------------------------------------------------
+
 f:inf?
 
   Data:  -f
@@ -2074,6 +2123,23 @@ f:inf?
 Return `TRUE` if floating point value is INF or `FALSE` otherwise.
 
 Class: class:word | Namespace: f | Interface Layer: rre
+------------------------------------------------------------------------
+
+f:limit
+
+  Data:  -
+  Addr:  -
+  Float: nlu-m
+
+Return n if it is within the lower (l) and upper (u) bounds. If outside the bounds, return the closes boundary value.
+
+Class: class:word | Namespace: f | Interface Layer: rre
+
+Example #1:
+
+    .-10 .5 .8 f:limit
+    .10  .1 .15 f:limit
+
 ------------------------------------------------------------------------
 
 f:log
@@ -2096,6 +2162,40 @@ f:lt?
 Compare two floating point values for less than.
 
 Class: class:word | Namespace: f | Interface Layer: rre
+------------------------------------------------------------------------
+
+f:max
+
+  Data:  -
+  Addr:  -
+  Float: mn-o
+
+Return the greater of two values.
+
+Class: class:word | Namespace: f | Interface Layer: rre
+
+Example #1:
+
+    .1 .7 f:max
+    .-8 .-10 f:max
+
+------------------------------------------------------------------------
+
+f:min
+
+  Data:  -
+  Addr:  -
+  Float: mn-o
+
+Return the lesser of two values.
+
+Class: class:word | Namespace: f | Interface Layer: rre
+
+Example #1:
+
+    .1 .7 f:min
+    .-8 .-10 f:min
+
 ------------------------------------------------------------------------
 
 f:nan?
@@ -3065,7 +3165,7 @@ n:negate
 
 Invert the sign of a number.
 
-Class: class:word | Namespace: n | Interface Layer: all
+Class: class:word | Namespace: n | Interface Layer: rre
 
 Example #1:
 
