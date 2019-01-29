@@ -34,6 +34,7 @@
 - add f:inc
 - add f:dec
 - add f:case
+- add f:dump-stack
 - improved f:tuck
 - improved f:over
 

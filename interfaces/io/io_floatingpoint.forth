@@ -144,3 +144,7 @@ n:MAX n:negate       'u:-INF const
 :f:store (a-|f:n-) [ f:to-u ] dip store ;
 :f:fetch (a-|f:-n) fetch u:to-f ;
 ~~~
+
+~~~
+:f:dump-stack f:depth dup [ f:push ] times [ f:pop f:dup f:put sp ] times ;
+~~~

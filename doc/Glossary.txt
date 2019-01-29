@@ -2043,6 +2043,17 @@ Remove top two items on the stack.
 Class: class:word | Namespace: f | Interface Layer: rre
 ------------------------------------------------------------------------
 
+f:dump-stack
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Display the items on the floating point stack.
+
+Class: class:word | Namespace: f | Interface Layer: rre
+------------------------------------------------------------------------
+
 f:dup
 
   Data:  -
