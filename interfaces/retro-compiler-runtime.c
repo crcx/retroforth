@@ -57,6 +57,7 @@ int main(int argc, char **argv) {
   IO_queryHandlers[2] = io_filesystem_query;
   ngaPrepare();
   loadEmbeddedImage(argv[0]);
+  update_rx();
   execute(0);
   exit(0);
 }

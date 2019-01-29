@@ -176,14 +176,23 @@ void write_image() {
   fclose(fp);
 }
 
+void patch_entry(CELL a) {
+  memory[1] = a;
+}
+
 int main(int argc, char **argv) {
   int tokens;
+  if (argc < 3) {
+    printf("Missing arguments\n");
+    exit(1);
+  }
   
   ngaPrepare();
   extract_runtime(argv[0]);
   extract_image(argv[0]);
   ngaLoadImage("__ngaImage");
   tokens = include_file(argv[1]);
+  patch_entry(d_xt_for(argv[2], Dictionary));
   write_image();
   generate_turnkey();
   unlink("__ngaImage");
@@ -195,8 +204,6 @@ CELL Dictionary, Heap, Compiler;
 CELL notfound;
 
 /* Some I/O Parameters */
-
-#define IO_TTY_PUTC  1000
 
 CELL stack_pop() {
   sp--;
