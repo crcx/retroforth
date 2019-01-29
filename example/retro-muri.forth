@@ -58,7 +58,7 @@ instruction pointer. These are: ju, ca, cc, re, and zr.
 This is documented in *example/retro-unu.forth*, but basically
 it provides a combinator that runs a quote for each line in a
 file, provided that the lines are in fenced blocks starting and
-ending with ~~~.
+ending with `~~~`.
 
 The RETRO sources are written in this style, so I include Unu
 here to simplify the later workflow.

@@ -470,8 +470,8 @@ provide here.
 ~~~
 
 ~~~
-:if;   (qf-)  over [  if ] dip     0; pop drop-pair ;
-:-if;  (qf-)  over [ -if ] dip not 0; pop drop-pair ;
+:if;   (qf-)  over [  if ] dip         0; pop drop-pair ;
+:-if;  (qf-)  over [ -if ] dip #-1 xor 0; pop drop-pair ;
 ~~~
 
 And then some numeric comparators.
