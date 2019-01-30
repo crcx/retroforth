@@ -45,7 +45,7 @@
 :f:pop   (f:-f)     #28 io:float-operation ;
 :f:square (f:n-m)   f:dup f:* ;
 :f:over  (f:ab-aba) f:push f:dup f:pop f:swap ;
-:f:tuck  (f:ab-bab) f:dup f:push p;pop f:swap ;
+:f:tuck  (f:ab-bab) f:dup f:push f:swap f:pop ;
 :f:nip   (f:ab-b)   f:swap f:drop ;
 :f:drop-pair (f:ab-) f:drop f:drop ;
 :f:dup-pair (f:ab-abab) f:over f:over ;
