@@ -159,8 +159,10 @@ And then a word to process a packed opcode. This also traps
 the `err:notfound` to report on word-not-found conditions.
 
 ~~~
+:notfound? (-f) @IP @t:notfound eq? ;
+:display   (-)  #1025 &Image + s:put sp $? c:put nl ;
 :process-packed-opcode (n-)
-  @IP @t:notfound eq? [ #1025 &Image + s:put sp $? c:put nl ] if
+  notfound? [ display ] if
   unpack
   process-single-opcode 
   process-single-opcode 
@@ -187,18 +189,15 @@ top level word called returns.
 :read-byte (n-)  @FID file:read #255 and ;
 
 :read-cell (-n)
-  read-byte
-  read-byte
-  read-byte
-  read-byte
-  #-8 shift +
-  #-8 shift +
-  #-8 shift + ;
+  read-byte    read-byte    read-byte  read-byte
+  #-8 shift +  #-8 shift +  #-8 shift + ;
+
+:size (-n) @FID file:size #4 / ;
 
 :load-image (s-)
   file:R file:open !FID
-  &Image @FID file:size #4 / [ read-cell over store n:inc ] times drop
-  @FID file:size #4 / n:put '_cells_loaded s:put nl
+  &Image size [ read-cell over store n:inc ] times drop
+  size n:put '_cells_loaded s:put nl
   @FID file:close ;
 
 'ngaImage load-image
@@ -207,38 +206,41 @@ top level word called returns.
 # Map in Functions
 
 ~~~
+:image:Dictionary &Image #2 + ;
+
+:xt-for (s-a)
+  here store
+  image:Dictionary fetch &Image +
+  [ repeat fetch 0; dup d:name here fetch s:eq?
+    [ dup d:xt fetch here n:inc store ] if again ] call
+  here n:inc fetch ;
+
+:map (as-)
+  dup '__`%s`... s:format s:put
+  xt-for over store
+  '_@_ s:put fetch n:put nl ;
+
 'Find: s:put nl
-'__`interpret`... s:put
-:image:Dictionary &Image #2 + ;
-
-image:Dictionary fetch &Image +
-  [ repeat fetch 0; dup d:name 'interpret s:eq?
-    [ dup d:xt fetch !t:interpret ] if again ] call
-'_@_ s:put @t:interpret n:put nl
-
-
-'__`err:notfound`... s:put
-:image:Dictionary &Image #2 + ;
-
-image:Dictionary fetch &Image +
-  [ repeat fetch 0; dup d:name 'err:notfound s:eq?
-    [ dup d:xt fetch !t:notfound ] if again ] call
-'_@_ s:put @t:notfound n:put nl
+&t:interpret 'interpret map
+&t:notfound  'err:notfound map
 ~~~
 
 # Process the Extensions
 
 ~~~
 'Process_Tokens s:put nl
-'Tokens var
+
+:gc      (a-)   &Heap swap v:preserve ;
+:to-TIB  (s-)   TIB s:copy ;
+:process        #1025 >s @t:interpret execute ;
+:valid?  (s-sf) dup s:length n:-zero? ;
+:progress       $. c:put ;
 
 #0 sys:argv
-  [ &Heap
-    [ ASCII:SPACE s:tokenize
-      [ dup s:length n:zero? &drop [ &Tokens v:inc TIB s:copy #1025 >s @t:interpret execute ] choose ] set:for-each
-      $. c:put
-    ] v:preserve ] unu nl
-@Tokens n:put '_tokens_processed s:put nl
+  [ [ ASCII:SPACE s:tokenize
+      [ valid? [ to-TIB process ] &drop choose ] set:for-each
+      progress
+    ] gc ] unu nl
 ~~~
 
 # Save the Image
