@@ -54,7 +54,8 @@ progresses. I will fill in the value for `interpret` later.
 
 ~~~
 #1025 &Image + 'TIB const
-'interpret var
+#367 't:interpret var<n>
+#339 't:notfound var<n>
 ~~~
 
 I next define helpers to move values to/from the host data
@@ -97,13 +98,13 @@ back.
 :i:gt s> s> swap gt?       >s    ;
 :i:fe s>    #-1 [ @SP >s ] case
             #-2 [ @RP >s ] case
-            #-3 [ #65535 #4 * >s ] case
+            #-3 [ IMAGE-SIZE >s ] case
             &Image + fetch >s    ;
 :i:st s> s> swap &Image + store  ;
 :i:ad s> s> +              >s    ;
 :i:su s> s> swap -         >s    ;
 :i:mu s> s> *              >s    ;
-:i:di s> s> swap /mod      >s >s ;
+:i:di s> s> swap /mod swap >s >s ;
 :i:an s> s> and            >s    ;
 :i:or s> s> or             >s    ;
 :i:xo s> s> xor            >s    ;
@@ -150,19 +151,16 @@ validation to make sure the opcode is in the expected range.
 ~~~
 :process-single-opcode (n-)
   dup #0 #29 n:between?
-  [ &Instructions + fetch call ]
+  [ 0; &Instructions + fetch call ]
   [ 'Invalid_Instruction:_%n_! s:format s:put nl ] choose ;
 ~~~
 
 And then a word to process a packed opcode. This also traps
 the `err:notfound` to report on word-not-found conditions.
 
-Todo: the address of `err:notfound` shouldn't be hard coded
-here.
-
 ~~~
 :process-packed-opcode (n-)
-  @IP #339 eq? [ #1025 &Image + s:put sp $? c:put nl ] if
+  @IP @t:notfound eq? [ #1025 &Image + s:put sp $? c:put nl ] if
   unpack
   process-single-opcode 
   process-single-opcode 
@@ -200,7 +198,8 @@ top level word called returns.
 :load-image (s-)
   file:R file:open !FID
   &Image @FID file:size #4 / [ read-cell over store n:inc ] times drop
-  @FID dup file:size #4 / n:put '_cells s:put nl file:close ;
+  @FID file:size #4 / n:put '_cells_loaded s:put nl
+  @FID file:close ;
 
 'ngaImage load-image
 ~~~
@@ -208,22 +207,38 @@ top level word called returns.
 # Map in Functions
 
 ~~~
-'Find_`interpret`... s:put
+'Find: s:put nl
+'__`interpret`... s:put
 :image:Dictionary &Image #2 + ;
-image:Dictionary fetch
+
+image:Dictionary fetch &Image +
   [ repeat fetch 0; dup d:name 'interpret s:eq?
-    [ dup d:xt fetch !interpret ] if again ] call
-'_@_ s:put @interpret n:put nl
+    [ dup d:xt fetch !t:interpret ] if again ] call
+'_@_ s:put @t:interpret n:put nl
+
+
+'__`err:notfound`... s:put
+:image:Dictionary &Image #2 + ;
+
+image:Dictionary fetch &Image +
+  [ repeat fetch 0; dup d:name 'err:notfound s:eq?
+    [ dup d:xt fetch !t:notfound ] if again ] call
+'_@_ s:put @t:notfound n:put nl
 ~~~
 
 # Process the Extensions
 
 ~~~
+'Process_Tokens s:put nl
+'Tokens var
+
 #0 sys:argv
   [ &Heap
     [ ASCII:SPACE s:tokenize
-      [ dup s:length n:zero? &drop [ TIB s:copy #1025 >s @interpret execute ] choose $. c:put  ] set:for-each
+      [ dup s:length n:zero? &drop [ &Tokens v:inc TIB s:copy #1025 >s @t:interpret execute ] choose ] set:for-each
+      $. c:put
     ] v:preserve ] unu nl
+@Tokens n:put '_tokens_processed s:put nl
 ~~~
 
 # Save the Image
@@ -240,9 +255,10 @@ image:Dictionary fetch
   #8 shift dup mask write-byte
   #8 shift     mask write-byte ;
 
-:save-image (s-)
+:save-image (s-)z
   file:W file:open !FID
   &Image &Image #3 + fetch [ fetch-next write-cell ] times drop
+  &Image #3 + fetch n:put sp 'cells_written s:put nl
   @FID file:close ;
 
 'ngaImage2 save-image
