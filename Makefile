@@ -11,7 +11,7 @@ RIIO ?= io/filesystem.o io/floatingpoint.o io/gopher.o io/unix.o
 
 all: build
 
-build: dirs bin/retro-embedimage bin/retro-extend bin/retro-injectimage-js bin/retro-muri bin/RETRO12.html bin/retro bin/retro-repl bin/retro-unu
+build: dirs bin/retro-embedimage bin/retro-extend bin/retro-injectimage-js bin/retro-muri bin/RETRO12.html bin/retro bin/retro-ri bin/retro-repl bin/retro-unu
 
 dirs:
 	mkdir -p bin
