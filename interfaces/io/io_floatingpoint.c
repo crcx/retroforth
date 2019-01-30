@@ -83,8 +83,8 @@ void float_to_alt() {
 }
 
 void float_from_alt() {
+  float_push(AFloats[afsp]);
   afsp--;
-  float_push(AFloats[afsp + 1]);
 }
 
 
