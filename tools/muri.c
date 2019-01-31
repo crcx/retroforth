@@ -111,8 +111,6 @@ void pass1(char *fname) {
                       break;
             case 'd': target[here++] = atoi(buffer+2);
                       break;
-            case 'c': target[here++] = buffer[2];
-                      break;
             case 's': opcode = 2;
                       while (opcode < strlen(buffer))
                         target[here++] = buffer[opcode++];
@@ -151,7 +149,6 @@ void pass2(char *fname) {
                       printf("Lookup failed: '%s'\n", buffer+2);
                                                         break;
           case 'd': here++;                             break;
-          case 'c': here++;                             break;
           case 's': here = here + strlen(buffer) - 1;   break;
           case ':':                                     break;
         }
