@@ -1,5 +1,9 @@
 # RETRO 12.2019.6
 
+This is the changelog for the development builds of Retro.
+I am currently planning to have the next release occur in
+June 2019.
+
 ## Bug Fixes
 
 ## Build
@@ -70,11 +74,13 @@
 - retro-extend: allow multiple files
 - retro-extend: reduce memory usage
 - retro-extend: fix potential buffer overrun
+- muri: remove the unused `c` directive
 
 ## Other
 
 ## Documentation
 
+- add a collection of papers
 - refactor glossary tool
 - add HTML version of the Glossary
 - add more concise text copies of the Glossary
@@ -88,6 +94,7 @@
 - add HTML.forth
 - add KeyValueStore.forth
 - add Marker.forth
+- add Naming_Quotes.forth
 - add net_fetch.forth
 - add paste.forth
 - add Paste_to_Sprunge.forth
