@@ -1,0 +1,72 @@
+When I decided to begin work on what became Retro 12, I knew
+the process would involve updating Ngaro, the virtual machine
+that Retro 10 and 11 ran on.
+
+Ngaro rose out of an earlier experimental virtual machine I had
+written back in 2005-2006. This earlier VM, called Maunga, was
+very close to what Ngaro ended up being, though it had a very
+different approach to I/O. (All I/O in Maunga was intended to be
+memory mapped; Ngaro adopted a port based I/O system).
+
+Ngaro itself evolved along with Retro, gaining features like
+automated skipping of NOPs and a LOOP opcode to help improve
+performance. But the I/O model proved to be a problem. When I
+created Ngaro, I had the idea that I would always be able to
+assume a console/terminal style environment. The assumption was
+that all code would be entered via the keyboard (or maybe a
+block editor), and that proved to be the fundamental flaw as
+time went on.
+
+As Retro grew it was evident that the model had some serious
+problems. Need to load code from a file? The VM and language had
+functionality to pretend it was being typed in. Want to run on
+something like a browser, Android, or iOS? The VM would need to
+be implemented in a way that simulates input being typed into
+the VM via a simulated keyboard. And Retro was built around this.
+I couldn't change it because of a promise to maintain, as much
+as possible, source compatibility for a period of at least five
+years.
+
+When the time came to fix this, I decided at the start to keep
+the I/O model separate from the core VM. I also decided that the
+core Retro language would provide some means of interpreting
+code without requiring an assumption that a traditional terminal
+was being used.
+
+So Nga began. I took the opportunity to simplify the instruction
+set to just 26 essential instructions, add support for packing
+multiple instructions per memory location (allowing a long due
+reduction in memory footprint), and to generally just make a far
+simpler design.
+
+I've been pleased with Nga. On its own it really isn't useful
+though. So with Retro I embed it into a larger framework that
+adds some basic I/O functionality. The *interfaces* handle the
+details of passing tokens into the language and capturing any
+output. They are free to do this in whatever model makes most
+sense on a given platform.
+
+So far I've implemented:
+
+    - a scripting interface, reading input from a file and
+      offering file i/o, gopher, and reading from stdin, and
+      sending output to stdout.
+    - an interactive interface, built around ncurses, reading
+      input from stdin, and displaying output to a scrolling
+      buffer.
+    - an iOS interface, built around a text editor, directing
+      output to a separate interface pane.
+    - an interactive block editor, using a gopher-based block
+      data store. Output is displayed to stdout, and input is
+      done via the blocks being evaluated or by reading from
+      stdin.
+
+In all cases, the only common I/O word that has to map to an
+exposed instruction is `putc`, to display a single character to
+some output device. There is no requirement for a traditional
+keyboard input model.
+
+By doing this I was able to solve the biggest portability issue
+with the Retro 10/11 model, and make a much simpler, cleaner
+language in the end.
+

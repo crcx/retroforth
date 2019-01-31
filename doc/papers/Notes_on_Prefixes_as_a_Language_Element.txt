@@ -1,0 +1,45 @@
+A big change in Retro 12 was the elimination of the traditional
+parser from the language. This was a sacrifice due to the lack
+of an I/O model. Retro has no way to know *how* input is given
+to the `interpret` word, or whether anything else will ever be
+passed into it.
+
+And so `interpret` operates only on the current token. The core
+language does not track what came before or attempt to guess at
+what might come in the future.
+
+This leads into the prefixes. Retro 11 had a complicated system
+for prefixes, with different types of prefixes for words that
+parsed ahead (e.g., strings) and words that operated on the
+current token (e.g., `@`). Retro 12 eliminates all of these in
+favor of just having a single prefix model.
+
+The first thing `interpret` does is look to see if the first
+character in a token matches a `prefix:` word. If it does, it
+passes the rest of the token as a string pointer to the prefix
+specific handler to deal with. If there is no valid prefix
+found, it tries to find it in the dictionary. Assuming that it
+finds the words, it passes the `d:xt` field to the handler that
+`d:class` points to. Otherwise it calls `err:notfound`.
+
+This has an important implication: *words can not reliably
+have names that start with a prefix character.*
+
+It also simplifies things. Anything that would normally parse
+becomes a prefix handler. So creating a new word? Use the `:`
+prefix. Strings? Use `'`. Pointers? Try `&`. And so on. E.g.,
+
+    In ANS                  | In Retro
+    : foo ... ;             | :foo ... ;
+    ' foo                   | &foo
+    : bar ... ['] foo ;     | :bar ... &foo ;
+    s" hello world!"        | 'hello_world!
+
+If you are familiar with ColorForth, prefixes are a similar
+idea to colors, but can be defined by the user as normal words.
+
+After doing this for quite a while I rather like it. I can see
+why Chuck Moore eventually went towards ColorForth as using
+color (or prefixes in my case) does simplify the implementation
+in many ways.
+

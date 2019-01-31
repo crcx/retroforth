@@ -1,0 +1,77 @@
+Retro 10 and 11 were written in themselves using a metacompiler.
+I had been fascinated by this idea for a long time and was able
+to explore it heavily. While I still find it to be a good idea,
+the way I ended up doing it was problematic.
+
+The biggest issue I faced was that I wanted to do this in one
+step, where loading the Retro source would create a new image
+in place of the old one, switch to the new one, and then load
+the higher level parts of the language over this. In retrospect,
+this was a really bad idea.
+
+My earlier design for Retro was very flexible. I allowed almost
+everything to be swapped out or extended at any time. This made
+it extremely easy to customize the language and environment, but
+made it crucial to keep track of what was in memory and what had
+been patched so that the metacompiler wouldn't refer to anything
+in the old image during the relocation and control change. It
+was far too easy to make a mistake, discover that elements of
+the new image were broken, and the have to go and revert many
+changes to try to figure out what went wrong.
+
+This was also complicated by the fact that I built new images
+as I worked, and, while a new image could be built from the last
+built one, it wasn't always possible to build a new image from
+the prior release version. (Actually, it was often worse - I
+failed to check in every change as I went, so often even the
+prior commits couldn't rebuild the latest images).
+
+For Retro 12 I wanted to avoid this problem, so I decided to go
+back to writing the kernel ("Rx") in assembly. I actually wrote
+a Machine Forth dialect to generate the initial assembly, before
+eventually hand tuning the final results to its current state.
+
+I could (and likely will eventually) write the assembler in
+Retro, but the current one is in C, and is built as part of the
+standard toolchain.
+
+My VM actually has two assemblers. The older one is Naje. This
+was intended to be fairly friendly to work with, and handles
+many of the details of packing instructions for the user. Here
+is an example of a small program in it:
+
+    :square
+      dup
+      mul
+      ret
+    :main
+      lit 35
+      lit &square
+      call
+      lit &square
+      call
+      end
+
+The other assembler is Muri. This is a far more minimalistic
+assembler, but I've actually grown to prefer it. The above
+example in Muri would become:
+
+    i liju....
+    r main
+    : square
+    i dumure..
+    : main
+    i lilica..
+    d 35
+    r square
+    i en......
+
+In Muri, each instruction is reduced to two characters, and the
+bundlings are listed as part of an instruction bundle (lines
+starting with `i`). This is less readable if you aren't very
+familiar with Nga's assembly and packing rules, but allows a
+very quick, efficient way of writing assembly for those who are.
+
+I eventually rewrote the kernel in the Muri style as it's what
+I prefer, and since there's not much need to make changes in it.
+
