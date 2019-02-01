@@ -1,17 +1,16 @@
-This is a tiny Gopher client written in RETRO. It's only for the iOS implementation, but could be adapted for others with a little reworking of the file I/O code.
+This is a tiny Gopher client.
 
 It's intentionally kept minimal, handling only text files and directories. The interface is line oriented.
 
 # General Configuration
 
-`GOPHER-DATA` is the name of the file to store the last downloaded content into.
+`TARGET` is the name of the buffer to store the last downloaded content into.
 
 `WrapPoint` holds the number of characters to display before wrapping output.
 
 There is also a `Results` variable which will point to the data set being displayed.
 
 ~~~
-'GopherData.txt 'GOPHER-DATA s:const
 #34 'WrapPoint var<n>
 'Results var
 'TARGET d:create #1024 #64 * allot
@@ -83,9 +82,9 @@ The next word is `display`. This will tokenize a line and display the `type` and
 
 ~~~
   :display (s-)
-    #0 !Displayed
-    ASCII:HT s:tokenize #0 set:nth fetch
-    fetch-next type s:put<w/wrap> ;
+    &Heap [ #0 !Displayed
+            ASCII:HT s:tokenize #0 set:nth fetch
+            fetch-next type s:put<w/wrap> ] v:preserve ;
 ~~~
 
 ~~~
@@ -96,19 +95,21 @@ And finally, tie everything together. This will display an index.
 
 ~~~
   :display:index (-)
-    &TARGET ASCII:LF s:tokenize !Results
+    &Heap [
+      &TARGET ASCII:LF s:tokenize !Results
 
-    @Results fetch #2 - @Results store
+      @Results fetch #2 - @Results store
 
-    #0 @Results
-    [ over line display nl n:inc ]
-    set:for-each drop ;
+      #0 @Results
+      [ over line display nl n:inc ]
+      set:for-each drop
+    ] v:preserve ;
 }}
 ~~~
 
 # Text Viewer
 
-Text files are really easy. We just read the downloaded file into a buffer and display it.
+Text files are really easy. We just display the contents of the download buffer.
 
 ~~~
 :display:text (-)
@@ -138,13 +139,14 @@ The last bit is `g`, which is used to navigate a directory. Pass it the line num
 
 ~~~
 :g (n-)
-  @Results swap set:nth fetch
-  ASCII:HT s:tokenize
-  dup #0 set:nth fetch fetch [
-    [ #2 set:nth fetch ]
-    [ #3 set:nth fetch s:chop s:to-number ]
-    [ #1 set:nth fetch ] tri grab
-  ] dip display-by-type ;
+  &Heeap [ @Results swap set:nth fetch
+           ASCII:HT s:tokenize
+           dup #0 set:nth fetch fetch [
+             [ #2 set:nth fetch ]
+             [ #3 set:nth fetch s:chop s:to-number ]
+             [ #1 set:nth fetch ] tri grab
+           ] dip display-by-type
+  ] v:preserve ;
 ~~~
 
 The final thing to do is just call `home` to get started.
@@ -152,4 +154,3 @@ The final thing to do is just call `home` to get started.
 ~~~
 home
 ~~~
-
