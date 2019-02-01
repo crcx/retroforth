@@ -21,7 +21,7 @@ RETRO 12 is:
 
     Copyright (c) 2008 - 2019, Charles Childers
 
-Portions of the code derive from RETRO 11, which is:
+Portions of the code derive from RETRO 11, which was:
 
     Copyright (c) 2008 - 2016, Charles Childers
     Copyright (c) 2012 - 2013, Michal J Wallace

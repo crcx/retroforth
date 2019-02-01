@@ -3580,6 +3580,14 @@
 <xmp>  '/etc unix:chdir</xmp>
 </p>
 <hr/>
+<h1>unix:count-files-in-cwd</h1>
+<div style='margin-left: 1em;'><p><b>Data:</b> -n<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Return the number of files (and subdirectories) in the current working directory</p>
+<p><b>Class:</b> class:word | <b>Namespace:</b> unix | <b>Interface Layer:</b> rre</p>
+<hr/>
 <h1>unix:exec0</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> s-<br>
 <b>Addr:</b> -<br>
@@ -3620,12 +3628,28 @@
 <p>Exit the current process, returning the specified return code.</p>
 <p><b>Class:</b> class:word | <b>Namespace:</b> unix | <b>Interface Layer:</b> rre</p>
 <hr/>
+<h1>unix:for-each-file</h1>
+<div style='margin-left: 1em;'><p><b>Data:</b> q-<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Run a quote once for each file or subdirectory in the current directory. The quote will receive the file name as a string and should consume this and return nothing on the stack.</p>
+<p><b>Class:</b> class:word | <b>Namespace:</b> unix | <b>Interface Layer:</b> rre</p>
+<hr/>
 <h1>unix:fork</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -n<br>
 <b>Addr:</b> -<br>
 <b>Float:</b> -</p>
 </div>
 <p>Fork the current process. Returns a PID.</p>
+<p><b>Class:</b> class:word | <b>Namespace:</b> unix | <b>Interface Layer:</b> rre</p>
+<hr/>
+<h1>unix:get-cwd</h1>
+<div style='margin-left: 1em;'><p><b>Data:</b> -s<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Return the current working directory</p>
 <p><b>Class:</b> class:word | <b>Namespace:</b> unix | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>unix:getenv</h1>

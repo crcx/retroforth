@@ -109,3 +109,28 @@ seconds.
 :unix:io:n:put (n-) #17 io:unix-syscall ;
 :unix:io:s:put (s-) #18 io:unix-syscall ;
 ~~~
+
+~~~
+:unix:get-cwd (-s)
+  'pwd file:R unix:popen
+    dup file:read-line s:trim swap
+  unix:pclose
+  #0 sys:argv s:length + '/ s:append ;
+~~~
+
+~~~
+:unix:count-files-in-cwd (-n)
+  'ls_-1_|_wc_-l  file:R unix:popen
+    dup file:read-line s:trim s:to-number swap
+  unix:pclose ;
+~~~
+
+~~~
+:unix:for-each-file (q-)
+  'ls_-1_-p file:R unix:popen
+  unix:count-files-in-cwd
+  [ [ file:read-line s:temp over call ] sip ] times
+  unix:pclose drop ;
+~~~
+
+

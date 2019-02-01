@@ -1,4 +1,4 @@
-#!/usr/bin/env rre
+#!/usr/bin/env retro
 
 # Hua: a text editor written in RETRO
 

@@ -42,6 +42,12 @@ June 2019.
 - improved f:tuck
 - improved f:over
 
+### Unix
+
+- add unix:get-cwd
+- add unix:count-files-in-cwd
+- add unix:for-each-file
+
 ## Nga
 
 ## Interfaces

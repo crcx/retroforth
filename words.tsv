@@ -407,12 +407,15 @@ u:to-f	u-	-	-n	Decode an encoded floating point value.			class:word	{n/a}	{n/a}	
 u:zero?	u-f	-	-	{n/a}			class:word	{n/a}	{n/a}	u	rre	{n/a}
 unhook	a-	-	-	Reset the hook point in a1 to the default definition.			class:word	    :foo hook #1 ;\n    :bar #2 ;\n    &bar &foo set-hook\n    &foo unhook	{n/a}	global	all	
 unix:chdir	s-	-	-	Change the current working directory to the specified one.			class:word	  '/etc unix:chdir	{n/a}	unix	rre	
+unix:count-files-in-cwd	-n	-	-	Return the number of files (and subdirectories) in the current working directory			class:word	{n/a}	{n/a}	unix	rre	
 unix:exec0	s-	-	-	Execute a process by running the application specified by s.			class:word	{n/a}	{n/a}	unix	rre	
 unix:exec1	ss-	-	-	Execute a process by running the application specified by s1. Pass s2 as an argument.			class:word	{n/a}	{n/a}	unix	rre	
 unix:exec2	sss-	-	-	Execute a process by running the application specified by s1. Pass s2 and s3 as arguments.			class:word	{n/a}	{n/a}	unix	rre	
 unix:exec3	ssss-	-	-	Execute a process by running the application specified by s1. Pass s2, s3, and s4 as arguments.			class:word	{n/a}	{n/a}	unix	rre	
 unix:exit	n-	-	-	Exit the current process, returning the specified return code.			class:word	{n/a}	{n/a}	unix	rre	
+unix:for-each-file	q-	-	-	Run a quote once for each file or subdirectory in the current directory. The quote will receive the file name as a string and should consume this and return nothing on the stack.			class:word	{n/a}	{n/a}	unix	rre	
 unix:fork	-n	-	-	Fork the current process. Returns a PID.			class:word	{n/a}	{n/a}	unix	rre	
+unix:get-cwd	-s	-	-	Return the current working directory			class:word	{n/a}	{n/a}	unix	rre	
 unix:getenv	sa-	-	-	Get an environment variable. Provide the name and an address to store it in.			class:word	  'SHELL s:empty [ unix:getenv ] sip s:put nl	{n/a}	unix	rre	
 unix:getpid	-n	-	-	Return the PID of the current process.			class:word	{n/a}	{n/a}	unix	rre	
 unix:io:n:put	n-	-	-	Display a number (in base 10) to the standard output device. This is faster than `n:put`, but not portable.			class:word	{n/a}	{n/a}	unix:io	rre	

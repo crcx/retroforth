@@ -4856,6 +4856,17 @@ Example #1:
 
 ------------------------------------------------------------------------
 
+unix:count-files-in-cwd
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Return the number of files (and subdirectories) in the current working directory
+
+Class: class:word | Namespace: unix | Interface Layer: rre
+------------------------------------------------------------------------
+
 unix:exec0
 
   Data:  s-
@@ -4911,6 +4922,17 @@ Exit the current process, returning the specified return code.
 Class: class:word | Namespace: unix | Interface Layer: rre
 ------------------------------------------------------------------------
 
+unix:for-each-file
+
+  Data:  q-
+  Addr:  -
+  Float: -
+
+Run a quote once for each file or subdirectory in the current directory. The quote will receive the file name as a string and should consume this and return nothing on the stack.
+
+Class: class:word | Namespace: unix | Interface Layer: rre
+------------------------------------------------------------------------
+
 unix:fork
 
   Data:  -n
@@ -4918,6 +4940,17 @@ unix:fork
   Float: -
 
 Fork the current process. Returns a PID.
+
+Class: class:word | Namespace: unix | Interface Layer: rre
+------------------------------------------------------------------------
+
+unix:get-cwd
+
+  Data:  -s
+  Addr:  -
+  Float: -
+
+Return the current working directory
 
 Class: class:word | Namespace: unix | Interface Layer: rre
 ------------------------------------------------------------------------
