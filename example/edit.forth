@@ -2,25 +2,41 @@
 
 # Hua: a text editor written in RETRO
 
-Hua is a small, functional text editor written in RETRO, using the
-*RRE* interface. It is line oriented, visual, and tries to be very
-simple to use.
+Hua is a small, functional text editor written in RETRO, using
+the *RRE* interface. It is line oriented, visual, and tries to
+be very simple to use.
 
-First up, several variables and constants that are used through
-the rest of the code.
+## Starting
+
+Hua is intended to run as a standalone tool. Use a line like:
+
+    edit.forth filename
+
+To create a new file:
+
+    edit.forth new filename
+
+## A Word of Warning
+
+Hua saves changes as you edit the file. I advise using it along
+with a version control system so you can revert changes if or
+when needed.
+
+## The Code
+
+Since this runs as a standalone application I use a quick check
+to exit if no arguments were passed.
 
 ~~~
-'SourceFile var
-'CurrentLine var
-'LineCount var
-'ShowEOL var
-'FID var
-'CopiedLine d:create #1025 allot
+sys:argc n:zero? [ #0 unix:exit ] if
 ~~~
 
-The configuration here is for two items. The number of lines from the
-file to show on screen, and the name of the temporary file to use
-when editing.
+If I get here, a filename was provided. So I start by creating
+a few variables and constants.
+
+The configuration here is for two items. The number of lines
+from the file to show on screen, and the name of the temporary
+file to use when editing.
 
 ~~~
 #80 'COLS      const
@@ -28,11 +44,28 @@ when editing.
 '/tmp/rre.edit 'TEMP-FILE s:const
 ~~~
 
-Get the name of the file to edit. If no file is provided, exit.
+Next are the variables that I use to track various bits of
+state.
 
 ~~~
-sys:argc n:zero? [ #0 unix:exit ] if
+'SourceFile  var
+'CurrentLine var
+'LineCount   var
+'ShowEOL     var
+'FID         var
+'CopiedLine  d:create #1025 allot
+~~~
+
+Get the name of the file to edit.
+
+~~~
 #0 sys:argv s:keep !SourceFile
+~~~
+
+To create a new file, Hua allows for the use of `new` followed
+by the filename. I handle the file creation here.
+
+~~~
 @SourceFile 'new s:eq?
   [ #1 sys:argv s:keep !SourceFile
     @SourceFile file:A file:open file:close ] if
@@ -48,15 +81,15 @@ easier.
 I now turn my attention to displaying the file. I am aiming for
 an interface like:
 
-  <filename> : <line-count>
-  ---------------------------------------------------------------
-  *   99:
-     100: :n:square dup * ;
-     101:
-     102: This is the current line
-     103:
-  ---------------------------------------------------------------
-  j: down | k: up | ... other helpful text ...
+    <filename> : <line-count>
+    ---------------------------------------------------------------
+    *   99:
+       100: :n:square dup * ;
+       101:
+       102: This is the current line
+       103:
+    ---------------------------------------------------------------
+    j: down | k: up | ... other helpful text ...
 
 The * denotes the currently selected line.
 
@@ -71,11 +104,11 @@ advance to the currently selected line.
   @CurrentLine MAX-LINES #2 / - #0 n:max [ @FID file:read-line drop ] times ;
 ~~~
 
-Now for words to format the output. This should all be pretty clear in
-intent.
+Now for words to format the output. This should all be pretty
+clear in intent.
 
-`clear-display` uses an ANSI/VT100 escape sequence. This might need to
-be adjusted for your chosen terminal.
+`clear-display` uses an ANSI/VT100 escape sequence. This might
+need to be adjusted for your chosen terminal.
 
 ~~~
 :clear-display (-)
@@ -89,33 +122,35 @@ This just displays the separator bars.
   COLS [ $- c:put ] times nl ;
 ~~~
 
-Next, a word to display the header. Currently just the name of the file
-being edited and the line count.
+Next, a word to display the header. Currently just the name of
+the file being edited and the line count.
 
 ~~~
 :header (-)
   count-lines @SourceFile '%s_:_%n_lines\n s:format s:put ;
 ~~~
 
-The `pad` word is used to make sure line numbers are all the same width.
+The `pad` word is used to make sure line numbers are all the
+same width.
 
 ~~~
 :pad (n-n)
-  dup #0 #9 n:between? [ '____ s:put ] if
-  dup #10 #99 n:between? [ '___ s:put ] if
-  dup #100 #999 n:between? [ '__ s:put ] if
-  dup #1000 #9999 n:between? [ '_ s:put ] if ;
+  dup    #0 #9    n:between? [ '____ s:put ] if
+  dup   #10 #99   n:between? [ '___  s:put ] if
+  dup  #100 #999  n:between? [ '__   s:put ] if
+  dup #1000 #9999 n:between? [ '_    s:put ] if ;
 ~~~
 
 A line has a form:
 
     <indicator><number>: <text><eol>
 
-The indicator is an asterisk, and visually marks the current line.
+The indicator is an asterisk, and visually marks the current
+line.
 
-EOL is optional. If `ShowEOL` is `TRUE`, it'll display a ~ at the end
-of each line. This is useful when looking for trailing whitespace. The
-indicator can be toggled via the ~ key.
+EOL is optional. If `ShowEOL` is `TRUE`, it'll display a ~ at
+the end of each line. This is useful when looking for trailing
+whitespace. The indicator can be toggled via the ~ key.
 
 ~~~
 :mark-if-current (n-n)
@@ -138,20 +173,21 @@ indicator can be toggled via the ~ key.
   ---- @FID file:close ;
 ~~~
 
-With the code to display the file done, I can proceed on to words for
-handling editing.
+With the code to display the file done, I can proceed to the
+words for handling editing.
 
-I add a custom combinator, `process-lines` to iterate over the lines in
-the file. This takes a quote, and runs it once for each line in the file.
-The quote gets passed two values: a counter and a pointer to the current
-line in the file. The quote should consume the pointer an increment the
-counter. This also sets up `FID` as a pointer to the temporary file where
-changes can be written. The combinator will replace the original file
-after execution completes.
+I add a custom combinator, `process-lines` to iterate over the
+lines in the file. This takes a quote, and runs it once for
+each line in the file. The quote gets passed two values: a
+counter and a pointer to the current line in the file. The
+quote should consume the pointer an increment the counter. This
+also sets up `FID` as a pointer to the temporary file where
+changes can be written. The combinator will replace the
+original file after execution completes.
 
-Additionally, I define a word named `current?` which returns `TRUE` if
-the specified line is the current one. This is just to aid in later
-readability.
+Additionally, I define a word named `current?` which returns
+`TRUE` if the specified line is the current one. This is just
+to aid in later readability.
 
 ~~~
 :process-lines (q-)
