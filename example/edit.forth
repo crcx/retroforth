@@ -221,10 +221,11 @@ And the inverse, a word to inject a new line into the file.
   [ current? [ ASCII:LF @FID file:write ] if file:s:put n:inc ] process-lines ;
 ~~~
 
-Replacing a line is next. Much like the `delete-line`, this writes all
-but the current line to a dummy file. It uses a `s:get` word to read in
-the text to write instead of the original current line. When done, it
-replaces the original file with the dummy one.
+Replacing a line is next. Much like the `delete-line`, this
+writes all but the current line to a dummy file. It uses an
+`s:get` word to read in the text to write instead of the
+original current line. When done, it replaces the original
+file with the dummy one.
 
 ~~~
 {{
@@ -242,9 +243,9 @@ replaces the original file with the dummy one.
   [ current? [ drop s:get ] if file:s:put n:inc ] process-lines ;
 ~~~
 
-The next four are just things I find useful. They allow me to indent,
-remove indention, trim trailing whitespace, and insert a code block
-delimiter at a single keystroke.
+The next four are just things I find useful. They allow me to
+indent, remove indention, trim trailing whitespace, and insert
+a code block delimiter at a single keystroke.
 
 ~~~
 :indent-line (-)
@@ -260,8 +261,10 @@ delimiter at a single keystroke.
   [ current? [ drop '~~~ ] if file:s:put n:inc ] process-lines ;
 ~~~
 
-And then a very limited form of copy/paste, which moves a copy of the
-current line into a `CopiedLine` buffer and back again.
+And then a very limited form of copy/paste, which moves a copy
+of the current line into a `CopiedLine` buffer and back again.
+The line buffer is 1024 characters long, use of a longer line
+will cause problems.
 
 ~~~
 :copy-line (-)
@@ -271,8 +274,8 @@ current line into a `CopiedLine` buffer and back again.
   [ current? [ drop &CopiedLine ] if file:s:put n:inc ] process-lines ;
 ~~~
 
-One more set of commands: jump to a particular line in the file, jump
-to the start or end of the file.
+One more set of commands: jump to a particular line in the
+file, jump to the start or end of the file.
 
 ~~~
 :goto (-)
@@ -285,7 +288,8 @@ to the start or end of the file.
   @LineCount n:dec !CurrentLine ;
 ~~~
 
-And now tie everything together. There's a key handler and a top level loop.
+And now tie everything together. There's a key handler and a
+top level loop.
 
 ~~~
 :describe (cs-)
@@ -332,6 +336,8 @@ And now tie everything together. There's a key handler and a top level loop.
       $] [ goto-end                               ] case
       $j [ &CurrentLine v:inc constrain           ] case
       $k [ &CurrentLine v:dec constrain           ] case
+      $h [ &CurrentLine v:inc constrain           ] case
+      $t [ &CurrentLine v:dec constrain           ] case
       $g [ goto               constrain           ] case
       $q [ 'stty_-cbreak unix:system #0 unix:exit ] case
     drop ;
