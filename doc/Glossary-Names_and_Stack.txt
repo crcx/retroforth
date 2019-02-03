@@ -493,20 +493,29 @@ Return the floating point value for PI.
 f:abs                           D: -  A: -  F: F-F
 Return the absolute value for a floating point value.
 
-f:acos                          D: -  A: -  F: f-f
+f:acos                          D: -  A: -  F: F-F
 Return the arc cosine of a floating point number.
 
-f:asin                          D: -  A: -  F: f-f
+f:asin                          D: -  A: -  F: F-F
 Return the arc sine of a floating point number.
 
-f:atan                          D: -  A: -  F: f-f
+f:atan                          D: -  A: -  F: F-F
 Return the arc tangent of a floating point number.
+
+f:between?                      D: -f  A: -  F: nlu-
+Return TRUE if number is between the lower (l) and upper (u) bounds. If not, return FALSE. This is inclusive of the limits.
+
+f:case                          D: q-  A: -  F: nm-n
+If `n` is equal to `m`, drop both and execute the specified quote before exiting the calling word. If not equal, leave `n` on the stack and let execution continue.
 
 f:ceiling                       D: -  A: -  F: F-F
 Return the smallest integral value greater than or equal to the specified value.
 
-f:cos                           D: -  A: -  F: f-f
+f:cos                           D: -  A: -  F: F-F
 Return the cosine of a floating point number.
+
+f:dec                           D: -  A: -  F: n-m
+Decrement n by one.
 
 f:depth                         D: -n  A: -  F: -
 Return the number of items on the floating point stack.
@@ -514,8 +523,17 @@ Return the number of items on the floating point stack.
 f:drop                          D: -  A: -  F: F-
 Discard the top item on the floating point stack.
 
+f:drop-pair                     D: -  A: -  F: FF-
+Remove top two items on the stack.
+
+f:dump-stack                    D: -  A: -  F: -
+Display the items on the floating point stack.
+
 f:dup                           D: -  A: -  F: F-FF
 Duplicate the top item on the floating point stack.
+
+f:dup-pair                      D: -  A: -  F: nm-nmnm
+Duplicate the top two items on the stack.
 
 f:eq?                           D: -f  A: -  F: FF-
 Compare two floating point values for equality. Returns `TRUE` if they are equal or `FALSE` otherwise.
@@ -529,14 +547,26 @@ Perform a mathmatical floor operation on the floating point value.
 f:gt?                           D: -f  A: -  F: FF-
 Compare two floating point values for greater than.
 
+f:inc                           D: -  A: -  F: n-m
+Increment n by one.
+
 f:inf?                          D: -f  A: -  F: F-
 Return `TRUE` if floating point value is INF or `FALSE` otherwise.
+
+f:limit                         D: -  A: -  F: nlu-m
+Return n if it is within the lower (l) and upper (u) bounds. If outside the bounds, return the closes boundary value.
 
 f:log                           D: -  A: -  F: FF-F
 Return log(F1) for base F2 for floating point values.
 
 f:lt?                           D: -f  A: -  F: FF-
 Compare two floating point values for less than.
+
+f:max                           D: -  A: -  F: mn-o
+Return the greater of two values.
+
+f:min                           D: -  A: -  F: mn-o
+Return the lesser of two values.
 
 f:nan?                          D: -f  A: -  F: F-
 Return `TRUE` if floating point value is NaN or `FALSE` otherwise.
@@ -547,8 +577,14 @@ Invert the sign of the floating point value.
 f:negative?                     D: -f  A: -  F: F-
 Return `TRUE` if floating point value is negative or `FALSE` if not.
 
+f:nip                           D: -  A: -  F: NM-M
+Remove the second item from the stack.
+
 f:over                          D: -  A: -  F: FG-FGF
 Put a copy of the second floating point value over the top one.
+
+f:pop                           D: -  A: -  F: -F
+Pop a floating point value from the alternate stack.
 
 f:positive?                     D: -f  A: -  F: F-
 Return `TRUE` if floating point value is positive or `FALSE` otherwise.
@@ -556,8 +592,14 @@ Return `TRUE` if floating point value is positive or `FALSE` otherwise.
 f:power                         D: -  A: -  F: FF-F
 Return F1^F2 for floating point values.
 
+f:push                          D: -  A: -  F: F-
+Push a floating point value to an alternative stack.
+
 f:put                           D: -  A: -  F: F-
 Display a floating point number.
+
+f:rot                           D: -  A: -  F: abc-bca
+Rotate the top three values.
 
 f:round                         D: -  A: -  F: f-f
 Round a floating point value.
@@ -591,6 +633,9 @@ Encode the floating point value to an integer.
 
 f:tuck                          D: -  A: -  F: FG-GFG
 Tuck a copy of the top floating point value under the second one.
+
+f:tuck                          D: -  A: -  F: nm-mnm
+Put a copy of the top item on the stack under the second one.
 
 fetch                           D: a-n  A: -  F: -
 Fetch the value stored at the specified address.
@@ -1180,6 +1225,9 @@ Reset the hook point in a1 to the default definition.
 unix:chdir                      D: s-  A: -  F: -
 Change the current working directory to the specified one.
 
+unix:count-files-in-cwd         D: -n  A: -  F: -
+Return the number of files (and subdirectories) in the current working directory
+
 unix:exec0                      D: s-  A: -  F: -
 Execute a process by running the application specified by s.
 
@@ -1195,8 +1243,14 @@ Execute a process by running the application specified by s1. Pass s2, s3, and s
 unix:exit                       D: n-  A: -  F: -
 Exit the current process, returning the specified return code.
 
+unix:for-each-file              D: q-  A: -  F: -
+Run a quote once for each file or subdirectory in the current directory. The quote will receive the file name as a string and should consume this and return nothing on the stack.
+
 unix:fork                       D: -n  A: -  F: -
 Fork the current process. Returns a PID.
+
+unix:get-cwd                    D: -s  A: -  F: -
+Return the current working directory
 
 unix:getenv                     D: sa-  A: -  F: -
 Get an environment variable. Provide the name and an address to store it in.
