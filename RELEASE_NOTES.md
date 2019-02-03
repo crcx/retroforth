@@ -105,6 +105,7 @@ June 2019.
 - add paste.forth
 - add Paste_to_Sprunge.forth
 - add retro-extend.forth
+- add retro-embedimage.forth
 - add Save_and_Restore_Stack.forth
 - add share.forth and shared.forth
 - add uuencode.forth
