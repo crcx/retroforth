@@ -119,7 +119,8 @@ This just displays the separator bars.
 
 ~~~
 :---- (-)
-  COLS [ $- c:put ] times nl ;
+  #7 [ $- c:put ] times 
+  #0 COLS #10 / [ dup n:put #9 [ $- c:put ] times n:inc ] times n:put nl ; 
 ~~~
 
 Next, a word to display the header. Currently just the name of
@@ -196,7 +197,7 @@ to aid in later readability.
   @FID file:close
   here TEMP-FILE file:slurp here @SourceFile file:spew ;
 
-:current? (n-nf)
+:current (ns-nsf)
   over @CurrentLine eq? ;
 ~~~
 
@@ -217,8 +218,9 @@ Then a word to discard the current line, removing it from the file.
 And the inverse, a word to inject a new line into the file.
 
 ~~~
-:add-line (-)
-  [ current? [ ASCII:LF @FID file:write ] if file:s:put n:inc ] process-lines ;
+:add-line (-) 
+  [ current? [ file:s:put ASCII:LF @FID file:write ] 
+             [ file:s:put ] choose n:inc ] process-lines CurrentLine v:inc ;
 ~~~
 
 Replacing a line is next. Much like the `delete-line`, this
@@ -239,8 +241,9 @@ file with the dummy one.
       [ repeat c:get dup ASCII:LF -eq? 0; drop save again ] call drop ] sip ;
 }}
 
-:replace-line (-)
-  [ current? [ drop s:get ] if file:s:put n:inc ] process-lines ;
+:replace-line (-) 
+  [ current? [ drop #7 [ ASCII:SPACE c:put ] times s:get ] if 
+    file:s:put n:inc ] process-lines ;
 ~~~
 
 The next four are just things I find useful. They allow me to
