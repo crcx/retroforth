@@ -1,4 +1,4 @@
-#!/usr/bin/env rre
+#!/usr/bin/env retro
 
 This is a simple `echo` style example.
 

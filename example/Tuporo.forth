@@ -1,4 +1,4 @@
-#!/usr/bin/env rre
+#!/usr/bin/env retro
 
 # tūporo: a gopher-based block store for retro
 
