@@ -172,7 +172,7 @@ My default keymap will be (subject to change!):
     `    Switch modes
     h    Cursor left
     t    Cursor down
-    s    Cursor up
+    n    Cursor up
     s    Cursor right
     H    Previous block
     S    Next block
