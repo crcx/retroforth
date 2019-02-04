@@ -14,7 +14,7 @@ Retro 11 was built using the last Retro 10 image and an
 evolved version of the metacompiler. This worked well, but
 I eventually found it to be problematic.
 
-One of the issueo sI faced was the inability to make a new
+One of the issues I faced was the inability to make a new
 image from the prior stable release. Since I develop and
 test changes incrementally, I reached a point where the
 current metacompiler and image required each other. This

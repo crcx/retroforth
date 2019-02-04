@@ -16,7 +16,7 @@ made it crucial to keep track of what was in memory and what had
 been patched so that the metacompiler wouldn't refer to anything
 in the old image during the relocation and control change. It
 was far too easy to make a mistake, discover that elements of
-the new image were broken, and the have to go and revert many
+the new image were broken, and then have to go and revert many
 changes to try to figure out what went wrong.
 
 This was also complicated by the fact that I built new images
