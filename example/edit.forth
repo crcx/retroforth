@@ -197,7 +197,7 @@ to aid in later readability.
   @FID file:close
   here TEMP-FILE file:slurp here @SourceFile file:spew ;
 
-:current (ns-nsf)
+:current? (ns-nsf)
   over @CurrentLine eq? ;
 ~~~
 

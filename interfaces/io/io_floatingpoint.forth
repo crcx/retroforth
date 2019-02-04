@@ -129,9 +129,6 @@ n:MAX n:negate       'u:-INF const
     f:drop ;
 
   :u:to-f  (u-|f:-b)
-    n:to-float f:decode ;
-
-  :u:to-f  (u-|f:-b)
     dup n:to-float f:decode
     dup u:nan?  [ f:drop f:NAN ] if
     dup u:inf?  [ f:drop f:INF ] if
