@@ -254,6 +254,9 @@ void execute(CELL cell) {
   ip = cell;
   while (ip < IMAGE_SIZE) {
     opcode = memory[ip];
+    if (ip == notfound) {
+      printf("%s ?\n", string_extract(1025));
+    }
     if (ngaValidatePackedOpcodes(opcode) != 0) {
       ngaProcessPackedOpcodes(opcode);
     } else {
