@@ -115,7 +115,7 @@ seconds.
   'pwd file:R unix:popen
     dup file:read-line s:trim swap
   unix:pclose
-  #0 sys:argv s:length + '/ s:append ;
+  #0 'sys:argv d:lookup d:xt fetch call s:length + '/ s:append ;
 ~~~
 
 ~~~
