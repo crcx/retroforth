@@ -11,7 +11,11 @@ RIIO ?= io/filesystem.o io/floatingpoint.o io/gopher.o io/unix.o
 
 all: build
 
-build: dirs toolchain bin/RETRO12.html bin/retro bin/retro-ri bin/retro-repl
+help:
+
+build: dirs toolchain bin/RETRO12.html bin/retro
+
+optional: build bin/retro-ri bin/retro-repl
 
 toolchain: dirs bin/retro-embedimage bin/retro-extend bin/retro-injectimage-js bin/retro-muri bin/retro-unu
 
