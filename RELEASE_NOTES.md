@@ -112,5 +112,6 @@ June 2019.
 - add uudecode.forth
 - switch to dvorak key bindings in Roo.forth
 - remove Hooks.forth (now in core language)
+- improved edit.forth from Kiyoshi
 
 ## Final Notes

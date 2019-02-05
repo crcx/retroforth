@@ -1,10 +1,12 @@
-# RETRO
+# RRE Listener and Extensions
 
-This is a set of extensions for RRE.
+In this file I am implementing the interactive listener that
+RRE will run when started with `-i` or `-c`.
 
-# I/O Extensions
+## Console Input
 
-# Console Input
+The RRE interface provides a keyboard device. This exposes it
+via `c:get`.
 
 ~~~
 {{
@@ -19,9 +21,37 @@ This is a set of extensions for RRE.
 }}
 ~~~
 
----------------------------------------------------------------
+Now that I can read characters, it's time to support reading
+strings. I do this via two words. The first is `parse-until`.
+This will setup a temporary string as an input buffer, then
+read input, passing each character ot a provided quote. When
+the quote returns `TRUE`, it ends and returns the string. When
+not `TRUE` it will add the character to the buffer.
 
-# Scripting: Command Line Arguments
+~~~
+{{
+  :gather (c-)
+    dup [ #8 eq? ] [ #127 eq? ] bi or [ drop ] [ buffer:add ] choose ;
+  :cycle (q-qc)  repeat c:get dup-pair swap call not 0; drop gather again ;
+---reveal---
+  :parse-until (q-s)
+    [ s:empty buffer:set cycle drop-pair buffer:start ] buffer:preserve ;
+}}
+~~~
+
+Using this, a simple `s:get` can be implemented very easily as
+a quote which looks for an end of line character.
+
+~~~
+:s:get (-s) [ [ ASCII:LF eq? ] [ ASCII:CR eq? ] bi or ] parse-until ;
+~~~
+
+
+## Scripting: Command Line Arguments
+
+RRE also provides access to the command line arguments passed
+to a script. The next few words map the scripting device to
+words we can use.
 
 ~~~
 {{
@@ -38,7 +68,14 @@ This is a set of extensions for RRE.
 }}
 ~~~
 
-# Interactive Listener
+
+## Interactive Listener
+
+The main part of this file is the *listener*, an interactive
+read-eval-print loop. 
+
+RRE's C part will access a couple parts of this, based on the
+startup flags passed.
 
 ~~~
 'NoEcho var
@@ -64,17 +101,3 @@ This is a set of extensions for RRE.
 
 &listen #1 store
 ~~~
-
-~~~
-{{
-  :gather (c-)
-    dup [ #8 eq? ] [ #127 eq? ] bi or [ drop ] [ buffer:add ] choose ;
-  :cycle (q-qc)  repeat c:get dup-pair swap call not 0; drop gather again ;
----reveal---
-  :parse-until (q-s)
-    [ s:empty buffer:set cycle drop-pair buffer:start ] buffer:preserve ;
-}}
-
-:s:get (-s) [ [ ASCII:LF eq? ] [ ASCII:CR eq? ] bi or ] parse-until ;
-~~~
-
