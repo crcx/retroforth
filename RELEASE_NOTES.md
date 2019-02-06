@@ -10,6 +10,9 @@ June 2019.
 
 - parallel builds now work
 - refactor Makefile
+- files in `packages` directory will be compiled into the
+  image when building
+- only build the toolchain and `retro` binary by default
 
 ## Core Language
 
