@@ -32,8 +32,8 @@ install: build install-data install-docs install-examples install-manpages
 	install -c -m 755 bin/retro-extend $(DESTDIR)$(PREFIX)/bin/retro-extend
 	install -c -m 755 bin/retro-injectimage-js $(DESTDIR)$(PREFIX)/bin/retro-injectimage-js
 	install -c -m 755 bin/retro-muri $(DESTDIR)$(PREFIX)/bin/retro-muri
-	install -c -m 755 bin/retro-repl $(DESTDIR)$(PREFIX)/bin/retro-repl
-	install -c -m 755 bin/retro-ri $(DESTDIR)$(PREFIX)/bin/retro-ri
+#	install -c -m 755 bin/retro-repl $(DESTDIR)$(PREFIX)/bin/retro-repl
+#	install -c -m 755 bin/retro-ri $(DESTDIR)$(PREFIX)/bin/retro-ri
 	install -c -m 755 bin/retro $(DESTDIR)$(PREFIX)/bin/retro
 	install -c -m 755 bin/retro-unu $(DESTDIR)$(PREFIX)/bin/retro-unu
 
@@ -43,8 +43,8 @@ install-strip: build install-data install-docs install-examples
 	install -c -m 755 -s bin/retro-extend $(DESTDIR)$(PREFIX)/bin/retro-extend
 	install -c -m 755 -s bin/retro-injectimage-js $(DESTDIR)$(PREFIX)/bin/retro-injectimage-js
 	install -c -m 755 -s bin/retro-muri $(DESTDIR)$(PREFIX)/bin/retro-muri
-	install -c -m 755 -s bin/retro-repl $(DESTDIR)$(PREFIX)/bin/retro-repl
-	install -c -m 755 -s bin/retro-ri $(DESTDIR)$(PREFIX)/bin/retro-ri
+#	install -c -m 755 -s bin/retro-repl $(DESTDIR)$(PREFIX)/bin/retro-repl
+#	install -c -m 755 -s bin/retro-ri $(DESTDIR)$(PREFIX)/bin/retro-ri
 	install -c -m 755 -s bin/retro $(DESTDIR)$(PREFIX)/bin/retro
 	install -c -m 755 -s bin/retro-unu $(DESTDIR)$(PREFIX)/bin/retro-unu
 

@@ -2840,6 +2840,17 @@ Execute the quotation if the flag is `TRUE`. If true, also exit the word.
 Class: class:word | Namespace: global | Interface Layer: all
 ------------------------------------------------------------------------
 
+image:save
+
+  Data:  s-
+  Addr:  -
+  Float: -
+
+Save the current system to a new image file.
+
+Class: class:word | Namespace: image | Interface Layer: rre
+------------------------------------------------------------------------
+
 immediate
 
   Data:  -

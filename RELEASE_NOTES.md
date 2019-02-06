@@ -74,6 +74,7 @@ June 2019.
 
 - support switching between multiple copies of the image
 - add random number generator
+- add image:save
 
 ## Tools
 

@@ -242,6 +242,7 @@ hook	-	-	-	Add a hook point into the current word. This should only be used as t
 i	s-	-	-	Assemble the instructions specified by the string into the current assembly scope.			class:word	{n/a}	{n/a}	global	all	
 if	fq-	-	-	Execute the quote if the flag is `TRUE`.			class:word	{n/a}	{n/a}	global	all	
 if;	fq-	-	-	Execute the quotation if the flag is `TRUE`. If true, also exit the word.			class:word	{n/a}	{n/a}	global	all	
+image:save	s-	-	-	Save the current system to a new image file.			class:word	{n/a}	{n/a}	image	rre	
 immediate	-	-	-	Change the class of the most recently defined word to `class:macro`.			class:word	{n/a}	{n/a}	global	all	
 include	s-	-	-	Run the code in the specified file. 			class:word	{n/a}	{n/a}	global	rre	
 interpret	s-	-	-	Interpret a single input token.			class:word	    '#100 interpret\n    'words interpret	{n/a}	global	all	
