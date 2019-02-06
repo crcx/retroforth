@@ -33,8 +33,6 @@ into problems, try using the alternative Makefile:
 
 Binaries will be placed in the `bin` directory.
 
-### retro
-
 The primary executable is `retro`. This is used for running the
 examples and the Atua (gopher) & Casket (http) servers that
 power forthworks.com.
@@ -91,27 +89,6 @@ fenced blocks:
 
 Anything outside the fenced blocks will be ignored.
 
-### retro-repl
-
-This is a basic `read-evaluate-print-loop` for interactive use.
-It's intended for quick tests and as an easy starting point for
-new interfaces.
-
-The `retro-repl` interface looks for the RETRO image (normally
-`ngaImage`) in the current working directory. If not found,
-this will use an embedded copy.
-
-### retro-ri
-
-`retro-ri` is an interactive, curses based interface inspired
-by the interface used around 2001 with RETRO4. It provides an
-output area and then an input area at the bottom. Input is
-processed as it is entered, and the top stack items appear to
-the right of the input.
-
-It's useful for playing around with new ideas and seeing how
-the stack works.
-
 ## Commercial Versions
 
 I provide proprietary versions of RETRO for iOS and macOS.
@@ -132,7 +109,7 @@ occasional cup of tea).
 
 ## Alternative Implementations
 
-This source tree includes implementations in C#, JavaScript,
-Pascal, and Python. These are not officially supported, but
-are provided for your use if the C implementation will not
-suffice.
+This source tree includes additional implementations in C#,
+JavaScript, Pascal, and Python. These are not officially
+supported, but are provided for your use if the C
+implementations will not suffice.
