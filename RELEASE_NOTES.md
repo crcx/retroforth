@@ -97,9 +97,12 @@ June 2019.
 
 ## Examples
 
+- add Abort.forth
 - add Buffer.forth
 - add CaptureOutput.forth
 - add DisplayNames.forth
+- add EvaluateString.forth
+- add Forget.forth
 - add HTML.forth
 - add KeyValueStore.forth
 - add Marker.forth
