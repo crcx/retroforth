@@ -16,7 +16,7 @@ via `c:get`.
       #1 io:scan-for dup n:negative?
       [ drop 'IO_DEVICE_TYPE_0001_NOT_FOUND s:put nl ]
       [ !io:Keyboard ] choose ] if ;
-  ---reveal---
+---reveal---
   :c:get (-c) identify @io:Keyboard io:invoke ;
 }}
 ~~~
@@ -100,4 +100,9 @@ startup flags passed.
 }}
 
 &listen #1 store
+~~~
+
+
+~~~
+:image:save (s-) #1000 io:scan-for io:invoke ;
 ~~~

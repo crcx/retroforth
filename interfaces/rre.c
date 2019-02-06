@@ -53,8 +53,10 @@ void io_gopher_query();
 void io_gopher_handler();
 void io_scripting_handler();
 void io_scripting_query();
+void io_image();
+void io_image_query();
 
-#define NUM_DEVICES  7
+#define NUM_DEVICES  8
 
 typedef void (*Handler)(void);
 
@@ -65,7 +67,8 @@ Handler IO_deviceHandlers[NUM_DEVICES + 1] = {
   io_floatingpoint_handler,
   io_scripting_handler,
   io_unix_handler,
-  io_gopher_handler
+  io_gopher_handler,
+  io_image
 };
 
 Handler IO_queryHandlers[NUM_DEVICES + 1] = {
@@ -75,7 +78,8 @@ Handler IO_queryHandlers[NUM_DEVICES + 1] = {
   io_floatingpoint_query,
   io_scripting_query,
   io_unix_query,
-  io_gopher_query
+  io_gopher_query,
+  io_image_query
 };
 
 
@@ -198,6 +202,22 @@ void io_scripting_query() {
 
 void io_scripting_handler() {
   ScriptingActions[stack_pop()]();
+}
+
+void io_image() {
+  FILE *fp;
+  char *f = string_extract(stack_pop());
+  if ((fp = fopen(f, "wb")) == NULL) {
+    printf("Unable to save the image: %s!\n", f);
+    exit(2);
+  }
+  fwrite(&memory, sizeof(CELL), memory[3] + 1, fp);
+  fclose(fp);
+}
+
+void io_image_query() {
+  stack_push(0);
+  stack_push(1000);
 }
 
 /*---------------------------------------------------------------------
