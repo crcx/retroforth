@@ -1,0 +1,21 @@
+.Dd February 2019
+.Dt RETRO-EMBEDIMAGE 1
+.Os
+.Sh RETRO-EMBEDIMAGE
+.Nm retro-embedimage
+.Nd "a modern, pragmatic forth development system"
+.Sh SYNOPSIS
+.Nm
+.Op filename
+.Sh DESCRIPTION
+RETRO is a modern, pragmatic Forth drawing influences from many
+sources. It's clean, elegant, tiny, and easy to grasp and adapt
+to various uses.
+
+.Nm
+loads the specified image (or `ngaImage` from the current
+directory if none is specified). It converts this into C
+code that can be compiled for inclusion in a RETRO executable.
+It will write the output to stdout.
+.Sh AUTHORS
+.An Charles Childers Aq Mt crc@forthworks.com
