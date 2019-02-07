@@ -77,6 +77,43 @@ To build:
 
     make bin/retro-barebones
 
+## retro-compiler
+
+This is a turnkey compiler. It can compile a new executable
+bundling a Retro VM and image.
+
+Requirements:
+
+- BSD or Linux
+- objcopy in $PATH
+
+To build:
+
+    make bin/retro-compiler
+
+Example use:
+
+1. Given a source file like "Hello.forth":
+
+    ~~~
+    :hello 'hello_world! s:put nl ;
+    ~~~
+
+2. Use:
+
+    ./bin/retro-compiler Hello.forth hello
+
+The first argument is the source file, the second is the
+word to run on startup.
+
+3. Run the generated `a.out`
+
+Limits:
+
+This only supports the core words ('all' interface) and the
+file i/o words. Support for other I/O extensions will be
+added in the future.
+
 ## RETRO12.html
 
 There is a JavaScript and HTML based interface. To
