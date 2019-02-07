@@ -257,7 +257,7 @@ top level word called returns.
   #8 shift dup mask write-byte
   #8 shift     mask write-byte ;
 
-:save-image (s-)z
+:save-image (s-)
   file:W file:open !FID
   &Image &Image #3 + fetch [ fetch-next write-cell ] times drop
   &Image #3 + fetch n:put sp 'cells_written s:put nl
