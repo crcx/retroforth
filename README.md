@@ -24,7 +24,7 @@ errors by doing:
 
     make -kis
 
-If you are building an an older Linux system and are running
+If you are building on an older Linux system and are running
 into problems, try using the alternative Makefile:
 
     make -f Makefile.linux
