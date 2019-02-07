@@ -143,3 +143,27 @@ Building:
 This will require a copy of the `ngaImage` in the
 current directory.
 
+## Python: retro.py
+
+This is an implementation of `retro-repl` in Python. As
+with `retro-repl` it requires the `ngaImage` in the current
+directory when starting.
+
+## C#: retro.cs
+
+This is an implementation of `retro-repl` in C#. As with
+`retro-repl` it requires the `ngaImage` in the current
+directory when starting.
+
+Building:
+
+    csc retro.cs
+
+You'll need to make sure your path has the CSC.EXE in it,
+or provide a full path to it. Something like this should
+reveal the path to use:
+
+    dir /s %WINDIR%\CSC.EXE
+
+I've only tested building this using Microsoft's .NET tools.
+It should also build and run under Mono.
