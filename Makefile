@@ -69,9 +69,9 @@ install-examples:
 
 install-manpages:
 	install -c -m 644 man/retro.1 $(MANDIR)/retro.1
-	install -c -m 644 man/retro-ri.1 $(MANDIR)/retro-ri.1
-	install -c -m 644 man/retro-unu.1 $(MANDIR)/retro-unu.1
+	install -c -m 644 man/retro-extend.1 $(MANDIR)/retro-extend.1
 	install -c -m 644 man/retro-muri.1 $(MANDIR)/retro-muri.1
+	install -c -m 644 man/retro-unu.1 $(MANDIR)/retro-unu.1
 
 
 test: bin/retro
