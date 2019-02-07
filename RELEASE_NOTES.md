@@ -101,6 +101,7 @@ June 2019.
 ## Examples
 
 - add Abort.forth
+- add atua-gophermap.forth
 - add Buffer.forth
 - add CaptureOutput.forth
 - add DisplayNames.forth
