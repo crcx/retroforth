@@ -10,8 +10,8 @@ June 2019.
 
 - parallel builds now work
 - refactor Makefile
-- files in `packages` directory will be compiled into the
-  image when building
+- support for adding custom code to an image at build
+  time (see packages/list)
 - only build the toolchain and `retro` binary by default
 
 ## Core Language
@@ -65,6 +65,7 @@ June 2019.
 - add random number generator
 - add `-u filename` startup parameter to allow selection of
   image file
+- add `image:save`
 
 ### retro-compiler
 
@@ -95,6 +96,7 @@ June 2019.
 - add HTML version of the Glossary
 - add more concise text copies of the Glossary
 - add man pages
+- add BUILDING.md
 
 ## Examples
 
