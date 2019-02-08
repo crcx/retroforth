@@ -133,6 +133,7 @@ Cursor Control
 
 ## Example:
 
+```
     VT100:clear
     #10 #15 VT100:cursor:move
     'red VT100:color VT100:foreground VT100:set
@@ -142,3 +143,4 @@ Cursor Control
     'Press_a_key_to_exit s:put nl
     c:get drop
     VT100:reset
+```
