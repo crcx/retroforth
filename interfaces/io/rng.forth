@@ -21,17 +21,16 @@ Return a random value from /dev/urandom
 
 XOR/rotate/shift/rotate PNRG (See http://xoshiro.di.unimi.it/)
 
+
 ~~~
 {{
-  'k var
-  't var 's0 var 's1 var 's2 var 's3 var
-  :seed (n-) dup !k dup !t dup !s1 dup !s2 !s3 ;
-  :rotl (x--) !k [ @k n:negate shift ] [ #32 @k - shift ] bi or ;
-  :res** (--n) @s0 #5 * #7 rotl #9 * ;
----reveal---
-  :random:xoroshiro128** (-n)
-    @s1 dup #-9 shift push
-    @s3 @s0 @s2
+  'JUMP d:create #2271477771 , #4114797267 , #1872770499 , #2012404571 ,
+  'k var 't var 's0 var 's1 var 's2 var 's3 var
+  :reseed (n-)  dup !s1 dup !s2 dup !s3 dup !k !t  ;
+  :rotl   (x-)  !k [ @k n:negate shift ] [ #32 @k - shift ] bi or ;
+  :res**  (-n)  @s0 #5 * #7 rotl #9 * ;
+  :next   (-)
+    @s1 dup #-9 shift push @s3 @s0 @s2
     as{
       'pudupoxo i
       'pupu.... i
@@ -41,12 +40,35 @@ XOR/rotate/shift/rotate PNRG (See http://xoshiro.di.unimi.it/)
       'pudupoxo i
       'popopoxo i
     }as
-    !s2 !s1 !s0
-    #11 rotl !s3
-    res** ;
+    !s2 !s1 !s0 #11 rotl !s3 ;
+
+  :xor-er (nananana-nananana)
+    as{
+      'dupufexo i 'pu...... i
+      'dupufexo i 'pu...... i
+      'dupufexo i 'pu...... i
+      'dupufexo i 'pu...... i
+      'popopopo i 'popopopo i
+    }as ;
+  :jump? (nm-) [ JUMP + fetch ] dip #1 swap n:negate shift and ;
+  :inner (n-n)
+    #32 [ dup I jump? [ [ xor-er ] dip ] if next ] times<with-index> ;
+    
+---reveal---
+  :random:xoroshiro128** (-n)
+    next res** ;
+    
+  :random:xoroshiro128**:jump (-)
+    #0 &s3 #0 &s2 #0 &s1 #0 &s0
+    #4 [ I inner drop ] times<with-index>
+    as{ 'stststst i }as ;
+    
   :random:xoroshiro128**:set-seed (n-)
-    seed #100 [ random:xoroshiro128** drop ] times ;
-}}
+    reseed #100 [ next ] times ;
+
+  :random:xoroshiro128**:test-seed (nnnn-)
+    !s0 !s1 !s2 !s3 ;
+}}   
 ~~~
 
 ## Mersenne Twister
