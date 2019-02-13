@@ -106,6 +106,7 @@ June 2019.
 - add CaptureOutput.forth
 - add DisplayNames.forth
 - add EvaluateString.forth
+- add FloatVar.forth
 - add Forget.forth
 - add HTML.forth
 - add KeyValueStore.forth
@@ -120,6 +121,7 @@ June 2019.
 - add share.forth and shared.forth
 - add uuencode.forth
 - add uudecode.forth
+- fix test block in defstruct.forth
 - switch to dvorak key bindings in Roo.forth
 - remove Hooks.forth (now in core language)
 - improved edit.forth from Kiyoshi
