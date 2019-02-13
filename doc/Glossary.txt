@@ -2967,17 +2967,6 @@ Trigger a Unix system call. This is not intended to be used directly.
 Class: class:word | Namespace: io | Interface Layer: rre
 ------------------------------------------------------------------------
 
-ios:list-fonts
-
-  Data:  -
-  Addr:  -
-  Float: -
-
-Display a list of all installed fonts.
-
-Class: class:word | Namespace: ios | Interface Layer: iOS
-------------------------------------------------------------------------
-
 listen
 
   Data:  -
