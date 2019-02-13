@@ -123,5 +123,6 @@ June 2019.
 - switch to dvorak key bindings in Roo.forth
 - remove Hooks.forth (now in core language)
 - improved edit.forth from Kiyoshi
+- Casket-HTTP now supports server side scripting
 
 ## Final Notes

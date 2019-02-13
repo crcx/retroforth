@@ -1,27 +1,15 @@
 #!/usr/bin/env retro
 
-## Overview
+## Casket v5
 
-Casket is an HTTP server written in RETRO.
-
-## History
-
-  v0   Barebones, HTTP/1.0 server for a single file
-  v1   Added support for multiple HTML files
-  v2   Added support for non-HTML files
-  v3   HTTP/1.1, support virtual hosts
-  v4   Support 404 error code for file not found
-
-## Casket v4
-
-This is a small HTTP/1.1 server.
+This is a small HTTP/1.1 server written in Retro Forth.
 
 First, some configuration options. Since this will run under
 inetd there's no need to specify the port. But the path to the
 files to serve is rather useful, so define it here.
 
 ~~~
-'/root/web 'WEBROOT s:const
+'/home/crc/www 'WEBROOT s:const
 ~~~
 
 Next, I need to handle the incoming requests. In v0 these were
@@ -35,14 +23,16 @@ So an incoming request will look like:
 With the lines ending in a CR,LF sequence.
 
 I need to allocate space for the data I care about. There are
-two items:
+three items:
 
 - The `Requested` file
 - The desired virtual `Host`
+- The query string (if any)
 
 ~~~
-'Requested d:create #1025 allot
+'Requested d:create #8193 allot
 'Host      d:create #1025 allot
+'GET-Query var
 ~~~
 
 The header processor will read each item and store the `Host`
@@ -79,6 +69,9 @@ filename with **/index.html**. In the odd case that a file is
 requested without a leading **/**, I have a word to add this.
 And then a word that constructs a filename.
 
+This also has a word `check-for-params` that is used to separate
+the requested file from any query string that may be present.
+
 ~~~
 :map-/-to-index (-)
   &Requested '/ s:eq?
@@ -88,8 +81,12 @@ And then a word that constructs a filename.
   @Requested $/ -eq?
     [ '/ &Requested s:append s:keep &Requested s:copy ] if ;
 
+:check-for-params (-)
+  &Requested $? s:contains-char?
+    [ &Requested $? s:split drop dup n:inc !GET-Query #0 swap store ] if ;
+
 :filename (-s)
-  map-/-to-index ensure-leading-/
+  check-for-params map-/-to-index ensure-leading-/
   &Requested &Host WEBROOT '%s/%s%s s:format ;
 ~~~
 
@@ -97,8 +94,14 @@ Next, I need to determine the file type. I'll do this by taking
 a look at the extension, and mapping this to a MIME type.
 
 ~~~
+:filename-w/o-path
+  WEBROOT s:length &Host s:length + filename +
+  [ $/ s:index-of ] sip + ;
+
 :get-mime-type (-s)
-  filename [ $. s:index-of ] sip +
+  filename-w/o-path [ $. s:index-of ] sip +
+  (fsp)
+    '.fsp   [ 'application/fsp          ] s:case
   (textual_files)
     '.txt   [ 'text/plain               ] s:case
     '.md    [ 'text/markdown            ] s:case
@@ -131,6 +134,10 @@ send it to the client.
 Reading files is now a bit more involved, since images and
 other formats have binary data.
 
+If the mime type is application/fsp, this will run the code
+in the file. The code should output the necessary headers
+and content.
+
 ~~~
 'FID var
 
@@ -143,8 +150,11 @@ other formats have binary data.
 :eol  (-)   ASCII:CR c:put ASCII:LF c:put ;
 
 :send-file (-)
-  get-mime-type 'Content_type:_%s s:format s:put eol eol
-  read-file [ fetch-next c:put ] times drop ;
+  get-mime-type
+  dup 'application/fsp s:eq?
+  [ drop filename include ]
+  [ 'Content_type:_%s s:format s:put eol eol
+    read-file [ fetch-next c:put ] times drop ] choose ;
 ~~~
 
 In the above, `eol` will send an end of line sequence.
@@ -181,4 +191,54 @@ the file wasn't found):
 [ 404 ] choose
 ~~~
 
-And v4 is done.
+And the code for Casket is done.
+
+----
+
+## Using Casket
+
+Casket requires [Retro](http://forthworks.com/retro) and a Unix system with inetd.
+
+Install Retro and put the `casket.forth` somewhere. Then add a configuration line to your `/etc/inetd.conf`. I use:
+
+    http    stream  tcp     nowait/6/30/2   casket    /home/crc/servers/casket.forth
+
+Restart inetd.
+
+Edit the `WEBROOT` in `casket.forth` to point to your web directory. Then go to the web directory and create a directory for each domain. E.g.,
+
+    /home/crc/www/casket.forthworks.com
+
+Put your `index.html` and other files here and try accessing your website.
+
+## Download
+
+* [casket.forth](http://forth.works:8080/casket.forth)
+* [retro forth](http://forthworks.com/r/latest.tar.gz)
+
+----
+
+## Real World Uses
+
+Casket has been in use since the second half of 2018 serving a number of small websites. It's also used to host the Casket project page you are looking at.
+
+---
+
+## License and Copyright
+
+Copyright (c) 2018 - 2019, Charles Childers
+
+Permission to use, copy, modify, and/or distribute this software
+for any purpose with or without fee is hereby granted, provided
+that the copyright notice and this permission notice appear in
+all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS
+ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO
+EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER
+RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN
+AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION,
+ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE
+OF THIS SOFTWARE.
