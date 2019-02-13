@@ -21,8 +21,7 @@ This can be useful, so I'm doing something similar here.
 }}
 ~~~
 
-
-~~~
+```
 'book { 'title 'author 'subject 'book-id } defstruct
 
 book 'A const
@@ -35,4 +34,4 @@ book 'A const
   '%s_by_%s_is_a_%s_book. s:format s:put nl ;
 
 &A info
-~~~
+```
