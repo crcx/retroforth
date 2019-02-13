@@ -3649,7 +3649,7 @@ prefix:|
   Addr:  -
   Float: -
 
-POSTPONE equivilent.
+POSTPONE equivalent.
 
 Interpret Time:
   Discard the string.
