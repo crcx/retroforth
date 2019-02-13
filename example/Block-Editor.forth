@@ -142,7 +142,8 @@ more complex display with column and cursor indicators.
 It should be pretty straightforward though.
 
 ~~~
-:clear       #27 c:put '[2J s:put #27 c:put '[0;0H s:put ;
+:tty:clear (-) #27 c:put '[2J s:put #27 c:put '[0;0H s:put ;
+
 {{
   :ruler 
     '____0---------1---------2---------3 s:put
@@ -160,7 +161,7 @@ It should be pretty straightforward though.
   :code       &Block #16 [ line ] times<with-index> drop ;
 ---reveal---
   :block:display (-)
-    clear ruler code ruler indicator status ;
+    tty:clear ruler code ruler indicator status ;
 }}
 ~~~
 
@@ -168,8 +169,6 @@ It should be pretty straightforward though.
 
 ~~~
 {{
-  :clear      #27 c:put '[0;0H s:put ;
-
   :cursor
     ASCII:ESC c:put
     $[ c:put @CurrentLine #2 + n:put
@@ -184,7 +183,7 @@ It should be pretty straightforward though.
 
   :edit
     blocks:initialize block:read #0 block:select
-    'stty_cbreak unix:system clear
+    'stty_cbreak unix:system tty:clear
     repeat block:display cursor handler again ;
 }}
 ~~~
@@ -206,10 +205,8 @@ the key handlers.
     [ dup s:length n:zero? [ drop ] [ interpret ] choose ] set:for-each ;
 }}
 
-:clear      #27 c:put '[0;0H s:put ;
-
-:editor:key<H>  block:update @CurrentBlock n:dec #0 BLOCKS n:dec n:limit block:select clear ;
-:editor:key<S>  block:update @CurrentBlock n:inc #0 BLOCKS n:dec #18 &nl times dump-stack n:limit block:select clear ;
+:editor:key<H>  block:update @CurrentBlock n:dec #0 BLOCKS n:dec n:limit block:select tty:clear ;
+:editor:key<S>  block:update @CurrentBlock n:inc #0 BLOCKS n:dec #18 &nl times dump-stack n:limit block:select tty:clear ;
 :editor:key<n>  &CurrentLine v:dec &CurrentLine  #0 #15 v:limit ;
 :editor:key<h>  &CurrentCol  v:dec &CurrentCol   #0 #63 v:limit ;
 :editor:key<s>  &CurrentCol  v:inc &CurrentCol   #0 #63 v:limit ;
