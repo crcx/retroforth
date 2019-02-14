@@ -159,8 +159,8 @@ interfaces/image.c: bin/retro-embedimage bin/retro-extend bin/retro-muri literat
 
 bin/retro-compiler: io bin/retro-extend interfaces/image.c interfaces/retro-compiler.c interfaces/retro-compiler-runtime.c interfaces/image-functions.o
 	cp ngaImage runtime.image
-	./bin/retro-extend runtime.image interfaces/io/io_filesystem.forth
-	cd interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../retro-compiler-runtime $(LIBM) retro-compiler-runtime.c image-functions.c io/filesystem.o
+	./bin/retro-extend runtime.image interfaces/io/io_filesystem.forth interfaces/io/io_gopher.forth interfaces/io/io_floatingpoint.forth interfaces/io/io_unix_syscalls.forth interfaces/io/rng.forth interfaces/rre.forth
+	cd interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../retro-compiler-runtime $(LIBM) retro-compiler-runtime.c image-functions.c $(RREIO)
 	cd interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../bin/retro-compiler retro-compiler.c
 	objcopy --add-section .ngaImage=runtime.image --set-section-flags .ngaImage=noload,readonly bin/retro-compiler
 	objcopy --add-section .runtime=retro-compiler-runtime --set-section-flags .runtime=noload,readonly bin/retro-compiler

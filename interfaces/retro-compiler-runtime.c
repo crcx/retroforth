@@ -15,15 +15,48 @@ CELL data[STACK_DEPTH];           /* The data stack                    */
 CELL address[ADDRESSES];          /* The address stack                 */
 CELL memory[IMAGE_SIZE + 1];      /* The memory for the image          */
 
-#define NUM_DEVICES 3
+void generic_output();
+void generic_output_query();
+void io_keyboard_handler();
+void io_keyboard_query();
+void io_filesystem_query();
+void io_filesystem_handler();
+void io_unix_query();
+void io_unix_handler();
+void io_floatingpoint_query();
+void io_floatingpoint_handler();
+void io_gopher_query();
+void io_gopher_handler();
+void io_scripting_handler();
+void io_scripting_query();
+void io_image();
+void io_image_query();
+
+#define NUM_DEVICES  7
 
 typedef void (*Handler)(void);
 
-Handler IO_deviceHandlers[NUM_DEVICES + 1];
-Handler IO_queryHandlers[NUM_DEVICES + 1];
+Handler IO_deviceHandlers[NUM_DEVICES + 1] = {
+  generic_output,
+  io_keyboard_handler,
+  io_filesystem_handler,
+  io_floatingpoint_handler,
+  io_unix_handler,
+  io_gopher_handler,
+  io_image
+};
 
-void io_filesystem_handler();
-void io_filesystem_query();
+Handler IO_queryHandlers[NUM_DEVICES + 1] = {
+  generic_output_query,
+  io_keyboard_query,
+  io_filesystem_query,
+  io_floatingpoint_query,
+  io_unix_query,
+  io_gopher_query,
+  io_image_query
+};
+
+
 
 void loadEmbeddedImage(char *arg);
 void ngaPrepare();
@@ -38,23 +71,35 @@ void generic_output_query() {
   stack_push(0);
 }
 
-void generic_input() {
+void io_keyboard_handler() {
   stack_push(getc(stdin));
   if (TOS == 127) TOS = 8;
 }
 
-void generic_input_query() {
+void io_keyboard_query() {
   stack_push(0);
   stack_push(1);
 }
 
+
+void io_image() {
+  FILE *fp;
+  char *f = string_extract(stack_pop());
+  if ((fp = fopen(f, "wb")) == NULL) {
+    printf("Unable to save the image: %s!\n", f);
+    exit(2);
+  }
+  fwrite(&memory, sizeof(CELL), memory[3] + 1, fp);
+  fclose(fp);
+}
+
+void io_image_query() {
+  stack_push(0);
+  stack_push(1000);
+}
+
+
 int main(int argc, char **argv) {
-  IO_deviceHandlers[0] = generic_output;
-  IO_deviceHandlers[1] = generic_input;
-  IO_deviceHandlers[2] = io_filesystem_handler;
-  IO_queryHandlers[0] = generic_output_query;
-  IO_queryHandlers[1] = generic_input_query;
-  IO_queryHandlers[2] = io_filesystem_query;
   ngaPrepare();
   loadEmbeddedImage(argv[0]);
   update_rx();
