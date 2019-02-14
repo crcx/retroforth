@@ -110,6 +110,7 @@ that is added to Nga.
   file:close drop ;
 
 :block:read (-)
+  BLOCK-FILE file:exists? [ block:write ] -if
   &Blocks BLOCK-FILE file:open<for-reading> swap
   [ dup-pair file:read swap store &n:inc dip ] times
   file:close drop ;
