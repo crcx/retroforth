@@ -159,10 +159,10 @@ This entails writing an implementation of Nga in RETRO. So to start, setup space
 Next, helpers to push values from the real stacks to the simulated ones. The stack pointer will point to the next available cell, not the actual top element.
 
 ~~~
-:to-stack (n-) &DataStack @SP + store &SP v:inc ;
-:from-stack (-n) &SP v:dec &DataStack @SP + fetch ;
-:to-rstack (n-) &ReturnStack @RP + store &RP v:inc ;
-:from-rstack (-n) &RP v:dec &ReturnStack @RP + fetch ;
+:>s (n-) &DataStack @SP + store &SP v:inc ;
+:s> (-n) &SP v:dec &DataStack @SP + fetch ;
+:>r (n-) &ReturnStack @RP + store &RP v:inc ;
+:r> (-n) &RP v:dec &ReturnStack @RP + fetch ;
 ~~~
 
 One more helper, `[IP]` will return the value in memory at the location `IP` points to.
@@ -174,36 +174,36 @@ One more helper, `[IP]` will return the value in memory at the location `IP` poi
 Now for the instructions. Taking a cue from the C implementation, I have a separate word for each instruction and then a jump table of addresses that point to these.
 
 ~~~
-:i:no ;
-:i:li  &IP v:inc [IP] to-stack ;
-:i:du from-stack dup to-stack to-stack ;
-:i:dr from-stack drop ;
-:i:sw from-stack from-stack swap to-stack to-stack ;
-:i:pu from-stack to-rstack ;
-:i:po from-rstack to-stack ;
-:i:ju from-stack n:dec !IP ;
-:i:ca @IP to-rstack i:ju ;
-:i:cc from-stack from-stack [ to-stack i:ca ] [ drop ] choose ;
-:i:re from-rstack !IP ;
-:i:eq from-stack from-stack eq? to-stack ;
-:i:ne from-stack from-stack -eq? to-stack ;
-:i:lt from-stack from-stack swap lt? to-stack ;
-:i:gt from-stack from-stack swap gt? to-stack ;
-:i:fe from-stack fetch to-stack ;
-:i:st from-stack from-stack swap store ;
-:i:ad from-stack from-stack + to-stack ;
-:i:su from-stack from-stack swap - to-stack ;
-:i:mu from-stack from-stack * to-stack ;
-:i:di from-stack from-stack swap /mod to-stack to-stack ;
-:i:an from-stack from-stack and to-stack ;
-:i:or from-stack from-stack or to-stack ;
-:i:xo from-stack from-stack xor to-stack ;
-:i:sh from-stack from-stack swap shift to-stack ;
-:i:zr dup n:zero? [ drop i:re ] if ;
-:i:en ;
-:i:ie #1 to-stack ;
-:i:iq from-stack #0 eq? [ #0 dup to-stack to-stack ] if ;
-:i:ii from-stack #0 eq? [ from-stack c:put ] if ;
+:i:no                            ;
+:i:li       &IP v:inc [IP] >s    ;
+:i:du s>    dup            >s >s ;
+:i:dr s>    drop                 ;
+:i:sw s> s> (swap           >s >s ;
+:i:pu s>    >r                   ;
+:i:po       r>             >s    ;
+:i:ju s>    n:dec !IP            ;
+:i:ca       @IP >r i:ju          ;
+:i:cc s> s> nl dump-stack nl [ >s i:ca ] [ drop ] choose ;
+:i:re       r> !IP               ;
+:i:eq s> s> eq?            >s    ;
+:i:ne s> s> -eq?           >s    ;
+:i:lt s> s> swap lt?       >s    ;
+:i:gt s> s> swap gt?       >s    ;
+:i:fe s>    fetch          >s    ;
+:i:st s> s> swap store           ;
+:i:ad s> s> +              >s    ;
+:i:su s> s> swap -         >s    ;
+:i:mu s> s> *              >s    ;
+:i:di s> s> swap /mod swap >s >s ;
+:i:an s> s> and            >s    ;
+:i:or s> s> or             >s    ;
+:i:xo s> s> xor            >s    ;
+:i:sh s> s> swap shift     >s    ;
+:i:zr s>    dup n:zero? [ drop i:re ] [ >s ] choose ;
+:i:en       #0 !RP               ;
+:i:ie       #1             >s    ;
+:i:iq       #0 dup         >s >s ;
+:i:ii s> s> nip c:put            ;
 ~~~
 
 With the instructions defined, populate the jump table. The order is crucial as the opcode number will be the index into this table.
@@ -274,11 +274,18 @@ And then using the display helpers and instruction processor, a single stepper. 
 'Steps var
 
 :step (-)
+  @IP d:lookup-xt n:-zero? [ @IP d:lookup-xt d:name nl tab s:put nl ] if
   display-status
+  @IP n:inc fetch sp sp n:put nl
+  @IP #2 + fetch sp sp n:put nl
   '__Stack:_ s:put display-data-stack '_->_ s:put
   [IP] process-packed-opcode &IP v:inc
   display-data-stack nl nl
   &Steps v:inc ;
+:astep
+  [IP] process-packed-opcode &IP v:inc
+  &Steps v:inc ;
+
 ~~~
 
 And then wrap it with `times` to run multiple steps.
@@ -295,14 +302,14 @@ The `trace` will empty the step counter and display the number of steps used.
 ~~~
 :trace (a-)
   #0 !Steps
-  !IP #0 to-rstack
-  [ step @RP n:zero? ] until
-  @Steps '%n_steps_taken\n s:format s:put ;
+  !IP #0 >r
+  [ step @RP n:zero? @IP n:negative? or ] until
+  nl @Steps '%n_steps_taken\n s:format s:put ;
 ~~~
 
 # Tests
 
-~~~
+```
 :test
   as{ 'liliaddu i #22 d #33 d }as
   #3 #4 gt? [ #1 ] if ;
@@ -311,4 +318,4 @@ The `trace` will empty the step counter and display the number of steps used.
 nl '-------------------------- s:put nl
 &TryToIdentifyWords v:on
 #0 #100 disassemble
-~~~
+```
