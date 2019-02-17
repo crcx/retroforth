@@ -105,6 +105,7 @@ June 2019.
 - add Buffer.forth
 - add CaptureOutput.forth
 - add DisplayNames.forth
+- add EDA.forth
 - add EvaluateString.forth
 - add FloatVar.forth
 - add Forget.forth
