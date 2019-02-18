@@ -113,13 +113,13 @@ June 2019.
 - add HTML.forth
 - add KeyValueStore.forth
 - add Marker.forth
-- add Naming_Quotes.forth
-- add net_fetch.forth
+- add NamingQuotes.forth
+- add NetFetch.forth
 - add paste.forth
-- add Paste_to_Sprunge.forth
+- add PasteToSprunge.forth
 - add retro-extend.forth
 - add retro-embedimage.forth
-- add Save_and_Restore_Stack.forth
+- add SaveAndRestoreStack.forth
 - add share.forth and shared.forth
 - add uuencode.forth
 - add uudecode.forth
