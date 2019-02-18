@@ -322,12 +322,33 @@ These are helpful to quickly navigate through a block.
 }}
 ~~~
 
+## Erase
+
+~~~
+:editor:key<x> &Block #1024 [ #32 over store n:inc ] times drop ;
+:editor:key<z> &Block @CurrentLine #64 * + #64
+               [ #32 over store n:inc ] times drop ;
+~~~
+
+## Copy/Paste
+
+~~~
+{{
+  'Copy      d:create #65   allot
+  'CopyBlock d:create #1025 allot
+---reveal---
+  :editor:key<b> &Block @CurrentLine #64 * + &Copy #64 copy ;
+  :editor:key<m> &Copy &Block @CurrentLine #64 * + #64 copy ;
+  :editor:key<B> &Block &CopyBlock #1024 copy ;
+  :editor:key<M> &CopyBlock &Block #1024 copy ;
+}}
+~~~
+
 ## Misc.
 
 ~~~
 :editor:key<i>  block:update block:write ;
 :editor:key<y>  @CurrentBlock block:select ;
-:editor:key<x>  &Block #1024 [ #32 over store n:inc ] times drop ;
 :editor:key<q>  block:write 'stty_-cbreak unix:system #0 unix:exit ;
 :editor:key<`>  tob:initialize ;
 ~~~
