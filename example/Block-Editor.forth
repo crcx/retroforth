@@ -7,6 +7,7 @@ new one that I'm planning to eventually use with Retro/Native.
 
 This presents a visual, (briefly) modal interface.
 
+              *
         0---------1---------2---------3---------4---------5---------6---
       | This is the new block editor!                                    |
     * |                                                                  |
@@ -25,12 +26,17 @@ This presents a visual, (briefly) modal interface.
       |                                                                  |
       |                                                                  |
         0---------1---------2---------3---------4---------5---------6---
-        *                                                                #2 1:0
+      | Output is shown here                                             |
+      |                                                                  |
+      |                                                                  |
+      |                                                                  |
+        0---------1---------2---------3---------4---------5---------6---
+    #2 1:0 ::
 
 The horizontal rulers have column indicators, there are cursor
 position indicators (and the actual cursor location shows at the
-intersection). The bottom right has the current block number,
-line number, and column number.
+intersection). The bottom line has the current block number, line
+number, and column number.
 
 Key Bindings
 
@@ -88,11 +94,16 @@ I have one memory region for the current block and a second
 one for the entire set of blocks. I keep the blocks in RAM
 for performance.
 
+There is also one half block set aside for the output display.
+This is the `TOB` (Text Output Buffer).
+
 ~~~
 'Block d:create #1025 allot
 
 'Blocks d:create
   BLOCKS #1024 * allot
+
+'TOB   d:create #513  allot
 ~~~
 
 # Block File I/O
@@ -151,18 +162,46 @@ It should be pretty straightforward though.
     '---------4---------5---------6---   s:put nl ;
   :pad-to-cur @CurrentCol dup [ sp ] times ;
   :pad-to-eol #64 swap - [ sp ] times ;
-  :indicator  '____ s:put pad-to-cur $* c:put pad-to-eol ;
+  :indicator  '____ s:put pad-to-cur $* c:put pad-to-eol nl ;
   :block#     $# c:put @CurrentBlock n:put ;
   :pos        @CurrentLine n:put $: c:put @CurrentCol n:put ;
-  :status     block# sp pos nl dump-stack nl ;
+  :status     block# sp pos '_::_ s:put dump-stack nl ;
   :current?   I @CurrentLine eq? ;
   :left       [ $* c:put ] &sp choose ;
   :format     current? left '_|_ s:put call '_| s:put nl ;
   :line       [ #64 [ fetch-next c:put ] times ] format ;
   :code       &Block #16 [ line ] times<with-index> drop ;
+  :format     '__|_ s:put call '_| s:put nl ;
+  :line       [ #64 [ fetch-next c:put ] times ] format ;
+  :tob        &TOB #4 [ line ] times<with-index> drop ;
 ---reveal---
   :block:display (-)
-    tty:clear ruler code ruler indicator status ;
+    tty:clear indicator ruler code ruler tob ruler status ;
+}}
+~~~
+
+# Text Output Buffer
+
+~~~
+{{
+  'TNext var
+
+  :scroll? (-f)
+    @TNext #256 gt? ;
+  :scroll-up (-)
+    &TOB #64 + &TOB #192 copy #193 !TNext
+    &TOB #193 + #64 [ #32 over store n:inc ] times drop ;
+---reveal---
+  :c:put<TOB> (c-)
+    dup #10 eq? [ drop @TNext #64 + dup #64 mod - !TNext ]
+                [ @TNext &TOB + store &TNext v:inc ] choose
+    scroll? [ scroll-up ] if ;
+
+  :with-tob (q-)
+    &c:put<TOB> &c:put set-hook call &c:put unhook ;
+
+  :tob:initialize (-)
+    &TOB #512 [ #32 over store n:inc ] times drop #0 !TNext ;
 }}
 ~~~
 
@@ -172,7 +211,7 @@ It should be pretty straightforward though.
 {{
   :cursor
     ASCII:ESC c:put
-    $[ c:put @CurrentLine #2 + n:put
+    $[ c:put @CurrentLine #3 + n:put
     $; c:put @CurrentCol #5 + n:put $H c:put ;
 
   :handler
@@ -183,7 +222,7 @@ It should be pretty straightforward though.
 ---reveal---
 
   :edit
-    blocks:initialize block:read #0 block:select
+    tob:initialize blocks:initialize block:read #0 block:select
     'stty_cbreak unix:system tty:clear
     repeat block:display cursor handler again ;
 }}
@@ -199,24 +238,41 @@ the key handlers.
 ~~~
 {{
   'Tokens d:create  #4097 allot
+  :prepare  &Tokens #4096 [ #0 over store n:inc ] times drop ;
+  :generate &Tokens !Heap &Block #32 s:tokenize ;
+  :item     dup s:length n:zero? [ drop ] [ interpret ] choose ;
+  :process  [ item ] set:for-each ;
 ---reveal---
   :editor:key<1>
-    &Tokens #4096 [ #0 over store n:inc ] times drop
-    &Heap [ &Tokens !Heap &Block #32 s:tokenize ] v:preserve
-    [ dup s:length n:zero? [ drop ] [ interpret ] choose ] set:for-each ;
+    [ prepare &Heap [ generate ] v:preserve process ] with-tob ;
 }}
+~~~
 
-:editor:key<H>  block:update @CurrentBlock n:dec #0 BLOCKS n:dec n:limit block:select tty:clear ;
-:editor:key<S>  block:update @CurrentBlock n:inc #0 BLOCKS n:dec #18 &nl times dump-stack n:limit block:select tty:clear ;
-:editor:key<n>  &CurrentLine v:dec &CurrentLine  #0 #15 v:limit ;
-:editor:key<h>  &CurrentCol  v:dec &CurrentCol   #0 #63 v:limit ;
-:editor:key<s>  &CurrentCol  v:inc &CurrentCol   #0 #63 v:limit ;
-:editor:key<t>  &CurrentLine v:inc &CurrentLine  #0 #15 v:limit ;
+~~~
+{{
+  :boundaries
+    &CurrentLine #0 #15 v:limit
+    &CurrentCol  #0 #63 v:limit ;
+  :keep-in-range #0 BLOCKS n:dec n:limit ;
+---reveal---
+  :editor:key<H>
+    block:update
+    @CurrentBlock n:dec keep-in-range block:select tty:clear ;
+  :editor:key<S>
+    block:update
+    @CurrentBlock n:inc keep-in-range block:select tty:clear ;
+  :editor:key<n>  &CurrentLine v:dec boundaries ;
+  :editor:key<h>  &CurrentCol  v:dec boundaries ;
+  :editor:key<s>  &CurrentCol  v:inc boundaries ;
+  :editor:key<t>  &CurrentLine v:inc boundaries ;
+}}
+~~~
 
+~~~
 {{
   :cursor
     ASCII:ESC c:put
-    $[ c:put @CurrentLine #2 + n:put
+    $[ c:put @CurrentLine #3 + n:put
     $; c:put @CurrentCol #5 + n:put $H c:put ;
 ---reveal---
   :editor:key<a>  cursor s:get @CurrentLine #64 * @CurrentCol + &Block + over s:length [ dup-pair &fetch dip store &n:inc bi@ ] times drop-pair #27 c:put '[2J s:put ;
@@ -226,6 +282,8 @@ the key handlers.
 :editor:key<y>  @CurrentBlock block:select ;
 :editor:key<x>  &Block #1024 [ #32 over store n:inc ] times drop ;
 :editor:key<q>  block:write 'stty_-cbreak unix:system #0 unix:exit ;
+
+:editor:key<`>  tob:initialize ;
 ~~~
 
 ~~~
