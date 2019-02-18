@@ -7,10 +7,9 @@ new one that I'm planning to eventually use with Retro/Native.
 
 This presents a visual, (briefly) modal interface.
 
-              *
-        0---------1---------2---------3---------4---------5---------6---
+        0-----#---1---------2---------3---------4---------5---------6---
       | This is the new block editor!                                    |
-    * |                                                                  |
+      #                                                                  |
       |                                                                  |
       |                                                                  |
       |                                                                  |
@@ -58,6 +57,11 @@ Key Bindings
     |  q  | Save the Blocks and Quit       |
     |  `  | Clear output buffer            |
     |  7  | Share block                    |
+    |  m  | Copy line                      |
+    |  w  | Paste line                     |
+    |  M  | Copy block                     |
+    |  W  | Paste block                    |
+    |  z  | Delete line                    |
 
 The key bindings are oriented around the Dvorak keyboard layout
 which I use. The key map leverages an approach I stole from
@@ -68,6 +72,13 @@ the dictionary with a format like:
 
 With the `*` being the key.
 
+# Sample Blocks
+
+This will create an empty `retro.blocks` file if one is not
+found. I have a sample included, but it is compressed. To use
+the sample run `gunzip retro.blocks` and keep a copy or a
+symlink to it in your CWD.
+
 # Configuration
 
 I define the number of blocks and the file to use. On the non
@@ -75,7 +86,7 @@ hosted Retro systems the block file will be replaced by a
 block storage device.
 
 ~~~
-#512          'BLOCKS       const
+#1024         'BLOCKS       const
 'retro.blocks 'BLOCK-FILE s:const
 ~~~
 
@@ -159,26 +170,27 @@ It should be pretty straightforward though.
 :tty:clear (-) #27 c:put '[2J s:put #27 c:put '[0;0H s:put ;
 
 {{
+  :cursor (cl-)
+    ASCII:ESC c:put
+    $[ c:put n:put
+    $; c:put n:put $H c:put ;
+  :indicators @CurrentCol #4 + #0 cursor $# c:put
+              #2 @CurrentLine #2 + cursor $# c:put
+              #0 #24 cursor ;
   :ruler 
-    '____0---------1---------2---------3 s:put
+    '___0---------1---------2---------3 s:put
     '---------4---------5---------6---   s:put nl ;
-  :pad-to-cur @CurrentCol dup [ sp ] times ;
-  :pad-to-eol #64 swap - [ sp ] times ;
-  :indicator  '____ s:put pad-to-cur $* c:put pad-to-eol nl ;
   :block#     $# c:put @CurrentBlock n:put ;
   :pos        @CurrentLine n:put $: c:put @CurrentCol n:put ;
-  :status     block# sp pos '_::_ s:put dump-stack nl ;
-  :current?   I @CurrentLine eq? ;
-  :left       [ $* c:put ] &sp choose ;
-  :format     current? left '_|_ s:put call '_| s:put nl ;
+  :status     block# sp pos '_::_ s:put dump-stack ;
+  :format     '_|_ s:put call '_| s:put nl ;
   :line       [ #64 [ fetch-next c:put ] times ] format ;
   :code       &Block #16 [ line ] times<with-index> drop ;
-  :format     '__|_ s:put call '_| s:put nl ;
-  :line       [ #64 [ fetch-next c:put ] times ] format ;
+  :format     '_|_ s:put call '_| s:put nl ;
   :tob        &TOB #4 [ line ] times drop ;
 ---reveal---
   :block:display (-)
-    tty:clear indicator ruler code ruler tob ruler status ;
+    tty:clear ruler code ruler tob ruler indicators status ;
 }}
 ~~~
 
@@ -213,8 +225,8 @@ It should be pretty straightforward though.
 {{
   :cursor
     ASCII:ESC c:put
-    $[ c:put @CurrentLine #3 + n:put
-    $; c:put @CurrentCol #5 + n:put $H c:put ;
+    $[ c:put @CurrentLine #2 + n:put
+    $; c:put @CurrentCol #4 + n:put $H c:put ;
 
   :handler
     c:get
@@ -311,8 +323,8 @@ These are helpful to quickly navigate through a block.
 {{
   :position-cursor
     ASCII:ESC c:put
-    $[ c:put @CurrentLine #3 + n:put
-    $; c:put @CurrentCol #5 + n:put $H c:put ;
+    $[ c:put @CurrentLine #2 + n:put
+    $; c:put @CurrentCol #4 + n:put $H c:put ;
   :dest @CurrentLine #64 * @CurrentCol + &Block + ;
   :chars over s:length ;
   :copy [ dup-pair &fetch dip store &n:inc bi@ ] times ;
