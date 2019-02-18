@@ -57,6 +57,7 @@ Key Bindings
     |  x  | Erase the current block        |
     |  q  | Save the Blocks and Quit       |
     |  `  | Clear output buffer            |
+    |  7  | Share block                    |
 
 The key bindings are oriented around the Dvorak keyboard layout
 which I use. The key map leverages an approach I stole from
@@ -174,7 +175,7 @@ It should be pretty straightforward though.
   :code       &Block #16 [ line ] times<with-index> drop ;
   :format     '__|_ s:put call '_| s:put nl ;
   :line       [ #64 [ fetch-next c:put ] times ] format ;
-  :tob        &TOB #4 [ line ] times<with-index> drop ;
+  :tob        &TOB #4 [ line ] times drop ;
 ---reveal---
   :block:display (-)
     tty:clear indicator ruler code ruler tob ruler status ;
@@ -331,6 +332,48 @@ These are helpful to quickly navigate through a block.
 :editor:key<`>  tob:initialize ;
 ~~~
 
+## Code Sharing
+
+~~~
+TRUE 'UseSprunge var<n>
+
+{{
+  '/home/crc/public      'PASTEBIN-PATH s:const
+  'http://forth.works/%s 'PASTEBIN-URL  s:const
+  '/tmp/retro.block.txt  'TEMPFILE      s:const
+  'FID var
+  :c:put<file> @FID file:write ;
+  :line#       I dup #10 lt? &sp if n:put ':_ s:put ;
+  :line        line# #64 [ fetch-next c:put ] times nl ;
+  :generate    &Block #16 [ line ] times<with-index> drop ;
+  :export        TEMPFILE file:open<for-writing> !FID
+                 &c:put<file> &c:put set-hook generate
+                 &c:put unhook @FID file:close ;
+  'MD5 var
+  :get-md5     TEMPFILE 'md5_%s s:format file:R unix:popen !FID
+               [ @FID file:read $= eq? ] until
+               @FID file:read drop
+               #1000 [ @FID file:read , ] here &times dip
+               s:chop !MD5 @FID unix:pclose ;
+  :dest        @MD5 '/home/crc/public/%s s:format ;
+  :upload      here TEMPFILE file:slurp here dest file:spew ;
+  :cleanup     TEMPFILE file:delete ;
+  :url         @MD5 PASTEBIN-URL s:format ;
+  :share       export get-md5 upload cleanup url ;
+
+  TEMPFILE 'curl_-s_-F_'sprunge=<%s'_http://sprunge.us s:format
+  'CURL s:const
+  :pipe{       CURL file:R unix:popen ;
+  :get         here [ #100 [ dup file:read , ] times ] dip ;
+  :result      s:chop s:temp ;
+  :}           swap unix:pclose cleanup ;
+  :sprunge     &Heap [ export pipe{ get result } ] v:preserve ;
+---reveal---
+  :editor:key<7>
+    @UseSprunge [ sprunge ] [ share ] choose
+    [ s:put nl ] with-tob ;
+}}
+~~~
 
 # Run It
 
