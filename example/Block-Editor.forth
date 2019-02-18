@@ -56,6 +56,7 @@ Key Bindings
     |  1  | Evaluate the current block     |
     |  x  | Erase the current block        |
     |  q  | Save the Blocks and Quit       |
+    |  `  | Clear output buffer            |
 
 The key bindings are oriented around the Dvorak keyboard layout
 which I use. The key map leverages an approach I stole from
@@ -235,6 +236,13 @@ It should be pretty straightforward though.
 All of the actual work is done by the words that make up
 the key handlers.
 
+## Evaluate block
+
+The `1` key is used to evaluate a block. To avoid wasting
+space, a block of memory is allocated to use as a temporary
+`Heap`. The actual `Heap` is saved and restored during the
+tokenization.
+
 ~~~
 {{
   'Tokens d:create  #4097 allot
@@ -247,6 +255,8 @@ the key handlers.
     [ prepare &Heap [ generate ] v:preserve process ] with-tob ;
 }}
 ~~~
+
+## Cursor and Block Movement
 
 ~~~
 {{
@@ -268,52 +278,57 @@ the key handlers.
 }}
 ~~~
 
-~~~
-{{
-  :cursor
-    ASCII:ESC c:put
-    $[ c:put @CurrentLine #3 + n:put
-    $; c:put @CurrentCol #5 + n:put $H c:put ;
----reveal---
-  :editor:key<a>  cursor s:get @CurrentLine #64 * @CurrentCol + &Block + over s:length [ dup-pair &fetch dip store &n:inc bi@ ] times drop-pair #27 c:put '[2J s:put ;
-}}
+## Navigate to prior, next word
 
-:editor:key<i>  block:update block:write ;
-:editor:key<y>  @CurrentBlock block:select ;
-:editor:key<x>  &Block #1024 [ #32 over store n:inc ] times drop ;
-:editor:key<q>  block:write 'stty_-cbreak unix:system #0 unix:exit ;
-
-:editor:key<`>  tob:initialize ;
-~~~
+These are helpful to quickly navigate through a block.
 
 ~~~
 {{
   :limit       (n-n)   &Block dup #1024 + n:limit ;
-
   :fetch-prior (a-Ac)  [ n:dec ] [ fetch ] bi ;
-
   :find-next-word
-    @CurrentLine #63 * @CurrentCol + &Block + n:inc
+    @CurrentLine #64 * @CurrentCol + &Block + n:inc
     repeat fetch-next #32 -eq? 0; drop again ;
-
   :find-prior-word
-    @CurrentLine #63 * @CurrentCol + &Block + n:dec
+    @CurrentLine #64 * @CurrentCol + &Block + n:dec
     repeat fetch-prior #32 -eq? 0; drop again ;
-
   :select-next (-)
     find-next-word n:dec limit &Block -
-    #63 /mod !CurrentLine !CurrentCol ;
-
+    #64 /mod !CurrentLine !CurrentCol ;
   :select-prior (-)
     find-prior-word n:inc limit &Block -
-    #63 /mod !CurrentLine !CurrentCol ;
-
+    #64 /mod !CurrentLine !CurrentCol ;
 ---reveal---
-
   :editor:key<c>  select-prior ;
-
   :editor:key<r>  select-next ;
 }}
+~~~
+
+## Edit (Replace)
+
+~~~
+{{
+  :position-cursor
+    ASCII:ESC c:put
+    $[ c:put @CurrentLine #3 + n:put
+    $; c:put @CurrentCol #5 + n:put $H c:put ;
+  :dest @CurrentLine #64 * @CurrentCol + &Block + ;
+  :chars over s:length ;
+  :copy [ dup-pair &fetch dip store &n:inc bi@ ] times ;
+---reveal---
+  :editor:key<a>
+    position-cursor s:get dest chars copy drop-pair tty:clear ;
+}}
+~~~
+
+## Misc.
+
+~~~
+:editor:key<i>  block:update block:write ;
+:editor:key<y>  @CurrentBlock block:select ;
+:editor:key<x>  &Block #1024 [ #32 over store n:inc ] times drop ;
+:editor:key<q>  block:write 'stty_-cbreak unix:system #0 unix:exit ;
+:editor:key<`>  tob:initialize ;
 ~~~
 
 
