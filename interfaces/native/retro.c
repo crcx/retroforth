@@ -29,6 +29,19 @@ int r_strcmp(const char *s1, const char *s2) {
   return (*(const unsigned char *)s1 - *(const unsigned char *)(s2 - 1));
 }
 
+#ifdef TARGET_X86
+unsigned char inportb(unsigned int port)
+{
+   unsigned char ret;
+   asm volatile ("inb %%dx,%%al":"=a" (ret):"d" (port));
+   return ret;
+}
+
+void outportb(unsigned int port,unsigned char value)
+{
+   asm volatile ("outb %%al,%%dx": :"d" (port), "a" (value));
+}
+#endif
 
 
 /*---------------------------------------------------------------------
@@ -63,8 +76,11 @@ CELL memory[IMAGE_SIZE + 1];      /* The memory for the image          */
 #define NOS  data[sp-1]           /* Shortcut for second item on stack */
 #define TORS address[rp]          /* Shortcut for top item on address stack */
 
-
+#ifdef TARGET_X86
+#define NUM_DEVICES  2
+#else
 #define NUM_DEVICES  1
+#endif
 
 typedef void (*Handler)(void);
 
@@ -281,6 +297,26 @@ void generic_output_query() {
   stack_push(0);
 }
 
+
+#ifdef TARGET_X86
+void portio() {
+  CELL p, v;
+  switch (stack_pop()) {
+    case 0: stack_push((CELL)inportb((unsigned int)stack_pop()));
+            break;
+    case 1: p = stack_pop();
+            v = stack_pop();
+            outportb((unsigned int)p, (unsigned char)v);
+            break;
+  }
+}
+
+void portio_query() {
+  stack_push(0);
+  stack_push(2000);
+}
+#endif
+
 /*---------------------------------------------------------------------
   With these out of the way, I implement `execute`, which takes an
   address and runs the code at it. This has a couple of interesting
@@ -382,6 +418,10 @@ int main(int argc, char **argv) {
   char input[1024];
   IO_deviceHandlers[0] = generic_output;
   IO_queryHandlers[0] = generic_output_query;
+#ifdef TARGET_X86
+  IO_deviceHandlers[1] = portio;
+  IO_queryHandlers[1] = portio_query;
+#endif
   ngaPrepare();
   for (CELL i = 0; i < ngaImageCells; i++)
     memory[i] = ngaImage[i];

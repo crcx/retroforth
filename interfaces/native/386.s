@@ -102,14 +102,19 @@ key:
         jmp    .a                       ;  And try again
 .done:  ret
 
+
 section .data
+
 .shifts dd shift, alpha
+
 board dd alpha
+
 alpha:
   db 0,27,"1234567890-=",8              ;00-0E
   db 9,"qwertyuiop[]",10                ;0F-1C
   db 0,"asdfghjkl;'`"                   ;1D-29
   db -1,"\zxcvbnm,./",-1,"*",0,32,-2    ;2A-3A
+
 shift:
   db 0,27,"!@#$%^&*()_+",8              ;00-0E
   db 9,"QWERTYUIOP{}",10                ;0F-1C
