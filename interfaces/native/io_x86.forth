@@ -19,6 +19,8 @@ will be used in the implementation of the device drivers.
 :io:outb (vp-)    #1 io:portio ;
 :io:store (va-)   #2 io:portio ;
 :io:fetch (a-v)   #3 io:portio ;
+:io:storeb (va-)  #4 io:portio ;
+:io:fetchb (a-v)  #5 io:portio ;
 ~~~
 
 # Hexadecimal

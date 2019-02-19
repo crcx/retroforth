@@ -91,13 +91,23 @@ void outportb(unsigned int port,unsigned char value)
 }
 
 void store() {
-  int address = stack_pop();
-  int value   = stack_pop();
+  long address = stack_pop();
+  long value   = stack_pop();
   *((int*)address) = value;
 }
 
 void fetch() {
   stack_push(*((int*)stack_pop()));
+}
+
+void storeb() {
+  long address = stack_pop();
+  long value   = stack_pop();
+  *((char *)address) = (char)value;
+}
+
+void fetchb() {
+  stack_push((long)*((char*)stack_pop()) & 0xFF);
 }
 #endif
 
@@ -367,6 +377,10 @@ void portio() {
     case 2: store();
             break;
     case 3: fetch();
+            break;
+    case 4: storeb();
+            break;
+    case 5: fetchb();
             break;
   }
 }
