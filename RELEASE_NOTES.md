@@ -103,6 +103,7 @@ June 2019.
 - add Abort.forth
 - add ANS-PICK-ROLL.forth
 - add atua-gophermap.forth
+- add Block-Editor.forth
 - add Buffer.forth
 - add CaptureOutput.forth
 - add DisplayNames.forth

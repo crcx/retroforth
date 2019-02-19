@@ -57,10 +57,10 @@ Key Bindings
     |  q  | Save the Blocks and Quit       |
     |  `  | Clear output buffer            |
     |  7  | Share block                    |
-    |  m  | Copy line                      |
-    |  w  | Paste line                     |
-    |  M  | Copy block                     |
-    |  W  | Paste block                    |
+    |  b  | Copy line                      |
+    |  m  | Paste line                     |
+    |  B  | Copy block                     |
+    |  M  | Paste block                    |
     |  z  | Delete line                    |
 
 The key bindings are oriented around the Dvorak keyboard layout
@@ -203,7 +203,7 @@ It should be pretty straightforward though.
   :scroll? (-f)
     @TNext #256 gt? ;
   :scroll-up (-)
-    &TOB #64 + &TOB #192 copy #193 !TNext
+    &TOB #64 + &TOB #193 copy #193 !TNext
     &TOB #193 + #64 [ #32 over store n:inc ] times drop ;
 ---reveal---
   :c:put<TOB> (c-)
