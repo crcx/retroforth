@@ -77,6 +77,13 @@ June 2019.
 - add random number generator
 - add image:save
 
+### native
+
+- add port i/o words
+- add cmos rtc driver
+- add serial port driver
+- now builds properly on openbsd
+
 ## Tools
 
 - use strlcpy, strlcat instead of strcpy and strcat
