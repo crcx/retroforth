@@ -16,6 +16,54 @@
 int getchar(void);
 int putchar(int c);
 
+long stack_pop();
+void stack_push(long value);
+
+int remap(int c) {
+  int a = c;
+#ifdef USE_DVORAK
+  switch (c) {
+    case 'q': a = '\''; break;   case 'Q': a = '"'; break;
+    case 'w': a = ','; break;    case 'W': a = '<'; break;
+    case 'e': a = '.'; break;    case 'E': a = '>'; break;
+    case 'r': a = 'p'; break;    case 'R': a = 'P'; break;
+    case 't': a = 'y'; break;    case 'T': a = 'Y'; break;
+    case 'y': a = 'f'; break;    case 'Y': a = 'F'; break;
+    case 'u': a = 'g'; break;    case 'U': a = 'G'; break;
+    case 'i': a = 'c'; break;    case 'I': a = 'C'; break;
+    case 'o': a = 'r'; break;    case 'O': a = 'R'; break;
+    case 'p': a = 'l'; break;    case 'P': a = 'L'; break;
+    case '[': a = '/'; break;    case '{': a = '?'; break;
+    case ']': a = '='; break;    case '}': a = '+'; break;
+    case 'a': a = 'a'; break;    case 'A': a = 'A'; break;
+    case 's': a = 'o'; break;    case 'S': a = 'O'; break;
+    case 'd': a = 'e'; break;    case 'D': a = 'E'; break;
+    case 'f': a = 'u'; break;    case 'F': a = 'U'; break;
+    case 'g': a = 'i'; break;    case 'G': a = 'I'; break;
+    case 'h': a = 'd'; break;    case 'H': a = 'D'; break;
+    case 'j': a = 'h'; break;    case 'J': a = 'H'; break;
+    case 'k': a = 't'; break;    case 'K': a = 'T'; break;
+    case 'l': a = 'n'; break;    case 'L': a = 'N'; break;
+    case ';': a = 's'; break;    case ':': a = 'S'; break;
+    case '\'': a = '-'; break;   case '"': a = '_'; break;
+    case 'z': a = ';'; break;    case 'Z': a = ':'; break;
+    case 'x': a = 'q'; break;    case 'X': a = 'Q'; break;
+    case 'c': a = 'j'; break;    case 'C': a = 'J'; break;
+    case 'v': a = 'k'; break;    case 'V': a = 'K'; break;
+    case 'b': a = 'x'; break;    case 'B': a = 'X'; break;
+    case 'n': a = 'b'; break;    case 'N': a = 'B'; break;
+    case 'm': a = 'm'; break;    case 'M': a = 'M'; break;
+    case ',': a = 'w'; break;    case '<': a = 'W'; break;
+    case '.': a = 'v'; break;    case '>': a = 'V'; break;
+    case '/': a = 'z'; break;    case '?': a = 'Z'; break;
+    case '-': a = '['; break;    case '_': a = '{'; break;
+    case '=': a = ']'; break;    case '+': a = '}'; break;
+  }
+#endif
+  putchar(a);
+  return a;
+}
+
 int r_strlen(char *str) {
   const char *s;
   for (s = str; *s; ++s);
@@ -40,6 +88,16 @@ unsigned char inportb(unsigned int port)
 void outportb(unsigned int port,unsigned char value)
 {
    asm volatile ("outb %%al,%%dx": :"d" (port), "a" (value));
+}
+
+void store() {
+  int address = stack_pop();
+  int value   = stack_pop();
+  *((int*)address) = value;
+}
+
+void fetch() {
+  stack_push(*((int*)stack_pop()));
 }
 #endif
 
@@ -101,8 +159,6 @@ CELL interpret;
   Function prototypes.
   ---------------------------------------------------------------------*/
 
-CELL stack_pop();
-void stack_push(CELL value);
 int string_inject(char *str, int buffer);
 char *string_extract(int at);
 int d_link(CELL dt);
@@ -308,6 +364,10 @@ void portio() {
             v = stack_pop();
             outportb((unsigned int)p, (unsigned char)v);
             break;
+    case 2: store();
+            break;
+    case 3: fetch();
+            break;
   }
 }
 
@@ -380,7 +440,7 @@ int not_eol(int ch) {
 }
 
 void read_token(char *token_buffer, int echo) {
-  int ch = getchar();
+  int ch = remap(getchar());
   if (echo != 0)
     putchar(ch);
   int count = 0;
@@ -396,7 +456,7 @@ void read_token(char *token_buffer, int echo) {
     } else {
       token_buffer[count++] = ch;
     }
-    ch = getchar();
+    ch = remap(getchar());
     if (echo != 0)
       putchar(ch);
   }

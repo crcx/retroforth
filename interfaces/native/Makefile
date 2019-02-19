@@ -4,10 +4,12 @@ native386:
 	cp ../../ngaImage nativeImage
 	../../bin/retro-extend nativeImage io_x86.forth
 	../../bin/retro-embedimage nativeImage >image.c
-	cc -fno-pie -m32 -DTARGET_X86 -c retro.c
+	cc -fno-pie -m32 -DTARGET_X86              -c retro.c -o retro_qwerty.o
+	cc -fno-pie -m32 -DTARGET_X86 -DUSE_DVORAK -c retro.c -o retro_dvorak.o
 	nasm -f elf 386.s
-	ld -nostdlib -m elf_i386 -n -T 386.ld 386.o retro.o -o bin/rf.386
-	ld -nostdlib -m elf_i386 -n -e_start -T 386flat.ld 386.o retro.o -o bin/rf.386flat
+	ld -nostdlib -m elf_i386 -n -T 386.ld 386.o retro_qwerty.o -o bin/rnf_qwerty.386
+	ld -nostdlib -m elf_i386 -n -T 386.ld 386.o retro_dvorak.o -o bin/rnf_dvorak.386
+#	ld -nostdlib -m elf_i386 -n -e_start -T 386flat.ld 386.o retro.o -o bin/rf.386flat
 
 macos:
 	cc -m64 -c retro.c

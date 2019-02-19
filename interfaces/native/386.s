@@ -69,9 +69,6 @@ clearscreen:
 align 4
 getchar:
         call    key
-        push    eax
-        call    vEmit
-        pop     eax
         ret
 
 section .text
@@ -120,7 +117,6 @@ shift:
   db 9,"QWERTYUIOP{}",10                ;0F-1C
   db 0,'ASDFGHJKL:"~'                   ;1D-29
   db -1,"|ZXCVBNM<>?",-1,"*",0,32,-2    ;2A-3A
-
 
 section .text
 

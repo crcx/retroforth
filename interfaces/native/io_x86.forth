@@ -1,13 +1,7 @@
-~~~
-{{
-  'Number var
-  '0123456789ABCDEF 'DIGITS s:const
-  :convert    (c-)  &DIGITS swap s:index-of @Number #16 * + !Number ;
----reveal---
-  :prefix:0 (s-n)
-    n:inc #0 !Number [ convert ] s:for-each @Number class:data ; immediate
-}}
-~~~
+# Port I/O
+
+This exposes the low level port I/O device to RETRO. These
+will be used in the implementation of the device drivers.
 
 ~~~
 {{
@@ -20,12 +14,32 @@
   ---reveal---
   :io:portio identify @io:PortIO io:invoke ;
 }}
-~~~
 
-~~~
 :io:inb  (p-n)    #0 io:portio ;
 :io:outb (vp-)    #1 io:portio ;
+:io:store (va-)   #2 io:portio ;
+:io:fetch (a-v)   #3 io:portio ;
 ~~~
+
+# Hexadecimal
+
+Since most resources list the values and ports in hex, I
+am defining a prefix to be used. This will allow for hex
+values to be specified like `0xC3`. They must be caps, and
+negative values are not supported.
+
+~~~
+{{
+  'Number var
+  '0123456789ABCDEF 'DIGITS s:const
+  :convert    (c-)  &DIGITS swap s:index-of @Number #16 * + !Number ;
+---reveal---
+  :prefix:0 (s-n)
+    n:inc #0 !Number [ convert ] s:for-each @Number class:data ; immediate
+}}
+~~~
+
+# CMOS RTC
 
 ~~~
 #112 'CMOS:ADDRESS const
@@ -42,12 +56,18 @@
 :time rtc:hour n:put $: c:put rtc:minute n:put nl ;
 ~~~
 
+# Serial
+
+This was adapted from the RETRO9 serial driver. To use it,
+set the `serial:Port` variable to the port you want to use.
+Then do `serial:init` and read/write as necessary.
+
 ~~~
 #1016 'serial:COM1 const
 #760  'serial:COM2 const
 #1000 'serial:COM3 const
 #744  'serial:COM4 const
-serial:COM2 'serial:Port var<n>
+serial:COM1 'serial:Port var<n>
 
 :serial:port      @serial:Port ;
 :serial:received? serial:port #5 + io:inb #1  and n:-zero? ;
