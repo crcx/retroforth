@@ -60,7 +60,6 @@ int remap(int c) {
     case '=': a = ']'; break;    case '+': a = '}'; break;
   }
 #endif
-  putchar(a);
   return a;
 }
 
@@ -145,9 +144,9 @@ CELL memory[IMAGE_SIZE + 1];      /* The memory for the image          */
 #define TORS address[rp]          /* Shortcut for top item on address stack */
 
 #ifdef TARGET_X86
-#define NUM_DEVICES  2
+#define NUM_DEVICES  3
 #else
-#define NUM_DEVICES  1
+#define NUM_DEVICES  2
 #endif
 
 typedef void (*Handler)(void);
@@ -391,6 +390,16 @@ void portio_query() {
 }
 #endif
 
+void generic_input() {
+  stack_push(remap(getchar()));
+  if (TOS == 127) TOS = 8;
+}
+
+void generic_input_query() {
+  stack_push(0);
+  stack_push(1);
+}
+
 /*---------------------------------------------------------------------
   With these out of the way, I implement `execute`, which takes an
   address and runs the code at it. This has a couple of interesting
@@ -443,6 +452,7 @@ void evaluate(char *s) {
 }
 
 
+
 /*---------------------------------------------------------------------
   `read_token` reads a token from the specified file.  It will stop on
    a whitespace or newline. It also tries to handle backspaces, though
@@ -492,13 +502,16 @@ int main(int argc, char **argv) {
   char input[1024];
   IO_deviceHandlers[0] = generic_output;
   IO_queryHandlers[0] = generic_output_query;
+  IO_deviceHandlers[1] = generic_input;
+  IO_queryHandlers[1] = generic_input_query;
 #ifdef TARGET_X86
-  IO_deviceHandlers[1] = portio;
-  IO_queryHandlers[1] = portio_query;
+  IO_deviceHandlers[2] = portio;
+  IO_queryHandlers[2] = portio_query;
 #endif
   ngaPrepare();
   for (CELL i = 0; i < ngaImageCells; i++)
     memory[i] = ngaImage[i];
+  execute(0);
   update_rx();
   retro_puts("RETRO Listener (c) 2016-2019, Charles Childers\n\n");
   while(1) {
