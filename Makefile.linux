@@ -105,3 +105,7 @@ interfaces/io/unix.o: interfaces/io/io_unix_syscalls.forth interfaces/io/io_unix
 
 interfaces/io/strl.o: interfaces/io/strl.c
 	cd interfaces/io && $(CC) $(CFLAGS) -c -o strl.o strl.c
+
+bin/retro-unu: tools/unu.c
+	$(CC) $(CFLAGS) $(LDFLAGS) -o bin/retro-unu tools/unu.c
+
