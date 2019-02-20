@@ -28,20 +28,20 @@ June 2019.
 
 ### Floating Point
 
-- add f:push
-- add f:pop
-- add f:dup-pair
-- add f:drop-pair
-- add f:rot
-- add f:nip
-- add f:min
-- add f:max
-- add f:limit
 - add f:between?
-- add f:inc
-- add f:dec
 - add f:case
+- add f:dec
+- add f:drop-pair
+- add f:dup-pair
 - add f:dump-stack
+- add f:inc
+- add f:limit
+- add f:max
+- add f:min
+- add f:nip
+- add f:pop
+- add f:push
+- add f:rot
 - add f:sign
 - add u:scaling
 - improved f:tuck
