@@ -5,6 +5,9 @@
 #80     'COLUMNS  const
 #25     'ROWS     const
 
+'vga:Display d:create
+  COLUMNS ROWS * n:inc allot
+
 'vga:Row    var
 'vga:Column var
 
@@ -23,13 +26,27 @@
 :vga:move-cursor (rc-)
   !vga:Column !vga:Row vga:update-cursor ;
 
+:all-but-top
+  [ &vga:Display buffer:set
+     VGA-BASE COLUMNS #2 * + ROWS n:dec COLUMNS * [ dup ram:fetch-byte buffer:add #2 + ] times drop ] buffer:preserve ;
+
+:move-up
+  &VGA-BASE &vga:Display [ over ram:store-byte #2 + ] s:for-each drop ;
+
+:erase-last-line
+  &VGA-BASE ROWS n:dec COLUMNS * #2 * +  COLUMNS [ ASCII:SPACE over ram:store-byte #2 + ] times drop ;
+
 :wrap
-  @vga:Row ROWS gt? [ #0 !vga:Column #0 !vga:Row ] if vga:update-cursor ;
+  @vga:Row ROWS eq? [
+    all-but-top move-up erase-last-line
+    ROWS n:dec #0 vga:move-cursor
+  ] if
+  vga:update-cursor ;
 
 :vga:next
   &vga:Column v:inc
   @vga:Column COLUMNS gt? [ &vga:Row v:inc #0 !vga:Column ] if
-  @vga:Row ROWS gteq? [ #0 !vga:Row ] if vga:update-cursor ;
+  wrap ;
 
 :putc (c-)
   #10 [ #0 !vga:Column &vga:Row v:inc wrap ] case
