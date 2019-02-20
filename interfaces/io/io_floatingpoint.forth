@@ -114,10 +114,10 @@ n:MAX n:negate       'u:-INF const
 ~~~
 
 ~~~
+:u:scaling hook .10.0e-4 ;
 {{
-  :s .10.0e-4 ;
-  :f:encode .0.5 f:power s .-1.0 f:power f:* ;
-  :f:decode f:square s f:square f:* ;
+  :f:encode .0.5 f:power u:scaling .-1.0 f:power f:* ;
+  :f:decode f:square u:scaling f:square f:* ;
 
 ---reveal---
 
