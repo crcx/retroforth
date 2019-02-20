@@ -20,7 +20,7 @@
                   buffer:start s:chop ] buffer:preserve ;
 
   :listen (-)
-    test 'RETRO/Native s:put nl
+    vga:initialize 'RETRO/Native s:put sp @Version #100 /mod n:put $. c:put n:put nl
     repeat s:get-word valid? &interpret &drop choose again ;
 
   &listen #1 store
