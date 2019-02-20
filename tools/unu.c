@@ -61,6 +61,6 @@ int main(int argc, char **argv) {
     }
   }
   else
-    printf("unu\n(c) 2013-2018 charles childers\n\nTry:\n  %s filename\n", argv[0]);
+    printf("unu\n(c) 2013-2019 charles childers\n\nTry:\n  %s filename\n", argv[0]);
   return 0;
 }
