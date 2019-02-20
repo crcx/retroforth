@@ -20,5 +20,6 @@
     repeat s:get valid? &interpret &drop choose again ;
 
   &listen #1 store
+  [ $? c:put sp 'word_not_found s:put nl ] &err:notfound set-hook
 }}
 ~~~
