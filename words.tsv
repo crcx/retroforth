@@ -405,6 +405,7 @@ u:max?	u-f	-	-	Is encoded value at the maximum?			class:word	{n/a}	{n/a}	u	rre	{
 u:min?	u-f	-	-	Is encoded value at the minimum?			class:word	{n/a}	{n/a}	u	rre	{n/a}
 u:n?	u-f	-	-	{n/a}			class:word	{n/a}	{n/a}	u	rre	{n/a}
 u:nan?	u-f	-	-	Is encoded value a Nan?			class:word	{n/a}	{n/a}	u	ree	{n/a}
+u:scaling	-	-	-f	Hook. Return a constant used as the scaling factor for the u: words.			class:word	{n/a}	{n/a}	u	rre	{n/a}
 u:to-f	u-	-	-n	Decode an encoded floating point value.			class:word	{n/a}	{n/a}	rre	rre	
 u:zero?	u-f	-	-	{n/a}			class:word	{n/a}	{n/a}	u	rre	{n/a}
 unhook	a-	-	-	Reset the hook point in a1 to the default definition.			class:word	    :foo hook #1 ;\n    :bar #2 ;\n    &bar &foo set-hook\n    &foo unhook	{n/a}	global	all	

@@ -4821,6 +4821,17 @@ Is encoded value a Nan?
 Class: class:word | Namespace: u | Interface Layer: ree
 ------------------------------------------------------------------------
 
+u:scaling
+
+  Data:  -
+  Addr:  -
+  Float: -f
+
+Hook. Return a constant used as the scaling factor for the u: words.
+
+Class: class:word | Namespace: u | Interface Layer: rre
+------------------------------------------------------------------------
+
 u:to-f
 
   Data:  u-
