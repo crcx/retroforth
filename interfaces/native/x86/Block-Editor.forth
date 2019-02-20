@@ -349,3 +349,12 @@ These are helpful to quickly navigate through a block.
 :editor:key<q>  TRUE !DoneEditing ;
 :editor:key<`>  tob:initialize ;
 ~~~
+
+~~~
+:editor:key<!>
+  &Block &Sector #512 copy @CurrentBlock #2 * ata:write
+  &Block #512 + &Sector #512 copy @CurrentBlock #2 * n:inc ata:write ;
+:editor:key<@>
+  @CurrentBlock #2 * ata:read &Sector &Block #512 copy
+  @CurrentBlock #2 * n:inc ata:read &Sector &Block #512 + #512 copy ;
+~~~
