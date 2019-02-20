@@ -10,7 +10,7 @@
   I'll include commentary throughout the source, so read on.
   ---------------------------------------------------------------------*/
 
-
+#include <sys/types.h>
 #include "image.c"
 
 int getchar(void);
@@ -107,6 +107,20 @@ void storeb() {
 
 void fetchb() {
   stack_push((long)*((char*)stack_pop()) & 0xFF);
+}
+
+static inline uint16_t inw(uint16_t port)
+{
+    uint16_t ret;
+    asm volatile ( "inw %1, %0"
+                   : "=a"(ret)
+                   : "Nd"(port) );
+    return ret;
+}
+
+static inline void outw(uint16_t port, uint16_t val)
+{
+    asm volatile ( "outw %0, %1" : : "a"(val), "Nd"(port) );
 }
 #endif
 
@@ -215,6 +229,12 @@ void portio() {
     case 4: storeb();
             break;
     case 5: fetchb();
+            break;
+    case 6: stack_push((CELL)inw((uint16_t)stack_pop()));
+            break;
+    case 7: p = stack_pop();
+            v = stack_pop();
+            outw((uint16_t)p, (uint16_t)v);
             break;
   }
 }

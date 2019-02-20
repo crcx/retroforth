@@ -21,6 +21,8 @@ will be used in the implementation of the device drivers.
 ~~~
 :pio:in-byte    (p-n)  #0 io:x86 ;
 :pio:out-byte   (vp-)  #1 io:x86 ;
+:pio:in-word    (p-n)  #6 io:x86 ;
+:pio:out-word   (vp-)  #7 io:x86 ;
 ~~~
 
 # Access to Physical RAM
