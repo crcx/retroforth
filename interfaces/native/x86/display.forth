@@ -41,5 +41,5 @@
   VGA-BASE COLUMNS ROWS * [ ASCII:SPACE over ram:store-byte #2 + ] times drop
   #0 !vga:Row #0 !vga:Column vga:update-cursor ;
 
-:test      &putc &c:put set-hook ;
+:test #1793 &c:put #2 + store &putc &c:put #3 + store ;
 ~~~

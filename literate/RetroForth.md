@@ -1717,7 +1717,7 @@ original one.
 
 A Retro system is only required to provide a single I/O word to
 the user: a word to push a single character to the output log.
-This is always mapped to device 0, and is exposed as `c:putc`.
+This is always mapped to device 0, and is exposed as `c:put`.
 
 ~~~
 :c:put (c-) hook #0 io:invoke ;
