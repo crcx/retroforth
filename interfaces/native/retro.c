@@ -154,15 +154,6 @@ void ngaProcessPackedOpcodes(CELL opcode);
 int ngaValidatePackedOpcodes(CELL opcode);
 
 
-/*---------------------------------------------------------------------
-  Here's an output helper. I define a wrapper over `write` to avoid
-  using `printf()`.
-  ---------------------------------------------------------------------*/
-
-void retro_puts(char *s) {
-  while (*s) putchar(*s++);
-}
-
 
 /*---------------------------------------------------------------------
   Now to the fun stuff: interfacing with the virtual machine. There are
@@ -198,7 +189,7 @@ void stack_push(CELL value) {
   ---------------------------------------------------------------------*/
 
 void generic_output() {
-  putchar(stack_pop());
+  stack_pop();
 }
 
 void generic_output_query() {
@@ -266,8 +257,6 @@ void execute(int cell) {
     if (ngaValidatePackedOpcodes(opcode) != 0) {
       ngaProcessPackedOpcodes(opcode);
     } else {
-      retro_puts("Invalid instruction!\n");
-      retro_puts("System halted.\n");
       while(1);
     }
     ip++;
