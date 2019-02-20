@@ -40,8 +40,8 @@
   dup  0x1F3 pio:out-byte
   dup #8 shift 0x1F4 pio:out-byte
      #16 shift 0x1F5 pio:out-byte
-  0x20 0x1F7 pio:out-byte
+  0x30 0x1F7 pio:out-byte
   #10000 [ ] times
-  &Sector #256 [ fetch-next [ fetch-next ] dip #-8 shift + 0x1F0 pio:out-word ] times drop ;
+  &Sector #256 [ fetch-next [ fetch-next #-8 shift ] dip + 0x1F0 pio:out-word ] times drop ;
 
 ~~~
