@@ -42,6 +42,7 @@ June 2019.
 - add f:dec
 - add f:case
 - add f:dump-stack
+- add f:sign
 - add u:scaling
 - improved f:tuck
 - improved f:over

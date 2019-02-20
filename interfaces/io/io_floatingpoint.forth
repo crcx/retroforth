@@ -77,6 +77,9 @@
 :f:dec   (f:n-n)   .1 f:- ;
 :f:case  (f:ff-,q-)
   f:over f:eq? [ f:drop call #-1 ] [ drop #0 ] choose 0; pop drop-pair ;
+:f:sign (-n|f:a-)
+  f:dup .0 f:eq? [ #0 f:drop ] if;
+  .0 f:gt? [ #1 ] [ #-1 ] choose ;
 ~~~
 
 ---------------------------------------------------------------

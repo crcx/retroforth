@@ -200,6 +200,7 @@ f:push	-	-	F-	Push a floating point value to an alternative stack.			class:word	
 f:put	-	-	F-	Display a floating point number.			class:word	{n/a}	{n/a}	global	rre	
 f:rot	-	-	abc-bca	Rotate the top three values.			class:word	{n/a}	{n/a}	f	rre	
 f:round	-	-	f-f	Round a floating point value.			class:word	{n/a}	{n/a}	f	rre	
+f:sign	-n	-	F-	Return 1 if the floating point value is positive or -1 if it is negative.			class:word	    .3.1415 f:sign	{n/a}	f	rre	
 f:sin	-	-	F-F	Return the sine of a floating point number.			class:word	{n/a}	{n/a}	f	rre	
 f:sqrt	-	-	F-F	Return the square root of a floating point number.			class:word	{n/a}	{n/a}	f	rre	
 f:square	-	-	f-f	Return the square of a floating point number.			class:word	{n/a}	{n/a}	f	rre	

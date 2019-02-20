@@ -2357,6 +2357,22 @@ Round a floating point value.
 Class: class:word | Namespace: f | Interface Layer: rre
 ------------------------------------------------------------------------
 
+f:sign
+
+  Data:  -n
+  Addr:  -
+  Float: F-
+
+Return 1 if the floating point value is positive or -1 if it is negative.
+
+Class: class:word | Namespace: f | Interface Layer: rre
+
+Example #1:
+
+    .3.1415 f:sign
+
+------------------------------------------------------------------------
+
 f:sin
 
   Data:  -

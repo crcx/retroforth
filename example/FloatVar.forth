@@ -2,9 +2,6 @@ Words to encode floating point numbers into two cells.
 
 ~~~
 :st (-) dump-stack nl f:dump-stack ; 
-  :f:sign (-n|f:a-) 
-  f:dup .0 f:eq? [ #0 f:drop ] if; 
-  .0 f:gt? [ #1 ] [ #-1 ] choose ; 
 ~~~
 
 ~~~
