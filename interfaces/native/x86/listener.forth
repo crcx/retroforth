@@ -9,7 +9,7 @@
   :check-bs (c-c)
     dup [ #8 eq? ] [ #127 eq? ] bi or [ buffer:get buffer:get drop-pair ] if ;
 ---reveal---
-  :c:get (-c) as{ 'liii.... i #1 d }as dup c:put ;
+  :c:get (-c) hook as{ 'liii.... i #1 d }as dup c:put ;
 
   :s:get-word (-s) [ #1025 buffer:set
                 [ c:get dup buffer:add check-bs eol? ] until
@@ -27,4 +27,7 @@
   &listen #1 store
   [ $? c:put sp 'word_not_found s:put nl ] &err:notfound set-hook
 }}
+
+:use-key &getc &c:get set-hook 'Hook_set s:put nl ;
+
 ~~~
