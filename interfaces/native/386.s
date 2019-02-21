@@ -1,8 +1,3 @@
-;  ___ ___ _____ ___  ___      __  ____ ___   __
-; | _ \ __|_   _| _ \/ _ \    / / |__ /( _ ) / /
-; |   / _|  | | |   / (_) |  / /   |_ \/ _ \/ _ \
-; |_|_\___| |_| |_|_\\___/  /_/   |___/\___/\___/
-;
 ; This is the minimal startup & I/O needed to run a basic RETRO
 ; instance on x86 hardware.
 ; =============================================================
@@ -53,12 +48,6 @@ _start:
 
 align 4
 getchar:
-        call    key
-        ret
-
-section .text
-
-key:
         xor     eax, eax                ;  clear eax
 .a:     in      al, 64h                 ;  Is any data waiting?
         test    al, 1                   ;  Is character = ASCII 0?
