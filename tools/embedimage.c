@@ -18,7 +18,7 @@
 #include <stdint.h>
 
 #define CELL         int32_t
-CELL memory[128*1024];
+CELL memory[512*1024];
 
 CELL ngaLoadImage(char *imageFile) {
   FILE *fp;

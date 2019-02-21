@@ -86,7 +86,7 @@ hosted Retro systems the block file will be replaced by a
 block storage device.
 
 ~~~
-#64 'BLOCKS const
+#16 'BLOCKS const
 ~~~
 
 # Variables
