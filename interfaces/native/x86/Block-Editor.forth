@@ -251,7 +251,7 @@ tokenization.
   :prepare  &Tokens #4096 [ #0 over store n:inc ] times drop ;
   :generate &Tokens !Heap &Block #32 s:tokenize ;
   :item     dup s:length n:zero? [ drop ] [ interpret ] choose ;
-  :process  [ item ] set:for-each ;
+  :process  [ item ] array:for-each ;
 ---reveal---
   :editor:key<1>
     [ prepare &Heap [ generate ] v:preserve process ] with-tob ;

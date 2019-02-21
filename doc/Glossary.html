@@ -581,6 +581,110 @@
 <p>Perform a bitwise AND operation between the two provided values.</p>
 <p><b>Class:</b> class:primitive | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
+<h1>array:contains-string?</h1>
+<div style='margin-left: 1em;'><p><b>Data:</b> sa-f<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Return `TRUE` if the string value is in the set or`FALSE` otherwise.</p>
+<p><b>Class:</b> class:word | <b>Namespace:</b> set | <b>Interface Layer:</b> all</p>
+<hr/>
+<h1>array:contains?</h1>
+<div style='margin-left: 1em;'><p><b>Data:</b> na-f<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Return `TRUE` if the value is in the set or `FALSE` otherwise.</p>
+<p><b>Class:</b> class:word | <b>Namespace:</b> set | <b>Interface Layer:</b> all</p>
+<hr/>
+<h1>array:counted-results</h1>
+<div style='margin-left: 1em;'><p><b>Data:</b> q-a<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Run a quote and construct a new set from the returned values. The quote should return the values and the number of values to put into the set.</p>
+<p><b>Class:</b> class:word | <b>Namespace:</b> set | <b>Interface Layer:</b> all</p>
+<hr/>
+<h1>array:dup</h1>
+<div style='margin-left: 1em;'><p><b>Data:</b> a-b<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Make a copy of a set. Return the address of the copy.</p>
+<p><b>Class:</b> class:word | <b>Namespace:</b> set | <b>Interface Layer:</b> all</p>
+<hr/>
+<h1>array:filter</h1>
+<div style='margin-left: 1em;'><p><b>Data:</b> aq-b<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>For each item in the initial set, run the specified quote. If the quote returns `TRUE`, copy the item into a new set. If `FALSE`, discard it. Returns a pointer to the new set.</p>
+<p><b>Class:</b> class:word | <b>Namespace:</b> set | <b>Interface Layer:</b> all</p>
+<hr/>
+<h1>array:for-each</h1>
+<div style='margin-left: 1em;'><p><b>Data:</b> aq-<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Execute the quote once for each item in the set.</p>
+<p><b>Class:</b> class:word | <b>Namespace:</b> set | <b>Interface Layer:</b> all</p>
+<hr/>
+<h1>array:from-string</h1>
+<div style='margin-left: 1em;'><p><b>Data:</b> s-a<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Create a new set with the characters in the source string.</p>
+<p><b>Class:</b> class:word | <b>Namespace:</b> set | <b>Interface Layer:</b> all</p>
+<hr/>
+<h1>array:length</h1>
+<div style='margin-left: 1em;'><p><b>Data:</b> a-n<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Return the length of a set.</p>
+<p><b>Class:</b> class:word | <b>Namespace:</b> set | <b>Interface Layer:</b> all</p>
+<hr/>
+<h1>array:make</h1>
+<div style='margin-left: 1em;'><p><b>Data:</b> q-a<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Execute quote. Return a new set containing the values the quote leaves on the stack. This is identical to doing `array:counted-results array:reverse`</p>
+<p><b>Class:</b> class:word | <b>Namespace:</b> set | <b>Interface Layer:</b> all</p>
+<hr/>
+<h1>array:map</h1>
+<div style='margin-left: 1em;'><p><b>Data:</b> aq-<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Execute quote once for each item in the set. Constructs a new set from the value returned by the quote.</p>
+<p><b>Class:</b> class:word | <b>Namespace:</b> set | <b>Interface Layer:</b> all</p>
+<hr/>
+<h1>array:nth</h1>
+<div style='margin-left: 1em;'><p><b>Data:</b> an-b<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Return the actual address of the nth item in the set.</p>
+<p><b>Class:</b> class:word | <b>Namespace:</b> set | <b>Interface Layer:</b> all</p>
+<hr/>
+<h1>array:reduce</h1>
+<div style='margin-left: 1em;'><p><b>Data:</b> pnq-n<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Takes a set, a starting value, and a quote. This will apply the quote to each item in the set; the quote should consume two values and return one.</p>
+<p><b>Class:</b> class:word | <b>Namespace:</b> set | <b>Interface Layer:</b> all</p>
+<hr/>
+<h1>array:reverse</h1>
+<div style='margin-left: 1em;'><p><b>Data:</b> a-b<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Reverse the order of items in a set. This will return a new set.</p>
+<p><b>Class:</b> class:word | <b>Namespace:</b> set | <b>Interface Layer:</b> all</p>
+<hr/>
 <h1>as{</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -f<br>
 <b>Addr:</b> -<br>
@@ -3231,110 +3335,6 @@
     &bar &foo set-hook</xmp>
 </p>
 <hr/>
-<h1>set:contains-string?</h1>
-<div style='margin-left: 1em;'><p><b>Data:</b> sa-f<br>
-<b>Addr:</b> -<br>
-<b>Float:</b> -</p>
-</div>
-<p>Return `TRUE` if the string value is in the set or`FALSE` otherwise.</p>
-<p><b>Class:</b> class:word | <b>Namespace:</b> set | <b>Interface Layer:</b> all</p>
-<hr/>
-<h1>set:contains?</h1>
-<div style='margin-left: 1em;'><p><b>Data:</b> na-f<br>
-<b>Addr:</b> -<br>
-<b>Float:</b> -</p>
-</div>
-<p>Return `TRUE` if the value is in the set or `FALSE` otherwise.</p>
-<p><b>Class:</b> class:word | <b>Namespace:</b> set | <b>Interface Layer:</b> all</p>
-<hr/>
-<h1>set:counted-results</h1>
-<div style='margin-left: 1em;'><p><b>Data:</b> q-a<br>
-<b>Addr:</b> -<br>
-<b>Float:</b> -</p>
-</div>
-<p>Run a quote and construct a new set from the returned values. The quote should return the values and the number of values to put into the set.</p>
-<p><b>Class:</b> class:word | <b>Namespace:</b> set | <b>Interface Layer:</b> all</p>
-<hr/>
-<h1>set:dup</h1>
-<div style='margin-left: 1em;'><p><b>Data:</b> a-b<br>
-<b>Addr:</b> -<br>
-<b>Float:</b> -</p>
-</div>
-<p>Make a copy of a set. Return the address of the copy.</p>
-<p><b>Class:</b> class:word | <b>Namespace:</b> set | <b>Interface Layer:</b> all</p>
-<hr/>
-<h1>set:filter</h1>
-<div style='margin-left: 1em;'><p><b>Data:</b> aq-b<br>
-<b>Addr:</b> -<br>
-<b>Float:</b> -</p>
-</div>
-<p>For each item in the initial set, run the specified quote. If the quote returns `TRUE`, copy the item into a new set. If `FALSE`, discard it. Returns a pointer to the new set.</p>
-<p><b>Class:</b> class:word | <b>Namespace:</b> set | <b>Interface Layer:</b> all</p>
-<hr/>
-<h1>set:for-each</h1>
-<div style='margin-left: 1em;'><p><b>Data:</b> aq-<br>
-<b>Addr:</b> -<br>
-<b>Float:</b> -</p>
-</div>
-<p>Execute the quote once for each item in the set.</p>
-<p><b>Class:</b> class:word | <b>Namespace:</b> set | <b>Interface Layer:</b> all</p>
-<hr/>
-<h1>set:from-string</h1>
-<div style='margin-left: 1em;'><p><b>Data:</b> s-a<br>
-<b>Addr:</b> -<br>
-<b>Float:</b> -</p>
-</div>
-<p>Create a new set with the characters in the source string.</p>
-<p><b>Class:</b> class:word | <b>Namespace:</b> set | <b>Interface Layer:</b> all</p>
-<hr/>
-<h1>set:length</h1>
-<div style='margin-left: 1em;'><p><b>Data:</b> a-n<br>
-<b>Addr:</b> -<br>
-<b>Float:</b> -</p>
-</div>
-<p>Return the length of a set.</p>
-<p><b>Class:</b> class:word | <b>Namespace:</b> set | <b>Interface Layer:</b> all</p>
-<hr/>
-<h1>set:make</h1>
-<div style='margin-left: 1em;'><p><b>Data:</b> q-a<br>
-<b>Addr:</b> -<br>
-<b>Float:</b> -</p>
-</div>
-<p>Execute quote. Return a new set containing the values the quote leaves on the stack. This is identical to doing `set:counted-results set:reverse`</p>
-<p><b>Class:</b> class:word | <b>Namespace:</b> set | <b>Interface Layer:</b> all</p>
-<hr/>
-<h1>set:map</h1>
-<div style='margin-left: 1em;'><p><b>Data:</b> aq-<br>
-<b>Addr:</b> -<br>
-<b>Float:</b> -</p>
-</div>
-<p>Execute quote once for each item in the set. Constructs a new set from the value returned by the quote.</p>
-<p><b>Class:</b> class:word | <b>Namespace:</b> set | <b>Interface Layer:</b> all</p>
-<hr/>
-<h1>set:nth</h1>
-<div style='margin-left: 1em;'><p><b>Data:</b> an-b<br>
-<b>Addr:</b> -<br>
-<b>Float:</b> -</p>
-</div>
-<p>Return the actual address of the nth item in the set.</p>
-<p><b>Class:</b> class:word | <b>Namespace:</b> set | <b>Interface Layer:</b> all</p>
-<hr/>
-<h1>set:reduce</h1>
-<div style='margin-left: 1em;'><p><b>Data:</b> pnq-n<br>
-<b>Addr:</b> -<br>
-<b>Float:</b> -</p>
-</div>
-<p>Takes a set, a starting value, and a quote. This will apply the quote to each item in the set; the quote should consume two values and return one.</p>
-<p><b>Class:</b> class:word | <b>Namespace:</b> set | <b>Interface Layer:</b> all</p>
-<hr/>
-<h1>set:reverse</h1>
-<div style='margin-left: 1em;'><p><b>Data:</b> a-b<br>
-<b>Addr:</b> -<br>
-<b>Float:</b> -</p>
-</div>
-<p>Reverse the order of items in a set. This will return a new set.</p>
-<p><b>Class:</b> class:word | <b>Namespace:</b> set | <b>Interface Layer:</b> all</p>
-<hr/>
 <h1>shift</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> mn-o<br>
 <b>Addr:</b> -<br>
@@ -3930,7 +3930,7 @@
 <b>Addr:</b> -<br>
 <b>Float:</b> -</p>
 </div>
-<p>Begin a set. This is intended to make creating sets a bit cleaner than using a quotation and `set:counteh-results`.</p>
+<p>Begin a set. This is intended to make creating sets a bit cleaner than using a quotation and `array:counteh-results`.</p>
 <p><b>Class:</b> class:word | <b>Namespace:</b> set | <b>Interface Layer:</b> all</p>
 <hr/>
 <h1>{{</h1>

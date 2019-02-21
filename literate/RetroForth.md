@@ -29,13 +29,13 @@ The main namespaces are:
     | namespace  | words related to   |
     | ---------- | ------------------ |
     | ASCII      | ASCII Constants    |
+    | array      | arrays             |
     | c          | characters         |
     | compile    | compiler functions |
     | d          | dictionary headers |
     | err        | error handlers     |
     | n          | numbers            |
     | s          | strings            |
-    | set        | sets (arrays)      |
     | v          | variables          |
 
 This makes it very easy to identify related words, especially
@@ -1250,10 +1250,10 @@ dictionary header by the `d:xt` field.
            [ swap &nip dip ] &drop choose ] d:for-each drop ;
 ~~~
 
-## Sets
+## Arrays
 
-Sets are statically sized arrays. They are represented in
-memory as:
+Retro provides words for statically sized arrays. They are
+represented in memory as:
 
     count
     data #1 (first)
@@ -1262,69 +1262,69 @@ memory as:
 
 Since the count comes first, a simple `fetch` will suffice to
 get it, but for completeness (and to allow for future changes),
-we wrap this as `set:length`:
+we wrap this as `array:length`:
 
 ~~~
-:set:length (a-n) fetch ;
+:array:length (a-n) fetch ;
 ~~~
 
-The first couple of words are used to create sets. The first,
-`set:counted-results` executes a quote which returns values
-and a count. It then creates a set with the provided data.
+The first couple of words are used to create arrays. The first,
+`array:counted-results` executes a quote which returns values
+and a count. It then creates an array with the provided data.
 
 ~~~
-:set:counted-results (q-a)
+:array:counted-results (q-a)
   call here [ dup , &, times ] dip ;
 ~~~
 
-The second, `set:from-string`, creates a new string with the
+The second, `array:from-string`, creates a new string with the
 characters in given a string.
 
 ~~~
-:set:from-string (s-a)
+:array:from-string (s-a)
   here [ dup s:length , [ , ] s:for-each ] dip ;
 ~~~
 
-A very crucial piece is `set:for-each`. This runs a quote once
-against each value in a set. This is leveraged to implement
+A very crucial piece is `array:for-each`. This runs a quote once
+against each value in an array. This is leveraged to implement
 additional combinators.
 
 ~~~
 {{
   'Q var
 ---reveal---
-  :set:for-each (aq-)
+  :array:for-each (aq-)
     &Q [ !Q fetch-next
          [ fetch-next swap [ @Q call ] dip ] times drop
        ] v:preserve ;
 }}
 ~~~
 
-With this I can easily define `set:dup` to make a copy of a
-set.
+With this I can easily define `array:dup` to make a copy of an
+array.
 
 ~~~
-:set:dup (a-a)
-  here [ dup fetch , [ , ] set:for-each ] dip ;
+:array:dup (a-a)
+  here [ dup fetch , [ , ] array:for-each ] dip ;
 ~~~
 
-Next is `set:filter`, which is extracts matching values from
-a set. This is used like:
+Next is `array:filter`, which is extracts matching values from
+an array. This is used like:
 
     { #1 #2 #3 #4 #5 #6 #7 #8 }
-    [ n:even? ] set:filter
+    [ n:even? ] array:filter
 
-It returns a new set with the values that the quote returned
+It returns a new array with the values that the quote returned
 a `TRUE` flag for.
 
 ~~~
-:set:filter (aq-)
+:array:filter (aq-)
   [ over [ call ] dip swap [ , ] [ drop ] choose ] curry
-  here [ over fetch , set:for-each ] dip
+  here [ over fetch , array:for-each ] dip
   here over - n:dec over store ;
 ~~~
 
-Next are `set:contains?` and `set:contains-string?` which
+Next are `array:contains?` and `array:contains-string?` which
 compare a given value to each item in the array and returns
 a flag.
 
@@ -1332,70 +1332,70 @@ a flag.
 {{
   'F var
 ---reveal---
-  :set:contains? (na-f)
+  :array:contains? (na-f)
     &F v:off
-    [ over eq? @F or !F ] set:for-each
+    [ over eq? @F or !F ] array:for-each
     drop @F ;
 
-  :set:contains-string? (sa-f)
+  :array:contains-string? (sa-f)
     &F v:off
-    [ over s:eq? @F or !F ] set:for-each
+    [ over s:eq? @F or !F ] array:for-each
     drop @F ;
 }}
 ~~~
 
-I implemented `set:map` to apply a quotation to each item in a
-set and construct a new set from the returned values.
+I implemented `array:map` to apply a quotation to each item in
+an array and construct a new array from the returned values.
 
 Example:
 
     { #1 #2 #3 }
-    [ #10 * ] set:map
+    [ #10 * ] array:map
 
 ~~~
-:set:map (aq-a)
+:array:map (aq-a)
   [ call , ] curry
-  here [ over fetch , set:for-each ] dip ;
+  here [ over fetch , array:for-each ] dip ;
 ~~~
 
-You can use `set:reverse` to make a copy of a set with the
+You can use `array:reverse` to make a copy of an array with the
 values reversed.
 
 ~~~
-:set:reverse (a-a)
+:array:reverse (a-a)
   here [ fetch-next [ + n:dec ] sip dup ,
          [ dup fetch , n:dec ] times drop
        ] dip ;
 ~~~
 
-`set:nth` provides a quick means of adjusting a set and offset
-into an address for use with `fetch` and `store`.
+`array:nth` provides a quick means of adjusting an array and
+offset into an address for use with `fetch` and `store`.
 
 ~~~
-:set:nth (an-a)
+:array:nth (an-a)
   + n:inc ;
 ~~~
 
-`set:reduce` takes a set, a starting value, and a quote. It
-executes the quote once for each item in the set, passing the
+`array:reduce` takes an array, a starting value, and a quote. It
+executes the quote once for each item in the array, passing the
 item and the value to the quote. The quote should consume both
 and return a new value.
 
 ~~~
-:set:reduce (pnp-n)
-  [ swap ] dip set:for-each ;
+:array:reduce (pnp-n)
+  [ swap ] dip array:for-each ;
 ~~~
 
-When making a set, I often want the values in the original
-order. The `set:counted-results set:reverse` is a bit long, so
-I'm defining a new `set:make` which wraps these.
+When making an array, I often want the values in the original
+order. The `array:counted-results array:reverse` is a bit long, so
+I'm defining a new `array:make` which wraps these.
 
 ~~~
-:set:make (q-a)
-  set:counted-results set:reverse ;
+:array:make (q-a)
+  array:counted-results array:reverse ;
 
 :{ (-)  |[ |depth |[ ; immediate
-:} (-a) |] |dip |depth |swap |- |n:dec |] |set:make ; immediate
+:} (-a) |] |dip |depth |swap |- |n:dec |] |array:make ; immediate
 ~~~
 
 ## Muri: an assembler

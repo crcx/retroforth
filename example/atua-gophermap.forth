@@ -70,7 +70,7 @@ unix:count-files     'FILES const
 Ok, now for a useful combinator. I want to be able to run
 something once for each file or directory in the current
 directory. One option would be to read the names and
-construct a set, then use `set:for-each`. I decided to take
+construct a set, then use `array:for-each`. I decided to take
 a different path: I implement a word to open a pipe, read a
 single line, then run a quote against it.
 

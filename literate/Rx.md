@@ -1055,7 +1055,7 @@ instruction. It is intended that this be hooked into and changed.
 As an example, in Rx code, assuming an I/O interface with some
 support for strings and output:
 
-    [ $? putc space 'word not found' puts ]
+    [ $? c:put sp 'word_not_found s:put ]
     &err:notfound #1 + store
 
 An interface should either patch the jump, or catch it and do

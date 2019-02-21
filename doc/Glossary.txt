@@ -795,6 +795,149 @@ Perform a bitwise AND operation between the two provided values.
 Class: class:primitive | Namespace: global | Interface Layer: all
 ------------------------------------------------------------------------
 
+array:contains-string?
+
+  Data:  sa-f
+  Addr:  -
+  Float: -
+
+Return `TRUE` if the string value is in the set or`FALSE` otherwise.
+
+Class: class:word | Namespace: set | Interface Layer: all
+------------------------------------------------------------------------
+
+array:contains?
+
+  Data:  na-f
+  Addr:  -
+  Float: -
+
+Return `TRUE` if the value is in the set or `FALSE` otherwise.
+
+Class: class:word | Namespace: set | Interface Layer: all
+------------------------------------------------------------------------
+
+array:counted-results
+
+  Data:  q-a
+  Addr:  -
+  Float: -
+
+Run a quote and construct a new set from the returned values. The quote should return the values and the number of values to put into the set.
+
+Class: class:word | Namespace: set | Interface Layer: all
+------------------------------------------------------------------------
+
+array:dup
+
+  Data:  a-b
+  Addr:  -
+  Float: -
+
+Make a copy of a set. Return the address of the copy.
+
+Class: class:word | Namespace: set | Interface Layer: all
+------------------------------------------------------------------------
+
+array:filter
+
+  Data:  aq-b
+  Addr:  -
+  Float: -
+
+For each item in the initial set, run the specified quote. If the quote returns `TRUE`, copy the item into a new set. If `FALSE`, discard it. Returns a pointer to the new set.
+
+Class: class:word | Namespace: set | Interface Layer: all
+------------------------------------------------------------------------
+
+array:for-each
+
+  Data:  aq-
+  Addr:  -
+  Float: -
+
+Execute the quote once for each item in the set.
+
+Class: class:word | Namespace: set | Interface Layer: all
+------------------------------------------------------------------------
+
+array:from-string
+
+  Data:  s-a
+  Addr:  -
+  Float: -
+
+Create a new set with the characters in the source string.
+
+Class: class:word | Namespace: set | Interface Layer: all
+------------------------------------------------------------------------
+
+array:length
+
+  Data:  a-n
+  Addr:  -
+  Float: -
+
+Return the length of a set.
+
+Class: class:word | Namespace: set | Interface Layer: all
+------------------------------------------------------------------------
+
+array:make
+
+  Data:  q-a
+  Addr:  -
+  Float: -
+
+Execute quote. Return a new set containing the values the quote leaves on the stack. This is identical to doing `array:counted-results array:reverse`
+
+Class: class:word | Namespace: set | Interface Layer: all
+------------------------------------------------------------------------
+
+array:map
+
+  Data:  aq-
+  Addr:  -
+  Float: -
+
+Execute quote once for each item in the set. Constructs a new set from the value returned by the quote.
+
+Class: class:word | Namespace: set | Interface Layer: all
+------------------------------------------------------------------------
+
+array:nth
+
+  Data:  an-b
+  Addr:  -
+  Float: -
+
+Return the actual address of the nth item in the set.
+
+Class: class:word | Namespace: set | Interface Layer: all
+------------------------------------------------------------------------
+
+array:reduce
+
+  Data:  pnq-n
+  Addr:  -
+  Float: -
+
+Takes a set, a starting value, and a quote. This will apply the quote to each item in the set; the quote should consume two values and return one.
+
+Class: class:word | Namespace: set | Interface Layer: all
+------------------------------------------------------------------------
+
+array:reverse
+
+  Data:  a-b
+  Addr:  -
+  Float: -
+
+Reverse the order of items in a set. This will return a new set.
+
+Class: class:word | Namespace: set | Interface Layer: all
+------------------------------------------------------------------------
+
 as{
 
   Data:  -f
@@ -4380,149 +4523,6 @@ Example #1:
 
 ------------------------------------------------------------------------
 
-set:contains-string?
-
-  Data:  sa-f
-  Addr:  -
-  Float: -
-
-Return `TRUE` if the string value is in the set or`FALSE` otherwise.
-
-Class: class:word | Namespace: set | Interface Layer: all
-------------------------------------------------------------------------
-
-set:contains?
-
-  Data:  na-f
-  Addr:  -
-  Float: -
-
-Return `TRUE` if the value is in the set or `FALSE` otherwise.
-
-Class: class:word | Namespace: set | Interface Layer: all
-------------------------------------------------------------------------
-
-set:counted-results
-
-  Data:  q-a
-  Addr:  -
-  Float: -
-
-Run a quote and construct a new set from the returned values. The quote should return the values and the number of values to put into the set.
-
-Class: class:word | Namespace: set | Interface Layer: all
-------------------------------------------------------------------------
-
-set:dup
-
-  Data:  a-b
-  Addr:  -
-  Float: -
-
-Make a copy of a set. Return the address of the copy.
-
-Class: class:word | Namespace: set | Interface Layer: all
-------------------------------------------------------------------------
-
-set:filter
-
-  Data:  aq-b
-  Addr:  -
-  Float: -
-
-For each item in the initial set, run the specified quote. If the quote returns `TRUE`, copy the item into a new set. If `FALSE`, discard it. Returns a pointer to the new set.
-
-Class: class:word | Namespace: set | Interface Layer: all
-------------------------------------------------------------------------
-
-set:for-each
-
-  Data:  aq-
-  Addr:  -
-  Float: -
-
-Execute the quote once for each item in the set.
-
-Class: class:word | Namespace: set | Interface Layer: all
-------------------------------------------------------------------------
-
-set:from-string
-
-  Data:  s-a
-  Addr:  -
-  Float: -
-
-Create a new set with the characters in the source string.
-
-Class: class:word | Namespace: set | Interface Layer: all
-------------------------------------------------------------------------
-
-set:length
-
-  Data:  a-n
-  Addr:  -
-  Float: -
-
-Return the length of a set.
-
-Class: class:word | Namespace: set | Interface Layer: all
-------------------------------------------------------------------------
-
-set:make
-
-  Data:  q-a
-  Addr:  -
-  Float: -
-
-Execute quote. Return a new set containing the values the quote leaves on the stack. This is identical to doing `set:counted-results set:reverse`
-
-Class: class:word | Namespace: set | Interface Layer: all
-------------------------------------------------------------------------
-
-set:map
-
-  Data:  aq-
-  Addr:  -
-  Float: -
-
-Execute quote once for each item in the set. Constructs a new set from the value returned by the quote.
-
-Class: class:word | Namespace: set | Interface Layer: all
-------------------------------------------------------------------------
-
-set:nth
-
-  Data:  an-b
-  Addr:  -
-  Float: -
-
-Return the actual address of the nth item in the set.
-
-Class: class:word | Namespace: set | Interface Layer: all
-------------------------------------------------------------------------
-
-set:reduce
-
-  Data:  pnq-n
-  Addr:  -
-  Float: -
-
-Takes a set, a starting value, and a quote. This will apply the quote to each item in the set; the quote should consume two values and return one.
-
-Class: class:word | Namespace: set | Interface Layer: all
-------------------------------------------------------------------------
-
-set:reverse
-
-  Data:  a-b
-  Addr:  -
-  Float: -
-
-Reverse the order of items in a set. This will return a new set.
-
-Class: class:word | Namespace: set | Interface Layer: all
-------------------------------------------------------------------------
-
 shift
 
   Data:  mn-o
@@ -5332,7 +5332,7 @@ Class: class:primitive | Namespace: global | Interface Layer: all
   Addr:  -
   Float: -
 
-Begin a set. This is intended to make creating sets a bit cleaner than using a quotation and `set:counteh-results`.
+Begin a set. This is intended to make creating sets a bit cleaner than using a quotation and `array:counteh-results`.
 
 Class: class:word | Namespace: set | Interface Layer: all
 ------------------------------------------------------------------------

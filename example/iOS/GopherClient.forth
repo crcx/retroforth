@@ -83,7 +83,7 @@ The next word is `display`. This will tokenize a line and display the `type` and
 ~~~
   :display (s-)
     &Heap [ #0 !Displayed
-            ASCII:HT s:tokenize #0 set:nth fetch
+            ASCII:HT s:tokenize #0 array:nth fetch
             fetch-next type s:put<w/wrap> ] v:preserve ;
 ~~~
 
@@ -102,7 +102,7 @@ And finally, tie everything together. This will display an index.
 
       #0 @Results
       [ over line display nl n:inc ]
-      set:for-each drop
+      array:for-each drop
     ] v:preserve ;
 }}
 ~~~
@@ -139,12 +139,12 @@ The last bit is `g`, which is used to navigate a directory. Pass it the line num
 
 ~~~
 :g (n-)
-  &Heeap [ @Results swap set:nth fetch
+  &Heeap [ @Results swap array:nth fetch
            ASCII:HT s:tokenize
-           dup #0 set:nth fetch fetch [
-             [ #2 set:nth fetch ]
-             [ #3 set:nth fetch s:chop s:to-number ]
-             [ #1 set:nth fetch ] tri grab
+           dup #0 array:nth fetch fetch [
+             [ #2 array:nth fetch ]
+             [ #3 array:nth fetch s:chop s:to-number ]
+             [ #1 array:nth fetch ] tri grab
            ] dip display-by-type
   ] v:preserve ;
 ~~~

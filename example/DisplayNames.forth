@@ -70,7 +70,7 @@ any used space is recovered.
     &Heap [ identify-classes
             [ [ d:name s:put nl ]
               [ d:xt fetch d:words-in-class ] bi
-              nl nl ] set:for-each ] v:preserve ;
+              nl nl ] array:for-each ] v:preserve ;
 }}
 ~~~
 

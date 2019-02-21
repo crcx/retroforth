@@ -23,6 +23,7 @@ June 2019.
 - add `set-hook`
 - add `unhook`
 - `c:put` primitive is a hookable word
+- `set:` is now `array:`
 
 ## I/O and Extensions
 
