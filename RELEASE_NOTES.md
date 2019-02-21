@@ -86,6 +86,9 @@ June 2019.
 - add cmos rtc driver
 - add serial port driver
 - now builds properly on openbsd
+- add ata driver
+- add block editor
+- rewrite vga text driver in retro
 
 ## Tools
 
