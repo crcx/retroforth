@@ -86,7 +86,7 @@ hosted Retro systems the block file will be replaced by a
 block storage device.
 
 ~~~
-#32         'BLOCKS       const
+#64 'BLOCKS const
 ~~~
 
 # Variables
@@ -352,9 +352,12 @@ These are helpful to quickly navigate through a block.
 
 ~~~
 :editor:key<!>
-  &Block &Sector #512 copy @CurrentBlock #2 * ata:write
-  &Block #512 + &Sector #512 copy @CurrentBlock #2 * n:inc ata:write ;
+  &Block        @CurrentBlock #2 * ata:write
+  &Block #512 + @CurrentBlock #2 * n:inc ata:write ;
+
 :editor:key<@>
-  @CurrentBlock #2 * ata:read &Sector &Block #512 copy
-  @CurrentBlock #2 * n:inc ata:read &Sector &Block #512 + #512 copy ;
+  &Block @CurrentBlock #2 * ata:read
+  &Block #512 + @CurrentBlock #2 * n:inc ata:read ;
 ~~~
+  &Block #512 + &Sector #512 copy @CurrentBlock #2 * n:inc ata:write ;
+  @CurrentBlock #2 * n:inc ata:read &Sector &Block #512 + #512 copy ;

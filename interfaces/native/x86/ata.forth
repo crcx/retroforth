@@ -24,6 +24,9 @@ are made to validate the sector number. Using these (esp.
 # Common
 
 ~~~
+:ata:clear-bsy (-)
+  [ 0x1F7 pio:in-byte 0x80 and n:zero? ] until ;
+
 :ata:set-sector (n-)
   0xE0 0x1F6 pio:out-byte
   0x00 0x1F1 pio:out-byte
@@ -36,11 +39,11 @@ are made to validate the sector number. Using these (esp.
 # Reading a Sector
 
 ~~~
-:ata:read (n-)
+:ata:read (an-)
   ata:set-sector
   ata:READ 0x1F7 pio:out-byte
   #10000 [ ] times
-  &ata:Sector #256 [ ata:PRIMARY pio:in-word [ 0xFF and over store n:inc ] sip #8 shift over store n:inc ] times drop ;
+  #256 [ ata:PRIMARY pio:in-word [ 0xFF and over store n:inc ] sip #8 shift over store n:inc ] times drop ;
 ~~~
 
 # Writing a Sector
@@ -50,35 +53,6 @@ are made to validate the sector number. Using these (esp.
   ata:set-sector
   ata:WRITE 0x1F7 pio:out-byte
   #10000 [ ] times
-  &ata:Sector #256 [ fetch-next [ fetch-next #-8 shift ] dip + ata:PRIMARY pio:out-word ] times drop ;
+  #256 [ fetch-next [ fetch-next #-8 shift ] dip + ata:PRIMARY pio:out-word ] times drop
+  0xE7 (cache_flush) 0x1F7 pio:out-byte ata:clear-bsy ;
 ~~~
-
-# Experiments
-
-~~~
-#1024 'ata:cylinders var
- #255 'ata:heads     var
-  #63 'ata:sectors   var
-
-{{
-  'LBA var
-  :HEADS   @ata:heads ;
-  :SECTORS @ata:sectors ;
-  :H*S   HEADS SECTORS * ;
-  :C     @LBA H*S / ;
-  :TEMP  @LBA H*S mod ;
-  :H     TEMP SECTORS / ; 
-  :S     TEMP SECTORS mod n:inc ;
----reveal---
-  :lba->chs !LBA C H S ;
-}}
-~~~
-
-# Todo
-
-- read partition table
-- identify a partition for retro
-- restrict read/write to this
-- support second disk?
-- atapi?
-

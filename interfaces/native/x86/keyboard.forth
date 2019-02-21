@@ -26,12 +26,11 @@
   #-1 ,  $| , $: , $Q , $J , $K , $X , $B , $M , $W , $V , $Z ,
   #-1 ,  $* , #0 , #32 , #32 ,
 
-'Shift var
-
+{{
 :n &keyboard:Dvorak + fetch ;
 :N &keyboard:Dvorak:Shifted + fetch ;
-
+---reveal---
 :getc uuu drop uuu n dup #-1 eq? [ drop uuu drop uuu N ] if dup c:put ;
-:test #10 [ uuu drop uuu n:put sp ] times reset nl ;
+}}
 ~~~
 
