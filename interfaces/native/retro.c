@@ -1,23 +1,51 @@
-/* RETRO -------------------------------------------------------------
+/* RETRO/Native (x86) -----------------------------------------
   A personal, minimalistic forth
   Copyright (c) 2016 - 2019 Charles Childers
-
-  This is the `repl`, a basic interactive interface for RETRO. It is
-  intended to be simple and very minimalistic, providing the minimal
-  I/O and additions needed to support a basic RETRO system. For a much
-  larger system, see `rre`.
-
-  I'll include commentary throughout the source, so read on.
-  ---------------------------------------------------------------------*/
+  -----------------------------------------------------------*/
 
 #include <sys/types.h>
 #include "image.c"
 
-int getchar(void);
-int putchar(int c);
+/*-------------------------------------------------------------
+  Next we get into some things that relate to the Nga virtual
+  machine that RETRO runs on.
+  -----------------------------------------------------------*/
 
+#define CELL         long        /* Cell size                */
+#define IMAGE_SIZE   524288 * 8  /* Amount of RAM.           */
+#define ADDRESSES    1024        /* Depth of address stack   */
+#define STACK_DEPTH  128         /* Depth of data stack      */
+
+CELL sp, rp, ip;                 /* Stack & Instruction Ptrs */
+CELL data[STACK_DEPTH];          /* The data stack           */
+CELL address[ADDRESSES];         /* The address stack        */
+CELL memory[IMAGE_SIZE + 1];     /* The memory for the image */
+
+#define TOS  data[sp]
+#define NOS  data[sp-1]
+#define TORS address[rp]
+
+#define NUM_DEVICES  3
+
+typedef void (*Handler)(void);
+
+Handler IO_deviceHandlers[NUM_DEVICES + 1];
+Handler IO_queryHandlers[NUM_DEVICES + 1];
+
+/*-------------------------------------------------------------
+  Function prototypes.
+  -----------------------------------------------------------*/
+
+void execute(int cell);
+CELL ngaLoadImage(char *imageFile);
+void ngaPrepare();
+void ngaProcessOpcode(CELL opcode);
+void ngaProcessPackedOpcodes(CELL opcode);
+int ngaValidatePackedOpcodes(CELL opcode);
 long stack_pop();
 void stack_push(long value);
+
+int getchar(void);
 
 int remap(int c) {
   int a = c;
@@ -110,66 +138,12 @@ static inline void outw(uint16_t port, uint16_t val)
 }
 
 
-/*---------------------------------------------------------------------
-  Next we get into some things that relate to the Nga virtual machine
-  that RETRO runs on.
-  ---------------------------------------------------------------------*/
-
-#define CELL         long         /* Cell size (32 bit, signed integer */
-#define IMAGE_SIZE   524288 * 8   /* Amount of RAM. 4MiB by default.   */
-#define ADDRESSES    1024         /* Depth of address stack            */
-#define STACK_DEPTH  128          /* Depth of data stack               */
-
-CELL sp, rp, ip;                  /* Data, address, instruction pointers */
-CELL data[STACK_DEPTH];           /* The data stack                    */
-CELL address[ADDRESSES];          /* The address stack                 */
-CELL memory[IMAGE_SIZE + 1];      /* The memory for the image          */
-
-#define TOS  data[sp]             /* Shortcut for top item on stack    */
-#define NOS  data[sp-1]           /* Shortcut for second item on stack */
-#define TORS address[rp]          /* Shortcut for top item on address stack */
-
-#ifdef TARGET_X86
-#define NUM_DEVICES  3
-#else
-#define NUM_DEVICES  2
-#endif
-
-typedef void (*Handler)(void);
-
-Handler IO_deviceHandlers[NUM_DEVICES + 1];
-Handler IO_queryHandlers[NUM_DEVICES + 1];
 
 
-/*---------------------------------------------------------------------
-  Function prototypes.
-  ---------------------------------------------------------------------*/
-
-void execute(int cell);
-CELL ngaLoadImage(char *imageFile);
-void ngaPrepare();
-void ngaProcessOpcode(CELL opcode);
-void ngaProcessPackedOpcodes(CELL opcode);
-int ngaValidatePackedOpcodes(CELL opcode);
-
-
-
-/*---------------------------------------------------------------------
-  Now to the fun stuff: interfacing with the virtual machine. There are
-  a things I like to have here:
-
-  - push a value to the stack
-  - pop a value off the stack
-  - extract a string from the image
-  - inject a string into the image.
-  - lookup dictionary headers and access dictionary fields
-  ---------------------------------------------------------------------*/
-
-
-/*---------------------------------------------------------------------
-  Stack push/pop is easy. I could avoid these, but it aids in keeping
-  the code readable, so it's worth the slight overhead.
-  ---------------------------------------------------------------------*/
+/*-------------------------------------------------------------
+  Stack push/pop is easy. I could avoid these, but it aids in
+  keeping the code readable, so it's worth the slight overhead.
+  -----------------------------------------------------------*/
 
 CELL stack_pop() {
   sp--;
@@ -182,10 +156,11 @@ void stack_push(CELL value) {
 }
 
 
-/*---------------------------------------------------------------------
-  This is an implementation of the generic output device. It's set to
-  write output to the standard display.
-  ---------------------------------------------------------------------*/
+/*-------------------------------------------------------------
+  This is an implementation of the generic output device. It's
+  set to ignore data passed into it. (The RETRO/Native image
+  will use its own driver instead.)
+  -----------------------------------------------------------*/
 
 void generic_output() {
   stack_pop();
@@ -197,11 +172,11 @@ void generic_output_query() {
 }
 
 
-#ifdef TARGET_X86
 void portio() {
   CELL p, v;
   switch (stack_pop()) {
-    case 0: stack_push((CELL)inportb((unsigned int)stack_pop()));
+    case 0: p = stack_pop();
+            stack_push((CELL)inportb((unsigned int)p));
             break;
     case 1: p = stack_pop();
             v = stack_pop();
@@ -228,7 +203,6 @@ void portio_query() {
   stack_push(0);
   stack_push(2000);
 }
-#endif
 
 void generic_input() {
   stack_push(remap(getchar()));
@@ -240,18 +214,14 @@ void generic_input_query() {
   stack_push(1);
 }
 
-/*---------------------------------------------------------------------
-  With these out of the way, I implement `execute`, which takes an
-  address and runs the code at it. This has a couple of interesting
-  bits.
+/*-------------------------------------------------------------
+  With these out of the way, I implement `execute`, which takes
+  an address and runs the code at it.
 
-  Nga uses packed instruction bundles, with up to four instructions per
-  bundle. Since RETRO requires an additional instruction to handle
-  displaying a character, I define the handler for that here.
-
-  This will also exit if the address stack depth is zero (meaning that
-  the word being run, and it's dependencies) are finished.
-  ---------------------------------------------------------------------*/
+  This will also exit if the address stack depth is zero
+  (meaning that the word being run, and its dependencies) are
+  finished.
+  -----------------------------------------------------------*/
 
 void execute(int cell) {
   CELL opcode;
@@ -271,25 +241,18 @@ void execute(int cell) {
 }
 
 
-/*---------------------------------------------------------------------
-  The `main()` routine. This sets up the Nga VM, loads the image, and
-  enters a loop.
-
-  The loop:
-
-  - reads input
-  - otherwise, pass to `evaluate()` to run
-  ---------------------------------------------------------------------*/
+/*-------------------------------------------------------------
+  The `main()` routine. This sets up the Nga VM, loads the
+  image, and then transfers control to it.
+  -----------------------------------------------------------*/
 
 int main(int argc, char **argv) {
   IO_deviceHandlers[0] = generic_output;
   IO_queryHandlers[0] = generic_output_query;
   IO_deviceHandlers[1] = generic_input;
   IO_queryHandlers[1] = generic_input_query;
-#ifdef TARGET_X86
   IO_deviceHandlers[2] = portio;
   IO_queryHandlers[2] = portio_query;
-#endif
   while (1) {
     ngaPrepare();
     for (CELL i = 0; i < ngaImageCells; i++)
@@ -299,13 +262,13 @@ int main(int argc, char **argv) {
 }
 
 
-/* Nga ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/* Nga -------------------------------------------------------
    Copyright (c) 2008 - 2019, Charles Childers
    Copyright (c) 2009 - 2010, Luke Parrish
    Copyright (c) 2010,        Marc Simpson
    Copyright (c) 2010,        Jay Skeer
    Copyright (c) 2011,        Kenneth Keating
-   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+   ----------------------------------------------------------*/
 
 enum vm_opcode {
   VM_NOP,  VM_LIT,    VM_DUP,   VM_DROP,    VM_SWAP,   VM_PUSH,  VM_POP,
