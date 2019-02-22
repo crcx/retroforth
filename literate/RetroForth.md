@@ -1060,9 +1060,10 @@ TRUE 'RewriteUnderscores var<n>
 {{
   :sub (c-c) $_ [ ASCII:SPACE ] case ;
   :rewrite (s-s)
-    @RewriteUnderscores [ &sub s:map ] if &prefix:' call ;
+    @RewriteUnderscores [ &sub s:map ] if ;
+  :handle &prefix:' call ;
 ---reveal---
-  :prefix:' rewrite ; immediate
+  :prefix:' rewrite handle ; immediate
   :prefix:" rewrite s:keep ; immediate
 }}
 ~~~

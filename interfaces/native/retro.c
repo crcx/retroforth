@@ -63,20 +63,6 @@ int remap(int c) {
   return a;
 }
 
-int r_strlen(char *str) {
-  const char *s;
-  for (s = str; *s; ++s);
-  return(s - str);
-}
-
-int r_strcmp(const char *s1, const char *s2) {
-  while (*s1 == *s2++)
-    if (*s1++ == '\0')
-      return (0);
-  return (*(const unsigned char *)s1 - *(const unsigned char *)(s2 - 1));
-}
-
-#ifdef TARGET_X86
 unsigned char inportb(unsigned int port)
 {
    unsigned char ret;
@@ -122,7 +108,6 @@ static inline void outw(uint16_t port, uint16_t val)
 {
     asm volatile ( "outw %0, %1" : : "a"(val), "Nd"(port) );
 }
-#endif
 
 
 /*---------------------------------------------------------------------

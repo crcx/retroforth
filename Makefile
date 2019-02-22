@@ -13,7 +13,7 @@ all: build
 
 help:
 
-build: dirs toolchain bin/retro
+build: dirs toolchain ngaImage bin/retro
 
 optional: build bin/retro-ri bin/retro-repl
 
@@ -95,6 +95,10 @@ update: bin/retro-unu literate/Unu.md literate/Muri.md
 	./bin/retro-unu literate/Muri.md >tools/muri.c
 
 # File targets.
+
+ngaImage: literate/Rx.md literate/RetroForth.md bin/retro-muri bin/retro-extend
+	./bin/retro-muri literate/Rx.md
+	./bin/retro-extend ngaImage literate/RetroForth.md
 
 bin/retro-embedimage: tools/embedimage.c
 	$(CC) $(CFLAGS) $(LDFLAGS) -o bin/retro-embedimage  tools/embedimage.c
