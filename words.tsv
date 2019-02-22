@@ -177,6 +177,7 @@ f:NAN	-	-	-n	Return a value corresponding to NaN			class:word	{n/a}	{n/a}	f	rre
 f:PI	-	-	-F	Return the floating point value for PI.			class:word	{n/a}	{n/a}	f	rre	
 f:abs	-	-	F-F	Return the absolute value for a floating point value.			class:word	{n/a}	{n/a}	f	rre	
 f:acos	-	-	F-F	Return the arc cosine of a floating point number.			class:word	{n/a}	{n/a}	f	rre	
+f:adepth	-n	-	-	Return the number of items on the alternate floating point stack.			class:word	{n/a}	{n/a}	f	rre	
 f:asin	-	-	F-F	Return the arc sine of a floating point number.			class:word	{n/a}	{n/a}	f	rre	
 f:atan	-	-	F-F	Return the arc tangent of a floating point number.			class:word	{n/a}	{n/a}	f	rre	
 f:between?	-f	-	nlu-	Return TRUE if number is between the lower (l) and upper (u) bounds. If not, return FALSE. This is inclusive of the limits.			class:word	    .3 .1 .100 f:between?\n    .100 .200 .300   f:between?	{n/a}	f	rre	

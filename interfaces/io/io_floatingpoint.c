@@ -213,6 +213,10 @@ void float_depth() {
     stack_push(fsp);
 }
 
+void float_adepth() {
+    stack_push(afsp);
+}
+
 void float_dup() {
     double a = float_pop();
     float_push(a);
@@ -303,7 +307,8 @@ Handler FloatHandlers[] = {
   float_acos,
   float_atan,
   float_to_alt,
-  float_from_alt
+  float_from_alt,
+  float_adepth,
 };
 
 void io_floatingpoint_query() {

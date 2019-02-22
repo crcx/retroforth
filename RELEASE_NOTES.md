@@ -29,6 +29,7 @@ June 2019.
 
 ### Floating Point
 
+- add f:adepth
 - add f:between?
 - add f:case
 - add f:dec

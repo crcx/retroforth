@@ -43,6 +43,7 @@
 :f:atan  (f:f-f)    #26 io:float-operation ;
 :f:push  (f:f-)     #27 io:float-operation ;
 :f:pop   (f:-f)     #28 io:float-operation ;
+:f:adepth  (-n)     #29 io:float-operation ;
 :f:square (f:n-m)   f:dup f:* ;
 :f:over  (f:ab-aba) f:push f:dup f:pop f:swap ;
 :f:tuck  (f:ab-bab) f:dup f:push f:swap f:pop ;

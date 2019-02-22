@@ -2065,6 +2065,17 @@ Return the arc cosine of a floating point number.
 Class: class:word | Namespace: f | Interface Layer: rre
 ------------------------------------------------------------------------
 
+f:adepth
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Return the number of items on the alternate floating point stack.
+
+Class: class:word | Namespace: f | Interface Layer: rre
+------------------------------------------------------------------------
+
 f:asin
 
   Data:  -
