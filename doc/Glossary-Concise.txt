@@ -535,6 +535,9 @@ Return the absolute value for a floating point value.
 f:acos                           D: -  A: -  F: F-F
 Return the arc cosine of a floating point number.
 
+f:adepth                         D: -n  A: -  F: -
+Return the number of items on the alternate floating point stack.
+
 f:asin                           D: -  A: -  F: F-F
 Return the arc sine of a floating point number.
 

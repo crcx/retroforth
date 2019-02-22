@@ -500,7 +500,7 @@ a separator bar between each entry.
 
   :export-concise-stack
     'words.tsv
-    [ s:keep !SourceLine display-concise-result ] file:for-each-line ;
+    [ s:keep !SourceLine display-concise-result<stack-only> ] file:for-each-line ;
 
 ~~~
 
