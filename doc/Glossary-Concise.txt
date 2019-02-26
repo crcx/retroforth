@@ -206,43 +206,43 @@ and                              D: nm-o  A: -  F: -
 Perform a bitwise AND operation between the two provided values.
 
 array:contains-string?           D: sa-f  A: -  F: -
-Return `TRUE` if the string value is in the set or`FALSE` otherwise.
+Return `TRUE` if the string value is in the array or`FALSE` otherwise.
 
 array:contains?                  D: na-f  A: -  F: -
-Return `TRUE` if the value is in the set or `FALSE` otherwise.
+Return `TRUE` if the value is in the array or `FALSE` otherwise.
 
 array:counted-results            D: q-a  A: -  F: -
-Run a quote and construct a new set from the returned values. The quote should return the values and the number of values to put into the set.
+Run a quote and construct a new array from the returned values. The quote should return the values and the number of values to put into the array.
 
 array:dup                        D: a-b  A: -  F: -
-Make a copy of a set. Return the address of the copy.
+Make a copy of an array. Return the address of the copy.
 
 array:filter                     D: aq-b  A: -  F: -
-For each item in the initial set, run the specified quote. If the quote returns `TRUE`, copy the item into a new set. If `FALSE`, discard it. Returns a pointer to the new set.
+For each item in the initial array, run the specified quote. If the quote returns `TRUE`, copy the item into a new array. If `FALSE`, discard it. Returns a pointer to the new array.
 
 array:for-each                   D: aq-  A: -  F: -
-Execute the quote once for each item in the set.
+Execute the quote once for each item in the array.
 
 array:from-string                D: s-a  A: -  F: -
-Create a new set with the characters in the source string.
+Create a new array with the characters in the source string.
 
 array:length                     D: a-n  A: -  F: -
-Return the length of a set.
+Return the length of a array.
 
 array:make                       D: q-a  A: -  F: -
-Execute quote. Return a new set containing the values the quote leaves on the stack. This is identical to doing `array:counted-results array:reverse`
+Execute quote. Return a new array containing the values the quote leaves on the stack. This is identical to doing `array:counted-results array:reverse`
 
 array:map                        D: aq-  A: -  F: -
-Execute quote once for each item in the set. Constructs a new set from the value returned by the quote.
+Execute quote once for each item in the array. Constructs a new array from the value returned by the quote.
 
 array:nth                        D: an-b  A: -  F: -
-Return the actual address of the nth item in the set.
+Return the actual address of the nth item in the array.
 
 array:reduce                     D: pnq-n  A: -  F: -
-Takes a set, a starting value, and a quote. This will apply the quote to each item in the set; the quote should consume two values and return one.
+Takes an array, a starting value, and a quote. This will apply the quote to each item in the array; the quote should consume two values and return one.
 
 array:reverse                    D: a-b  A: -  F: -
-Reverse the order of items in a set. This will return a new set.
+Reverse the order of items in a array. This will return a new array.
 
 as{                              D: -f  A: -  F: -
 Begin an assembly section.
@@ -1127,10 +1127,10 @@ s:to-upper                       D: s-s  A: -  F: -
 Convert lowercase ASCII characters in a string to uppercase.
 
 s:tokenize                       D: sc-a  A: -  F: -
-Takes a string and a character to use as a separator. It splits the string into a set of substrings and returns a set containing pointers to each of them.
+Takes a string and a character to use as a separator. It splits the string into substrings and returns an array containing pointers to each of them.
 
 s:tokenize-on-string             D: ss-a  A: -  F: -
-Takes a string (s1) and a substring (s2)  use as a separator. It splits the string into a set of substrings and returns a set containing pointers to each of them.
+Takes a string (s1) and a substring (s2)  use as a separator. It splits the string into substrings and returns as array containing pointers to each of them.
 
 s:trim                           D: s-s  A: -  F: -
 Trim leading and trailing whitespace from a string.
@@ -1346,13 +1346,13 @@ xor                              D: mn-o  A: -  F: -
 Perform a bitwise XOR operation.
 
 {                                D: -  A: -  F: -
-Begin a set. This is intended to make creating sets a bit cleaner than using a quotation and `array:counteh-results`.
+Begin an array. This is intended to make creating arrays a bit cleaner than using a quotation and `array:counted-results`.
 
 {{                               D: -  A: -  F: -
 Begin a lexically scoped area.
 
 }                                D: -a  A: -  F: -
-Complete a set begun by `{`. Returns a pointer to the data.
+Complete an array begun by `{`. Returns a pointer to the data.
 
 }as                              D: f-  A: -  F: -
 End an assembly section.
