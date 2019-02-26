@@ -15,12 +15,6 @@ are made to validate the sector number. Using these (esp.
 0x1F0 'ata:PRIMARY const
 ~~~
 
-# Buffer
-
-~~~
-'ata:Sector d:create #513 allot
-~~~
-
 # Common
 
 ~~~
@@ -49,7 +43,7 @@ are made to validate the sector number. Using these (esp.
 # Writing a Sector
 
 ~~~
-:ata:write (n-)
+:ata:write (an-)
   ata:set-sector
   ata:WRITE 0x1F7 pio:out-byte
   #10000 [ ] times

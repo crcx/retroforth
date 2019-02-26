@@ -359,5 +359,3 @@ These are helpful to quickly navigate through a block.
   &Block @CurrentBlock #2 * ata:read
   &Block #512 + @CurrentBlock #2 * n:inc ata:read ;
 ~~~
-  &Block #512 + &Sector #512 copy @CurrentBlock #2 * n:inc ata:write ;
-  @CurrentBlock #2 * n:inc ata:read &Sector &Block #512 + #512 copy ;
