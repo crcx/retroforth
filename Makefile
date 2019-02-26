@@ -130,10 +130,9 @@ bin/retro: io bin/retro-embedimage bin/retro-extend interfaces/image.c interface
 	./bin/retro-extend rre.image interfaces/io/io_filesystem.forth interfaces/io/io_gopher.forth interfaces/io/io_floatingpoint.forth interfaces/io/io_unix_syscalls.forth interfaces/io/rng.forth interfaces/rre.forth
 	./bin/retro-embedimage rre.image >interfaces/rre_image.c
 	cd interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../bin/retro $(LIBM) rre.c image-functions.o $(RREIO)
-	cd packages && ../bin/retro -f list
+	cd package && ../bin/retro -f list
 	./bin/retro-embedimage rre.image >interfaces/rre_image.c
 	cd interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../bin/retro $(LIBM) rre.c image-functions.o $(RREIO)
-#	cd packages/ && xargs -L1 ../bin/retro-extend ../rre.image <list
 	rm rre.image
 
 bin/retro-barebones: bin/retro-embedimage bin/retro-extend interfaces/image.c interfaces/barebones.c interfaces/barebones.forth
