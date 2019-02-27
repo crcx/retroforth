@@ -128,8 +128,8 @@ n:MAX n:negate       'u:-INF const
 {{
   :f:encode
     f:dup f:sign #-1 eq?
-    [ f:abs .0.5 f:power u:scaling .-1.0 f:power f:* f:negate ]
-    [ .0.5 f:power u:scaling .-1.0 f:power f:* ] choose ;
+    [ f:abs f:sqrt u:scaling .-1.0 f:power f:* f:negate ]
+    [       f:sqrt u:scaling .-1.0 f:power f:* ] choose ;
   :f:decode f:square u:scaling f:square f:* ;
 
 ---reveal---
