@@ -89,13 +89,19 @@
 
 ## Description
 
-This implements a means of encoding floating point values into signed integer cells. The technique is described in the paper titled "Encoding floating point numbers to shorter integers" by Kiyoshi Yoneda and Charles Childers.
+This implements a means of encoding floating point values
+into signed integer cells. The technique is described in
+the paper titled "Encoding floating point numbers to shorter
+integers" by Kiyoshi Yoneda and Charles Childers.
 
-This will extend the `f:` vocabulary and adds a new `u:` vocabulary.
+This will extend the `f:` vocabulary and adds a new `u:`
+vocabulary.
 
 ## Code & Commentary
 
-Define some constants. The range is slightly reduced from the standard integer range as the smallest value is used for NaN.
+Define some constants. The range is slightly reduced from
+the standard  integer range as the smallest value is used
+for NaN.
 
 ~~~
 n:MAX n:dec          'u:MAX const
@@ -120,20 +126,24 @@ n:MAX n:negate       'u:-INF const
 ~~~
 :u:scaling hook .10.0e-4 ;
 {{
-  :f:encode .0.5 f:power u:scaling .-1.0 f:power f:* ;
+  :f:encode
+    f:dup f:sign #-1 eq?
+    [ f:abs .0.5 f:power u:scaling .-1.0 f:power f:* f:negate ]
+    [ .0.5 f:power u:scaling .-1.0 f:power f:* ] choose ;
   :f:decode f:square u:scaling f:square f:* ;
 
 ---reveal---
 
   :f:to-u  (-u|f:a-)
     f:dup f:encode f:round f:to-number u:clip
-    f:dup f:nan? [ drop u:NAN ] if
-    f:dup f:inf? [ drop u:INF ] if
+    f:dup f:nan?  [ drop u:NAN ] if
+    f:dup f:inf?  [ drop u:INF ] if
     f:dup f:-inf? [ drop u:-INF ] if
     f:drop ;
 
   :u:to-f  (u-|f:-b)
     dup n:to-float f:decode
+    dup n:negative? [ f:negate ] if
     dup u:nan?  [ f:drop f:NAN ] if
     dup u:inf?  [ f:drop f:INF ] if
     dup u:-inf? [ f:drop f:-INF ] if
