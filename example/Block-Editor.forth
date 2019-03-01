@@ -30,7 +30,7 @@ This presents a visual, (briefly) modal interface.
       |                                                                  |
       |                                                                  |
         0---------1---------2---------3---------4---------5---------6---
-    #2 1:0 ::
+    Block 2 | 1:0 | Stack:
 
 The horizontal rulers have column indicators, there are cursor
 position indicators (and the actual cursor location shows at the
@@ -170,26 +170,24 @@ It should be pretty straightforward though.
 :tty:clear (-) #27 c:put '[2J s:put #27 c:put '[0;0H s:put ;
 
 {{
-  :cursor (cl-)
-    ASCII:ESC c:put
-    $[ c:put n:put
-    $; c:put n:put $H c:put ;
-  :indicators @CurrentCol #4 + #0 cursor $# c:put
-              #2 @CurrentLine #2 + cursor $# c:put
-              #0 #24 cursor ;
+  :cursor (cl-)    ASCII:ESC '%c[%n;%nH s:format s:put ;
+  :indicate:column @CurrentCol #4 + #0 cursor $# c:put ;
+  :indicate:row    #2 @CurrentLine #2 + cursor $# c:put ;
+  :indicators      indicate:row indicate:column ;
   :ruler 
-    '___0---------1---------2---------3 s:put
-    '---------4---------5---------6---   s:put nl ;
-  :block#     $# c:put @CurrentBlock n:put ;
-  :pos        @CurrentLine n:put $: c:put @CurrentCol n:put ;
-  :status     block# sp pos '_::_ s:put dump-stack ;
-  :format     '_|_ s:put call '_| s:put nl ;
+    '___0---------1---------2---------      s:put
+       '3---------4---------5---------6---  s:put nl ;
+  :|          '_|_ s:put ;
+  :block#     @CurrentBlock 'Block_%n s:format s:put ;
+  :pos        @CurrentCol @CurrentLine '%n,%n s:format s:put ;
+  :status     #0 #24 cursor block#
+              | pos | 'Stack:_ s:put dump-stack ;
+  :format     | call | nl ;
   :line       [ #64 [ fetch-next c:put ] times ] format ;
   :code       &Block #16 [ line ] times<with-index> drop ;
-  :format     '_|_ s:put call '_| s:put nl ;
   :tob        &TOB #4 [ line ] times drop ;
 ---reveal---
-  :block:display (-)
+  :block:display (-) hook
     tty:clear ruler code ruler tob ruler indicators status ;
 }}
 ~~~
