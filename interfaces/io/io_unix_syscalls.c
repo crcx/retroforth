@@ -16,6 +16,7 @@
 #include <errno.h>
 #include <sys/wait.h>
 #include <signal.h>
+#include <time.h>
 
 #include "strl.h"
 
@@ -277,11 +278,19 @@ void unix_io_puts() {
 }
 
 
+/*---------------------------------------------------------------------
+  ---------------------------------------------------------------------*/
+void unix_time() {
+  stack_push((CELL)time(NULL));
+}
+
+
 Handler UnixActions[] = {
   unix_system, unix_fork, unix_exec0, unix_exec1, unix_exec2,
   unix_exec3, unix_exit, unix_getpid, unix_wait, unix_kill,
   unixOpenPipe, unixClosePipe, unix_write, unix_chdir,
-  unix_getenv, unix_putenv, unix_sleep, unix_io_putn, unix_io_puts
+  unix_getenv, unix_putenv, unix_sleep, unix_io_putn, unix_io_puts,
+  unix_time
 };
 
 void io_unix_query() {

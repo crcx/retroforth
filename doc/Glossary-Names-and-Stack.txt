@@ -431,6 +431,7 @@ unix:popen                       D: sn-n  A: -  F: -
 unix:putenv                      D: s-  A: -  F: -
 unix:sleep                       D: n-  A: -  F: -
 unix:system                      D: s-  A: -  F: -
+unix:time                        D: -n  A: -  F: -
 unix:wait                        D: -n  A: -  F: -
 unix:write                       D: sh-  A: -  F: -
 until                            D: q-  A: -  F: -

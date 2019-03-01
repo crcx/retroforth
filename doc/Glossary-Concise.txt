@@ -1297,6 +1297,9 @@ Sleep for the specified number of seconds.
 unix:system                      D: s-  A: -  F: -
 Runs another application using the system shell and returns after execution is completed.
 
+unix:time                        D: -n  A: -  F: -
+Return a timestamp.
+
 unix:wait                        D: -n  A: -  F: -
 Waits for a child process to complete. This maps to the wait() system call.
 

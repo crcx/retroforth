@@ -111,6 +111,10 @@ seconds.
 ~~~
 
 ~~~
+:unix:time (-n) #19 io:unix-syscall ;
+~~~
+
+~~~
 :unix:get-cwd (-s)
   'pwd file:R unix:popen
     dup file:read-line s:trim swap

@@ -51,9 +51,10 @@ June 2019.
 
 ### Unix
 
-- add unix:get-cwd
 - add unix:count-files-in-cwd
 - add unix:for-each-file
+- add unix:get-cwd
+- add unix:time
 
 ## Nga
 

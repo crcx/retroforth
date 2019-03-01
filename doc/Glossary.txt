@@ -5140,6 +5140,17 @@ Example #1:
 
 ------------------------------------------------------------------------
 
+unix:time
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Return a timestamp.
+
+Class: class:word | Namespace: unix | Interface Layer: rre
+------------------------------------------------------------------------
+
 unix:wait
 
   Data:  -n
