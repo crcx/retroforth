@@ -45,10 +45,28 @@ June 2019.
 - add f:push
 - add f:rot
 - add f:sign
-- add u:scaling
+- add e:scaling
 - improved f:tuck
 - improved f:over
+- u: is now e:
 
+  - f:to-u     ->  f:to-e
+  - u:-INF     ->  e:-INF
+  - u:-inf?    ->  e:-inf?
+  - u:INF      ->  e:INF
+  - u:MAX      ->  e:MAX
+  - u:MIN      ->  e:MIN
+  - u:NAN      ->  e:NAN
+  - u:clip     ->  e:clip
+  - u:inf?     ->  e:inf?
+  - u:max?     ->  e:max?
+  - u:min?     ->  e:min?
+  - u:n?       ->  e:n?
+  - u:nan?     ->  e:nan?
+  - u:scaling  ->  e:scaling
+  - u:to-f     ->  e:to-f
+  - u:zero?    ->  e:zero?
+ 
 ### Unix
 
 - add unix:count-files-in-cwd

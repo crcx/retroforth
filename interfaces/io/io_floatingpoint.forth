@@ -94,7 +94,7 @@ into signed integer cells. The technique is described in
 the paper titled "Encoding floating point numbers to shorter
 integers" by Kiyoshi Yoneda and Charles Childers.
 
-This will extend the `f:` vocabulary and adds a new `u:`
+This will extend the `f:` vocabulary and adds a new `e:`
 vocabulary.
 
 ## Code & Commentary
@@ -104,56 +104,56 @@ the standard  integer range as the smallest value is used
 for NaN.
 
 ~~~
-n:MAX n:dec          'u:MAX const
-n:MAX n:dec n:negate 'u:MIN const
-n:MIN                'u:NAN const
-n:MAX                'u:INF const
-n:MAX n:negate       'u:-INF const
+n:MAX n:dec          'e:MAX const
+n:MAX n:dec n:negate 'e:MIN const
+n:MIN                'e:NAN const
+n:MAX                'e:INF const
+n:MAX n:negate       'e:-INF const
 ~~~
 
 ~~~
-:u:n?    (u-f)
-  u:MIN n:inc u:MAX n:dec n:between? ;
-:u:max?  (u-f) u:MAX eq? ;
-:u:min?  (u-f) u:MIN eq? ;
-:u:zero? (u-f) n:zero? ;
-:u:nan?  (u-f) u:NAN eq? ;
-:u:inf?  (u-f) u:INF eq? ;
-:u:-inf? (u-f) u:-INF eq? ;
-:u:clip  (u-u) u:MIN u:MAX n:limit ;
+:e:n?    (u-f)
+  e:MIN n:inc e:MAX n:dec n:between? ;
+:e:max?  (u-f) e:MAX eq? ;
+:e:min?  (u-f) e:MIN eq? ;
+:e:zero? (u-f) n:zero? ;
+:e:nan?  (u-f) e:NAN eq? ;
+:e:inf?  (u-f) e:INF eq? ;
+:e:-inf? (u-f) e:-INF eq? ;
+:e:clip  (u-u) e:MIN e:MAX n:limit ;
 ~~~
 
 ~~~
-:u:scaling hook .10.0e-4 ;
+:e:scaling hook .10.0e-4 ;
 {{
   :f:encode
     f:dup f:sign #-1 eq?
-    [ f:abs f:sqrt u:scaling .-1.0 f:power f:* f:negate ]
-    [       f:sqrt u:scaling .-1.0 f:power f:* ] choose ;
-  :f:decode f:square u:scaling f:square f:* ;
+    [ f:abs f:sqrt e:scaling .-1.0 f:power f:* f:negate ]
+    [       f:sqrt e:scaling .-1.0 f:power f:* ] choose ;
+  :f:decode f:square e:scaling f:square f:* ;
 
 ---reveal---
 
-  :f:to-u  (-u|f:a-)
-    f:dup f:encode f:round f:to-number u:clip
-    f:dup f:nan?  [ drop u:NAN ] if
-    f:dup f:inf?  [ drop u:INF ] if
-    f:dup f:-inf? [ drop u:-INF ] if
+  :f:to-e  (-u|f:a-)
+    f:dup f:encode f:round f:to-number e:clip
+    f:dup f:nan?  [ drop e:NAN ] if
+    f:dup f:inf?  [ drop e:INF ] if
+    f:dup f:-inf? [ drop e:-INF ] if
     f:drop ;
 
-  :u:to-f  (u-|f:-b)
+  :e:to-f  (u-|f:-b)
     dup n:to-float f:decode
     dup n:negative? [ f:negate ] if
-    dup u:nan?  [ f:drop f:NAN ] if
-    dup u:inf?  [ f:drop f:INF ] if
-    dup u:-inf? [ f:drop f:-INF ] if
+    dup e:nan?  [ f:drop f:NAN ] if
+    dup e:inf?  [ f:drop f:INF ] if
+    dup e:-inf? [ f:drop f:-INF ] if
     drop ;
 }}
 ~~~
 
 ~~~
-:f:store (a-|f:n-) [ f:to-u ] dip store ;
-:f:fetch (a-|f:-n) fetch u:to-f ;
+:f:store (a-|f:n-) [ f:to-e ] dip store ;
+:f:fetch (a-|f:-n) fetch e:to-f ;
 ~~~
 
 ~~~

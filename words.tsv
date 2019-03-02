@@ -162,6 +162,21 @@ drop-pair	nn-	-	-	Remove top two items on the stack.			class:word	{n/a}	{n/a}	gl
 dump-stack	-	-	-	Display the items on the data stack.			class:word	{n/a}	{n/a}	global	all	
 dup	n-nn	-	-	Duplicate the top item on the stack.			class:primitive	{n/a}	{n/a}	global	all	
 dup-pair	nm-nmnm	-	-	Duplicate the top two items on the stack.			class:word	{n/a}	{n/a}	global	all	
+e:-INF	-u	-	-	Constant. Negative infinity.  For encoded floating point values.			class:word	{n/a}	{n/a}	u	rre	{n/a}
+e:-inf?	u-f	-	-	Is encoded value negative infinity?			class:word	{n/a}	{n/a}	u	rre	{n/a}
+e:INF	-u	-	-	Constant. Infinity. For encoded floating point values.			class:word	{n/a}	{n/a}	u	rre	{n/a}
+e:MAX	-u	-	-	Constant. Maximum value. For encoded floating point values.			class:word	{n/a}	{n/a}	u	rre	
+e:MIN	-u	-	-	Constant. Minimum value. For encoded floating point values.			class:word	{n/a}	{n/a}	u	rre	{n/a}
+e:NAN	-u	-	-	Constant. Not a Number. For encoded floating point values.			class:word	{n/a}	{n/a}	u	rre	{n/a}
+e:clip	u-U	-	-	{n/a}			class:word	{n/a}	{n/a}	u	rre	{n/a}
+e:inf?	u-f	-	-	Is encoded value infinity?			class:word	{n/a}	{n/a}	u	rre	{n/a}
+e:max?	u-f	-	-	Is encoded value at the maximum?			class:word	{n/a}	{n/a}	u	rre	{n/a}
+e:min?	u-f	-	-	Is encoded value at the minimum?			class:word	{n/a}	{n/a}	u	rre	{n/a}
+e:n?	u-f	-	-	{n/a}			class:word	{n/a}	{n/a}	u	rre	{n/a}
+e:nan?	u-f	-	-	Is encoded value a Nan?			class:word	{n/a}	{n/a}	u	ree	{n/a}
+e:scaling	-	-	-f	Hook. Return a constant used as the scaling factor for the e: words.			class:word	{n/a}	{n/a}	u	rre	{n/a}
+e:to-f	u-	-	-n	Decode an encoded floating point value.			class:word	{n/a}	{n/a}	rre	rre	
+e:zero?	u-f	-	-	{n/a}			class:word	{n/a}	{n/a}	u	rre	{n/a}
 eq?	nn-f	-	-	Compare two values for equality. Returns `TRUE` if they are equal or `FALSE` otherwise.			class:primitive	    #1 #2 eq?\n    $a $b eq?	{n/a}	global	all	
 err:notfound	-	-	-	Error handler. Called when a word is not found by `interpret`.			class:word	{n/a}	{n/a}	err	all	
 f:*	-	-	FF-F	Multiply two floating point numbers, returning the result.			class:word	    .3.1415 .22 f:*	{n/a}	f	rre	
@@ -221,9 +236,9 @@ f:square	-	-	f-f	Return the square of a floating point number.			class:word	{n/a
 f:store	a-	-	n-	Store a floating point value to the specified memory location.			class:word	{n/a}	{n/a}	f	rre	
 f:swap	-	-	FG-GF	Exchange the top and second items on the floating point stack.			class:word	{n/a}	{n/a}	f	rre	
 f:tan	-	-	F-F	Return the tangent of a floating point number.			class:word	{n/a}	{n/a}	f	rre	
+f:to-e	-u	-	n-	Encode the floating point value to an integer.			class:word	{n/a}	{n/a}	f	rre	
 f:to-number	-n	-	F-	Convert a floating point value into a number.			class:word	{n/a}	{n/a}	f	rre	
 f:to-string	-s	-	F-	Convert a floating point value into a string.			class:word	{n/a}	{n/a}	f	rre	
-f:to-u	-u	-	n-	Encode the floating point value to an integer.			class:word	{n/a}	{n/a}	f	rre	
 f:tuck	-	-	FG-GFG	Tuck a copy of the top floating point value under the second one.			class:word	{n/a}	{n/a}	f	rre	
 f:tuck	-	-	nm-mnm	Put a copy of the top item on the stack under the second one.			class:word	{n/a}	{n/a}	f	rre	
 fetch	a-n	-	-	Fetch the value stored at the specified address.			class:primitive	    &Version fetch	{n/a}	global	all	
@@ -395,21 +410,6 @@ tri	xqqq-?	-	-	Apply q1 against x, then q2 against a copy of x, and finally q3 a
 tri*	xyzqqq-?	-	-	Apply q1 against x, q2 against y, and q3 against z.			class:word	{n/a}	{n/a}	global	all	
 tri@	xyzq-?	-	-	Apply q against x, then against y, and finally against z.			class:word	{n/a}	{n/a}	global	all	
 tuck	nm-mnm	-	-	Put a copy of the top item on the stack under the second one.			class:word	{n/a}	{n/a}	global	all	
-u:-INF	-u	-	-	Constant. Negative infinity.  For encoded floating point values.			class:word	{n/a}	{n/a}	u	rre	{n/a}
-u:-inf?	u-f	-	-	Is encoded value negative infinity?			class:word	{n/a}	{n/a}	u	rre	{n/a}
-u:INF	-u	-	-	Constant. Infinity. For encoded floating point values.			class:word	{n/a}	{n/a}	u	rre	{n/a}
-u:MAX	-u	-	-	Constant. Maximum value. For encoded floating point values.			class:word	{n/a}	{n/a}	u	rre	
-u:MIN	-u	-	-	Constant. Minimum value. For encoded floating point values.			class:word	{n/a}	{n/a}	u	rre	{n/a}
-u:NAN	-u	-	-	Constant. Not a Number. For encoded floating point values.			class:word	{n/a}	{n/a}	u	rre	{n/a}
-u:clip	u-U	-	-	{n/a}			class:word	{n/a}	{n/a}	u	rre	{n/a}
-u:inf?	u-f	-	-	Is encoded value infinity?			class:word	{n/a}	{n/a}	u	rre	{n/a}
-u:max?	u-f	-	-	Is encoded value at the maximum?			class:word	{n/a}	{n/a}	u	rre	{n/a}
-u:min?	u-f	-	-	Is encoded value at the minimum?			class:word	{n/a}	{n/a}	u	rre	{n/a}
-u:n?	u-f	-	-	{n/a}			class:word	{n/a}	{n/a}	u	rre	{n/a}
-u:nan?	u-f	-	-	Is encoded value a Nan?			class:word	{n/a}	{n/a}	u	ree	{n/a}
-u:scaling	-	-	-f	Hook. Return a constant used as the scaling factor for the u: words.			class:word	{n/a}	{n/a}	u	rre	{n/a}
-u:to-f	u-	-	-n	Decode an encoded floating point value.			class:word	{n/a}	{n/a}	rre	rre	
-u:zero?	u-f	-	-	{n/a}			class:word	{n/a}	{n/a}	u	rre	{n/a}
 unhook	a-	-	-	Reset the hook point in a1 to the default definition.			class:word	    :foo hook #1 ;\n    :bar #2 ;\n    &bar &foo set-hook\n    &foo unhook	{n/a}	global	all	
 unix:chdir	s-	-	-	Change the current working directory to the specified one.			class:word	  '/etc unix:chdir	{n/a}	unix	rre	
 unix:count-files-in-cwd	-n	-	-	Return the number of files (and subdirectories) in the current working directory			class:word	{n/a}	{n/a}	unix	rre	

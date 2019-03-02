@@ -490,6 +490,51 @@ Duplicate the top item on the stack.
 dup-pair                         D: nm-nmnm  A: -  F: -
 Duplicate the top two items on the stack.
 
+e:-INF                           D: -u  A: -  F: -
+Constant. Negative infinity.  For encoded floating point values.
+
+e:-inf?                          D: u-f  A: -  F: -
+Is encoded value negative infinity?
+
+e:INF                            D: -u  A: -  F: -
+Constant. Infinity. For encoded floating point values.
+
+e:MAX                            D: -u  A: -  F: -
+Constant. Maximum value. For encoded floating point values.
+
+e:MIN                            D: -u  A: -  F: -
+Constant. Minimum value. For encoded floating point values.
+
+e:NAN                            D: -u  A: -  F: -
+Constant. Not a Number. For encoded floating point values.
+
+e:clip                           D: u-U  A: -  F: -
+{n/a}
+
+e:inf?                           D: u-f  A: -  F: -
+Is encoded value infinity?
+
+e:max?                           D: u-f  A: -  F: -
+Is encoded value at the maximum?
+
+e:min?                           D: u-f  A: -  F: -
+Is encoded value at the minimum?
+
+e:n?                             D: u-f  A: -  F: -
+{n/a}
+
+e:nan?                           D: u-f  A: -  F: -
+Is encoded value a Nan?
+
+e:scaling                        D: -  A: -  F: -f
+Hook. Return a constant used as the scaling factor for the e: words.
+
+e:to-f                           D: u-  A: -  F: -n
+Decode an encoded floating point value.
+
+e:zero?                          D: u-f  A: -  F: -
+{n/a}
+
 eq?                              D: nn-f  A: -  F: -
 Compare two values for equality. Returns `TRUE` if they are equal or `FALSE` otherwise.
 
@@ -667,14 +712,14 @@ Exchange the top and second items on the floating point stack.
 f:tan                            D: -  A: -  F: F-F
 Return the tangent of a floating point number.
 
+f:to-e                           D: -u  A: -  F: n-
+Encode the floating point value to an integer.
+
 f:to-number                      D: -n  A: -  F: F-
 Convert a floating point value into a number.
 
 f:to-string                      D: -s  A: -  F: F-
 Convert a floating point value into a string.
-
-f:to-u                           D: -u  A: -  F: n-
-Encode the floating point value to an integer.
 
 f:tuck                           D: -  A: -  F: FG-GFG
 Tuck a copy of the top floating point value under the second one.
@@ -1188,51 +1233,6 @@ Apply q against x, then against y, and finally against z.
 
 tuck                             D: nm-mnm  A: -  F: -
 Put a copy of the top item on the stack under the second one.
-
-u:-INF                           D: -u  A: -  F: -
-Constant. Negative infinity.  For encoded floating point values.
-
-u:-inf?                          D: u-f  A: -  F: -
-Is encoded value negative infinity?
-
-u:INF                            D: -u  A: -  F: -
-Constant. Infinity. For encoded floating point values.
-
-u:MAX                            D: -u  A: -  F: -
-Constant. Maximum value. For encoded floating point values.
-
-u:MIN                            D: -u  A: -  F: -
-Constant. Minimum value. For encoded floating point values.
-
-u:NAN                            D: -u  A: -  F: -
-Constant. Not a Number. For encoded floating point values.
-
-u:clip                           D: u-U  A: -  F: -
-{n/a}
-
-u:inf?                           D: u-f  A: -  F: -
-Is encoded value infinity?
-
-u:max?                           D: u-f  A: -  F: -
-Is encoded value at the maximum?
-
-u:min?                           D: u-f  A: -  F: -
-Is encoded value at the minimum?
-
-u:n?                             D: u-f  A: -  F: -
-{n/a}
-
-u:nan?                           D: u-f  A: -  F: -
-Is encoded value a Nan?
-
-u:scaling                        D: -  A: -  F: -f
-Hook. Return a constant used as the scaling factor for the u: words.
-
-u:to-f                           D: u-  A: -  F: -n
-Decode an encoded floating point value.
-
-u:zero?                          D: u-f  A: -  F: -
-{n/a}
 
 unhook                           D: a-  A: -  F: -
 Reset the hook point in a1 to the default definition.

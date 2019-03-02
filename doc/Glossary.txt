@@ -1879,6 +1879,171 @@ Duplicate the top two items on the stack.
 Class: class:word | Namespace: global | Interface Layer: all
 ------------------------------------------------------------------------
 
+e:-INF
+
+  Data:  -u
+  Addr:  -
+  Float: -
+
+Constant. Negative infinity.  For encoded floating point values.
+
+Class: class:word | Namespace: u | Interface Layer: rre
+------------------------------------------------------------------------
+
+e:-inf?
+
+  Data:  u-f
+  Addr:  -
+  Float: -
+
+Is encoded value negative infinity?
+
+Class: class:word | Namespace: u | Interface Layer: rre
+------------------------------------------------------------------------
+
+e:INF
+
+  Data:  -u
+  Addr:  -
+  Float: -
+
+Constant. Infinity. For encoded floating point values.
+
+Class: class:word | Namespace: u | Interface Layer: rre
+------------------------------------------------------------------------
+
+e:MAX
+
+  Data:  -u
+  Addr:  -
+  Float: -
+
+Constant. Maximum value. For encoded floating point values.
+
+Class: class:word | Namespace: u | Interface Layer: rre
+------------------------------------------------------------------------
+
+e:MIN
+
+  Data:  -u
+  Addr:  -
+  Float: -
+
+Constant. Minimum value. For encoded floating point values.
+
+Class: class:word | Namespace: u | Interface Layer: rre
+------------------------------------------------------------------------
+
+e:NAN
+
+  Data:  -u
+  Addr:  -
+  Float: -
+
+Constant. Not a Number. For encoded floating point values.
+
+Class: class:word | Namespace: u | Interface Layer: rre
+------------------------------------------------------------------------
+
+e:clip
+
+  Data:  u-U
+  Addr:  -
+  Float: -
+
+{n/a}
+
+Class: class:word | Namespace: u | Interface Layer: rre
+------------------------------------------------------------------------
+
+e:inf?
+
+  Data:  u-f
+  Addr:  -
+  Float: -
+
+Is encoded value infinity?
+
+Class: class:word | Namespace: u | Interface Layer: rre
+------------------------------------------------------------------------
+
+e:max?
+
+  Data:  u-f
+  Addr:  -
+  Float: -
+
+Is encoded value at the maximum?
+
+Class: class:word | Namespace: u | Interface Layer: rre
+------------------------------------------------------------------------
+
+e:min?
+
+  Data:  u-f
+  Addr:  -
+  Float: -
+
+Is encoded value at the minimum?
+
+Class: class:word | Namespace: u | Interface Layer: rre
+------------------------------------------------------------------------
+
+e:n?
+
+  Data:  u-f
+  Addr:  -
+  Float: -
+
+{n/a}
+
+Class: class:word | Namespace: u | Interface Layer: rre
+------------------------------------------------------------------------
+
+e:nan?
+
+  Data:  u-f
+  Addr:  -
+  Float: -
+
+Is encoded value a Nan?
+
+Class: class:word | Namespace: u | Interface Layer: ree
+------------------------------------------------------------------------
+
+e:scaling
+
+  Data:  -
+  Addr:  -
+  Float: -f
+
+Hook. Return a constant used as the scaling factor for the e: words.
+
+Class: class:word | Namespace: u | Interface Layer: rre
+------------------------------------------------------------------------
+
+e:to-f
+
+  Data:  u-
+  Addr:  -
+  Float: -n
+
+Decode an encoded floating point value.
+
+Class: class:word | Namespace: rre | Interface Layer: rre
+------------------------------------------------------------------------
+
+e:zero?
+
+  Data:  u-f
+  Addr:  -
+  Float: -
+
+{n/a}
+
+Class: class:word | Namespace: u | Interface Layer: rre
+------------------------------------------------------------------------
+
 eq?
 
   Data:  nn-f
@@ -2593,6 +2758,17 @@ Return the tangent of a floating point number.
 Class: class:word | Namespace: f | Interface Layer: rre
 ------------------------------------------------------------------------
 
+f:to-e
+
+  Data:  -u
+  Addr:  -
+  Float: n-
+
+Encode the floating point value to an integer.
+
+Class: class:word | Namespace: f | Interface Layer: rre
+------------------------------------------------------------------------
+
 f:to-number
 
   Data:  -n
@@ -2611,17 +2787,6 @@ f:to-string
   Float: F-
 
 Convert a floating point value into a string.
-
-Class: class:word | Namespace: f | Interface Layer: rre
-------------------------------------------------------------------------
-
-f:to-u
-
-  Data:  -u
-  Addr:  -
-  Float: n-
-
-Encode the floating point value to an integer.
 
 Class: class:word | Namespace: f | Interface Layer: rre
 ------------------------------------------------------------------------
@@ -4714,171 +4879,6 @@ tuck
 Put a copy of the top item on the stack under the second one.
 
 Class: class:word | Namespace: global | Interface Layer: all
-------------------------------------------------------------------------
-
-u:-INF
-
-  Data:  -u
-  Addr:  -
-  Float: -
-
-Constant. Negative infinity.  For encoded floating point values.
-
-Class: class:word | Namespace: u | Interface Layer: rre
-------------------------------------------------------------------------
-
-u:-inf?
-
-  Data:  u-f
-  Addr:  -
-  Float: -
-
-Is encoded value negative infinity?
-
-Class: class:word | Namespace: u | Interface Layer: rre
-------------------------------------------------------------------------
-
-u:INF
-
-  Data:  -u
-  Addr:  -
-  Float: -
-
-Constant. Infinity. For encoded floating point values.
-
-Class: class:word | Namespace: u | Interface Layer: rre
-------------------------------------------------------------------------
-
-u:MAX
-
-  Data:  -u
-  Addr:  -
-  Float: -
-
-Constant. Maximum value. For encoded floating point values.
-
-Class: class:word | Namespace: u | Interface Layer: rre
-------------------------------------------------------------------------
-
-u:MIN
-
-  Data:  -u
-  Addr:  -
-  Float: -
-
-Constant. Minimum value. For encoded floating point values.
-
-Class: class:word | Namespace: u | Interface Layer: rre
-------------------------------------------------------------------------
-
-u:NAN
-
-  Data:  -u
-  Addr:  -
-  Float: -
-
-Constant. Not a Number. For encoded floating point values.
-
-Class: class:word | Namespace: u | Interface Layer: rre
-------------------------------------------------------------------------
-
-u:clip
-
-  Data:  u-U
-  Addr:  -
-  Float: -
-
-{n/a}
-
-Class: class:word | Namespace: u | Interface Layer: rre
-------------------------------------------------------------------------
-
-u:inf?
-
-  Data:  u-f
-  Addr:  -
-  Float: -
-
-Is encoded value infinity?
-
-Class: class:word | Namespace: u | Interface Layer: rre
-------------------------------------------------------------------------
-
-u:max?
-
-  Data:  u-f
-  Addr:  -
-  Float: -
-
-Is encoded value at the maximum?
-
-Class: class:word | Namespace: u | Interface Layer: rre
-------------------------------------------------------------------------
-
-u:min?
-
-  Data:  u-f
-  Addr:  -
-  Float: -
-
-Is encoded value at the minimum?
-
-Class: class:word | Namespace: u | Interface Layer: rre
-------------------------------------------------------------------------
-
-u:n?
-
-  Data:  u-f
-  Addr:  -
-  Float: -
-
-{n/a}
-
-Class: class:word | Namespace: u | Interface Layer: rre
-------------------------------------------------------------------------
-
-u:nan?
-
-  Data:  u-f
-  Addr:  -
-  Float: -
-
-Is encoded value a Nan?
-
-Class: class:word | Namespace: u | Interface Layer: ree
-------------------------------------------------------------------------
-
-u:scaling
-
-  Data:  -
-  Addr:  -
-  Float: -f
-
-Hook. Return a constant used as the scaling factor for the u: words.
-
-Class: class:word | Namespace: u | Interface Layer: rre
-------------------------------------------------------------------------
-
-u:to-f
-
-  Data:  u-
-  Addr:  -
-  Float: -n
-
-Decode an encoded floating point value.
-
-Class: class:word | Namespace: rre | Interface Layer: rre
-------------------------------------------------------------------------
-
-u:zero?
-
-  Data:  u-f
-  Addr:  -
-  Float: -
-
-{n/a}
-
-Class: class:word | Namespace: u | Interface Layer: rre
 ------------------------------------------------------------------------
 
 unhook
