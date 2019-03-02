@@ -162,21 +162,21 @@ drop-pair	nn-	-	-	Remove top two items on the stack.			class:word	{n/a}	{n/a}	gl
 dump-stack	-	-	-	Display the items on the data stack.			class:word	{n/a}	{n/a}	global	all	
 dup	n-nn	-	-	Duplicate the top item on the stack.			class:primitive	{n/a}	{n/a}	global	all	
 dup-pair	nm-nmnm	-	-	Duplicate the top two items on the stack.			class:word	{n/a}	{n/a}	global	all	
-e:-INF	-u	-	-	Constant. Negative infinity.  For encoded floating point values.			class:word	{n/a}	{n/a}	u	rre	{n/a}
-e:-inf?	u-f	-	-	Is encoded value negative infinity?			class:word	{n/a}	{n/a}	u	rre	{n/a}
-e:INF	-u	-	-	Constant. Infinity. For encoded floating point values.			class:word	{n/a}	{n/a}	u	rre	{n/a}
-e:MAX	-u	-	-	Constant. Maximum value. For encoded floating point values.			class:word	{n/a}	{n/a}	u	rre	
-e:MIN	-u	-	-	Constant. Minimum value. For encoded floating point values.			class:word	{n/a}	{n/a}	u	rre	{n/a}
-e:NAN	-u	-	-	Constant. Not a Number. For encoded floating point values.			class:word	{n/a}	{n/a}	u	rre	{n/a}
-e:clip	u-U	-	-	{n/a}			class:word	{n/a}	{n/a}	u	rre	{n/a}
-e:inf?	u-f	-	-	Is encoded value infinity?			class:word	{n/a}	{n/a}	u	rre	{n/a}
-e:max?	u-f	-	-	Is encoded value at the maximum?			class:word	{n/a}	{n/a}	u	rre	{n/a}
-e:min?	u-f	-	-	Is encoded value at the minimum?			class:word	{n/a}	{n/a}	u	rre	{n/a}
-e:n?	u-f	-	-	{n/a}			class:word	{n/a}	{n/a}	u	rre	{n/a}
-e:nan?	u-f	-	-	Is encoded value a Nan?			class:word	{n/a}	{n/a}	u	ree	{n/a}
-e:scaling	-	-	-f	Hook. Return a constant used as the scaling factor for the e: words.			class:word	{n/a}	{n/a}	u	rre	{n/a}
-e:to-f	u-	-	-n	Decode an encoded floating point value.			class:word	{n/a}	{n/a}	rre	rre	
-e:zero?	u-f	-	-	{n/a}			class:word	{n/a}	{n/a}	u	rre	{n/a}
+e:-INF	-u	-	-	Constant. Negative infinity.  For encoded floating point values.			class:word	{n/a}	{n/a}	e	rre	{n/a}
+e:-inf?	u-f	-	-	Is encoded value negative infinity?			class:word	{n/a}	{n/a}	e	rre	{n/a}
+e:INF	-u	-	-	Constant. Infinity. For encoded floating point values.			class:word	{n/a}	{n/a}	e	rre	{n/a}
+e:MAX	-u	-	-	Constant. Maximum value. For encoded floating point values.			class:word	{n/a}	{n/a}	e	rre	
+e:MIN	-u	-	-	Constant. Minimum value. For encoded floating point values.			class:word	{n/a}	{n/a}	e	rre	{n/a}
+e:NAN	-u	-	-	Constant. Not a Number. For encoded floating point values.			class:word	{n/a}	{n/a}	e	rre	{n/a}
+e:clip	u-U	-	-	Constrain the encoded value to the allowable range.			class:word	{n/a}	{n/a}	e	rre	
+e:inf?	u-f	-	-	Is encoded value infinity?			class:word	{n/a}	{n/a}	e	rre	{n/a}
+e:max?	u-f	-	-	Is encoded value at the maximum?			class:word	{n/a}	{n/a}	e	rre	{n/a}
+e:min?	u-f	-	-	Is encoded value at the minimum?			class:word	{n/a}	{n/a}	e	rre	{n/a}
+e:n?	u-f	-	-	Return `TRUE` if the encoded value is a valid number, or `FALSE` otherwise.			class:word	{n/a}	{n/a}	e	rre	
+e:nan?	u-f	-	-	Is encoded value a Nan?			class:word	{n/a}	{n/a}	e	rre	{n/a}
+e:put	u-	-	-	Display an encoded number.			class:word	{n/a}	{n/a}	e	rre	
+e:to-f	u-	-	-n	Decode an encoded floating point value.			class:word	{n/a}	{n/a}	e	rre	
+e:zero?	u-f	-	-	Return `TRUE` if the value is zero, or `FALSE` otherwise.			class:word	{n/a}	{n/a}	e	rre	
 eq?	nn-f	-	-	Compare two values for equality. Returns `TRUE` if they are equal or `FALSE` otherwise.			class:primitive	    #1 #2 eq?\n    $a $b eq?	{n/a}	global	all	
 err:notfound	-	-	-	Error handler. Called when a word is not found by `interpret`.			class:word	{n/a}	{n/a}	err	all	
 f:*	-	-	FF-F	Multiply two floating point numbers, returning the result.			class:word	    .3.1415 .22 f:*	{n/a}	f	rre	
@@ -187,6 +187,7 @@ f:-eq?	-f	-	FF-	Compare two floating point values for inequality. Returns `TRUE`
 f:-inf?	-f	-	F-	Return `TRUE` if floating point value is -INF or `FALSE` otherwise.			class:word	{n/a}	{n/a}	f	rre	
 f:/	-	-	FF-F	Divide floating point value F1 by F2.			class:word	{n/a}	{n/a}	f	rre	
 f:E	-	-	-F	Return the floating point value for Euler's number.			class:word	{n/a}	{n/a}	f	rre	
+f:E1	-	-	-f	Hook. Return a constant used as the scaling factor for the e: words.			class:word	{n/a}	{n/a}	f	rre	{n/a}
 f:INF	-	-	-n	Return a value corresponding to positive infinity			class:word	{n/a}	{n/a}	f	rre	
 f:NAN	-	-	-n	Return a value corresponding to NaN			class:word	{n/a}	{n/a}	f	rre	
 f:PI	-	-	-F	Return the floating point value for PI.			class:word	{n/a}	{n/a}	f	rre	
@@ -230,6 +231,8 @@ f:put	-	-	F-	Display a floating point number.			class:word	{n/a}	{n/a}	global	rr
 f:rot	-	-	abc-bca	Rotate the top three values.			class:word	{n/a}	{n/a}	f	rre	
 f:round	-	-	f-f	Round a floating point value.			class:word	{n/a}	{n/a}	f	rre	
 f:sign	-n	-	F-	Return 1 if the floating point value is positive or -1 if it is negative.			class:word	    .3.1415 f:sign	{n/a}	f	rre	
+f:signed-sqrt	-	-	F-F	Return the square root of a floating point number.			class:word	{n/a}	{n/a}	f	rre	
+f:signed-square	-	-	f-f	Return the square of a floating point number.			class:word	{n/a}	{n/a}	f	rre	
 f:sin	-	-	F-F	Return the sine of a floating point number.			class:word	{n/a}	{n/a}	f	rre	
 f:sqrt	-	-	F-F	Return the square root of a floating point number.			class:word	{n/a}	{n/a}	f	rre	
 f:square	-	-	f-f	Return the square of a floating point number.			class:word	{n/a}	{n/a}	f	rre	

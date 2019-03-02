@@ -85,9 +85,7 @@
 
 ---------------------------------------------------------------
 
-# Float
-
-## Description
+# Floating Point Encoding
 
 This implements a means of encoding floating point values
 into signed integer cells. The technique is described in
@@ -112,50 +110,71 @@ n:MAX n:negate       'e:-INF const
 ~~~
 
 ~~~
-:e:n?    (u-f)
-  e:MIN n:inc e:MAX n:dec n:between? ;
-:e:max?  (u-f) e:MAX eq? ;
-:e:min?  (u-f) e:MIN eq? ;
-:e:zero? (u-f) n:zero? ;
-:e:nan?  (u-f) e:NAN eq? ;
-:e:inf?  (u-f) e:INF eq? ;
-:e:-inf? (u-f) e:-INF eq? ;
+:e:n?    (u-f) e:MIN n:inc e:MAX n:dec n:between? ;
+:e:max?  (u-f) e:MAX   eq? ;
+:e:min?  (u-f) e:MIN   eq? ;
+:e:zero? (u-f) n:zero?     ;
+:e:nan?  (u-f) e:NAN   eq? ;
+:e:inf?  (u-f) e:INF   eq? ;
+:e:-inf? (u-f) e:-INF  eq? ;
 :e:clip  (u-u) e:MIN e:MAX n:limit ;
 ~~~
 
-~~~
-:e:scaling hook .10.0e-4 ;
-{{
-  :f:encode
-    f:dup f:sign #-1 eq?
-    [ f:abs f:sqrt e:scaling .-1.0 f:power f:* f:negate ]
-    [       f:sqrt e:scaling .-1.0 f:power f:* ] choose ;
-  :f:decode f:square e:scaling f:square f:* ;
+Since 32-bit cells take about 9 decimal digits, if you set
 
----reveal---
+    `[ .1e5 ] &f:E1 set-hook`
 
-  :f:to-e  (-u|f:a-)
-    f:dup f:encode f:round f:to-number e:clip
-    f:dup f:nan?  [ drop e:NAN ] if
-    f:dup f:inf?  [ drop e:INF ] if
-    f:dup f:-inf? [ drop e:-INF ] if
-    f:drop ;
+you will have 5 decimal digits left for the integer part of
+the encoded number, which corresponds to 8 decimal digits
+decoded.
 
-  :e:to-f  (u-|f:-b)
-    dup n:to-float f:decode
-    dup n:negative? [ f:negate ] if
-    dup e:nan?  [ f:drop f:NAN ] if
-    dup e:inf?  [ f:drop f:INF ] if
-    dup e:-inf? [ f:drop f:-INF ] if
-    drop ;
-}}
-~~~
+Encode/decode words to secure dynamic range. This portion
+is the essence of the method.
 
 ~~~
-:f:store (a-|f:n-) [ f:to-e ] dip store ;
+:f:E1 (-|f:-n)_e-unit_in_float  hook .1.e5 ; (decimal_digits_to_shift_left
+:f:-shift        (|f:n-n)_shift_left                          f:E1       f:* ;
+:f:+shift        (|f:n-n)_shift_right                         f:E1       f:/ ;
+:f:signed-sqrt   (|f:n-n) f:dup f:sign           f:abs f:sqrt n:to-float f:* ;
+:f:+encode       (|f:n-n) f:signed-sqrt f:-shift                             ;
+:f:-encode       (|f:n-n) f:dup f:sign  f:+shift f:dup f:*    n:to-float f:* ;
+:f:signed-square (|f:n-n) f:dup f:sign           f:dup f:*    n:to-float f:* ;
+~~~
+
+Deal with special cases.
+
+~~~
+:f:to-e (-e|f:n-)
+  f:dup f:nan?  [ f:drop drop e:NAN  ]    if;
+  f:dup f:inf?  [ f:drop drop e:INF  ]    if;
+  f:dup f:-inf? [ f:drop drop e:-INF ]    if;
+  f:+encode f:round f:to-number e:clip      (e
+  e:MIN         [ f:drop             ] case
+  e:MAX         [ f:drop             ] case ;
+
+:e:to-f (e-|f:-n)
+  e:NAN  [ drop  f:NAN ] case
+  e:INF  [ drop  f:INF ] case
+  e:-INF [ drop f:-INF ] case
+  n:to-float f:-encode ;
+~~~
+
+~~~
+:f:store (a-|f:n-)     [ f:to-e ] dip store ;
 :f:fetch (a-|f:-n) fetch e:to-f ;
 ~~~
 
 ~~~
 :f:dump-stack f:depth dup [ f:push ] times [ f:pop f:dup f:put sp ] times ;
+~~~
+
+~~~
+:e:put (e-)
+  e:MAX  [ 'e:MAX  s:put ] case
+  e:MIN  [ 'e:MIN  s:put ] case
+  #0     [ 'e:0    s:put ] case
+  e:NAN  [ 'e:NAN  s:put ] case
+  e:INF  [ 'e:INF  s:put ] case
+  e:-INF [ 'e:-INF s:put ] case
+  e:to-f f:put ;
 ~~~

@@ -11,8 +11,9 @@ June 2019.
 - parallel builds now work
 - refactor Makefile
 - support for adding custom code to an image at build
-  time (see packages/list)
+  time (see package/list)
 - only build the toolchain and `retro` binary by default
+- fix an issue with rebuilding of image
 
 ## Core Language
 
@@ -45,7 +46,13 @@ June 2019.
 - add f:push
 - add f:rot
 - add f:sign
-- add e:scaling
+- add f:E1
+- add f:-shift
+- add f:+shift
+- add f:signed-sqrt
+- add f:+encode
+- add f:-encode
+- add f:signed-square
 - improved f:tuck
 - improved f:over
 - u: is now e:
@@ -63,9 +70,10 @@ June 2019.
   - u:min?     ->  e:min?
   - u:n?       ->  e:n?
   - u:nan?     ->  e:nan?
-  - u:scaling  ->  e:scaling
   - u:to-f     ->  e:to-f
   - u:zero?    ->  e:zero?
+
+- add e:put
  
 ### Unix
 
@@ -130,6 +138,7 @@ June 2019.
 - add more concise text copies of the Glossary
 - add man pages
 - add BUILDING.md
+- add missing descriptions
 
 ## Examples
 

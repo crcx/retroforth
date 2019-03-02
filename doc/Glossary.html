@@ -1383,7 +1383,7 @@
 <b>Float:</b> -</p>
 </div>
 <p>Constant. Negative infinity.  For encoded floating point values.</p>
-<p><b>Class:</b> class:word | <b>Namespace:</b> u | <b>Interface Layer:</b> rre</p>
+<p><b>Class:</b> class:word | <b>Namespace:</b> e | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>e:-inf?</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> u-f<br>
@@ -1391,7 +1391,7 @@
 <b>Float:</b> -</p>
 </div>
 <p>Is encoded value negative infinity?</p>
-<p><b>Class:</b> class:word | <b>Namespace:</b> u | <b>Interface Layer:</b> rre</p>
+<p><b>Class:</b> class:word | <b>Namespace:</b> e | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>e:INF</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -u<br>
@@ -1399,7 +1399,7 @@
 <b>Float:</b> -</p>
 </div>
 <p>Constant. Infinity. For encoded floating point values.</p>
-<p><b>Class:</b> class:word | <b>Namespace:</b> u | <b>Interface Layer:</b> rre</p>
+<p><b>Class:</b> class:word | <b>Namespace:</b> e | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>e:MAX</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -u<br>
@@ -1407,7 +1407,7 @@
 <b>Float:</b> -</p>
 </div>
 <p>Constant. Maximum value. For encoded floating point values.</p>
-<p><b>Class:</b> class:word | <b>Namespace:</b> u | <b>Interface Layer:</b> rre</p>
+<p><b>Class:</b> class:word | <b>Namespace:</b> e | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>e:MIN</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -u<br>
@@ -1415,7 +1415,7 @@
 <b>Float:</b> -</p>
 </div>
 <p>Constant. Minimum value. For encoded floating point values.</p>
-<p><b>Class:</b> class:word | <b>Namespace:</b> u | <b>Interface Layer:</b> rre</p>
+<p><b>Class:</b> class:word | <b>Namespace:</b> e | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>e:NAN</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -u<br>
@@ -1423,15 +1423,15 @@
 <b>Float:</b> -</p>
 </div>
 <p>Constant. Not a Number. For encoded floating point values.</p>
-<p><b>Class:</b> class:word | <b>Namespace:</b> u | <b>Interface Layer:</b> rre</p>
+<p><b>Class:</b> class:word | <b>Namespace:</b> e | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>e:clip</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> u-U<br>
 <b>Addr:</b> -<br>
 <b>Float:</b> -</p>
 </div>
-<p>{n/a}</p>
-<p><b>Class:</b> class:word | <b>Namespace:</b> u | <b>Interface Layer:</b> rre</p>
+<p>Constrain the encoded value to the allowable range.</p>
+<p><b>Class:</b> class:word | <b>Namespace:</b> e | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>e:inf?</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> u-f<br>
@@ -1439,7 +1439,7 @@
 <b>Float:</b> -</p>
 </div>
 <p>Is encoded value infinity?</p>
-<p><b>Class:</b> class:word | <b>Namespace:</b> u | <b>Interface Layer:</b> rre</p>
+<p><b>Class:</b> class:word | <b>Namespace:</b> e | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>e:max?</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> u-f<br>
@@ -1447,7 +1447,7 @@
 <b>Float:</b> -</p>
 </div>
 <p>Is encoded value at the maximum?</p>
-<p><b>Class:</b> class:word | <b>Namespace:</b> u | <b>Interface Layer:</b> rre</p>
+<p><b>Class:</b> class:word | <b>Namespace:</b> e | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>e:min?</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> u-f<br>
@@ -1455,15 +1455,15 @@
 <b>Float:</b> -</p>
 </div>
 <p>Is encoded value at the minimum?</p>
-<p><b>Class:</b> class:word | <b>Namespace:</b> u | <b>Interface Layer:</b> rre</p>
+<p><b>Class:</b> class:word | <b>Namespace:</b> e | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>e:n?</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> u-f<br>
 <b>Addr:</b> -<br>
 <b>Float:</b> -</p>
 </div>
-<p>{n/a}</p>
-<p><b>Class:</b> class:word | <b>Namespace:</b> u | <b>Interface Layer:</b> rre</p>
+<p>Return `TRUE` if the encoded value is a valid number, or `FALSE` otherwise.</p>
+<p><b>Class:</b> class:word | <b>Namespace:</b> e | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>e:nan?</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> u-f<br>
@@ -1471,15 +1471,15 @@
 <b>Float:</b> -</p>
 </div>
 <p>Is encoded value a Nan?</p>
-<p><b>Class:</b> class:word | <b>Namespace:</b> u | <b>Interface Layer:</b> ree</p>
+<p><b>Class:</b> class:word | <b>Namespace:</b> e | <b>Interface Layer:</b> rre</p>
 <hr/>
-<h1>e:scaling</h1>
-<div style='margin-left: 1em;'><p><b>Data:</b> -<br>
+<h1>e:put</h1>
+<div style='margin-left: 1em;'><p><b>Data:</b> u-<br>
 <b>Addr:</b> -<br>
-<b>Float:</b> -f</p>
+<b>Float:</b> -</p>
 </div>
-<p>Hook. Return a constant used as the scaling factor for the e: words.</p>
-<p><b>Class:</b> class:word | <b>Namespace:</b> u | <b>Interface Layer:</b> rre</p>
+<p>Display an encoded number.</p>
+<p><b>Class:</b> class:word | <b>Namespace:</b> e | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>e:to-f</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> u-<br>
@@ -1487,15 +1487,15 @@
 <b>Float:</b> -n</p>
 </div>
 <p>Decode an encoded floating point value.</p>
-<p><b>Class:</b> class:word | <b>Namespace:</b> rre | <b>Interface Layer:</b> rre</p>
+<p><b>Class:</b> class:word | <b>Namespace:</b> e | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>e:zero?</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> u-f<br>
 <b>Addr:</b> -<br>
 <b>Float:</b> -</p>
 </div>
-<p>{n/a}</p>
-<p><b>Class:</b> class:word | <b>Namespace:</b> u | <b>Interface Layer:</b> rre</p>
+<p>Return `TRUE` if the value is zero, or `FALSE` otherwise.</p>
+<p><b>Class:</b> class:word | <b>Namespace:</b> e | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>eq?</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> nn-f<br>
@@ -1592,6 +1592,14 @@
 <b>Float:</b> -F</p>
 </div>
 <p>Return the floating point value for Euler's number.</p>
+<p><b>Class:</b> class:word | <b>Namespace:</b> f | <b>Interface Layer:</b> rre</p>
+<hr/>
+<h1>f:E1</h1>
+<div style='margin-left: 1em;'><p><b>Data:</b> -<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -f</p>
+</div>
+<p>Hook. Return a constant used as the scaling factor for the e: words.</p>
 <p><b>Class:</b> class:word | <b>Namespace:</b> f | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>f:INF</h1>
@@ -1973,6 +1981,22 @@
 <br>
 <xmp>    .3.1415 f:sign</xmp>
 </p>
+<hr/>
+<h1>f:signed-sqrt</h1>
+<div style='margin-left: 1em;'><p><b>Data:</b> -<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> F-F</p>
+</div>
+<p>Return the square root of a floating point number.</p>
+<p><b>Class:</b> class:word | <b>Namespace:</b> f | <b>Interface Layer:</b> rre</p>
+<hr/>
+<h1>f:signed-square</h1>
+<div style='margin-left: 1em;'><p><b>Data:</b> -<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> f-f</p>
+</div>
+<p>Return the square of a floating point number.</p>
+<p><b>Class:</b> class:word | <b>Namespace:</b> f | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>f:sin</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -<br>

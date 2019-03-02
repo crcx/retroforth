@@ -174,7 +174,7 @@ e:max?                           D: u-f  A: -  F: -
 e:min?                           D: u-f  A: -  F: -
 e:n?                             D: u-f  A: -  F: -
 e:nan?                           D: u-f  A: -  F: -
-e:scaling                        D: -  A: -  F: -f
+e:put                            D: u-  A: -  F: -
 e:to-f                           D: u-  A: -  F: -n
 e:zero?                          D: u-f  A: -  F: -
 eq?                              D: nn-f  A: -  F: -
@@ -187,6 +187,7 @@ f:-eq?                           D: -f  A: -  F: FF-
 f:-inf?                          D: -f  A: -  F: F-
 f:/                              D: -  A: -  F: FF-F
 f:E                              D: -  A: -  F: -F
+f:E1                             D: -  A: -  F: -f
 f:INF                            D: -  A: -  F: -n
 f:NAN                            D: -  A: -  F: -n
 f:PI                             D: -  A: -  F: -F
@@ -230,6 +231,8 @@ f:put                            D: -  A: -  F: F-
 f:rot                            D: -  A: -  F: abc-bca
 f:round                          D: -  A: -  F: f-f
 f:sign                           D: -n  A: -  F: F-
+f:signed-sqrt                    D: -  A: -  F: F-F
+f:signed-square                  D: -  A: -  F: f-f
 f:sin                            D: -  A: -  F: F-F
 f:sqrt                           D: -  A: -  F: F-F
 f:square                         D: -  A: -  F: f-f

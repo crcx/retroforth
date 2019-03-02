@@ -509,7 +509,7 @@ e:NAN                            D: -u  A: -  F: -
 Constant. Not a Number. For encoded floating point values.
 
 e:clip                           D: u-U  A: -  F: -
-{n/a}
+Constrain the encoded value to the allowable range.
 
 e:inf?                           D: u-f  A: -  F: -
 Is encoded value infinity?
@@ -521,19 +521,19 @@ e:min?                           D: u-f  A: -  F: -
 Is encoded value at the minimum?
 
 e:n?                             D: u-f  A: -  F: -
-{n/a}
+Return `TRUE` if the encoded value is a valid number, or `FALSE` otherwise.
 
 e:nan?                           D: u-f  A: -  F: -
 Is encoded value a Nan?
 
-e:scaling                        D: -  A: -  F: -f
-Hook. Return a constant used as the scaling factor for the e: words.
+e:put                            D: u-  A: -  F: -
+Display an encoded number.
 
 e:to-f                           D: u-  A: -  F: -n
 Decode an encoded floating point value.
 
 e:zero?                          D: u-f  A: -  F: -
-{n/a}
+Return `TRUE` if the value is zero, or `FALSE` otherwise.
 
 eq?                              D: nn-f  A: -  F: -
 Compare two values for equality. Returns `TRUE` if they are equal or `FALSE` otherwise.
@@ -564,6 +564,9 @@ Divide floating point value F1 by F2.
 
 f:E                              D: -  A: -  F: -F
 Return the floating point value for Euler's number.
+
+f:E1                             D: -  A: -  F: -f
+Hook. Return a constant used as the scaling factor for the e: words.
 
 f:INF                            D: -  A: -  F: -n
 Return a value corresponding to positive infinity
@@ -693,6 +696,12 @@ Round a floating point value.
 
 f:sign                           D: -n  A: -  F: F-
 Return 1 if the floating point value is positive or -1 if it is negative.
+
+f:signed-sqrt                    D: -  A: -  F: F-F
+Return the square root of a floating point number.
+
+f:signed-square                  D: -  A: -  F: f-f
+Return the square of a floating point number.
 
 f:sin                            D: -  A: -  F: F-F
 Return the sine of a floating point number.

@@ -1887,7 +1887,7 @@ e:-INF
 
 Constant. Negative infinity.  For encoded floating point values.
 
-Class: class:word | Namespace: u | Interface Layer: rre
+Class: class:word | Namespace: e | Interface Layer: rre
 ------------------------------------------------------------------------
 
 e:-inf?
@@ -1898,7 +1898,7 @@ e:-inf?
 
 Is encoded value negative infinity?
 
-Class: class:word | Namespace: u | Interface Layer: rre
+Class: class:word | Namespace: e | Interface Layer: rre
 ------------------------------------------------------------------------
 
 e:INF
@@ -1909,7 +1909,7 @@ e:INF
 
 Constant. Infinity. For encoded floating point values.
 
-Class: class:word | Namespace: u | Interface Layer: rre
+Class: class:word | Namespace: e | Interface Layer: rre
 ------------------------------------------------------------------------
 
 e:MAX
@@ -1920,7 +1920,7 @@ e:MAX
 
 Constant. Maximum value. For encoded floating point values.
 
-Class: class:word | Namespace: u | Interface Layer: rre
+Class: class:word | Namespace: e | Interface Layer: rre
 ------------------------------------------------------------------------
 
 e:MIN
@@ -1931,7 +1931,7 @@ e:MIN
 
 Constant. Minimum value. For encoded floating point values.
 
-Class: class:word | Namespace: u | Interface Layer: rre
+Class: class:word | Namespace: e | Interface Layer: rre
 ------------------------------------------------------------------------
 
 e:NAN
@@ -1942,7 +1942,7 @@ e:NAN
 
 Constant. Not a Number. For encoded floating point values.
 
-Class: class:word | Namespace: u | Interface Layer: rre
+Class: class:word | Namespace: e | Interface Layer: rre
 ------------------------------------------------------------------------
 
 e:clip
@@ -1951,9 +1951,9 @@ e:clip
   Addr:  -
   Float: -
 
-{n/a}
+Constrain the encoded value to the allowable range.
 
-Class: class:word | Namespace: u | Interface Layer: rre
+Class: class:word | Namespace: e | Interface Layer: rre
 ------------------------------------------------------------------------
 
 e:inf?
@@ -1964,7 +1964,7 @@ e:inf?
 
 Is encoded value infinity?
 
-Class: class:word | Namespace: u | Interface Layer: rre
+Class: class:word | Namespace: e | Interface Layer: rre
 ------------------------------------------------------------------------
 
 e:max?
@@ -1975,7 +1975,7 @@ e:max?
 
 Is encoded value at the maximum?
 
-Class: class:word | Namespace: u | Interface Layer: rre
+Class: class:word | Namespace: e | Interface Layer: rre
 ------------------------------------------------------------------------
 
 e:min?
@@ -1986,7 +1986,7 @@ e:min?
 
 Is encoded value at the minimum?
 
-Class: class:word | Namespace: u | Interface Layer: rre
+Class: class:word | Namespace: e | Interface Layer: rre
 ------------------------------------------------------------------------
 
 e:n?
@@ -1995,9 +1995,9 @@ e:n?
   Addr:  -
   Float: -
 
-{n/a}
+Return `TRUE` if the encoded value is a valid number, or `FALSE` otherwise.
 
-Class: class:word | Namespace: u | Interface Layer: rre
+Class: class:word | Namespace: e | Interface Layer: rre
 ------------------------------------------------------------------------
 
 e:nan?
@@ -2008,18 +2008,18 @@ e:nan?
 
 Is encoded value a Nan?
 
-Class: class:word | Namespace: u | Interface Layer: ree
+Class: class:word | Namespace: e | Interface Layer: rre
 ------------------------------------------------------------------------
 
-e:scaling
+e:put
 
-  Data:  -
+  Data:  u-
   Addr:  -
-  Float: -f
+  Float: -
 
-Hook. Return a constant used as the scaling factor for the e: words.
+Display an encoded number.
 
-Class: class:word | Namespace: u | Interface Layer: rre
+Class: class:word | Namespace: e | Interface Layer: rre
 ------------------------------------------------------------------------
 
 e:to-f
@@ -2030,7 +2030,7 @@ e:to-f
 
 Decode an encoded floating point value.
 
-Class: class:word | Namespace: rre | Interface Layer: rre
+Class: class:word | Namespace: e | Interface Layer: rre
 ------------------------------------------------------------------------
 
 e:zero?
@@ -2039,9 +2039,9 @@ e:zero?
   Addr:  -
   Float: -
 
-{n/a}
+Return `TRUE` if the value is zero, or `FALSE` otherwise.
 
-Class: class:word | Namespace: u | Interface Layer: rre
+Class: class:word | Namespace: e | Interface Layer: rre
 ------------------------------------------------------------------------
 
 eq?
@@ -2171,6 +2171,17 @@ f:E
   Float: -F
 
 Return the floating point value for Euler's number.
+
+Class: class:word | Namespace: f | Interface Layer: rre
+------------------------------------------------------------------------
+
+f:E1
+
+  Data:  -
+  Addr:  -
+  Float: -f
+
+Hook. Return a constant used as the scaling factor for the e: words.
 
 Class: class:word | Namespace: f | Interface Layer: rre
 ------------------------------------------------------------------------
@@ -2690,6 +2701,28 @@ Example #1:
 
     .3.1415 f:sign
 
+------------------------------------------------------------------------
+
+f:signed-sqrt
+
+  Data:  -
+  Addr:  -
+  Float: F-F
+
+Return the square root of a floating point number.
+
+Class: class:word | Namespace: f | Interface Layer: rre
+------------------------------------------------------------------------
+
+f:signed-square
+
+  Data:  -
+  Addr:  -
+  Float: f-f
+
+Return the square of a floating point number.
+
+Class: class:word | Namespace: f | Interface Layer: rre
 ------------------------------------------------------------------------
 
 f:sin
