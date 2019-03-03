@@ -36,6 +36,7 @@ June 2019.
 - add f:dec
 - add f:drop-pair
 - add f:dup-pair
+- add f:dump-astack
 - add f:dump-stack
 - add f:inc
 - add f:limit

@@ -616,6 +616,9 @@ Discard the top item on the floating point stack.
 f:drop-pair                      D: -  A: -  F: FF-
 Remove top two items on the stack.
 
+f:dump-astack                    D: -  A: -  F: -
+Display the items on the alternate floating point stack.
+
 f:dump-stack                     D: -  A: -  F: -
 Display the items on the floating point stack.
 

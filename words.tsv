@@ -204,6 +204,7 @@ f:dec	-	-	n-m	Decrement n by one.			class:word	    .100 f:dec	{n/a}	f	rre
 f:depth	-n	-	-	Return the number of items on the floating point stack.			class:word	{n/a}	{n/a}	f	rre	
 f:drop	-	-	F-	Discard the top item on the floating point stack.			class:word	{n/a}	{n/a}	f	rre	
 f:drop-pair	-	-	FF-	Remove top two items on the stack.			class:word	{n/a}	{n/a}	f	rre	
+f:dump-astack	-	-	-	Display the items on the alternate floating point stack.			class:word	{n/a}	{n/a}	f	rre	
 f:dump-stack	-	-	-	Display the items on the floating point stack.			class:word	{n/a}	{n/a}	f	rre	
 f:dup	-	-	F-FF	Duplicate the top item on the floating point stack.			class:word	{n/a}	{n/a}	f	rre	
 f:dup-pair	-	-	nm-nmnm	Duplicate the top two items on the stack.			class:word	{n/a}	{n/a}	f	rre	

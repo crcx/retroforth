@@ -204,6 +204,7 @@ f:dec                            D: -  A: -  F: n-m
 f:depth                          D: -n  A: -  F: -
 f:drop                           D: -  A: -  F: F-
 f:drop-pair                      D: -  A: -  F: FF-
+f:dump-astack                    D: -  A: -  F: -
 f:dump-stack                     D: -  A: -  F: -
 f:dup                            D: -  A: -  F: F-FF
 f:dup-pair                       D: -  A: -  F: nm-nmnm

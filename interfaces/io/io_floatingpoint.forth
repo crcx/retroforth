@@ -165,7 +165,12 @@ Deal with special cases.
 ~~~
 
 ~~~
-:f:dump-stack f:depth dup [ f:push ] times [ f:pop f:dup f:put sp ] times ;
+:f:dump-stack  (-)
+  f:depth dup [ f:push ] times
+              [ f:pop f:dup f:put sp ] times ;
+:f:dump-astack (-)
+  f:adepth dup [ f:pop ] times
+               [ f:dup f:put sp f:push ] times ;
 ~~~
 
 ~~~
