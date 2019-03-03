@@ -1,16 +1,154 @@
+## Helpers
+
+~~~
+:s:shout (s-) '!_ s:prepend s:put nl 'Stack_:_ s:put dump-stack nl ;
+{{
+  'Depth var
+  :message (-)
+    'abort_with__trail__invoked s:shout nl
+    'Do__reset__to_clear_stack. s:put   nl ;
+  :put-name (a-) fetch d:lookup-xt
+    dup n:-zero? [ d:name s:put nl ] [ drop ] choose ;
+---reveal---
+  :trail repeat pop put-name again ;
+  :abort (-?) depth !Depth message trail ;
+  :s:abort (s-) 's:abort_:_ s:prepend s:put nl abort ;
+}}
+
+{{
+  :f:dump-astack (-)_dump_alternative_stack
+    f:adepth [ [ f:pop ] times ] sip 'fa_ s:put [ f:dup f:put sp f:push ] times ;
+  :dump-stacks   (-)  dump-stack nl f:dump-stack nl f:dump-astack ;
+---reveal---
+  :s  (-)___Stack       dump-stacks        ;
+}}
+
+{{
+  :f:reset (-|float:?-) f:depth [       f:drop ] times ; 
+  :f:areset (-|alt:?-)  f:depth [ f:pop f:drop ] times ; 
+  :reset.nf (?-|float:?-) reset f:reset f:areset ; 
+---reveal---
+  :r  (?-)__Reset       reset.nf           ;
+}}
+
+~~~
+
+## Description
+
+This implements a means of encoding floating point values
+into signed integer cells. The technique is described in
+the paper titled "Encoding floating point numbers to shorter
+integers" by Kiyoshi Yoneda and Charles Childers.
+
+This will extend the `f:` vocabulary and adds a new `e:` vocabulary.
+Here `e:` stands for encoded.
+
+## Code & Commentary
+
+Define some constants. The range is slightly reduced from
+the standard  integer range as the smallest value is used
+for NaN.
+
+~~~
+n:MAX n:dec          'e:MAX  const
+n:MAX n:dec n:negate 'e:MIN  const
+n:MIN                'e:NAN  const
+n:MAX                'e:INF  const
+n:MAX       n:negate 'e:-INF const
+~~~
+
+~~~
+:e:n?    (e-f) e:MIN n:inc e:MAX n:dec n:between? ;
+:e:max?  (e-f) e:MAX   eq? ;
+:e:min?  (e-f) e:MIN   eq? ;
+:e:zero? (e-f) n:zero?     ;
+:e:nan?  (e-f) e:NAN   eq? ;
+:e:inf?  (e-f) e:INF   eq? ;
+:e:-inf? (e-f) e:-INF  eq? ;
+:e:clip  (e-e) e:MIN e:MAX n:limit ;
+~~~
+
+Since 32-bit cell takes about 9 decimal digits, if you set
+
+  `[ .1e5 ] f:E1 set-hook`
+
+you will have 4 decimal digits left for the integer part of the encoded number,
+which corresponds to 8 decimal digits decoded.
+
+Encode/decode words to secure dynamic range.
+This portion is the essence of the method.
+
+~~~
+:f:E1 (-|f:-n)_e-unit_in_float  hook .1.e5 ; (decimal_digits_to_shift_left
+:f:-shift        (|f:n-n)_shift_left                          f:E1       f:* ;
+:f:+shift        (|f:n-n)_shift_right                         f:E1       f:/ ;
+:f:signed-sqrt   (|f:n-n) f:dup f:sign           f:abs f:sqrt n:to-float f:* ;
+:f:+encode       (|f:n-n) f:signed-sqrt f:-shift                             ;
+:f:-encode       (|f:n-n) f:dup f:sign  f:+shift f:dup f:*    n:to-float f:* ;
+:f:signed-square (|f:n-n) f:dup f:sign           f:dup f:*    n:to-float f:* ;
+~~~
+
+Deal with special cases.
+
+~~~
+:f:to-e (-e|f:n-)
+  f:dup f:nan?  [ f:drop drop e:NAN  ]    if;
+  f:dup f:inf?  [ f:drop drop e:INF  ]    if;
+  f:dup f:-inf? [ f:drop drop e:-INF ]    if;
+  f:+encode f:round f:to-number e:clip      (e
+  e:MIN         [ f:drop             ] case
+  e:MAX         [ f:drop             ] case ;
+
+:e:to-f (e-|f:-n)
+  e:NAN  [ drop  f:NAN ] case
+  e:INF  [ drop  f:INF ] case
+  e:-INF [ drop f:-INF ] case
+  n:to-float f:-encode ;
+~~~
+
+```
+r .-1234.56789 f:to-e s e:to-f s
+```
+
+~~~
+:f:store (a-|f:n-)     [ f:to-e ] dip store ;
+:f:fetch (a-|f:-n) fetch e:to-f             ;
+~~~
+
+~~~
+:f:dump-stack f:depth dup [ f:push ] times [ f:pop f:dup f:put sp ] times ;
+~~~
+
+~~~
+:e:put (e-)
+  e:MAX  [ 'e:MAX  s:put ] case
+  e:MIN  [ 'e:MIN  s:put ] case
+  #0     [ 'e:0    s:put ] case
+  e:NAN  [ 'e:NAN  s:put ] case
+  e:INF  [ 'e:INF  s:put ] case
+  e:-INF [ 'e:-INF s:put ] case
+  e:to-f f:put ;
+~~~
+
+```
+r .-1234.56789 f:to-e e:put
+```
+
+## Higher precision variables
+
 Here are words to encode floating point numbers into two cells.
 
-Words in file FloatingPointEncoding.forth encode
+Words defined up to this point store
 floating point numbers, which are often  64-bit or 2-cell numbers,
 into signed integers,   which are always 32-bit or 1-cell numbers.
 The encoding causes loss in both precision and dynamic range.
 
-Words defined in this file encodes floating point numbers into
+Words defined below encode floating point numbers into
 two integers occupying two 32-bit cells.
 
 Two different ways are implemented:
 
-- `w1` used fixed point encoding.
+- `w1` uses fixed point encoding.
    Splits a floating point number into the integer and the fraction
    parts to store them in two cells.
    This is faster with a narrower dynamic range.
@@ -21,31 +159,24 @@ Two different ways are implemented:
 Since Retro's cells are 32-bit,
 it is more convenient to handle floating point numbers
 encoded into single cells than into pairs of cells.
-For instance, consider using the `set:` class words for vectors.
+For instance, consider using the `array:` words for vectors.
 Hence in many cases the words found by doing
 
-  'u: d:words-with
+  'e: d:words-with
 
 are suitable.
 However, sometimes a higher precision is desired at a higher cost.
 
-~~~
-:d:-found? (s-f) d:lookup n:zero? ;
-:st (-) dump-stack nl f:dump-stack ;
-'s:abort d:-found? [ 'example/Abort.forth include ] if
-~~~
-
-Encode/decode words to secure dynamic range.
-This is the essence of the method.
+These are the same as `f:+encode` and `f:-encode` except that they come
+without `f:-shift` and `f:+shift` .
 
 ~~~
-:f:encode.w2  (|f:n-n) f:dup f:sign f:abs f:sqrt n:to-float f:* ;
+:f:+encode.w2 (|f:n-n) f:dup f:sign f:abs f:sqrt n:to-float f:* ;
 :f:-encode.w2 (|f:n-n) f:dup f:sign f:dup f:*    n:to-float f:* ;
 ~~~
 
 ```
-.-12345.6789 f:encode.w2  st
-             f:-encode.w2 st
+r .-12345.6789 f:+encode.w2 s f:-encode.w2 s
 ```
 
 Split encoded floating point numbers into the integer and the fraction parts.
@@ -54,44 +185,40 @@ The fractional part is that of the absolute value.
 
 ~~~
 {{
-  :f:shift9  .1.e-9 f:* ;
+  :f:+shift9 .1.e-9 f:* ;
   :f:-shift9 .1.e9  f:* ;
 ---reveal---
-  :f:split  (-|f:n-fi)_absFrac.-shift9_signedInt
-    f:dup f:sign                      (s|f:_n
-    f:abs f:dup f:floor f:swap f:over (s|f:_abs.int_abs_abs.int
-    f:- f:-shift9                     (s|f:_abs.int_abs.frac.-shift9
-    f:swap n:to-float f:*             (_|f:_abs.frac.-shift9_signedInt
+
+  :f:+split (-|f:n-fi)_absFrac.-shift9_signedInt
+    f:dup f:sign                        (s|f:_n
+    f:abs f:dup f:floor f:swap f:over   (s|f:_abs.int_abs_abs.int
+    f:- f:-shift9                       (s|f:_abs.int_abs.frac.-shift9
+    f:swap n:to-float f:*               (_|f:_abs.frac.-shift9_signedInt
     ;
+
   :f:-split (-|f:fi-n)
-    f:dup f:sign f:abs                 (s|f:_abs.frac.-shift9_abs.int
-    f:swap f:shift9 f:+ n:to-float f:* (_|f:_n 
+    f:dup f:sign f:abs                  (s|f:_abs.frac.-shift9_abs.int
+    f:swap f:+shift9 f:+ n:to-float f:* (_|f:_n 
     ;
 }}
 ~~~
 
 ```
-.-123456789.0987654321 f:split  st
-                       f:-split st
+r .-123456789.0987654321 f:+split s f:-split s
 ```
 
 From float to double cells w2 .
 And its inverse.
 
 ~~~
-:f:to-w1 (-fi|f:n-)_frac_sInt f:split f:to-number f:to-number swap     ;
+:f:to-w1 (-fi|f:n-)_frac_sInt f:+split f:to-number f:to-number swap     ;
 :w1:to-f (fi-|f:-n)           swap    n:to-float  n:to-float  f:-split ;
-:f:to-w2 (-fi|f:n-)_frac_sInt f:encode.w2  f:to-w1 ;
+:f:to-w2 (-fi|f:n-)_frac_sInt f:+encode.w2  f:to-w1 ;
 :w2:to-f (fi-|f:-n)   w1:to-f f:-encode.w2         ;
-:st (-) dump-stack nl f:dump-stack ; 
-  :f:sign (-n|f:a-) 
-  f:dup .0 f:eq? [ #0 f:drop ] if; 
-  .0 f:gt? [ #1 ] [ #-1 ] choose ; 
 ~~~
 
 ```
-.-123456789.0987654321 f:to-w2 st
-                       w2:to-f st
+r .-123456789.0987654321 f:to-w2 s w2:to-f s
 ```
 
 `f:var1` and `f:var2` take initial values.
@@ -103,21 +230,23 @@ And its inverse.
     f:dup f:abs f:SATURATE1 f:gt? 
     [ f:put nl 'f:var1_overflow s:abort ] if ;
 ---reveal---
-  :f:var1   (s-|f:n-) f:overflow-check1 f:to-w1 rot d:create , , ;
-  :f:fetch1 (a-|f:-n) fetch-next [ fetch ] dip w1:to-f ;
-  :f:store1 (a-|f:n-) f:overflow-check1 f:to-w1 rot store-next store ;
+  :f:var1 (s-|f:n-) f:overflow-check1 f:to-w1 rot d:create , , ;
+  :f:@1   (a-|f:-n) fetch-next [ fetch ] dip w1:to-f ;
+  :f:!1   (a-|f:n-) f:overflow-check1 f:to-w1 rot store-next store ;
 }}
 ~~~
 
 ```
+r
 .-123456789.0987654321 'FVar1 f:var1
-&FVar1 f:fetch1 st
-.-98765.4321 &FVar1 f:store1
-&FVar1 f:fetch1 st
+&FVar1 f:@1 s
+r
+.-98765.4321 &FVar1 f:!1
+&FVar1 f:@1 s
 ```
 
-  .-9876543210.123456789 &FVar1 f:store1 (This_test_should__abort
-  .1.e20 &FVar1 f:store1                 (This_test_should__abort
+  .-9876543210.123456789 &FVar1 f:@1 (This_test_should__abort
+  .1.e20 &FVar1 f:!1                 (This_test_should__abort
 
 ~~~
 {{
@@ -126,17 +255,20 @@ And its inverse.
     f:dup f:abs f:SATURATE2 f:gt? 
     [ f:put nl 'f:var2_overflow s:abort ] if ;
 ---reveal---
-  :f:var2   (s-|f:n-) f:overflow-check2 f:to-w2 rot d:create , , ;
-  :f:fetch2 (a-|f:-n) fetch-next [ fetch ] dip w2:to-f ;
-  :f:store2 (a-|f:n-) f:overflow-check2 f:to-w2 rot store-next store ;
+  :f:var2 (s-|f:n-) f:overflow-check2 f:to-w2 rot d:create , , ;
+  :f:@2   (a-|f:-n) fetch-next [ fetch ] dip w2:to-f ;
+  :f:!2   (a-|f:n-) f:overflow-check2 f:to-w2 rot store-next store ;
 }}
 ~~~
 
 ```
+r
 .-123456789.0987654321 'FVar2 f:var2
-&FVar2 f:fetch2 st
-.-9876543210.123456789 &FVar2 f:store2
-&FVar2 f:fetch2 st
+&FVar2 f:@2 s
+r
+.-9876543210.123456789 &FVar2 f:!2
+&FVar2 f:@2 s
 ```
 
-  .1.e20 &FVar2 f:store2  (This_test_should_abort
+  .1.e20 &FVar2 f:!2  (This_test_should_abort
+
