@@ -165,6 +165,7 @@ June 2019.
 - add retro-embedimage.forth
 - add SaveAndRestoreStack.forth
 - add share.forth and shared.forth
+- add TokiPona-Translate.forth
 - add uuencode.forth
 - add uudecode.forth
 - fix test block in defstruct.forth
