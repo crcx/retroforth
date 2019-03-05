@@ -688,7 +688,7 @@ d 3
 ~~~
 
 A traditional Forth has `create` to make a new dictionary entry
-pointing to the next free location in `Heap`. Rx has `newentry` 
+pointing to the next free location in `Heap`. Rx has `d:add-header` 
 which serves as a slightly more flexible base. You provide a
 string for the name, a pointer to the class handler, and a
 pointer to the start of the function. Rx does the rest.
@@ -696,10 +696,10 @@ pointer to the start of the function. Rx does the rest.
 In actual practice, I never use this outside of Rx. New words
 are made using the `:` prefix, or `d:create` (once defined in
 the standard library). At some point I may simplify this by
-moving `d:create` into Rx and using it in place of `newentry`.
+moving `d:create` into Rx and using it in place of `d:add-header`.
 
 ~~~
-: newentry
+: d:add-header
 i lifepuli
 r Heap
 r Dictionary
@@ -892,25 +892,43 @@ obtaining pointers (prefix with `&`), and defining functions
 | :      | definitions       | :foo    |
 | (      | Comments          | (n-)    |
 
+
+    :prefix:(  (s-)  drop ;
+
 ~~~
 : prefix:(
 i drre....
+~~~
 
+    :prefix:#  (s-n)  s:to-number class:data ;
+
+~~~
 : prefix:#
 i lica....
 r s:to-number
 i liju....
 r class:data
+~~~
 
+    :prefix:$  (s-c)  fetch class:data ;
+
+~~~
 : prefix:$
 i feliju..
 r class:data
+~~~
 
+    :prefix::  (s-)
+      &class:word &Heap fetch d:add-header
+      &Heap fetch &Dictionary d:xt store
+      #-1 &Compiler store ;
+
+~~~
 : prefix::
 i lilifeli
 r class:word
 r Heap
-r newentry
+r d:add-header
 i ca......
 i lifelife
 r Heap
@@ -921,7 +939,11 @@ i stlilist
 d -1
 r Compiler
 i re......
+~~~
 
+    :prefix:&  (s-a)  d:lookup d:xt fetch class:data ;
+
+~~~
 : prefix:&
 i lica....
 r d:lookup
@@ -1355,7 +1377,7 @@ r class:word
 s class:data
 : 0045
 r 0044
-r newentry
+r d:add-header
 r class:word
 s d:add-header
 : 0046
