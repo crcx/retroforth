@@ -941,7 +941,28 @@ r Compiler
 i re......
 ~~~
 
+The `&` prefix is used to return the address of a named item.
+This will correspond to the `d:xt` field of the word header.
+In higher level Retro this would be:
+
     :prefix:&  (s-a)  d:lookup d:xt fetch class:data ;
+
+As an example:
+
+    #1 #2 &+ call        (call_`+`_via_pointer)
+    &Heap fetch          (fetch_from_`Heap`)
+
+In the latter case, the use of `class:data` means that I
+don't *need* to use the `&` prefix, but I do this anyway as
+I find it helps to provide a visual clue as to the intent of
+the code.
+
+This is also useful with combinators. If you are only using
+a single word, using `&word` instead of `[ word ]` will be
+smaller and faster.
+
+For those familiar with traditional Forth, the `&` prefix
+replaces both `'` and `[']`.
 
 ~~~
 : prefix:&
