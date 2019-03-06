@@ -732,13 +732,13 @@ handle each case.
 ~~~
 :process-arguments
   QUERY
-  'describe [ find-and-display-entry ] s:case
-  'export   [ export-data            ] s:case
-  'edit     [ handle-edit            ] s:case
-  'add      [ add-word               ] s:case
-  'delete   [ delete-entry           ] s:case
-  'serve    [ server                 ] s:case
-  'missing  [ display-missing        ] s:case 
+  'describe [ find-and-display-entry nl ] s:case
+  'export   [ export-data               ] s:case
+  'edit     [ handle-edit               ] s:case
+  'add      [ add-word                  ] s:case
+  'delete   [ delete-entry              ] s:case
+  'serve    [ server                    ] s:case
+  'missing  [ display-missing           ] s:case 
   drop show-help ;
 ~~~
 

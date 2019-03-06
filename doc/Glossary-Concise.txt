@@ -1225,6 +1225,9 @@ Return the number of arguments passed to the program.
 sys:argv                         D: n-s  A: -  F: -
 Given an argument number, return the argument as a string.
 
+sys:name                         D: -s  A: -  F: -
+Return the filename of the program being run.
+
 tab                              D: -  A: -  F: -
 Display a tab (`ASCII:HT`)
 

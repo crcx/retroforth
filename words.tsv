@@ -323,7 +323,7 @@ over	nm-nmn	-	-	Put a copy of n over m.			class:word	{n/a}	{n/a}	global	all
 parse-until	q-s	-	-	Read input from stdin (via `c:get`) until the returned character is matched by the quote. Returns a string.			class:word	  :read-until-period (-s)\n    [ $. eq? ] parse-until ;	{n/a}	all	rre	
 pb:get	a-	-	-	Copy a string from the pasteboard to the specified address.			class:word	{n/a}	{n/a}	pb	iOS	{n/a}
 pb:length	-n	-	-	Return the length of the string on the pasteboard.			class:word	{n/a}	pb	pb	iOS	
-pb:set	s-	-	-	Copy a string to the pasteboard.			class:word	{n/a}	{n/a}	pb\n	iOS	
+pb:set	s-	-	-	Copy a string to the pasteboard.			class:word	{n/a}	{n/a}	pb	iOS	
 pop	-n	n-	-	Move a value from the return stack to the data stack.			class:macro	{n/a}	{n/a}	global	all	
 prefix:!	ns-	-	-	Store a value into a variable.	Store a value into the named variable.	Compile the code to store a value into a named variable.	class:macro	{n/a}	{n/a}	prefix	all	
 prefix:"	s-s	-	-	Process token as a string.	Keep string as permanent. If `RewriteUnderscores` is `TRUE`, replace all instances of _ with space.	Keep string as permanent. If `RewriteUnderscores` is `TRUE`, replace all instances of _ with space. Then compile the string into the current definition.	class:macro	{n/a}	{n/a}	prefix	all	
@@ -407,6 +407,7 @@ store-next	na-a	-	-	Store a value into the specified address and return the next
 swap	nm-mn	-	-	Exchange the position of the top two items on the stack			class:primitive	{n/a}	{n/a}	global	all	
 sys:argc	-n	-	-	Return the number of arguments passed to the program.			class:word	{n/a}	{n/a}	sys	rre	
 sys:argv	n-s	-	-	Given an argument number, return the argument as a string.			class:word	{n/a}	{n/a}	sys	rre	
+sys:name	-s	-	-	Return the filename of the program being run.			class:word	{n/a}	{n/a}	sys	rre	
 tab	-	-	-	Display a tab (`ASCII:HT`)			class:word	{n/a}	{n/a}	global	all	
 times	nq-	-	-	Run the specified quote the specified number of times.			class:word	    #12 [ $- c:put ] times	{n/a}	global	all	
 times<with-index>	nq-	-	-	Run a quote the specified number of times, tracking the loop index in `I`.			class:word	{n/a}	{n/a}	global	all	

@@ -98,6 +98,7 @@ June 2019.
 - add `-u filename` startup parameter to allow selection of
   image file
 - add `image:save`
+- add `sys:name`
 
 ### retro-compiler
 

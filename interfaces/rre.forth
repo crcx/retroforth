@@ -64,7 +64,8 @@ words we can use.
 ---reveal---
   :sys:argc (-n)               identify #0 @io:Scripting io:invoke ;
   :sys:argv (n-s) s:empty swap identify #1 @io:Scripting io:invoke ;
-  :include  (s-)               identify #2 @io:Scripting io:invoke  ;
+  :include  (s-)               identify #2 @io:Scripting io:invoke ;
+  :sys:name (-s)       s:empty identify #3 @io:Scripting io:invoke ;
 }}
 ~~~
 

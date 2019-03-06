@@ -189,10 +189,15 @@ void scripting_include() {
   include_file(string_extract(stack_pop()), 0);
 }
 
+void scripting_name() {
+  stack_push(string_inject(sys_argv[1], stack_pop()));
+}
+
 Handler ScriptingActions[] = {
   scripting_arg_count,
   scripting_arg,
-  scripting_include
+  scripting_include,
+  scripting_name
 };
 
 void io_scripting_query() {
