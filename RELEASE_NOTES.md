@@ -129,6 +129,7 @@ June 2019.
 - retro-extend: reduce memory usage
 - retro-extend: fix potential buffer overrun
 - muri: remove the unused `c` directive
+- add retro-describe
 
 ## Other
 

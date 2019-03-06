@@ -13,7 +13,7 @@ all: build
 
 help:
 
-build: dirs toolchain ngaImage bin/retro
+build: dirs toolchain ngaImage bin/retro bin/retro-describe
 
 optional: build bin/retro-ri bin/retro-repl
 
@@ -36,6 +36,7 @@ install: build install-data install-docs install-examples install-manpages
 #	install -c -m 755 bin/retro-ri $(DESTDIR)$(PREFIX)/bin/retro-ri
 	install -c -m 755 bin/retro $(DESTDIR)$(PREFIX)/bin/retro
 	install -c -m 755 bin/retro-unu $(DESTDIR)$(PREFIX)/bin/retro-unu
+	install -c -m 755 bin/retro-describe $(DESTDIR)$(PREFIX)/bin/retro-describe
 
 install-strip: build install-data install-docs install-examples
 	install -m 755 -d -- $(DESTDIR)/bin
@@ -90,6 +91,8 @@ repl: bin/retro-repl
 
 ri: bin/retro-ri
 
+retro-describe: bin/retro-describe
+
 update: bin/retro-unu literate/Unu.md literate/Muri.md
 	./bin/retro-unu literate/Unu.md >tools/unu.c
 	./bin/retro-unu literate/Muri.md >tools/muri.c
@@ -99,6 +102,9 @@ update: bin/retro-unu literate/Unu.md literate/Muri.md
 ngaImage: literate/Rx.md literate/RetroForth.md bin/retro-muri bin/retro-extend
 	./bin/retro-muri literate/Rx.md
 	./bin/retro-extend ngaImage literate/RetroForth.md
+
+bin/retro-describe: retro-describe.forth words.tsv
+	cat retro-describe.forth words.tsv >bin/retro-describe
 
 bin/retro-embedimage: tools/embedimage.c
 	$(CC) $(CFLAGS) $(LDFLAGS) -o bin/retro-embedimage  tools/embedimage.c

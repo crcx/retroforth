@@ -1,0 +1,159 @@
+#!/usr/bin/env retro
+
+# retro-describe
+
+This is a small tool to display some helpful information
+about a word.
+
+# Usage
+
+    retro-describe wordname
+
+# Notes
+
+This is based on the `glossary.forth` tool included with
+Retro. It's basically just the `describe` functionality,
+but is a little more streamlined to use and abandons the
+editing and export functionality of the full tool.
+
+# The Code
+
+First, gather the command line arguments. If no word name
+was passed, just exit.
+
+~~~
+sys:argc n:zero? [ #0 unix:exit ] if
+#0 sys:argv 'TARGET s:const
+~~~
+
+# Data File
+
+/usr/local/share/RETRO12/words.tsv
+
+I like plain text formats, so the data is stored as a plain text
+file, with one line per word. Each line has a number of fields.
+These are tab separated. The fields are:
+
+    | name                       | 0
+    | data stack                 | 1
+    | address stack              | 2
+    | float stack                | 3
+    | general description        | 4
+    | interpret time description | 5
+    | compile time description   | 6
+    | class handler              | 7
+    | example 1                  | 8
+    | example 2                  | 9
+    | namespace                  | 10
+    | interface                  | 11
+
+I use a variable named `SourceLine` to point to the current line
+contents.
+
+~~~
+'SourceLine var
+~~~
+
+I next define words to access each field. This involves helpers
+to skip over fields I'm not intersted in, a word to return a 
+specific field, and the top level wrappers over these.
+
+Rather than manually enter each of the field accessors, I am
+just listing them in a set and constructing the words via some
+simple code.
+
+~~~
+{{
+  :skip (n-) [ ASCII:HT s:split drop n:inc ] times ;
+  :select   (n-s)
+    @SourceLine swap skip ASCII:HT s:split nip ;
+
+---reveal---
+
+  #0 { 'name        'dstack     'astack     'fstack
+       'descr       'itime      'ctime      'class
+       'ex1         'ex2        'namespace  'interface }
+
+  [ 'field: s:prepend d:create
+    dup compile:lit &select compile:call compile:ret
+    &class:word reclass n:inc ] array:for-each drop
+}}
+~~~
+
+# Display an Entry
+
+I implement a word to display an entry. This will use a
+format like:
+
+    name
+
+      Data:  -
+      Addr:  -
+      Float: -
+
+    A description of the word.
+
+    Class Handler: class:word | Namespace: global | Interface Layer: all
+
+If there are specific notes on interpret or compile time
+actions, or any examples, they will be displayed after
+the description.
+
+~~~
+{{
+  :s:putfmt (s-)   s:format s:put ;
+  :name            field:name    '%s\n\n           s:putfmt ;
+  :data            field:dstack  '__Data:__%s\n    s:putfmt ;
+  :address         field:astack  '__Addr:__%s\n    s:putfmt ;
+  :float           field:fstack  '__Float:_%s\n\n  s:putfmt ;
+  :description     field:descr   '%s\n\n           s:putfmt ;
+  :interpret-time  field:itime s:length 0; drop
+                   field:itime   'Interpret_Time:\n__%s\n\n s:putfmt ;
+  :compile-time    field:ctime s:length 0; drop
+                   field:ctime   'Compile_Time:\n__%s\n\n   s:putfmt ;
+  :|                               '_|_ s:put ;
+  :class           field:class     'Class:_%s     s:putfmt ;
+  :namespace       field:namespace 'Namespace:_%s s:putfmt ;
+  :interface       field:interface 'Interface_Layer:_%s s:putfmt ;
+  :example1        field:ex1 '{n/a} s:eq? not 0; drop
+                   field:ex1 s:format '\nExample_#1:\n\n%s\n\n s:putfmt ;
+  :example2        field:ex2 '{n/a} s:eq? not 0; drop
+                   field:ex2 s:format '\nExample_#1:\n\n%s\n\n s:putfmt ;
+---reveal---
+  :display-result
+    name
+      data    (stack)
+      address (stack)
+      float   (stack)
+    description
+    interpret-time
+    compile-time
+    class | namespace | interface nl
+    example1
+    example2 ;
+}}
+~~~
+
+## Describe a Word
+
+~~~
+{{
+  :matched? (-f) field:name TARGET s:eq? ;
+  :entry?   (-f) @SourceLine ASCII:HT s:contains-char? ;
+---reveal---
+  :find-and-display-entry
+   sys:name [ s:keep !SourceLine entry? 0; drop matched? [ display-result ] if ] file:for-each-line nl ;
+}}
+~~~
+
+# Finish
+
+This checks the command line arguments and calls the proper words to
+handle each case.
+
+~~~
+find-and-display-entry
+~~~
+
+# Glossary Data
+
