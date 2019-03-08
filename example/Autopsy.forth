@@ -9,36 +9,40 @@ Autopsy is a set of debugging tools for RETRO.
 
 # Background
 
-RETRO runs on a virtual machine called Nga. The instruction set is MISC inspired, consisting of just 30 instructions:
+RETRO runs on a virtual machine called Nga. The instruction set
+is MISC inspired, consisting of just 30 instructions:
 
-    0  nop       10  return     20  divmod
-    1  lit <v>   11  eq         21  and
-    2  dup       12  neq        22  or
-    3  drop      13  lt         23  xor
-    4  swap      14  gt         24  shift
-    5  push      15  fetch      25  zret
-    6  pop       16  store      26  end
-    7  jump      17  add        27  ienumerate
-    8  call      18  subtract   28  iquery
-    9  ccall     19  multiply   29  iinvoke
+    0 ..    5 pu    10 re    15 fe    20 di    25 zr
+    1 li    6 po    11 eq    16 st    21 an    26 en
+    2 du    7 ju    12 ne    17 ad    22 or    27 ie
+    3 dr    8 ca    13 lt    18 su    23 xo    28 iq
+    4 sw    9 cc    14 gt    19 mu    24 sh    29 ii
 
-The first two characters of each instruction name are sufficient to identify the instruction.
+The first two characters of each instruction name are sufficient
+to identify the instruction.
 
-Nga exposes memory as an array of 32-bit signed integers. Each memory location can store four instructions. The assembler expects the instructions to be named using their two character identifiers. E.g.,
+Nga exposes memory as an array of 32-bit signed integers. Each
+memory location can store four instructions. The assembler
+expects the instructions to be named using their two character
+identifiers. E.g.,
 
     'lica.... i
     #100 d
 
 # Disassembly
 
-I use  '..' for 'no(p)' and then construct a string with all of these. This will be used to resolve names. The ?? at the end will be used for unidentified instructions.
+I use  '..' for 'no(p)' and then construct a string with all of
+these. This will be used to resolve names. The ?? at the end
+will be used for unidentified instructions.
 
 ~~~
 '..lidudrswpupojucaccreeqneltgtfestadsumudianorxoshzrenieiqii??
 'INST s:const
 ~~~
 
-Since instructions are packed, I need to unpack them before I can run or display the individual instructions. I implement `unpack` for this.
+Since instructions are packed, I need to unpack them before I
+can run or display the individual instructions. I implement
+`unpack` for this.
 
 ~~~
 {{
@@ -53,7 +57,11 @@ Since instructions are packed, I need to unpack them before I can run or display
 }}
 ~~~
 
-Now it's possible to write words to display instruction bundles. The formats are kept simple. For a bundle with `lit / lit / add / lit`, this will display either the opcodes (`1,1,17,1`) or a string with the abbreviations (`liliadli`).
+Now it's possible to write words to display instruction
+bundles. The formats are kept simple. For a bundle with
+`lit / lit / add / lit`, this will display either the
+opcodes (`1,1,17,1`) or a string with the abbreviations
+(`liliadli`).
 
 ~~~
 :name-for (n-cc)
@@ -66,27 +74,35 @@ Now it's possible to write words to display instruction bundles. The formats are
   unpack #4 [ name-for c:put c:put ] times ;
 ~~~
 
-So now I'm ready to write an actual disassembler. I'll provide an output setup like this:
+So now I'm ready to write an actual disassembler. I'll
+provide an output formatted like this:
 
     (address) 'instructionbundle i
     (address) #value d (possibly_`reference`)
 
-If the value corresponds to a word in the `Dictionary`, the disassembler will display a message indicating the possible name that corresponds to the value.
+If the value corresponds to a word in the `Dictionary`, the
+disassembler will display a message indicating the possible
+name that corresponds to the value.
 
-To begin, I'll add a variable to track the number of `li` instructions. (These require special handling as they push a value in the following cells to the stack).
+To begin, I'll add a variable to track the number of `li`
+instructions. (These require special handling as they push a
+value in the following cells to the stack).
 
 ~~~
 'LitCount var
 ~~~
 
-I then wrap `name-for` with a simple check that increments `LitCount` as needed.
+I then wrap `name-for` with a simple check that increments
+`LitCount` as needed.
 
 ~~~
 :name-for<counting-li> (n-cc)
   dup #1 eq? [ &LitCount v:inc ] if name-for ;
 ~~~
 
-To actually display a bundle, I need to decide on what it is. So I have a `validate` word to look at each instruction and make sure all are actual instructions.
+To actually display a bundle, I need to decide on what it is. So
+I have a `validate` word to look at each instruction and make
+sure all are actual instructions.
 
 ~~~
 :valid? (n-f)
@@ -95,9 +111,11 @@ To actually display a bundle, I need to decide on what it is. So I have a `valid
   [ [ #0 #29 n:between? ] bi@ and ] dip and ;
 ~~~
 
-With this and the `LitCount`, I can determine how to render a bundle.
+With this and the `LitCount`, I can determine how to render
+a bundle.
 
-I split out each type (instruction, reference/raw, and data) into a separate handler.
+I split out each type (instruction, reference/raw, and data) into
+a separate handler.
 
 ~~~
 :render-inst (n-)
@@ -113,8 +131,8 @@ I split out each type (instruction, reference/raw, and data) into a separate han
     [     render-data ] choose ;
 ~~~
 
-Then I use these and my `valid?` checker to implement a single word to
-render the packed cell in a meaningful manner.
+Then I use these and my `valid?` checker to implement a single
+word to render the packed cell in a meaningful manner.
 
 ~~~
 :render-packed (n-)
@@ -144,12 +162,15 @@ And now to tie it all together:
 
 # Execution Trace and Single Stepper
 
-Ok, now on to the fun bit: execution trace and single stepping through a word.
+Ok, now on to the fun bit: execution trace and single stepping
+through a word.
 
-This entails writing an implementation of Nga in RETRO. So to start, setup space for the data and address ("return") stacks, as well as variables for the stack pointers and instruction pointer.
+This entails writing an implementation of Nga in RETRO. So to
+start, setup space for the data and address ("return") stacks,
+as well as variables for the stack pointers and instruction
+pointer.
 
 ~~~
-'Image       d:create  #32769 allot
 'DataStack   d:create  #128 allot
 'ReturnStack d:create  #768 allot
 'SP var
@@ -157,7 +178,17 @@ This entails writing an implementation of Nga in RETRO. So to start, setup space
 'IP var
 ~~~
 
-Next, helpers to push values from the real stacks to the simulated ones. The stack pointer will point to the next available cell, not the actual top element.
+I also set up space for the actual RAM. When single stepping
+or tracing, Autopsy will copy the actual RAM to this before
+proceeding. Note that this is limited to 128K cells.
+
+~~~
+'Image       d:create  #128000 allot
+~~~
+
+Next, helpers to push values from the real stacks to the
+simulated ones. The stack pointer will point to the next
+available cell, not the actual top element.
 
 ~~~
 :>s (n-) &DataStack @SP + store &SP v:inc ;
@@ -166,13 +197,16 @@ Next, helpers to push values from the real stacks to the simulated ones. The sta
 :r> (-n) &RP v:dec &ReturnStack @RP + fetch ;
 ~~~
 
-One more helper, `[IP]` will return the value in memory at the location `IP` points to.
+One more helper, `[IP]` will return the value in memory at the
+location `IP` points to.
 
 ~~~
 :[IP] @IP fetch ;
 ~~~
 
-Now for the instructions. Taking a cue from the C implementation, I have a separate word for each instruction and then a jump table of addresses that point to these.
+Now for the instructions. I have a separate word for each
+instruction and then a jump table of addresses that point to
+these.
 
 ~~~
 :i:no                            ;
@@ -190,7 +224,10 @@ Now for the instructions. Taking a cue from the C implementation, I have a separ
 :i:ne s> s> -eq?           >s    ;
 :i:lt s> s> swap lt?       >s    ;
 :i:gt s> s> swap gt?       >s    ;
-:i:fe s>    &Image + fetch >s    ;
+:i:fe s>    #-1 [ @SP     >s ] case
+            #-2 [ @RP     >s ] case
+            #-3 [ #128000 >s ] case
+            &Image + fetch >s    ;
 :i:st s> s> swap &Image + store  ;
 :i:ad s> s> +              >s    ;
 :i:su s> s> swap -         >s    ;
@@ -207,7 +244,9 @@ Now for the instructions. Taking a cue from the C implementation, I have a separ
 :i:ii s> s> nip c:put            ;
 ~~~
 
-With the instructions defined, populate the jump table. The order is crucial as the opcode number will be the index into this table.
+With the instructions defined, populate the jump table. The
+order is crucial as the opcode number will be the index into
+this table.
 
 ~~~
 'Instructions d:create
@@ -218,7 +257,11 @@ With the instructions defined, populate the jump table. The order is crucial as 
   &i:sh ,  &i:zr ,  &i:en ,  &i:ie ,  &i:iq ,  &i:ii ,
 ~~~
 
-With the populated table of instructions, implementing a `process-single-opcode` is easy. This will check the instruction to make sure it's valid, then call the corresponding handler in the instruction table. If not valid, this will report an error.
+With the populated table of instructions, implementing a
+`process-single-opcode` is easy. This will check the
+instruction to make sure it's valid, then call the
+corresponding handler in the instruction table. If not
+valid, this will report an error.
 
 ~~~
 :process-single-opcode (n-)
@@ -227,7 +270,8 @@ With the populated table of instructions, implementing a `process-single-opcode`
   [ 'Invalid_Instruction:_%n_! s:format s:put nl ] choose ;
 ~~~
 
-Next is to unpack an instruction bundle and process each instruction.
+Next is to unpack an instruction bundle and process each
+instruction.
 
 ~~~
 :process-packed-opcode (n-)
@@ -238,7 +282,8 @@ Next is to unpack an instruction bundle and process each instruction.
   process-single-opcode ;
 ~~~
 
-So the guts of the Nga-in-RETRO are done at this point. Now to implement a method of stepping through execution of a word.
+So the guts of the Nga-in-RETRO are done at this point. Next
+is a method of stepping through execution of a word.
 
 This will display output indicating state. It'll provide:
 
@@ -257,35 +302,42 @@ E.g.,
 So helpers for displaying things:
 
 ~~~
-:display-status
-  @RP @SP @IP 'IP:%n_SP:%n_RP:%n\n s:format s:put
-  [IP] [ unpack ] sip '__%n_->_[%n,%n,%n,%n]_->_ s:format s:put
-  [IP] unpack #4 [ name-for<counting-li> c:put c:put ] times nl ;
-
 :display-data-stack
+  'DS:_ s:put
   #0 @SP [ &DataStack over + fetch n:put sp n:inc ] times drop ;
 
 :display-return-stack
+  'RS:_ s:put
   #0 @RP [ &ReturnStack over + fetch n:put sp n:inc ] times drop ;
 ~~~
 
-And then using the display helpers and instruction processor, a single stepper. (This also updates a `Steps` counter)
+And then using the display helpers and instruction processor, a
+single stepper. (This also updates a `Steps` counter)
 
 ~~~
 'Steps var
 
-:step (-)
-  @IP d:lookup-xt n:-zero? [ @IP d:lookup-xt d:name nl tab s:put nl ] if
-  display-status
-  '__DS:_ s:put display-data-stack '_->_ s:put
-  [IP] process-packed-opcode &IP v:inc
-  display-data-stack nl nl
-  &Steps v:inc ;
-
-:astep
+:take-step
   [IP] process-packed-opcode &IP v:inc
   &Steps v:inc ;
 
+{{
+  :sep          #63 [ $- c:put ] times nl ;
+  :named-word?  @IP d:lookup-xt n:-zero? ;
+  :show-name    0; drop @IP d:lookup-xt d:name s:put nl ;
+  :instruction  [IP] [ unpack ] sip ;
+  :names        #4 [ name-for<counting-li> c:put c:put ] times ;
+  :format       '%n,%n,%n,%n s:format ;
+  :pad          s:length #16 swap - #0 n:max [ sp ] times ;
+  :opcodes      format dup s:put pad ;
+  :pad          dup n:to-string s:length #6 swap - #0 n:max [ sp ] times ;
+  :header       'IP: s:put @IP pad n:put
+                @RP @SP '\tSP:%n_RP:%n\t s:format s:put ;
+---reveal---
+  :details      instruction drop names tab instruction [ opcodes ] dip sp n:put nl ;
+  :stacks       display-data-stack nl display-return-stack nl ;
+  :step         sep named-word? show-name header details take-step stacks ;
+}}
 ~~~
 
 And then wrap it with `times` to run multiple steps.
@@ -295,29 +347,26 @@ And then wrap it with `times` to run multiple steps.
   &step times ;
 ~~~
 
-Then on to the tracer. This will `step` through execution until the word returns. I use a similar approach to how I handle this in the interface layers for RETRO (word execution ends when the address stack depth reaches zero).
+Then on to the tracer. This will `step` through execution until
+the word returns. I use a similar approach to how I handle this
+in the interface layers for RETRO (word execution ends when the
+address stack depth reaches zero).
 
-The `trace` will empty the step counter and display the number of steps used.
+The `trace` will empty the step counter and display the number
+of steps used.
 
 ~~~
 :copy-image
-  #0 &Image #32768 copy ;
+  #0 &Image #128000 here n:min copy ;
 ~~~
 
 ~~~
 :trace (a-)
   copy-image
-  #0 !Steps
+  #0 !Steps #0 !SP
   !IP #0 >r
   [ step @RP n:zero? @IP n:negative? or ] until
   nl @Steps '%n_steps_taken\n s:format s:put ;
-~~~
-
-~~~
-:run (a-)
-  copy-image
-  #0 !Steps !IP #0 >r
-  [ astep @RP n:zero? @IP n:negative? or ] until ;
 ~~~
 
 # Tests
@@ -332,3 +381,4 @@ nl '-------------------------- s:put nl
 &TryToIdentifyWords v:on
 #0 #100 disassemble
 ```
+
