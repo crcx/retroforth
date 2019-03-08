@@ -183,7 +183,8 @@ or tracing, Autopsy will copy the actual RAM to this before
 proceeding. Note that this is limited to 128K cells.
 
 ~~~
-'Image       d:create  #128000 allot
+FREE #3 / dup 'IMAGE const
+FREE swap -   'IMAGE-SIZE const
 ~~~
 
 Next, helpers to push values from the real stacks to the
@@ -226,9 +227,9 @@ these.
 :i:gt s> s> swap gt?       >s    ;
 :i:fe s>    #-1 [ @SP     >s ] case
             #-2 [ @RP     >s ] case
-            #-3 [ #128000 >s ] case
-            &Image + fetch >s    ;
-:i:st s> s> swap &Image + store  ;
+            #-3 [ IMAGE-SIZE >s ] case
+            IMAGE + fetch  >s    ;
+:i:st s> s> swap IMAGE + store   ;
 :i:ad s> s> +              >s    ;
 :i:su s> s> swap -         >s    ;
 :i:mu s> s> *              >s    ;
@@ -357,7 +358,7 @@ of steps used.
 
 ~~~
 :copy-image
-  #0 &Image #128000 here n:min copy ;
+  #0 IMAGE IMAGE-SIZE here n:min copy ;
 ~~~
 
 ~~~
