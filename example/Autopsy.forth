@@ -149,7 +149,8 @@ Ok, now on to the fun bit: execution trace and single stepping through a word.
 This entails writing an implementation of Nga in RETRO. So to start, setup space for the data and address ("return") stacks, as well as variables for the stack pointers and instruction pointer.
 
 ~~~
-'DataStack d:create    #128 allot
+'Image       d:create  #32769 allot
+'DataStack   d:create  #128 allot
 'ReturnStack d:create  #768 allot
 'SP var
 'RP var
@@ -178,19 +179,19 @@ Now for the instructions. Taking a cue from the C implementation, I have a separ
 :i:li       &IP v:inc [IP] >s    ;
 :i:du s>    dup            >s >s ;
 :i:dr s>    drop                 ;
-:i:sw s> s> (swap           >s >s ;
+:i:sw s> s> swap           >s >s ;
 :i:pu s>    >r                   ;
 :i:po       r>             >s    ;
 :i:ju s>    n:dec !IP            ;
 :i:ca       @IP >r i:ju          ;
-:i:cc s> s> nl dump-stack nl [ >s i:ca ] [ drop ] choose ;
+:i:cc s> s> [ >s i:ca ] [ drop ] choose ;
 :i:re       r> !IP               ;
 :i:eq s> s> eq?            >s    ;
 :i:ne s> s> -eq?           >s    ;
 :i:lt s> s> swap lt?       >s    ;
 :i:gt s> s> swap gt?       >s    ;
-:i:fe s>    fetch          >s    ;
-:i:st s> s> swap store           ;
+:i:fe s>    &Image + fetch >s    ;
+:i:st s> s> swap &Image + store  ;
 :i:ad s> s> +              >s    ;
 :i:su s> s> swap -         >s    ;
 :i:mu s> s> *              >s    ;
@@ -276,12 +277,11 @@ And then using the display helpers and instruction processor, a single stepper. 
 :step (-)
   @IP d:lookup-xt n:-zero? [ @IP d:lookup-xt d:name nl tab s:put nl ] if
   display-status
-  @IP n:inc fetch sp sp n:put nl
-  @IP #2 + fetch sp sp n:put nl
-  '__Stack:_ s:put display-data-stack '_->_ s:put
+  '__DS:_ s:put display-data-stack '_->_ s:put
   [IP] process-packed-opcode &IP v:inc
   display-data-stack nl nl
   &Steps v:inc ;
+
 :astep
   [IP] process-packed-opcode &IP v:inc
   &Steps v:inc ;
@@ -300,11 +300,24 @@ Then on to the tracer. This will `step` through execution until the word returns
 The `trace` will empty the step counter and display the number of steps used.
 
 ~~~
+:copy-image
+  #0 &Image #32768 copy ;
+~~~
+
+~~~
 :trace (a-)
+  copy-image
   #0 !Steps
   !IP #0 >r
   [ step @RP n:zero? @IP n:negative? or ] until
   nl @Steps '%n_steps_taken\n s:format s:put ;
+~~~
+
+~~~
+:run (a-)
+  copy-image
+  #0 !Steps !IP #0 >r
+  [ astep @RP n:zero? @IP n:negative? or ] until ;
 ~~~
 
 # Tests
