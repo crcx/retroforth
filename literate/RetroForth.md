@@ -184,6 +184,23 @@ and `data` to tag data words.
 :primitive (-) &class:primitive reclass ;
 ~~~
 
+## Visual Grouping
+
+Comments start with a `(` and end at the first whitespace. It's
+useful to be able to punctuate a code block, providing some
+inline commentary and having a clear end point. We can provide
+this with a single word `)`.
+
+Example:
+
+    :pre.min (a-an)
+      (comparison  &lt? &lt-or-gt? set-hook )
+      (begin_with  #-1 !Index n:min !Value dup array:length ) ;
+
+~~~
+:) ; immediate
+~~~
+
 ## Optimizations & Compiler Extensions
 
 I have a `compile` namespace for some low level words that

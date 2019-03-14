@@ -1,3 +1,6 @@
+)                                D: -  A: -  F: -
+Provide a visual indication of a code group.
+
 *                                D: nn-n  A: -  F: -
 Multiply `n1` by `n2` and return the result.
 
