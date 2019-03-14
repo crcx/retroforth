@@ -208,10 +208,10 @@ compile specific Nga bytecode. This is intended to aid in
 readability when constructing compiler extensions.
 
 ~~~
-:compile:lit  (a-) #1 , , ;
-:compile:jump (a-) #1793 , , ;
-:compile:call (a-) #2049 , , ;
-:compile:ret  (-)  #10 , ;
+:compile:lit  (a-) (li...... #1    , , ) ;
+:compile:jump (a-) (liju.... #1793 , , ) ;
+:compile:call (a-) (lica.... #2049 , , ) ;
+:compile:ret  (-)  (re...... #10   ,   ) ;
 ~~~
 
 The compiler state is stored in a value named `Compiler`. I
@@ -262,13 +262,13 @@ corresponding to:
 ~~~
 :prefix:@  (s-n)
   d:lookup d:xt fetch
-  compiling? [ (life....) #3841 , , ]
-             [ fetch                ] choose ; immediate
+  compiling? [ (life.... #3841 , , ) ]
+             [ fetch                 ] choose ; immediate
 
 :prefix:!  (s-n)
   d:lookup d:xt fetch
-  compiling? [ (list....) #4097 , , ]
-             [ store                ] choose ; immediate
+  compiling? [ (list.... #4097 , , ) ]
+             [ store                 ] choose ; immediate
 ~~~
 
 The next few words aren't actually useful until the `s:`
@@ -289,15 +289,15 @@ build other data structures without invoking the `:` compiler.
 
 ~~~
 :d:create (s-)
-  (s-) &class:data #0 d:add-header
+  &class:data #0 d:add-header
   here d:last d:xt store ;
 ~~~
 
 And then the others are trivial.
 
 ~~~
-:var    (s-)  d:create #0 , ;
 :var<n> (ns-) d:create , ;
+:var    (s-)  #0 var<n> ;
 :const  (ns-) d:create d:last d:xt store ;
 ~~~
 
@@ -328,11 +328,11 @@ are:
 And the low level forms:
 
 ~~~
-:tuck      (xy-yxy)   `100926722 ; primitive
-:over      (xy-xyx)   `67502597  ; primitive
-:nip       (xy-y)     `772       ; primitive
-:drop-pair (nn-)      `771       ; primitive
-:?dup      (n-nn|n-n) `6402      ; primitive
+:tuck      (xy-yxy)   (dupuswpo `100926722 ) ; primitive
+:over      (xy-xyx)   (puduposw `67502597  ) ; primitive
+:nip       (xy-y)     (swdr.... `772       ) ; primitive
+:drop-pair (nn-)      (drdr.... `771       ) ; primitive
+:?dup      (n-nn|n-n) (duzr.... `6402      ) ; primitive
 :dup-pair  (xy-xyxy)  over over ;
 ~~~
 
@@ -397,7 +397,7 @@ Apply each quote to a copy of x.
 Apply q1 to x, q2 to y, and q3 to z.
 
 ~~~
-:tri*  (xyzqqq-)  [ [ swap &dip dip ] dip dip ] dip call ;
+:tri* (xyzqqq-)  [ [ swap &dip dip ] dip dip ] dip call ;
 ~~~
 
 Apply q to x, y, and z.
@@ -532,8 +532,8 @@ so they can be inlined. Here's the high level forms:
     :mod       (nq-r)  /mod drop ;
 
 ~~~
-:/         (nq-d)  `197652 ; primitive
-:mod       (nq-r)  `788    ; primitive
+:/         (nq-d)  (diswdr.. `197652 ) ; primitive
+:mod       (nq-r)  (didr.... `788    ) ; primitive
 :not       (n-n)   #-1 xor ;
 :n:pow     (bp-n)  #1 swap [ over * ] times nip ;
 :n:negate  (n-n)   #-1 * ;
