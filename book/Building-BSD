@@ -1,0 +1,25 @@
+# Building RETRO
+
+## Requirements
+
+- c compiler (tested: clang, tcc, gcc)
+- make
+- standard unix shell
+
+## Process
+
+Run `make`.
+
+This will build the toolchain and then the main `retro`
+executable.
+
+## Executables
+
+In the `bin/` directory:
+
+    retro
+    retro-unu
+    retro-muri
+    retro-extend
+    retro-embedimage
+
