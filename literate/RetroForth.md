@@ -297,7 +297,7 @@ And then the others are trivial.
 
 ~~~
 :var<n> (ns-) d:create , ;
-:var    (s-)  #0 var<n> ;
+:var    (s-)  #0 swap var<n> ;
 :const  (ns-) d:create d:last d:xt store ;
 ~~~
 
