@@ -152,6 +152,7 @@ June 2019.
 - add Block-Editor.forth
 - add Buffer.forth
 - add CaptureOutput.forth
+- add CloseParen.forth
 - add DisplayNames.forth
 - add EDA.forth
 - add EvaluateString.forth
