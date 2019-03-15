@@ -1,0 +1,22 @@
+# Working With Floating Point
+
+Some RETRO systems include support for floating point numbers.
+When present, this is built over the system `libm` using the
+C `double` type.
+
+Floating point values are typically 64 bit IEEE 754 double
+precision (1 bit for the sign, 11 bits for the exponent, and
+the remaining 52 bits for the value), i.e. 15 decimal digits
+of precision.
+
+## Prefix
+
+Floating point numbers start with a `.`
+
+Examples:
+
+   Token    Value
+    .1       1.0
+    .0.5     0.5
+    .-.4    -0.4
+    .1.3     1.3

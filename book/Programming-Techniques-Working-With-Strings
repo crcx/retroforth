@@ -1,0 +1,77 @@
+# Working With Strings
+
+Strings in RETRO are NULL terminated sequences of values
+representing characters. Being NULL terminated, they can't
+contain a NULL (ASCII 0).
+
+The character words in RETRO are built around ASCII, but
+strings can contain UTF8 encoded data if the host platform
+allows. Words like `s:length` will return the number of bytes,
+not the number of logical characters in this case.
+
+## Searching
+
+RETRO provides two words for searching within a string.
+
+`s:contains-char?` 
+`s:contains-string?`
+`s:index-of`
+`s:index-of-string`
+
+## Comparisons
+
+`s:eq?`
+`s:case`
+
+## Extraction
+
+`s:left`
+`s:right`
+`s:substr`
+
+## Joining
+
+`s:append`
+`s:prepend`
+
+## Tokenization
+
+`s:tokenize`
+`s:tokenize-on-string`
+`s:split`
+`s:split-on-string`
+
+## Conversions
+
+`s:to-lower`
+`s:to-upper`
+`s:to-number`
+
+## Cleanup
+
+`s:chop`
+`s:trim`
+`s:trim-left`
+`s:trim-right`
+
+## Lifetime
+
+`s:keep`
+`s:temp`
+
+## Combinators
+
+`s:for-each`
+`s:filter`
+`s:map`
+
+## Other
+
+`s:evaluate`
+`s:copy`
+`s:reverse`
+`s:hash`
+`s:length`
+`s:replace`
+`s:format`
+`s:empty`

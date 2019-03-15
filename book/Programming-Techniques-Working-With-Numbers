@@ -1,0 +1,10 @@
+# Working With Numbers
+
+Numbers in RETRO are signed, 32 bit integers with a range of
+-2,147,483,648 to 2,147,483,647.
+
+## Token Prefix
+
+All numbers start with a `#` prefix.
+
+
