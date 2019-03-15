@@ -1,0 +1,19 @@
+# RETRO: a Modern, Pragmatic Forth
+
+Welcome to RETRO, my personal take on the Forth language. This
+is a modern system primarily targetting desktop, mobile, and
+servers, though it can also be used on some larger (ARM, MIPS32)
+embedded systems.
+
+The language is Forth. It is untyped, uses a stack to pass data
+between functions called words, and a dictionary which tracks
+the word names and data structures.
+
+But it's not a traditional Forth. RETRO draws influences from
+many sources and takes a unique approach to the language.
+
+RETRO has a large vocabulary of words. Keeping a copy of the
+Glossary on hand is highly recommended as you learn to use RETRO.
+
+This book will hopefully help you develop a better understanding
+of RETRO and how it works.

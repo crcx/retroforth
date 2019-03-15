@@ -1,0 +1,15 @@
+# Internals: Interface Layers
+
+Nga provides a virtual processor and an extensible way of adding
+I/O devices, but does not provide any I/O itself. Adding I/O is
+the responsability of the *interface layer*.
+
+An interface layer will wrap Nga, providing at least one I/O
+device (a generic output target), and a means of interacting
+with the *retro image*.
+
+It's expected that this layer will be host specific, adding any
+system interactions that are needed via the I/O instructions.
+The image will typically be extended with words to use these.
+
+

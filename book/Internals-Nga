@@ -1,0 +1,70 @@
+# Internals: Nga Virtual Machine
+
+## Overview
+
+At the heart of RETRO is a simple MISC (minimal instruction
+set computer) processor for a dual stack architecture.
+
+This is a very simple and straightforward system. There are
+30 instructions. The memory is a linear array of signed 32
+bit values. And there are two stacks: one for data and one
+for return addresses.
+
+## Instrution Table
+
+Column:
+
+  0 - opcode value
+  1 - Muri assembly name
+  2 - Full name
+  3 - Data Stack Usage
+  4 - Address Stack Usage
+
+    +--------------------------------------------------+
+    |  0 ..  nop                   -           -       |
+    |  1 li  lit                   -n          -       |
+    |  2 du  dup                  n-nn         -       |
+    |  3 dr  drop                 n-           -       |
+    |  4 sw  swap                xy-yx         -       |
+    |  5 pu  push                 n-           -n      |
+    |  6 po  pop                   -n         n-       |
+    |  7 ju  jump                 a-           -       |
+    |  8 ca  call                 a-           -A      |
+    |  9 cc  conditional call    af-           -A      |
+    | 10 re  return                -          A-       |
+    | 11 eq  equality            xy-f          -       |
+    | 12 ne  inequality          xy-f          -       |
+    | 13 lt  less than           xy-f          -       |
+    | 14 gt  greater than        xy-f          -       |
+    | 15 fe  fetch                a-n          -       |
+    | 16 st  store               na-           -       |
+    | 17 ad  addition            xy-n          -       |
+    | 18 su  subtraction         xy-n          -       |
+    | 19 mu  multiplication      xy-n          -       |
+    | 20 di  divide & remainder  xy-rq         -       |
+    | 21 an  bitwise and         xy-n          -       |
+    | 22 or  bitwise or          xy-n          -       |
+    | 23 xo  bitwise xor         xy-n          -       |
+    | 24 sh  shift               xy-n          -       |
+    | 25 zr  zero return          n-n | n-     -       |
+    | 26 en  end                   -           -       |
+    | 27 ie  i/o enumerate         -n          -       |
+    | 28 iq  i/o query            n-xy         -       |
+    | 29 ii  i/o invoke         ...n-          -       |
+    |                                                  |
+    | Each `li` will push the value in the following   |
+    | cell to the data stack.                          |
+    +--------------------------------------------------+
+    |             li       du       mu       ..        |
+    | i lidumu..  00000001:00000010:00010011:00000000  |
+    |             data for li                          |
+    | d 2         00000000:00000000:00000000:00000010  |
+    |                                                  |
+    | Assembler Directives        Instruction Bundles  |
+    | ========================    ==================== |
+    | : label                     Combine instruction  |
+    | i bundle                    names in groups of 4 |
+    | d numeric-data                                   |
+    | r ref-to-address-by-name    Use only .. after    |
+    | s null-terminated string    ju, ca, cc, re, zr   |
+    +--------------------------------------------------+
