@@ -1,0 +1,44 @@
+#!/usr/bin/env retro
+
+~~~
+'book/  'BOOK-BASE s:const
+'Out var
+
+:import       here swap BOOK-BASE s:prepend file:slurp ;
+:\n           ASCII:CR @Out file:write ;
+:add-to-book  here [ @Out file:write ] s:for-each \n ;
+:process      [ import add-to-book ] array:for-each ;
+
+'RETRO-Book-BSD.md file:open<for-writing> !Out
+
+{
+ 'Overview
+ 'Building-BSD
+ 'Starting-BSD
+ 'Basic-Interactions
+ 'Quick-Tutorial
+ 'Programming-Techniques
+ 'Programming-Techniques-Naming-Conventions
+ 'Programming-Techniques-Stack-Diagrams
+ 'Programming-Techniques-Word-Classes
+ 'Programming-Techniques-Using-Combinators
+ 'Programming-Techniques-Working-With
+ 'Programming-Techniques-Working-With-Arrays
+ 'Programming-Techniques-Working-With-Buffer
+ 'Programming-Techniques-Working-With-Characters
+ 'Programming-Techniques-Working-With-Dictionary
+ 'Programming-Techniques-Working-With-Floating-Point
+ 'Programming-Techniques-Working-With-Numbers
+ 'Programming-Techniques-Working-With-Pointers
+ 'Programming-Techniques-Working-With-Strings
+ 'Programming-Techniques-Writing-Combinators
+ 'Internals
+ 'Internals-Interface-Layers
+ 'Internals-Nga
+ 'Internals-Retro-Image
+ 'Additional-Tools
+ 'Advanced-Builds
+} process
+@Out file:close
+~~~
+

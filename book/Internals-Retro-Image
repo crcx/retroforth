@@ -2,3 +2,20 @@
 
 The actual RETRO language is stored as a memory image for Nga.
 
+## Layout
+
+Assuming an Nga built with 524287 cells of memory:
+
+| RANGE           | CONTAINS                     |
+| --------------- | ---------------------------- |
+| 0 - 1024        | rx kernel                    |
+| 1025 - 1535     | token input buffer           |
+| 1536 +          | start of heap space          |
+| ............... | free memory for your use     |
+| 506879          | buffer for string evaluate   |
+| 507904          | temporary strings (32 * 512) |
+| 524287          | end of memory                |
+
+The buffers at the end of memory will resize when specific
+variables related to them are altered.
+

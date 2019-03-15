@@ -9,6 +9,45 @@ strings can contain UTF8 encoded data if the host platform
 allows. Words like `s:length` will return the number of bytes,
 not the number of logical characters in this case.
 
+## Prefix
+
+Strings begin with a single `'`.
+
+```
+'Hello
+'This_is_a_string
+'This_is_a_much_longer_string_12345_67890_!!!
+```
+
+RETRO will replace spaces with underscores. If you need both
+spaces and underscores in a string, escape the underscores and
+use `s:format`:
+
+```
+'This_has_spaces_and_under\_scored_words. s:format
+```
+
+## Lifetime
+
+At the interpreter, strings get allocated in a rotating buffer.
+This is used by the words operating on strings, so if you need
+to keep them around, use `s:keep` or `s:copy` to move them to
+more permanent storage.
+
+In a definition, the string is compiled inline and so is in
+permanent memory.
+
+You can manually manage the string lifetime by using `s:keep`
+to place it into permanent memory or `s:temp` to copy it to
+the rotating buffer.
+
+## Mutability
+
+Strings are mutable. If you need to ensure that a string is
+not altered, make a copy before operating on it or see the
+individual glossary entries for notes on words that may do
+this automatically.
+
 ## Searching
 
 RETRO provides two words for searching within a string.
@@ -53,11 +92,6 @@ RETRO provides two words for searching within a string.
 `s:trim`
 `s:trim-left`
 `s:trim-right`
-
-## Lifetime
-
-`s:keep`
-`s:temp`
 
 ## Combinators
 

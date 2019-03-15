@@ -68,3 +68,8 @@ Column:
     | r ref-to-address-by-name    Use only .. after    |
     | s null-terminated string    ju, ca, cc, re, zr   |
     +--------------------------------------------------+
+
+## Misc
+
+There are 810,000 possible combinations of instructions. Only
+73 are used in the implementation of RETRO.
