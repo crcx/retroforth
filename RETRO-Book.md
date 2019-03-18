@@ -1256,5 +1256,58 @@ The buffers at the end of memory will resize when specific
 variables related to them are altered.
 
 
+# Additional Tools
 
+In addition to the core `retro` binary, the `bin` directory
+will contain a few other tools.
+
+## retro
+
+This is the main RETRO binary.
+
+## retro-describe
+
+This is a program that looks up entries in the Glossary.
+
+## retro-embedimage
+
+This is a program which generates a C file with the ngaImage
+contents. It's used when building `retro`.
+
+## retro-extend
+
+This is a program which compiles code into the ngaImage.
+It's used when building `retro` and when you want to make a
+standalone image with custom additions.
+
+## retro-muri
+
+This is the assembler for Nga. It's used to build the initial
+RETRO kernel and can be used by other tools as well.
+
+## retro-unu
+
+This is the literate source extraction tool for RETRO. It
+is used in building `retro`.
+
+# Advanced Builds
+
+For users of BSD, Linux, macOS, you can customize the image at
+build time.
+
+In the top level directory is a `packages` directory containing
+a file named `list`. You can add files to compile into your
+system by adding them to the `list` and rebuilding.
+
+Example:
+
+If you have wanted to include the NumbersWithoutPrefixes.forth
+example, add:
+
+    ~~~
+    'example/NumbersWithoutPrefixes.forth include
+    ~~~
+
+To the start of the `list` file and then run `make` again. The
+newly built `bin/retro` will now include your additions.
 

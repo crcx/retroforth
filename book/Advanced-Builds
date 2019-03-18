@@ -1,0 +1,20 @@
+# Advanced Builds
+
+For users of BSD, Linux, macOS, you can customize the image at
+build time.
+
+In the top level directory is a `packages` directory containing
+a file named `list`. You can add files to compile into your
+system by adding them to the `list` and rebuilding.
+
+Example:
+
+If you have wanted to include the NumbersWithoutPrefixes.forth
+example, add:
+
+    ~~~
+    'example/NumbersWithoutPrefixes.forth include
+    ~~~
+
+To the start of the `list` file and then run `make` again. The
+newly built `bin/retro` will now include your additions.
