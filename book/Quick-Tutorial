@@ -1,0 +1,44 @@
+# A Quick Tutorial
+
+Programming in RETRO is all about creating words to solve
+the problem at hand. Words operate on data, which can be
+kept in memory or on the stack.
+
+Let's look at this by solving a small problem: writing a
+word to determine if a string is a palindrome.
+
+A palindrome is a phrase which reads the same backward
+and forward.
+
+We first need a string to look at. Starting with something
+easy:
+
+```
+'anna
+```
+
+Looking in the Glossary, there is a `s:reverse` word for
+reversing a string. We can find `dup` to copy a value, and
+`s:eq?` to compare two strings. So testing:
+
+```
+'anna dup s:reverse s:eq?
+```
+
+This yields -1 (`TRUE`) as expected. So we can easily
+name it:
+
+```
+:palindrome dup s:reverse s:eq? ;
+```
+
+Naming uses the `:` prefix to add a new word to the dictionary.
+The words that make up the definition are then placed, with a
+final word (`;`) ending the definition. We can then use this:
+
+```
+'anna palindrome?
+```
+
+Once defined there is no difference between our new word and
+any of the words already provided by the RETRO system.

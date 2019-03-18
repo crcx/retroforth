@@ -216,6 +216,134 @@ To exit, run `bye`:
 bye
 ```
 
+# Syntax
+
+RETRO has more syntax than a traditional Forth due to ideas
+borrowed from ColorForth and some design decisions. This has
+some useful traits, and helps to make the language more
+consistent.
+
+## Tokens
+
+Input is divided into a series of whitespace delimited tokens.
+Each of these is then processed individually. There are no
+parsing words in RETRO.
+
+Tokens may have a single character *prefix*, which RETRO will
+use to decide how to process the token.
+
+## Prefixes
+
+Prefixes are single characters added to the start of a token
+to guide the compiler. The use of these is a major way in
+which RETRO differs from traditional Forth.
+
+When a token is passed to `interpret`, RETRO first takes the
+intitial character and looks to see if there is a word that
+matches this. If so, it will pass the rest of the token to
+that word to handle.
+
+In a traditional Forth, the interpret process is something
+like:
+
+    get token
+    is token in the dictionary?
+      yes:
+        is it immediate?
+          yes: call the word.
+          no:  are we interpreting?
+               yes: call the word
+               no:  compile a call to the word
+      no:
+        is it a number?
+          yes: are we interpreting?
+               yes: push the number to the stack
+               no:  compile the number as a literal
+          no:  report an error ("not found")
+
+In RETRO, the interpret process is basically:
+
+    get token
+    does the first character match a `prefix:` word?
+      yes: pass the token to the prefix handler
+      no:  is token a word in the dictionary?
+           yes: push the XT to the stack and call the
+                class handler
+           no:  report an error ("not found")
+
+All of the actual logic for how to deal with tokens is moved
+to the individual prefix handlers, and the logic for handling
+words is moved to word class handlers.
+
+This means that prefixes are used for a lot of things. Numbers?
+Handled by a `#` prefix. Strings? Use the `'` prefix. Comments?
+Use `(`. Making a new word? Use the `:` prefix.
+
+The major prefixes are:
+
+| Prefix | Used For                      |
+| ------ | ----------------------------- |
+| @      | Fetch from variable           |
+| !      | Store into variable           |
+| &      | Pointer to named item         |
+| #      | Numbers                       |
+| $      | ASCII characters              |
+| '      | Strings                       |
+| (      | Comments                      |
+| :      | Define a word                 |
+
+The individual prefixes will be covered in more detail in the
+later chapters on working with different data types.
+
+## Word Classes
+
+Word classes are words which take a pointer and do something
+with it.
+
+# A Quick Tutorial
+
+Programming in RETRO is all about creating words to solve
+the problem at hand. Words operate on data, which can be
+kept in memory or on the stack.
+
+Let's look at this by solving a small problem: writing a
+word to determine if a string is a palindrome.
+
+A palindrome is a phrase which reads the same backward
+and forward.
+
+We first need a string to look at. Starting with something
+easy:
+
+```
+'anna
+```
+
+Looking in the Glossary, there is a `s:reverse` word for
+reversing a string. We can find `dup` to copy a value, and
+`s:eq?` to compare two strings. So testing:
+
+```
+'anna dup s:reverse s:eq?
+```
+
+This yields -1 (`TRUE`) as expected. So we can easily
+name it:
+
+```
+:palindrome dup s:reverse s:eq? ;
+```
+
+Naming uses the `:` prefix to add a new word to the dictionary.
+The words that make up the definition are then placed, with a
+final word (`;`) ending the definition. We can then use this:
+
+```
+'anna palindrome?
+```
+
+Once defined there is no difference between our new word and
+any of the words already provided by the RETRO system.
 
 # Using The Glossary
 
