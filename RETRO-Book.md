@@ -713,6 +713,108 @@ beween words. The second one primarily holds return addresses.
 Each time a word is called, the next address is pushed to
 the return stack.
 
+# Working With Assembly Language
+
+RETRO runs on a virtual machine called Nga. It provides a
+standard assembler for this called *Muri*.
+
+Muri is a simple, multipass model that's not fancy, but
+suffices for RETRO's needs.
+
+## Assembling A Standalone File
+
+A small example (*test.muri*)
+
+    ~~~
+    i liju....
+    r main
+    : c:put
+    i liiire..
+    i 0
+    : main
+    i lilica..
+    d 97
+    i liju....
+    r main
+    ~~~
+
+Assembling it:
+
+    retro-muri test.muri
+
+So breaking down: Muri extracts the assembly code blocks to
+assemble, then proceeds to do the assembly. Each source line
+starts with a directive, followed by a space, and then ending
+with a value.
+
+The directives are:
+
+    :    value is a label
+    i    value is an instruction bundle
+    d    value is a numeric value
+    r    value is a reference
+    s    value is a string to inline
+
+Instructions for Nga are provided as bundles. Each memory
+location can store up to four instructions. And each instruction
+gets a two character identifier.
+
+From the list of instructions:
+
+    0 nop   5 push  10 ret   15 fetch 20 div   25 zret
+    1 lit   6 pop   11 eq    16 store 21 and   26 end
+    2 dup   7 jump  12 neq   17 add   22 or    27 ienum
+    3 drop  8 call  13 lt    18 sub   23 xor   28 iquery
+    4 swap  9 ccall 14 gt    19 mul   24 shift 29 iinvoke
+
+This reduces to:
+
+    0 ..    5 pu    10 re    15 fe    20 di    25 zr
+    1 li    6 po    11 eq    16 st    21 an    26 en
+    2 du    7 ju    12 ne    17 ad    22 or    27 ie
+    3 dr    8 ca    13 lt    18 su    23 xo    28 iq
+    4 sw    9 cc    14 gt    19 mu    24 sh    29 ii
+
+Most are just the first two letters of the instruction name. I
+use `..` instead of `no` for `NOP`, and the first letter of
+each I/O instruction name. So a bundle may look like:
+
+    dumure..
+
+(This would correspond to `dup multiply return nop`).
+
+## Runtime Assembler
+
+RETRO also has a runtime variation of Muri that can be used
+when you need to generate more optimal code. So one can write:
+
+    :n:square dup * ;
+
+Or:
+
+    :n:square as{ 'dumure.. i }as ;
+
+The second one will be faster, as the entire definition is one
+bundle, which reduces memory reads and decoding by 2/3.
+
+Doing this is less readable, so I only recommend doing so after
+you have finalized working RETRO level code and determined the
+best places to optimize.
+
+The runtime assembler has the following directives:
+
+    i    value is an instruction bundle
+    d    value is a numeric value
+    r    value is a reference
+
+Additionally, in the runtime assembler, these are reversed:
+
+    'dudumu.. i
+
+Instead of:
+
+    i dudumu..
+
 # Internals
 
 The next few chapters dive into RETRO's architecture. If you
