@@ -1,0 +1,56 @@
+# Word Classes
+
+Word classes are one of the two elements at the heart of
+RETRO's interpreter.
+
+There are different types of words in a Forth system. At a
+minimum there are data words, regular words, and immediate
+words. There are numerous approaches to dealing with this.
+
+In RETRO I define special words which receive a pointer and
+decide how to deal with it. These are grouped into a `class:`
+namespace.
+
+## How It Works
+
+When a word is found in the dictionary, RETRO will push a
+pointer to the definition (the `d:xt` field) to the stack
+and then call the word specified by the `d:class` field.
+
+The word called is responsible for processing the pointer
+passed to it.
+
+As a simple case, let's look at `immediate` words. These are
+words which will always be called when encountered. A common
+strategy is to have an immediacy bit which the interpreter
+will look at, but RETRO uses a class for this. The class is
+defined:
+
+```
+:class:immediate (a-)  call ;
+```
+
+Or a normal word. These should be called at interpret time
+or compiled into definitions. The handler for this can look
+like:
+
+```
+:class:word (a-) compiling? [ compile:call ] [ call ] choose ;
+```
+
+## Using Classes
+
+The ability to add new classes is useful. If I wanted to add
+a category of word that preserves an input value, I could do
+it with a class:
+
+```
+:class:duplicating (a-)
+  compiling? [ &dup compile:call ] [ &dup dip ] choose
+  class:word ; 
+
+:duplicating &class:duplicating reclass ;
+
+:. n:put nl ; duplicating
+#100 . . .
+```
