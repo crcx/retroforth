@@ -98,25 +98,26 @@ In the `bin/` directory:
 
 # Building RETRO on Windows
 
+It is possible to build RETRO on Windows, though a few of the
+extensions are not supported:
 
-## C#: retro.cs
+- no `unix:` words
+- no `gopher:` words
 
-This is an implementation of `retro-repl` in C#. As with
-`retro-repl` it requires the `ngaImage` in the current
-directory when starting.
+## Process
 
-Building:
+### Setup TCC
 
-    csc retro.cs
+Go to http://download.savannah.gnu.org/releases/tinycc/
 
-You'll need to make sure your path has the CSC.EXE in it,
-or provide a full path to it. Something like this should
-reveal the path to use:
+Download the *winapi-full* and *tcc-xxxx-bin* packages for your
+system. Decompress them, copy the headers from the winapi
+package into the tcc directory.
 
-    dir /s %WINDIR%\CSC.EXE
+### Prepare Source
 
-I've only tested building this using Microsoft's .NET tools.
-It should also build and run under Mono.
+
+
 
 
 # Starting RETRO

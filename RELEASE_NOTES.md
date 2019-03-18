@@ -143,6 +143,7 @@ June 2019.
 - add man pages
 - add BUILDING.md
 - add missing descriptions
+- add RETRO-Book.md
 
 ## Examples
 
