@@ -1,0 +1,39 @@
+# Working With Pointers
+
+## Prefix
+
+Pointers are returned by the `&` prefix.
+
+## Examples
+
+```
+'Base var
+&Base fetch
+#10 &Base store
+
+#10 &n:inc call
+```
+
+## Notes
+
+The use of `&` to get a pointer to a data structure (with a
+word class of `class:data`) is not required. I like to use it
+anyway as it makes my intent a little clearer.
+
+Pointers are useful with combinators. Consider:
+
+```
+:abs dup n:negative? [ n:negate ] if ;
+```
+
+Since the target quote body is a single word, it is more
+efficient to use a pointer instead:
+
+```
+:abs dup n:negative? &n:negate if ;
+```
+
+The advantages are speed (saves a level of call/return by
+avoiding the quotation) and size (for the same reason).
+This may be less readable though, so consider the balance
+of performance to readability when using this approach.

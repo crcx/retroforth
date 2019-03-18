@@ -1,0 +1,35 @@
+# Naming Conventions
+
+Word names in RETRO generally follow the following conventions.
+
+## Case
+
+Word names are lowercase, with a dash (-) for compound names.
+Variables use TitleCase, with no dash between compound names.
+Constants are UPPERCASE, with a dash (-) for compound names.
+
+## Namespaces
+
+Words are grouped into broad namespaces by attaching a short
+prefix string to the start of a name.
+
+The common namespaces are:
+
+| Prefix  | Contains                                               |
+| ------- | ------------------------------------------------------ |
+| array:  | Words operating on simple arrays                       |
+| ASCII:  | ASCII character constants for control characters       |
+| buffer: | Words for operating on a simple linear LIFO buffer     |
+| c:      | Words for operating on ASCII character data            |
+| class:  | Contains class handlers for words                      |
+| d:      | Words operating on the Dictionary                      |
+| err:    | Words for handling errors                              |
+| io:     | General I/O words                                      |
+| n:      | Words operating on numeric data                        |
+| prefix: | Contains prefix handlers                               |
+| s:      | Words operating on string data                         |
+| v:      | Words operating on variables                           |
+| file:   | File I/O words                                         |
+| f:      | Floating Point words                                   |
+| gopher: | Gopher protocol words                                  |
+| unix:   | Unix system call words                                 |

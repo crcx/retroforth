@@ -1,0 +1,5 @@
+# Internals
+
+The next few chapters dive into RETRO's architecture. If you
+seek to implement a port to a new platform or to extend the
+I/O functionality you'll find helpful information here.

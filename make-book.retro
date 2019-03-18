@@ -4,12 +4,13 @@
 'book/  'BOOK-BASE s:const
 'Out var
 
-:import       here swap BOOK-BASE s:prepend file:slurp ;
-:\n           ASCII:CR @Out file:write ;
-:add-to-book  here [ @Out file:write ] s:for-each \n ;
-:process      [ import add-to-book ] array:for-each ;
-
-'RETRO-Book-BSD.md file:open<for-writing> !Out
+:import        here swap BOOK-BASE s:prepend file:slurp ;
+:\n            ASCII:LF @Out file:write ;
+:add-to-book   here [ @Out file:write ] s:for-each \n ;
+:process-files [ import add-to-book ] array:for-each ;
+:open          'RETRO-Book-BSD.md file:open<for-writing> !Out ;
+:close         @Out file:close ;
+:process       open process-files close ;
 
 {
  'Overview
@@ -17,6 +18,7 @@
  'Starting-BSD
  'Basic-Interactions
  'Quick-Tutorial
+ 'Using-the-Glossary
  'Programming-Techniques
  'Programming-Techniques-Naming-Conventions
  'Programming-Techniques-Stack-Diagrams
@@ -32,6 +34,7 @@
  'Programming-Techniques-Working-With-Pointers
  'Programming-Techniques-Working-With-Strings
  'Programming-Techniques-Writing-Combinators
+ 'Programming-Techniques-Return-Stack
  'Internals
  'Internals-Interface-Layers
  'Internals-Nga
@@ -39,6 +42,5 @@
  'Additional-Tools
  'Advanced-Builds
 } process
-@Out file:close
 ~~~
 

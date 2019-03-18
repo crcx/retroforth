@@ -1,0 +1,10 @@
+# Working With a Buffer
+
+RETRO provides words for operating on a linear memory area.
+This can be useful in building strings or custom data
+structures.
+
+## Namespace
+
+Words operating on the buffer are kept in the `buffer`
+namespace.

@@ -7,4 +7,8 @@ Numbers in RETRO are signed, 32 bit integers with a range of
 
 All numbers start with a `#` prefix.
 
+## Namespace
+
+Most words operating on numbers are in the `n:` namespace.
+
 
