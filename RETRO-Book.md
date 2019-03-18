@@ -98,6 +98,7 @@ In the `bin/` directory:
 
 # Building RETRO on Windows
 
+
 ## C#: retro.cs
 
 This is an implementation of `retro-repl` in C#. As with
@@ -568,6 +569,106 @@ it with a class:
 
 
 
+# Working With Arrays
+
+RETRO offers a number of words for operating on statically sized
+arrays.
+
+## Namespace
+
+The words operating on arrays are kept in an `array:` namespace.
+
+## Creating Arrays
+
+The easiest way to create an array is to wrap the values in a
+`{` and `}` pair:
+
+```
+{ #1 #2 #3 #4 }
+{ 'this 'is 'an 'array 'of 'strings }
+{ 'this 'is 'a 'mixed 'array #1 #2 #3 }
+```
+
+You can also make an array from a quotation which returns
+values and the number of values to store in the array:
+
+```
+[ #1 #2 #3  #3 ] array:counted-results
+[ #1 #2 #3  #3 ] array:make
+```
+
+## Accessing Elements
+
+You can access a specific value with `array:nth` and `fetch` or
+`store`:
+
+```
+{ #1 #2 #3 #4 } #3 array:nth fetch
+```
+
+## Find The Length
+
+Use `array:length` to find the size of the array.
+
+```
+{ #1 #2 #3 #4 } array:length
+```
+
+## Duplicate
+
+Use `array:dup` to make a copy of an array:
+
+```
+{ #1 #2 #3 #4 } array:dup
+```
+
+## Filtering
+
+RETRO provides `array:filter` which extracts matching values
+from an array. This is used like:
+
+```
+{ #1 #2 #3 #4 #5 #6 #7 #8 }
+[ n:even? ] array:filter
+```
+
+The quote will be passed each value in the array and should
+return TRUE or FALSE. Values that lead to TRUE will be collected
+into a new array.
+
+## Mapping
+
+`array:map` applies a quotation to each item in an array and
+constructs a new array from the returned values.
+
+Example:
+
+```
+{ #1 #2 #3 }
+[ #10 * ] array:map
+```
+
+## Reduce
+
+`array:reduce` takes an array, a starting value, and a quote. It
+executes the quote once for each item in the array, passing the
+item and the value to the quote. The quote should consume both
+and return a new value.
+
+```
+{ #1 #2 #3 } #0 [ + ] array:reduce
+```
+
+## Search
+
+RETRO provides `array:contains?` and `array:contains-string?`
+to search an array for a value (either a number or string) and
+return either TRUE or FALSE.
+
+```
+#100  { #1 #2 #3 } array:contains?
+'test { 'abc 'def 'test 'ghi } array:contains-string?
+```
 
 # Working With a Buffer
 
