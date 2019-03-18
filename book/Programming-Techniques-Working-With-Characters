@@ -1,0 +1,7 @@
+# Working With Characters
+
+RETRO provides words for working with ASCII characters.
+
+## Prefix
+
+Character constants are returned using the `$` prefix.

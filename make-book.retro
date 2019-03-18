@@ -8,14 +8,20 @@
 :\n            ASCII:LF @Out file:write ;
 :add-to-book   here [ @Out file:write ] s:for-each \n ;
 :process-files [ import add-to-book ] array:for-each ;
-:open          'RETRO-Book-BSD.md file:open<for-writing> !Out ;
+:open          'RETRO-Book.md file:open<for-writing> !Out ;
 :close         @Out file:close ;
 :process       open process-files close ;
 
 {
  'Overview
  'Building-BSD
+ 'Building-Linux
+ 'Building-macOS
+ 'Building-Windows
  'Starting-BSD
+ 'Starting-Linux
+ 'Starting-macOS
+ 'Starting-Windows
  'Basic-Interactions
  'Quick-Tutorial
  'Using-the-Glossary

@@ -1,0 +1,109 @@
+# Working With The Dictionary
+
+The Dictionary is a linked list containing the dictionary
+headers.
+
+## Namespace
+
+Words operating on the dictionary are in the `d:` namespace.
+
+## Variables
+
+`Dictionary` is a variable holding a pointer to the most recent
+header.
+
+## Header Structure
+
+Each entry follows the following structure:
+
+    Offset   Contains
+    ------   ---------------------------
+    0000     Link to Prior Header
+    0001     Link to XT
+    0002     Link to Class Handler
+    0003+    Word name (null terminated)
+
+RETRO provides words for accessing the fields in a portable
+manner. It's recommended to use these to allow for future
+revision of the header structure.
+
+## Accessing Fields
+
+Given a pointer to a header, you can use `d:xt`, `d:class`,
+and `d:name` to access the address of each specific field.
+There is no `d:link`, as the link will always be the first
+field.
+
+## Shortcuts For The Latest Header
+
+RETRO provides several words for operating on the most recent
+header.
+
+`d:last` returns a pointer to the latest header. `d:last<xt>`
+will give the contents of the `d:xt` field for the latest
+header. There are also `d:last<class>` and `d:last<name>`.
+
+## Adding Headers
+
+Two words exist for making new headers. The easy one is
+`d:create`. This takes a string for the name and makes a
+new header with the class set to `class:data` and the XT
+field pointing to `here`.
+
+Example:
+
+```
+'Base d:create
+```
+
+The other is `d:add-header`. This takes a string, a pointer
+to the class handler, and a pointer for the XT field and
+builds a new header using these.
+
+Example:
+
+```
+'Base &class:data #10000 d:add-header
+```
+
+## Searching
+
+RETRO provides two words for searching the dictionary.
+
+`d:lookup` takes a string and tries to find it in the
+dictionary. It will return a pointer to the dictionary header
+or a value of zero if the word was not found.
+
+`d:lookup-xt` takes a pointer and will return the dictionary
+header that has this as the `d:xt` field, or zero if no match
+is found.
+
+## Iteration
+
+You can use the `d:for-each` combinator to iterate over all
+entries in the dictionary. For instance, to display the names
+of all words:
+
+```
+[ d:name s:put sp ] d:for-each
+```
+
+For each entry, this combinator will push a pointer to the
+entry to the stack and call the quotation.
+
+## Listing Words
+
+Most Forth systems provide WORDS for listing the names of all
+words in the dictionary. RETRO does as well, but this is named
+`d:words`.
+
+This isn't super useful as looking through several hundred
+names is annoying. RETRO also provides `d:words-with` to help
+in filtering the results.
+
+Example:
+
+```
+'class: d:words-with
+```
+
