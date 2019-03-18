@@ -270,6 +270,50 @@ The upcoming chapters provide helpful information on using RETRO
 with different types of data and hints on how to solve problems
 in a way consistent with the RETRO system.
 
+# Unu: Simple, Literate Source Files
+
+RETRO is written in a literate style. Most of the sources
+are in a format called Unu. This allows easy mixing of
+commentary and code blocks, making it simple to document
+the code.
+
+As an example,
+
+    # Determine The Average Word Name Length
+
+    To determine the average length of a word name two values
+    are needed. First, the total length of all names in the
+    Dictionary:
+
+    ~~~
+    #0 [ d:name s:length + ] d:for-each
+    ~~~
+
+    And then the number of words in the Dictionary:
+
+    ~~~
+    #0 [ drop n:inc ] d:for-each
+    ~~~
+
+    With these, a simple division is all that's left.
+
+    ~~~
+    /
+    ~~~
+
+    Finally, display the results:
+
+
+    ~~~
+    'Average_name_length:_%n\n s:format s:put
+    ~~~
+
+This illustrates the format. Only code in the fenced blocks
+(between \~~~ pairs) get extracted and run.
+
+(Note: this only applies to *source files*; fences are not used
+when entering code interactively).
+
 # Naming Conventions
 
 Word names in RETRO generally follow the following conventions.
