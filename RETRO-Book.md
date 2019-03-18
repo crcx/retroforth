@@ -821,22 +821,6 @@ The next few chapters dive into RETRO's architecture. If you
 seek to implement a port to a new platform or to extend the
 I/O functionality you'll find helpful information here.
 
-# Internals: Interface Layers
-
-Nga provides a virtual processor and an extensible way of adding
-I/O devices, but does not provide any I/O itself. Adding I/O is
-the responsability of the *interface layer*.
-
-An interface layer will wrap Nga, providing at least one I/O
-device (a generic output target), and a means of interacting
-with the *retro image*.
-
-It's expected that this layer will be host specific, adding any
-system interactions that are needed via the I/O instructions.
-The image will typically be extended with words to use these.
-
-
-
 # Internals: Nga Virtual Machine
 
 ## Overview
@@ -912,6 +896,58 @@ Column:
 
 There are 810,000 possible combinations of instructions. Only
 73 are used in the implementation of RETRO.
+
+# Internals: I/O
+
+RETRO provides three words for interacting with I/O. These are:
+
+    io:enumerate    returns the number of attached devices
+    io:query        returns information about a device
+    io:invoke       invokes an interaction with a device
+
+As an example, with an implementation providing an output source,
+a block storage system, and keyboard:
+
+    io:enumerate    will return `3` since there are three
+                    i/o devices
+    #0 io:query     will return 0 0, since the first device
+                    is a screen (type 0) with a version of 0
+    #1 io:query     will return 1 3, since the second device is
+                    block storage (type 3), with a version of 1
+    #2 io:query     will return 0 1, since the last device is a
+                    keyboard (type 1), with a version of 0
+
+In this case, some interactions can be defined:
+
+    :c:put #0 io:invoke ;
+    :c:get #2 io:invoke ;
+
+Setup the stack, push the device ID, and then use `io:invoke`
+to invoke the interaction.
+
+A RETRO system requires one I/O device (a generic output for a
+single character). This must be the first device, and must have
+a device ID of 0.
+
+All other devices are optional and can be specified in any
+order.
+
+
+# Internals: Interface Layers
+
+Nga provides a virtual processor and an extensible way of adding
+I/O devices, but does not provide any I/O itself. Adding I/O is
+the responsability of the *interface layer*.
+
+An interface layer will wrap Nga, providing at least one I/O
+device (a generic output target), and a means of interacting
+with the *retro image*.
+
+It's expected that this layer will be host specific, adding any
+system interactions that are needed via the I/O instructions.
+The image will typically be extended with words to use these.
+
+
 
 # Internals: The Retro Image
 
