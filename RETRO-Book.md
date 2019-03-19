@@ -20,11 +20,14 @@ of RETRO and how it works.
 
 # Building RETRO on BSD
 
+RETRO is well supported on BSD (FreeBSD, NetBSD, OpenBSD)
+systems. It should build on a base install of any of these
+without issue.
+
 ## Requirements
 
-- c compiler (tested: clang, tcc, gcc)
+- c compiler
 - make
-- standard unix shell
 
 ## Process
 
@@ -42,15 +45,18 @@ In the `bin/` directory:
     retro-muri
     retro-extend
     retro-embedimage
-
+    retro-describe
 
 # Building RETRO on Linux
+
+Building on Linux is pretty easy. You'll need to make sure
+you have a C compiler, headers, and make.
 
 ## Requirements
 
 - c compiler (tested: clang, tcc, gcc)
+- development headers
 - make
-- standard unix shell
 
 ## Process
 
@@ -68,15 +74,17 @@ In the `bin/` directory:
     retro-muri
     retro-extend
     retro-embedimage
-
+    retro-describe
 
 # Building RETRO on macOS
 
+To build on macOS, you will need the command line tools from
+Xcode. Install these and you should be able to build and use
+RETRO.
+
 ## Requirements
 
-- c compiler (tested: clang, tcc, gcc)
-- make
-- standard unix shell
+- command line tools from Xcode
 
 ## Process
 

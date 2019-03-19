@@ -1,10 +1,12 @@
 # Building RETRO on macOS
 
+To build on macOS, you will need the command line tools from
+Xcode. Install these and you should be able to build and use
+RETRO.
+
 ## Requirements
 
-- c compiler (tested: clang, tcc, gcc)
-- make
-- standard unix shell
+- command line tools from Xcode
 
 ## Process
 

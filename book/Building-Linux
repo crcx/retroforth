@@ -1,10 +1,13 @@
 # Building RETRO on Linux
 
+Building on Linux is pretty easy. You'll need to make sure
+you have a C compiler, headers, and make.
+
 ## Requirements
 
 - c compiler (tested: clang, tcc, gcc)
+- development headers
 - make
-- standard unix shell
 
 ## Process
 
@@ -22,4 +25,4 @@ In the `bin/` directory:
     retro-muri
     retro-extend
     retro-embedimage
-
+    retro-describe
