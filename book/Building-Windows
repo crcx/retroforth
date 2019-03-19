@@ -52,4 +52,4 @@ In *io\io_floatingpoint.c*:
 
 ### Build
 
-\path\to\tcc rre.c image-functions.c io\io_filesystem.c io\io_floatingpoint.c
+\path\to\tcc rre.c image-functions.c io\io_filesystem.c io\io_floatingpoint.c -o retro.exe

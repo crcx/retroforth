@@ -1,4 +1,4 @@
-# Starting RETRO
+# Starting RETRO on Linux
 
 RETRO can be run for scripting or interactive use. To start it
 interactively, run: `retro -i` or `retro -c`.
