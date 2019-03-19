@@ -106,6 +106,10 @@ extensions are not supported:
 
 ## Process
 
+This is currently more difficult than on a Unix host. If you have
+Windows 10 and WSL, it may be better to build under that (using
+the Linux instructions).
+
 ### Setup TCC
 
 Go to http://download.savannah.gnu.org/releases/tinycc/
@@ -116,9 +120,37 @@ package into the tcc directory.
 
 ### Prepare Source
 
+You'll need to comment out (or remove) some things before RETRO
+will build.
 
+In *rre.c*:
 
+- remove includes for unistd.h, sys/sockets.h, netinet/in.h
+  netdb.h, errno.h, sys/wait.h, signal.h
+- remove the #define USE_TERMIOS line
+- change the #define NUM_DEVICES to 6
+- remove io_unix_handler and io_gopher_handler from IO_deviceHandlers
+- remove io_unix_query and io_gopher_query from IO_queryHandlers
 
+In *image-functions.c*:
+
+- remove includes for unistd.h
+
+In *image-functions.h*:
+
+- remove includes for unistd.h
+
+In *io\io_filesystem.c*:
+
+- remove includes for unistd.h
+
+In *io\io_floatingpoint.c*:
+
+- remove includes for unistd.h
+
+### Build
+
+\path\to\tcc rre.c image-functions.c io\io_filesystem.c io\io_floatingpoint.c
 
 # Starting RETRO
 
