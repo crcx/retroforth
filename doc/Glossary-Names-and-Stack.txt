@@ -245,7 +245,6 @@ f:to-e                           D: -u  A: -  F: n-
 f:to-number                      D: -n  A: -  F: F-
 f:to-string                      D: -s  A: -  F: F-
 f:tuck                           D: -  A: -  F: FG-GFG
-f:tuck                           D: -  A: -  F: nm-mnm
 fetch                            D: a-n  A: -  F: -
 fetch-next                       D: a-an  A: -  F: -
 file:A                           D: -n  A: -  F: -

@@ -2857,17 +2857,6 @@ Tuck a copy of the top floating point value under the second one.
 Class: class:word | Namespace: f | Interface Layer: rre
 ------------------------------------------------------------------------
 
-f:tuck
-
-  Data:  -
-  Addr:  -
-  Float: nm-mnm
-
-Put a copy of the top item on the stack under the second one.
-
-Class: class:word | Namespace: f | Interface Layer: rre
-------------------------------------------------------------------------
-
 fetch
 
   Data:  a-n

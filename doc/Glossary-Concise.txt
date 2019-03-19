@@ -739,9 +739,6 @@ Convert a floating point value into a string.
 f:tuck                           D: -  A: -  F: FG-GFG
 Tuck a copy of the top floating point value under the second one.
 
-f:tuck                           D: -  A: -  F: nm-mnm
-Put a copy of the top item on the stack under the second one.
-
 fetch                            D: a-n  A: -  F: -
 Fetch the value stored at the specified address.
 

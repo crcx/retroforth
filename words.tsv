@@ -245,7 +245,6 @@ f:to-e	-u	-	n-	Encode the floating point value to an integer.			class:word	{n/a}
 f:to-number	-n	-	F-	Convert a floating point value into a number.			class:word	{n/a}	{n/a}	f	rre	
 f:to-string	-s	-	F-	Convert a floating point value into a string.			class:word	{n/a}	{n/a}	f	rre	
 f:tuck	-	-	FG-GFG	Tuck a copy of the top floating point value under the second one.			class:word	{n/a}	{n/a}	f	rre	
-f:tuck	-	-	nm-mnm	Put a copy of the top item on the stack under the second one.			class:word	{n/a}	{n/a}	f	rre	
 fetch	a-n	-	-	Fetch the value stored at the specified address.			class:primitive	    &Version fetch	{n/a}	global	all	
 fetch-next	a-an	-	-	Fetch the value stored at the specified address. Returns the next address and the value.			class:word	{n/a}	{n/a}	global	all	
 file:A	-n	-	-	Constant for opening a file in APPEND mode.			class:data	{n/a}	{n/a}	file	rre	

@@ -20,3 +20,94 @@ Examples:
     .0.5     0.5
     .-.4    -0.4
     .1.3     1.3
+
+## Namespace
+
+Floating point words are in the `f:` namespace. There is also
+a related `e:` namespace for *encoded values*, which allows
+storing of floats in standard memory.
+
+## Operation
+
+Floating point values exist on a separate stack, and are bigger
+than the standard memory cells, so can not be directly stored
+and fetched from memory.
+
+The floating point system also provides an alternate stack that
+can be used to temporarily store values.
+
+f:nip
+f:over
+f:pop
+f:adepth
+f:push
+f:dump-astack
+f:dump-stack
+f:depth
+f:drop
+f:drop-pair
+f:dup
+f:dup-pair
+f:tuck
+f:swap
+
+
+f:*
+f:+
+f:-
+f:-INF
+f:-eq?
+f:-inf?
+f:/
+f:E
+f:E1
+f:INF
+f:NAN
+f:PI
+f:abs
+f:acos
+f:asin
+f:atan
+f:between?
+f:case
+f:ceiling
+f:cos
+f:dec
+f:eq?
+f:fetch
+f:floor
+f:gt?
+f:inc
+f:inf?
+f:limit
+f:log
+f:lt?
+f:max
+f:min
+f:nan?
+f:negate
+f:negative?
+f:positive?
+f:power
+f:put
+f:rot
+f:round
+f:sign
+f:signed-sqrt
+f:signed-square
+f:sin
+f:sqrt
+f:square
+f:store
+f:tan
+f:to-e
+f:to-number
+f:to-string
+f:tuck
+
+## Encoded Values
+
+RETRO provides a means of encoding and decoding floating point
+values into standard integer cells. This is based on the paper
+"Encoding floating point values to shorter integers" by Kiyoshi
+Yoneda and Charles Childers.
