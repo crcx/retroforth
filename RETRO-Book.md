@@ -600,6 +600,238 @@ it with a class:
 #100 . . .
 ```
 
+# Using Combinators
+
+A combinator is a function that consumes functions as input.
+They are used heavily by the RETRO system.
+
+## Types of Combinators
+
+Combinators are divided into three primary types: compositional,
+execution flow, and data flow.
+
+### Compositional
+
+A compositional combinator takes elements from the stack and
+returns a new quote.
+
+`curry` takes a value and a quote and returns a new quote
+applying the specified quote to the specified value. As an
+example,
+
+```
+:acc (n-)  here swap , [ dup v:inc fetch ] curry ;
+```
+
+This would create an accumulator function, which takes an
+initial value and returns a quote that will increase the
+accumulator by 1 each time it is invoked. It will also return
+the latest value. So:
+
+```
+#10 acc
+dup call n:put
+dup call n:put
+dup call n:put
+```
+
+### Execution Flow
+
+Combinators of this type execute other functions.
+
+#### Fundamental
+
+`call` takes a quote and executes it immediately.
+
+```
+[ #1 n:put ] call
+&words call
+```
+
+#### Conditionals
+
+RETRO provides three primary combinators for use with
+conditional execution of quotes. These are `choose`, `if`,
+and `-if`.
+
+`choose` takes a flag and two quotes from the stack. If the
+flag is true, the first quote is executed. If false, the
+second quote is executed.
+
+```
+#-1 [ 'true s:put ] [ 'false s:put ] choose
+ #0 [ 'true s:put ] [ 'false s:put ] choose
+```
+
+`if` takes a flag and one quote from the stack. If the flag is
+true, the quote is executed. If false, the quote is discarded.
+
+```
+#-1 [ 'true s:put ] if
+ #0 [ 'true s:put ] if
+```
+
+`-if` takes a flag and one quote from the stack. If the flag is
+false, the quote is executed. If true, the quote is discarded.
+
+```
+#-1 [ 'false s:put ] -if
+ #0 [ 'false s:put ] -if
+```
+
+RETRO also provides `case` and `s:case` for use when you have
+multiple values to check against. This is similar to a `switch`
+in C.
+
+`case` takes two numbers and a quote. The initial value is
+compared to the second one. If they match, the quote is
+executed. If false, the quote is discarded and the initial
+value is left on the stack.
+
+Additionally, if the first value was matched, `case` will exit
+the calling function, but if false, it returns to the calling
+function.
+
+`s:case` works the same way, but for strings instead of simple
+values.
+
+```
+:test (n-)
+  #1 [ 'Yes s:put ] case
+  #2 [ 'No  s:put ] case
+  drop 'No idea s:put ;
+```
+
+#### Looping
+
+Several combinators are available for handling various looping
+constructs.
+
+`while` takes a quote from the stack and executes it repeatedly
+as long as the quote returns a true flag on the stack. This flag
+must be well formed and equal -1 or 0.
+
+```
+#10 [ dup n:put sp n:dec dup 0 -eq? ] while
+```
+
+`times` takes a count and quote from the stack. The quote will
+be executed the number of times specified. No indexes are pushed
+to the stack.
+
+```
+#1 #10 [ dup n:put sp n:inc ] times drop
+```
+
+There is also a `times<with-index>` variation that provides
+access to the loop index (via `I`) and parent loop indexes
+(via `J` and `K`).
+
+```
+#10 [ I n:put sp ] times<with-index>
+```
+
+### Data Flow
+
+These combinators exist to simplify stack usage in various
+circumstances.
+
+#### Preserving
+
+Preserving combinators execute code while preserving portions
+of the data stack.
+
+`dip` takes a value and a quote, moves the value off the main
+stack temporarily, executes the quote, and then restores the
+value.
+
+```
+#10 #20 [ n:inc ] dip
+```
+
+Would yield the following on the stack:
+
+```
+11 20
+```
+
+`sip` is similar to `dip`, but leaves a copy of the original
+value on the stack during execution of the quote. So:
+
+```
+#10 [ n:inc ] sip
+```
+
+Leaves us with:
+
+```
+11 10
+```
+
+#### Cleave
+
+Cleave combinators apply multiple quotations to a single value
+or set of values.
+
+`bi` takes a value and two quotes, it then applies each quote to
+a copy of the value.
+
+```
+#100 [ n:inc ] [ n:dec ] bi
+```
+
+`tri` takes a value and three quotes. It then applies each quote
+to a copy of the value.
+
+```
+#100 [ n:inc ] [ n:dec ] [ dup * ] tri
+```
+
+#### Spread
+
+Spread combinators apply multiple quotations to multiple values.
+The asterisk suffixed to these function names signifies that
+they are spread combinators.
+
+`bi*` takes two values and two quotes. It applies the first
+quote to the first value and the second quote to the second
+value.
+
+```
+#1 #2 [ n:inc ] [ #2 * ] bi*
+```
+
+`tri*` takes three values and three quotes, applying the
+first quote to the first value, the second quote to the
+second value, and the third quote to the third value.
+
+```
+#1 #2 #3 [ n:inc ] [ #2 * ] [ n:dec ] tri*
+```
+
+#### Apply
+
+Apply combinators apply a single quotation to multiple values.
+The @ sign suffixed to these function names signifies that they
+are apply combinators.
+
+`bi@` takes two values and a quote. It then applies the quote to
+each value.
+
+```
+#1 #2 [ n:inc ] bi@
+```
+
+`tri@` takes three values and a quote. It then applies the quote
+to each value.
+
+```
+#1 #2 #3 [ n:inc ] tri@
+```
+
+RETRO also provides `for-each` combinators for various data
+structures. The exact usage of these varies; consult the
+Glossary and relevant chapters for more details on these.
 
 
 # Working With Arrays
