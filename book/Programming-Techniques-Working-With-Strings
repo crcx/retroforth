@@ -27,6 +27,10 @@ use `s:format`:
 'This_has_spaces_and_under\_scored_words. s:format
 ```
 
+## Namespace
+
+Words operating on strings are in the `s:` namespace.
+
 ## Lifetime
 
 At the interpreter, strings get allocated in a rotating buffer.
@@ -50,7 +54,7 @@ this automatically.
 
 ## Searching
 
-RETRO provides two words for searching within a string.
+RETRO provides four words for searching within a string.
 
 `s:contains-char?` 
 `s:contains-string?`
@@ -70,8 +74,12 @@ RETRO provides two words for searching within a string.
 
 ## Joining
 
-`s:append`
-`s:prepend`
+You can use `s:append` or `s:prepend` to merge two strings.
+
+```
+'First 'Second s:append
+'Second 'First s:prepend
+```
 
 ## Tokenization
 
@@ -82,16 +90,25 @@ RETRO provides two words for searching within a string.
 
 ## Conversions
 
-`s:to-lower`
-`s:to-upper`
-`s:to-number`
+To convert the case of a string, RETRO provides `s:to-lower`
+and `s:to-upper`.
+
+`s:to-number` is provided to convert a string to an integer
+value. This has a few limitations:
+
+- only supports decimal
+- non-numeric characters will result in incorrect values
 
 ## Cleanup
 
-`s:chop`
-`s:trim`
-`s:trim-left`
-`s:trim-right`
+RETRO provides a handful of words for cleaning up strings.
+
+`s:chop` will remove the last character from a string. This
+is done by replacing it with an ASCII:NULL.
+
+`s:trim` removes leading and trailing whitespace from a string.
+For more control, there is also `s:trim-left` and `s:trim-right`
+which let you trim just the leading or trailing end as desired.
 
 ## Combinators
 
