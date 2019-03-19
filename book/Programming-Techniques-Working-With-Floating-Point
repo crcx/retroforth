@@ -36,74 +36,104 @@ and fetched from memory.
 The floating point system also provides an alternate stack that
 can be used to temporarily store values.
 
-f:nip
-f:over
-f:pop
-f:adepth
-f:push
-f:dump-astack
-f:dump-stack
-f:depth
-f:drop
-f:drop-pair
-f:dup
-f:dup-pair
-f:tuck
-f:swap
+The following words exist for arranging values on the floating
+point stack. These are direct analogs to the non-prefiexd words
+for dealing with the data stack.
 
+- `f:nip`
+- `f:over`
+- `f:depth`
+- `f:drop`
+- `f:drop-pair`
+- `f:dup`
+- `f:dup-pair`
+- `f:dump-stack`
+- `f:tuck`
+- `f:swap`
+- `f:rot`
 
-f:*
-f:+
-f:-
-f:-INF
-f:-eq?
-f:-inf?
-f:/
-f:E
-f:E1
-f:INF
-f:NAN
-f:PI
-f:abs
-f:acos
-f:asin
-f:atan
-f:between?
-f:case
-f:ceiling
-f:cos
-f:dec
-f:eq?
-f:fetch
-f:floor
-f:gt?
-f:inc
-f:inf?
-f:limit
-f:log
-f:lt?
-f:max
-f:min
-f:nan?
-f:negate
-f:negative?
-f:positive?
-f:power
-f:put
-f:rot
-f:round
-f:sign
-f:signed-sqrt
-f:signed-square
-f:sin
-f:sqrt
-f:square
-f:store
-f:tan
-f:to-e
-f:to-number
-f:to-string
-f:tuck
+For the secondary floating point stack, the following words are
+provided:
+
+- `f:push`
+- `f:pop`
+- `f:adepth`
+- `f:dump-astack`
+
+## Constants
+
+    | Name     | Returns           |
+    | -------- | ----------------- |
+    | `f:E`    | Euler's number    |
+    | `f:-INF` | Negative infinity |
+    | `f:INF`  | Positive infinity |
+    | `f:NAN`  | Not a Number      |
+    | `f:PI`   | PI                |
+
+## Comparisons
+
+The basic set of comparators are the same as those for
+operating on integers. These are:
+
+- `f:-eq?`
+- `f:between?`
+- `f:eq?`
+- `f:gt?`
+- `f:lt?`
+- `f:negative?`
+- `f:positive?`
+- `f:case`
+
+There are also a few additions for comparing to special values
+like infinity and NaN.
+
+- `f:-inf?`
+- `f:inf?`
+- `f:nan?`
+
+## Basic Math
+
+- `f:*`
+- `f:+`
+- `f:-`
+- `f:/`
+- `f:abs`
+- `f:floor`
+- `f:inc`
+- `f:limit`
+- `f:max`
+- `f:min`
+- `f:negate`
+- `f:power`
+- `f:ceiling`
+- `f:dec`
+- `f:log`
+- `f:sqrt`
+- `f:square`
+- `f:round`
+- `f:sign`
+- `f:signed-sqrt`
+- `f:signed-square`
+
+## Geometry
+
+- `f:acos`
+- `f:asin`
+- `f:atan`
+- `f:cos`
+- `f:sin`
+- `f:tan`
+
+## Storage and Retrieval
+
+- `f:fetch`
+- `f:store`
+- `f:to-number`
+- `f:to-string`
+
+## I/O
+
+- `f:put`
 
 ## Encoded Values
 
@@ -111,3 +141,21 @@ RETRO provides a means of encoding and decoding floating point
 values into standard integer cells. This is based on the paper
 "Encoding floating point values to shorter integers" by Kiyoshi
 Yoneda and Charles Childers.
+
+- `f:E1`
+- `f:to-e`
+- `e:-INF`
+- `e:-inf?`
+- `e:INF`
+- `e:MAX`
+- `e:MIN`
+- `e:NAN`
+- `e:clip`
+- `e:inf?`
+- `e:max?`
+- `e:min?`
+- `e:n?`
+- `e:nan?`
+- `e:put`
+- `e:to-f`
+- `e:zero?`

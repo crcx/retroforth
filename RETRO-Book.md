@@ -1148,6 +1148,145 @@ Examples:
     .-.4    -0.4
     .1.3     1.3
 
+## Namespace
+
+Floating point words are in the `f:` namespace. There is also
+a related `e:` namespace for *encoded values*, which allows
+storing of floats in standard memory.
+
+## Operation
+
+Floating point values exist on a separate stack, and are bigger
+than the standard memory cells, so can not be directly stored
+and fetched from memory.
+
+The floating point system also provides an alternate stack that
+can be used to temporarily store values.
+
+The following words exist for arranging values on the floating
+point stack. These are direct analogs to the non-prefiexd words
+for dealing with the data stack.
+
+- `f:nip`
+- `f:over`
+- `f:depth`
+- `f:drop`
+- `f:drop-pair`
+- `f:dup`
+- `f:dup-pair`
+- `f:dump-stack`
+- `f:tuck`
+- `f:swap`
+- `f:rot`
+
+For the secondary floating point stack, the following words are
+provided:
+
+- `f:push`
+- `f:pop`
+- `f:adepth`
+- `f:dump-astack`
+
+## Constants
+
+    | Name     | Returns           |
+    | -------- | ----------------- |
+    | `f:E`    | Euler's number    |
+    | `f:-INF` | Negative infinity |
+    | `f:INF`  | Positive infinity |
+    | `f:NAN`  | Not a Number      |
+    | `f:PI`   | PI                |
+
+## Comparisons
+
+The basic set of comparators are the same as those for
+operating on integers. These are:
+
+- `f:-eq?`
+- `f:between?`
+- `f:eq?`
+- `f:gt?`
+- `f:lt?`
+- `f:negative?`
+- `f:positive?`
+- `f:case`
+
+There are also a few additions for comparing to special values
+like infinity and NaN.
+
+- `f:-inf?`
+- `f:inf?`
+- `f:nan?`
+
+## Basic Math
+
+- `f:*`
+- `f:+`
+- `f:-`
+- `f:/`
+- `f:abs`
+- `f:floor`
+- `f:inc`
+- `f:limit`
+- `f:max`
+- `f:min`
+- `f:negate`
+- `f:power`
+- `f:ceiling`
+- `f:dec`
+- `f:log`
+- `f:sqrt`
+- `f:square`
+- `f:round`
+- `f:sign`
+- `f:signed-sqrt`
+- `f:signed-square`
+
+## Geometry
+
+- `f:acos`
+- `f:asin`
+- `f:atan`
+- `f:cos`
+- `f:sin`
+- `f:tan`
+
+## Storage and Retrieval
+
+- `f:fetch`
+- `f:store`
+- `f:to-number`
+- `f:to-string`
+
+## I/O
+
+- `f:put`
+
+## Encoded Values
+
+RETRO provides a means of encoding and decoding floating point
+values into standard integer cells. This is based on the paper
+"Encoding floating point values to shorter integers" by Kiyoshi
+Yoneda and Charles Childers.
+
+- `f:E1`
+- `f:to-e`
+- `e:-INF`
+- `e:-inf?`
+- `e:INF`
+- `e:MAX`
+- `e:MIN`
+- `e:NAN`
+- `e:clip`
+- `e:inf?`
+- `e:max?`
+- `e:min?`
+- `e:n?`
+- `e:nan?`
+- `e:put`
+- `e:to-f`
+- `e:zero?`
+
 # Working With Numbers
 
 Numbers in RETRO are signed, 32 bit integers with a range of
