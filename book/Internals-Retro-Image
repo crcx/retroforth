@@ -2,20 +2,52 @@
 
 The actual RETRO language is stored as a memory image for Nga.
 
+## Format
+
+The image file is a flat, linear sequence of signed 32-bit
+values. Each value is stored in little endian format. The
+size is not fixed. An interface should check when loading to
+ensure that the physical image is not larger than the emulated
+memory.
+
+## Header
+
+The image will start with two cells. The first is a liju....
+instruction, the second is the target address for the jump.
+This serves to skip over the rest of the data and reach the
+actual entry point.
+
+This is followed by a pointer to the most recent dictionary
+header, a pointer to the next free address in memory, and
+then the RETRO version number.
+
+    | Offset | Contains                    |
+    | ------ | --------------------------- |
+    | 0      | lit call nop nop            |
+    | 1      | Pointer to main entry point |
+    | 2      | Dictionary                  |
+    | 3      | Heap                        |
+    | 4      | RETRO version               |
+
+The actual code starts after this header.
+
+The version number is the year and month. As an example,
+the 12.2019.6 release will have a version number of
+`201906`.
+
 ## Layout
 
 Assuming an Nga built with 524287 cells of memory:
 
-| RANGE           | CONTAINS                     |
-| --------------- | ---------------------------- |
-| 0 - 1024        | rx kernel                    |
-| 1025 - 1535     | token input buffer           |
-| 1536 +          | start of heap space          |
-| ............... | free memory for your use     |
-| 506879          | buffer for string evaluate   |
-| 507904          | temporary strings (32 * 512) |
-| 524287          | end of memory                |
+    | RANGE           | CONTAINS                     |
+    | --------------- | ---------------------------- |
+    | 0 - 1024        | rx kernel                    |
+    | 1025 - 1535     | token input buffer           |
+    | 1536 +          | start of heap space          |
+    | ............... | free memory for your use     |
+    | 506879          | buffer for string evaluate   |
+    | 507904          | temporary strings (32 * 512) |
+    | 524287          | end of memory                |
 
 The buffers at the end of memory will resize when specific
 variables related to them are altered.
-
