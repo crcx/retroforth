@@ -5,3 +5,61 @@ RETRO provides words for working with ASCII characters.
 ## Prefix
 
 Character constants are returned using the `$` prefix.
+
+## Namespace
+
+Words operating on characters are in the `c:` namespace.
+
+## Classification
+
+RETRO provides a number of words to determine if a character
+fits into predefined groups.
+
+The primary words for this are:
+
+* `c:consonant?`
+* `c:digit?`
+* `c:letter?`
+* `c:lowercase?`
+* `c:uppercase?`
+* `c:visible?`
+* `c:vowel?`
+* `c:whitespace?`
+
+There are also corresponding "not" forms:
+
+* `c:-consonant?`
+* `c:-digit?`
+* `c:-lowercase?`
+* `c:-uppercase?`
+* `c:-visible?`
+* `c:-vowel?`
+* `c:-whitespace?`
+
+All of these take a character and return either a `TRUE` or
+`FALSE` flag.
+
+## Conversions
+
+A few words are provided to convert case. Each takes a character
+and returns the modified character.
+
+* `c:to-lower`
+* `c:to-number`
+* `c:to-upper`
+* `c:toggle-case`
+
+RETRO also has `c:to-string`, which takes a character and
+creates a new temporary string with the character.
+
+## I/O
+
+Characters can be displayed using `c:put`.
+
+```
+$a c:put
+```
+
+With the default system on BSD, Linux, and macOS (and other
+Unix style hosts), `c:get` is provided to read input. This
+may be buffered, depending on the host.
