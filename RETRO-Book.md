@@ -1244,23 +1244,39 @@ like infinity and NaN.
 
 ## Geometry
 
-- `f:acos`
-- `f:asin`
-- `f:atan`
-- `f:cos`
-- `f:sin`
-- `f:tan`
+RETRO provides a small number of words for doing geometric
+related calculations.
+
+| Word     | Returns      |
+| -------- | ------------ |
+| `f:acos` | arc cosine   |
+| `f:asin` | arc sine     |
+| `f:atan` | arc tangent  |
+| `f:cos`  | cosine       |
+| `f:sin`  | sine         |
+| `f:tan`  | tangent      |
 
 ## Storage and Retrieval
 
-- `f:fetch`
-- `f:store`
+By leveraging the encoded value functions, RETRO is able to
+allow storage of floating point values in memory. This does
+have a tradeoff in accuracy as the memory cells are considerably
+smaller than a full floating point size.
+
+You can use `f:fetch` to fetch a floating point value and
+`f:store` to store one.
+
+If you need more precision, try Kiyoshi Yoneda's FloatVar
+example (`example/FloatVar.forth`), which includes words to
+store and retrieve values using multiple cells.
+
 - `f:to-number`
 - `f:to-string`
 
 ## I/O
 
-- `f:put`
+The floating point vocabulary has a single I/O word, `f:put`,
+for the display of floating point numbers.
 
 ## Encoded Values
 
