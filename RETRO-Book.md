@@ -1612,16 +1612,40 @@ This is the main RETRO binary.
 
 This is a program that looks up entries in the Glossary.
 
+At the command line, you can use it like:
+
+```
+retro-describe s:for-each
+```
+
 ## retro-embedimage
 
 This is a program which generates a C file with the ngaImage
 contents. It's used when building `retro`.
+
+```
+retro-embedimage ngaImage
+```
+
+The output is written to stdout; redirect it as needed.
 
 ## retro-extend
 
 This is a program which compiles code into the ngaImage.
 It's used when building `retro` and when you want to make a
 standalone image with custom additions.
+
+Example command line:
+
+```
+retro-extend ngaImage example/rot13.forth
+```
+
+Pass the image name as the first argument, and then file names
+as susequent ones. Do *not* use this for things relying on I/O
+apart from the basic console output as it doesn't emulate other
+devices. If you need to load in things that rely on using the
+optional I/O devices, see the Advanced Builds chapter.
 
 ## retro-muri
 
@@ -1632,6 +1656,14 @@ RETRO kernel and can be used by other tools as well.
 
 This is the literate source extraction tool for RETRO. It
 is used in building `retro`.
+
+Example usage:
+
+```
+retro-unu literate/RetroForth.md
+```
+
+Output is written to stdout; redirect as neeeded.
 
 # Advanced Builds
 
@@ -1653,4 +1685,67 @@ example, add:
 
 To the start of the `list` file and then run `make` again. The
 newly built `bin/retro` will now include your additions.
+
+# The Optional Retro Compiler
+
+In addition to the base system, users of RETRO on Unix hosts
+with ELF executables can build and use the `retro-compiler`
+to generate turnkey executables.
+
+## Requirements
+
+- Unix host
+- ELF executable support
+- objcpy in the $PATH
+
+## Building
+
+BSD users:
+
+   make bin/retro-compiler
+
+Linux users:
+
+   make -f Makefile.linux bin/retro-compiler
+
+## Installing
+
+Copy `bin/retro-compiler` to somewhere in your $PATH.
+
+## Using
+
+`retro-compiler` takes two arguments: the source file to
+compile and the name of the word to use as the main entry
+point.
+
+Example:
+
+Given a `hello.forth`:
+
+```
+:hello 'Hello_World! s:put nl ;
+```
+
+Use:
+
+```
+retro-compiler hello.forth hello
+```
+
+The compiler will generate an `a.out` file which you can
+then rename.
+
+## Known Limitations
+
+This does not provide the scripting support for command line
+arguments that the standard `retro` interface offers.
+
+A copy of `objcopy` needs to be in the path for compilation
+to work.
+
+The current working directory must be writable.
+
+This only supports hosts using ELF executables.
+
+The output file name is fixed to `a.out`.
 

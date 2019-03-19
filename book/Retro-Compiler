@@ -1,0 +1,62 @@
+# The Optional Retro Compiler
+
+In addition to the base system, users of RETRO on Unix hosts
+with ELF executables can build and use the `retro-compiler`
+to generate turnkey executables.
+
+## Requirements
+
+- Unix host
+- ELF executable support
+- objcpy in the $PATH
+
+## Building
+
+BSD users:
+
+   make bin/retro-compiler
+
+Linux users:
+
+   make -f Makefile.linux bin/retro-compiler
+
+## Installing
+
+Copy `bin/retro-compiler` to somewhere in your $PATH.
+
+## Using
+
+`retro-compiler` takes two arguments: the source file to
+compile and the name of the word to use as the main entry
+point.
+
+Example:
+
+Given a `hello.forth`:
+
+```
+:hello 'Hello_World! s:put nl ;
+```
+
+Use:
+
+```
+retro-compiler hello.forth hello
+```
+
+The compiler will generate an `a.out` file which you can
+then rename.
+
+## Known Limitations
+
+This does not provide the scripting support for command line
+arguments that the standard `retro` interface offers.
+
+A copy of `objcopy` needs to be in the path for compilation
+to work.
+
+The current working directory must be writable.
+
+This only supports hosts using ELF executables.
+
+The output file name is fixed to `a.out`.

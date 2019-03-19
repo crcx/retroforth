@@ -51,6 +51,7 @@
  'Internals-Retro-Image
  'Additional-Tools
  'Advanced-Builds
+ 'Retro-Compiler
 } process
 ~~~
 
