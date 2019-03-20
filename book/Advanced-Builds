@@ -3,7 +3,7 @@
 For users of BSD, Linux, macOS, you can customize the image at
 build time.
 
-In the top level directory is a `packages` directory containing
+In the top level directory is a `package` directory containing
 a file named `list`. You can add files to compile into your
 system by adding them to the `list` and rebuilding.
 
