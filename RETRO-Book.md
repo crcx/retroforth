@@ -80,7 +80,7 @@ without issue.
 
 ## Process
 
-Run `make`.
+Run `make`
 
 This will build the toolchain and then the main `retro`
 executable.
@@ -141,7 +141,7 @@ RETRO.
 
 ## Process
 
-Run `make`.
+Run `make`
 
 This will build the toolchain and then the main `retro`
 executable.
