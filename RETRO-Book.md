@@ -63,6 +63,10 @@ This will let you stay current with my latest changes faster
 than the snapshots, but you may occasionally encounter bigger
 problems as some commits may be in a partially broken state.
 
+If you have problems, check the version of Fossil you are
+using. I am currently using Fossil 2.7, you may experience
+issues checking out or cloning if using older versions.
+
 # Building RETRO on BSD
 
 RETRO is well supported on BSD (FreeBSD, NetBSD, OpenBSD)
