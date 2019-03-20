@@ -1,4 +1,4 @@
-#!/usr/bin/rre
+#!/usr/bin/env retro
 
 # Atua: A Gopher Server
 

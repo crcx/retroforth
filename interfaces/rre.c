@@ -264,6 +264,14 @@ void rre_execute(CELL cell, int silent) {
 #endif
       exit(1);
     }
+    if (sp < 0 || sp > STACK_DEPTH) {
+      printf("Stack Limits Exceeded!\n");
+      printf("At %d, opcode %d\n", ip, opcode);
+#ifdef USE_TERMIOS
+      restore_term();
+#endif
+      exit(1);
+    }
     ip++;
     if (rp == 0)
       ip = IMAGE_SIZE;
