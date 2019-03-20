@@ -50,7 +50,7 @@ I use a Fossil repository to manage development. To obtain a
 copy of the repository install Fossil and:
 
 ```
-fossil clone https://forthworks.com:8000 retro.fossil
+fossil clone http://forthworks.com:8000 retro.fossil
 mkdir retro
 cd retro
 fossil open /path/to/retro.fossil
