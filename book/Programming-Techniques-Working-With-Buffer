@@ -6,5 +6,119 @@ structures.
 
 ## Namespace
 
-Words operating on the buffer are kept in the `buffer`
+Words operating on the buffer are kept in the `buffer:`
 namespace.
+
+## Implementation
+
+A buffer is a linear sequence of memory. The buffer words
+provide a means of incrementally storing and retrieving
+values from it.
+
+The buffer words keep track of the start and end of the
+buffer. They also ensure that an `ASCII:NULL` is written
+after the last value, which make using them for string
+data easy.
+
+## Limitations
+
+Only one buffer can be active at a time. RETRO provides a
+`buffer:preserve` combinator to allow using a second one
+before returning to the prior one.
+
+## Example
+
+To begin, create a memory region to use as a buffer.
+
+```
+'Test d:create #1025 allot
+```
+
+Then you can set this as the current buffer:
+
+```
+&Test buffer:set
+```
+
+When a buffer is set, the vocabulary sets an internal
+index to the first address in it. This will be
+incremented when you add data and decremented when you
+remove data.
+
+Let's add some stuff using `buffer:add`:
+
+```
+#100 buffer:add
+#200 buffer:add
+#300 buffer:add
+```
+
+And then retreive the values:
+
+```
+buffer:get n:put nl
+buffer:get n:put nl
+buffer:get n:put nl
+```
+
+You can remove all values using `buffer:empty`:
+
+```
+#100 buffer:add
+#200 buffer:add
+#300 buffer:add
+buffer:empty
+```
+
+And ask the buffer how many items it contains:
+
+```
+buffer:size n:put nl
+#100 buffer:add
+#200 buffer:add
+#300 buffer:add
+buffer:size n:put nl
+buffer:empty
+```
+
+The other functions are `buffer:start`, which returns
+the address of the buffer, `buffer:end`, which returns
+the address of the last value, and `buffer:preserve`.
+The first is easy to demo:
+
+```
+buffer:start Test eq? n:put nl
+```
+
+The last one is useful. Only one buffer is ever active
+at a given time. The `buffer:preserve` combinator lets
+you execute a word, saving and restoring the current
+buffer indexes. So the word could assign and use a new
+buffer and this will reset the previous one after
+control returns.
+
+There are a few notes that need to be considered. The
+preserve combinator saves the start and current index
+but *not* the contents. If the word you call uses the
+same buffer, the contents will remain altered.
+
+Finally, the buffer words have one interesting trait:
+they store an ASCII NULL after adding each item to the
+buffer. This lets one use them to build strings easily.
+
+```
+Test buffer:set
+$h buffer:add
+$e buffer:add
+$l buffer:add
+$l buffer:add
+$o buffer:add
+$, buffer:add
+#32 buffer:add
+$w buffer:add
+$o buffer:add
+$r buffer:add
+$l buffer:add
+$d buffer:add
+buffer:start s:put nl
+```
