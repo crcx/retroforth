@@ -109,7 +109,11 @@ you have a C compiler, headers, and make.
 
 ## Process
 
-Run `make -f Makefile.linux`.
+Run:
+
+```
+make -f Makefile.linux
+```
 
 This will build the toolchain and then the main `retro`
 executable.
