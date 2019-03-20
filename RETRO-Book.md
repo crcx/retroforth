@@ -18,6 +18,40 @@ Glossary on hand is highly recommended as you learn to use RETRO.
 This book will hopefully help you develop a better understanding
 of RETRO and how it works.
 
+# Obtaining RETRO
+
+The RETRO source code can be obtained from http://forthworks.com/retro
+
+## Stable Releases
+
+I periodically make stable releases. This will typically happen
+two to four times per year.
+
+These are good for those needing a solid base that doesn't change
+frequently.
+
+## Snapshots
+
+A lot of development happens between releases. I make snapshots
+of my working source tree nightly (and often more often).
+
+This is what I recommend for most users. It reflects my latest
+system and is normally reliable as it's used daily in production.
+
+## Repository
+
+To stay fully current, use the repository.
+
+I use a Fossil repository to manage development. To obtain a
+copy of the repository install Fossil and:
+
+```
+fossil clone https://forthworks.com:8000 retro.fossil
+mkdir retro
+cd retro
+fossil open /path/to/retro.fossil
+```
+
 # Building RETRO on BSD
 
 RETRO is well supported on BSD (FreeBSD, NetBSD, OpenBSD)
