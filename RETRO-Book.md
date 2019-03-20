@@ -674,7 +674,7 @@ They are used heavily by the RETRO system.
 Combinators are divided into three primary types: compositional,
 execution flow, and data flow.
 
-### Compositional
+## Compositional
 
 A compositional combinator takes elements from the stack and
 returns a new quote.
@@ -699,11 +699,11 @@ dup call n:put
 dup call n:put
 ```
 
-### Execution Flow
+## Execution Flow
 
 Combinators of this type execute other functions.
 
-#### Fundamental
+### Fundamental
 
 `call` takes a quote and executes it immediately.
 
@@ -712,7 +712,7 @@ Combinators of this type execute other functions.
 &words call
 ```
 
-#### Conditionals
+### Conditionals
 
 RETRO provides three primary combinators for use with
 conditional execution of quotes. These are `choose`, `if`,
@@ -766,7 +766,7 @@ values.
   drop 'No idea s:put ;
 ```
 
-#### Looping
+### Looping
 
 Several combinators are available for handling various looping
 constructs.
@@ -795,12 +795,12 @@ access to the loop index (via `I`) and parent loop indexes
 #10 [ I n:put sp ] times<with-index>
 ```
 
-### Data Flow
+## Data Flow
 
 These combinators exist to simplify stack usage in various
 circumstances.
 
-#### Preserving
+### Preserving
 
 Preserving combinators execute code while preserving portions
 of the data stack.
@@ -832,7 +832,7 @@ Leaves us with:
 11 10
 ```
 
-#### Cleave
+### Cleave
 
 Cleave combinators apply multiple quotations to a single value
 or set of values.
@@ -851,7 +851,7 @@ to a copy of the value.
 #100 [ n:inc ] [ n:dec ] [ dup * ] tri
 ```
 
-#### Spread
+### Spread
 
 Spread combinators apply multiple quotations to multiple values.
 The asterisk suffixed to these function names signifies that
@@ -873,7 +873,7 @@ second value, and the third quote to the third value.
 #1 #2 #3 [ n:inc ] [ #2 * ] [ n:dec ] tri*
 ```
 
-#### Apply
+### Apply
 
 Apply combinators apply a single quotation to multiple values.
 The @ sign suffixed to these function names signifies that they
@@ -2138,10 +2138,11 @@ whatever means your host system provides.
 ## Rationale
 
 Error checks are useful, but slow - especially on a minimal
-system like RETRO. The overhead of doing depth checks adds
-up quickly.
+system like RETRO. The overhead of doing depth or other checks
+adds up quickly.
 
 As an example, adding a depth check to `drop` increases the
 time to use it 250,000 times in a loop from 0.16 seconds to
 1.69 seconds.
+
 

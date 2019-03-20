@@ -429,6 +429,11 @@ CELL ngaLoadImage(char *imageFile) {
     /* Determine length (in cells) */
     fseek(fp, 0, SEEK_END);
     fileLen = ftell(fp) / sizeof(CELL);
+    if (fileLen > IMAGE_SIZE) {
+      fclose(fp);
+      printf("Image is larger than alloted space!\n");
+      exit(1);
+    }
     rewind(fp);
     /* Read the file into memory */
     imageSize = fread(&memory, sizeof(CELL), fileLen, fp);
