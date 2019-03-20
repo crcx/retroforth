@@ -1,0 +1,34 @@
+# Errors
+
+RETRO does only minimal error checking.
+
+## Non-Fatal
+
+A non-fatal error will be reported on *word not found* during
+interactive or compile time. Note that this only applies to
+calls: if you try to get a pointer to an undefined word, the
+returned pointer will be zero.
+
+## Fatal
+
+A number of conditions are known to cause fatal errors. The
+main ones are stack overflow, stack underflow, and division
+by zero.
+
+On these, RETRO will generally exit. For stack depth issues,
+the VM will attempt to display an error prior to exiting.
+
+In some cases, the VM may get stuck in an endless loop. If this
+occurs, try using CTRL+C to kill the process, or kill it using
+whatever means your host system provides.
+
+## Rationale
+
+Error checks are useful, but slow - especially on a minimal
+system like RETRO. The overhead of doing depth or other checks
+adds up quickly.
+
+As an example, adding a depth check to `drop` increases the
+time to use it 250,000 times in a loop from 0.16 seconds to
+1.69 seconds.
+

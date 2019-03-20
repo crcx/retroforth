@@ -100,6 +100,7 @@ June 2019.
   image file
 - add `image:save`
 - add `sys:name`
+- will now display an error and exit on stack over/underflow
 
 ### retro-compiler
 
