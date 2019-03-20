@@ -21,26 +21,30 @@ of RETRO and how it works.
 # Obtaining RETRO
 
 The RETRO source code can be obtained from http://forthworks.com/retro
+or gopher://forthworks.com/1/retro
 
 ## Stable Releases
 
 I periodically make stable releases. This will typically happen
-two to four times per year.
-
-These are good for those needing a solid base that doesn't change
-frequently.
+two to four times per year. These are good for those needing a
+solid base that doesn't change frequently.
 
 ## Snapshots
 
 A lot of development happens between releases. I make snapshots
 of my working source tree nightly (and often more often).
 
-This is what I recommend for most users. It reflects my latest
-system and is normally reliable as it's used daily in production.
+This is what I personally recommend for most users. It reflects
+my latest system and is normally reliable as it's used daily in
+production.
+
+The latest snapshot can be downloaded from the following stable
+URLs:
+
+* http://forthworks.com/retro/r/latest.tar.gz
+* gopher://forthworks.com/9/retro/r/latest.tar.gz
 
 ## Repository
-
-To stay fully current, use the repository.
 
 I use a Fossil repository to manage development. To obtain a
 copy of the repository install Fossil and:
@@ -51,6 +55,13 @@ mkdir retro
 cd retro
 fossil open /path/to/retro.fossil
 ```
+
+See the Fossil documentation for details on using Fossil to
+keep your local copy of the repository current.
+
+This will let you stay current with my latest changes faster
+than the snapshots, but you may occasionally encounter bigger
+problems as some commits may be in a partially broken state.
 
 # Building RETRO on BSD
 
