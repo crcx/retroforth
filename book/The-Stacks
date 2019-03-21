@@ -1,0 +1,130 @@
+# The Stacks
+
+The stacks are a defining feature of Forth. They are are used
+to pass data between words and to track return addresses for
+function calls.
+
+RETRO always has two stacks, and optionally (if built with
+floating point support) a third.
+
+## Data Stack
+
+This is the primary stack. Values are placed here, passed to
+words which consume them and then return results. When I
+refer to "the stack", this is the one I mean. Learning to use
+the stack is a crucial part to making effective use of RETRO.
+
+### Placing Values On The Stack
+
+Values can be placed on the stack directly.
+
+| Example        | Action                                   |
+| -------------- | ---------------------------------------- |
+| `#300123`      | Push the number `300123` to the stack    |
+| `$h`           | Push the ASCII code for `h` to the stack |
+| `'hello_world` | Push a pointer to a string to the stack  |
+| `&fetch`       | Push the address of `fetch` to the stack |
+
+### Reordering The Stack
+
+RETRO provides a number of *shufflers* for reordering items
+on the stack.
+
+Some of the most common ones are:
+
+| Word    | Before   | After    |
+| ------- |--------- | -------- |
+| dup     | #1       | #1 #1    |
+| drop    | #1 #2    | #1       |
+| swap    | #1 #2    | #2 #1    |
+| over    | #1 #2    | #1 #2 #1 |
+| tuck    | #1 #2    | #2 #1 #2 |
+| nip     | #1 #2    | #2       |
+| rot     | #1 #2 #3 | #3 #1 #2 |
+
+You can use `push` and `pop` to move values to and from the
+address stack. Make sure you `pop` them back before the word
+ends or RETRO will crash. These two words can not be used
+at the interpreter.
+
+There is also a special one, `reorder`, which allows for big
+stack restructuring. This is slow but can be very useful.
+
+As an example, let's say we have four values:
+
+```
+#1 #2 #3 #4
+```
+
+And we want them to become:
+
+```
+#4 #3 #2 #1
+```
+
+Doing this with the basic shufflers is difficult. You could end
+up with something similar to:
+
+```
+swap rot push rot pop swap 
+```
+
+But with `reorder`, you can just express the before and after
+states:
+
+```
+'abcd 'dcba reorder
+```
+
+### Resetting The Stack
+
+If you need to quickly empty the stack, use `reset`.
+
+### Get The Stack Depth
+
+To find out how many items are on the stack, use `depth`.
+
+### Displaying The Stack
+
+You can display the stack by running `dump-stack`.
+
+### Data Flow Combinators
+
+RETRO provides *combinators* for working with data order on
+the stack. These are covered in a later chapter and are worth
+learning to use as they can help provide a cleaner, more
+structured means of working.
+
+### Tips
+
+The stack is *not* an array in addressable memory. Don't try
+to treat it like one.
+
+## Address Stack
+
+This stack primarily holds return addresses for function calls.
+You normally won't need to directly interact with this stack,
+but you can use `push` and `pop` to move values between the
+data stack and this.
+
+## Floating Point Stack
+
+If you are using a build with floating point support a third
+stack will be present. Floating point values are kept and
+passed between words using this.
+
+See the Floating Point chapter for more details on this.
+
+## Tips
+
+I recommend keeping the data stack shallow. Don't try to juggle
+too much; it's better to factor definitions into shorter ones
+that deal with simpler parts of the stack values than to have
+a big definition with a lot of complex shuffling.
+
+## Notes
+
+The standard system is configured with a very deep data stack
+(around 2,000 items) and an address stack that is 3x deeper.
+In actual use, your programs are unlikely to ever need this,
+but if you do, keep the limits in mind.
