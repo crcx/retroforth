@@ -544,11 +544,49 @@ when entering code interactively).
 
 Word names in RETRO generally follow the following conventions.
 
+## General Guidelines
+
+* Readability is important
+* Be consistent
+* Don't use a prefix as the first character of a name
+* Use short names for indices
+
+## Typical Format
+
+The word names will generally follow a form like:
+
+    [namespace:]name
+
+The `namespace:` is optional, but recommended for consistency
+with the rest of the system and to make it easier to identify
+related words.
+
 ## Case
 
 Word names are lowercase, with a dash (-) for compound names.
+
+```
+hello
+drop-pair
+s:for-each
+```
+
 Variables use TitleCase, with no dash between compound names.
+
+```
+Base
+Heap
+StringBuffers
+```
+
 Constants are UPPERCASE, with a dash (-) for compound names.
+
+```
+TRUE
+FALSE
+f:PI
+MAX-STRING-LENGTH
+```
 
 ## Namespaces
 
@@ -576,6 +614,18 @@ The common namespaces are:
 | gopher: | Gopher protocol words                                  |
 | unix:   | Unix system call words                                 |
 
+## Tips
+
+Avoid using a prefix as the first character of a word name. RETRO
+will look for prefixes first, this will prevent direct use of
+the work in question.
+
+To find a list of prefix characters, do:
+
+```
+'prefix: d:words-with
+```
+
 # Stack Diagrams
 
 Most words in RETRO have a stack comment. These look like:
@@ -592,13 +642,15 @@ RETRO uses a short notation, with one character per value
 taken or left. In general, the following symbols represent
 certain types of values.
 
-    b, n, m, o, x, y, z are generic numeric values
-    s represents a string
-    v represents a variable
-    p, a represent pointers
-    q represents a quotation
-    d represents a dictionary header
-    f represents a `TRUE` or `FALSE` flag.
+| Notation            | Represents              |
+| ------------------- | ----------------------- |
+| b, n, m, o, x, y, z | generic numeric values  |
+| s                   | string                  |
+| v                   | variable                |
+| p, a                | pointers                |
+| q                   | quotation               |
+| d                   | dictionary header       |
+| f                   | `TRUE` or `FALSE` flag. |
 
 In the case of something like `(xyz-m)`, RETRO expects z to be
 on the top of the stack, with y below it and x below the y

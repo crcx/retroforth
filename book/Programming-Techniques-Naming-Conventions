@@ -2,11 +2,49 @@
 
 Word names in RETRO generally follow the following conventions.
 
+## General Guidelines
+
+* Readability is important
+* Be consistent
+* Don't use a prefix as the first character of a name
+* Use short names for indices
+
+## Typical Format
+
+The word names will generally follow a form like:
+
+    [namespace:]name
+
+The `namespace:` is optional, but recommended for consistency
+with the rest of the system and to make it easier to identify
+related words.
+
 ## Case
 
 Word names are lowercase, with a dash (-) for compound names.
+
+```
+hello
+drop-pair
+s:for-each
+```
+
 Variables use TitleCase, with no dash between compound names.
+
+```
+Base
+Heap
+StringBuffers
+```
+
 Constants are UPPERCASE, with a dash (-) for compound names.
+
+```
+TRUE
+FALSE
+f:PI
+MAX-STRING-LENGTH
+```
 
 ## Namespaces
 
@@ -33,3 +71,15 @@ The common namespaces are:
 | f:      | Floating Point words                                   |
 | gopher: | Gopher protocol words                                  |
 | unix:   | Unix system call words                                 |
+
+## Tips
+
+Avoid using a prefix as the first character of a word name. RETRO
+will look for prefixes first, this will prevent direct use of
+the work in question.
+
+To find a list of prefix characters, do:
+
+```
+'prefix: d:words-with
+```

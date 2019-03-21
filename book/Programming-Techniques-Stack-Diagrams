@@ -14,13 +14,15 @@ RETRO uses a short notation, with one character per value
 taken or left. In general, the following symbols represent
 certain types of values.
 
-    b, n, m, o, x, y, z are generic numeric values
-    s represents a string
-    v represents a variable
-    p, a represent pointers
-    q represents a quotation
-    d represents a dictionary header
-    f represents a `TRUE` or `FALSE` flag.
+| Notation            | Represents              |
+| ------------------- | ----------------------- |
+| b, n, m, o, x, y, z | generic numeric values  |
+| s                   | string                  |
+| v                   | variable                |
+| p, a                | pointers                |
+| q                   | quotation               |
+| d                   | dictionary header       |
+| f                   | `TRUE` or `FALSE` flag. |
 
 In the case of something like `(xyz-m)`, RETRO expects z to be
 on the top of the stack, with y below it and x below the y
