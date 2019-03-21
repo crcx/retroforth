@@ -57,8 +57,7 @@ RETRO provides `array:filter` which extracts matching values
 from an array. This is used like:
 
 ```
-{ #1 #2 #3 #4 #5 #6 #7 #8 }
-[ n:even? ] array:filter
+{ #1 #2 #3 #4 #5 #6 #7 #8 } [ n:even? ] array:filter
 ```
 
 The quote will be passed each value in the array and should
@@ -73,8 +72,7 @@ constructs a new array from the returned values.
 Example:
 
 ```
-{ #1 #2 #3 }
-[ #10 * ] array:map
+{ #1 #2 #3 } [ #10 * ] array:map
 ```
 
 ## Reduce

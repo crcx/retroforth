@@ -80,4 +80,7 @@ later chapters on working with different data types.
 ## Word Classes
 
 Word classes are words which take a pointer and do something
-with it.
+with it. These are covered in detail in their own chapter,
+but essentially they decide *how* to execute or compile specific
+types of words.
+

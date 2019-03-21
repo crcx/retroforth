@@ -26,6 +26,37 @@ Only one buffer can be active at a time. RETRO provides a
 `buffer:preserve` combinator to allow using a second one
 before returning to the prior one.
 
+## Set The Active Buffer
+
+To set a buffer as the active one use `buffer:set`. This takes
+an address.
+
+The buffer will be assumed to be empty. The inital value will
+be set to ASCII:NULL.
+
+## Add Value
+
+Use `buffer:add` to append a value to the buffer. This takes
+a single value and will also add an ASCII:NULL after the end
+of the buffer.
+
+## Fetch Last Value
+
+To return the last value in the buffer you can use `buffer:get`.
+This removes the value and sets an ASCII:NULL in the memory
+location the returned value occupied.
+
+## Get Data About The Buffer
+
+RETRO provides `buffer:start` to get the initial address in
+the buffer, `buffer:end` to get the last address (ignoring the
+ASCII:NULL), and `buffer:size` to return the number of values
+in the buffer.
+
+## Reset
+
+You can reset a buffer to the empty state using `buffer:empty`.
+
 ## Example
 
 To begin, create a memory region to use as a buffer.

@@ -396,7 +396,10 @@ later chapters on working with different data types.
 ## Word Classes
 
 Word classes are words which take a pointer and do something
-with it.
+with it. These are covered in detail in their own chapter,
+but essentially they decide *how* to execute or compile specific
+types of words.
+
 
 # A Quick Tutorial
 
@@ -1009,8 +1012,7 @@ RETRO provides `array:filter` which extracts matching values
 from an array. This is used like:
 
 ```
-{ #1 #2 #3 #4 #5 #6 #7 #8 }
-[ n:even? ] array:filter
+{ #1 #2 #3 #4 #5 #6 #7 #8 } [ n:even? ] array:filter
 ```
 
 The quote will be passed each value in the array and should
@@ -1025,8 +1027,7 @@ constructs a new array from the returned values.
 Example:
 
 ```
-{ #1 #2 #3 }
-[ #10 * ] array:map
+{ #1 #2 #3 } [ #10 * ] array:map
 ```
 
 ## Reduce
@@ -1078,6 +1079,37 @@ data easy.
 Only one buffer can be active at a time. RETRO provides a
 `buffer:preserve` combinator to allow using a second one
 before returning to the prior one.
+
+## Set The Active Buffer
+
+To set a buffer as the active one use `buffer:set`. This takes
+an address.
+
+The buffer will be assumed to be empty. The inital value will
+be set to ASCII:NULL.
+
+## Add Value
+
+Use `buffer:add` to append a value to the buffer. This takes
+a single value and will also add an ASCII:NULL after the end
+of the buffer.
+
+## Fetch Last Value
+
+To return the last value in the buffer you can use `buffer:get`.
+This removes the value and sets an ASCII:NULL in the memory
+location the returned value occupied.
+
+## Get Data About The Buffer
+
+RETRO provides `buffer:start` to get the initial address in
+the buffer, `buffer:end` to get the last address (ignoring the
+ASCII:NULL), and `buffer:size` to return the number of values
+in the buffer.
+
+## Reset
+
+You can reset a buffer to the empty state using `buffer:empty`.
 
 ## Example
 
