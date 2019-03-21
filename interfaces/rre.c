@@ -534,8 +534,8 @@ int main(int argc, char **argv) {
   if (modes[FLAG_INTERACTIVE] == 1) {
     rre_execute(d_xt_for("banner", Dictionary), 0);
 #ifdef USE_TERMIOS
-    atexit(restore_term);
     if (modes[FLAG_CBREAK] == 1) prepare_term();
+    if (modes[FLAG_CBREAK] == 1) atexit(restore_term);
 #endif
     if (modes[FLAG_CBREAK] == 1) while (1) rre_execute(0, 0);
     if (modes[FLAG_CBREAK] == 0) while (1) rre_execute(0, -1);
