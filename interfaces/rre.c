@@ -259,17 +259,11 @@ void rre_execute(CELL cell, int silent) {
     } else {
       printf("Invalid instruction!\n");
       printf("At %d, opcode %d\n", ip, opcode);
-#ifdef USE_TERMIOS
-      restore_term();
-#endif
       exit(1);
     }
     if (sp < 0 || sp > STACK_DEPTH) {
-      printf("Stack Limits Exceeded!\n");
+      printf("\nStack Limits Exceeded!\n");
       printf("At %d, opcode %d\n", ip, opcode);
-#ifdef USE_TERMIOS
-      restore_term();
-#endif
       exit(1);
     }
     ip++;
@@ -541,13 +535,11 @@ int main(int argc, char **argv) {
   if (modes[FLAG_INTERACTIVE] == 1) {
     rre_execute(d_xt_for("banner", Dictionary), 0);
 #ifdef USE_TERMIOS
+    atexit(restore_term);
     if (modes[FLAG_CBREAK] == 1) prepare_term();
 #endif
     if (modes[FLAG_CBREAK] == 1) while (1) rre_execute(0, 0);
     if (modes[FLAG_CBREAK] == 0) while (1) rre_execute(0, -1);
-#ifdef USE_TERMIOS
-    if (modes[FLAG_CBREAK] == 1) restore_term();
-#endif
     exit(0);
   }
 }
