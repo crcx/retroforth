@@ -213,10 +213,10 @@ In *io\io_floatingpoint.c*:
 
 \path\to\tcc rre.c image-functions.c io\io_filesystem.c io\io_floatingpoint.c -o retro.exe
 
-# Starting RETRO on BSD
+# Starting RETRO
 
 RETRO can be run for scripting or interactive use. To start it
-interactively, run: `retro -i` or `retro -c`.
+interactively, run: `retro` without any command line arguments.
 
 For a summary of the full command line arguments available:
 
@@ -235,59 +235,6 @@ For a summary of the full command line arguments available:
                    echo in interactive mode
       -f filename  Run the contents of the specified file
       -t           Run tests (in ``` blocks) in any loaded files
-
-
-# Starting RETRO on Linux
-
-RETRO can be run for scripting or interactive use. To start it
-interactively, run: `retro -i` or `retro -c`.
-
-For a summary of the full command line arguments available:
-
-    Scripting Usage:
-
-        retro filename [script arguments...]
-
-    Interactive Usage:
-
-        retro [-h] [-i] [-c] [-s] [-f filename] [-t]
-
-      -h           Display this help text
-      -i           Interactive mode (line buffered)
-      -c           Interactive mode (character buffered)
-      -s           Suppress the 'ok' prompt and keyboard
-                   echo in interactive mode
-      -f filename  Run the contents of the specified file
-      -t           Run tests (in ``` blocks) in any loaded files
-
-
-# Starting RETRO on macOS
-
-RETRO can be run for scripting or interactive use. To start it
-interactively, run: `retro -i` or `retro -c`.
-
-For a summary of the full command line arguments available:
-
-    Scripting Usage:
-
-        retro filename [script arguments...]
-
-    Interactive Usage:
-
-        retro [-h] [-i] [-c] [-s] [-f filename] [-t]
-
-      -h           Display this help text
-      -i           Interactive mode (line buffered)
-      -c           Interactive mode (character buffered)
-      -s           Suppress the 'ok' prompt and keyboard
-                   echo in interactive mode
-      -f filename  Run the contents of the specified file
-      -t           Run tests (in ``` blocks) in any loaded files
-
-
-# Starting RETRO on Windows
-
-Double click the `retro.exe` file.
 
 # Basic Interactions
 
