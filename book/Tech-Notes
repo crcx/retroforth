@@ -1,0 +1,473 @@
+# Technical Notes and Reflections
+
+This is a collection of short papers providing some additional
+background and reflections on design decisions.
+
+## Metacompilation and Assembly
+
+RETRO 10 and 11 were written in themselves using a metacompiler.
+I had been fascinated by this idea for a long time and was able
+to explore it heavily. While I still find it to be a good idea,
+the way I ended up doing it was problematic.
+
+The biggest issue I faced was that I wanted to do this in one
+step, where loading the RETRO source would create a new image
+in place of the old one, switch to the new one, and then load
+the higher level parts of the language over this. In retrospect,
+this was a really bad idea.
+
+My earlier design for RETRO was very flexible. I allowed almost
+everything to be swapped out or extended at any time. This made
+it extremely easy to customize the language and environment, but
+made it crucial to keep track of what was in memory and what had
+been patched so that the metacompiler wouldn't refer to anything
+in the old image during the relocation and control change. It
+was far too easy to make a mistake, discover that elements of
+the new image were broken, and then have to go and revert many
+changes to try to figure out what went wrong.
+
+This was also complicated by the fact that I built new images
+as I worked, and, while a new image could be built from the last
+built one, it wasn't always possible to build a new image from
+the prior release version. (Actually, it was often worse - I
+failed to check in every change as I went, so often even the
+prior commits couldn't rebuild the latest images).
+
+For RETRO 12 I wanted to avoid this problem, so I decided to go
+back to writing the kernel ("Rx") in assembly. I actually wrote
+a Machine Forth dialect to generate the initial assembly, before
+eventually hand tuning the final results to its current state.
+
+I could (and likely will eventually) write the assembler in
+RETRO, but the current one is in C, and is built as part of the
+standard toolchain.
+
+My VM actually has two assemblers. The older one is Naje. This
+was intended to be fairly friendly to work with, and handles
+many of the details of packing instructions for the user. Here
+is an example of a small program in it:
+
+    :square
+      dup
+      mul
+      ret
+    :main
+      lit 35
+      lit &square
+      call
+      lit &square
+      call
+      end
+
+The other assembler is Muri. This is a far more minimalistic
+assembler, but I've actually grown to prefer it. The above
+example in Muri would become:
+
+    i liju....
+    r main
+    : square
+    i dumure..
+    : main
+    i lilica..
+    d 35
+    r square
+    i en......
+
+In Muri, each instruction is reduced to two characters, and the
+bundlings are listed as part of an instruction bundle (lines
+starting with `i`). This is less readable if you aren't very
+familiar with Nga's assembly and packing rules, but allows a
+very quick, efficient way of writing assembly for those who are.
+
+I eventually rewrote the kernel in the Muri style as it's what
+I prefer, and since there's not much need to make changes in it.
+
+## The Path to Self Hosting
+
+RETRO is an image based Forth system running on a lightweight
+virtual machine. This is the story of how that image is made.
+
+The first RETRO to use an image based approach was RETRO 10.
+The earliest images were built using a compiler written in
+Toka, an earlier experimental stack language I had written.
+It didn't take long to want to drop the dependency on Toka,
+so I rewrote the image compiler in RETRO and then began
+development at a faster pace.
+
+RETRO 11 was built using the last RETRO 10 image and an
+evolved version of the metacompiler. This worked well, but
+I eventually found it to be problematic.
+
+One of the issues I faced was the inability to make a new
+image from the prior stable release. Since I develop and
+test changes incrementally, I reached a point where the
+current metacompiler and image required each other. This
+wasn't a fatal flaw, but it was annoying.
+
+Perhaps more critical was the fragility of the system. In
+R11 small mistakes could result in a corrupt image. The test
+suite helped identify some of these, but there were a few
+times I was forced to dig back through the version control
+history to recover a working image.
+
+The fragile nature was amplified by some design decisions.
+In R11, after the initial kernel was built, it would be
+moved to memory address 0, then control would jump into the
+new kernel to finish building the higher level parts.
+
+Handling this was a tricky task. In R11 almost everything
+could be revectored, so the metacompiler had to ensure that
+it didn't rely on anything in the old image during the move.
+This caused a large number of issues over R11's life.
+
+So on to RETRO 12. I decided that this would be different.
+First, the kernel would be assembly, with an external tool
+to generate the core image. The kernel is in `Rx.md` and the
+assembler is `Muri`. To load the standard library, I wrote a
+second tool, `retro-extend`. This separation has allowed me
+many fewer headaches as I can make changes more easily and
+rebuild from scratch when necessary.
+
+But I miss self-hosting. So last fall I decided to resolve
+this. And today I'm pleased to say that it is now done.
+
+There are a few parts to this.
+
+**Unu**. I use a Markdown variation with fenced code blocks.
+The tool I wrote in C to extract these is called `unu`. For
+a self hosting RETRO, I rewrote this as a combinator that
+reads in a file and runs another word against each line in the
+file. So I could display the code block contents by doing:
+
+    'filename [ s:put nl ] unu
+
+This made it easier to implement the other tools.
+
+**Muri**. This is my assembler. It's minimalistic, fast, and
+works really well for my purposes. RETRO includes a runtime
+version of this (using `as{`, `}as`, `i`, `d`, and `r`), so
+all I needed for this was to write a few words to parse the
+lines and run the corresponding runtime words. As with the C
+version, this is a two pass assembler.
+
+Muri generates a new `ngaImage` with the kernel. To create a
+full image I needed a way to load in the standard library and
+I/O extensions.
+
+This is handled by **retro-extend**. This is where it gets
+more complex. I implemented the Nga virtual machine in RETRO
+to allow this to run the new image in isolation from the
+host image. The new ngaImage is loaded, the interpreter is
+located, and each token is passed to the interpreter. Once
+done, the new image is written to disk.
+
+So at this point I'm pleased to say that I can now develop
+RETRO using only an existing copy of RETRO (VM+image) and
+tools (unu, muri, retro-extend, and a line oriented text
+editor) written in RETRO.
+
+This project has delivered some additional side benefits.
+During the testing I was able to use it to identify a few
+bugs in the I/O extensions, and the Nga-in-RETRO will replace
+the older attempt at this in the debugger, allowing a safer
+testing environment.
+
+What issues remain?
+
+The extend process is *slow*. On my main development server
+(Linode 1024, OpenBSD 6.4, 64-bit) it takes a bit over five
+minutes to complete loading the standard library, and a few
+additional depending on the I/O drivers selected.
+
+Most of the performance issues come from running Nga-in-RETRO
+to isolate the new image from the host one. It'd be possible
+to do something a bit more clever (e.g., running a RETRO
+instance using the new image via a subprocess and piping in
+the source, or doing relocations of the data), but this is
+less error prone and will work on all systems that I plan to
+support (including, with a few minor adjustments, the native
+hardware versions [assuming the existance of mass storage]).
+
+Sources:
+
+**Unu**
+
+- http://forth.works/c8820f85e0c52d32c7f9f64c28f435c0
+- gopher://forth.works/0/c8820f85e0c52d32c7f9f64c28f435c0
+
+**Muri**
+
+- http://forth.works/09d6c4f3f8ab484a31107dca780058e3
+- gopher://forth.works/0/09d6c4f3f8ab484a31107dca780058e3
+
+**retro-extend**
+
+- http://forth.works/c812416f397af11db58e97388a3238f2
+- gopher://forth.works/0/c812416f397af11db58e97388a3238f2
+
+## Prefixes as a Language Element
+
+A big change in RETRO 12 was the elimination of the traditional
+parser from the language. This was a sacrifice due to the lack
+of an I/O model. RETRO has no way to know *how* input is given
+to the `interpret` word, or whether anything else will ever be
+passed into it.
+
+And so `interpret` operates only on the current token. The core
+language does not track what came before or attempt to guess at
+what might come in the future.
+
+This leads into the prefixes. RETRO 11 had a complicated system
+for prefixes, with different types of prefixes for words that
+parsed ahead (e.g., strings) and words that operated on the
+current token (e.g., `@`). RETRO 12 eliminates all of these in
+favor of just having a single prefix model.
+
+The first thing `interpret` does is look to see if the first
+character in a token matches a `prefix:` word. If it does, it
+passes the rest of the token as a string pointer to the prefix
+specific handler to deal with. If there is no valid prefix
+found, it tries to find it in the dictionary. Assuming that it
+finds the words, it passes the `d:xt` field to the handler that
+`d:class` points to. Otherwise it calls `err:notfound`.
+
+This has an important implication: *words can not reliably
+have names that start with a prefix character.*
+
+It also simplifies things. Anything that would normally parse
+becomes a prefix handler. So creating a new word? Use the `:`
+prefix. Strings? Use `'`. Pointers? Try `&`. And so on. E.g.,
+
+    In ANS                  | In RETRO
+    : foo ... ;             | :foo ... ;
+    ' foo                   | &foo
+    : bar ... ['] foo ;     | :bar ... &foo ;
+    s" hello world!"        | 'hello_world!
+
+If you are familiar with ColorForth, prefixes are a similar
+idea to colors, but can be defined by the user as normal words.
+
+After doing this for quite a while I rather like it. I can see
+why Chuck Moore eventually went towards ColorForth as using
+color (or prefixes in my case) does simplify the implementation
+in many ways.
+
+## On The Kernel Wordset
+
+In implementing the RETRO 12 kernel (called Rx) I had to decide
+on what functionality would be needed. It was important to me
+that this be kept clean and minimalistic, as I didn't want to
+spend a lot of time changing it as time progressed. It's far
+nicer to code at the higher level, where the RETRO language is
+functional, as opposed to writing more assembly code.
+
+So what made it in?
+
+Primitives
+
+These are words that map directly to Nga instructions.
+
+    dup      drop     swap   call   eq?   -eq?   lt?   gt?
+    fetch    store    +      -      *     /mod   and   or
+    xor      shift    push   pop    0;
+
+Memory
+
+    fetch-next    store-next    ,    s,
+
+Strings
+
+    s:to-number    s:eq?    s:length
+
+Flow Control
+
+    choose    if    -if    repeat    again
+
+Compiler & Interpreter
+
+    Compiler    Heap        ;       [    ]      Dictionary
+    d:link      d:class     d:xt    d:name      d:add-header
+    class:word  class:primitive     class:data  class:macro
+    prefix::    prefix:#    prefix:&    prefix:$
+    interpret   d:lookup    err:notfound
+
+I *could* slightly reduce this. The $ prefix could be defined in
+higher level code, and I don't strictly *need* to expose the
+`fetch-next` and `store-next` here. But since the are already
+implemented as dependencies of the words in the kernel, it would
+be a bit wasteful to redefine them later in higher level code.
+
+With these words the rest of the language can be built up. Note
+that the Rx kernel does not provide any I/O words. It's assumed
+that the RETRO interfaces will add these as best suited for the
+systems they run on.
+
+There is another small bit. All images start with a few key
+pointers in fixed offsets of memory. These are:
+
+    | Offset | Contains                    |
+    | ------ | --------------------------- |
+    | 0      | lit call nop nop            |
+    | 1      | Pointer to main entry point |
+    | 2      | Dictionary                  |
+    | 3      | Heap                        |
+    | 4      | RETRO version identifier    |
+
+An interface can use the dictionary pointer and knowledge of the
+dictionary format for a specific RETRO version to identify the
+location of essential words like `interpret` and `err:notfound`
+when implementing the user facing interface.
+
+## On The Evolution Of Ngaro Into Nga
+
+When I decided to begin work on what became RETRO 12, I knew
+the process would involve updating Ngaro, the virtual machine
+that RETRO 10 and 11 ran on.
+
+Ngaro rose out of an earlier experimental virtual machine I had
+written back in 2005-2006. This earlier VM, called Maunga, was
+very close to what Ngaro ended up being, though it had a very
+different approach to I/O. (All I/O in Maunga was intended to be
+memory mapped; Ngaro adopted a port based I/O system).
+
+Ngaro itself evolved along with RETRO, gaining features like
+automated skipping of NOPs and a LOOP opcode to help improve
+performance. But the I/O model proved to be a problem. When I
+created Ngaro, I had the idea that I would always be able to
+assume a console/terminal style environment. The assumption was
+that all code would be entered via the keyboard (or maybe a
+block editor), and that proved to be the fundamental flaw as
+time went on.
+
+As RETRO grew it was evident that the model had some serious
+problems. Need to load code from a file? The VM and language had
+functionality to pretend it was being typed in. Want to run on
+something like a browser, Android, or iOS? The VM would need to
+be implemented in a way that simulates input being typed into
+the VM via a simulated keyboard. And RETRO was built around this.
+I couldn't change it because of a promise to maintain, as much
+as possible, source compatibility for a period of at least five
+years.
+
+When the time came to fix this, I decided at the start to keep
+the I/O model separate from the core VM. I also decided that the
+core RETRO language would provide some means of interpreting
+code without requiring an assumption that a traditional terminal
+was being used.
+
+So Nga began. I took the opportunity to simplify the instruction
+set to just 26 essential instructions, add support for packing
+multiple instructions per memory location (allowing a long due
+reduction in memory footprint), and to generally just make a far
+simpler design.
+
+I've been pleased with Nga. On its own it really isn't useful
+though. So with RETRO I embed it into a larger framework that
+adds some basic I/O functionality. The *interfaces* handle the
+details of passing tokens into the language and capturing any
+output. They are free to do this in whatever model makes most
+sense on a given platform.
+
+So far I've implemented:
+
+    - a scripting interface, reading input from a file and
+      offering file i/o, gopher, and reading from stdin, and
+      sending output to stdout.
+    - an interactive interface, built around ncurses, reading
+      input from stdin, and displaying output to a scrolling
+      buffer.
+    - an iOS interface, built around a text editor, directing
+      output to a separate interface pane.
+    - an interactive block editor, using a gopher-based block
+      data store. Output is displayed to stdout, and input is
+      done via the blocks being evaluated or by reading from
+      stdin.
+
+In all cases, the only common I/O word that has to map to an
+exposed instruction is `putc`, to display a single character to
+some output device. There is no requirement for a traditional
+keyboard input model.
+
+By doing this I was able to solve the biggest portability issue
+with the RETRO 10/11 model, and make a much simpler, cleaner
+language in the end.
+
+## RETRO 11 (2011 - 2019): A Look Back
+
+So it's now been about five years since the last release of RETRO
+11. While I still see some people obtaining and using it, I've
+moved on to the twelth generation of RETRO. It's time for me to
+finally retire RETRO 11.
+
+As I prepare to do so, I thought I'd take a brief look back.
+
+RETRO 11 began life in 2011. It grew out of RETRO 10, which was
+the first version of RETRO to not be written in x86 assembly
+language. For R10 and R11, I wrote a portable virtual machine
+(with numerous implementations) and the Forth dialect was kept
+in an image file which ran on the VM.
+
+RETRO 10 worked, but was always a bit too sloppy and changed
+drastically between releases. The major goal of RETRO 11 was to
+provide a stable base for a five year period. In retrospect,
+this was mostly achieved. Code from earlier releases normally
+needed only minor adjustments to run on later releases, though
+newer releases added significantly to the language.
+
+There were seven releases.
+
+- Release 11.0: 2011, July
+- Release 11.1: 2011, November
+- Release 11.2: 2012, January
+- Release 11.3: 2012, March
+- Release 11.4: 2012, July
+- Release 11.5: 2013, March
+- Release 11.6: 2014, August
+
+Development was fast until 11.4. This was the point at which I
+had to slow down due to RSI problems. It was also the point
+which I started experiencing some problems with the metacompiler
+(as discussed previously).
+
+RETRO 11 was flexible. All colon definitions were setup as hooks,
+allowing new functionality to be layered in easily. This allowed
+the later releases to add things like vocabularies, search order,
+tab completion, and keyboard remapping. This all came at a cost
+though: later things could use the hooks to alter behavior of
+existing words, so it was necessary to use a lot of caution to
+ensure that the layers didn't break the earlier code.
+
+The biggest issue was the I/O model. RETRO 11 and the Ngaro VM
+assumed the existence of a console environment. All input was
+required to be input at the keyboard, and all output was to be
+shown on screen. This caused some problems. Including code from
+a file required some tricks, temporarily rewriting the keyboard
+input function to read from the file. It also became a major
+issue when I wrote the iOS version. The need to simulate the
+keyboard and console complicated everything and I had to spend
+a considerable amount of effort to deal with battery performance
+resulting from the I/O polling and wait states.
+
+But on the whole it worked well. I used RETRO 11.6 until I started
+work on RETRO 12 in late 2016, and continued running some tools
+written in R11 until the first quarter of last year.
+
+The final image file was 23,137 cells (92,548 bytes). This was
+bloated by keeping some documentation (stack comments and short
+descriptions) in the image, which started in 11.4. This contained
+269 words.
+
+I used RETRO 11 for a wide variety of tasks. A small selection of
+things that were written includes:
+
+- a pastebin
+- front end to ii (irc client)
+- small explorations of interactive fiction
+- irc log viewer
+- tool to create html from templates
+- tool to automate creation of an SVCD from a set of photos
+- tools to generate reports from data sets for my employer
+
+In the end, I'm happy with how RETRO 11 turned out. I made some
+mistakes in embracing too much complexity, but despite this it
+was a successful system for many years.
