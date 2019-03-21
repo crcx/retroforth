@@ -1687,9 +1687,27 @@ RETRO provides four words for searching within a string.
 
 ## Extraction
 
-`s:left`
-`s:right`
-`s:substr`
+To obtain a new string containing the first `n` characters from
+a source string, use `s:left`:
+
+```
+'Hello_World #5 s:left
+```
+
+To obtain a new string containing the last `n` characters from
+a source string, use `s:right`:
+
+```
+'Hello_World #5 s:right
+```
+
+If you need to extract data from the middle of the string, use
+`s:substr`. This takes a string, the offset of the first
+character, and the number of characters to extract.
+
+```
+'Hello_World #3 #5 s:substr
+```
 
 ## Joining
 
@@ -1745,6 +1763,36 @@ which let you trim just the leading or trailing end as desired.
 `s:replace`
 `s:format`
 `s:empty`
+
+## Controlling The Temporary Buffers
+
+As dicussed in the Lifetime subsection, temporary strings are
+allocated in a rotating buffer. The details of this can be
+altered by updating two variables.
+
+| Variable      | Holds                                    |
+| ------------- | ---------------------------------------- |
+| TempStrings   | The number of temporary strings          |
+| TempStringMax | The maximum length of a temporary string |
+
+For example, to increase the number of temporary strings to
+48:
+
+```
+#48 !TempStrings
+```
+
+The defaults are:
+
+| Variable      | Default |
+| ------------- | ------- |
+| TempStrings   | 32      |
+| TempStringMax | 512     |
+
+It's also important to note that altering these will affect
+the memory map for all temporary buffers. Do not use anything
+already in the buffers after updating these or you will risk
+data corruption and possible crashes.
 
 
 # The Return Stack
