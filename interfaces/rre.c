@@ -475,9 +475,6 @@ int main(int argc, char **argv) {
 
   int run_tests;
 
-  if (argc <= 1) return 0;                /* Guard clause: exit if no  */
-                                          /* arguments are passed.     */
-
   initialize();                           /* Initialize Nga & image    */
 
   sys_argc = argc;                        /* Point the global argc and */
@@ -497,6 +494,8 @@ int main(int argc, char **argv) {
 
   run_tests = 0;
   fsp = 0;
+
+  if (argc <= 1) modes[FLAG_INTERACTIVE] = 1;
 
   for (i = 1; i < argc; i++) {
     if (strcmp(argv[i], "-h") == 0) {
