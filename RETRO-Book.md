@@ -2056,103 +2056,150 @@ for return addresses.
 
 ## Instrution Table
 
-Column:
+| Opcode | Muri | Full Name          | Data Stack | Address Stack |
+| ------ | ---- | ------------------ | ---------- | ------------- |
+|  0     | ..   | nop                |   -        |   -           |
+|  1     | li   | lit                |   -n       |   -           |
+|  2     | du   | dup                |  n-nn      |   -           |
+|  3     | dr   | drop               |  n-        |   -           |
+|  4     | sw   | swap               | xy-yx      |   -           |
+|  5     | pu   | push               |  n-        |   -n          |
+|  6     | po   | pop                |   -n       |  n-           |
+|  7     | ju   | jump               |  a-        |   -           |
+|  8     | ca   | call               |  a-        |   -A          |
+|  9     | cc   | conditional call   | af-        |   -A          |
+| 10     | re   | return             |   -        |  A-           |
+| 11     | eq   | equality           | xy-f       |   -           |
+| 12     | ne   | inequality         | xy-f       |   -           |
+| 13     | lt   | less than          | xy-f       |   -           |
+| 14     | gt   | greater than       | xy-f       |   -           |
+| 15     | fe   | fetch              |  a-n       |   -           |
+| 16     | st   | store              | na-        |   -           |
+| 17     | ad   | addition           | xy-n       |   -           |
+| 18     | su   | subtraction        | xy-n       |   -           |
+| 19     | mu   | multiplication     | xy-n       |   -           |
+| 20     | di   | divide & remainder | xy-rq      |   -           |
+| 21     | an   | bitwise and        | xy-n       |   -           |
+| 22     | or   | bitwise or         | xy-n       |   -           |
+| 23     | xo   | bitwise xor        | xy-n       |   -           |
+| 24     | sh   | shift              | xy-n       |   -           |
+| 25     | zr   | zero return        |  n-?       |   -           |
+| 26     | en   | end                |   -        |   -           |
+| 27     | ie   | i/o enumerate      |   -n       |   -           |
+| 28     | iq   | i/o query          |  n-xy      |   -           |
+| 29     | ii   | i/o invoke         | ...n-      |   -           |
 
-  0 - opcode value
-  1 - Muri assembly name
-  2 - Full name
-  3 - Data Stack Usage
-  4 - Address Stack Usage
+## Encoding
 
-    +--------------------------------------------------+
-    |  0 ..  nop                   -           -       |
-    |  1 li  lit                   -n          -       |
-    |  2 du  dup                  n-nn         -       |
-    |  3 dr  drop                 n-           -       |
-    |  4 sw  swap                xy-yx         -       |
-    |  5 pu  push                 n-           -n      |
-    |  6 po  pop                   -n         n-       |
-    |  7 ju  jump                 a-           -       |
-    |  8 ca  call                 a-           -A      |
-    |  9 cc  conditional call    af-           -A      |
-    | 10 re  return                -          A-       |
-    | 11 eq  equality            xy-f          -       |
-    | 12 ne  inequality          xy-f          -       |
-    | 13 lt  less than           xy-f          -       |
-    | 14 gt  greater than        xy-f          -       |
-    | 15 fe  fetch                a-n          -       |
-    | 16 st  store               na-           -       |
-    | 17 ad  addition            xy-n          -       |
-    | 18 su  subtraction         xy-n          -       |
-    | 19 mu  multiplication      xy-n          -       |
-    | 20 di  divide & remainder  xy-rq         -       |
-    | 21 an  bitwise and         xy-n          -       |
-    | 22 or  bitwise or          xy-n          -       |
-    | 23 xo  bitwise xor         xy-n          -       |
-    | 24 sh  shift               xy-n          -       |
-    | 25 zr  zero return          n-n | n-     -       |
-    | 26 en  end                   -           -       |
-    | 27 ie  i/o enumerate         -n          -       |
-    | 28 iq  i/o query            n-xy         -       |
-    | 29 ii  i/o invoke         ...n-          -       |
-    |                                                  |
-    | Each `li` will push the value in the following   |
-    | cell to the data stack.                          |
-    +--------------------------------------------------+
-    |             li       du       mu       ..        |
-    | i lidumu..  00000001:00000010:00010011:00000000  |
-    |             data for li                          |
-    | d 2         00000000:00000000:00000000:00000010  |
-    |                                                  |
-    | Assembler Directives        Instruction Bundles  |
-    | ========================    ==================== |
-    | : label                     Combine instruction  |
-    | i bundle                    names in groups of 4 |
-    | d numeric-data                                   |
-    | r ref-to-address-by-name    Use only .. after    |
-    | s null-terminated string    ju, ca, cc, re, zr   |
-    +--------------------------------------------------+
+Up to four instructions can be packed into each memory cell.
 
-## Misc
+As an example,
 
-There are 810,000 possible combinations of instructions. Only
-73 are used in the implementation of RETRO.
+    Opcode 1 Opcode 2 Opcode 3 Opcode 4
+    00000000:00000000:00000000:00000000
 
-# Internals: I/O
+If we have a bundle of `lidumu..`, it would look like:
 
-RETRO provides three words for interacting with I/O. These are:
+          li       du       mu       ..
+    00000001:00000010:00010011:00000000
 
-    io:enumerate    returns the number of attached devices
-    io:query        returns information about a device
-    io:invoke       invokes an interaction with a device
+Each `li` should have a value in the following cell(s). These
+values will be pushed to the stack. E.g., `lili....` and
+1, 2:
+
+    00000001:00000001:00000000:00000000
+    00000000 00000000 00000000 00000001 (1)
+    00000000 00000000 00000000 00000010 (2)
+
+## Shifts
+
+`sh` performs a bitwise arithmetic shift operation.
+
+This takes two values:
+
+    xy
+
+And returns a single one:
+
+    z
+
+If y is positive, this shifts `x` right by `y` bits. If negative,
+it shifts left.
+
+## Queries: Memory, Stacks
+
+The `fe` instruction allows queries of some data related to
+the Nga VM state. These are returned by reading from negative
+addresses:
+
+| Address | Returns             |
+| ------- | ------------------- |
+| -1      | Data stack depth    |
+| -2      | Address stack depth |
+| -3      | Maximum Image Size  |
+
+## I/O Devices
+
+Nga provides three instructions for interacting with I/O devices.
+These are:
+
+    ie   i/o enumerate    returns the number of attached devices
+    iq   i/o query        returns information about a device
+    ii   i/o interact     invokes an interaction with a device
 
 As an example, with an implementation providing an output source,
 a block storage system, and keyboard:
 
-    io:enumerate    will return `3` since there are three
-                    i/o devices
-    #0 io:query     will return 0 0, since the first device
-                    is a screen (type 0) with a version of 0
-    #1 io:query     will return 1 3, since the second device is
-                    block storage (type 3), with a version of 1
-    #2 io:query     will return 0 1, since the last device is a
-                    keyboard (type 1), with a version of 0
+    ie    will return `3` since there are three i/o devices
+    0 iq  will return 0 0, since the first device is a screen (0)
+          with a version of 0
+    1 iq  will return 1 3, since the second device is a block
+          storage (3), with a version of 1
+    2 iq  will return 0 1, since the third device is a keyboard
+          (1), with a version of 0
 
 In this case, some interactions can be defined:
 
-    :c:put #0 io:invoke ;
-    :c:get #2 io:invoke ;
+    : c:put
+    i liiire..
+    d 0
+    
+    : c:get
+    i liiire..
+    d 2
 
-Setup the stack, push the device ID, and then use `io:invoke`
-to invoke the interaction.
+Setup the stack, push the device ID to the stack, and then use
+`ii` to invoke the interaction.
 
 A RETRO system requires one I/O device (a generic output for a
 single character). This must be the first device, and must have
 a device ID of 0.
 
-All other devices are optional and can be specified in any
-order.
+All other devices are optional and can be specified in any order.
 
+The currently supported and reserved device identifiers are:
+
+| ID   | Device Type      | Notes                      |
+| ---- | ---------------- | -------------------------- |
+| 0000 | Generic Output   | Always present as device 0 |
+| 0001 | Keyboard         |                            |
+| 0002 | Floating Point   |                            |
+| 0003 | Block Storage    | Raw, 1024 cell blocks      |
+| 0004 | Filesystem       | Unix-style Files           |
+| 0005 | Network: Gopher  | Make gopher requests       |
+| 0006 | Network: HTTP    | Make HTTP requests         |
+| 0007 | Network: Sockets |                            |
+| 0008 | Syscalls: Unix   |                            |
+| 0009 | Scripting Hooks  |                            |
+| 0010 | Random Number    |                            |
+
+This list may be revised in the future. The only guaranteed
+stable indentifier is 0000 for generic output.
+
+## Trivia
+
+There are 810,000 possible combinations of instructions. Only
+73 are used in the implementation of RETRO.
 
 # Internals: Interface Layers
 
