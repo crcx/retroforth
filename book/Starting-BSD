@@ -1,7 +1,7 @@
-# Starting RETRO on BSD
+# Starting RETRO
 
 RETRO can be run for scripting or interactive use. To start it
-interactively, run: `retro -i` or `retro -c`.
+interactively, run: `retro` without any command line arguments.
 
 For a summary of the full command line arguments available:
 
@@ -20,4 +20,3 @@ For a summary of the full command line arguments available:
                    echo in interactive mode
       -f filename  Run the contents of the specified file
       -t           Run tests (in ``` blocks) in any loaded files
-
