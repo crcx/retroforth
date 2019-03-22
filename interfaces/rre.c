@@ -507,6 +507,7 @@ int main(int argc, char **argv) {
       modes[FLAG_INTERACTIVE] = 1;
       modes[FLAG_CBREAK] = 1;
     } else if (strcmp(argv[i], "-s") == 0) {
+      modes[FLAG_INTERACTIVE] = 1;
       modes[FLAG_SILENT] = 1;
     } else if (strcmp(argv[i], "-f") == 0) {
       files[fsp] = argv[i + 1];
