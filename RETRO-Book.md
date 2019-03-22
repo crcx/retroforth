@@ -1873,14 +1873,6 @@ already in the buffers after updating these or you will risk
 data corruption and possible crashes.
 
 
-# The Return Stack
-
-RETRO has two stacks. The primary one is used to pass data
-beween words. The second one primarily holds return addresses.
-
-Each time a word is called, the next address is pushed to
-the return stack.
-
 # Working With Assembly Language
 
 RETRO runs on a virtual machine called Nga. It provides a
