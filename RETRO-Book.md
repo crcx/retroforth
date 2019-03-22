@@ -2468,6 +2468,51 @@ time to use it 250,000 times in a loop from 0.16 seconds to
 1.69 seconds.
 
 
+# Security Concerns
+
+The standard RETRO is not a good choice for applications
+needing to be highly secure.
+
+## Runtime Checks
+
+The RETRO system performs only minimal checks. It will not
+load an image larger than the max set at build time. And
+stack over/underflow are checked for as code executes.
+
+The system does not attempt to validate anything else, it's
+quite easy to crash.
+
+## Isolation
+
+The VM itself and the core code is self contained. Nga does
+not make use of malloc/free, and uses only standard system
+libraries. It's possible for buffer overruns within the image
+(overwriting Nga code), but the RETRO image shouldn't leak
+into the C portions.
+
+I/O presents a bigger issue. Anything involving I/O, especially
+with the `unix:` words, may be a vector for attacks.
+
+## Future Direction
+
+I'm not planning to add anything to the *image* side as, for me,
+the performance hit due to added checks is bigger than the
+benefits.
+
+The story is different on the VM side. I've already begun taking
+steps to address some of the issues, using functions that check
+for overruns with strings and doing some minor testing for these
+conditions. I will be gradually addressing the various I/O
+related extensions, though it's unlikely to ever be fully guarded
+against attacks.
+
+## Rationale
+
+RETRO is, primarily, a personal system. I'm running code I wrote
+to solve problems I face. On the occasions where I run code sent
+to me by others, I read it carefully first and then run inside a
+sandboxed environment if I'm worried about anything in it.
+
 # Technical Notes and Reflections
 
 This is a collection of short papers providing some additional

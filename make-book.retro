@@ -53,10 +53,12 @@ for me.
   'Advanced-Builds
   'Retro-Compiler
   'Errors
+  'Security
   'Tech-Notes
   'Historical-Papers
 } 'TOC const
 ~~~
+
 
 ~~~
 'Out var
@@ -68,13 +70,19 @@ for me.
 :open          'RETRO-Book.md file:open<for-writing> !Out ;
 :close         @Out file:close ;
 :assemble      open process-files close ;
+~~~
 
+
+~~~
 :open          'gophermap file:open<for-writing> !Out ;
 :close         @Out file:close ;
 :ENTRY         '0%s\t/book/%s\tforth.works\t70\n ;
 :process-files [ dup ENTRY s:format [ @Out file:write ] s:for-each ] array:for-each ;
 :gophermap     open process-files close ;
+~~~
 
+
+~~~
 :process       dup assemble gophermap ;
 
 TOC process
