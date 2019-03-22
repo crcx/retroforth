@@ -1,7 +1,80 @@
 # Starting RETRO
 
-RETRO can be run for scripting or interactive use. To start it
-interactively, run: `retro` without any command line arguments.
+RETRO can be run for scripting or interactive use.
+
+## Interactive
+
+To start it interactively, run: `retro` without any command line
+arguments, or with `-i`, `-s`, or `-c`.
+
+Starting the interactive system:
+
+```
+retro
+```
+
+Or:
+
+```
+retro -i
+```
+
+This should be sufficient for most uses.
+
+Starting the interactive system (without displaying the `Ok`
+prompt or startup banner):
+
+```
+retro -s
+```
+
+RETRO also has a *character breaking* mode, in which input is
+processed directly as entered, this is started with the `-c`
+option:
+
+```
+retro -c
+```
+
+## Using In a Pipe
+
+If using a Unix shell and piping input between processes, you
+will probably want to use `-s` to supress the startup messages
+and `Ok` prompt that normally appear.
+
+E.g.,
+
+```
+echo "'lol s:put nl" | retro -s
+```
+
+## Running A Program In A File
+
+You can run code in a file very easily. This is simply:
+
+```
+retro filename
+```
+
+You can follow the filename with any arguments that it may need.
+These will be accessible to the program via the `sys:argc` and
+`sys:argv` words.
+
+Source files must be written in Unu format.
+
+## Scripting
+
+You can use RETRO to write scripts. Add a shebang:
+
+```
+#!/usr/bin/env retro
+```
+
+And make the file executable.
+
+Source files must be written in Unu format.
+
+## Command Line Arguments
 
 For a summary of the full command line arguments available:
 
