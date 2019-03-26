@@ -1,5 +1,27 @@
 # Advanced Builds
 
+## Reduced Memory
+
+RETRO can be built for reduced memory targets. This is primarily
+intendeded for use with embedded targets, but can be useful on
+large machines as well.
+
+To do this, `make` with `CFLAGS` set to `-DMEM1024K`, `-DMEM512K`,
+`-DMEM256K`, `-DMEM192K`, `-DMEM128K`' or `-DMEM96K`. These will
+target memory sizes as specified per the following table.
+
+|               |   1024kB  |  512kB  |  256kB  |  192kB  |  128kB  |  96kB  |
+| ------------- | --------- | ------- | ------- | ------- | ------- | ------ |
+| Total Bytes   | 1,048,579 | 524,288 | 262,144 | 196,608 | 131,072 | 98,304 |
+| Image         |   968,000 | 384,000 | 192,000 | 126,000 |  96,000 | 72,000 |
+| Data Stack    |       512 |     512 |     512 |     512 |     512 |    512 |
+| Address Stack |     1,024 |   1,024 |   1,024 |   1,024 |   1,024 |  1,024 |
+| Remaining     |    79,040 | 138,752 |  68,608 |  69,072 |  33,536 | 24,768 |
+
+The remaining memory is available for use by the VM.
+
+## Custom Image
+
 For users of BSD, Linux, macOS, you can customize the image at
 build time.
 

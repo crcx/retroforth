@@ -1,49 +1,29 @@
-# RETRO Cross Reference
+# Forth to RETRO Cross Reference
 
-Definitions
------------
-RETRO    :name ;
-ANS      : name ;
+This is a quick overview of some differences between RETRO
+and traditional Forth.
 
+| Category               | Forth                   | RETRO                         |
+| ---------------------- | ----------------------- | ----------------------------- |
+| Definitions            | `: name ;`              | `:name ;`                     |
+| Numbers                | `100 -12`               | `#100 #-12`                   |
+| Characters (interpret) | `CHAR A CHAR D`         | `$A $D`                       |
+| Characters (compile)   | `[CHAR] A [CHAR] D`     | `$A $D`                       |
+| Comments               | `( This is a comment )` | `(This_is_a_comment)`         |
+| Pointers (interpret)   | `' Compiler`            | `&Compiler`                   |
+| Pointers (compile)     | `['] Compiler           | `&Compiler`                   |
+| Conditionals #1        | `IF 1 THEN`             | `[ #1 ] if`                   |
+| Conditionals #2        | `NOT IF 1 THEN`         | `[ #1 ] -if`                  |
+| Conditionals #3        | `IF 1 ELSE 2 THEN`      | `[ #1 ] [ #2 ] choose`        |
+| Counted Loops          | `10 0 DO LOOP`          | `#10 [ ] times`               |
+| Counted Loops w/Index  | `10 0 DO I LOOP`        | `#10 [ I ] times<with-index>` |
+| Unconditional Loops    | `BEGIN AGAIN`           | `repeat again`                |
+| Return Stack           | `10 >R ... R>`          | `#10 push ... pop`            |
 
-Numbers
--------
-RETRO    #100  #-12
-ANS      100   -12
+RETRO conditionals and loops can be used outside of definitions, ANS ones can not.
 
+Some forms are replaced by combinators.
 
-Characters
-----------
-RETRO    $A      $D
-ANS      CHAR A  CHAR D
-
-RETRO    :foo $A ;
-ANS      : foo [CHAR] A ;
-
-
-Comments
---------
-RETRO    (This_is_a_comment)
-ANS      ( This is a comment )
-
-
-Pointers
---------
-RETRO    &Compiler
-ANS      ' Compiler
-RETRO    :foo &Heap ;
-ANS      : foo ['] Heap ;
-
-
-Conditionals
-------------
-RETRO    (flag) [ 'TRUE ] if
-ANS      ( flag ) IF s" TRUE" THEN
-
-RETRO    (flag) [ 'FALSE ] -if
-ANS      ( flag ) NOT IF s" FALSE" THEN
-
-RETRO    (flag) [ 'TRUE ] [ 'FALSE ] choose
-ANS      ( flag ) IF s" TRUE" ELSE s" FALSE" THEN
-
-RETRO conditionals can be used outside of definitions, ANS ones can not.
+    FORTH
+    >R ... R>       [ ... ] dip
+    DUP >R ... R>   [ ... ] sip

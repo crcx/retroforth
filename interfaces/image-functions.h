@@ -20,9 +20,61 @@
 #define D_OFFSET_NAME     3
 
 #define CELL         int32_t
+
 #define IMAGE_SIZE   524288 * 8
 #define STACK_DEPTH  4096
 #define ADDRESSES    STACK_DEPTH * 3
+
+#ifdef MEM1024K
+#undef IMAGE_SIZE
+#undef STACK_DEPTH
+#undef ADDRESSES
+#define IMAGE_SIZE   242000
+#define STACK_DEPTH  128
+#define ADDRESSES    256
+#else
+#endif
+
+#ifdef MEM512K
+#undef IMAGE_SIZE
+#undef STACK_DEPTH
+#undef ADDRESSES
+#define IMAGE_SIZE   384000
+#define STACK_DEPTH  128
+#define ADDRESSES    256
+#else
+#endif
+
+#ifdef MEM256K
+#undef IMAGE_SIZE
+#undef STACK_DEPTH
+#undef ADDRESSES
+#define IMAGE_SIZE   48000
+#define STACK_DEPTH  128
+#define ADDRESSES    256
+#else
+#endif
+
+#ifdef MEM192K
+#undef IMAGE_SIZE
+#undef STACK_DEPTH
+#undef ADDRESSES
+#define IMAGE_SIZE   31500
+#define STACK_DEPTH  128
+#define ADDRESSES    256
+#else
+#endif
+
+#ifdef MEM128K
+#undef IMAGE_SIZE
+#undef STACK_DEPTH
+#undef ADDRESSES
+#define IMAGE_SIZE   24000
+#define STACK_DEPTH  128
+#define ADDRESSES    256
+#else
+#endif
+
 
 extern CELL sp, rp, ip;
 extern CELL data[STACK_DEPTH];
