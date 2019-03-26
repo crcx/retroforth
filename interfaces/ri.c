@@ -44,6 +44,7 @@
 #include <string.h>
 #include <ncurses.h>
 
+#include "config.h"
 #include "image-functions.h"
 
 CELL sp, rp, ip;                  /* Data, address, instruction pointers */
