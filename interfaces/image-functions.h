@@ -75,6 +75,16 @@
 #else
 #endif
 
+#ifdef MEM96K
+#undef IMAGE_SIZE
+#undef STACK_DEPTH
+#undef ADDRESSES
+#define IMAGE_SIZE   18000
+#define STACK_DEPTH  128
+#define ADDRESSES    256
+#else
+#endif
+
 
 extern CELL sp, rp, ip;
 extern CELL data[STACK_DEPTH];
