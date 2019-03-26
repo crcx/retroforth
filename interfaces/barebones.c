@@ -8,8 +8,8 @@
 #include <stdlib.h>
 
 #define CELL         int32_t      /* Cell size (32 bit, signed integer */
-#define IMAGE_SIZE   524288 * 8   /* Amount of RAM. 4MiB by default.   */
-#define ADDRESSES    1024         /* Depth of address stack            */
+#define IMAGE_SIZE   242000       /* Amount of RAM. 968kB by default.  */
+#define ADDRESSES    256          /* Depth of address stack            */
 #define STACK_DEPTH  128          /* Depth of data stack               */
 
 CELL sp, rp, ip;                  /* Data, address, instruction pointers */

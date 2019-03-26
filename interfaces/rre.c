@@ -29,6 +29,7 @@
 #include <sys/wait.h>
 #include <signal.h>
 
+#include "config.h"
 #include "image-functions.h"
 
 #define USE_TERMIOS
