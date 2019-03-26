@@ -39,7 +39,7 @@
 #undef IMAGE_SIZE
 #undef STACK_DEPTH
 #undef ADDRESSES
-#define IMAGE_SIZE   384000
+#define IMAGE_SIZE   450000
 #define STACK_DEPTH  128
 #define ADDRESSES    256
 #else
