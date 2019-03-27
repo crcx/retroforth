@@ -63,7 +63,7 @@ bin/RETRO12.html: bin/retro-injectimage-js
 
 bin/retro: io bin/retro-embedimage bin/retro-extend interfaces/image.c interfaces/rre.c interfaces/rre.forth interfaces/image-functions.o interfaces/io/rng.forth
 	cp ngaImage rre.image
-	./bin/retro-extend rre.image interfaces/io/io_filesystem.forth interfaces/io/io_gopher.forth interfaces/io/io_floatingpoint.forth interfaces/io/io_unix_syscalls.forth interfaces/io/rng.forth interfaces/rre.forth
+	./bin/retro-extend rre.image interfaces/io/filesystem.forth interfaces/io/gopher.forth interfaces/io/floatingpoint.forth interfaces/io/unix.forth interfaces/io/rng.forth interfaces/rre.forth
 	./bin/retro-embedimage rre.image >interfaces/rre_image.c
 	cd interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../bin/retro rre.c image-functions.o $(RREIO) $(LIBM)
 	cd package && ../bin/retro -f list
@@ -91,17 +91,17 @@ io: interfaces/io/filesystem.o interfaces/io/floatingpoint.o interfaces/io/gophe
 interfaces/image-functions.o: interfaces/image-functions.c interfaces/image-functions.h
 	cd interfaces && $(CC) $(CFLAGS) -c -o image-functions.o image-functions.c
 
-interfaces/io/filesystem.o: interfaces/io/io_filesystem.forth interfaces/io/io_filesystem.c
-	cd interfaces/io && $(CC) $(CFLAGS) -c -o filesystem.o io_filesystem.c
+interfaces/io/filesystem.o: interfaces/io/filesystem.forth interfaces/io/filesystem.c
+	cd interfaces/io && $(CC) $(CFLAGS) -c -o filesystem.o filesystem.c
 
-interfaces/io/floatingpoint.o: interfaces/io/io_floatingpoint.forth interfaces/io/io_floatingpoint.c
-	cd interfaces/io && $(CC) $(CFLAGS) -c -o floatingpoint.o io_floatingpoint.c
+interfaces/io/floatingpoint.o: interfaces/io/floatingpoint.forth interfaces/io/floatingpoint.c
+	cd interfaces/io && $(CC) $(CFLAGS) -c -o floatingpoint.o floatingpoint.c
 
-interfaces/io/gopher.o: interfaces/io/io_gopher.forth interfaces/io/io_gopher.c
-	cd interfaces/io && $(CC) $(CFLAGS) -c -o gopher.o io_gopher.c
+interfaces/io/gopher.o: interfaces/io/gopher.forth interfaces/io/gopher.c
+	cd interfaces/io && $(CC) $(CFLAGS) -c -o gopher.o gopher.c
 
-interfaces/io/unix.o: interfaces/io/io_unix_syscalls.forth interfaces/io/io_unix_syscalls.c
-	cd interfaces/io && $(CC) $(CFLAGS) -c -o unix.o io_unix_syscalls.c
+interfaces/io/unix.o: interfaces/io/unix.forth interfaces/io/unix.c
+	cd interfaces/io && $(CC) $(CFLAGS) -c -o unix.o unix.c
 
 interfaces/io/strl.o: interfaces/io/strl.c
 	cd interfaces/io && $(CC) $(CFLAGS) -c -o strl.o strl.c
