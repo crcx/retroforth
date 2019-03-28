@@ -11,22 +11,6 @@ results. A sample CSS is included at the end.
 I include my `unu` file processor here as it makes it easy to
 process the relevant lines from the source file.
 
-~~~
-{{
-  'Fenced var
-  :toggle-fence @Fenced not !Fenced ;
-  :fenced? (-f) @Fenced ;
-  :handle-line (s-)
-    fenced? [ over call ] [ drop ] choose ;
----reveal---
-  :unu (sq-)
-    swap [ dup '~~~ s:eq?
-           [ drop toggle-fence ]
-           [ handle-line       ] choose
-         ] file:for-each-line drop ;
-}}
-~~~
-
 Some characters need to be escaped. The `:put-html` words will
 be used to handle these.
 
@@ -35,8 +19,26 @@ be used to handle these.
   $< [ '&lt;  s:put ] case
   $> [ '&gt;  s:put ] case
   $& [ '&amp; s:put ] case
+  ASCII:SPACE [ '&nbsp; s:put ] case
   c:put ;
 :s:put-html [ c:put-html ] s:for-each ;
+~~~
+
+~~~
+{{
+  :span '<span_class='text'> s:put s:put-html '</span> s:put ;
+  'Fenced var
+  :toggle-fence @Fenced not !Fenced ;
+  :fenced? (-f) @Fenced ;
+  :handle-line (s-)
+    fenced? [ over call ] [ span '<br> s:put nl ] choose ;
+---reveal---
+  :unu (sq-)
+    swap [ dup '~~~ s:eq?
+           [ toggle-fence s:put '<br> s:put nl ]
+           [ handle-line       ] choose
+         ] file:for-each-line drop ;
+}}
 ~~~
 
 Formatting is pretty straightforward. I have a `span` word to
@@ -63,26 +65,15 @@ the token type and use `span`.
   $@ [ 'fetch     span ] case
   $! [ 'store     span ] case
 
-  (immediate_words)
+  (immediate_and_primitives)
   drop dup
-  ';      [ 'immediate span ] s:case
-  '0;     [ 'immediate span ] s:case
-  'hook   [ 'immediate span ] s:case
-  'as{    [ 'immediate span ] s:case
-  '}as    [ 'immediate span ] s:case
-  '{      [ 'immediate span ] s:case
-  '}      [ 'immediate span ] s:case
-  'pop    [ 'immediate span ] s:case
-  'push   [ 'immediate span ] s:case
-  'again  [ 'immediate span ] s:case
-  'repeat [ 'immediate span ] s:case
-  '[      [ 'immediate span ] s:case
-  ']      [ 'immediate span ] s:case
-  ')      [ 'comment   span ] s:case
+  d:lookup d:class fetch
+  &class:macro     [ 'immediate span ] case
+  &class:primitive [ 'primitive span ] case
+  drop
 
-  (primitive_and_normal_words)
-  d:lookup d:class fetch &class:primitive eq?
-  [ 'primitive span ] [ s:put '&nbsp; s:put ] choose ;
+  (normal_words)
+  s:put '&nbsp; s:put ;
 ~~~
 
 The remaining bits are just to generate the header, and then
@@ -103,6 +94,10 @@ process each line through the `format` word.
   background: #111;
   color: #44dd44;
   font-family: monospace;
+}
+
+.text {
+  color: white;
 }
 
 .colon {
