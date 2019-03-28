@@ -158,6 +158,7 @@ June 2019.
 - add DisplayNames.forth
 - add EDA.forth
 - add EvaluateString.forth
+- add export-as-html.forth
 - add FloatVar.forth
 - add Forget.forth
 - add HTML.forth
