@@ -3,8 +3,9 @@
 # Export as HTML
 
 This tool processes the code in Unu code blocks, generating HTML
-output. It assumes that a CSS file will be used to style the
-results. A sample CSS is included at the end.
+output. It assumes that CSS will be used to style the results.
+The default CSS is included at the end of this file and will be
+embedded into the generated HTML.
 
 # Code
 
@@ -36,7 +37,7 @@ be used to handle these.
   :unu (sq-)
     swap [ dup '~~~ s:eq?
            [ toggle-fence s:put '<br> s:put nl ]
-           [ handle-line       ] choose
+           [ handle-line ] choose
          ] file:for-each-line drop ;
 }}
 ~~~
@@ -73,22 +74,51 @@ the token type and use `span`.
   drop
 
   (normal_words)
-  s:put '&nbsp; s:put ;
+  s:put ;
 ~~~
 
-The remaining bits are just to generate the header, and then
-process each line through the `format` word.
+Next is the HTML page generation. This has words to generate
+the header, embeds the CSS (from the end of this file), and
+then processes the lines in the source file to generate the
+body.
+
+Output is written to stdout.
 
 ~~~
-'<!DOCTYPE_html> s:put nl
-'<link_rel='stylesheet'_href='/retro-export.css'> s:put nl
+'CSS var
+:embed-css
+  '<style> s:put nl
+  sys:name [ dup '/*_CSS_Begins_*/ s:eq? [ &CSS v:on ] if
+             @CSS [ s:put nl ] [ drop ] choose ] file:for-each-line
+  '</style> s:put nl ;
 
-#0 sys:argv
+:header
+  '<!DOCTYPE_html> s:put nl
+  '<html> s:put nl
+  '<head> s:put nl embed-css '</head> s:put nl ;
+
+:body (s-)
+  '<body> s:put nl
   [ ASCII:SPACE s:tokenize [ format '&nbsp; s:put ] array:for-each
     '<br> s:put nl ] unu
+  '</body> s:put nl ;
+
+:footer
+  '</html> s:put nl ;
+
+:generate (s-)
+  header body footer ;
+~~~
+
+And finally, run it.
+
+~~~
+#0 sys:argv generate
 ~~~
 
 # CSS
+
+/* CSS Begins */
 
 * {
   background: #111;
