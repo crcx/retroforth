@@ -15,7 +15,7 @@ help:
 
 build: dirs toolchain ngaImage bin/retro bin/retro-describe
 
-optional: build bin/retro-ri bin/retro-repl
+optional: build bin/retro-repl
 
 toolchain: dirs bin/retro-embedimage bin/retro-extend bin/retro-muri bin/retro-unu
 
@@ -33,7 +33,6 @@ install: build install-data install-docs install-examples install-manpages
 #	install -c -m 755 bin/retro-injectimage-js $(DESTDIR)$(PREFIX)/bin/retro-injectimage-js
 	install -c -m 755 bin/retro-muri $(DESTDIR)$(PREFIX)/bin/retro-muri
 #	install -c -m 755 bin/retro-repl $(DESTDIR)$(PREFIX)/bin/retro-repl
-#	install -c -m 755 bin/retro-ri $(DESTDIR)$(PREFIX)/bin/retro-ri
 	install -c -m 755 bin/retro $(DESTDIR)$(PREFIX)/bin/retro
 	install -c -m 755 bin/retro-unu $(DESTDIR)$(PREFIX)/bin/retro-unu
 	install -c -m 755 bin/retro-describe $(DESTDIR)$(PREFIX)/bin/retro-describe
@@ -45,7 +44,6 @@ install-strip: build install-data install-docs install-examples
 #	install -c -m 755 -s bin/retro-injectimage-js $(DESTDIR)$(PREFIX)/bin/retro-injectimage-js
 	install -c -m 755 -s bin/retro-muri $(DESTDIR)$(PREFIX)/bin/retro-muri
 #	install -c -m 755 -s bin/retro-repl $(DESTDIR)$(PREFIX)/bin/retro-repl
-#	install -c -m 755 -s bin/retro-ri $(DESTDIR)$(PREFIX)/bin/retro-ri
 	install -c -m 755 -s bin/retro $(DESTDIR)$(PREFIX)/bin/retro
 	install -c -m 755 -s bin/retro-unu $(DESTDIR)$(PREFIX)/bin/retro-unu
 
@@ -90,8 +88,6 @@ js: bin/RETRO12.html
 
 repl: bin/retro-repl
 
-ri: bin/retro-ri
-
 retro-describe: bin/retro-describe
 
 update: bin/retro-unu literate/Unu.md literate/Muri.md
@@ -124,13 +120,6 @@ bin/RETRO12.html: bin/retro-injectimage-js
 
 bin/retro-repl: interfaces/repl.c interfaces/image.c
 	cd interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../bin/retro-repl repl.c
-
-bin/retro-ri: io bin/retro-embedimage bin/retro-extend interfaces/ri_image.c interfaces/ri.c interfaces/ri.forth interfaces/image-functions.o interfaces/io/rng.forth
-	cp ngaImage ri.image
-	./bin/retro-extend ri.image interfaces/io/filesystem.forth interfaces/io/gopher.forth interfaces/io/floatingpoint.forth interfaces/io/unix.forth interfaces/io/rng.forth interfaces/ri.forth
-	./bin/retro-embedimage ri.image >interfaces/ri_image.c
-	rm ri.image
-	cd interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../bin/retro-ri $(LIBCURSES) $(LIBM) ri.c image-functions.o $(RIIO)
 
 bin/retro: io bin/retro-embedimage bin/retro-extend interfaces/image.c interfaces/rre.c interfaces/rre.forth interfaces/image-functions.o interfaces/io/rng.forth
 	cp ngaImage rre.image

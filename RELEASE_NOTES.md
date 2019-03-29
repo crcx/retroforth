@@ -101,6 +101,8 @@ June 2019.
 - add `image:save`
 - add `sys:name`
 - will now display an error and exit on stack over/underflow
+- `-c` is now `-i,c`
+- added `-i,fs` (interface formerly existing as `retro-ri`)
 
 ### retro-compiler
 
@@ -108,9 +110,7 @@ June 2019.
 
 ### retro-ri
 
-- support switching between multiple copies of the image
-- add random number generator
-- add image:save
+- this interface has been rolled into the main `retro` binary
 
 ### native
 

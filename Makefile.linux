@@ -14,7 +14,7 @@ help:
 
 build: dirs toolchain bin/retro
 
-optional: build bin/retro-ri bin/retro-repl
+optional: build bin/retro-repl
 
 toolchain: dirs bin/retro-embedimage bin/retro-extend bin/retro-muri bin/retro-unu
 
@@ -37,8 +37,6 @@ image: interfaces/image.c
 js: bin/RETRO12.html
 
 repl: bin/retro-repl
-
-ri: bin/retro-ri
 
 update: bin/retro-unu literate/Unu.md literate/Muri.md
 	./bin/retro-unu literate/Unu.md >tools/unu.c

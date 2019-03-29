@@ -421,19 +421,21 @@ void help(char *exename) {
   printf("Interactive Usage: %s [-h] [-i] [-c] [-s] [-f filename] [-t]\n\n", exename);
   printf("Valid Arguments:\n\n");
   printf("  -h\n");
-  printf("  Display this help text\n\n");
+  printf("    Display this help text\n");
   printf("  -i\n");
-  printf("  Launches in interactive mode (line buffered)\n\n");
-  printf("  -c\n");
-  printf("  Launches in interactive mode (character buffered)\n\n");
+  printf("    Launches in interactive mode (line buffered)\n");
+  printf("  -i,c\n");
+  printf("    Launches in interactive mode (character buffered)\n");
+  printf("  -i,fs\n");
+  printf("    Launches in interactive mode (character buffered, full screen)\n");
   printf("  -s\n");
-  printf("  Suppress the 'ok' prompt and keyboard echo in interactive mode\n\n");
+  printf("    Suppress the 'ok' prompt and keyboard echo in interactive mode\n");
   printf("  -f filename\n");
-  printf("  Run the contents of the specified file\n\n");
+  printf("    Run the contents of the specified file\n");
   printf("  -u filename\n");
-  printf("  Use the image in the specified file instead of the internal one\n\n");
+  printf("    Use the image in the specified file instead of the internal one\n");
   printf("  -t\n");
-  printf("  Run tests (in ``` blocks) in any loaded files\n\n");
+  printf("    Run tests (in ``` blocks) in any loaded files\n\n");
 }
 
 
@@ -465,7 +467,7 @@ int arg_is(char *t) {
   ---------------------------------------------------------------------*/
 
 enum flags {
-  FLAG_HELP, FLAG_RUN_TESTS, FLAG_INCLUDE, FLAG_INTERACTIVE, FLAG_CBREAK, FLAG_SILENT
+  FLAG_HELP, FLAG_RUN_TESTS, FLAG_INCLUDE, FLAG_INTERACTIVE, FLAG_CBREAK, FLAG_SILENT, FLAG_FULLSCREEN
 };
 
 int main(int argc, char **argv) {
@@ -504,9 +506,13 @@ int main(int argc, char **argv) {
       exit(0);    
     } else if (strcmp(argv[i], "-i") == 0) {
       modes[FLAG_INTERACTIVE] = 1;
-    } else if (strcmp(argv[i], "-c") == 0) {
+    } else if (strcmp(argv[i], "-i,c") == 0) {
       modes[FLAG_INTERACTIVE] = 1;
       modes[FLAG_CBREAK] = 1;
+    } else if (strcmp(argv[i], "-i,fs") == 0) {
+      modes[FLAG_INTERACTIVE] = 1;
+      modes[FLAG_FULLSCREEN] = 1;
+      modes[FLAG_SILENT] = 1;
     } else if (strcmp(argv[i], "-s") == 0) {
       modes[FLAG_INTERACTIVE] = 1;
       modes[FLAG_SILENT] = 1;
@@ -539,6 +545,7 @@ int main(int argc, char **argv) {
     if (modes[FLAG_CBREAK] == 1) prepare_term();
     if (modes[FLAG_CBREAK] == 1) atexit(restore_term);
 #endif
+    if (modes[FLAG_FULLSCREEN] == 1) memory[d_xt_for("FullScreenListener", Dictionary)] = -1;
     if (modes[FLAG_CBREAK] == 1) while (1) rre_execute(0, 0);
     if (modes[FLAG_CBREAK] == 0) while (1) rre_execute(0, -1);
     exit(0);
