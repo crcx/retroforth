@@ -1,7 +1,16 @@
 # RRE Listener and Extensions
 
 In this file I am implementing the interactive listener that
-RRE will run when started with `-i` or `-c`.
+RRE will run when started with `-i`, `-i,c`, or `-i,fs`.
+
+The basic image has a space allocated for input at the end of
+the kernel. This is at address 1024 (the kernel space is fixed
+at addresses 0 to 1023).
+
+~~~
+#1024 'TIB const
+~~~
+
 
 ## Console Input
 
@@ -73,14 +82,6 @@ words we can use.
 
 ~~~
 'FullScreenListener var
-~~~
-
-The basic image has a space allocated for input at the end of
-the kernel. This is at address 1024 (the kernel space is fixed
-at addresses 0 to 1023).
-
-~~~
-#1024 'TIB const
 ~~~
 
 Nearly all of this will be hidden from the user.
@@ -243,7 +244,7 @@ startup flags passed.
   :ok      (-)    @NoEcho not 0; drop compiling? [ nl 'Ok_ s:put ] -if ;
   :check-eof (c-c) dup [ #-1 eq? ] [ #4 eq? ] bi or [ 'bye d:lookup d:xt fetch call ] if ;
   :check-bs  (c-c) dup [ #8 eq? ] [ #127 eq? ] bi or [ buffer:get buffer:get drop-pair ] if ;
-  :s:get      (-s) [ #1025 buffer:set
+  :s:get      (-s) [ TIB buffer:set
                      [ c:get dup buffer:add check-eof check-bs eol? ] until
                       buffer:start s:chop ] buffer:preserve ;
 ---reveal---
