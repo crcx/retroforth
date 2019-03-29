@@ -6,7 +6,7 @@ The individual chapters are in the `book/` directory. This is set
 using the `BOOK-BASE` constant.
 
 ~~~
-'book/  'BOOK-BASE s:const
+'doc/book/  'BOOK-BASE s:const
 ~~~
 
 The chapters are specified it the `TOC`, a named array. These are
