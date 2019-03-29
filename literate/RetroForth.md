@@ -516,7 +516,7 @@ High level:
 And low level, for inlining:
 
 ~~~
-:rot (abc-bca) `67503109 ; primitive
+:rot (abc-bca) (puswposw `67503109 ) ; primitive
 ~~~
 
 ## Numeric Operations
