@@ -459,4 +459,4 @@ xor	mn-o	-	-	Perform a bitwise XOR operation.			class:primitive	{n/a}	{n/a}	glob
 {{	-	-	-	Begin a lexically scoped area.			class:word	{n/a}	{n/a}	global	all	
 }	-a	-	-	Complete an array begun by `{`. Returns a pointer to the data.			class:word	{n/a}	{n/a}	global	all	
 }as	f-	-	-	End an assembly section.			class:macro	{n/a}	{n/a}	global	all	
-}}	-	-	-	End a lexically scoped area.			class:word	{n/a}	{n/a}	global	all	
+}}	-	-	-	End a lexically scoped area. This will hide any headers between `{{` and `---reveal---`, leaving only headers between `---reveal---` and the `}}` visible.			class:word	{n/a}	{n/a}	global	all	

@@ -5475,7 +5475,7 @@ Class: class:macro | Namespace: global | Interface Layer: all
   Addr:  -
   Float: -
 
-End a lexically scoped area.
+End a lexically scoped area. This will hide any headers between `{{` and `---reveal---`, leaving only headers between `---reveal---` and the `}}` visible.
 
 Class: class:word | Namespace: global | Interface Layer: all
 ------------------------------------------------------------------------
