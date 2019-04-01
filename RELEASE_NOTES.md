@@ -26,6 +26,10 @@ June 2019.
 - add `)`
 - `c:put` primitive is a hookable word
 - `set:` is now `array:`
+- add `s:begins-with?`
+- add `s:ends-with?`
+- remove `d:words`
+- remove `d:words-with`
 
 ## I/O and Extensions
 
@@ -103,6 +107,9 @@ June 2019.
 - will now display an error and exit on stack over/underflow
 - `-c` is now `-i,c`
 - added `-i,fs` (interface formerly existing as `retro-ri`)
+- add `d:words`
+- add `d:words-with`
+- add `d:words-beginning-with`
 
 ### retro-compiler
 

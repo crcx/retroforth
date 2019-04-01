@@ -8,6 +8,7 @@ directory or use full path names to the files. You can
 also use any Retro code directly.
 
 ~~~
+'dict-words-listing.forth include
 ~~~
 
 Save the image with anything loaded here added in. The
