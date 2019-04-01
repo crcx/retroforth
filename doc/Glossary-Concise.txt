@@ -1081,6 +1081,9 @@ Constant. Returns a string of characters recognized as whitespace.
 s:append                         D: ss-s  A: -  F: -
 Return a new string consisting of s1 followed by s2.
 
+s:begins-with?                   D: ss-f  A: -  F: -
+Return `TRUE` if s1 begins with s2 or `FALSE` otherwise.
+
 s:case                           D: sSq- || sSq-s  A: -  F: -
 If the `s` matches `S`, discard `s` and run the quote before exiting the caller. If they do not match, discard the quote and leave `s` on the stack.
 
@@ -1101,6 +1104,9 @@ Copy a string (s) to a destination (a). This will include the terminator charact
 
 s:empty                          D: -s  A: -  F: -
 Return an empty string.
+
+s:ends-with?                     D: ss-f  A: -  F: -
+Return `TRUE` if s1 ends with s2 or `FALSE` otherwise.
 
 s:eq?                            D: ss-f  A: -  F: -
 Compare two strings for equality. Return `TRUE` if identical or `FALSE` if not.

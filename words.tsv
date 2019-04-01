@@ -151,8 +151,8 @@ d:link	d-a	-	-	Given a dictionary header, return the link field.			class:word	{n
 d:lookup	s-d	-	-	Lookup the specified name in the dictionary and return a pointer to its dictionary header. This returns zero if the word is not found.			class:word	{n/a}	{n/a}	d	all	
 d:lookup-xt	a-d	-	-	Lookup the specified address in the dictionary and return a pointer to its dictionary header. This returns zero if the word is not found.			class:word	{n/a}	{n/a}	d	all	
 d:name	d-s	-	-	Given a dictionary header, return the name field.			class:word	{n/a}	{n/a}	d	all	
-d:words	-	-	-	Display a list of all named items in the `Dictionary`.			class:word	{n/a}	{n/a}	global	all	
-d:words-with	s-	-	-	Display a list of all named items in the `Dictionary` that contain the provided substring.			class:word	{n/a}	{n/a}	global	all	
+d:words	-	-	-	Display a list of all named items in the `Dictionary`.			class:word	{n/a}	{n/a}	d	rre	
+d:words-with	s-	-	-	Display a list of all named items in the `Dictionary` that contain the provided substring.			class:word	{n/a}	{n/a}	d	rre	
 d:xt	d-a	-	-	Given a dictionary header, return the xt field.			class:word	{n/a}	{n/a}	d	all	
 data	-	-	-	Change the class of the most recently defined word to `class:data`.			class:word	{n/a}	{n/a}	global	all	
 depth	-n	-	-	Return the number of items on the stack.			class:word	{n/a}	{n/a}	global	all	
@@ -359,6 +359,7 @@ s:DIGITS	-s	-	-	Constant. Return a string of characters recognized as numeric di
 s:PUNCTUATION	-s	-	-	Constant. Return a string of characters recognized as punctuation.			class:data	{n/a}	{n/a}	s	all	
 s:WHITESPACE	-s	-	-	Constant. Returns a string of characters recognized as whitespace.			class:data	{n/a}	{n/a}	s	all	
 s:append	ss-s	-	-	Return a new string consisting of s1 followed by s2.			class:word	{n/a}	{n/a}	s	all	
+s:begins-with?	ss-f	-	-	Return `TRUE` if s1 begins with s2 or `FALSE` otherwise.			class:word	{n/a}	{n/a}	s	all	
 s:case	sSq- || sSq-s	-	-	If the `s` matches `S`, discard `s` and run the quote before exiting the caller. If they do not match, discard the quote and leave `s` on the stack.			class:word	{n/a}	{n/a}	s	all	
 s:chop	s-s	-	-	Remove the last character from a string.			class:word	{n/a}	{n/a}	s	all	
 s:const	ss-	-	-	Create a constant named s2, returning a pointer to s1. This will use `s:keep` to preserve the original string.			class:word	{n/a}	{n/a}	s	all	
@@ -366,6 +367,7 @@ s:contains-char?	sc-f	-	-	Return `TRUE` if the character is present in the strin
 s:contains-string?	ss-f	-	-	Return `TRUE` if the second string is present in the first string or `FALSE` otherwise.			class:word	{n/a}	{n/a}	s	all	
 s:copy	sa-	-	-	Copy a string (s) to a destination (a). This will include the terminator character when copying.			class:word	{n/a}	{n/a}	s	all	
 s:empty	-s	-	-	Return an empty string.			class:word	{n/a}	{n/a}	s	all	
+s:ends-with?	ss-f	-	-	Return `TRUE` if s1 ends with s2 or `FALSE` otherwise.			class:word	{n/a}	{n/a}	s	all	
 s:eq?	ss-f	-	-	Compare two strings for equality. Return `TRUE` if identical or `FALSE` if not.			class:word	    'hello 'again s:eq?\n    'test  'test  s:eq?	{n/a}	s	all	
 s:evaluate	s-?	-	-	Evaluate string as if it was typed into the interpreter.			class:word	{n/a}	{n/a}	s	all	
 s:filter	sq-s	-	-	Execute the quote once for each value in the string. If the quote returns `TRUE`, append the value into a new string. If `FALSE` the value will be discarded.			class:word	{n/a}	{n/a}	s	all	

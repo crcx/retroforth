@@ -934,6 +934,17 @@ from fixed ends of the string.
 :s:left  (sn-s) #0 swap s:substr ;
 ~~~
 
+`s:begins-with?` and `s:ends-with?` are useful words to see if
+a string starts or ends with a specific substring.
+
+~~~
+:s:begins-with? (ss-f)
+  dup s:length [ swap ] dip s:left s:eq? ;
+
+:s:ends-with? (ss-f)
+  dup s:length [ swap ] dip s:right s:eq? ;
+~~~
+
 Hash (using DJB2)
 
 I use the djb2 hash algorithm for computing hashes from
@@ -1763,24 +1774,8 @@ examples provide much better tools, and interface layers can
 provide much more than I can do here.
 
 ~~~
-:d:words    (-)  [ d:name s:put sp ] d:for-each ;
 :reset      (...-) depth repeat 0; push drop pop #1 - again ;
 :dump-stack (-)  depth 0; drop push dump-stack pop dup n:put sp ;
-~~~
-
-From Kiyoshi Yoneda, this is a variant of `d:words` which displays
-words containing a specific substring. It's useful to see words in
-a specific namespace, e.g., by doing `'s: d:words-with`, or words
-that likely display something: `':puts d:words-with`.
-
-~~~
-{{
-  :display-if-matched  (s-)
-    dup here s:contains-string? [ s:put sp ] [ drop ] choose ;
----reveal---
-  :d:words-with (s-)
-    here s:copy [ d:name display-if-matched ] d:for-each ;
-}}
 ~~~
 
 ~~~

@@ -359,6 +359,7 @@ s:DIGITS                         D: -s  A: -  F: -
 s:PUNCTUATION                    D: -s  A: -  F: -
 s:WHITESPACE                     D: -s  A: -  F: -
 s:append                         D: ss-s  A: -  F: -
+s:begins-with?                   D: ss-f  A: -  F: -
 s:case                           D: sSq- || sSq-s  A: -  F: -
 s:chop                           D: s-s  A: -  F: -
 s:const                          D: ss-  A: -  F: -
@@ -366,6 +367,7 @@ s:contains-char?                 D: sc-f  A: -  F: -
 s:contains-string?               D: ss-f  A: -  F: -
 s:copy                           D: sa-  A: -  F: -
 s:empty                          D: -s  A: -  F: -
+s:ends-with?                     D: ss-f  A: -  F: -
 s:eq?                            D: ss-f  A: -  F: -
 s:evaluate                       D: s-?  A: -  F: -
 s:filter                         D: sq-s  A: -  F: -

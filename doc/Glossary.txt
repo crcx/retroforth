@@ -1766,7 +1766,7 @@ d:words
 
 Display a list of all named items in the `Dictionary`.
 
-Class: class:word | Namespace: global | Interface Layer: all
+Class: class:word | Namespace: d | Interface Layer: rre
 ------------------------------------------------------------------------
 
 d:words-with
@@ -1777,7 +1777,7 @@ d:words-with
 
 Display a list of all named items in the `Dictionary` that contain the provided substring.
 
-Class: class:word | Namespace: global | Interface Layer: all
+Class: class:word | Namespace: d | Interface Layer: rre
 ------------------------------------------------------------------------
 
 d:xt
@@ -4270,6 +4270,17 @@ Return a new string consisting of s1 followed by s2.
 Class: class:word | Namespace: s | Interface Layer: all
 ------------------------------------------------------------------------
 
+s:begins-with?
+
+  Data:  ss-f
+  Addr:  -
+  Float: -
+
+Return `TRUE` if s1 begins with s2 or `FALSE` otherwise.
+
+Class: class:word | Namespace: s | Interface Layer: all
+------------------------------------------------------------------------
+
 s:case
 
   Data:  sSq- || sSq-s
@@ -4343,6 +4354,17 @@ s:empty
   Float: -
 
 Return an empty string.
+
+Class: class:word | Namespace: s | Interface Layer: all
+------------------------------------------------------------------------
+
+s:ends-with?
+
+  Data:  ss-f
+  Addr:  -
+  Float: -
+
+Return `TRUE` if s1 ends with s2 or `FALSE` otherwise.
 
 Class: class:word | Namespace: s | Interface Layer: all
 ------------------------------------------------------------------------
