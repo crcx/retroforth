@@ -1,0 +1,42 @@
+# Lexical Scope
+
+RETRO has a single dictionary, but does provide a means of using
+lexical scope to keep this dictionary clean.
+
+## Example
+
+```
+{{
+  'A var
+  :++A  &A v:inc ;
+---reveal---
+  :B ++A ++A @A n:put nl ;
+}}
+```
+
+In this example, the lexical namespace is created with `{{`. A
+variable (`A`) and word (`++A`) are defined. Then a marker is
+set with `---reveal---`. Another word (`B`) is defined, and the
+lexical area is closed with `}}`.
+
+The headers between `{{` and `---reveal---` are then hidden from
+the dictionary, leaving only the headers between `---reveal---`
+and `}}` exposed.
+
+## Notes
+
+This only affects word visibility within the scoped area. As an
+example:
+
+```
+:a #1 ;
+
+{{
+  :a #2 ;
+---reveal---
+  :b 'a s:evaluate n:put ;
+}}
+```
+
+In this, after `}}` closes the area, the `:a #2 ;` is hidden and
+the `s:evaluate` will find the `:a #1 ;` when `b` is run.
