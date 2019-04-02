@@ -84,10 +84,10 @@ Handler IO_queryHandlers[NUM_DEVICES + 1] = {
 };
 
 
-CELL sp, rp, ip;                  /* Data, address, instruction pointers */
-CELL data[STACK_DEPTH];           /* The data stack                    */
-CELL address[ADDRESSES];          /* The address stack                 */
-CELL memory[IMAGE_SIZE + 1];      /* The memory for the image          */
+CELL sp, rp, ip;                /* Data, address, instruction pointers */
+CELL data[STACK_DEPTH];         /* The data stack                      */
+CELL address[ADDRESSES];        /* The address stack                   */
+CELL memory[IMAGE_SIZE + 1];    /* The memory for the image            */
 
 /* ------------------------------------------------------------
   RRE embeds the image into the binary. This includes the image
@@ -153,6 +153,9 @@ void io_keyboard_query() {
 
 
 /*---------------------------------------------------------------------
+  RRE allows use of termios to set the terminal to a key breaking (as
+  opposed to the default line buffered) mode. These functions handle
+  this.
   ---------------------------------------------------------------------*/
 
 #ifdef USE_TERMIOS
@@ -174,6 +177,10 @@ void restore_term() {
 }
 #endif
 
+
+/*---------------------------------------------------------------------
+  Implement Scripting Support
+  ---------------------------------------------------------------------*/
 
 void scripting_arg() {
   CELL a, b;
@@ -201,6 +208,11 @@ Handler ScriptingActions[] = {
   scripting_name
 };
 
+
+/*---------------------------------------------------------------------
+  Implement Image Saving
+  ---------------------------------------------------------------------*/
+
 void io_scripting_query() {
   stack_push(0);
   stack_push(9);
@@ -225,6 +237,7 @@ void io_image_query() {
   stack_push(0);
   stack_push(1000);
 }
+
 
 /*---------------------------------------------------------------------
   With these out of the way, I implement `execute`, which takes an
@@ -327,7 +340,9 @@ void read_token(FILE *file, char *token_buffer, int echo) {
 
 
 /*---------------------------------------------------------------------
+  Display the Stack Contents
   ---------------------------------------------------------------------*/
+
 void dump_stack() {
   CELL i;
   if (sp == 0)
@@ -464,10 +479,12 @@ int arg_is(char *t) {
 
 
 /*---------------------------------------------------------------------
+  Main Entry Point
   ---------------------------------------------------------------------*/
 
 enum flags {
-  FLAG_HELP, FLAG_RUN_TESTS, FLAG_INCLUDE, FLAG_INTERACTIVE, FLAG_CBREAK, FLAG_SILENT, FLAG_FULLSCREEN
+  FLAG_HELP, FLAG_RUN_TESTS, FLAG_INCLUDE, FLAG_INTERACTIVE, FLAG_CBREAK,
+  FLAG_SILENT, FLAG_FULLSCREEN
 };
 
 int main(int argc, char **argv) {
@@ -554,7 +571,7 @@ int main(int argc, char **argv) {
 
 
 /* Nga ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   Copyright (c) 2008 - 2018, Charles Childers
+   Copyright (c) 2008 - 2019, Charles Childers
    Copyright (c) 2009 - 2010, Luke Parrish
    Copyright (c) 2010,        Marc Simpson
    Copyright (c) 2010,        Jay Skeer
@@ -569,13 +586,6 @@ enum vm_opcode {
   VM_IQ,   VM_II
 };
 #define NUM_OPS VM_II + 1
-
-#ifndef NUM_DEVICES
-#define NUM_DEVICES 0
-#endif
-
-//Handler IO_deviceHandlers[NUM_DEVICES + 1];
-//Handler IO_queryHandlers[NUM_DEVICES + 1];
 
 CELL ngaLoadImage(char *imageFile) {
   FILE *fp;
