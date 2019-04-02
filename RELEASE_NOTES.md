@@ -177,6 +177,7 @@ June 2019.
 - add PasteToSprunge.forth
 - add retro-extend.forth
 - add retro-embedimage.forth
+- add Sandboxed-Dictionary.forth
 - add SaveAndRestoreStack.forth
 - add share.forth and shared.forth
 - add strip-html.forth
