@@ -163,6 +163,7 @@ June 2019.
 - add CaptureOutput.forth
 - add CloseParen.forth
 - add DisplayNames.forth
+- add DictionaryAlias.forth
 - add EDA.forth
 - add EvaluateString.forth
 - add export-as-html.forth
@@ -189,5 +190,7 @@ June 2019.
 - remove Hooks.forth (now in core language)
 - improved edit.forth from Kiyoshi
 - Casket-HTTP now supports server side scripting
+- Fix a bug in Autopsy.forth causing dissassembly to
+  list addresses off by one
 
 ## Final Notes
