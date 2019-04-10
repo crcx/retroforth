@@ -155,7 +155,7 @@ And now to tie it all together:
     [ dup d:lookup-xt n:-zero?
       [ dup d:lookup-xt d:name nl s:put nl ] if ] if
     fetch-next
-    over $( c:put n:put $) c:put sp (address)
+    over $( c:put n:dec n:put $) c:put sp (address)
     render-packed nl  (inst_or_data)
   ] times drop ;
 ~~~

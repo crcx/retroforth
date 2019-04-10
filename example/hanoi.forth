@@ -1,7 +1,7 @@
 The Tower of Hanoi (also called the Tower of Brahma or Lucas' Tower
 and sometimes  pluralized) is a mathematical game or puzzle. It
 consists of three rods and a number of disks of different sizes,
-which can slide onto any rod. The puzzle starts with the disks in 
+which can slide onto any rod. The puzzle starts with the disks in
 a neat stack in ascending order of size on one rod, the smallest
 at the top, thus making a conical shape.
 
@@ -19,38 +19,17 @@ number of moves required to solve a Tower of Hanoi puzzle is
 
 Taken from https://en.m.wikipedia.org/wiki/Tower_of_Hanoi
 
-I am tracking state in a few variables, so I define them first.
-
 ~~~
-'Num  var
-'From var
-'To   var
-'Via  var
-~~~
+{ 'Num 'From 'To 'Via } [ var ] array:for-each
 
-Next, a quick word to setup all the variables.
+:set     !Via !To !From !Num ;
+:display @To @From 'Move_a_ring_from_%n_to_%n\n s:format s:put ;
 
-~~~
-:set-vars !Via !To !From !Num ;
-~~~
-
-Then, implementing the recursive algorithm from the Wikipedia article:
-
-~~~
 :hanoi (num,from,to,via-)
-  set-vars
-  @Num n:-zero?
-  [
-    @Num @From @To @Via
-    @Num n:dec @From @Via @To hanoi
-    set-vars
-    @To @From '\nMove_a_ring_from_%n_to_%n s:format s:put
-    @Num n:dec @Via @To @From hanoi
-  ] if ;
-~~~
+  set @Num n:-zero?
+  [ @Num @From @To @Via
+    @Num n:dec @From @Via @To hanoi set display
+    @Num n:dec @Via @To @From hanoi ] if ;
 
-And a test.
-
-~~~
 #3 #1 #3 #2 hanoi nl
 ~~~
