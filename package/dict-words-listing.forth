@@ -16,13 +16,11 @@ in a specific namespace, e.g., by doing `'s: d:words-with`, or
 words that likely display something: `':put d:words-with`.
 
 ~~~
-{{
-  :display-if-matched  (s-)
-    here over s:contains-string? [ s:put sp ] [ drop ] choose ;
----reveal---
-  :d:words-with (s-)
-    here s:copy [ d:name display-if-matched ] d:for-each ;
-}}
+:d:words-with (s-)
+  here s:copy
+  [ d:name dup here
+    (put-match s:contains-string? [ s:put sp ] [ drop ] choose )
+  ] d:for-each ;
 ~~~
 
 This does have a drawback if you want words in a namespace as
