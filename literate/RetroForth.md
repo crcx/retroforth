@@ -1015,7 +1015,7 @@ First are a bunch of words to help identify character values.
 :c:lowercase?   (c-f) $a $z n:between? ;
 :c:uppercase?   (c-f) $A $Z n:between? ;
 :c:digit?       (c-f) $0 $9 n:between? ;
-:c:visible?     (c-f) #31 #126 n:between? ;
+:c:visible?     (c-f) #32 #126 n:between? ;
 :c:vowel?       (c-f) 'aeiouAEIOU swap s:contains-char? ;
 :c:consonant?   (c-f)
   dup c:letter? [ c:vowel? not ] [ drop FALSE ] choose ;
