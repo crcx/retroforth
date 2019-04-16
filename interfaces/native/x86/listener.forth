@@ -27,7 +27,4 @@
   &listen #1 store
   [ $? c:put sp 'word_not_found s:put nl ] &err:notfound set-hook
 }}
-
-:use-key &getc &c:get set-hook 'Hook_set s:put nl ;
-
 ~~~
