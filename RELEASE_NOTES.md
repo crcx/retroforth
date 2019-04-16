@@ -164,6 +164,7 @@ June 2019.
 - add CloseParen.forth
 - add DisplayNames.forth
 - add DictionaryAlias.forth
+- add DictionaryUsedIn.forth
 - add EDA.forth
 - add EvaluateString.forth
 - add export-as-html.forth
