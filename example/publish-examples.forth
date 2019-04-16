@@ -4,6 +4,12 @@ This program generates an HTML index and exports (using the
 `export-as-html.forth` example) the samples to HTML. The files
 are stored in `/home/crc/public/examples`.
 
+# Configuration
+
+~~~
+'/home/crc/public/examples/ 'FILE-PATH s:const
+~~~
+
 ~~~
 :unix:count-files (-n)
   'ls_-1_|_wc_-l  file:R unix:popen
@@ -22,7 +28,7 @@ are stored in `/home/crc/public/examples`.
 # Generate index.html
 
 ~~~
-'/home/crc/public/examples/index.html file:W file:open 'FID const
+FILE-PATH 'index.html s:append file:W file:open 'FID const
 
 :index:put [ FID file:write ] s:for-each ;
 
@@ -42,8 +48,8 @@ FID file:close
 # Generate HTML Files
 
 ~~~
-:export dup './export-as-html.forth_%s_>/home/crc/public/examples/%s.html
-        s:format unix:system $. c:put ;
+:export FILE-PATH over
+        './export-as-html.forth_%s_>%s%s.html s:format unix:system $. c:put ;
 
 [ dir? &drop [ export ] choose ] unix:for-each-file nl
 ~~~
