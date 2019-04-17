@@ -173,6 +173,7 @@ June 2019.
 - add HTML.forth
 - add KeyValueStore.forth
 - add Marker.forth
+- add mail.forth
 - add NamingQuotes.forth
 - add NetFetch.forth
 - add paste.forth
