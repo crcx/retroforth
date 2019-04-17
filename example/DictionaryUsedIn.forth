@@ -41,8 +41,8 @@ The name of `w1` may be found by `'a1 d:lookup d:name`
 in which `a1` is `w1`'s address.
 
 Variables `Used` contains `a0` and `In` contains `a1`.
-Make sure the word's class is `class:word` and not something els,
-like `class:primitive`, `class:data`, etc.
+Make sure the word's class is `class:word` and not something
+else, like `class:primitive`, `class:data`, etc.
  
 ~~~
 'Used var (a0
@@ -124,7 +124,7 @@ Final product.
 :used-in (a-)
   used 
   [ dup class:word?
-    [ in uses? [ @In d:name s:put sp ] if ] [ drop ] choose 
+    [ in uses? [ @In d:name s:put sp ] if drop ] [ drop ] choose 
   ] d:for-each drop ;
 :d:used-in (s-) d:lookup used-in ;
 ~~~
@@ -139,3 +139,21 @@ Hide unnecessary words.
 'LICA....  d:lookup d:link fetch
 'd:used-in d:lookup d:link store 
 ~~~~
+
+# Limitations
+
+This only searches visible words. Any headers that are hidden
+from the dictionary are no longer visible. So:
+
+    :foo dup * + ;
+
+    {{
+      :test #2 #3 foo ;
+    ----reveal--
+      :bar test n:put nl ;
+    }}
+
+    'foo d:used-in
+
+This will not see the use of `foo` in `test` as the header for
+`test` is not visible after the closing `}}`.
