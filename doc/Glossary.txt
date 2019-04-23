@@ -806,6 +806,17 @@ Perform a bitwise AND operation between the two provided values.
 Class: class:primitive | Namespace: global | Interface Layer: all
 ------------------------------------------------------------------------
 
+array:-eq?
+
+  Data:  aa-f
+  Addr:  -
+  Float: -
+
+Compare all values in the array. Return `FALSE` if all values are equal or `TRUE` otherwise. This assumes the array contains only numeric values.
+
+Class: class:word | Namespace: array | Interface Layer: all
+------------------------------------------------------------------------
+
 array:contains-string?
 
   Data:  sa-f
@@ -846,6 +857,17 @@ array:dup
   Float: -
 
 Make a copy of an array. Return the address of the copy.
+
+Class: class:word | Namespace: array | Interface Layer: all
+------------------------------------------------------------------------
+
+array:eq?
+
+  Data:  aa-f
+  Addr:  -
+  Float: -
+
+Compare all values in the array. Return `TRUE` if all values are equal or `FALSE` otherwise. This assumes the array contains only numeric values.
 
 Class: class:word | Namespace: array | Interface Layer: all
 ------------------------------------------------------------------------

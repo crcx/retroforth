@@ -1670,6 +1670,33 @@ And finally, tie it all together into the single exposed word
 }}
 ~~~
 
+## Arrays, comparisons
+
+~~~
+{{
+  'Flag var
+  :compare    as{ 'dufepusw i 'dufepoeq i }as ;
+  :length     as{ 'dufere.. i }as ;
+  :next       as{ 'liadswli i #1 d #1 d 'adre.... i }as ;
+  :not-equal  as{ 'podrdrdr i 'lire...... i #0 d }as ;
+  :loop       repeat
+                as{ 'pulica.. i &next d }as
+                as{ 'lica.... i &compare d }as
+                as{ 'lifeanli i &Flag d &Flag d 'st...... i }as
+                as{ 'polisuzr i #1 d }as
+              again ;
+---reveal---
+  :array:eq? (aa-f)
+    as{ 'lilist.. i #-1 d &Flag d      }as
+    as{ 'lica.... i &compare d         }as
+    as{ 'lixolicc i #-1 d &not-equal d }as
+    as{ 'lica.... i &length d          }as
+    as{ 'lica.... i &loop d            }as
+    as{ 'drdrlife i &Flag d            }as ;
+  :array:-eq? (aa-f) array:eq? not ;
+}}
+~~~
+
 
 ## Loops, continued
 

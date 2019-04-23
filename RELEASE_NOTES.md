@@ -30,6 +30,8 @@ June 2019.
 - add `s:ends-with?`
 - remove `d:words`
 - remove `d:words-with`
+- add `array:eq?`
+- add `array:-eq?`
 
 ## I/O and Extensions
 

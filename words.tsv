@@ -68,10 +68,12 @@ Version	-a	-	-	Variable. This stores the version number.			class:data	{n/a}	{n/a
 again	-	-	-	Close an unconditional loop. Branches back to the prior `repeat`.			class:macro	{n/a}	{n/a}	global	all	
 allot	n-	-	-	Allocate the specified number of cells from the `Heap`.			class:word	    'Buffer d:create  #100 allot	{n/a}	global	all	
 and	nm-o	-	-	Perform a bitwise AND operation between the two provided values.			class:primitive	{n/a}	{n/a}	global	all	
+array:-eq?	aa-f	-	-	Compare all values in the array. Return `FALSE` if all values are equal or `TRUE` otherwise. This assumes the array contains only numeric values.			class:word	{n/a}	{n/a}	array	all	
 array:contains-string?	sa-f	-	-	Return `TRUE` if the string value is in the array or`FALSE` otherwise.			class:word	{n/a}	{n/a}	array	all	
 array:contains?	na-f	-	-	Return `TRUE` if the value is in the array or `FALSE` otherwise.			class:word	{n/a}	{n/a}	array	all	
 array:counted-results	q-a	-	-	Run a quote and construct a new array from the returned values. The quote should return the values and the number of values to put into the array.			class:word	{n/a}	{n/a}	array	all	
 array:dup	a-b	-	-	Make a copy of an array. Return the address of the copy.			class:word	{n/a}	{n/a}	array	all	
+array:eq?	aa-f	-	-	Compare all values in the array. Return `TRUE` if all values are equal or `FALSE` otherwise. This assumes the array contains only numeric values.			class:word	{n/a}	{n/a}	array	all	
 array:filter	aq-b	-	-	For each item in the initial array, run the specified quote. If the quote returns `TRUE`, copy the item into a new array. If `FALSE`, discard it. Returns a pointer to the new array.			class:word	{n/a}	{n/a}	array	all	
 array:for-each	aq-	-	-	Execute the quote once for each item in the array.			class:word	{n/a}	{n/a}	array	all	
 array:from-string	s-a	-	-	Create a new array with the characters in the source string.			class:word	{n/a}	{n/a}	array	all	

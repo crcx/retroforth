@@ -68,10 +68,12 @@ Version                          D: -a  A: -  F: -
 again                            D: -  A: -  F: -
 allot                            D: n-  A: -  F: -
 and                              D: nm-o  A: -  F: -
+array:-eq?                       D: aa-f  A: -  F: -
 array:contains-string?           D: sa-f  A: -  F: -
 array:contains?                  D: na-f  A: -  F: -
 array:counted-results            D: q-a  A: -  F: -
 array:dup                        D: a-b  A: -  F: -
+array:eq?                        D: aa-f  A: -  F: -
 array:filter                     D: aq-b  A: -  F: -
 array:for-each                   D: aq-  A: -  F: -
 array:from-string                D: s-a  A: -  F: -

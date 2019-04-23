@@ -208,6 +208,9 @@ Allocate the specified number of cells from the `Heap`.
 and                              D: nm-o  A: -  F: -
 Perform a bitwise AND operation between the two provided values.
 
+array:-eq?                       D: aa-f  A: -  F: -
+Compare all values in the array. Return `FALSE` if all values are equal or `TRUE` otherwise. This assumes the array contains only numeric values.
+
 array:contains-string?           D: sa-f  A: -  F: -
 Return `TRUE` if the string value is in the array or`FALSE` otherwise.
 
@@ -219,6 +222,9 @@ Run a quote and construct a new array from the returned values. The quote should
 
 array:dup                        D: a-b  A: -  F: -
 Make a copy of an array. Return the address of the copy.
+
+array:eq?                        D: aa-f  A: -  F: -
+Compare all values in the array. Return `TRUE` if all values are equal or `FALSE` otherwise. This assumes the array contains only numeric values.
 
 array:filter                     D: aq-b  A: -  F: -
 For each item in the initial array, run the specified quote. If the quote returns `TRUE`, copy the item into a new array. If `FALSE`, discard it. Returns a pointer to the new array.
