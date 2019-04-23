@@ -74,14 +74,16 @@ The `n:to-string<with-base>` returns a representation of binary numbers, but
 not the actual bitwise representation. The next word takes care of this.
 
 ~~~
-:n:binary-rep (n-s)
-  [ s:empty buffer:set
-    dup n:negative? [ n:inc ] if
-    #32 [ dup n:negative?
-              [ dup n:odd? ] [ dup n:even? ] choose
-              [ $1 ] [ $0 ] choose buffer:add
-          #2 / ] times drop
-    buffer:start s:reverse
-  ] buffer:preserve ;
+{{
+  'Selector var
+  :bit (f-c) [ $0 ] [ $1 ] choose ;
+---reveal---
+  :n:binary-rep (n-s)
+    dup n:negative? [ n:inc &n:odd? ] [ &n:even? ] choose !Selector
+    [ s:empty buffer:set
+      #32 [ dup @Selector call bit buffer:add #2 / ] times drop
+      buffer:start s:reverse
+    ] buffer:preserve ;
+}}
 ~~~
 
