@@ -8,8 +8,8 @@
 -eq?	nn-f	-	-	Compare two values for inequality. Returns `TRUE` if they are not equal or `FALSE` otherwise.			class:primitive	    #1 #2 -eq?\n    $a $b -eq?	{n/a}	global	all	
 -if	fq-	-	-	Execute the quotation if the flag is `FALSE`.			class:word	{n/a}	{n/a}	global	all	
 -if;	fq-	-	-	Execute the quotation if the flag is `FALSE`. If false, also exit the word.			class:word	{n/a}	{n/a}	global	all	
-/	mn-o	-	-	Divide `m` by `n` and return the result.			class:word	{n/a}	{n/a}	global	all	
-/mod	nm-op	-	-	Divide `n` by `m` and return the result and remainder.			class:primitive	{n/a}	{n/a}	global	all	
+/	nm-q	-	-	Divide `n` by `m` and return the integer part of the quotient.			class:word	{n/a}	{n/a}	global	all	
+/mod	nm-rq	-	-	Divide `n` by `m` and return the integer part of the quotient and remainder.			class:primitive	{n/a}	{n/a}	global	all	
 0;	n-n || n-	-	-	If `n` is zero, drop `n` and exit the current word. If non-zero, leave `n` alone and allow execution to continue.			class:macro	{n/a}	{n/a}	global	all	
 ;	-	-	-	End the current definition.			class:macro	{n/a}	{n/a}	global	all	
 ?dup	n-nn || n-n	-	-	Duplicate top value on stack if not zero. If zero, do nothing.			class:word	    #1 ?dup\n    #0 ?dup	{n/a}	global	all	

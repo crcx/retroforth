@@ -457,6 +457,10 @@ void inst_mul() {
 
 **DIVMOD** divides and returns the quotient and remainder.
 
+If using a C99 or newer compiler, this should return a remainder
+with the same sign as the dividend. If using an older compiler,
+you may need to alter this to achieve the expected results.
+
 ~~~
 void inst_divmod() {
   CELL a, b;

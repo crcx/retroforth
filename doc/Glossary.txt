@@ -137,22 +137,22 @@ Class: class:word | Namespace: global | Interface Layer: all
 
 /
 
-  Data:  mn-o
+  Data:  nm-q
   Addr:  -
   Float: -
 
-Divide `m` by `n` and return the result.
+Divide `n` by `m` and return the integer part of the quotient.
 
 Class: class:word | Namespace: global | Interface Layer: all
 ------------------------------------------------------------------------
 
 /mod
 
-  Data:  nm-op
+  Data:  nm-rq
   Addr:  -
   Float: -
 
-Divide `n` by `m` and return the result and remainder.
+Divide `n` by `m` and return the integer part of the quotient and remainder.
 
 Class: class:primitive | Namespace: global | Interface Layer: all
 ------------------------------------------------------------------------
