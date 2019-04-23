@@ -198,6 +198,7 @@ Example:
       (begin_with  #-1 !Index n:min !Value dup array:length ) ;
 
 ~~~
+:( ; immediate
 :) ; immediate
 ~~~
 
