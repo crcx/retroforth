@@ -1502,7 +1502,7 @@ clock:day
 
 Return the current day.
 
-Class: class:word | Namespace: clock | Interface Layer: iOS
+Class: class:word | Namespace: clock | Interface Layer: iOS, rre
 ------------------------------------------------------------------------
 
 clock:hour
@@ -1513,7 +1513,7 @@ clock:hour
 
 Return the current hour.
 
-Class: class:word | Namespace: clock | Interface Layer: iOS
+Class: class:word | Namespace: clock | Interface Layer: iOS, rre
 ------------------------------------------------------------------------
 
 clock:minute
@@ -1524,7 +1524,7 @@ clock:minute
 
 Return the current minute.
 
-Class: class:word | Namespace: clock | Interface Layer: iOS
+Class: class:word | Namespace: clock | Interface Layer: iOS, rre
 ------------------------------------------------------------------------
 
 clock:month
@@ -1535,7 +1535,7 @@ clock:month
 
 Return the current month.
 
-Class: class:word | Namespace: clock | Interface Layer: iOS
+Class: class:word | Namespace: clock | Interface Layer: iOS, rre
 ------------------------------------------------------------------------
 
 clock:second
@@ -1546,7 +1546,7 @@ clock:second
 
 Return the current second.
 
-Class: class:word | Namespace: clock | Interface Layer: iOS
+Class: class:word | Namespace: clock | Interface Layer: iOS, rre
 ------------------------------------------------------------------------
 
 clock:year
@@ -1557,7 +1557,7 @@ clock:year
 
 Return the current year.
 
-Class: class:word | Namespace: clock | Interface Layer: iOS
+Class: class:word | Namespace: clock | Interface Layer: iOS, rre
 ------------------------------------------------------------------------
 
 compile:call

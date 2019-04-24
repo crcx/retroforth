@@ -1,8 +1,8 @@
-# RETRO 12.2019.6
+# RETRO 2019.6
 
 This is the changelog for the development builds of Retro.
-I am currently planning to have the next release occur in
-June 2019.
+It is expected to be released as the stable system in early
+June.
 
 ## Bug Fixes
 
@@ -113,6 +113,12 @@ June 2019.
 - add `d:words`
 - add `d:words-with`
 - add `d:words-beginning-with`
+- add `clock:day`
+- add `clock:month`
+- add `clock:year`
+- add `clock:hour`
+- add `clock:minute`
+- add `clock:second`
 
 ### retro-compiler
 

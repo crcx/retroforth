@@ -111,7 +111,13 @@ seconds.
 ~~~
 
 ~~~
-:unix:time (-n) #19 io:unix-syscall ;
+:unix:time    (-n) #19 io:unix-syscall ;
+:clock:day    (-s) #20 io:unix-syscall ;
+:clock:month  (-s) #21 io:unix-syscall ;
+:clock:year   (-s) #22 io:unix-syscall ;
+:clock:hour   (-s) #23 io:unix-syscall ;
+:clock:minute (-n) #24 io:unix-syscall ;
+:clock:secord (-s) #25 io:unix-syscall ;
 ~~~
 
 ~~~

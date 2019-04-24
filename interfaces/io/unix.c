@@ -284,13 +284,44 @@ void unix_time() {
   stack_push((CELL)time(NULL));
 }
 
+void unix_time_day() {
+  time_t t = time(NULL);
+  stack_push((CELL)localtime(&t)->tm_mday);
+}
+
+void unix_time_month() {
+  time_t t = time(NULL);
+  stack_push((CELL)localtime(&t)->tm_mon);
+}
+
+void unix_time_year() {
+  time_t t = time(NULL);
+  stack_push((CELL)localtime(&t)->tm_year);
+}
+
+void unix_time_hour() {
+  time_t t = time(NULL);
+  stack_push((CELL)localtime(&t)->tm_hour);
+}
+
+void unix_time_minute() {
+  time_t t = time(NULL);
+  stack_push((CELL)localtime(&t)->tm_min);
+}
+
+void unix_time_second() {
+  time_t t = time(NULL);
+  stack_push((CELL)localtime(&t)->tm_sec);
+}
+
 
 Handler UnixActions[] = {
   unix_system, unix_fork, unix_exec0, unix_exec1, unix_exec2,
   unix_exec3, unix_exit, unix_getpid, unix_wait, unix_kill,
   unixOpenPipe, unixClosePipe, unix_write, unix_chdir,
   unix_getenv, unix_putenv, unix_sleep, unix_io_putn, unix_io_puts,
-  unix_time
+  unix_time, unix_time_day, unix_time_month, unix_time_year,
+  unix_time_hour, unix_time_minute, unix_time_second
 };
 
 void io_unix_query() {
