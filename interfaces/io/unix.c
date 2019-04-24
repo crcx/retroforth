@@ -296,7 +296,7 @@ void unix_time_month() {
 
 void unix_time_year() {
   time_t t = time(NULL);
-  stack_push((CELL)localtime(&t)->tm_year);
+  stack_push((CELL)localtime(&t)->tm_year + 1990);
 }
 
 void unix_time_hour() {
