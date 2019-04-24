@@ -99,7 +99,7 @@ Output is written to stdout.
 
 :body (s-)
   '<body> s:put nl
-  [ ASCII:SPACE s:tokenize [ format '&nbsp; s:put ] array:for-each
+  [ ASCII:SPACE s:tokenize [ format '&nbsp; s:put ] a:for-each
     '<br> s:put nl ] unu
   '</body> s:put nl ;
 

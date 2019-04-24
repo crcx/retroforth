@@ -55,7 +55,7 @@ The common namespaces are:
 
 | Prefix  | Contains                                               |
 | ------- | ------------------------------------------------------ |
-| array:  | Words operating on simple arrays                       |
+| a:      | Words operating on simple arrays                       |
 | ASCII:  | ASCII character constants for control characters       |
 | buffer: | Words for operating on a simple linear LIFO buffer     |
 | c:      | Words for operating on ASCII character data            |

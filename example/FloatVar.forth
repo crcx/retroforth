@@ -159,7 +159,7 @@ Two different ways are implemented:
 Since Retro's cells are 32-bit,
 it is more convenient to handle floating point numbers
 encoded into single cells than into pairs of cells.
-For instance, consider using the `array:` words for vectors.
+For instance, consider using the `a:` words for vectors.
 Hence in many cases the words found by doing
 
   'e: d:words-with

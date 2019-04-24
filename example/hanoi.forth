@@ -20,7 +20,7 @@ number of moves required to solve a Tower of Hanoi puzzle is
 Taken from https://en.m.wikipedia.org/wiki/Tower_of_Hanoi
 
 ~~~
-{ 'Num 'From 'To 'Via } [ var ] array:for-each
+{ 'Num 'From 'To 'Via } [ var ] a:for-each
 
 :set     !Via !To !From !Num ;
 :display @To @From 'Move_a_ring_from_%n_to_%n\n s:format s:put ;

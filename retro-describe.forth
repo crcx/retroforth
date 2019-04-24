@@ -76,7 +76,7 @@ simple code.
 
   [ 'field: s:prepend d:create
     dup compile:lit &select compile:call compile:ret
-    &class:word reclass n:inc ] array:for-each drop
+    &class:word reclass n:inc ] a:for-each drop
 }}
 ~~~
 

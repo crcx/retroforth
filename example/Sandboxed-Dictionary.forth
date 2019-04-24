@@ -21,7 +21,7 @@ dictionary.
     here [ @D , , , s, ] dip !D  ;
 ---reveal---
   :make-dict (a-a)
-    #0 !D [ unpack add-header ] array:for-each @D ;
+    #0 !D [ unpack add-header ] a:for-each @D ;
 }}
 ~~~
 

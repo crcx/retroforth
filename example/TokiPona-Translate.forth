@@ -158,6 +158,6 @@ A couple of resources:
 :clean    [ [ c:letter? ] [ c:whitespace? ] bi or ] s:filter ;
 :original dup s:put nl tab ;
 :tokens   ASCII:SPACE s:tokenize ;
-:convert  [ translate s:put sp ] array:for-each nl ;
+:convert  [ translate s:put sp ] a:for-each nl ;
 #0 sys:argv [ s:to-lower clean original tokens convert ] unu
 ~~~

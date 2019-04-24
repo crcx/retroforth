@@ -67,7 +67,7 @@ for me.
 :import        here swap BOOK-BASE s:prepend file:slurp ;
 :\n            ASCII:LF @Out file:write ;
 :add-to-book   here [ @Out file:write ] s:for-each \n ;
-:process-files [ import add-to-book ] array:for-each ;
+:process-files [ import add-to-book ] a:for-each ;
 :open          'RETRO-Book.md file:open<for-writing> !Out ;
 :close         @Out file:close ;
 :assemble      open process-files close ;
@@ -78,7 +78,7 @@ for me.
 :open          'gophermap file:open<for-writing> !Out ;
 :close         @Out file:close ;
 :ENTRY         '0%s\t/book/%s\tforth.works\t70\n ;
-:process-files [ dup ENTRY s:format [ @Out file:write ] s:for-each ] array:for-each ;
+:process-files [ dup ENTRY s:format [ @Out file:write ] s:for-each ] a:for-each ;
 :gophermap     open process-files close ;
 ~~~
 

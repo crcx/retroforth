@@ -10,13 +10,13 @@ This can be useful, so I'm doing something similar here.
   :make-struct (ns-)   d:create , [ here swap fetch allot ] does ;
 ---reveal---
   :defstruct (sa-)
-    dup array:length
+    dup a:length
     [ n:dec swap
       [ 'ab 'aabab reorder
         '@ s:append [ fetch + fetch ] make-helper
         '! s:append [ fetch + store ] make-helper
         n:dec
-      ] array:for-each drop
+      ] a:for-each drop
     ] sip swap make-struct ;
 }}
 ~~~

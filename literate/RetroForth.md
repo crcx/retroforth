@@ -29,7 +29,7 @@ The main namespaces are:
     | namespace  | words related to   |
     | ---------- | ------------------ |
     | ASCII      | ASCII Constants    |
-    | array      | arrays             |
+    | a          | arrays             |
     | c          | characters         |
     | compile    | compiler functions |
     | d          | dictionary headers |
@@ -195,7 +195,7 @@ Example:
 
     :pre.min (a-an)
       (comparison  &lt? &lt-or-gt? set-hook )
-      (begin_with  #-1 !Index n:min !Value dup array:length ) ;
+      (begin_with  #-1 !Index n:min !Value dup a:length ) ;
 
 ~~~
 :( ; immediate
@@ -1292,30 +1292,30 @@ represented in memory as:
 
 Since the count comes first, a simple `fetch` will suffice to
 get it, but for completeness (and to allow for future changes),
-we wrap this as `array:length`:
+we wrap this as `a:length`:
 
 ~~~
-:array:length (a-n) fetch ;
+:a:length (a-n) fetch ;
 ~~~
 
 The first couple of words are used to create arrays. The first,
-`array:counted-results` executes a quote which returns values
+`a:counted-results` executes a quote which returns values
 and a count. It then creates an array with the provided data.
 
 ~~~
-:array:counted-results (q-a)
+:a:counted-results (q-a)
   call here [ dup , &, times ] dip ;
 ~~~
 
-The second, `array:from-string`, creates a new string with the
+The second, `a:from-string`, creates a new string with the
 characters in given a string.
 
 ~~~
-:array:from-string (s-a)
+:a:from-string (s-a)
   here [ dup s:length , [ , ] s:for-each ] dip ;
 ~~~
 
-A very crucial piece is `array:for-each`. This runs a quote once
+A very crucial piece is `a:for-each`. This runs a quote once
 against each value in an array. This is leveraged to implement
 additional combinators.
 
@@ -1323,38 +1323,38 @@ additional combinators.
 {{
   'Q var
 ---reveal---
-  :array:for-each (aq-)
+  :a:for-each (aq-)
     &Q [ !Q fetch-next
          [ fetch-next swap [ @Q call ] dip ] times drop
        ] v:preserve ;
 }}
 ~~~
 
-With this I can easily define `array:dup` to make a copy of an
+With this I can easily define `a:dup` to make a copy of an
 array.
 
 ~~~
-:array:dup (a-a)
-  here [ dup fetch , [ , ] array:for-each ] dip ;
+:a:dup (a-a)
+  here [ dup fetch , [ , ] a:for-each ] dip ;
 ~~~
 
-Next is `array:filter`, which is extracts matching values from
+Next is `a:filter`, which is extracts matching values from
 an array. This is used like:
 
     { #1 #2 #3 #4 #5 #6 #7 #8 }
-    [ n:even? ] array:filter
+    [ n:even? ] a:filter
 
 It returns a new array with the values that the quote returned
 a `TRUE` flag for.
 
 ~~~
-:array:filter (aq-)
+:a:filter (aq-)
   [ over [ call ] dip swap [ , ] [ drop ] choose ] curry
-  here [ over fetch , array:for-each ] dip
+  here [ over fetch , a:for-each ] dip
   here over - n:dec over store ;
 ~~~
 
-Next are `array:contains?` and `array:contains-string?` which
+Next are `a:contains?` and `a:contains-string?` which
 compare a given value to each item in the array and returns
 a flag.
 
@@ -1362,70 +1362,70 @@ a flag.
 {{
   'F var
 ---reveal---
-  :array:contains? (na-f)
+  :a:contains? (na-f)
     &F v:off
-    [ over eq? @F or !F ] array:for-each
+    [ over eq? @F or !F ] a:for-each
     drop @F ;
 
-  :array:contains-string? (sa-f)
+  :a:contains-string? (sa-f)
     &F v:off
-    [ over s:eq? @F or !F ] array:for-each
+    [ over s:eq? @F or !F ] a:for-each
     drop @F ;
 }}
 ~~~
 
-I implemented `array:map` to apply a quotation to each item in
+I implemented `a:map` to apply a quotation to each item in
 an array and construct a new array from the returned values.
 
 Example:
 
     { #1 #2 #3 }
-    [ #10 * ] array:map
+    [ #10 * ] a:map
 
 ~~~
-:array:map (aq-a)
+:a:map (aq-a)
   [ call , ] curry
-  here [ over fetch , array:for-each ] dip ;
+  here [ over fetch , a:for-each ] dip ;
 ~~~
 
-You can use `array:reverse` to make a copy of an array with the
+You can use `a:reverse` to make a copy of an array with the
 values reversed.
 
 ~~~
-:array:reverse (a-a)
+:a:reverse (a-a)
   here [ fetch-next [ + n:dec ] sip dup ,
          [ dup fetch , n:dec ] times drop
        ] dip ;
 ~~~
 
-`array:nth` provides a quick means of adjusting an array and
+`a:nth` provides a quick means of adjusting an array and
 offset into an address for use with `fetch` and `store`.
 
 ~~~
-:array:nth (an-a)
+:a:nth (an-a)
   + n:inc ;
 ~~~
 
-`array:reduce` takes an array, a starting value, and a quote. It
+`a:reduce` takes an array, a starting value, and a quote. It
 executes the quote once for each item in the array, passing the
 item and the value to the quote. The quote should consume both
 and return a new value.
 
 ~~~
-:array:reduce (pnp-n)
-  [ swap ] dip array:for-each ;
+:a:reduce (pnp-n)
+  [ swap ] dip a:for-each ;
 ~~~
 
 When making an array, I often want the values in the original
-order. The `array:counted-results array:reverse` is a bit long, so
-I'm defining a new `array:make` which wraps these.
+order. The `a:counted-results a:reverse` is a bit long, so
+I'm defining a new `a:make` which wraps these.
 
 ~~~
-:array:make (q-a)
-  array:counted-results array:reverse ;
+:a:make (q-a)
+  a:counted-results a:reverse ;
 
 :{ (-)  |[ |depth |[ ; immediate
-:} (-a) |] |dip |depth |swap |- |n:dec |] |array:make ; immediate
+:} (-a) |] |dip |depth |swap |- |n:dec |] |a:make ; immediate
 ~~~
 
 ## Muri: an assembler
@@ -1687,14 +1687,14 @@ And finally, tie it all together into the single exposed word
                 as{ 'polisuzr i #1 d }as
               again ;
 ---reveal---
-  :array:eq? (aa-f)
+  :a:eq? (aa-f)
     as{ 'lilist.. i #-1 d &Flag d      }as
     as{ 'lica.... i &compare d         }as
     as{ 'lixolicc i #-1 d &not-equal d }as
     as{ 'lica.... i &length d          }as
     as{ 'lica.... i &loop d            }as
     as{ 'drdrlife i &Flag d            }as ;
-  :array:-eq? (aa-f) array:eq? not ;
+  :a:-eq? (aa-f) a:eq? not ;
 }}
 ~~~
 

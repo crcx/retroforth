@@ -238,7 +238,7 @@ top level word called returns.
 
 #0 sys:argv
   [ [ ASCII:SPACE s:tokenize
-      [ valid? [ to-TIB process ] &drop choose ] array:for-each
+      [ valid? [ to-TIB process ] &drop choose ] a:for-each
       progress
     ] gc ] unu nl
 ~~~

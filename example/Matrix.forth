@@ -31,5 +31,5 @@ Test matrix<xs>, should be "contained!" thrice.
 ```
 #30 #20 #10 #3 #1 "tester matrix<xs>
 { tester #2 + #3 [ fetch-next swap ] times drop }
-[ { #10 #20 #30 } array:contains? [ 'contained! s:put sp nl ] if ] array:for-each
+[ { #10 #20 #30 } a:contains? [ 'contained! s:put sp nl ] if ] a:for-each
 ```

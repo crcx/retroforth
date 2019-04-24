@@ -94,7 +94,7 @@ simple code.
 
   [ 'field: s:prepend d:create
     dup compile:lit &select compile:call compile:ret
-    &class:word reclass n:inc ] array:for-each drop
+    &class:word reclass n:inc ] a:for-each drop
 }}
 ~~~
 
@@ -281,7 +281,7 @@ before doing the checks.
   :record-name     !SourceLine field:name s:keep over &GlossaryNames + store ;
   :populate-names  #1 'words.tsv [ record-name n:inc ] file:for-each-line
                    n:dec &GlossaryNames store ;
-  :in-set?         dup &GlossaryNames array:contains-string? ;
+  :in-set?         dup &GlossaryNames a:contains-string? ;
 ---reveal---
   :display-missing
     restrict-scope populate-names 
@@ -372,7 +372,7 @@ when done.
       '/tmp/glossary.ex2
       '/tmp/glossary.namespace
       '/tmp/glossary.interface }
-    [ file:delete ] array:for-each ;
+    [ file:delete ] a:for-each ;
 ~~~
 
 Cleaning the edited data is necessary. This entails:
@@ -532,7 +532,7 @@ you edit/save the TSV data with a spreadsheet application.
       &field:ex2
       &field:namespace
       &field:interface }
-    [ call s:put tab ] array:for-each nl ;
+    [ call s:put tab ] a:for-each nl ;
 
   :export-tsv
     'words.tsv [ s:keep !SourceLine display-fields ] file:for-each-line ;
@@ -587,7 +587,7 @@ to use.
     '__glossary____concise
     '__tsv_________concise-stack
     '--------------------------------
-  } [ s:put nl ] array:for-each ;
+  } [ s:put nl ] a:for-each ;
 ~~~
 
 
@@ -686,7 +686,7 @@ And then the actual top level server.
       '*_{_font-family:_monospace;_color:_#aaa;_background:_#121212;_}
       'a_{_color:_#EE7600;_}
       '</style>
-    } [ s:put sp ] array:for-each ;
+    } [ s:put sp ] a:for-each ;
 
   :entry display-result<HTML> ;
 
@@ -704,13 +704,13 @@ And then the actual top level server.
 
   :handle-http
     page-header
-    &Selector ASCII:SPACE s:tokenize #1 array:nth fetch
+    &Selector ASCII:SPACE s:tokenize #1 a:nth fetch
     dup s:length #1 eq?
       [ drop http:list-words ]
       [ n:inc s:to-number http:display ] choose ;
 
   :handle-gopher
-    &Selector ASCII:SPACE s:tokenize #1 array:nth fetch
+    &Selector ASCII:SPACE s:tokenize #1 a:nth fetch
     s:chop s:keep dup s:put !Target gopher:display ;
 
 ---reveal---

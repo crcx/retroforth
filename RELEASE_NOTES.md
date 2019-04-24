@@ -26,13 +26,13 @@ June 2019.
 - add `(`
 - add `)`
 - `c:put` primitive is a hookable word
-- `set:` is now `array:`
+- `set:` is now `a:`
 - add `s:begins-with?`
 - add `s:ends-with?`
 - remove `d:words`
 - remove `d:words-with`
-- add `array:eq?`
-- add `array:-eq?`
+- add `a:eq?`
+- add `a:-eq?`
 
 ## I/O and Extensions
 

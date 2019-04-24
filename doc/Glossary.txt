@@ -779,6 +779,171 @@ End a quotation.
 Class: class:macro | Namespace: global | Interface Layer: all
 ------------------------------------------------------------------------
 
+a:-eq?
+
+  Data:  aa-f
+  Addr:  -
+  Float: -
+
+Compare all values in the array. Return `FALSE` if all values are equal or `TRUE` otherwise. This assumes the array contains only numeric values.
+
+Class: class:word | Namespace: a | Interface Layer: all
+------------------------------------------------------------------------
+
+a:contains-string?
+
+  Data:  sa-f
+  Addr:  -
+  Float: -
+
+Return `TRUE` if the string value is in the array or`FALSE` otherwise.
+
+Class: class:word | Namespace: a | Interface Layer: all
+------------------------------------------------------------------------
+
+a:contains?
+
+  Data:  na-f
+  Addr:  -
+  Float: -
+
+Return `TRUE` if the value is in the array or `FALSE` otherwise.
+
+Class: class:word | Namespace: a | Interface Layer: all
+------------------------------------------------------------------------
+
+a:counted-results
+
+  Data:  q-a
+  Addr:  -
+  Float: -
+
+Run a quote and construct a new array from the returned values. The quote should return the values and the number of values to put into the array.
+
+Class: class:word | Namespace: a | Interface Layer: all
+------------------------------------------------------------------------
+
+a:dup
+
+  Data:  a-b
+  Addr:  -
+  Float: -
+
+Make a copy of an array. Return the address of the copy.
+
+Class: class:word | Namespace: a | Interface Layer: all
+------------------------------------------------------------------------
+
+a:eq?
+
+  Data:  aa-f
+  Addr:  -
+  Float: -
+
+Compare all values in the array. Return `TRUE` if all values are equal or `FALSE` otherwise. This assumes the array contains only numeric values.
+
+Class: class:word | Namespace: a | Interface Layer: all
+------------------------------------------------------------------------
+
+a:filter
+
+  Data:  aq-b
+  Addr:  -
+  Float: -
+
+For each item in the initial array, run the specified quote. If the quote returns `TRUE`, copy the item into a new array. If `FALSE`, discard it. Returns a pointer to the new array.
+
+Class: class:word | Namespace: a | Interface Layer: all
+------------------------------------------------------------------------
+
+a:for-each
+
+  Data:  aq-
+  Addr:  -
+  Float: -
+
+Execute the quote once for each item in the array.
+
+Class: class:word | Namespace: a | Interface Layer: all
+------------------------------------------------------------------------
+
+a:from-string
+
+  Data:  s-a
+  Addr:  -
+  Float: -
+
+Create a new array with the characters in the source string.
+
+Class: class:word | Namespace: a | Interface Layer: all
+------------------------------------------------------------------------
+
+a:length
+
+  Data:  a-n
+  Addr:  -
+  Float: -
+
+Return the length of a array.
+
+Class: class:word | Namespace: a | Interface Layer: all
+------------------------------------------------------------------------
+
+a:make
+
+  Data:  q-a
+  Addr:  -
+  Float: -
+
+Execute quote. Return a new array containing the values the quote leaves on the stack. This is identical to doing `a:counted-results a:reverse`
+
+Class: class:word | Namespace: a | Interface Layer: all
+------------------------------------------------------------------------
+
+a:map
+
+  Data:  aq-
+  Addr:  -
+  Float: -
+
+Execute quote once for each item in the array. Constructs a new array from the value returned by the quote.
+
+Class: class:word | Namespace: a | Interface Layer: all
+------------------------------------------------------------------------
+
+a:nth
+
+  Data:  an-b
+  Addr:  -
+  Float: -
+
+Return the actual address of the nth item in the array.
+
+Class: class:word | Namespace: a | Interface Layer: all
+------------------------------------------------------------------------
+
+a:reduce
+
+  Data:  pnq-n
+  Addr:  -
+  Float: -
+
+Takes an array, a starting value, and a quote. This will apply the quote to each item in the array; the quote should consume two values and return one.
+
+Class: class:word | Namespace: a | Interface Layer: all
+------------------------------------------------------------------------
+
+a:reverse
+
+  Data:  a-b
+  Addr:  -
+  Float: -
+
+Reverse the order of items in a array. This will return a new array.
+
+Class: class:word | Namespace: a | Interface Layer: all
+------------------------------------------------------------------------
+
 again
 
   Data:  -
@@ -815,171 +980,6 @@ and
 Perform a bitwise AND operation between the two provided values.
 
 Class: class:primitive | Namespace: global | Interface Layer: all
-------------------------------------------------------------------------
-
-array:-eq?
-
-  Data:  aa-f
-  Addr:  -
-  Float: -
-
-Compare all values in the array. Return `FALSE` if all values are equal or `TRUE` otherwise. This assumes the array contains only numeric values.
-
-Class: class:word | Namespace: array | Interface Layer: all
-------------------------------------------------------------------------
-
-array:contains-string?
-
-  Data:  sa-f
-  Addr:  -
-  Float: -
-
-Return `TRUE` if the string value is in the array or`FALSE` otherwise.
-
-Class: class:word | Namespace: array | Interface Layer: all
-------------------------------------------------------------------------
-
-array:contains?
-
-  Data:  na-f
-  Addr:  -
-  Float: -
-
-Return `TRUE` if the value is in the array or `FALSE` otherwise.
-
-Class: class:word | Namespace: array | Interface Layer: all
-------------------------------------------------------------------------
-
-array:counted-results
-
-  Data:  q-a
-  Addr:  -
-  Float: -
-
-Run a quote and construct a new array from the returned values. The quote should return the values and the number of values to put into the array.
-
-Class: class:word | Namespace: array | Interface Layer: all
-------------------------------------------------------------------------
-
-array:dup
-
-  Data:  a-b
-  Addr:  -
-  Float: -
-
-Make a copy of an array. Return the address of the copy.
-
-Class: class:word | Namespace: array | Interface Layer: all
-------------------------------------------------------------------------
-
-array:eq?
-
-  Data:  aa-f
-  Addr:  -
-  Float: -
-
-Compare all values in the array. Return `TRUE` if all values are equal or `FALSE` otherwise. This assumes the array contains only numeric values.
-
-Class: class:word | Namespace: array | Interface Layer: all
-------------------------------------------------------------------------
-
-array:filter
-
-  Data:  aq-b
-  Addr:  -
-  Float: -
-
-For each item in the initial array, run the specified quote. If the quote returns `TRUE`, copy the item into a new array. If `FALSE`, discard it. Returns a pointer to the new array.
-
-Class: class:word | Namespace: array | Interface Layer: all
-------------------------------------------------------------------------
-
-array:for-each
-
-  Data:  aq-
-  Addr:  -
-  Float: -
-
-Execute the quote once for each item in the array.
-
-Class: class:word | Namespace: array | Interface Layer: all
-------------------------------------------------------------------------
-
-array:from-string
-
-  Data:  s-a
-  Addr:  -
-  Float: -
-
-Create a new array with the characters in the source string.
-
-Class: class:word | Namespace: array | Interface Layer: all
-------------------------------------------------------------------------
-
-array:length
-
-  Data:  a-n
-  Addr:  -
-  Float: -
-
-Return the length of a array.
-
-Class: class:word | Namespace: array | Interface Layer: all
-------------------------------------------------------------------------
-
-array:make
-
-  Data:  q-a
-  Addr:  -
-  Float: -
-
-Execute quote. Return a new array containing the values the quote leaves on the stack. This is identical to doing `array:counted-results array:reverse`
-
-Class: class:word | Namespace: array | Interface Layer: all
-------------------------------------------------------------------------
-
-array:map
-
-  Data:  aq-
-  Addr:  -
-  Float: -
-
-Execute quote once for each item in the array. Constructs a new array from the value returned by the quote.
-
-Class: class:word | Namespace: array | Interface Layer: all
-------------------------------------------------------------------------
-
-array:nth
-
-  Data:  an-b
-  Addr:  -
-  Float: -
-
-Return the actual address of the nth item in the array.
-
-Class: class:word | Namespace: array | Interface Layer: all
-------------------------------------------------------------------------
-
-array:reduce
-
-  Data:  pnq-n
-  Addr:  -
-  Float: -
-
-Takes an array, a starting value, and a quote. This will apply the quote to each item in the array; the quote should consume two values and return one.
-
-Class: class:word | Namespace: array | Interface Layer: all
-------------------------------------------------------------------------
-
-array:reverse
-
-  Data:  a-b
-  Addr:  -
-  Float: -
-
-Reverse the order of items in a array. This will return a new array.
-
-Class: class:word | Namespace: array | Interface Layer: all
 ------------------------------------------------------------------------
 
 as{
@@ -5464,7 +5464,7 @@ Class: class:primitive | Namespace: global | Interface Layer: all
   Addr:  -
   Float: -
 
-Begin an array. This is intended to make creating arrays a bit cleaner than using a quotation and `array:counted-results`.
+Begin an array. This is intended to make creating arrays a bit cleaner than using a quotation and `a:counted-results`.
 
 Class: class:word | Namespace: global | Interface Layer: all
 ------------------------------------------------------------------------

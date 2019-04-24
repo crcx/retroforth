@@ -202,6 +202,51 @@ Begin a quotation.
 ]                                D: -  A: -  F: -
 End a quotation.
 
+a:-eq?                           D: aa-f  A: -  F: -
+Compare all values in the array. Return `FALSE` if all values are equal or `TRUE` otherwise. This assumes the array contains only numeric values.
+
+a:contains-string?               D: sa-f  A: -  F: -
+Return `TRUE` if the string value is in the array or`FALSE` otherwise.
+
+a:contains?                      D: na-f  A: -  F: -
+Return `TRUE` if the value is in the array or `FALSE` otherwise.
+
+a:counted-results                D: q-a  A: -  F: -
+Run a quote and construct a new array from the returned values. The quote should return the values and the number of values to put into the array.
+
+a:dup                            D: a-b  A: -  F: -
+Make a copy of an array. Return the address of the copy.
+
+a:eq?                            D: aa-f  A: -  F: -
+Compare all values in the array. Return `TRUE` if all values are equal or `FALSE` otherwise. This assumes the array contains only numeric values.
+
+a:filter                         D: aq-b  A: -  F: -
+For each item in the initial array, run the specified quote. If the quote returns `TRUE`, copy the item into a new array. If `FALSE`, discard it. Returns a pointer to the new array.
+
+a:for-each                       D: aq-  A: -  F: -
+Execute the quote once for each item in the array.
+
+a:from-string                    D: s-a  A: -  F: -
+Create a new array with the characters in the source string.
+
+a:length                         D: a-n  A: -  F: -
+Return the length of a array.
+
+a:make                           D: q-a  A: -  F: -
+Execute quote. Return a new array containing the values the quote leaves on the stack. This is identical to doing `a:counted-results a:reverse`
+
+a:map                            D: aq-  A: -  F: -
+Execute quote once for each item in the array. Constructs a new array from the value returned by the quote.
+
+a:nth                            D: an-b  A: -  F: -
+Return the actual address of the nth item in the array.
+
+a:reduce                         D: pnq-n  A: -  F: -
+Takes an array, a starting value, and a quote. This will apply the quote to each item in the array; the quote should consume two values and return one.
+
+a:reverse                        D: a-b  A: -  F: -
+Reverse the order of items in a array. This will return a new array.
+
 again                            D: -  A: -  F: -
 Close an unconditional loop. Branches back to the prior `repeat`.
 
@@ -210,51 +255,6 @@ Allocate the specified number of cells from the `Heap`.
 
 and                              D: nm-o  A: -  F: -
 Perform a bitwise AND operation between the two provided values.
-
-array:-eq?                       D: aa-f  A: -  F: -
-Compare all values in the array. Return `FALSE` if all values are equal or `TRUE` otherwise. This assumes the array contains only numeric values.
-
-array:contains-string?           D: sa-f  A: -  F: -
-Return `TRUE` if the string value is in the array or`FALSE` otherwise.
-
-array:contains?                  D: na-f  A: -  F: -
-Return `TRUE` if the value is in the array or `FALSE` otherwise.
-
-array:counted-results            D: q-a  A: -  F: -
-Run a quote and construct a new array from the returned values. The quote should return the values and the number of values to put into the array.
-
-array:dup                        D: a-b  A: -  F: -
-Make a copy of an array. Return the address of the copy.
-
-array:eq?                        D: aa-f  A: -  F: -
-Compare all values in the array. Return `TRUE` if all values are equal or `FALSE` otherwise. This assumes the array contains only numeric values.
-
-array:filter                     D: aq-b  A: -  F: -
-For each item in the initial array, run the specified quote. If the quote returns `TRUE`, copy the item into a new array. If `FALSE`, discard it. Returns a pointer to the new array.
-
-array:for-each                   D: aq-  A: -  F: -
-Execute the quote once for each item in the array.
-
-array:from-string                D: s-a  A: -  F: -
-Create a new array with the characters in the source string.
-
-array:length                     D: a-n  A: -  F: -
-Return the length of a array.
-
-array:make                       D: q-a  A: -  F: -
-Execute quote. Return a new array containing the values the quote leaves on the stack. This is identical to doing `array:counted-results array:reverse`
-
-array:map                        D: aq-  A: -  F: -
-Execute quote once for each item in the array. Constructs a new array from the value returned by the quote.
-
-array:nth                        D: an-b  A: -  F: -
-Return the actual address of the nth item in the array.
-
-array:reduce                     D: pnq-n  A: -  F: -
-Takes an array, a starting value, and a quote. This will apply the quote to each item in the array; the quote should consume two values and return one.
-
-array:reverse                    D: a-b  A: -  F: -
-Reverse the order of items in a array. This will return a new array.
 
 as{                              D: -f  A: -  F: -
 Begin an assembly section.
@@ -1379,7 +1379,7 @@ xor                              D: mn-o  A: -  F: -
 Perform a bitwise XOR operation.
 
 {                                D: -  A: -  F: -
-Begin an array. This is intended to make creating arrays a bit cleaner than using a quotation and `array:counted-results`.
+Begin an array. This is intended to make creating arrays a bit cleaner than using a quotation and `a:counted-results`.
 
 {{                               D: -  A: -  F: -
 Begin a lexically scoped area.

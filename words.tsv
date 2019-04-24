@@ -66,24 +66,24 @@ TempStrings	-a	-	-	Variable. Holds the number of temporary strings.			class:data
 Version	-a	-	-	Variable. This stores the version number.			class:data	{n/a}	{n/a}	global	all	
 [	-	-	-	Begin a quotation.			class:macro	{n/a}	{n/a}	global	all	
 ]	-	-	-	End a quotation.			class:macro	{n/a}	{n/a}	global	all	
+a:-eq?	aa-f	-	-	Compare all values in the array. Return `FALSE` if all values are equal or `TRUE` otherwise. This assumes the array contains only numeric values.			class:word	{n/a}	{n/a}	a	all	
+a:contains-string?	sa-f	-	-	Return `TRUE` if the string value is in the array or`FALSE` otherwise.			class:word	{n/a}	{n/a}	a	all	
+a:contains?	na-f	-	-	Return `TRUE` if the value is in the array or `FALSE` otherwise.			class:word	{n/a}	{n/a}	a	all	
+a:counted-results	q-a	-	-	Run a quote and construct a new array from the returned values. The quote should return the values and the number of values to put into the array.			class:word	{n/a}	{n/a}	a	all	
+a:dup	a-b	-	-	Make a copy of an array. Return the address of the copy.			class:word	{n/a}	{n/a}	a	all	
+a:eq?	aa-f	-	-	Compare all values in the array. Return `TRUE` if all values are equal or `FALSE` otherwise. This assumes the array contains only numeric values.			class:word	{n/a}	{n/a}	a	all	
+a:filter	aq-b	-	-	For each item in the initial array, run the specified quote. If the quote returns `TRUE`, copy the item into a new array. If `FALSE`, discard it. Returns a pointer to the new array.			class:word	{n/a}	{n/a}	a	all	
+a:for-each	aq-	-	-	Execute the quote once for each item in the array.			class:word	{n/a}	{n/a}	a	all	
+a:from-string	s-a	-	-	Create a new array with the characters in the source string.			class:word	{n/a}	{n/a}	a	all	
+a:length	a-n	-	-	Return the length of a array.			class:word	{n/a}	{n/a}	a	all	
+a:make	q-a	-	-	Execute quote. Return a new array containing the values the quote leaves on the stack. This is identical to doing `a:counted-results a:reverse`			class:word	{n/a}	{n/a}	a	all	
+a:map	aq-	-	-	Execute quote once for each item in the array. Constructs a new array from the value returned by the quote.			class:word	{n/a}	{n/a}	a	all	
+a:nth	an-b	-	-	Return the actual address of the nth item in the array.			class:word	{n/a}	{n/a}	a	all	
+a:reduce	pnq-n	-	-	Takes an array, a starting value, and a quote. This will apply the quote to each item in the array; the quote should consume two values and return one.			class:word	{n/a}	{n/a}	a	all	
+a:reverse	a-b	-	-	Reverse the order of items in a array. This will return a new array.			class:word	{n/a}	{n/a}	a	all	
 again	-	-	-	Close an unconditional loop. Branches back to the prior `repeat`.			class:macro	{n/a}	{n/a}	global	all	
 allot	n-	-	-	Allocate the specified number of cells from the `Heap`.			class:word	    'Buffer d:create  #100 allot	{n/a}	global	all	
 and	nm-o	-	-	Perform a bitwise AND operation between the two provided values.			class:primitive	{n/a}	{n/a}	global	all	
-array:-eq?	aa-f	-	-	Compare all values in the array. Return `FALSE` if all values are equal or `TRUE` otherwise. This assumes the array contains only numeric values.			class:word	{n/a}	{n/a}	array	all	
-array:contains-string?	sa-f	-	-	Return `TRUE` if the string value is in the array or`FALSE` otherwise.			class:word	{n/a}	{n/a}	array	all	
-array:contains?	na-f	-	-	Return `TRUE` if the value is in the array or `FALSE` otherwise.			class:word	{n/a}	{n/a}	array	all	
-array:counted-results	q-a	-	-	Run a quote and construct a new array from the returned values. The quote should return the values and the number of values to put into the array.			class:word	{n/a}	{n/a}	array	all	
-array:dup	a-b	-	-	Make a copy of an array. Return the address of the copy.			class:word	{n/a}	{n/a}	array	all	
-array:eq?	aa-f	-	-	Compare all values in the array. Return `TRUE` if all values are equal or `FALSE` otherwise. This assumes the array contains only numeric values.			class:word	{n/a}	{n/a}	array	all	
-array:filter	aq-b	-	-	For each item in the initial array, run the specified quote. If the quote returns `TRUE`, copy the item into a new array. If `FALSE`, discard it. Returns a pointer to the new array.			class:word	{n/a}	{n/a}	array	all	
-array:for-each	aq-	-	-	Execute the quote once for each item in the array.			class:word	{n/a}	{n/a}	array	all	
-array:from-string	s-a	-	-	Create a new array with the characters in the source string.			class:word	{n/a}	{n/a}	array	all	
-array:length	a-n	-	-	Return the length of a array.			class:word	{n/a}	{n/a}	array	all	
-array:make	q-a	-	-	Execute quote. Return a new array containing the values the quote leaves on the stack. This is identical to doing `array:counted-results array:reverse`			class:word	{n/a}	{n/a}	array	all	
-array:map	aq-	-	-	Execute quote once for each item in the array. Constructs a new array from the value returned by the quote.			class:word	{n/a}	{n/a}	array	all	
-array:nth	an-b	-	-	Return the actual address of the nth item in the array.			class:word	{n/a}	{n/a}	array	all	
-array:reduce	pnq-n	-	-	Takes an array, a starting value, and a quote. This will apply the quote to each item in the array; the quote should consume two values and return one.			class:word	{n/a}	{n/a}	array	all	
-array:reverse	a-b	-	-	Reverse the order of items in a array. This will return a new array.			class:word	{n/a}	{n/a}	array	all	
 as{	-f	-	-	Begin an assembly section.			class:macro	{n/a}	{n/a}	global	all	
 banner	-	-	-	Display a welcome message on startup.			class:word	{n/a}	{n/a}	global	rre	{n/a}
 bi	xqq-?	-	-	Execute q1 against x, then execute q2 against a copy of x.			class:word	    #100 [ #10 * ] [ #10 - ] bi	{n/a}	global	all	
@@ -458,7 +458,7 @@ var	s-	-	-	Create a variable. The variable is initialized to 0.			class:word	   
 var<n>	ns-	-	-	Create a variable with the specified initial value.			class:word	    #10 'Base var<n>\n	{n/a}	global	all	
 while	q-	-	-	Execute quote repeatedly while the quote returns a `TRUE` value. The quote should return a flag of either `TRUE` or `FALSE`, though `while` will treat any non-zero value as `TRUE`.			class:word	    #10 [ dup n:put nl n:dec dup n:-zero? ] while	{n/a}	global	all	
 xor	mn-o	-	-	Perform a bitwise XOR operation.			class:primitive	{n/a}	{n/a}	global	all	
-{	-	-	-	Begin an array. This is intended to make creating arrays a bit cleaner than using a quotation and `array:counted-results`.			class:word	{n/a}	{n/a}	global	all	
+{	-	-	-	Begin an array. This is intended to make creating arrays a bit cleaner than using a quotation and `a:counted-results`.			class:word	{n/a}	{n/a}	global	all	
 {{	-	-	-	Begin a lexically scoped area.			class:word	{n/a}	{n/a}	global	all	
 }	-a	-	-	Complete an array begun by `{`. Returns a pointer to the data.			class:word	{n/a}	{n/a}	global	all	
 }as	f-	-	-	End an assembly section.			class:macro	{n/a}	{n/a}	global	all	
