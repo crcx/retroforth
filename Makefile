@@ -7,7 +7,6 @@ LIBM ?= -lm
 LIBCURSES ?= -lcurses
 
 RREIO ?= io/filesystem.o io/floatingpoint.o io/gopher.o io/unix.o
-RIIO ?= io/filesystem.o io/floatingpoint.o io/gopher.o io/unix.o
 
 all: build
 
