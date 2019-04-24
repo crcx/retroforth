@@ -51,13 +51,6 @@ arguments:
 
 Starts the *listener*, a basic REPL for interactive use.
 
-    retro -c
-
-Starts the *listener*, a basic REPL for interactive use. With
-`-c`, it runs in character breaking mode, where input is run
-as soon as a space or enter is encountered. This requires RETRO
-to have been built with TERMIOS support.
-
     retro filename
 
 This will run the code in the specified file, then exit. This
@@ -68,11 +61,6 @@ header line like `#!/usr/bin/env retro`.
 
 This will run the code in the specified file, then start the
 listener.
-
-    retro -c -f filename
-
-This will run the code in the specified file, then start the
-listener in character breaking mode.
 
     retro -h
 
