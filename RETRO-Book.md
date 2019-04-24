@@ -201,17 +201,17 @@ In *image-functions.h*:
 
 - remove includes for unistd.h
 
-In *io\io_filesystem.c*:
+In *io\filesystem.c*:
 
 - remove includes for unistd.h
 
-In *io\io_floatingpoint.c*:
+In *io\floatingpoint.c*:
 
 - remove includes for unistd.h
 
 ### Build
 
-\path\to\tcc rre.c image-functions.c io\io_filesystem.c io\io_floatingpoint.c -o retro.exe
+\path\to\tcc rre.c image-functions.c io\filesystem.c io\floatingpoint.c -o retro.exe
 
 # Starting RETRO
 
