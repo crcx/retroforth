@@ -790,6 +790,17 @@ Compare all values in the array. Return `FALSE` if all values are equal or `TRUE
 Class: class:word | Namespace: a | Interface Layer: all
 ------------------------------------------------------------------------
 
+a:append
+
+  Data:  aa-a
+  Addr:  -
+  Float: -
+
+Return a new array consisting of the values in a1 followed by the values in a2.
+
+Class: class:word | Namespace: a | Interface Layer: all
+------------------------------------------------------------------------
+
 a:contains-string?
 
   Data:  sa-f
@@ -918,6 +929,17 @@ a:nth
   Float: -
 
 Return the actual address of the nth item in the array.
+
+Class: class:word | Namespace: a | Interface Layer: all
+------------------------------------------------------------------------
+
+a:prepend
+
+  Data:  aa-a
+  Addr:  -
+  Float: -
+
+Return a new array consisting of the values in a2 followed by the values in a1.
 
 Class: class:word | Namespace: a | Interface Layer: all
 ------------------------------------------------------------------------

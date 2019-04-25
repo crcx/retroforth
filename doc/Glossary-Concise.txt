@@ -205,6 +205,9 @@ End a quotation.
 a:-eq?                           D: aa-f  A: -  F: -
 Compare all values in the array. Return `FALSE` if all values are equal or `TRUE` otherwise. This assumes the array contains only numeric values.
 
+a:append                         D: aa-a  A: -  F: -
+Return a new array consisting of the values in a1 followed by the values in a2.
+
 a:contains-string?               D: sa-f  A: -  F: -
 Return `TRUE` if the string value is in the array or`FALSE` otherwise.
 
@@ -240,6 +243,9 @@ Execute quote once for each item in the array. Constructs a new array from the v
 
 a:nth                            D: an-b  A: -  F: -
 Return the actual address of the nth item in the array.
+
+a:prepend                        D: aa-a  A: -  F: -
+Return a new array consisting of the values in a2 followed by the values in a1.
 
 a:reduce                         D: pnq-n  A: -  F: -
 Takes an array, a starting value, and a quote. This will apply the quote to each item in the array; the quote should consume two values and return one.

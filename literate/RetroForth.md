@@ -1338,6 +1338,18 @@ array.
   here [ dup fetch , [ , ] a:for-each ] dip ;
 ~~~
 
+I then define `a:append` and `a:prepend` to combine arrays.
+
+~~~
+:a:prepend (aa-a)
+  here #0 , [      dup fetch [ &, a:for-each ] dip
+              swap dup fetch [ &, a:for-each ] dip + ] dip
+  [ store ] sip ;
+
+:a:append (aa-a)
+  swap a:prepend ;
+~~~
+
 Next is `a:filter`, which is extracts matching values from
 an array. This is used like:
 

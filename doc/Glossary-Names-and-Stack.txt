@@ -67,6 +67,7 @@ Version                          D: -a  A: -  F: -
 [                                D: -  A: -  F: -
 ]                                D: -  A: -  F: -
 a:-eq?                           D: aa-f  A: -  F: -
+a:append                         D: aa-a  A: -  F: -
 a:contains-string?               D: sa-f  A: -  F: -
 a:contains?                      D: na-f  A: -  F: -
 a:counted-results                D: q-a  A: -  F: -
@@ -79,6 +80,7 @@ a:length                         D: a-n  A: -  F: -
 a:make                           D: q-a  A: -  F: -
 a:map                            D: aq-  A: -  F: -
 a:nth                            D: an-b  A: -  F: -
+a:prepend                        D: aa-a  A: -  F: -
 a:reduce                         D: pnq-n  A: -  F: -
 a:reverse                        D: a-b  A: -  F: -
 again                            D: -  A: -  F: -
