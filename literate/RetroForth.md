@@ -1440,6 +1440,30 @@ I'm defining a new `a:make` which wraps these.
 :} (-a) |] |dip |depth |swap |- |n:dec |] |a:make ; immediate
 ~~~
 
+To extract portions of an array, I provide `a:left`, `a:right`,
+and `a:middle`.
+
+~~~
+{{
+  :bounds? (an-anf) over a:length over lt? ;
+  :copy    (a-a)    fetch-next , ;
+  :to-end  (a-a)    dup a:length + n:inc ;
+---reveal---
+  :a:left  (an-a)
+    bounds? [ drop-pair #-1 ] if;
+    here over , [ &n:inc dip &copy times drop ] dip ;
+
+  :a:right (an-a)
+    bounds? [ drop-pair #-1 ] if;
+    here over , [ swap to-end over - swap &copy times drop ] dip ;
+
+  :a:middle (afl-a)
+    'abc 'abcac reorder bounds? [ drop-pair drop #-1 ] if; drop-pair
+    dup-pair swap - n:inc
+    here over , [ nip [ + n:inc ] dip &copy times drop ] dip ;
+}}
+~~~
+
 ## Muri: an assembler
 
 Muri is my minimalist assembler for Nga. This is an attempt to

@@ -33,8 +33,11 @@ June.
 - remove `d:words-with`
 - add `a:eq?`
 - add `a:-eq?`
-- add 'a:append`
-- add 'a:prepend`
+- add `a:append`
+- add `a:prepend`
+- add `a:left`
+- add `a:right`
+- add `a:middle`
 
 ## I/O and Extensions
 
