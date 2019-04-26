@@ -280,6 +280,9 @@ Reverse the order of items in a array. This will return a new array.
 a:right                          D: an-a  A: -  F: -
 Return a new array containing the specified number of values from the right side of the array.
 
+a:to-string                      D: a-s  A: -  F: -
+Create a new string from the provided array. This string will be stored in the temporal string buffers.
+
 again                            D: -  A: -  F: -
 Close an unconditional loop. Branches back to the prior `repeat`.
 

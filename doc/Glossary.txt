@@ -1065,6 +1065,17 @@ Return a new array containing the specified number of values from the right side
 Class: class:word | Namespace: a | Interface Layer: all
 ------------------------------------------------------------------------
 
+a:to-string
+
+  Data:  a-s
+  Addr:  -
+  Float: -
+
+Create a new string from the provided array. This string will be stored in the temporal string buffers.
+
+Class: class:word | Namespace: a | Interface Layer: all
+------------------------------------------------------------------------
+
 again
 
   Data:  -

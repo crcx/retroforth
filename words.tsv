@@ -92,6 +92,7 @@ a:prepend	aa-a	-	-	Return a new array consisting of the values in a2 followed by
 a:reduce	pnq-n	-	-	Takes an array, a starting value, and a quote. This will apply the quote to each item in the array; the quote should consume two values and return one.			class:word	{n/a}	{n/a}	a	all	
 a:reverse	a-b	-	-	Reverse the order of items in a array. This will return a new array.			class:word	{n/a}	{n/a}	a	all	
 a:right	an-a	-	-	Return a new array containing the specified number of values from the right side of the array.			class:word	{n/a}	{n/a}	a	all	
+a:to-string	a-s	-	-	Create a new string from the provided array. This string will be stored in the temporal string buffers.			class:word	{n/a}	{n/a}	a	all	
 again	-	-	-	Close an unconditional loop. Branches back to the prior `repeat`.			class:macro	{n/a}	{n/a}	global	all	
 allot	n-	-	-	Allocate the specified number of cells from the `Heap`.			class:word	    'Buffer d:create  #100 allot	{n/a}	global	all	
 and	nm-o	-	-	Perform a bitwise AND operation between the two provided values.			class:primitive	{n/a}	{n/a}	global	all	

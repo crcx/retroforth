@@ -1338,6 +1338,14 @@ array.
   here [ dup fetch , [ , ] a:for-each ] dip ;
 ~~~
 
+`a:dup` is used to implement `a:to-string`, the reverse of
+`a:from-string`.
+
+~~~
+:a:to-string (a-s)
+  &Heap [ a:dup #0 , n:inc ] v:preserve s:temp ;
+~~~
+
 I then define `a:append` and `a:prepend` to combine arrays.
 
 ~~~

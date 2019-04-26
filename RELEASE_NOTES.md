@@ -42,6 +42,7 @@ June.
 - add `a:begins-with?`
 - add `a:ends-with?`
 - add `a:index-of`
+- add `a:to-string`
 
 ## I/O and Extensions
 
