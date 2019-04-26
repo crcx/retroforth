@@ -74,6 +74,7 @@ a:begins-with?	aa-f	-	-	Return `TRUE` if a1 begins with a2 or `FALSE` otherwise.
 a:chop	a-a	-	-	Return a new array containing all but the last value in the source array.			class:word	{n/a}	{n/a}	a	all	
 a:contains-string?	sa-f	-	-	Return `TRUE` if the string value is in the array or`FALSE` otherwise.			class:word	{n/a}	{n/a}	a	all	
 a:contains?	na-f	-	-	Return `TRUE` if the value is in the array or `FALSE` otherwise.			class:word	{n/a}	{n/a}	a	all	
+a:copy	aa-	-	-	Copy an array (a1) to a destination (a2).			class:word	{n/a}	{n/a}	a	all	
 a:counted-results	q-a	-	-	Run a quote and construct a new array from the returned values. The quote should return the values and the number of values to put into the array.			class:word	{n/a}	{n/a}	a	all	
 a:dup	a-b	-	-	Make a copy of an array. Return the address of the copy.			class:word	{n/a}	{n/a}	a	all	
 a:ends-with?	aa-f	-	-	Return `TRUE` if a1 ends with a2 or `FALSE` otherwise.			class:word	{n/a}	{n/a}	a	all	

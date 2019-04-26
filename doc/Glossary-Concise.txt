@@ -226,6 +226,9 @@ Return `TRUE` if the string value is in the array or`FALSE` otherwise.
 a:contains?                      D: na-f  A: -  F: -
 Return `TRUE` if the value is in the array or `FALSE` otherwise.
 
+a:copy                           D: aa-  A: -  F: -
+Copy an array (a1) to a destination (a2).
+
 a:counted-results                D: q-a  A: -  F: -
 Run a quote and construct a new array from the returned values. The quote should return the values and the number of values to put into the array.
 

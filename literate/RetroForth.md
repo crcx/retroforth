@@ -1338,6 +1338,14 @@ array.
   here [ dup fetch , [ , ] a:for-each ] dip ;
 ~~~
 
+A closely related word is `a:copy`, which copies an array
+from one location to another.
+
+~~~
+:a:copy (aa-)
+  &Heap [ !Heap dup a:length , [ , ] a:for-each ] v:preserve ;
+~~~
+
 `a:dup` is used to implement `a:to-string`, the reverse of
 `a:from-string`.
 

@@ -867,6 +867,17 @@ Return `TRUE` if the value is in the array or `FALSE` otherwise.
 Class: class:word | Namespace: a | Interface Layer: all
 ------------------------------------------------------------------------
 
+a:copy
+
+  Data:  aa-
+  Addr:  -
+  Float: -
+
+Copy an array (a1) to a destination (a2).
+
+Class: class:word | Namespace: a | Interface Layer: all
+------------------------------------------------------------------------
+
 a:counted-results
 
   Data:  q-a

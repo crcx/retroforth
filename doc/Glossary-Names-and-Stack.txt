@@ -74,6 +74,7 @@ a:begins-with?                   D: aa-f  A: -  F: -
 a:chop                           D: a-a  A: -  F: -
 a:contains-string?               D: sa-f  A: -  F: -
 a:contains?                      D: na-f  A: -  F: -
+a:copy                           D: aa-  A: -  F: -
 a:counted-results                D: q-a  A: -  F: -
 a:dup                            D: a-b  A: -  F: -
 a:ends-with?                     D: aa-f  A: -  F: -

@@ -31,17 +31,18 @@ June.
 - add `s:ends-with?`
 - remove `d:words`
 - remove `d:words-with`
+- add `a:append`
+- add `a:begins-with?`
+- add `a:chop`
+- add `a:copy`
+- add `a:ends-with?`
 - add `a:eq?`
 - add `a:-eq?`
-- add `a:append`
-- add `a:prepend`
-- add `a:left`
-- add `a:right`
-- add `a:middle`
-- add `a:chop`
-- add `a:begins-with?`
-- add `a:ends-with?`
 - add `a:index-of`
+- add `a:left`
+- add `a:middle`
+- add `a:prepend`
+- add `a:right`
 - add `a:to-string`
 
 ## I/O and Extensions
