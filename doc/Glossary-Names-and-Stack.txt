@@ -81,6 +81,7 @@ a:eq?                            D: aa-f  A: -  F: -
 a:filter                         D: aq-b  A: -  F: -
 a:for-each                       D: aq-  A: -  F: -
 a:from-string                    D: s-a  A: -  F: -
+a:index-of                       D: an-n  A: -  F: -
 a:left                           D: an-a  A: -  F: -
 a:length                         D: a-n  A: -  F: -
 a:make                           D: q-a  A: -  F: -

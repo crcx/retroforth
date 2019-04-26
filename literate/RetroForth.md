@@ -1393,6 +1393,24 @@ a flag.
 }}
 ~~~
 
+`a:index-of` builds on these to return the offset of a value in the
+array.
+
+~~~
+{{
+  'Location var
+  :prepare  #-1 !Location ;
+  :next     @Location n:negative? [ &Location v:dec ] if ;
+  :match?   over eq? [ @Location n:negative? ] [ FALSE ] choose ;
+  :update   @Location n:abs n:dec !Location ;
+---reveal---
+  :a:index-of (na-n)
+    prepare dup-pair a:contains? [ drop-pair #-1 ] -if;
+    [ match? [ update ] if next ] a:for-each
+    drop @Location ;
+}}
+~~~
+
 I implemented `a:map` to apply a quotation to each item in
 an array and construct a new array from the returned values.
 

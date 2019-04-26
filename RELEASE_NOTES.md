@@ -41,6 +41,7 @@ June.
 - add `a:chop`
 - add `a:begins-with?`
 - add `a:ends-with?`
+- add `a:index-of`
 
 ## I/O and Extensions
 

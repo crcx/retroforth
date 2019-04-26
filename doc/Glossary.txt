@@ -944,6 +944,17 @@ Create a new array with the characters in the source string.
 Class: class:word | Namespace: a | Interface Layer: all
 ------------------------------------------------------------------------
 
+a:index-of
+
+  Data:  an-n
+  Addr:  -
+  Float: -
+
+Return the location of the first instance of the specified value in the array.
+
+Class: class:word | Namespace: a | Interface Layer: all
+------------------------------------------------------------------------
+
 a:left
 
   Data:  an-a

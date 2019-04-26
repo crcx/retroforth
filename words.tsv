@@ -81,6 +81,7 @@ a:eq?	aa-f	-	-	Compare all values in the array. Return `TRUE` if all values are 
 a:filter	aq-b	-	-	For each item in the initial array, run the specified quote. If the quote returns `TRUE`, copy the item into a new array. If `FALSE`, discard it. Returns a pointer to the new array.			class:word	{n/a}	{n/a}	a	all	
 a:for-each	aq-	-	-	Execute the quote once for each item in the array.			class:word	{n/a}	{n/a}	a	all	
 a:from-string	s-a	-	-	Create a new array with the characters in the source string.			class:word	{n/a}	{n/a}	a	all	
+a:index-of	an-n	-	-	Return the location of the first instance of the specified value in the array.			class:word	{n/a}	{n/a}	a	all	
 a:left	an-a	-	-	Return a new array containing the first `n` values from the source array.			class:word	{n/a}	{n/a}	a	all	
 a:length	a-n	-	-	Return the length of a array.			class:word	{n/a}	{n/a}	a	all	
 a:make	q-a	-	-	Execute quote. Return a new array containing the values the quote leaves on the stack. This is identical to doing `a:counted-results a:reverse`			class:word	{n/a}	{n/a}	a	all	
