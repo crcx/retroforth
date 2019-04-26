@@ -625,6 +625,17 @@ Returns the number of cells available to your application. This is the amount of
 Class: class:word | Namespace: global | Interface Layer: all
 ------------------------------------------------------------------------
 
+FullScreenListener
+
+  Data:  -a
+  Addr:  -
+  Float: -
+
+Variable. This is set by the startup flags to the rre interface. If `TRUE`, rre will run the `listen:fullscreen` interface for interactive use instead of the `listen` interface.
+
+Class: class:data | Namespace: global | Interface Layer: rre
+------------------------------------------------------------------------
+
 Heap
 
   Data:  -a
@@ -711,6 +722,17 @@ ScopeList
 Variable. This holds some information used by `{{` and `}}`.
 
 Class: class:data | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+TIB
+
+  Data:  -a
+  Addr:  -
+  Float: -
+
+Constant. Returns a pointer to the text input buffer.
+
+Class: class:data | Namespace: global | Interface Layer: rre
 ------------------------------------------------------------------------
 
 TRUE
@@ -1560,6 +1582,17 @@ Compile Time:
 Class: class:word | Namespace: class | Interface Layer: all
 ------------------------------------------------------------------------
 
+clear
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Clear the display.
+
+Class: class:word | Namespace: global | Interface Layer: rre
+------------------------------------------------------------------------
+
 clock:day
 
   Data:  -n
@@ -1864,6 +1897,17 @@ d:words
   Float: -
 
 Display a list of all named items in the `Dictionary`.
+
+Class: class:word | Namespace: d | Interface Layer: rre
+------------------------------------------------------------------------
+
+d:words-beginning-with
+
+  Data:  s-
+  Addr:  -
+  Float: -
+
+Display a list of all named items in the `Dictionary` that begin with the provided substring.
 
 Class: class:word | Namespace: d | Interface Layer: rre
 ------------------------------------------------------------------------
@@ -3454,6 +3498,28 @@ listen
 Run interactive "listener" (a REPL).
 
 Class: class:word | Namespace: global | Interface Layer: rre
+------------------------------------------------------------------------
+
+listen:fullscreen
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Run interactive "listener" (a REPL) in fullscreen mode (with a minimalistic console UI).
+
+Class: class:word | Namespace: listen | Interface Layer: rre
+------------------------------------------------------------------------
+
+listen:fullscreen:bye
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Exit RETRO while running the fullscreen listener.
+
+Class: class:word | Namespace: listen | Interface Layer: rre
 ------------------------------------------------------------------------
 
 lt?

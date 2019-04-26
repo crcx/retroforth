@@ -457,6 +457,14 @@
 <p>Returns the number of cells available to your application. This is the amount of memory, less the already consumed portion and buffers mapped for RETRO's internal use.</p>
 <p><b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
+<h1>FullScreenListener</h1>
+<div style='margin-left: 1em;'><p><b>Data:</b> -a<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Variable. This is set by the startup flags to the rre interface. If `TRUE`, rre will run the `listen:fullscreen` interface for interactive use instead of the `listen` interface.</p>
+<p><b>Class:</b> class:data | <b>Namespace:</b> global | <b>Interface Layer:</b> rre</p>
+<hr/>
 <h1>Heap</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -a<br>
 <b>Addr:</b> -<br>
@@ -520,6 +528,14 @@
 </div>
 <p>Variable. This holds some information used by `{{` and `}}`.</p>
 <p><b>Class:</b> class:data | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
+<hr/>
+<h1>TIB</h1>
+<div style='margin-left: 1em;'><p><b>Data:</b> -a<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Constant. Returns a pointer to the text input buffer.</p>
+<p><b>Class:</b> class:data | <b>Namespace:</b> global | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>TRUE</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -n<br>
@@ -1145,6 +1161,14 @@
 
 <p><b>Class:</b> class:word | <b>Namespace:</b> class | <b>Interface Layer:</b> all</p>
 <hr/>
+<h1>clear</h1>
+<div style='margin-left: 1em;'><p><b>Data:</b> -<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Clear the display.</p>
+<p><b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> rre</p>
+<hr/>
 <h1>clock:day</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -n<br>
 <b>Addr:</b> -<br>
@@ -1367,6 +1391,14 @@
 <b>Float:</b> -</p>
 </div>
 <p>Display a list of all named items in the `Dictionary`.</p>
+<p><b>Class:</b> class:word | <b>Namespace:</b> d | <b>Interface Layer:</b> rre</p>
+<hr/>
+<h1>d:words-beginning-with</h1>
+<div style='margin-left: 1em;'><p><b>Data:</b> s-<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Display a list of all named items in the `Dictionary` that begin with the provided substring.</p>
 <p><b>Class:</b> class:word | <b>Namespace:</b> d | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>d:words-with</h1>
@@ -2531,6 +2563,22 @@
 </div>
 <p>Run interactive "listener" (a REPL).</p>
 <p><b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> rre</p>
+<hr/>
+<h1>listen:fullscreen</h1>
+<div style='margin-left: 1em;'><p><b>Data:</b> -<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Run interactive "listener" (a REPL) in fullscreen mode (with a minimalistic console UI).</p>
+<p><b>Class:</b> class:word | <b>Namespace:</b> listen | <b>Interface Layer:</b> rre</p>
+<hr/>
+<h1>listen:fullscreen:bye</h1>
+<div style='margin-left: 1em;'><p><b>Data:</b> -<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Exit RETRO while running the fullscreen listener.</p>
+<p><b>Class:</b> class:word | <b>Namespace:</b> listen | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>lt?</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> nn-f<br>

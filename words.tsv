@@ -52,6 +52,7 @@ Dictionary	-a	-	-	Variable. Holds a pointer to the most recent dictionary header
 EOM	-n	-	-	Constant. Returns the last addressable memory address.			class:word	{n/a}	{n/a}	global	all	
 FALSE	-n	-	-	Returns `0`, the value used to indicate a FALSE result.			class:word	{n/a}	{n/a}	global	all	
 FREE	-n	-	-	Returns the number of cells available to your application. This is the amount of memory, less the already consumed portion and buffers mapped for RETRO's internal use.			class:word	{n/a}	{n/a}	global	all	
+FullScreenListener	-a	-	-	Variable. This is set by the startup flags to the rre interface. If `TRUE`, rre will run the `listen:fullscreen` interface for interactive use instead of the `listen` interface.			class:data	{n/a}	{n/a}	global	rre	
 Heap	-a	-	-	Variable. Holds the address of the next available cell.			class:data	{n/a}	{n/a}	global	all	
 I	-n	-	-	Access the loop index for the current loop. (For loops made using `times<with-index>`)			class:word	{n/a}	{n/a}	global	all	
 J	-n	-	-	Access the parent loop index for the current loop. (For loops made using `times<with-index>`)			class:word	{n/a}	{n/a}	global	all	
@@ -60,6 +61,7 @@ NoEcho	-a	-	-	Variable. If TRUE, allow display of the "ok" prompt and startup ba
 RewriteUnderscores	-a	-	-	Variable. When set to `TRUE`, RETRO will replace underscores in strings with spaces. When `FALSE`, RETRO does not.			class:data	{n/a}	{n/a}	global	all	
 STRINGS	-a	-	-	Return the address of the start of the temporary string pool.			class:word	{n/a}	{n/a}	global	all	
 ScopeList	-a	-	-	Variable. This holds some information used by `{{` and `}}`.			class:data	{n/a}	{n/a}	global	all	
+TIB	-a	-	-	Constant. Returns a pointer to the text input buffer.			class:data	{n/a}	{n/a}	global	rre	
 TRUE	-n	-	-	Returns `-1`, the value used to indicate a TRUE result.			class:word	{n/a}	{n/a}	global	all	
 TempStringMax	-a	-	-	Variable. Holds the maximum length of a temporary string.			class:data	{n/a}	{n/a}	global	all	
 TempStrings	-a	-	-	Variable. Holds the number of temporary strings.			class:data	{n/a}	{n/a}	global	all	
@@ -133,6 +135,7 @@ class:data	n- || n-n	-	-	Class handler for data structures.	Keep the address or 
 class:macro	a-	-	-	Class handler for compiler macros (immediate words)	Execute the function at the provided address.	Execute the function at the provided address.	class:word	{n/a}	{n/a}	class	all	
 class:primitive	a-	-	-	Class handler for primitive words (words which map to Nga instructions)	Execute the function.	Compile the machine code in the definiton into the current definition.	class:word	{n/a}	{n/a}	class	all	
 class:word	a-	-	-	Class handler for normal words.	Execute the function at the provided address.	Compile a call to the specified address into the current definition.	class:word	{n/a}	{n/a}	class	all	
+clear	-	-	-	Clear the display.			class:word	{n/a}	{n/a}	global	rre	
 clock:day	-n	-	-	Return the current day.			class:word	{n/a}	{n/a}	clock	iOS, rre	
 clock:hour	-n	-	-	Return the current hour.			class:word	{n/a}	{n/a}	clock	iOS, rre	
 clock:minute	-n	-	-	Return the current minute.			class:word	{n/a}	{n/a}	clock	iOS, rre	
@@ -161,6 +164,7 @@ d:lookup	s-d	-	-	Lookup the specified name in the dictionary and return a pointe
 d:lookup-xt	a-d	-	-	Lookup the specified address in the dictionary and return a pointer to its dictionary header. This returns zero if the word is not found.			class:word	{n/a}	{n/a}	d	all	
 d:name	d-s	-	-	Given a dictionary header, return the name field.			class:word	{n/a}	{n/a}	d	all	
 d:words	-	-	-	Display a list of all named items in the `Dictionary`.			class:word	{n/a}	{n/a}	d	rre	
+d:words-beginning-with	s-	-	-	Display a list of all named items in the `Dictionary` that begin with the provided substring.			class:word	{n/a}	{n/a}	d	rre	
 d:words-with	s-	-	-	Display a list of all named items in the `Dictionary` that contain the provided substring.			class:word	{n/a}	{n/a}	d	rre	
 d:xt	d-a	-	-	Given a dictionary header, return the xt field.			class:word	{n/a}	{n/a}	d	all	
 data	-	-	-	Change the class of the most recently defined word to `class:data`.			class:word	{n/a}	{n/a}	global	all	
@@ -297,6 +301,8 @@ io:query	n-mN	-	-	Ask an I/O device to identify itself. Returns a version (m) an
 io:scan-for	n-m	-	-	Scan the I/O devices for a device with a specified ID. Returns the device number, or -1 if not found.			class:word	{n/a}	{n/a}	io	all	
 io:unix-syscall	...n-	-	-	Trigger a Unix system call. This is not intended to be used directly.			class:word	{n/a}	{n/a}	io	rre	
 listen	-	-	-	Run interactive "listener" (a REPL).			class:word	{n/a}	{n/a}	global	rre	
+listen:fullscreen	-	-	-	Run interactive "listener" (a REPL) in fullscreen mode (with a minimalistic console UI).			class:word	{n/a}	{n/a}	listen	rre	
+listen:fullscreen:bye	-	-	-	Exit RETRO while running the fullscreen listener.			class:word	{n/a}	{n/a}	listen	rre	
 lt?	nn-f	-	-	Compare n1 and n2. Return `TRUE` if n1 is less than n2, or `FALSE` otherwise.			class:primitive	{n/a}	{n/a}	global	all	
 lteq?	nn-f	-	-	Compare n1 and n2. Return `TRUE` if n1 is less than or equal to n2, or `FALSE` otherwise.			class:word	{n/a}	{n/a}	global	all	
 mod	nm-o	-	-	Divide `n` by `m` and return the remainder.			class:word	{n/a}	{n/a}	global	all	

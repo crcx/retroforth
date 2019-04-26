@@ -160,6 +160,9 @@ Returns `0`, the value used to indicate a FALSE result.
 FREE                             D: -n  A: -  F: -
 Returns the number of cells available to your application. This is the amount of memory, less the already consumed portion and buffers mapped for RETRO's internal use.
 
+FullScreenListener               D: -a  A: -  F: -
+Variable. This is set by the startup flags to the rre interface. If `TRUE`, rre will run the `listen:fullscreen` interface for interactive use instead of the `listen` interface.
+
 Heap                             D: -a  A: -  F: -
 Variable. Holds the address of the next available cell.
 
@@ -183,6 +186,9 @@ Return the address of the start of the temporary string pool.
 
 ScopeList                        D: -a  A: -  F: -
 Variable. This holds some information used by `{{` and `}}`.
+
+TIB                              D: -a  A: -  F: -
+Constant. Returns a pointer to the text input buffer.
 
 TRUE                             D: -n  A: -  F: -
 Returns `-1`, the value used to indicate a TRUE result.
@@ -403,6 +409,9 @@ Class handler for primitive words (words which map to Nga instructions)
 class:word                       D: a-  A: -  F: -
 Class handler for normal words.
 
+clear                            D: -  A: -  F: -
+Clear the display.
+
 clock:day                        D: -n  A: -  F: -
 Return the current day.
 
@@ -486,6 +495,9 @@ Given a dictionary header, return the name field.
 
 d:words                          D: -  A: -  F: -
 Display a list of all named items in the `Dictionary`.
+
+d:words-beginning-with           D: s-  A: -  F: -
+Display a list of all named items in the `Dictionary` that begin with the provided substring.
 
 d:words-with                     D: s-  A: -  F: -
 Display a list of all named items in the `Dictionary` that contain the provided substring.
@@ -894,6 +906,12 @@ Trigger a Unix system call. This is not intended to be used directly.
 
 listen                           D: -  A: -  F: -
 Run interactive "listener" (a REPL).
+
+listen:fullscreen                D: -  A: -  F: -
+Run interactive "listener" (a REPL) in fullscreen mode (with a minimalistic console UI).
+
+listen:fullscreen:bye            D: -  A: -  F: -
+Exit RETRO while running the fullscreen listener.
 
 lt?                              D: nn-f  A: -  F: -
 Compare n1 and n2. Return `TRUE` if n1 is less than n2, or `FALSE` otherwise.

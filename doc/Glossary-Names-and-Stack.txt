@@ -52,6 +52,7 @@ Dictionary                       D: -a  A: -  F: -
 EOM                              D: -n  A: -  F: -
 FALSE                            D: -n  A: -  F: -
 FREE                             D: -n  A: -  F: -
+FullScreenListener               D: -a  A: -  F: -
 Heap                             D: -a  A: -  F: -
 I                                D: -n  A: -  F: -
 J                                D: -n  A: -  F: -
@@ -60,6 +61,7 @@ NoEcho                           D: -a  A: -  F: -
 RewriteUnderscores               D: -a  A: -  F: -
 STRINGS                          D: -a  A: -  F: -
 ScopeList                        D: -a  A: -  F: -
+TIB                              D: -a  A: -  F: -
 TRUE                             D: -n  A: -  F: -
 TempStringMax                    D: -a  A: -  F: -
 TempStrings                      D: -a  A: -  F: -
@@ -133,6 +135,7 @@ class:data                       D: n- || n-n  A: -  F: -
 class:macro                      D: a-  A: -  F: -
 class:primitive                  D: a-  A: -  F: -
 class:word                       D: a-  A: -  F: -
+clear                            D: -  A: -  F: -
 clock:day                        D: -n  A: -  F: -
 clock:hour                       D: -n  A: -  F: -
 clock:minute                     D: -n  A: -  F: -
@@ -161,6 +164,7 @@ d:lookup                         D: s-d  A: -  F: -
 d:lookup-xt                      D: a-d  A: -  F: -
 d:name                           D: d-s  A: -  F: -
 d:words                          D: -  A: -  F: -
+d:words-beginning-with           D: s-  A: -  F: -
 d:words-with                     D: s-  A: -  F: -
 d:xt                             D: d-a  A: -  F: -
 data                             D: -  A: -  F: -
@@ -297,6 +301,8 @@ io:query                         D: n-mN  A: -  F: -
 io:scan-for                      D: n-m  A: -  F: -
 io:unix-syscall                  D: ...n-  A: -  F: -
 listen                           D: -  A: -  F: -
+listen:fullscreen                D: -  A: -  F: -
+listen:fullscreen:bye            D: -  A: -  F: -
 lt?                              D: nn-f  A: -  F: -
 lteq?                            D: nn-f  A: -  F: -
 mod                              D: nm-o  A: -  F: -
