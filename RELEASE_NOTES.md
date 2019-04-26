@@ -38,6 +38,7 @@ June.
 - add `a:left`
 - add `a:right`
 - add `a:middle`
+- add `a:chop`
 
 ## I/O and Extensions
 

@@ -68,6 +68,7 @@ Version	-a	-	-	Variable. This stores the version number.			class:data	{n/a}	{n/a
 ]	-	-	-	End a quotation.			class:macro	{n/a}	{n/a}	global	all	
 a:-eq?	aa-f	-	-	Compare all values in the array. Return `FALSE` if all values are equal or `TRUE` otherwise. This assumes the array contains only numeric values.			class:word	{n/a}	{n/a}	a	all	
 a:append	aa-a	-	-	Return a new array consisting of the values in a1 followed by the values in a2.			class:word	{n/a}	{n/a}	a	all	
+a:chop	a-a	-	-	Return a new array containing all but the last value in the source array.			class:word	{n/a}	{n/a}	a	all	
 a:contains-string?	sa-f	-	-	Return `TRUE` if the string value is in the array or`FALSE` otherwise.			class:word	{n/a}	{n/a}	a	all	
 a:contains?	na-f	-	-	Return `TRUE` if the value is in the array or `FALSE` otherwise.			class:word	{n/a}	{n/a}	a	all	
 a:counted-results	q-a	-	-	Run a quote and construct a new array from the returned values. The quote should return the values and the number of values to put into the array.			class:word	{n/a}	{n/a}	a	all	
@@ -369,7 +370,7 @@ s:WHITESPACE	-s	-	-	Constant. Returns a string of characters recognized as white
 s:append	ss-s	-	-	Return a new string consisting of s1 followed by s2.			class:word	{n/a}	{n/a}	s	all	
 s:begins-with?	ss-f	-	-	Return `TRUE` if s1 begins with s2 or `FALSE` otherwise.			class:word	{n/a}	{n/a}	s	all	
 s:case	sSq- || sSq-s	-	-	If the `s` matches `S`, discard `s` and run the quote before exiting the caller. If they do not match, discard the quote and leave `s` on the stack.			class:word	{n/a}	{n/a}	s	all	
-s:chop	s-s	-	-	Remove the last character from a string.			class:word	{n/a}	{n/a}	s	all	
+s:chop	s-s	-	-	Remove the last character from a string. Returns a new string.			class:word	{n/a}	{n/a}	s	all	
 s:const	ss-	-	-	Create a constant named s2, returning a pointer to s1. This will use `s:keep` to preserve the original string.			class:word	{n/a}	{n/a}	s	all	
 s:contains-char?	sc-f	-	-	Return `TRUE` if the character is present in the string or `FALSE` otherwise.			class:word	{n/a}	{n/a}	s	all	
 s:contains-string?	ss-f	-	-	Return `TRUE` if the second string is present in the first string or `FALSE` otherwise.			class:word	{n/a}	{n/a}	s	all	

@@ -1350,6 +1350,13 @@ I then define `a:append` and `a:prepend` to combine arrays.
   swap a:prepend ;
 ~~~
 
+`a:chop` returns a new array containing all but the last value
+in the source array.
+
+~~~
+:a:chop (a-a) a:dup #-1 allot dup v:dec ;
+~~~
+
 Next is `a:filter`, which is extracts matching values from
 an array. This is used like:
 
