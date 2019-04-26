@@ -117,7 +117,7 @@ seconds.
 :clock:year   (-s) #22 io:unix-syscall ;
 :clock:hour   (-s) #23 io:unix-syscall ;
 :clock:minute (-n) #24 io:unix-syscall ;
-:clock:secord (-s) #25 io:unix-syscall ;
+:clock:second (-s) #25 io:unix-syscall ;
 ~~~
 
 ~~~
