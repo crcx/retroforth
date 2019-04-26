@@ -39,6 +39,8 @@ June.
 - add `a:right`
 - add `a:middle`
 - add `a:chop`
+- add `a:begins-with?`
+- add `a:ends-with?`
 
 ## I/O and Extensions
 

@@ -1741,6 +1741,17 @@ And finally, tie it all together into the single exposed word
 }}
 ~~~
 
+Building on these, I implement `a:begins-with?` and `a:ends-with?`
+to determine if an array starts or ends with the values in a
+different array.
+
+~~~
+:a:begins-with? (aa-f)
+  &Heap [ dup a:length &swap dip a:left a:eq? ] v:preserve ;
+
+:a:ends-with? (aa-f)
+  &Heap [ dup a:length &swap dip a:right a:eq? ] v:preserve ;
+~~~
 
 ## Loops, continued
 

@@ -70,11 +70,13 @@ Version	-a	-	-	Variable. This stores the version number.			class:data	{n/a}	{n/a
 ]	-	-	-	End a quotation.			class:macro	{n/a}	{n/a}	global	all	
 a:-eq?	aa-f	-	-	Compare all values in the array. Return `FALSE` if all values are equal or `TRUE` otherwise. This assumes the array contains only numeric values.			class:word	{n/a}	{n/a}	a	all	
 a:append	aa-a	-	-	Return a new array consisting of the values in a1 followed by the values in a2.			class:word	{n/a}	{n/a}	a	all	
+a:begins-with?	aa-f	-	-	Return `TRUE` if a1 begins with a2 or `FALSE` otherwise.			class:word	{n/a}	{n/a}	a	all	
 a:chop	a-a	-	-	Return a new array containing all but the last value in the source array.			class:word	{n/a}	{n/a}	a	all	
 a:contains-string?	sa-f	-	-	Return `TRUE` if the string value is in the array or`FALSE` otherwise.			class:word	{n/a}	{n/a}	a	all	
 a:contains?	na-f	-	-	Return `TRUE` if the value is in the array or `FALSE` otherwise.			class:word	{n/a}	{n/a}	a	all	
 a:counted-results	q-a	-	-	Run a quote and construct a new array from the returned values. The quote should return the values and the number of values to put into the array.			class:word	{n/a}	{n/a}	a	all	
 a:dup	a-b	-	-	Make a copy of an array. Return the address of the copy.			class:word	{n/a}	{n/a}	a	all	
+a:ends-with?	aa-f	-	-	Return `TRUE` if a1 ends with a2 or `FALSE` otherwise.			class:word	{n/a}	{n/a}	a	all	
 a:eq?	aa-f	-	-	Compare all values in the array. Return `TRUE` if all values are equal or `FALSE` otherwise. This assumes the array contains only numeric values.			class:word	{n/a}	{n/a}	a	all	
 a:filter	aq-b	-	-	For each item in the initial array, run the specified quote. If the quote returns `TRUE`, copy the item into a new array. If `FALSE`, discard it. Returns a pointer to the new array.			class:word	{n/a}	{n/a}	a	all	
 a:for-each	aq-	-	-	Execute the quote once for each item in the array.			class:word	{n/a}	{n/a}	a	all	

@@ -823,6 +823,17 @@ Return a new array consisting of the values in a1 followed by the values in a2.
 Class: class:word | Namespace: a | Interface Layer: all
 ------------------------------------------------------------------------
 
+a:begins-with?
+
+  Data:  aa-f
+  Addr:  -
+  Float: -
+
+Return `TRUE` if a1 begins with a2 or `FALSE` otherwise.
+
+Class: class:word | Namespace: a | Interface Layer: all
+------------------------------------------------------------------------
+
 a:chop
 
   Data:  a-a
@@ -874,6 +885,17 @@ a:dup
   Float: -
 
 Make a copy of an array. Return the address of the copy.
+
+Class: class:word | Namespace: a | Interface Layer: all
+------------------------------------------------------------------------
+
+a:ends-with?
+
+  Data:  aa-f
+  Addr:  -
+  Float: -
+
+Return `TRUE` if a1 ends with a2 or `FALSE` otherwise.
 
 Class: class:word | Namespace: a | Interface Layer: all
 ------------------------------------------------------------------------

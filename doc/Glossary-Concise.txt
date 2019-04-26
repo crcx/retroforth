@@ -214,6 +214,9 @@ Compare all values in the array. Return `FALSE` if all values are equal or `TRUE
 a:append                         D: aa-a  A: -  F: -
 Return a new array consisting of the values in a1 followed by the values in a2.
 
+a:begins-with?                   D: aa-f  A: -  F: -
+Return `TRUE` if a1 begins with a2 or `FALSE` otherwise.
+
 a:chop                           D: a-a  A: -  F: -
 Return a new array containing all but the last value in the source array.
 
@@ -228,6 +231,9 @@ Run a quote and construct a new array from the returned values. The quote should
 
 a:dup                            D: a-b  A: -  F: -
 Make a copy of an array. Return the address of the copy.
+
+a:ends-with?                     D: aa-f  A: -  F: -
+Return `TRUE` if a1 ends with a2 or `FALSE` otherwise.
 
 a:eq?                            D: aa-f  A: -  F: -
 Compare all values in the array. Return `TRUE` if all values are equal or `FALSE` otherwise. This assumes the array contains only numeric values.

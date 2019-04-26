@@ -70,11 +70,13 @@ Version                          D: -a  A: -  F: -
 ]                                D: -  A: -  F: -
 a:-eq?                           D: aa-f  A: -  F: -
 a:append                         D: aa-a  A: -  F: -
+a:begins-with?                   D: aa-f  A: -  F: -
 a:chop                           D: a-a  A: -  F: -
 a:contains-string?               D: sa-f  A: -  F: -
 a:contains?                      D: na-f  A: -  F: -
 a:counted-results                D: q-a  A: -  F: -
 a:dup                            D: a-b  A: -  F: -
+a:ends-with?                     D: aa-f  A: -  F: -
 a:eq?                            D: aa-f  A: -  F: -
 a:filter                         D: aq-b  A: -  F: -
 a:for-each                       D: aq-  A: -  F: -
