@@ -978,6 +978,15 @@ characters that are of some general interest.
   #32, #9 , #10 , #13 , #0 ,
 ~~~
 
+I have a few words that correspond to empty versions of the
+prefixes.
+
+~~~
+:' |s:empty ; immediate
+:$ #0 class:data ; immediate
+:" |s:empty ; immediate
+~~~
+
 ## ASCII Constants
 
 Not all characters can be obtained via the $ prefix. ASCII has

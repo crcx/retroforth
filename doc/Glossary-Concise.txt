@@ -1,3 +1,12 @@
+"                                D: -s  A: -  F: -
+Return an empty string.
+
+$                                D: -c  A: -  F: -
+Return ASCII:NUL (0).
+
+'                                D: -s  A: -  F: -
+Return an empty string.
+
 (                                D: -  A: -  F: -
 Provide a visual indication of a code group.
 

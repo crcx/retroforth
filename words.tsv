@@ -1,3 +1,6 @@
+"	-s	-	-	Return an empty string.			class:macro	{n/a}	{n/a}	global	all	
+$	-c	-	-	Return ASCII:NUL (0).			class:macro	{n/a}	{n/a}	global	all	
+'	-s	-	-	Return an empty string.			class:macro	{n/a}	{n/a}	global	all	
 (	-	-	-	Provide a visual indication of a code group.			class:macro	{n/a}	{n/a}	prefix	all	
 )	-	-	-	Provide a visual indication of a code group.			class:macro	{n/a}	{n/a}	prefix	all	
 *	nn-n	-	-	Multiply `n1` by `n2` and return the result.			class:primitive	    #2 #6 *\n    #-1 #100 *	{n/a}	global	all	

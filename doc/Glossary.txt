@@ -1,3 +1,36 @@
+"
+
+  Data:  -s
+  Addr:  -
+  Float: -
+
+Return an empty string.
+
+Class: class:macro | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+$
+
+  Data:  -c
+  Addr:  -
+  Float: -
+
+Return ASCII:NUL (0).
+
+Class: class:macro | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+'
+
+  Data:  -s
+  Addr:  -
+  Float: -
+
+Return an empty string.
+
+Class: class:macro | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
 (
 
   Data:  -
