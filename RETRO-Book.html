@@ -462,7 +462,7 @@ netdb.h, errno.h, sys/wait.h, signal.h</li>
 <p>RETRO can be run for scripting or interactive use.</p>
 <h2 id="interactive">Interactive</h2>
 <p>To start it interactively, run: <code>retro</code> without any command line<br>
-arguments, or with <code>-i</code>, <code>-s</code>, or <code>-c</code>.</p>
+arguments, or with <code>-i</code>, <code>-s</code>, or <code>-i,c</code>.</p>
 <p>Starting the interactive system:</p>
 <pre><code>retro
 </code></pre>
@@ -477,7 +477,7 @@ prompt or startup banner):</p>
 <p>RETRO also has a <em>character breaking</em> mode, in which input is<br>
 processed directly as entered, this is started with the <code>-c</code><br>
 option:</p>
-<pre><code>retro -c
+<pre><code>retro -i,c
 </code></pre>
 <h2 id="using-in-a-pipe">Using In a Pipe</h2>
 <p>If using a Unix shell and piping input between processes, you<br>

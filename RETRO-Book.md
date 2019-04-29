@@ -220,7 +220,7 @@ RETRO can be run for scripting or interactive use.
 ## Interactive
 
 To start it interactively, run: `retro` without any command line
-arguments, or with `-i`, `-s`, or `-c`.
+arguments, or with `-i`, `-s`, or `-i,c`.
 
 Starting the interactive system:
 
@@ -248,7 +248,7 @@ processed directly as entered, this is started with the `-c`
 option:
 
 ```
-retro -c
+retro -i,c
 ```
 
 ## Using In a Pipe
