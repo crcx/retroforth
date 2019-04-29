@@ -9,13 +9,6 @@
 #include <string.h>
 #include <math.h>
 #include <sys/types.h>
-#include <sys/stat.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <netdb.h>
-#include <errno.h>
-#include <sys/wait.h>
-#include <signal.h>
 
 typedef void (*Handler)(void);
 
@@ -25,14 +18,11 @@ typedef void (*Handler)(void);
   ---------------------------------------------------------------------*/
 
 #define CELL         int32_t      /* Cell size (32 bit, signed integer */
-#define IMAGE_SIZE   524288 * 48  /* Amount of RAM. 12MiB by default.  */
-#define ADDRESSES    2048         /* Depth of address stack            */
-#define STACK_DEPTH  512          /* Depth of data stack               */
 
 extern CELL sp, rp, ip;             /* Stack & instruction pointers    */
-extern CELL data[STACK_DEPTH];      /* The data stack                  */
-extern CELL address[ADDRESSES];     /* The address stack               */
-extern CELL memory[IMAGE_SIZE + 1]; /* The memory for the image        */
+extern CELL data[];                 /* The data stack                  */
+extern CELL address[];              /* The address stack               */
+extern CELL memory[];               /* The memory for the image        */
 extern char string_data[];
 
 #define TOS  data[sp]             /* Shortcut for top item on stack    */
