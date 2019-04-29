@@ -165,13 +165,13 @@ extensions are not supported:
 - no `unix:` words
 - no `gopher:` words
 
-## Process
-
 This is currently more difficult than on a Unix host. If you have
 Windows 10 and WSL, it may be better to build under that (using
 the Linux instructions).
 
-### Setup TCC
+## Setup Build Environment
+
+RETRO on Windows is built with TCC.
 
 Go to http://download.savannah.gnu.org/releases/tinycc/
 
@@ -179,14 +179,14 @@ Download the *winapi-full* and *tcc-xxxx-bin* packages for your
 system. Decompress them, copy the headers from the winapi
 package into the tcc directory.
 
-### Prepare Source
+## Prepare Source
 
 You'll need to comment out (or remove) some things before RETRO
 will build.
 
 In *rre.c*:
 
-- remove includes for unistd.h, sys/sockets.h, netinet/in.h
+- remove includes for unistd.h, sys/sockets.h, netinet/in.h,
   netdb.h, errno.h, sys/wait.h, signal.h
 - remove the #define USE_TERMIOS line
 - change the #define NUM_DEVICES to 6
@@ -209,7 +209,7 @@ In *io\floatingpoint.c*:
 
 - remove includes for unistd.h
 
-### Build
+## Build
 
 \path\to\tcc rre.c image-functions.c io\filesystem.c io\floatingpoint.c -o retro.exe
 
