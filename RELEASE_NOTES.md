@@ -32,6 +32,9 @@ This is the changelog for the development builds of Retro.
 
 ## Documentation
 
+- updated Linux build instructions
+- updated Starting instructions
+
 ## Examples
 
 ## Final Notes

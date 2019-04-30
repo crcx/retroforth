@@ -88,7 +88,8 @@ For a summary of the full command line arguments available:
 
       -h           Display this help text
       -i           Interactive mode (line buffered)
-      -c           Interactive mode (character buffered)
+      -i,c         Interactive mode (character buffered)
+      -i,fs        Interactive mode (fullscreen)
       -s           Suppress the 'ok' prompt and keyboard
                    echo in interactive mode
       -f filename  Run the contents of the specified file
