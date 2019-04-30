@@ -112,7 +112,7 @@ you have a C compiler, headers, and make.
 Run:
 
 ```
-make -f Makefile.linux
+make
 ```
 
 This will build the toolchain and then the main `retro`
@@ -128,6 +128,23 @@ In the `bin/` directory:
     retro-extend
     retro-embedimage
     retro-describe
+
+## Troubleshooting
+
+I've had issues building on Linux in the past. The GNU toolchain
+can be quite problematic.
+
+If the build fails, try:
+
+    make -f GNUmakefile
+
+or:
+
+    mv GNUmakefile Makefile
+    make
+
+If none of these work, contact Charles with details and he will
+work on finding a fix.
 
 # Building RETRO on macOS
 
