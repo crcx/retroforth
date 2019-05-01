@@ -1,7 +1,7 @@
-#if defined __GNU_LIBRARY__ || defined __GLIBC__
-
 #include <sys/types.h>
 #include <string.h>
+
+#ifndef strlcat
 
 /*	$OpenBSD: strlcat.c,v 1.18 2016/10/16 17:37:39 dtucker Exp $	*/
 
@@ -74,8 +74,9 @@ strlcat(char *dst, const char *src, size_t dsize)
  * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
+#endif
 
-
+#ifndef strlcpy
 /*
  * Copy string src to buffer dst of size dsize.  At most dsize-1
  * chars will be copied.  Always NUL terminates (unless dsize == 0).
@@ -105,5 +106,4 @@ strlcpy(char *dst, const char *src, size_t dsize)
 
 	return(src - osrc - 1);	/* count does not include NUL */
 }
-
 #endif
