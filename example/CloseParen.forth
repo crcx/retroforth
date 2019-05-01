@@ -6,11 +6,11 @@ I find `)` useful to punctuate code chunks.
 
 Here is an example:
 
-  :i@ (an-n) a:nth fetch ;
+  :i@ (an-n) a:th fetch ;
 
 ~~~
 {{
-  :I@ (an-n) I a:nth fetch ;
+  :I@ (an-n) I a:th fetch ;
   'Index 'Value [ var ] bi@
   :lt?-or-gt? hook ;
   :pre.min (a-an)

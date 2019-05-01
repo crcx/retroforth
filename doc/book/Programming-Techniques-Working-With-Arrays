@@ -28,11 +28,11 @@ values and the number of values to store in the a:
 
 ## Accessing Elements
 
-You can access a specific value with `a:nth` and `fetch` or
+You can access a specific value with `a:th` and `fetch` or
 `store`:
 
 ```
-{ #1 #2 #3 #4 } #3 a:nth fetch
+{ #1 #2 #3 #4 } #3 a:th fetch
 ```
 
 ## Find The Length

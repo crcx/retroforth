@@ -1460,11 +1460,11 @@ values reversed.
        ] dip ;
 ~~~
 
-`a:nth` provides a quick means of adjusting an array and
+`a:th` provides a quick means of adjusting an array and
 offset into an address for use with `fetch` and `store`.
 
 ~~~
-:a:nth (an-a)
+:a:th (an-a)
   + n:inc ;
 ~~~
 

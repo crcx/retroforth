@@ -1,3 +1,9 @@
+
+ERROR: Word Not Found: `a:nth`
+
+
+ERROR: Word Not Found: `a:nth`
+
 "                                D: -s  A: -  F: -
 $                                D: -c  A: -  F: -
 '                                D: -s  A: -  F: -
@@ -91,11 +97,11 @@ a:length                         D: a-n  A: -  F: -
 a:make                           D: q-a  A: -  F: -
 a:map                            D: aq-  A: -  F: -
 a:middle                         D: afl-a  A: -  F: -
-a:nth                            D: an-b  A: -  F: -
 a:prepend                        D: aa-a  A: -  F: -
 a:reduce                         D: pnq-n  A: -  F: -
 a:reverse                        D: a-b  A: -  F: -
 a:right                          D: an-a  A: -  F: -
+a:th                             D: an-b  A: -  F: -
 a:to-string                      D: a-s  A: -  F: -
 again                            D: -  A: -  F: -
 allot                            D: n-  A: -  F: -

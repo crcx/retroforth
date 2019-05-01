@@ -1,3 +1,9 @@
+
+ERROR: Word Not Found: `a:nth`
+
+
+ERROR: Word Not Found: `a:nth`
+
 "                                D: -s  A: -  F: -
 Return an empty string.
 
@@ -277,9 +283,6 @@ Execute quote once for each item in the array. Constructs a new array from the v
 a:middle                         D: afl-a  A: -  F: -
 Extract a new array from the middle of the specified array. This will take the values starting at `f` and extend to the `l` last value.
 
-a:nth                            D: an-b  A: -  F: -
-Return the actual address of the nth item in the array.
-
 a:prepend                        D: aa-a  A: -  F: -
 Return a new array consisting of the values in a2 followed by the values in a1.
 
@@ -291,6 +294,9 @@ Reverse the order of items in a array. This will return a new array.
 
 a:right                          D: an-a  A: -  F: -
 Return a new array containing the specified number of values from the right side of the array.
+
+a:th                             D: an-b  A: -  F: -
+Return the actual address of the `n`th item in the array.
 
 a:to-string                      D: a-s  A: -  F: -
 Create a new string from the provided array. This string will be stored in the temporal string buffers.

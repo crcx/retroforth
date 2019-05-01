@@ -1,3 +1,9 @@
+
+ERROR: Word Not Found: `a:nth`
+
+
+ERROR: Word Not Found: `a:nth`
+
 "
 
   Data:  -s
@@ -1054,17 +1060,6 @@ Extract a new array from the middle of the specified array. This will take the v
 Class: class:word | Namespace: a | Interface Layer: all
 ------------------------------------------------------------------------
 
-a:nth
-
-  Data:  an-b
-  Addr:  -
-  Float: -
-
-Return the actual address of the nth item in the array.
-
-Class: class:word | Namespace: a | Interface Layer: all
-------------------------------------------------------------------------
-
 a:prepend
 
   Data:  aa-a
@@ -1105,6 +1100,17 @@ a:right
   Float: -
 
 Return a new array containing the specified number of values from the right side of the array.
+
+Class: class:word | Namespace: a | Interface Layer: all
+------------------------------------------------------------------------
+
+a:th
+
+  Data:  an-b
+  Addr:  -
+  Float: -
+
+Return the actual address of the `n`th item in the array.
 
 Class: class:word | Namespace: a | Interface Layer: all
 ------------------------------------------------------------------------
