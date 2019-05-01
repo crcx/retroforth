@@ -1,3 +1,5 @@
+#if defined __GNU_LIBRARY__ || defined __GLIBC__
+
 #include <sys/types.h>
 #include <string.h>
 
@@ -103,3 +105,5 @@ strlcpy(char *dst, const char *src, size_t dsize)
 
 	return(src - osrc - 1);	/* count does not include NUL */
 }
+
+#endif
