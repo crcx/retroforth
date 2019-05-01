@@ -18,16 +18,7 @@ For most systems (FreeBSD, NetBSD, OpenBSD, macOS, Linux):
 
     make
 
-You will need a standard C compiler and `make`. The `retro-ri`
-binary requires (n)curses, but you can ignore any build/link
-errors by doing:
-
-    make -kis
-
-If you are building on an older Linux system and are running
-into problems, try using the alternative Makefile:
-
-    make -f Makefile.linux
+You will need a standard C compiler and `make`.
 
 ## Executables
 
@@ -76,6 +67,12 @@ fenced blocks:
     ~~~
 
 Anything outside the fenced blocks will be ignored.
+
+## Documentation
+
+The primary documentation is in RETRO-Book.md (and the formatted
+RETRO-Book.html.) Additional notes can be found in the `doc`
+directory.
 
 ## Commercial Versions
 

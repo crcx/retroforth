@@ -20,3 +20,7 @@ This is the changelog for the development builds of Retro.
 
 - updated Linux build instructions
 - updated Starting instructions
+
+## Examples
+
+- add sqlite3 wrapper
