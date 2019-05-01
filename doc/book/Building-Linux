@@ -36,14 +36,5 @@ In the `bin/` directory:
 I've had issues building on Linux in the past. The GNU toolchain
 can be quite problematic.
 
-If the build fails, try:
-
-    make -f GNUmakefile
-
-or:
-
-    mv GNUmakefile Makefile
-    make
-
-If none of these work, contact Charles with details and he will
-work on finding a fix.
+If the build fails please contact Charles with details and he
+will work on finding a fix.

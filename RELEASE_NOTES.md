@@ -4,37 +4,14 @@ This is the changelog for the development builds of Retro.
 
 ## Bug Fixes
 
+- (all) strl* functions now only compiled if using GLIBC.
+- (rre) `clock:year` corrected
+
 ## Build
 
-- Makefile.linux is now GNUmakefile
-
-## Core Language
-
-## I/O and Extensions
-
-### Floating Point
- 
-### Unix
-
-## Nga
-
-## Interfaces
-
-### retro
-
-### retro-compiler
-
-### native
-
-## Tools
-
-## Other
+- Merged Linux & BSD Makefiles
 
 ## Documentation
 
 - updated Linux build instructions
 - updated Starting instructions
-
-## Examples
-
-## Final Notes

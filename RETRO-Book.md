@@ -134,17 +134,8 @@ In the `bin/` directory:
 I've had issues building on Linux in the past. The GNU toolchain
 can be quite problematic.
 
-If the build fails, try:
-
-    make -f GNUmakefile
-
-or:
-
-    mv GNUmakefile Makefile
-    make
-
-If none of these work, contact Charles with details and he will
-work on finding a fix.
+If the build fails please contact Charles with details and he
+will work on finding a fix.
 
 # Building RETRO on macOS
 
@@ -580,6 +571,13 @@ This illustrates the format. Only code in the fenced blocks
 
 (Note: this only applies to *source files*; fences are not used
 when entering code interactively).
+
+## On The Name
+
+The name Unu comes from the Maori language, where it means:
+
+    (verb) (-hia) pull out, withdraw, draw out, extract.
+    Taken from https://maoridictionary.co.nz/
 
 # Naming Conventions
 
