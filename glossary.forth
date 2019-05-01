@@ -704,13 +704,13 @@ And then the actual top level server.
 
   :handle-http
     page-header
-    &Selector ASCII:SPACE s:tokenize #1 a:nth fetch
+    &Selector ASCII:SPACE s:tokenize #1 a:th fetch
     dup s:length #1 eq?
       [ drop http:list-words ]
       [ n:inc s:to-number http:display ] choose ;
 
   :handle-gopher
-    &Selector ASCII:SPACE s:tokenize #1 a:nth fetch
+    &Selector ASCII:SPACE s:tokenize #1 a:th fetch
     s:chop s:keep dup s:put !Target gopher:display ;
 
 ---reveal---
