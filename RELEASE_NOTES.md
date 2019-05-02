@@ -24,6 +24,7 @@ This is the changelog for the development builds of Retro.
 ## Examples
 
 - add sqlite3 wrapper
+- add mandelbrot.forth
 
 ## General
 
