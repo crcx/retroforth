@@ -49,7 +49,7 @@ install-data:
 install-docs:
 	install -m 755 -d -- $(DESTDIR)$(DOCSDIR)
 	cp -fpR doc $(DESTDIR)$(DOCSDIR)
-	cp -fpR literate $(DESTDIR)$(DOCSDIR)
+#	cp -fpR literate $(DESTDIR)$(DOCSDIR)
 	install -c -m 644 README.md $(DESTDIR)$(DOCSDIR)/README.md
 	install -c -m 644 RELEASE_NOTES.md $(DESTDIR)$(DOCSDIR)/RELEASE_NOTES.md
 
@@ -72,7 +72,7 @@ test: bin/retro
 
 glossary: doc/Glossary.txt doc/Glossary.html doc/Glossary-Concise.txt doc/Glossary-Names-and-Stack.txt
 
-image: interfaces/image.c
+image: source/interfaces/image.c
 
 js: bin/RETRO12.html
 
@@ -86,9 +86,9 @@ update: bin/retro-unu literate/Unu.md literate/Muri.md
 
 # File targets.
 
-ngaImage: literate/Rx.md literate/RetroForth.md bin/retro-muri bin/retro-extend
-	./bin/retro-muri literate/Rx.md
-	./bin/retro-extend ngaImage literate/RetroForth.md
+ngaImage: source/rx.muri source/retro.forth bin/retro-muri bin/retro-extend
+	./bin/retro-muri source/rx.muri
+	./bin/retro-extend ngaImage source/retro.forth
 
 bin/retro-describe: retro-describe.forth words.tsv
 	cat retro-describe.forth words.tsv >bin/retro-describe
@@ -108,25 +108,18 @@ bin/retro-muri: tools/muri.c
 bin/RETRO12.html: bin/retro-injectimage-js
 	./bin/retro-injectimage-js >bin/RETRO12.html
 
-bin/retro-repl: interfaces/repl.c interfaces/image.c
-	cd interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../bin/retro-repl repl.c
+bin/retro-repl: source/interfaces/repl.c source/interfaces/image.c
+	cd source/interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../../bin/retro-repl repl.c
 
-bin/retro: bin/retro-embedimage bin/retro-extend interfaces/retro-image.c interfaces/retro-unix.c interfaces/rre.forth interfaces/io/rng.forth
+bin/retro: bin/retro-embedimage bin/retro-extend source/interfaces/retro-image.c source/interfaces/retro-unix.c source/interfaces/rre.forth source/interfaces/io/rng.forth
 	cp ngaImage rre.image
-	./bin/retro-extend rre.image interfaces/io/filesystem.forth interfaces/io/gopher.forth interfaces/io/floatingpoint.forth interfaces/io/unix.forth interfaces/io/rng.forth interfaces/rre.forth
-	./bin/retro-embedimage rre.image >interfaces/retro-image.c
-	cd interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../bin/retro retro-unix.c $(LIBM)
+	./bin/retro-extend rre.image source/interfaces/io/filesystem.forth source/interfaces/io/gopher.forth source/interfaces/io/floatingpoint.forth source/interfaces/io/unix.forth source/interfaces/io/rng.forth source/interfaces/rre.forth
+	./bin/retro-embedimage rre.image >source/interfaces/retro-image.c
+	cd source/interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../../bin/retro retro-unix.c $(LIBM)
 	cd package && ../bin/retro -f list
-	./bin/retro-embedimage rre.image >interfaces/retro-image.c
-	cd interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../bin/retro retro-unix.c $(LIBM)
+	./bin/retro-embedimage rre.image >source/interfaces/retro-image.c
 	rm rre.image
-
-bin/retro-barebones: bin/retro-embedimage bin/retro-extend interfaces/image.c interfaces/barebones.c interfaces/barebones.forth
-	cp ngaImage barebones.image
-	./bin/retro-extend barebones.image interfaces/barebones.forth
-	./bin/retro-embedimage barebones.image >interfaces/barebones_image.c
-	rm barebones.image
-	cd interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../bin/retro-barebones barebones.c
+	cd source/interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../../bin/retro retro-unix.c $(LIBM)
 
 bin/retro-unu: tools/unu.c
 	$(CC) $(CFLAGS) $(LDFLAGS) -o bin/retro-unu tools/unu.c
@@ -151,16 +144,16 @@ doc/Glossary-Names-and-Stack.txt: bin/retro words.tsv
 	mv sorted.tsv words.tsv
 	./bin/retro glossary.forth export concise-stack >doc/Glossary-Names-and-Stack.txt
 
-interfaces/image.c: bin/retro-embedimage bin/retro-extend bin/retro-muri literate/RetroForth.md literate/Rx.md
-	./bin/retro-muri literate/Rx.md
-	./bin/retro-extend ngaImage literate/RetroForth.md
+interfaces/image.c: bin/retro-embedimage bin/retro-extend bin/retro-muri source/retro.forth source/rx.md
+	./bin/retro-muri source/rx.muri
+	./bin/retro-extend ngaImage source/retro.forth
 	./bin/retro-embedimage ngaImage > interfaces/image.c
 
-bin/retro-compiler: bin/retro-extend interfaces/retro-compiler.c interfaces/retro-runtime.c
+bin/retro-compiler: bin/retro-extend source/interfaces/retro-compiler.c source/interfaces/retro-runtime.c
 	cp ngaImage runtime.image
-	./bin/retro-extend runtime.image interfaces/io/filesystem.forth interfaces/io/gopher.forth interfaces/io/floatingpoint.forth interfaces/io/unix.forth interfaces/io/rng.forth interfaces/rre.forth
-	cd interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../retro-runtime retro-runtime.c $(LIBM)
-	cd interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../bin/retro-compiler retro-compiler.c
+	./bin/retro-extend runtime.image source/interfaces/io/filesystem.forth source/interfaces/io/gopher.forth source/interfaces/io/floatingpoint.forth source/interfaces/io/unix.forth source/interfaces/io/rng.forth source/interfaces/rre.forth
+	cd source/interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../../retro-runtime retro-runtime.c $(LIBM)
+	cd source/interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../../bin/retro-compiler retro-compiler.c
 	objcopy --add-section .ngaImage=runtime.image --set-section-flags .ngaImage=noload,readonly bin/retro-compiler
 	objcopy --add-section .runtime=retro-runtime --set-section-flags .runtime=noload,readonly bin/retro-compiler
 	rm runtime.image retro-runtime

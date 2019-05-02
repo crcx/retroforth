@@ -25,6 +25,10 @@ This is the changelog for the development builds of Retro.
 
 - add sqlite3 wrapper
 
+## General
+
+- reorganized directory tree
+
 ## I/O
 
 - added `clock:utc:` namespace
