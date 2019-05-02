@@ -3957,7 +3957,7 @@ n:random
 
 Return a random number
 
-Class: class:word | Namespace: n | Interface Layer: rre, ri
+Class: class:word | Namespace: n | Interface Layer: rre
 
 Example #1:
 
@@ -4388,7 +4388,7 @@ random:mersenne
 
 Return a random number using a mersenne shifter
 
-Class: class:word | Namespace: random | Interface Layer: rre, ri
+Class: class:word | Namespace: random | Interface Layer: rre
 ------------------------------------------------------------------------
 
 random:mersenne:set-seed
@@ -4399,7 +4399,7 @@ random:mersenne:set-seed
 
 Seed random:mersenne with the specified value
 
-Class: class:word | Namespace: random | Interface Layer: rre, ri
+Class: class:word | Namespace: random | Interface Layer: rre
 ------------------------------------------------------------------------
 
 random:xoroshiro128**
@@ -4410,7 +4410,7 @@ random:xoroshiro128**
 
 Return a random number using xoroshiro128**
 
-Class: class:word | Namespace: random | Interface Layer: rre, ri
+Class: class:word | Namespace: random | Interface Layer: rre
 ------------------------------------------------------------------------
 
 random:xoroshiro128**:jump
@@ -4421,7 +4421,7 @@ random:xoroshiro128**:jump
 
 Updates the internal xoroshiro128** state registers with the equivalent of 2^64 calls to random:xoroshiro128**.
 
-Class: class:word | Namespace: random | Interface Layer: rre, ri
+Class: class:word | Namespace: random | Interface Layer: rre
 ------------------------------------------------------------------------
 
 random:xoroshiro128**:set-seed
@@ -4432,7 +4432,7 @@ random:xoroshiro128**:set-seed
 
 Seed random:xoroshiro128** with the specified value
 
-Class: class:word | Namespace: random | Interface Layer: rre, ri
+Class: class:word | Namespace: random | Interface Layer: rre
 ------------------------------------------------------------------------
 
 random:xoroshiro128**:test-seed
@@ -4443,7 +4443,7 @@ random:xoroshiro128**:test-seed
 
 Sets the internal xoroshiro128** state registers s0..s3 starting with TOS.
 
-Class: class:word | Namespace: random | Interface Layer: rre, ri
+Class: class:word | Namespace: random | Interface Layer: rre
 ------------------------------------------------------------------------
 
 reclass
