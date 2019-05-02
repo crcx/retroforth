@@ -158,14 +158,14 @@ interfaces/image.c: bin/retro-embedimage bin/retro-extend bin/retro-muri literat
 	./bin/retro-extend ngaImage literate/RetroForth.md
 	./bin/retro-embedimage ngaImage > interfaces/image.c
 
-bin/retro-compiler: io bin/retro-extend interfaces/image.c interfaces/retro-compiler.c interfaces/retro-compiler-runtime.c interfaces/image-functions.o
+bin/retro-compiler: io bin/retro-extend interfaces/retro-compiler.c interfaces/retro-runtime.c
 	cp ngaImage runtime.image
 	./bin/retro-extend runtime.image interfaces/io/filesystem.forth interfaces/io/gopher.forth interfaces/io/floatingpoint.forth interfaces/io/unix.forth interfaces/io/rng.forth interfaces/rre.forth
-	cd interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../retro-compiler-runtime retro-compiler-runtime.c $(LIBM)
+	cd interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../retro-runtime retro-runtime.c $(LIBM)
 	cd interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../bin/retro-compiler retro-compiler.c
 	objcopy --add-section .ngaImage=runtime.image --set-section-flags .ngaImage=noload,readonly bin/retro-compiler
-	objcopy --add-section .runtime=retro-compiler-runtime --set-section-flags .runtime=noload,readonly bin/retro-compiler
-	rm runtime.image retro-compiler-runtime
+	objcopy --add-section .runtime=retro-runtime --set-section-flags .runtime=noload,readonly bin/retro-compiler
+	rm runtime.image retro-runtime
 
 io: interfaces/io/filesystem.o interfaces/io/floatingpoint.o interfaces/io/gopher.o interfaces/io/unix.o interfaces/io/strl.o
 

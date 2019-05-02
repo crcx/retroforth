@@ -21,10 +21,14 @@ This is the changelog for the development builds of Retro.
 - updated Linux build instructions
 - updated Starting instructions
 
+## Examples
+
+- add sqlite3 wrapper
+
 ## I/O
 
 - added `clock:utc:` namespace
 
-## Examples
+## Interfaces
 
-- add sqlite3 wrapper
+- retro-compiler: runtime now supports scripting arguments
