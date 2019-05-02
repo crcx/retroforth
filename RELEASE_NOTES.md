@@ -21,6 +21,10 @@ This is the changelog for the development builds of Retro.
 - updated Linux build instructions
 - updated Starting instructions
 
+## I/O
+
+- added `clock:utc:` namespace
+
 ## Examples
 
 - add sqlite3 wrapper

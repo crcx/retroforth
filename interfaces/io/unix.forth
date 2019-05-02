@@ -118,6 +118,12 @@ seconds.
 :clock:hour   (-s) #23 io:unix-syscall ;
 :clock:minute (-n) #24 io:unix-syscall ;
 :clock:second (-s) #25 io:unix-syscall ;
+:clock:utc:day    (-s) #26 io:unix-syscall ;
+:clock:utc:month  (-s) #27 io:unix-syscall ;
+:clock:utc:year   (-s) #28 io:unix-syscall ;
+:clock:utc:hour   (-s) #29 io:unix-syscall ;
+:clock:utc:minute (-n) #30 io:unix-syscall ;
+:clock:utc:second (-s) #31 io:unix-syscall ;
 ~~~
 
 ~~~
@@ -142,5 +148,4 @@ seconds.
   [ [ file:read-line s:temp over call ] sip ] times
   unix:pclose drop ;
 ~~~
-
 

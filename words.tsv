@@ -149,6 +149,12 @@ clock:hour	-n	-	-	Return the current hour.			class:word	{n/a}	{n/a}	clock	iOS, r
 clock:minute	-n	-	-	Return the current minute.			class:word	{n/a}	{n/a}	clock	iOS, rre	
 clock:month	-n	-	-	Return the current month.			class:word	{n/a}	{n/a}	clock	iOS, rre	
 clock:second	-n	-	-	Return the current second.			class:word	{n/a}	{n/a}	clock	iOS, rre	
+clock:utc:day	-n	-	-	Return the current day.			class:word	{n/a}	{n/a}	clock	iOS, rre	
+clock:utc:hour	-n	-	-	Return the current hour.			class:word	{n/a}	{n/a}	clock	iOS, rre	
+clock:utc:minute	-n	-	-	Return the current minute.			class:word	{n/a}	{n/a}	clock	iOS, rre	
+clock:utc:month	-n	-	-	Return the current month.			class:word	{n/a}	{n/a}	clock	iOS, rre	
+clock:utc:second	-n	-	-	Return the current second.			class:word	{n/a}	{n/a}	clock	iOS, rre	
+clock:utc:year	-n	-	-	Return the current year.			class:word	{n/a}	{n/a}	clock	iOS, rre	
 clock:year	-n	-	-	Return the current year.			class:word	{n/a}	{n/a}	clock	iOS, rre	
 compile:call	a-	-	-	Compile a call to the specified address into the current definition.			class:word	{n/a}	{n/a}	compile	all	
 compile:jump	a-	-	-	Compile a jump to the specified address into the current definition.			class:word	{n/a}	{n/a}	compile	all	

@@ -1,9 +1,3 @@
-
-ERROR: Word Not Found: `a:nth`
-
-
-ERROR: Word Not Found: `a:nth`
-
 "                                D: -s  A: -  F: -
 Return an empty string.
 
@@ -456,6 +450,24 @@ Return the current month.
 
 clock:second                     D: -n  A: -  F: -
 Return the current second.
+
+clock:utc:day                    D: -n  A: -  F: -
+Return the current day.
+
+clock:utc:hour                   D: -n  A: -  F: -
+Return the current hour.
+
+clock:utc:minute                 D: -n  A: -  F: -
+Return the current minute.
+
+clock:utc:month                  D: -n  A: -  F: -
+Return the current month.
+
+clock:utc:second                 D: -n  A: -  F: -
+Return the current second.
+
+clock:utc:year                   D: -n  A: -  F: -
+Return the current year.
 
 clock:year                       D: -n  A: -  F: -
 Return the current year.

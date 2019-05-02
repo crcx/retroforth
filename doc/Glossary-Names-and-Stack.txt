@@ -1,9 +1,3 @@
-
-ERROR: Word Not Found: `a:nth`
-
-
-ERROR: Word Not Found: `a:nth`
-
 "                                D: -s  A: -  F: -
 $                                D: -c  A: -  F: -
 '                                D: -s  A: -  F: -
@@ -155,6 +149,12 @@ clock:hour                       D: -n  A: -  F: -
 clock:minute                     D: -n  A: -  F: -
 clock:month                      D: -n  A: -  F: -
 clock:second                     D: -n  A: -  F: -
+clock:utc:day                    D: -n  A: -  F: -
+clock:utc:hour                   D: -n  A: -  F: -
+clock:utc:minute                 D: -n  A: -  F: -
+clock:utc:month                  D: -n  A: -  F: -
+clock:utc:second                 D: -n  A: -  F: -
+clock:utc:year                   D: -n  A: -  F: -
 clock:year                       D: -n  A: -  F: -
 compile:call                     D: a-  A: -  F: -
 compile:jump                     D: a-  A: -  F: -
