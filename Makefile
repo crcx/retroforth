@@ -5,8 +5,6 @@ EXAMPLESDIR ?= $(PREFIX)/share/examples/RETRO12
 MANDIR ?= $(PREFIX)/man/man1
 LIBM ?= -lm
 
-RREIO ?= io/filesystem.o io/floatingpoint.o io/gopher.o io/unix.o io/strl.o
-
 all: build
 
 help:
@@ -113,7 +111,7 @@ bin/RETRO12.html: bin/retro-injectimage-js
 bin/retro-repl: interfaces/repl.c interfaces/image.c
 	cd interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../bin/retro-repl repl.c
 
-bin/retro: io bin/retro-embedimage bin/retro-extend interfaces/retro-image.c interfaces/retro-unix.c interfaces/rre.forth interfaces/io/rng.forth
+bin/retro: bin/retro-embedimage bin/retro-extend interfaces/retro-image.c interfaces/retro-unix.c interfaces/rre.forth interfaces/io/rng.forth
 	cp ngaImage rre.image
 	./bin/retro-extend rre.image interfaces/io/filesystem.forth interfaces/io/gopher.forth interfaces/io/floatingpoint.forth interfaces/io/unix.forth interfaces/io/rng.forth interfaces/rre.forth
 	./bin/retro-embedimage rre.image >interfaces/retro-image.c
@@ -158,7 +156,7 @@ interfaces/image.c: bin/retro-embedimage bin/retro-extend bin/retro-muri literat
 	./bin/retro-extend ngaImage literate/RetroForth.md
 	./bin/retro-embedimage ngaImage > interfaces/image.c
 
-bin/retro-compiler: io bin/retro-extend interfaces/retro-compiler.c interfaces/retro-runtime.c
+bin/retro-compiler: bin/retro-extend interfaces/retro-compiler.c interfaces/retro-runtime.c
 	cp ngaImage runtime.image
 	./bin/retro-extend runtime.image interfaces/io/filesystem.forth interfaces/io/gopher.forth interfaces/io/floatingpoint.forth interfaces/io/unix.forth interfaces/io/rng.forth interfaces/rre.forth
 	cd interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../retro-runtime retro-runtime.c $(LIBM)
@@ -166,23 +164,3 @@ bin/retro-compiler: io bin/retro-extend interfaces/retro-compiler.c interfaces/r
 	objcopy --add-section .ngaImage=runtime.image --set-section-flags .ngaImage=noload,readonly bin/retro-compiler
 	objcopy --add-section .runtime=retro-runtime --set-section-flags .runtime=noload,readonly bin/retro-compiler
 	rm runtime.image retro-runtime
-
-io: interfaces/io/filesystem.o interfaces/io/floatingpoint.o interfaces/io/gopher.o interfaces/io/unix.o interfaces/io/strl.o
-
-interfaces/image-functions.o: interfaces/image-functions.c interfaces/image-functions.h
-	cd interfaces && $(CC) $(CFLAGS) -c -o image-functions.o image-functions.c
-
-interfaces/io/filesystem.o: interfaces/io/filesystem.forth interfaces/io/filesystem.c
-	cd interfaces/io && $(CC) $(CFLAGS) -c -o filesystem.o filesystem.c
-
-interfaces/io/floatingpoint.o: interfaces/io/floatingpoint.forth interfaces/io/floatingpoint.c
-	cd interfaces/io && $(CC) $(CFLAGS) -c -o floatingpoint.o floatingpoint.c
-
-interfaces/io/gopher.o: interfaces/io/gopher.forth interfaces/io/gopher.c
-	cd interfaces/io && $(CC) $(CFLAGS) -c -o gopher.o gopher.c
-
-interfaces/io/unix.o: interfaces/io/unix.forth interfaces/io/unix.c
-	cd interfaces/io && $(CC) $(CFLAGS) -c -o unix.o unix.c
-
-interfaces/io/strl.o: interfaces/io/strl.h interfaces/io/strl.c
-	cd interfaces/io && $(CC) $(CFLAGS) -c -o strl.o strl.c
