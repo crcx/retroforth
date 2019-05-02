@@ -383,7 +383,7 @@ int main(int argc, char **argv) {
   IO_queryHandlers[0] = generic_output_query;
   ngaLoadImage("ngaImage");
   update_rx();
-  retro_puts("RETRO Listener (c) 2016-2018, Charles Childers\n\n");
+  retro_puts("RETRO Listener (c) 2016-2019, Charles Childers\n\n");
   while(1) {
     Dictionary = memory[2];
     read_token(stdin, input, 0);
