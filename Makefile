@@ -116,10 +116,10 @@ bin/retro-repl: interfaces/repl.c interfaces/image.c
 bin/retro: io bin/retro-embedimage bin/retro-extend interfaces/image.c interfaces/rre.c interfaces/rre.forth interfaces/image-functions.o interfaces/io/rng.forth
 	cp ngaImage rre.image
 	./bin/retro-extend rre.image interfaces/io/filesystem.forth interfaces/io/gopher.forth interfaces/io/floatingpoint.forth interfaces/io/unix.forth interfaces/io/rng.forth interfaces/rre.forth
-	./bin/retro-embedimage rre.image >interfaces/rre_image.c
+	./bin/retro-embedimage rre.image >interfaces/retro-image.c
 	cd interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../bin/retro rre.c image-functions.o $(RREIO) $(LIBM)
 	cd package && ../bin/retro -f list
-	./bin/retro-embedimage rre.image >interfaces/rre_image.c
+	./bin/retro-embedimage rre.image >interfaces/retro-image.c
 	cd interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../bin/retro rre.c image-functions.o $(RREIO) $(LIBM)
 	rm rre.image
 

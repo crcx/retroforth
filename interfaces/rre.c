@@ -94,7 +94,7 @@ CELL memory[IMAGE_SIZE + 1];    /* The memory for the image            */
   data (converted to a .c file by an external tool).
   ---------------------------------------------------------- */
 
-#include "rre_image.c"
+#include "retro-image.c"
 
 
 void rre_execute(CELL cell, int silent);
