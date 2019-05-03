@@ -8,6 +8,7 @@ This is the changelog for the development builds of Retro.
 - (rre) `clock:year` corrected
 - (rre) `clock:month` corrected
 - (all) `d:add-header` is extended by retro.forth to remap spaces back to underscores
+- (doc) fixed stack comments in glossary
 
 ## Build
 
@@ -16,6 +17,7 @@ This is the changelog for the development builds of Retro.
 ## Core Language
 
 - rename `a:nth` to `a:th`
+- rename `v:update-using` to `v:update`
 
 ## Documentation
 

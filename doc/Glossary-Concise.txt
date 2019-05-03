@@ -1441,7 +1441,7 @@ Set a variable to -1.
 v:preserve                       D: aq-  A: -  F: -
 Make a copy of the value at the address, then run the quote. Once the quote completes, restore the address to the specified value.
 
-v:update-using                   D: aq-  A: -  F: -
+v:update                         D: aq-  A: -  F: -
 Fetch a value from the specified address, then run the quotation with this value on the stack. Afterwards, store the returned value at the original address.
 
 var                              D: s-  A: -  F: -

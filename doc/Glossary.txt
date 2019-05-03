@@ -5673,7 +5673,7 @@ Make a copy of the value at the address, then run the quote. Once the quote comp
 Class: class:word | Namespace: v | Interface Layer: all
 ------------------------------------------------------------------------
 
-v:update-using
+v:update
 
   Data:  aq-
   Addr:  -

@@ -479,7 +479,7 @@ v:limit	alu-	-	-	Fetch the value stored at the address, then run `n:limit` again
 v:off	a-	-	-	Set a variable to 0.			class:word	{n/a}	{n/a}	v	all	
 v:on	a-	-	-	Set a variable to -1.			class:word	{n/a}	{n/a}	v	all	
 v:preserve	aq-	-	-	Make a copy of the value at the address, then run the quote. Once the quote completes, restore the address to the specified value.			class:word	{n/a}	{n/a}	v	all	
-v:update-using	aq-	-	-	Fetch a value from the specified address, then run the quotation with this value on the stack. Afterwards, store the returned value at the original address.			class:word	{n/a}	{n/a}	v	all	
+v:update	aq-	-	-	Fetch a value from the specified address, then run the quotation with this value on the stack. Afterwards, store the returned value at the original address.			class:word	{n/a}	{n/a}	v	all	
 var	s-	-	-	Create a variable. The variable is initialized to 0.			class:word	    'Base var	{n/a}	global	all	
 var<n>	ns-	-	-	Create a variable with the specified initial value.			class:word	    #10 'Base var<n>\n	{n/a}	global	all	
 while	q-	-	-	Execute quote repeatedly while the quote returns a `TRUE` value. The quote should return a flag of either `TRUE` or `FALSE`, though `while` will treat any non-zero value as `TRUE`.			class:word	    #10 [ dup n:put nl n:dec dup n:-zero? ] while	{n/a}	global	all	
