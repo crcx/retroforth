@@ -24,7 +24,7 @@ NOTE: For simplicity of implementation, failure within a word of class `class:as
 'assertionFlag var
 
 :assert  (f-)
-  &assertionFlag [ and ] v:update-using ;
+  &assertionFlag [ and ] v:update ;
 
 :deep?   (n-f)
   n:inc depth lteq? dup assert ;
