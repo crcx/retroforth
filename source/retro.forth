@@ -603,16 +603,16 @@ Or:
     #1 'Next var<n>
     &Next [ fetch #10 * ] sip store
 
-`v:update-using` replaces this with:
+`v:update` replaces this with:
 
     #1 'Next var<n>
-    &Next [ #10 * ] v:update-using
+    &Next [ #10 * ] v:update
 
 It takes care of preserving the variable address, fetching the
 stored value, and updating with the resulting value.
 
 ~~~
-:v:update-using (aq-) swap [ fetch swap call ] sip store ;
+:v:update (aq-) swap [ fetch swap call ] sip store ;
 ~~~
 
 I have a simple word `copy` which copies memory to another
