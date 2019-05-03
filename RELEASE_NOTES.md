@@ -7,6 +7,7 @@ This is the changelog for the development builds of Retro.
 - (all) strl* functions now only compiled if using GLIBC.
 - (rre) `clock:year` corrected
 - (rre) `clock:month` corrected
+- (all) `d:add-header` is extended by retro.forth to remap spaces back to underscores
 
 ## Build
 
