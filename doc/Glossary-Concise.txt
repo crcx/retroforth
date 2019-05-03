@@ -271,7 +271,7 @@ Return the length of a array.
 a:make                           D: q-a  A: -  F: -
 Execute quote. Return a new array containing the values the quote leaves on the stack. This is identical to doing `a:counted-results a:reverse`
 
-a:map                            D: aq-  A: -  F: -
+a:map                            D: aq-b  A: -  F: -
 Execute quote once for each item in the array. Constructs a new array from the value returned by the quote.
 
 a:middle                         D: afl-a  A: -  F: -

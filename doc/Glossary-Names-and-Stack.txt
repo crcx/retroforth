@@ -89,7 +89,7 @@ a:index-of                       D: an-n  A: -  F: -
 a:left                           D: an-a  A: -  F: -
 a:length                         D: a-n  A: -  F: -
 a:make                           D: q-a  A: -  F: -
-a:map                            D: aq-  A: -  F: -
+a:map                            D: aq-b  A: -  F: -
 a:middle                         D: afl-a  A: -  F: -
 a:prepend                        D: aa-a  A: -  F: -
 a:reduce                         D: pnq-n  A: -  F: -
