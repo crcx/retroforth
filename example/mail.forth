@@ -3,7 +3,7 @@ sending emails from within RETRO.
 
 ~~~
 :mail:send (sss-)
-  swap 'mail_-s_"%s"_%s s:format file:W unix:popen ;
+  swap 'mail_-s_"%s"_%s s:format file:W unix:popen
   swap [ over file:write ] s:for-each unix:pclose ;
 ~~~
 
