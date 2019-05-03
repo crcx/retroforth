@@ -588,6 +588,7 @@ Word names in RETRO generally follow the following conventions.
 * Readability is important
 * Be consistent
 * Don't use a prefix as the first character of a name
+* Don't use underscores in word names
 * Use short names for indices
 
 ## Typical Format
@@ -664,6 +665,19 @@ To find a list of prefix characters, do:
 ```
 'prefix: d:words-with
 ```
+
+Underscores in strings are replaced by spaces. This is problematic,
+especially with variables. Consider:
+
+    'test_name var
+    #188 !test_name
+
+In this, the string for the name is converted to "test name". The
+store in the second line will not add the space, so resolves to an
+incorrect address.
+
+I personally recommend avoiding the use of underscores in any word
+names.
 
 # Stack Diagrams
 

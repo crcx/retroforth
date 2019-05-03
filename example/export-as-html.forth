@@ -74,7 +74,7 @@ the token type and use `span`.
   drop
 
   (normal_words)
-  s:put ;
+  s:put-html ;
 ~~~
 
 Next is the HTML page generation. This has words to generate
