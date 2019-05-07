@@ -23,15 +23,20 @@ examination or manipulation.
 
 # The Code
 
-I begin by creating a word to return the number of files in
-the current directory. This makes use of a Unix pipe to run
+I begin by defining a word for dealing with pipes.
+
+~~~
+:pipe>  (s-s)  file:R unix:popen [ file:read-line ] [ unix:pclose ] bi ;
+~~~
+
+I then create a word to return the number of files in the
+current directory. This makes use of a Unix pipe to run
 `ls -l | wc -l` and capture the result. I trim off any
 whitespace and convert to a number.
 
 ~~~
 :unix:count-files (-n)
-  'ls_-1_|_wc_-l  file:R unix:popen
-  [ file:read-line s:trim s:to-number ] [ unix:pclose ] bi ;
+  'ls_-1_|_wc_-l pipe> s:trim s:to-number ;
 ~~~
 
 Next, a word to identify the current working directory. This
@@ -39,8 +44,7 @@ also uses a pipe to `pwd`.
 
 ~~~
 :unix:get-cwd (-s)
-  'pwd file:R unix:popen
-  [ file:read-line s:trim ] [ unix:pclose ] bi '/ s:append ;
+  'pwd pipe> s:trim '/ s:append ;
 ~~~
 
 The program accepts a single command line argument: the
