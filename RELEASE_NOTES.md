@@ -28,6 +28,7 @@ This is the changelog for the development builds of Retro.
 
 - add sqlite3 wrapper
 - add mandelbrot.forth
+- add shell.forth
 
 ## General
 
