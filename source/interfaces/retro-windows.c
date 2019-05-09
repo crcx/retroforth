@@ -23,18 +23,13 @@
 
 #include <errno.h>
 #include <math.h>
-#include <netdb.h>
-#include <netinet/in.h>
 #include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <sys/socket.h>
 #include <sys/stat.h>
 #include <sys/types.h>
-#include <sys/wait.h>
 #include <time.h>
-#include <unistd.h>
 
 
 /*---------------------------------------------------------------------
@@ -53,10 +48,9 @@
 #define D_OFFSET_CLASS    2
 #define D_OFFSET_NAME     3
 
-#define NUM_DEVICES       8       /* Set the number of I/O devices     */
+#define NUM_DEVICES       6       /* Set the number of I/O devices     */
 
 #define MAX_OPEN_FILES  128
-#define GOPHER_MAX_FILE_SIZE (128 * 1024) + 1
 
 
 /*---------------------------------------------------------------------
@@ -104,11 +98,8 @@ void io_scripting_handler();
 void io_scripting_query();
 void io_image();
 void io_image_query();
-
-#if defined __GNU_LIBRARY__ || defined __GLIBC__
 size_t strlcat(char *dst, const char *src, size_t dsize);
 size_t strlcpy(char *dst, const char *src, size_t dsize);
-#endif
 
 
 /*---------------------------------------------------------------------
@@ -123,8 +114,6 @@ Handler IO_deviceHandlers[NUM_DEVICES + 1] = {
   io_filesystem_handler,
   io_floatingpoint_handler,
   io_scripting_handler,
-  io_unix_handler,
-  io_gopher_handler,
   io_image
 };
 
@@ -134,8 +123,6 @@ Handler IO_queryHandlers[NUM_DEVICES + 1] = {
   io_filesystem_query,
   io_floatingpoint_query,
   io_scripting_query,
-  io_unix_query,
-  io_gopher_query,
   io_image_query
 };
 
@@ -1057,371 +1044,6 @@ void io_floatingpoint_handler() {
 
 
 /*---------------------------------------------------------------------
-  Gopher Support
-  ---------------------------------------------------------------------*/
-
-/*---------------------------------------------------------------------
-  The first Gopher related function is `error()`, which prints an
-  error message and exits if there is a problem.
-  ---------------------------------------------------------------------*/
-
-void error(const char *msg) {
-  perror(msg);
-  exit(0);
-}
-
-
-/*---------------------------------------------------------------------
-  `gopher_fetch()` is the part that does all the real work.
-  ---------------------------------------------------------------------*/
-
-void gopher_fetch(char *host, CELL port, char *selector, CELL dest) {
-  int sockfd, portno, n;
-  struct sockaddr_in serv_addr;
-  struct hostent *server;
-  char data[GOPHER_MAX_FILE_SIZE];
-  char buffer[1025];
-
-  portno = (int)port;
-  sockfd = socket(AF_INET, SOCK_STREAM, 0);
-  if (sockfd < 0)
-    error("ERROR opening socket");
-
-  server = gethostbyname(host);
-  if (server == NULL) {
-    fprintf(stderr,"ERROR, no such host\n");
-    exit(0);
-  }
-
-  bzero(data, GOPHER_MAX_FILE_SIZE);
-  bzero((char *) &serv_addr, sizeof(serv_addr));
-
-  serv_addr.sin_family = AF_INET;
-  bcopy((char *)server->h_addr,
-     (char *)&serv_addr.sin_addr.s_addr,
-     server->h_length);
-  serv_addr.sin_port = htons(portno);
-
-  if (connect(sockfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) < 0)
-    error("ERROR connecting");
-
-  n = write(sockfd, selector, strlen(selector));
-  if (n < 0)
-     error("ERROR writing to socket");
-
-  n = write(sockfd, "\n", strlen("\n"));
-  if (n < 0)
-     error("ERROR writing to socket");
-
-  n = 1;
-  while (n > 0) {
-    bzero(buffer, 1025);
-    n = read(sockfd, buffer, 1024);
-    strlcat(data, buffer, GOPHER_MAX_FILE_SIZE);
-  }
-
-  close(sockfd);
-  string_inject(data, dest);
-  stack_push(strlen(data));
-}
-
-
-
-/*---------------------------------------------------------------------
-  The last Gopher function, `gopher_handle_request()` pulls the values
-  needed from the stack and passes them to the `gopher_fetch()`
-  function.
-
-  This will take the following from the stack (TOS to bottom):
-
-  Selector   (NULL terminated string)
-  Port       (Number)
-  Server     (NULL terminated string)
-  Buffer     (Pointer to memory that will hold the received file)
-  ---------------------------------------------------------------------*/
-
-void gopher_handle_request() {
-  CELL port, dest;
-  char server[1025], selector[4097];
-  strlcpy(selector, string_extract(stack_pop()), 4096);
-  port = stack_pop();
-  strlcpy(server, string_extract(stack_pop()), 1024);
-  dest = stack_pop();
-  gopher_fetch(server, port, selector, dest);
-}
-
-Handler GopherActions[1] = {
-  gopher_handle_request
-};
-
-void io_gopher_query() {
-  stack_push(0);
-  stack_push(5);
-}
-
-void io_gopher_handler() {
-  GopherActions[stack_pop()]();
-}
-
-
-/*=====================================================================*/
-
-
-/*---------------------------------------------------------------------
-  `unix_open_pipe()` is like `file_open()`, but for pipes. This pulls
-  from the data stack:
-
-  - mode       (number, TOS)
-  - executable (string, NOS)
-
-  Modes are:
-
-  | Mode | Corresponds To | Description          |
-  | ---- | -------------- | -------------------- |
-  |  0   | r              | Open for reading     |
-  |  1   | w              | Open for writing     |
-  |  3   | r+             | Open for read/update |
-
-  The file name should be a NULL terminated string. This will attempt
-  to open the requested file and will return a handle (index number
-  into the `OpenFileHandles` array).
-
-  Once opened, you can use the standard file words to read/write to the
-  process.
-  ---------------------------------------------------------------------*/
-
-void unix_open_pipe() {
-  CELL slot, mode, name;
-  char *request;
-  slot = files_get_handle();
-  mode = stack_pop();
-  name = stack_pop();
-  request = string_extract(name);
-  if (slot > 0) {
-    if (mode == 0)  OpenFileHandles[slot] = popen(request, "r");
-    if (mode == 1)  OpenFileHandles[slot] = popen(request, "w");
-    if (mode == 3)  OpenFileHandles[slot] = popen(request, "r+");
-  }
-  if (OpenFileHandles[slot] == NULL) {
-    OpenFileHandles[slot] = 0;
-    slot = 0;
-  }
-  stack_push(slot);
-}
-
-void unix_close_pipe() {
-  pclose(OpenFileHandles[data[sp]]);
-  OpenFileHandles[data[sp]] = 0;
-  sp--;
-}
-
-void unix_system() {
-  system(string_extract(stack_pop()));
-}
-
-void unix_fork() {
-  stack_push(fork());
-}
-
-/*---------------------------------------------------------------------
-  UNIX provides `execl` to execute a file, with various forms for
-  arguments provided.
-
-  RRE wraps this in several functions, one for each number of passed
-  arguments. See the Glossary for details on what each takes from the
-  stack. Each of these will return the error code if the execution
-  fails.
-  ---------------------------------------------------------------------*/
-
-void unix_exec0() {
-  char path[1025];
-  strlcpy(path, string_extract(stack_pop()), 1024);
-  execl(path, path, (char *)0);
-  stack_push(errno);
-}
-
-void unix_exec1() {
-  char path[1025];
-  char arg0[1025];
-  strlcpy(arg0, string_extract(stack_pop()), 1024);
-  strlcpy(path, string_extract(stack_pop()), 1024);
-  execl(path, path, arg0, (char *)0);
-  stack_push(errno);
-}
-
-void unix_exec2() {
-  char path[1025];
-  char arg0[1025], arg1[1025];
-  strlcpy(arg1, string_extract(stack_pop()), 1024);
-  strlcpy(arg0, string_extract(stack_pop()), 1024);
-  strlcpy(path, string_extract(stack_pop()), 1024);
-  execl(path, path, arg0, arg1, (char *)0);
-  stack_push(errno);
-}
-
-void unix_exec3() {
-  char path[1025];
-  char arg0[1025], arg1[1025], arg2[1025];
-  strlcpy(arg2, string_extract(stack_pop()), 1024);
-  strlcpy(arg1, string_extract(stack_pop()), 1024);
-  strlcpy(arg0, string_extract(stack_pop()), 1024);
-  strlcpy(path, string_extract(stack_pop()), 1024);
-  execl(path, path, arg0, arg1, arg2, (char *)0);
-  stack_push(errno);
-}
-
-void unix_exit() {
-  exit(stack_pop());
-}
-
-void unix_getpid() {
-  stack_push(getpid());
-}
-
-void unix_wait() {
-  CELL a;
-  stack_push(wait(&a));
-}
-
-void unix_kill() {
-  CELL a;
-  a = stack_pop();
-  kill(stack_pop(), a);
-}
-
-void unix_write() {
-  CELL a, b, c;
-  c = stack_pop();
-  b = stack_pop();
-  a = stack_pop();
-  write(fileno(OpenFileHandles[c]), string_extract(a), b);
-}
-
-void unix_chdir() {
-  chdir(string_extract(stack_pop()));
-}
-
-void unix_getenv() {
-  CELL a, b;
-  a = stack_pop();
-  b = stack_pop();
-  string_inject(getenv(string_extract(b)), a);
-}
-
-void unix_putenv() {
-  putenv(string_extract(stack_pop()));
-}
-
-void unix_sleep() {
-  sleep(stack_pop());
-}
-
-
-/*---------------------------------------------------------------------
-  Faster verisons of `n:put` and `s:put`
-  ---------------------------------------------------------------------*/
-
-void unix_io_putn() {
-  printf("%ld", (long)stack_pop());
-}
-
-void unix_io_puts() {
-  printf("%s", string_extract(stack_pop()));
-}
-
-
-/*---------------------------------------------------------------------
-  Time and Date Functions
-  ---------------------------------------------------------------------*/
-void unix_time() {
-  stack_push((CELL)time(NULL));
-}
-
-void unix_time_day() {
-  time_t t = time(NULL);
-  stack_push((CELL)localtime(&t)->tm_mday);
-}
-
-void unix_time_month() {
-  time_t t = time(NULL);
-  stack_push((CELL)localtime(&t)->tm_mon + 1);
-}
-
-void unix_time_year() {
-  time_t t = time(NULL);
-  stack_push((CELL)localtime(&t)->tm_year + 1900);
-}
-
-void unix_time_hour() {
-  time_t t = time(NULL);
-  stack_push((CELL)localtime(&t)->tm_hour);
-}
-
-void unix_time_minute() {
-  time_t t = time(NULL);
-  stack_push((CELL)localtime(&t)->tm_min);
-}
-
-void unix_time_second() {
-  time_t t = time(NULL);
-  stack_push((CELL)localtime(&t)->tm_sec);
-}
-
-void unix_time_day_utc() {
-  time_t t = time(NULL);
-  stack_push((CELL)gmtime(&t)->tm_mday);
-}
-
-void unix_time_month_utc() {
-  time_t t = time(NULL);
-  stack_push((CELL)gmtime(&t)->tm_mon + 1);
-}
-
-void unix_time_year_utc() {
-  time_t t = time(NULL);
-  stack_push((CELL)gmtime(&t)->tm_year + 1900);
-}
-
-void unix_time_hour_utc() {
-  time_t t = time(NULL);
-  stack_push((CELL)gmtime(&t)->tm_hour);
-}
-
-void unix_time_minute_utc() {
-  time_t t = time(NULL);
-  stack_push((CELL)gmtime(&t)->tm_min);
-}
-
-void unix_time_second_utc() {
-  time_t t = time(NULL);
-  stack_push((CELL)gmtime(&t)->tm_sec);
-}
-
-Handler UnixActions[] = {
-  unix_system,    unix_fork,       unix_exec0,   unix_exec1,   unix_exec2,
-  unix_exec3,     unix_exit,       unix_getpid,  unix_wait,    unix_kill,
-  unix_open_pipe, unix_close_pipe, unix_write,   unix_chdir,   unix_getenv,
-  unix_putenv,    unix_sleep,      unix_io_putn, unix_io_puts, unix_time,
-  unix_time_day,      unix_time_month,      unix_time_year,
-  unix_time_hour,     unix_time_minute,     unix_time_second,
-  unix_time_day_utc,  unix_time_month_utc,  unix_time_year_utc,
-  unix_time_hour_utc, unix_time_minute_utc, unix_time_second_utc
-};
-
-void io_unix_query() {
-  stack_push(1);
-  stack_push(8);
-}
-
-void io_unix_handler() {
-  UnixActions[stack_pop()]();
-}
-
-
-/*=====================================================================*/
-
-
-/*---------------------------------------------------------------------
   Interfacing With The Image
   ---------------------------------------------------------------------*/
 
@@ -1852,10 +1474,6 @@ void ngaProcessPackedOpcodes(CELL opcode) {
   }
 }
 
-
-/*=====================================================================*/
-
-
 /*
  * Copyright (c) 1998, 2015 Todd C. Miller <Todd.Miller@courtesan.com>
  *
@@ -1872,7 +1490,6 @@ void ngaProcessPackedOpcodes(CELL opcode) {
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-#ifndef strlcat
 /*
  * Appends src to string dst of size dsize (unlike strncat, dsize is the
  * full size of dst, not space left).  At most dsize-1 characters
@@ -1907,9 +1524,7 @@ strlcat(char *dst, const char *src, size_t dsize)
 
 	return(dlen + (src - osrc));	/* count does not include NUL */
 }
-#endif
 
-#ifndef strlcpy
 /*
  * Copy string src to buffer dst of size dsize.  At most dsize-1
  * chars will be copied.  Always NUL terminates (unless dsize == 0).
@@ -1939,4 +1554,4 @@ strlcpy(char *dst, const char *src, size_t dsize)
 
 	return(src - osrc - 1);	/* count does not include NUL */
 }
-#endif
+
