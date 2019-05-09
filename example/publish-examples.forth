@@ -10,39 +10,44 @@ are stored in `/home/crc/public/examples`.
 '/home/crc/public/examples/ 'FILE-PATH s:const
 ~~~
 
+# Variables
+
 ~~~
-:unix:count-files (-n)
-  'ls_-1_|_wc_-l  file:R unix:popen
-  [ file:read-line s:trim s:to-number ] [ unix:pclose ] bi ;
+'FID var
+~~~
 
-:unix:for-each-file (q-)
-  'ls_-1_-p file:R unix:popen
-  unix:count-files-in-cwd
-  [ [ file:read-line s:temp over call ] sip ] times
-  unix:pclose drop ;
+# Support
 
+This word takes a string and provides a flag of `TRUE` if it
+ends in `/`, or `FALSE` otherwise. It leaves the string pointer
+on the stack.
+
+~~~
 :dir? (s-sf)
   dup s:length over + n:dec fetch $/ eq? ;
+~~~
+
+# Words To Create The Index
+
+~~~
+:s:put [ @FID file:write ] s:for-each ;
+:css   '<style>*{background:#111;color:#fff;font-family:monospace;}</style>
+       s:put ;
+:dtd   '<!DOCTYPE_html> s:put ;
+:title '<title>RETRO_Examples</title> s:put ;
+:head  '<head> s:put title css '</head> s:put ;
+:link  dup '<a_href="/examples/%s.html">%s</a><br> s:format s:put $. c:put ;
+:body  '<body> s:put call '</body> s:put ;
+:make  dtd head body ;
 ~~~
 
 # Generate index.html
 
 ~~~
-FILE-PATH 'index.html s:append file:W file:open 'FID const
-
-:index:put [ FID file:write ] s:for-each ;
-
-:css
-  '<style>*{background:#111;color:#fff;font-family:monospace;}</style>
-  index:put ;
-
-:header '<!DOCTYPE_html> index:put css ;
-
-:link dup '<a_href="/examples/%s.html">%s</a><br> s:format index:put $. c:put ;
-
-header
-[ dir? &drop &link choose ] unix:for-each-file nl
-FID file:close
+FILE-PATH 'index.html s:append file:W file:open !FID
+[ '<h1>Examples</h1><br> s:put
+  [ dir? &drop &link choose ] unix:for-each-file nl ] make
+@FID file:close
 ~~~
 
 # Generate HTML Files

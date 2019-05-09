@@ -35,6 +35,7 @@ July - September window for this release.
 - add shell.forth
 - add sqlite3 wrapper
 - corrected an issue in mail.forth
+- cleanup publish-examples.forth
 
 ## General
 
