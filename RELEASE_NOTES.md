@@ -1,14 +1,17 @@
 # RETRO 2019.12
 
 This is the changelog for the development builds of Retro.
+The version number is likely to change; I'm targetting a
+July - September window for this release.
 
 ## Bug Fixes
 
 - (all) strl* functions now only compiled if using GLIBC.
-- (rre) `clock:year` corrected
-- (rre) `clock:month` corrected
 - (all) `d:add-header` is extended by retro.forth to remap spaces back to underscores
 - (doc) fixed stack comments in glossary
+- (ex ) fixed issue in mail.forth
+- (rre) `clock:year` corrected
+- (rre) `clock:month` corrected
 
 ## Build
 
@@ -16,19 +19,21 @@ This is the changelog for the development builds of Retro.
 
 ## Core Language
 
-- rename `a:nth` to `a:th`
-- rename `v:update-using` to `v:update`
+- rename: `a:nth` to `a:th`
+- rename: `v:update-using` to `v:update`
 
 ## Documentation
 
-- updated Linux build instructions
+- merged BSD, Linux, macOS build instructions
 - updated Starting instructions
 
 ## Examples
 
-- add sqlite3 wrapper
+- add compat.forth
 - add mandelbrot.forth
 - add shell.forth
+- add sqlite3 wrapper
+- corrected an issue in mail.forth
 
 ## General
 
@@ -36,7 +41,7 @@ This is the changelog for the development builds of Retro.
 
 ## I/O
 
-- added `clock:utc:` namespace
+- (rre) added `clock:utc:` namespace
 
 ## Interfaces
 
