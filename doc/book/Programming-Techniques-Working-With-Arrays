@@ -96,3 +96,30 @@ return either TRUE or FALSE.
 #100  { #1 #2 #3 } a:contains?
 'test { 'abc 'def 'test 'ghi } a:contains-string?
 ```
+
+## Implementation
+
+In memory, an array is a count followed by the values. As an
+example, if you have an array:
+
+    { #10 #20 #30 }
+
+In memory this would be setup as:
+
+    | Offset | Value |
+    | ------ | ----- |
+    | 000    | 3     |
+    | 001    | 10    |
+    | 002    | 20    |
+    | 003    | 30    |
+
+You can construct one on the fly by keeping a pointer to
+`here` and using `,` to place the values. E.g.,
+
+    here [ #3 , #10 , #20 , #30 , ] dip
+
+An example of this can be seen in this excerpt from an example
+(*example/Primes.forth*):
+
+    :create-set (-a) 
+        here #3000 , #2 #3002 [ dup , n:inc ] times drop ;

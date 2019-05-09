@@ -22,34 +22,13 @@ package into the tcc directory.
 
 ## Prepare Source
 
-You'll need to comment out (or remove) some things before RETRO
-will build.
-
-In *rre.c*:
-
-- remove includes for unistd.h, sys/sockets.h, netinet/in.h,
-  netdb.h, errno.h, sys/wait.h, signal.h
-- remove the #define USE_TERMIOS line
-- change the #define NUM_DEVICES to 6
-- remove io_unix_handler and io_gopher_handler from IO_deviceHandlers
-- remove io_unix_query and io_gopher_query from IO_queryHandlers
-
-In *image-functions.c*:
-
-- remove includes for unistd.h
-
-In *image-functions.h*:
-
-- remove includes for unistd.h
-
-In *io\filesystem.c*:
-
-- remove includes for unistd.h
-
-In *io\floatingpoint.c*:
-
-- remove includes for unistd.h
+Copy the `source/interfaces/retro-windows.c` and the
+`source/interfaces/retro-windows.c` to the directory you setup
+tcc into.
 
 ## Build
 
-\path\to\tcc rre.c image-functions.c io\filesystem.c io\floatingpoint.c -o retro.exe
+Building will require use of the command line. Assuming that
+tcc.exe is in the current directory along with the RETRO sources:
+
+    tcc retro-windows.c -o retro.exe

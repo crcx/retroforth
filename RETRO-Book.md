@@ -127,37 +127,16 @@ package into the tcc directory.
 
 ## Prepare Source
 
-You'll need to comment out (or remove) some things before RETRO
-will build.
-
-In *rre.c*:
-
-- remove includes for unistd.h, sys/sockets.h, netinet/in.h,
-  netdb.h, errno.h, sys/wait.h, signal.h
-- remove the #define USE_TERMIOS line
-- change the #define NUM_DEVICES to 6
-- remove io_unix_handler and io_gopher_handler from IO_deviceHandlers
-- remove io_unix_query and io_gopher_query from IO_queryHandlers
-
-In *image-functions.c*:
-
-- remove includes for unistd.h
-
-In *image-functions.h*:
-
-- remove includes for unistd.h
-
-In *io\filesystem.c*:
-
-- remove includes for unistd.h
-
-In *io\floatingpoint.c*:
-
-- remove includes for unistd.h
+Copy the `source/interfaces/retro-windows.c` and the
+`source/interfaces/retro-windows.c` to the directory you setup
+tcc into.
 
 ## Build
 
-\path\to\tcc rre.c image-functions.c io\filesystem.c io\floatingpoint.c -o retro.exe
+Building will require use of the command line. Assuming that
+tcc.exe is in the current directory along with the RETRO sources:
+
+    tcc retro-windows.c -o retro.exe
 
 # Starting RETRO
 
@@ -1170,6 +1149,33 @@ return either TRUE or FALSE.
 #100  { #1 #2 #3 } a:contains?
 'test { 'abc 'def 'test 'ghi } a:contains-string?
 ```
+
+## Implementation
+
+In memory, an array is a count followed by the values. As an
+example, if you have an array:
+
+    { #10 #20 #30 }
+
+In memory this would be setup as:
+
+    | Offset | Value |
+    | ------ | ----- |
+    | 000    | 3     |
+    | 001    | 10    |
+    | 002    | 20    |
+    | 003    | 30    |
+
+You can construct one on the fly by keeping a pointer to
+`here` and using `,` to place the values. E.g.,
+
+    here [ #3 , #10 , #20 , #30 , ] dip
+
+An example of this can be seen in this excerpt from an example
+(*example/Primes.forth*):
+
+    :create-set (-a) 
+        here #3000 , #2 #3002 [ dup , n:inc ] times drop ;
 
 # Working With a Buffer
 
