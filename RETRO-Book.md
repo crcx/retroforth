@@ -67,15 +67,16 @@ If you have problems, check the version of Fossil you are
 using. I am currently using Fossil 2.7, you may experience
 issues checking out or cloning if using older versions.
 
-# Building RETRO on BSD
+# Building RETRO on BSD, Linux, macOS
 
-RETRO is well supported on BSD (FreeBSD, NetBSD, OpenBSD)
-systems. It should build on a base install of any of these
+RETRO is well supported on BSD (FreeBSD, NetBSD, OpenBSD),
+Linux, and macOS systems. It should build on any of these
 without issue.
 
 ## Requirements
 
-- c compiler
+- c compiler & linker
+- standard headers
 - make
 
 ## Process
@@ -96,74 +97,11 @@ In the `bin/` directory:
     retro-embedimage
     retro-describe
 
-# Building RETRO on Linux
+## Issues
 
-Building on Linux is pretty easy. You'll need to make sure
-you have a C compiler, headers, and make.
-
-## Requirements
-
-- c compiler (tested: clang, tcc, gcc)
-- development headers
-- make
-
-## Process
-
-Run:
-
-```
-make
-```
-
-This will build the toolchain and then the main `retro`
-executable.
-
-## Executables
-
-In the `bin/` directory:
-
-    retro
-    retro-unu
-    retro-muri
-    retro-extend
-    retro-embedimage
-    retro-describe
-
-## Troubleshooting
-
-I've had issues building on Linux in the past. The GNU toolchain
-can be quite problematic.
-
-If the build fails please contact Charles with details and he
-will work on finding a fix.
-
-# Building RETRO on macOS
-
-To build on macOS, you will need the command line tools from
-Xcode. Install these and you should be able to build and use
-RETRO.
-
-## Requirements
-
-- command line tools from Xcode
-
-## Process
-
-Run `make`
-
-This will build the toolchain and then the main `retro`
-executable.
-
-## Executables
-
-In the `bin/` directory:
-
-    retro
-    retro-unu
-    retro-muri
-    retro-extend
-    retro-embedimage
-
+If you run into any build issues, please send details to
+crc@forth.works so I can work on addressing them as quickly
+as possible.
 
 # Building RETRO on Windows
 
