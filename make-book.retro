@@ -18,9 +18,7 @@ for me.
 {
   'Overview
   'Obtaining-Retro
-  'Building-BSD
-  'Building-Linux
-  'Building-macOS
+  'Building-Unix
   'Building-Windows
   'Starting
   'Basic-Interactions
