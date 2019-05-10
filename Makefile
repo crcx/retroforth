@@ -97,6 +97,7 @@ ngaImage: source/rx.muri source/retro.forth bin/retro-muri bin/retro-extend
 
 bin/retro-describe: retro-describe.forth words.tsv
 	cat retro-describe.forth words.tsv >bin/retro-describe
+	chmod +x bin/retro-describe
 
 bin/retro-embedimage: tools/embedimage.c
 	$(CC) $(CFLAGS) $(LDFLAGS) -o bin/retro-embedimage  tools/embedimage.c
