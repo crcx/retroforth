@@ -40,6 +40,8 @@ install-strip: build install-data install-docs install-examples
 	install -c -m 755 -s bin/retro-muri $(DESTDIR)$(PREFIX)/bin/retro-muri
 	install -c -m 755 -s bin/retro $(DESTDIR)$(PREFIX)/bin/retro
 	install -c -m 755 -s bin/retro-unu $(DESTDIR)$(PREFIX)/bin/retro-unu
+	install -c -m 755 bin/retro-describe $(DESTDIR)$(PREFIX)/bin/retro-describe
+	install -c -m 755 bin/retro-document $(DESTDIR)$(PREFIX)/bin/retro-document
 
 install-data:
 	install -m 755 -d -- $(DESTDIR)$(DATADIR)
@@ -64,6 +66,7 @@ install-manpages:
 	install -c -m 644 man/retro-embedimage.1 $(MANDIR)/retro-embedimage.1
 	install -c -m 644 man/retro-extend.1 $(MANDIR)/retro-extend.1
 	install -c -m 644 man/retro-describe.1 $(MANDIR)/retro-describe.1
+	install -c -m 644 man/retro-document.1 $(MANDIR)/retro-document.1
 	install -c -m 644 man/retro-muri.1 $(MANDIR)/retro-muri.1
 	install -c -m 644 man/retro-unu.1 $(MANDIR)/retro-unu.1
 

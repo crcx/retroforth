@@ -26,6 +26,7 @@ July - September window for this release.
 
 - merged BSD, Linux, macOS build instructions
 - updated Starting instructions
+- added implementation notes on arrays
 
 ## Examples
 
@@ -36,6 +37,7 @@ July - September window for this release.
 - add sqlite3 wrapper
 - corrected an issue in mail.forth
 - cleanup publish-examples.forth
+- publish-examples.forth now uses `retro-document` to generate glossaries
 
 ## General
 
@@ -48,3 +50,5 @@ July - September window for this release.
 ## Interfaces
 
 - retro-compiler: runtime now supports scripting arguments
+- retro-unix: replaces earlier rre.c
+- retro-windows: rre, adapted for windows
