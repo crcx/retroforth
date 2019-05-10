@@ -36,7 +36,11 @@ on the stack.
 :dtd   '<!DOCTYPE_html> s:put ;
 :title '<title>RETRO_Examples</title> s:put ;
 :head  '<head> s:put title css '</head> s:put ;
-:link  dup '<a_href="/examples/%s.html">%s</a><br> s:format s:put $. c:put ;
+:li    '<li> s:put call '</li><br>\n s:format s:put ;
+:link  dup '<a_href="/examples/%s.html">%s</a>_ s:format s:put ;
+:link2 '<a_href="/examples/%s.glossary"><br>&rarr;_glossary</a> s:format s:put
+       $. c:put ;
+:links [ dup link link2 ] li ;
 :body  '<body> s:put call '</body> s:put ;
 :make  dtd head body ;
 ~~~
@@ -45,8 +49,9 @@ on the stack.
 
 ~~~
 FILE-PATH 'index.html s:append file:W file:open !FID
-[ '<h1>Examples</h1><br> s:put
-  [ dir? &drop &link choose ] unix:for-each-file nl ] make
+[ '<h1>Examples</h1><br><ul> s:put
+  [ dir? &drop &links choose ] unix:for-each-file
+  '</ul> s:put nl ] make
 @FID file:close
 ~~~
 
@@ -57,4 +62,13 @@ FILE-PATH 'index.html s:append file:W file:open !FID
         './export-as-html.forth_%s_>%s%s.html s:format unix:system $. c:put ;
 
 [ dir? &drop [ export ] choose ] unix:for-each-file nl
+~~~
+
+# Generate a Glossary File For Each
+
+~~~
+:glossary FILE-PATH over
+  'retro-document_%s_>%s%s.glossary s:format unix:system $. c:put ;
+
+[ dir? &drop &glossary choose ] unix:for-each-file
 ~~~
