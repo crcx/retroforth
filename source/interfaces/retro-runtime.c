@@ -23,13 +23,10 @@
 
 #include <errno.h>
 #include <math.h>
-#include <netdb.h>
-#include <netinet/in.h>
 #include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <sys/socket.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <sys/wait.h>
@@ -53,10 +50,9 @@
 #define D_OFFSET_CLASS    2
 #define D_OFFSET_NAME     3
 
-#define NUM_DEVICES       8       /* Set the number of I/O devices     */
+#define NUM_DEVICES       7       /* Set the number of I/O devices     */
 
 #define MAX_OPEN_FILES  128
-#define GOPHER_MAX_FILE_SIZE (128 * 1024) + 1
 
 
 /*---------------------------------------------------------------------
@@ -98,8 +94,6 @@ void io_unix_query();
 void io_unix_handler();
 void io_floatingpoint_query();
 void io_floatingpoint_handler();
-void io_gopher_query();
-void io_gopher_handler();
 void io_scripting_handler();
 void io_scripting_query();
 void io_image();
@@ -126,7 +120,6 @@ Handler IO_deviceHandlers[NUM_DEVICES + 1] = {
   io_floatingpoint_handler,
   io_scripting_handler,
   io_unix_handler,
-  io_gopher_handler,
   io_image
 };
 
@@ -137,7 +130,6 @@ Handler IO_queryHandlers[NUM_DEVICES + 1] = {
   io_floatingpoint_query,
   io_scripting_query,
   io_unix_query,
-  io_gopher_query,
   io_image_query
 };
 
@@ -986,117 +978,6 @@ void io_floatingpoint_query() {
 
 void io_floatingpoint_handler() {
   FloatHandlers[stack_pop()]();
-}
-
-
-/*=====================================================================*/
-
-
-/*---------------------------------------------------------------------
-  Gopher Support
-  ---------------------------------------------------------------------*/
-
-/*---------------------------------------------------------------------
-  The first Gopher related function is `error()`, which prints an
-  error message and exits if there is a problem.
-  ---------------------------------------------------------------------*/
-
-void error(const char *msg) {
-  perror(msg);
-  exit(0);
-}
-
-
-/*---------------------------------------------------------------------
-  `gopher_fetch()` is the part that does all the real work.
-  ---------------------------------------------------------------------*/
-
-void gopher_fetch(char *host, CELL port, char *selector, CELL dest) {
-  int sockfd, portno, n;
-  struct sockaddr_in serv_addr;
-  struct hostent *server;
-  char data[GOPHER_MAX_FILE_SIZE];
-  char buffer[1025];
-
-  portno = (int)port;
-  sockfd = socket(AF_INET, SOCK_STREAM, 0);
-  if (sockfd < 0)
-    error("ERROR opening socket");
-
-  server = gethostbyname(host);
-  if (server == NULL) {
-    fprintf(stderr,"ERROR, no such host\n");
-    exit(0);
-  }
-
-  bzero(data, GOPHER_MAX_FILE_SIZE);
-  bzero((char *) &serv_addr, sizeof(serv_addr));
-
-  serv_addr.sin_family = AF_INET;
-  bcopy((char *)server->h_addr,
-     (char *)&serv_addr.sin_addr.s_addr,
-     server->h_length);
-  serv_addr.sin_port = htons(portno);
-
-  if (connect(sockfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) < 0)
-    error("ERROR connecting");
-
-  n = write(sockfd, selector, strlen(selector));
-  if (n < 0)
-     error("ERROR writing to socket");
-
-  n = write(sockfd, "\n", strlen("\n"));
-  if (n < 0)
-     error("ERROR writing to socket");
-
-  n = 1;
-  while (n > 0) {
-    bzero(buffer, 1025);
-    n = read(sockfd, buffer, 1024);
-    strlcat(data, buffer, GOPHER_MAX_FILE_SIZE);
-  }
-
-  close(sockfd);
-  string_inject(data, dest);
-  stack_push(strlen(data));
-}
-
-
-
-/*---------------------------------------------------------------------
-  The last Gopher function, `gopher_handle_request()` pulls the values
-  needed from the stack and passes them to the `gopher_fetch()`
-  function.
-
-  This will take the following from the stack (TOS to bottom):
-
-  Selector   (NULL terminated string)
-  Port       (Number)
-  Server     (NULL terminated string)
-  Buffer     (Pointer to memory that will hold the received file)
-  ---------------------------------------------------------------------*/
-
-void gopher_handle_request() {
-  CELL port, dest;
-  char server[1025], selector[4097];
-  strlcpy(selector, string_extract(stack_pop()), 4096);
-  port = stack_pop();
-  strlcpy(server, string_extract(stack_pop()), 1024);
-  dest = stack_pop();
-  gopher_fetch(server, port, selector, dest);
-}
-
-Handler GopherActions[1] = {
-  gopher_handle_request
-};
-
-void io_gopher_query() {
-  stack_push(0);
-  stack_push(5);
-}
-
-void io_gopher_handler() {
-  GopherActions[stack_pop()]();
 }
 
 

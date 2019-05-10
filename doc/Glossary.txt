@@ -3425,7 +3425,7 @@ gopher:get
 
 Takes an address, a server, a port, and a selector. Fetch the resource and store it at address. Return the number of bytes received.
 
-Class: class:word | Namespace: gopher | Interface Layer: rre
+Class: class:word | Namespace: gopher | Interface Layer: ios
 
 Example #1:
 

@@ -46,6 +46,7 @@ July - September window for this release.
 ## I/O
 
 - (rre) added `clock:utc:` namespace
+- (rre) remove gopher downloader
 
 ## Interfaces
 

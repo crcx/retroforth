@@ -27,6 +27,6 @@ allow for the NULL termination.
 
 ```
 'Data d:create #256001 allot
-'https://www.osnews.com Data #300009 net:fetch
+'gopher://forthworks.com &Data #300009 net:fetch
 '%n_bytes_read\n s:format s:put
 ```

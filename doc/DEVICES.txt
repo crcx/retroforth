@@ -46,8 +46,8 @@ All other devices are optional and can be specified in any order.
 0002 | Floating Point   |                            |
 0003 | Block Storage    | Raw, 1024 cell blocks      |
 0004 | Filesystem       | Unix-style Files           |
-0005 | Network: Gopher  | Make gopher requests       |
-0006 | Network: HTTP    |                            |
+0005 |                  |                            |
+0006 |                  |                            |
 0007 | Network: Sockets |                            |
 0008 | Syscalls: Unix   |                            |
 0009 | Scripting Hooks  |                            |
@@ -107,21 +107,5 @@ additional values.
     | 6         | h-n   | Return the size of a file        |
     | 7         | s-    | Delete a file                    |
     | 8         | h-    | Flush pending writes             |
-
-## 0005: Network: Gopher
-
-Revision 0:
-
-This device fetches resources using the Gopher protocol.
-
-Takes a single value indicating the operation; the operation
-requires additional values.
-
-    | Operation | Stack | Action                           |
-    | --------- | ----- | -------------------------------- |
-    | 0         | asns- | Connect to server (s1), port (n) |
-    |           |       | and request selector (s2). The   |
-    |           |       | returned data is stored at the   |
-    |           |       | destination address (a).         |
 
 ## 0010: Random Number Generator

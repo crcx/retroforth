@@ -119,7 +119,7 @@ bin/retro-repl: source/interfaces/repl.c source/interfaces/image.c
 
 bin/retro: bin/retro-embedimage bin/retro-extend source/interfaces/retro-image.c source/interfaces/retro-unix.c source/interfaces/rre.forth source/interfaces/io/rng.forth
 	cp ngaImage rre.image
-	./bin/retro-extend rre.image source/interfaces/io/filesystem.forth source/interfaces/io/gopher.forth source/interfaces/io/floatingpoint.forth source/interfaces/io/unix.forth source/interfaces/io/rng.forth source/interfaces/rre.forth
+	./bin/retro-extend rre.image source/interfaces/io/filesystem.forth source/interfaces/io/floatingpoint.forth source/interfaces/io/unix.forth source/interfaces/io/rng.forth source/interfaces/rre.forth
 	./bin/retro-embedimage rre.image >source/interfaces/retro-image.c
 	cd source/interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../../bin/retro retro-unix.c $(LIBM)
 	cd package && ../bin/retro -f list
@@ -157,7 +157,7 @@ interfaces/image.c: bin/retro-embedimage bin/retro-extend bin/retro-muri source/
 
 bin/retro-compiler: bin/retro-extend source/interfaces/retro-compiler.c source/interfaces/retro-runtime.c
 	cp ngaImage runtime.image
-	./bin/retro-extend runtime.image source/interfaces/io/filesystem.forth source/interfaces/io/gopher.forth source/interfaces/io/floatingpoint.forth source/interfaces/io/unix.forth source/interfaces/io/rng.forth source/interfaces/rre.forth
+	./bin/retro-extend runtime.image source/interfaces/io/filesystem.forth source/interfaces/io/floatingpoint.forth source/interfaces/io/unix.forth source/interfaces/io/rng.forth source/interfaces/rre.forth
 	cd source/interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../../retro-runtime retro-runtime.c $(LIBM)
 	cd source/interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../../bin/retro-compiler retro-compiler.c
 	objcopy --add-section .ngaImage=runtime.image --set-section-flags .ngaImage=noload,readonly bin/retro-compiler

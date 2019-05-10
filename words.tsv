@@ -295,7 +295,7 @@ file:slurp	as-	-	-	Given an address and a file name, read the file contents into
 file:spew	ss-	-	-	Given a string (s1) and a file name (s2), write the string into the file, replacing any existing cotent.			class:word	{n/a}	{n/a}	file	rre	
 file:tell	h-n	-	-	Given a file handle, return the current offset in the file.			class:word	{n/a}	{n/a}	file	rre	
 file:write	ch-	-	-	Write a character to the file represented by the handle.			class:word	{n/a}	{n/a}	file	rre	
-gopher:get	asns-n	-	-	Takes an address, a server, a port, and a selector. Fetch the resource and store it at address. Return the number of bytes received.			class:word	    here 'forthworks.com #70 '/ gopher:get\n    here s:put	{n/a}	gopher	rre	
+gopher:get	asns-n	-	-	Takes an address, a server, a port, and a selector. Fetch the resource and store it at address. Return the number of bytes received.			class:word	    here 'forthworks.com #70 '/ gopher:get\n    here s:put	{n/a}	gopher	ios	
 gt?	nn-f	-	-	Compare n1 and n2. Return `TRUE` if n1 is greater than n2, or `FALSE` otherwise.			class:primitive	{n/a}	{n/a}	global	all	
 gteq?	nn-f	-	-	Compare n1 and n2. Return `TRUE` if n1 is greater than or equal to n2, or `FALSE` otherwise.			class:word	{n/a}	{n/a}	global	all	
 here	-a	-	-	Return the next free address in memory.			class:word	{n/a}	{n/a}	global	all	
