@@ -1,4 +1,4 @@
-Copyright 2018 jmf
+Copyright 2019 jmf
 License: WTFPL
 
 This code prints a Mandelbrot set in ASCII art to terminal.
@@ -7,19 +7,15 @@ First of all, some variables are declared.
 The initial maximum number of iterations is set to 128.
 
 ~~~
-'x var
-'y var
-'max_iter var
-'iter var
+'x var 
+'y var  
+'iter var 
 
-'zoom var
-'posx var
-'posy var
+#128 'max-iter var<n>
 
-#0   !posx
-#0   !posy
-#1   !zoom
-#128 !max_iter
+#1 'zoom var<n>
+#0 'posx var<n>
+#0 'posy var<n>
 ~~~
 
 We are using fixed-point numbers with a scaling factor of 10'000.
@@ -27,44 +23,89 @@ That means that the float value 1.0 is represented by the number 10'000.
 For that, we need a special multiplication definition.
 
 ~~~
-:f* * #10000 / ;
+:f* * #10000 / ; 
 ~~~
 
 Now the calculation of the Mandelbrot set value at a specified point is
 defined.
 
 ~~~
-:mb_value (x_y--v)
-#0  !x
-#0  !y
-#-1 !iter
-[ 
-@iter #1 + !iter
+:mb_value (x_y--v) 
+  #0  !x 
+  #0  !y 
+  #-1 !iter 
+  [  
+    @iter #1 + !iter 
+    
+    dup-pair  
+    #2 @x * @y f* + swap (new_y) 
+    @x @x f* @y @y f* - +  (new_x) 
+    !x !y 
+ 
+    @x @x f* @y @y f* + #40000 lteq?  
+    @iter @max-iter lt? and  
+  ] while 
+  drop drop @iter 
+; 
+~~~
 
-dup-pair 
-#2 @x * @y f* + swap (new_y)
-@x @x f* @y @y f* - +  (new_x)
-!x !y
+In order to display the mandelbrot set nicely, 10 different iteration
+levels are filled with their equivalent ASCII signs.
 
-@x @x f* @y @y f* + #40000 lteq? 
-@iter @max_iter lt? and 
-] while
-drop drop @iter
+~~~
+:ascii_equiv (n--c)
+  #9 * @max-iter / 
+  #0 [ #32 ] case
+  #1 [ $. ] case
+  #2 [ $: ] case
+  #3 [ $- ] case
+  #4 [ $= ] case
+  #5 [ $+ ] case
+  #6 [ $* ] case
+  #7 [ $# ] case
+  #8 [ $% ] case
+  #9 [ $@ ] case
 ;
 ~~~
 
 The user can change some parameters by entering key press sequences.
-The following code checks for those key presses.
+The following code checks for those key presses...
 
 ~~~
-:zoom+? dup $+ eq? [ @zoom #2 * !zoom ] if ;
-:zoom-? dup $- eq? [ @zoom #2 / #1 n:max !zoom ] if ;
-:up?    dup $w eq? [ @posy #10000 @zoom / - !posy ] if ;
-:down?  dup $s eq? [ @posy #10000 @zoom / + !posy ]  if ;
-:left?  dup $a eq? [ @posx #10000 @zoom / - !posx ]  if ;
-:right? dup $d eq? [ @posx #10000 @zoom / + !posx ]  if ;
-:resinc? dup $e eq? [ @max_iter #2 * !max_iter ] if ;
-:resdec? dup $q eq? [ @max_iter #2 / #1 n:max !max_iter ]  if ;
+:zoom+? dup $+ eq? [ @zoom #2 * !zoom ] if ; 
+:zoom-? dup $- eq? [ @zoom #2 / #1 n:max !zoom ] if ; 
+:up?    dup $w eq? [ @posy #10000 @zoom / - !posy ] if ; 
+:down?  dup $s eq? [ @posy #10000 @zoom / + !posy ]  if ; 
+:left?  dup $a eq? [ @posx #10000 @zoom / - !posx ]  if ; 
+:right? dup $d eq? [ @posx #10000 @zoom / + !posx ]  if ; 
+:resinc? dup $e eq? [ @max-iter #2 * !max-iter ] if ; 
+:resdec? dup $q eq? [ @max-iter #2 / #1 n:max !max-iter ]  if ; 
+~~~
+
+...and this word bundles all those together.
+
+~~~
+:input_handle 
+  c:get
+  zoom+? zoom-?
+  up? down?
+  left? right?
+  resinc? resdec?
+  drop
+  nl
+;
+~~~
+
+A quick function draws some information about key bindings and the
+current zoom level, as well as the current maximum number of iterations.
+
+~~~
+:info_draw
+'+/-_to_zoom;_w/a/s/d_to_move s:put nl 
+'q/e_to_increase_decrease_resolution s:put nl 
+'zoom_level_ s:put @zoom n:put nl 
+'iterations_ s:put @max-iter n:put nl  
+;
 ~~~
 
 Finally the actual drawing code is written. It renders to 25x80
@@ -75,40 +116,31 @@ This results in a scaling factor of 438 for the width and 800 for the
 height.
 
 ~~~
-:mb_draw
-#25 [
-  #80 [
-    I #438 * #25000 - @zoom / @posx +
-    J #800 * #10000 - @zoom / @posy +
-    mb_value
-    $A
-    swap @max_iter lt? [ drop $. ] if 
-    c:put
-  ] times<with-index>
-  nl
-] times<with-index>
-;
+:mb_draw 
+#25 [ 
+  #80 [ 
+    I #438 * #25000 - @zoom / @posx + 
+    J #800 * #10000 - @zoom / @posy + 
+    mb_value 
+    ascii_equiv c:put 
+  ] times<with-index> 
+  nl 
+] times<with-index> 
+; 
 ~~~
 
+Before we start, the terminal is set to character-buffered. This makes
+it possible to react to key presses directly, instead of only after
+the enter key is pressed.
 The last function is a loop that draws the set, some info and gets key-
 presses.
 
 ~~~
-[
-mb_draw
-'+/-_to_zoom;_w/a/s/d_to_move s:put nl
-'q/e_to_increase_decrease_resolution s:put nl
-'zoom_level_ s:put @zoom n:put nl
-'iterations_ s:put @max_iter n:put nl 
-c:get
-zoom+?
-zoom-?
-up?
-down?
-left?
-right?
-resinc?
-resdec?
-drop
-TRUE ] while
+'stty_cbreak unix:system
+
+[ 
+  mb_draw 
+  info_draw
+  input_handle
+TRUE ] while 
 ~~~
