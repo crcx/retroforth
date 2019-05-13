@@ -53,6 +53,9 @@ with tradition as well as the minimal requirements of ANS.
 :AGAIN |again ; immediate
 :FOR   |[ ; immediate
 :NEXT  |] |times<with-index> ; immediate
+:DO    |[ |[ |[ ; immediate
+:LOOP  |] |dip |] |dip |n:inc |dup-pair |gt? |] |while |drop-pair ; immediate
+:+LOOP |] |dip |] |dip |swap |push |+ |pop |swap |dup-pair |gt? |] |while |drop-pair ; immediate
 ~~~
 
 ## I/O
@@ -172,7 +175,8 @@ The following words are not supported due to design choices in RETRO.
     --------  --------  --------  --------  --------  --------
     #         #>        #S        '         (         ."
     [']       :         >IN       [CHAR]    ABORT"    CONSTANT
-    CREATE    POSTPONE  S"        SOURCE    VARIABLE  WORD
+    CREATE    EXIT      POSTPONE  S"        SOURCE    VARIABLE
+    WORD
     --------  --------  --------  --------  --------  --------
 
 The following are not supported due to limitations of the VM.
