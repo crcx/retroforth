@@ -250,6 +250,9 @@ Return `TRUE` if a1 ends with a2 or `FALSE` otherwise.
 a:eq?                            D: aa-f  A: -  F: -
 Compare all values in the array. Return `TRUE` if all values are equal or `FALSE` otherwise. This assumes the array contains only numeric values.
 
+a:fetch                          D: an-n  A: -  F: -
+Fetch the value stored at the specified index in the specified array.
+
 a:filter                         D: aq-b  A: -  F: -
 For each item in the initial array, run the specified quote. If the quote returns `TRUE`, copy the item into a new array. If `FALSE`, discard it. Returns a pointer to the new array.
 
@@ -288,6 +291,9 @@ Reverse the order of items in a array. This will return a new array.
 
 a:right                          D: an-a  A: -  F: -
 Return a new array containing the specified number of values from the right side of the array.
+
+a:store                          D: vna-  A: -  F: -
+Store a value into the array at the specified index.
 
 a:th                             D: an-b  A: -  F: -
 Return the actual address of the `n`th item in the array.

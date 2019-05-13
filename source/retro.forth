@@ -1464,8 +1464,15 @@ values reversed.
 offset into an address for use with `fetch` and `store`.
 
 ~~~
-:a:th (an-a)
-  + n:inc ;
+:a:th (an-a)  + n:inc ;
+~~~
+
+I use `a:th` to implement `a:fetch` and `a:store`, for easier
+readability.
+
+~~~
+:a:fetch (an-v) a:th fetch ;
+:a:store (van-) a:th store ;
 ~~~
 
 `a:reduce` takes an array, a starting value, and a quote. It

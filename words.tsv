@@ -82,6 +82,7 @@ a:counted-results	q-a	-	-	Run a quote and construct a new array from the returne
 a:dup	a-b	-	-	Make a copy of an array. Return the address of the copy.			class:word	{n/a}	{n/a}	a	all	
 a:ends-with?	aa-f	-	-	Return `TRUE` if a1 ends with a2 or `FALSE` otherwise.			class:word	{n/a}	{n/a}	a	all	
 a:eq?	aa-f	-	-	Compare all values in the array. Return `TRUE` if all values are equal or `FALSE` otherwise. This assumes the array contains only numeric values.			class:word	{n/a}	{n/a}	a	all	
+a:fetch	an-n	-	-	Fetch the value stored at the specified index in the specified array.			class:word	    { #0 #1 #3 } #2 a:fetch	{n/a}	global	all	
 a:filter	aq-b	-	-	For each item in the initial array, run the specified quote. If the quote returns `TRUE`, copy the item into a new array. If `FALSE`, discard it. Returns a pointer to the new array.			class:word	{n/a}	{n/a}	a	all	
 a:for-each	aq-	-	-	Execute the quote once for each item in the array.			class:word	{n/a}	{n/a}	a	all	
 a:from-string	s-a	-	-	Create a new array with the characters in the source string.			class:word	{n/a}	{n/a}	a	all	
@@ -95,6 +96,7 @@ a:prepend	aa-a	-	-	Return a new array consisting of the values in a2 followed by
 a:reduce	pnq-n	-	-	Takes an array, a starting value, and a quote. This will apply the quote to each item in the array; the quote should consume two values and return one.			class:word	{n/a}	{n/a}	a	all	
 a:reverse	a-b	-	-	Reverse the order of items in a array. This will return a new array.			class:word	{n/a}	{n/a}	a	all	
 a:right	an-a	-	-	Return a new array containing the specified number of values from the right side of the array.			class:word	{n/a}	{n/a}	a	all	
+a:store	vna-	-	-	Store a value into the array at the specified index.			class:word	    #3 { #0 #1 #2 } #1 a:store	{n/a}	global	all	
 a:th	an-b	-	-	Return the actual address of the `n`th item in the array.			class:word	{n/a}	{n/a}	a	all	
 a:to-string	a-s	-	-	Create a new string from the provided array. This string will be stored in the temporal string buffers.			class:word	{n/a}	{n/a}	a	all	
 again	-	-	-	Close an unconditional loop. Branches back to the prior `repeat`.			class:macro	{n/a}	{n/a}	global	all	

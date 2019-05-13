@@ -82,6 +82,7 @@ a:counted-results                D: q-a  A: -  F: -
 a:dup                            D: a-b  A: -  F: -
 a:ends-with?                     D: aa-f  A: -  F: -
 a:eq?                            D: aa-f  A: -  F: -
+a:fetch                          D: an-n  A: -  F: -
 a:filter                         D: aq-b  A: -  F: -
 a:for-each                       D: aq-  A: -  F: -
 a:from-string                    D: s-a  A: -  F: -
@@ -95,6 +96,7 @@ a:prepend                        D: aa-a  A: -  F: -
 a:reduce                         D: pnq-n  A: -  F: -
 a:reverse                        D: a-b  A: -  F: -
 a:right                          D: an-a  A: -  F: -
+a:store                          D: vna-  A: -  F: -
 a:th                             D: an-b  A: -  F: -
 a:to-string                      D: a-s  A: -  F: -
 again                            D: -  A: -  F: -

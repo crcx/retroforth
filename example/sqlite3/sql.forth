@@ -53,9 +53,9 @@ adaptable to similar external tools.
   'Table var
   :set-table    (s-s) dup s:keep !Table ;
   :get-columns  (s-a) 'PRAGMA_table\_info("%s") s:format sql:query ;
-  :id           (a-n) #0 a:th fetch s:to-number ;
-  :column       (a-s) #1 a:th fetch @Table '%s:%s s:format ;
-  :generate     (ns-) d:create , [ fetch a:th fetch ] does ;
+  :id           (a-n) #0 a:fetch s:to-number ;
+  :column       (a-s) #1 a:fetch @Table '%s:%s s:format ;
+  :generate     (ns-) d:create , [ fetch a:fetch ] does ;
 ---reveal---
   :sql:accessors-for (s-)
     set-table get-columns

@@ -21,6 +21,8 @@ July - September window for this release.
 
 - rename: `a:nth` to `a:th`
 - rename: `v:update-using` to `v:update`
+- add: `a:fetch`
+- add: `a:store`
 
 ## Documentation
 

@@ -955,6 +955,22 @@ Compare all values in the array. Return `TRUE` if all values are equal or `FALSE
 Class: class:word | Namespace: a | Interface Layer: all
 ------------------------------------------------------------------------
 
+a:fetch
+
+  Data:  an-n
+  Addr:  -
+  Float: -
+
+Fetch the value stored at the specified index in the specified array.
+
+Class: class:word | Namespace: global | Interface Layer: all
+
+Example #1:
+
+    { #0 #1 #3 } #2 a:fetch
+
+------------------------------------------------------------------------
+
 a:filter
 
   Data:  aq-b
@@ -1096,6 +1112,22 @@ a:right
 Return a new array containing the specified number of values from the right side of the array.
 
 Class: class:word | Namespace: a | Interface Layer: all
+------------------------------------------------------------------------
+
+a:store
+
+  Data:  vna-
+  Addr:  -
+  Float: -
+
+Store a value into the array at the specified index.
+
+Class: class:word | Namespace: global | Interface Layer: all
+
+Example #1:
+
+    #3 { #0 #1 #2 } #1 a:store
+
 ------------------------------------------------------------------------
 
 a:th
