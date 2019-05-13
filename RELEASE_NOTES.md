@@ -35,6 +35,7 @@ July - September window for this release.
 - add bury.forth
 - add compat.forth
 - add gopher.forth
+- add magic-8th-ball.forth
 - add mandelbrot.forth
 - add shell.forth
 - add sqlite3 wrapper

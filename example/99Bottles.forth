@@ -3,33 +3,28 @@
 Display the text for the *99 Bottles of Beer* song.
 
 ~~~
-[ dup n:put sp 'bottles s:put ]
-[ '1_bottle s:put ]
-[ 'no_more_bottles s:put  ]
-'bottles d:create
-  , , ,
+'example/Autopsy.forth include
 
-:display-bottles
-  dup #2 n:min bottles + fetch call ;
+{ 'bottle 'bottles 'of 'beer 'on 'the 'wall 'no 'more
+  'Take 'one 'down, 'pass 'it 'around }
+[ dup ':%s_'%s_s:put_sp_; s:format s:evaluate ] a:for-each
 
-:display-beer
-  display-bottles '_of_beer s:put ;
+{ [ no more bottles      ]
+  [ #1 n:put sp bottle   ]
+  [ dup n:put sp bottles ]
+} 'BOTTLES const
 
-:display-wall
-  display-beer '_on_the_wall s:put ;
-
-:display-take
-  'Take_one_down,_pass_it_around  s:put ;
+:number-bottles
+  dup #2 n:min BOTTLES swap a:fetch call ;
 
 :display-verse
-  display-wall nl display-beer nl
-  n:dec display-take nl display-wall nl ;
+  number-bottles of beer on the wall  nl
+  number-bottles of beer              nl
+  n:dec Take one down, pass it around nl
+  number-bottles of beer on the wall  nl ;
 
-:?dup
-  dup 0; ;
+:verses (n-)
+  repeat 0; nl display-verse again ;
 
-:verses
-  [ nl display-verse dup n:-zero? ] while drop ;
- 
-#99 verses
+#99 verses 
 ~~~
