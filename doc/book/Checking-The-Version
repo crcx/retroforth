@@ -1,0 +1,26 @@
+# Checking The Version
+
+RETRO releases add and change things. You can use the `Version`
+variable to determine the version in use and react accordingly.
+
+```
+@Version #201906 eq? [ 'Needs_2019.6! s:put nl bye ] if
+```
+
+This can be also be used to conditionally load compatibility files:
+
+```
+(If_newer_than_2016.6,_load_aliases_for_renamed_words)
+@Version #201906 gt? [ 'Renamed_2019.6.forth include ] if
+```
+
+## Version Number Format
+
+The version is a six digit number encoding the year and month of
+the release. So:
+
+    201901  is  2019.1
+    201906  is  2019.6
+    201911  is  2019.11
+
+A `#100 /mod` will suffice to split these if needed.
