@@ -39,6 +39,13 @@ sys:argc n:zero? [ 'No_file_specified! s:put nl #0 unix:exit ] if
 If I get here, a filename was provided. So I start by creating
 a few variables and constants.
 
+Get the name of the file to edit.
+
+~~~
+#0 sys:argv s:keep 'SourceFile var<n>
+~~~
+
+
 The configuration here is for two items. The number of lines
 from the file to show on screen, and the name of the temporary
 file to use when editing.
@@ -46,25 +53,18 @@ file to use when editing.
 ~~~
 #70 'COLS      const
 #16 'MAX-LINES const
-'/tmp/rre.edit 'TEMP-FILE s:const
+'/tmp/hua.editor.scratch 'TEMP-FILE s:const
 ~~~
 
 Next are the variables that I use to track various bits of
 state.
 
 ~~~
-'SourceFile  var
 'CurrentLine var
 'LineCount   var
 'ShowEOL     var
 'FID         var
 'CopiedLine  d:create #1025 allot
-~~~
-
-Get the name of the file to edit.
-
-~~~
-#0 sys:argv s:keep !SourceFile
 ~~~
 
 To create a new file, Hua allows for the use of `new` followed
@@ -175,7 +175,8 @@ whitespace. The indicator can be toggled via the ~ key.
 :display (-)
   @SourceFile file:R file:open !FID
   clear-display header ---- skip-to
-  @CurrentLine MAX-LINES #2 / - #0 n:max count-lines MAX-LINES n:min [ display-line ] times drop
+  @CurrentLine MAX-LINES #2 / - #0 n:max count-lines MAX-LINES n:min
+  [ display-line ] times drop
   ---- @FID file:close ;
 ~~~
 
@@ -329,25 +330,25 @@ top level loop.
 :constrain (-) &CurrentLine #0 @LineCount n:dec v:limit ;
 :handler
     c:get
-      $1 [ replace-line                           ] case
-      $2 [ add-line                               ] case
-      $3 [ trim-trailing                          ] case
-      $4 [ delete-line                            ] case
-      $5 [ kill-line                              ] case
-      $~ [ @ShowEOL not !ShowEOL                  ] case
-      $c [ copy-line                              ] case
-      $v [ paste-line                             ] case
-      $< [ dedent-line                            ] case
-      $> [ indent-line                            ] case
-      $| [ code-block                             ] case
-      $[ [ goto-start                             ] case
-      $] [ goto-end                               ] case
-      $j [ &CurrentLine v:inc constrain           ] case
-      $k [ &CurrentLine v:dec constrain           ] case
-      $h [ &CurrentLine v:inc constrain           ] case
-      $t [ &CurrentLine v:dec constrain           ] case
-      $g [ goto               constrain           ] case
-      $q [ 'stty_-cbreak unix:system #0 unix:exit ] case
+      $1 [ replace-line                   ] case
+      $2 [ add-line                       ] case
+      $3 [ trim-trailing                  ] case
+      $4 [ delete-line                    ] case
+      $5 [ kill-line                      ] case
+      $~ [ @ShowEOL not !ShowEOL          ] case
+      $c [ copy-line                      ] case
+      $v [ paste-line                     ] case
+      $< [ dedent-line                    ] case
+      $> [ indent-line                    ] case
+      $| [ code-block                     ] case
+      $[ [ goto-start                     ] case
+      $] [ goto-end                       ] case
+      $j [ &CurrentLine v:inc constrain   ] case
+      $k [ &CurrentLine v:dec constrain   ] case
+      $h [ &CurrentLine v:inc constrain   ] case
+      $t [ &CurrentLine v:dec constrain   ] case
+      $g [ goto               constrain   ] case
+      $q [ 'stty_-cbreak unix:system bye  ] case
     drop ;
 
 :edit
