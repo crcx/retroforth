@@ -1,10 +1,15 @@
 #!/usr/bin/env retro
+     _   _             
+    | | | |_   _  __ _ 
+    | |_| | | | |/ _` |
+    |  _  | |_| | (_| |
+    |_| |_|\__,_|\__,_|
+    line oriented editor
 
 # Hua: a text editor written in RETRO
 
-Hua is a small, functional text editor written in RETRO, using
-the *RRE* interface. It is line oriented, visual, and tries to
-be very simple to use.
+Hua is a small, functional text editor written in RETRO for
+Unix systems. It is line oriented, visual, and easy to learn.
 
 ## Starting
 
@@ -19,8 +24,8 @@ To create a new file:
 ## A Word of Warning
 
 Hua saves changes as you edit the file. I advise using it along
-with a version control system so you can revert changes if or
-when needed.
+with a version control system so you can revert changes when
+needed.
 
 ## The Code
 
@@ -28,7 +33,7 @@ Since this runs as a standalone application I use a quick check
 to exit if no arguments were passed.
 
 ~~~
-sys:argc n:zero? [ #0 unix:exit ] if
+sys:argc n:zero? [ 'No_file_specified! s:put nl #0 unix:exit ] if
 ~~~
 
 If I get here, a filename was provided. So I start by creating
@@ -39,7 +44,7 @@ from the file to show on screen, and the name of the temporary
 file to use when editing.
 
 ~~~
-#80 'COLS      const
+#70 'COLS      const
 #16 'MAX-LINES const
 '/tmp/rre.edit 'TEMP-FILE s:const
 ~~~
