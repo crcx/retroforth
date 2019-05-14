@@ -39,6 +39,8 @@ July - September window for this release.
 - add mandelbrot.forth
 - add shell.forth
 - add sqlite3 wrapper
+- add unix-does-user-exist.forth
+- improved 99bottles.forth
 - corrected an issue in mail.forth
 - cleanup publish-examples.forth
 - publish-examples.forth now uses `retro-document` to generate glossaries
