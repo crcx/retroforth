@@ -409,18 +409,27 @@ Apply q to x, y, and z.
 
 ### Combinators: Control
 
-Execute quote until quote returns a flag of 0.
+Execute quote until quote returns a flag of 0. In high level code:
+
+  :while  (q-)
+    [ repeat dup dup push call swap 0; drop again ] call drop ;
+
+This is manually translated to assembly and inlined for performance.
 
 ~~~
-:while  (q-)
-  [ repeat dup dip swap 0; drop again ] call drop ;
+:while  (q-) [ repeat `525570 `1639430 drop again ] call drop ;
 ~~~
 
-Execute quote until quote returns a non-zero flag.
+Execute quote until quote returns a non-zero flag. As with `while`
+the high level code:
+
+  :until  (q-)
+    [ repeat dup dip swap #-1 xor 0; drop again ] call drop ;
+
+is manually translated to assembly and inlined for performance.
 
 ~~~
-:until  (q-)
-  [ repeat dup dip swap #-1 xor 0; drop again ] call drop ;
+:until (q-) [ repeat `525570 `385942534 `-1 0; drop again ] call drop ;
 ~~~
 
 The `times` combinator runs a quote (n) times.

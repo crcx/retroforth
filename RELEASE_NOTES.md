@@ -25,6 +25,8 @@ July - September window for this release.
 - add: `a:store`
 - faster: `times`
 - faster: `times<with-index>`
+- faster: `while`
+- faster: `until`
 
 ## Documentation
 
