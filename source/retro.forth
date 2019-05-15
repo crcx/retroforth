@@ -1828,7 +1828,7 @@ current, and up to two outer loops as well.
   :K (-n) @LP &Index + #2 - fetch ;
   :times<with-index>
     prep swap
-      [ repeat 0; n:dec push &call sip pop next again ] call
+      [ repeat 0; #1 - push dup push call pop pop next again ] call
     drop done ;
 }}
 ~~~

@@ -23,6 +23,8 @@ July - September window for this release.
 - rename: `v:update-using` to `v:update`
 - add: `a:fetch`
 - add: `a:store`
+- faster: `times`
+- faster: `times<with-index>`
 
 ## Documentation
 
