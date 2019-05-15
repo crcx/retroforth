@@ -425,9 +425,14 @@ Execute quote until quote returns a non-zero flag.
 
 The `times` combinator runs a quote (n) times.
 
+This is defined using inlined Nga machine code. It corresponds
+to:
+
+    repeat 0; #1 - push dup push call pop pop again
+
 ~~~
 :times  (nq-)
-  swap [ repeat 0; #1 - push &call sip pop again ] call drop ;
+  [ swap repeat 0; #1 - push dup push call pop pop again ] call drop ;
 ~~~
 
 `case` is a conditional combinator. It's actually pretty
