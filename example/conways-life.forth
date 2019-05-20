@@ -80,25 +80,24 @@ Space is also reserved for the *next generation*.
     dup-pair [ #0 #19 n:between? ] bi@ and
     [ &World + [ #20 * ] dip + fetch ] [ drop-pair #0 ] choose ;
   :neighbor?  (rc-) get &Surrounding v:inc-by ;
-  :NW (rc-rc) dup-pair [ n:dec ] bi@ neighbor? ;
-  :NN (rc-rc) dup-pair [ n:dec ] dip neighbor? ;
+  :NW (rc-rc) dup-pair [ n:dec ] bi@       neighbor? ;
+  :NN (rc-rc) dup-pair [ n:dec ] dip       neighbor? ;
   :NE (rc-rc) dup-pair [ n:dec ] dip n:inc neighbor? ; 
-  :WW (rc-rc) dup-pair n:dec neighbor? ;
-  :EE (rc-rc) dup-pair n:inc neighbor? ;
+  :WW (rc-rc) dup-pair   n:dec             neighbor? ;
+  :EE (rc-rc) dup-pair   n:inc             neighbor? ;
   :SW (rc-rc) dup-pair [ n:inc ] dip n:dec neighbor? ;
-  :SS (rc-rc) dup-pair [ n:inc ] dip neighbor? ;
-  :SE (rc-rc) dup-pair [ n:inc ] bi@ neighbor? ;
+  :SS (rc-rc) dup-pair [ n:inc ] dip       neighbor? ;
+  :SE (rc-rc) dup-pair [ n:inc ] bi@       neighbor? ;
   :count (rc-rcn)
-    #0 !Surrounding
-    NW NN NE
-    WW    EE
-    SW SS SE @Surrounding ;
+    #0 !Surrounding NW NN NE
+                    WW    EE
+                    SW SS SE @Surrounding ;
   :alive (rc-n)
     count #2 #3 n:between? [ #1 ] if; #0 ;
   :dead (rc-n)
     count #3 eq? [ #1 ] if; #0 ;
   :new-state (rc-n)
-    dup-pair get #1 eq? [ alive ] [ dead ] choose ;
+    dup-pair get #1 eq? &alive &dead choose ;
   :set   (nrc-)  &Next + [ #20 * ] dip + store ;
   :cols (r-)
     #20 [ I over swap new-state rot rot set ] times<with-index> drop ;
