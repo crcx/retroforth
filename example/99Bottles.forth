@@ -3,8 +3,6 @@
 Display the text for the *99 Bottles of Beer* song.
 
 ~~~
-'example/Autopsy.forth include
-
 { 'bottle 'bottles 'of 'beer 'on 'the 'wall 'no 'more
   'Take 'one 'down, 'pass 'it 'around }
 [ dup ':%s_'%s_s:put_sp_; s:format s:evaluate ] a:for-each

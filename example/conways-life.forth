@@ -1,0 +1,119 @@
+# Conway's Game of Life
+
+The Game of Life, also known simply as Life, is a cellular automaton
+devised by the British mathematician John Horton Conway in 1970.
+
+The universe of the Game of Life is an infinite, two-dimensional
+orthogonal grid of square cells, each of which is in one of two
+possible states, alive or dead, (or populated and unpopulated,
+respectively). Every cell interacts with its eight neighbours, which
+are the cells that are horizontally, vertically, or diagonally
+adjacent. At each step in time, the following transitions occur:
+
+- Any live cell with fewer than two live neighbours dies, as if by
+  underpopulation.
+- Any live cell with two or three live neighbours lives on to the
+  next generation.
+- Any live cell with more than three live neighbours dies, as if
+  by overpopulation.
+- Any dead cell with exactly three live neighbours becomes a live
+  cell, as if by reproduction.
+
+The initial pattern constitutes the seed of the system. The first
+generation is created by applying the above rules simultaneously to
+every cell in the seed; births and deaths occur simultaneously, and
+the discrete moment at which this happens is sometimes called a tick.
+Each generation is a pure function of the preceding one. The rules
+continue to be applied repeatedly to create further generations.
+
+Taken from https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life
+
+# The Code
+
+This is my take on implementing this in RETRO.
+
+I first wrote a quick helper to inline a representation of part
+of the world.
+
+~~~
+:w/l [ $. eq? [ #0 ] [ #1 ] choose , ] s:for-each ;
+~~~
+
+I then define the intitial world. This is a 20x20 grid.
+
+~~~
+'World d:create
+  '.................... w/l
+  '.................... w/l
+  '.................... w/l
+  '..ooo............... w/l
+  '....o............... w/l
+  '...o................ w/l
+  '.................... w/l
+  '.................... w/l
+  '.................... w/l
+  '.................... w/l
+  '.................... w/l
+  '....ooo............. w/l
+  '.................... w/l
+  '.................... w/l
+  '.................... w/l
+  '........ooo......... w/l
+  '.......ooo.......... w/l
+  '.................... w/l
+  '.................... w/l
+  '.................... w/l
+~~~
+
+Space is also reserved for the *next generation*.
+
+~~~
+'Next d:create
+  #20 #20 * allot
+~~~
+
+
+~~~
+{{
+  'Surrounding var
+  :get (rc-v)
+    dup-pair [ #0 #19 n:between? ] bi@ and
+    [ &World + [ #20 * ] dip + fetch ] [ drop-pair #0 ] choose ;
+  :neighbor?  (rc-) get &Surrounding v:inc-by ;
+  :NW (rc-rc) dup-pair [ n:dec ] bi@ neighbor? ;
+  :NN (rc-rc) dup-pair [ n:dec ] dip neighbor? ;
+  :NE (rc-rc) dup-pair [ n:dec ] dip n:inc neighbor? ; 
+  :WW (rc-rc) dup-pair n:dec neighbor? ;
+  :EE (rc-rc) dup-pair n:inc neighbor? ;
+  :SW (rc-rc) dup-pair [ n:inc ] dip n:dec neighbor? ;
+  :SS (rc-rc) dup-pair [ n:inc ] dip neighbor? ;
+  :SE (rc-rc) dup-pair [ n:inc ] bi@ neighbor? ;
+  :count (rc-rcn)
+    #0 !Surrounding
+    NW NN NE
+    WW    EE
+    SW SS SE @Surrounding ;
+  :alive (rc-n)
+    count #2 #3 n:between? [ #1 ] if; #0 ;
+  :dead (rc-n)
+    count #3 eq? [ #1 ] if; #0 ;
+  :new-state (rc-n)
+    dup-pair get #1 eq? [ alive ] [ dead ] choose ;
+  :set   (nrc-)  &Next + [ #20 * ] dip + store ;
+  :cols (r-)
+    #20 [ I over swap new-state rot rot set ] times<with-index> drop ;
+  :output (n-) n:-zero? [ $o ] [ $. ] choose c:put sp ;
+---reveal---
+  :display (-)
+    nl &World #20 [ #20 [ fetch-next output ] times nl ] times drop ;
+  :gen (-)
+    #20 [ I cols ] times<with-index> &Next &World #20 #20 * copy ;
+}}
+
+{{
+  :divide #20 [ $- c:put ] times sp 'Gen:_ s:put dup n:put nl ;
+---reveal---
+  :gens (n-)  #0 swap [ display divide  n:inc gen ] times drop ;
+}}
+
+#12 gens

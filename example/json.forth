@@ -1,0 +1,49 @@
+This is a wrapper over `jq` (https://stedolan.github.io/jq/) to
+provide some access to JSON using RETRO.
+
+~~~
+{{
+  :input   swap '/tmp/r.json file:spew ; 
+  :command 'cat_/tmp/r.json_|_jq_'%s'_>/tmp/r.json2 s:format ;
+  :process unix:system here '/tmp/r.json2 file:slurp ;
+  :results '/tmp/r.json '/tmp/r.json2 &file:delete bi@ here ;
+---reveal---
+  :jq (ss-s) input command process results ;
+}}
+~~~
+
+With this, I can begin to parse JSON and do things with it.
+
+Import a JSON test set (https://api.github.com/repos/stedolan/jq/commits?per_page=5)
+
+~~~
+'JSON d:create
+  here 'test.json file:slurp here s:length n:inc !Heap
+~~~
+
+Extract the commit messages using `jq`.
+
+~~~
+JSON '.[]_|_{message:_.commit.message}_|_flatten jq s:temp
+~~~
+
+This leaves output like:
+
+  [
+    "Improve jv_is_integer()"
+  ]
+  [
+    "Dockerfile: Change base image to Debian Stable"
+  ]
+
+I can tokenize this and filter out the [ ] pairs:
+
+~~~
+ASCII:LF s:tokenize [ fetch [ $[ eq? ] [ $] eq? ] bi or not ] a:filter
+~~~
+
+And then display the resulting lines:
+
+~~~
+[ s:put nl ] a:for-each
+~~~

@@ -40,7 +40,7 @@ on the stack.
 :link  dup '<a_href="/examples/%s.html">%s</a>_ s:format s:put ;
 :link2 '<a_href="/examples/%s.glossary"><br>&rarr;_glossary</a> s:format s:put
        $. c:put ;
-:links [ dup link link2 ] li ;
+:links dup '.forth s:ends-with? [ [ dup link link2 ] li ] if; drop ;
 :body  '<body> s:put call '</body> s:put ;
 :make  dtd head body ;
 ~~~
@@ -58,7 +58,8 @@ FILE-PATH 'index.html s:append file:W file:open !FID
 # Generate HTML Files
 
 ~~~
-:export FILE-PATH over
+:export dup '.forth s:ends-with? &drop -if;
+        FILE-PATH over
         './export-as-html.forth_%s_>%s%s.html s:format unix:system $. c:put ;
 
 [ dir? &drop [ export ] choose ] unix:for-each-file nl
@@ -67,7 +68,8 @@ FILE-PATH 'index.html s:append file:W file:open !FID
 # Generate a Glossary File For Each
 
 ~~~
-:glossary FILE-PATH over
+:glossary dup '.forth s:ends-with? &drop -if;
+   FILE-PATH over
   'retro-document_%s_>%s%s.glossary s:format unix:system $. c:put ;
 
 [ dir? &drop &glossary choose ] unix:for-each-file
