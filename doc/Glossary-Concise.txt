@@ -169,9 +169,6 @@ Returns `0`, the value used to indicate a FALSE result.
 FREE                             D: -n  A: -  F: -
 Returns the number of cells available to your application. This is the amount of memory, less the already consumed portion and buffers mapped for RETRO's internal use.
 
-FullScreenListener               D: -a  A: -  F: -
-Variable. This is set by the startup flags to the rre interface. If `TRUE`, rre will run the `listen:fullscreen` interface for interactive use instead of the `listen` interface.
-
 Heap                             D: -a  A: -  F: -
 Variable. Holds the address of the next available cell.
 
@@ -955,12 +952,6 @@ Trigger a Unix system call. This is not intended to be used directly.
 listen                           D: -  A: -  F: -
 Run interactive "listener" (a REPL).
 
-listen:fullscreen                D: -  A: -  F: -
-Run interactive "listener" (a REPL) in fullscreen mode (with a minimalistic console UI).
-
-listen:fullscreen:bye            D: -  A: -  F: -
-Exit RETRO while running the fullscreen listener.
-
 lt?                              D: nn-f  A: -  F: -
 Compare n1 and n2. Return `TRUE` if n1 is less than n2, or `FALSE` otherwise.
 
@@ -1050,6 +1041,9 @@ Display a newline.
 
 not                              D: n-m  A: -  F: -
 Perform a logical NOT operation.
+
+ok                               D: -  A: -  F: -
+Display the "ok" prompt. This is a hook.
 
 or                               D: mn-o  A: -  F: -
 Perform a bitwise OR between the provided values.

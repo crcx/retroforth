@@ -11,6 +11,9 @@ at addresses 0 to 1023).
 #1024 'TIB const
 ~~~
 
+~~~
+:image:save (s-) #1000 io:scan-for io:invoke ;
+~~~
 
 ## Console Input
 
@@ -78,153 +81,11 @@ words we can use.
 }}
 ~~~
 
-# Fullscreen Interactive Listener
-
 ~~~
-'FullScreenListener var
-~~~
-
-Nearly all of this will be hidden from the user.
-
-~~~
-{{
-~~~
-
-I'm using the buffer: words to deal with the TIB. To avoid any
-conflict with user buffers, I'm duplicating the needed words
-here, privately.
-
-~~~
-  :Buffer `0 ; data
-  :Ptr    `0 ; data
-  :terminate (-) #0 @Ptr store ;
-  :buffer:start  (-a) @Buffer ;
-  :buffer:end    (-a) @Ptr ;
-  :buffer:add    (c-) buffer:end store &Ptr v:inc terminate ;
-  :buffer:get    (-c) &Ptr v:dec buffer:end fetch terminate ;
-  :buffer:empty  (-)  buffer:start !Ptr terminate ;
-  :buffer:set    (a-) !Buffer buffer:empty ;
-~~~
-
-Color choices are a personal thing. I define the ones I want
-here.
-
-~~~
-  :white,blue  #27 c:put '[1;37;44m s:put ;
-  :white,black #27 c:put '[0;37;40m s:put ;
-~~~
-
-The top bar displays:
-
-- stack depth
-- memory stats
-- top five stack values
-
-~~~
-  :dump-stack
-    depth 0; #5 n:min
-    '|_ s:put
-    #1 [ 'a     'aa         reorder      n:put            ] case
-    #2 [ 'ab    'abba       reorder #2 [ n:put sp ] times ] case
-    #3 [ 'abc   'abccba     reorder #3 [ n:put sp ] times ] case
-    #4 [ 'abcd  'abcddcba   reorder #4 [ n:put sp ] times ] case
-    #5 [ 'abcde 'abcdeedcba reorder #5 [ n:put sp ] times ] case ;
-
-  :top-row    #27 c:put '[1;0H s:put ;
-  :clear-row  #80 [ sp ] times ;
-
-  :top   top-row white,blue clear-row top-row
-         FREE depth n:dec 'SP:%n_FREE:%n_ s:format s:put
-         dump-stack ;
-~~~
-
-
-Next is the input bar. This is displayed at the bottom of the screen.
-
-~~~
-  :bottom-row  #27 c:put '[24;0H s:put ;
-  :input       bottom-row white,blue clear-row bottom-row ;
-~~~
-
-The other bit is the output area in the middle. I have this as white
-text on a black background.
-
-~~~
-  :output bottom-row white,black clear-row bottom-row ;
-~~~
-
-Now on to input processing. I have a variable, `In`, which
-tracks the number of characters read so far. This is used in
-a few places, to ensure that backspace doesn't overwrite the
-kernel, and to blank the line if too many characters are
-input.
-
-~~~
-  'In var
-~~~
-
-For handling backspaces, remove from the buffer and erase the
-displayed character.
-
-~~~
-  :discard buffer:get drop ;
-  :rub     #8 c:put sp #8 c:put ;
-~~~
-
-I process input on CR, LF, and SPACE.
-
-~~~
-  :evaluate TIB interpret ;
-  :reset    #0 !In buffer:empty ;
-~~~
-
-Tie this together into a key handler.
-
-~~~
-  :handle
-    ASCII:SPACE [ @In 0; drop output evaluate nl reset top input ] case
-    ASCII:CR    [ @In 0; drop output evaluate nl reset top input ] case
-    ASCII:LF    [ @In 0; drop output evaluate nl reset top input ] case
-    ASCII:DEL   [ @In 0; drop discard rub &In v:dec ] case
-    ASCII:BS    [ @In 0; drop discard rub &In v:dec ] case
-    dup c:put buffer:add &In v:inc ;
-~~~
-
-And use that a the `process` loop.
-
-~~~
-  :process
-    TIB buffer:set
-    repeat c:get handle @In #80 eq? [ #0 !In input ] if again ;
-~~~
-
-The last few support words use the stty(1) program to setup and
-reset the terminal.
-
-~~~
-  :init   'stty_cbreak_-echo unix:system ;
-  :exit   'stty_-cbreak_echo unix:system #0 unix:exit ;
-~~~
-
-Switch to the public words.
-
-~~~
----reveal---
-~~~
-
-And expose `bye`, `clear`, and the `listener`.
-
-~~~
-  :clear #27 c:put '[2J s:put #27 c:put '[0;0H s:put ;
-  :listen:fullscreen:bye  exit ;
-  :listen:fullscreen      init clear top input process ;
+:clear #27 c:put '[2J s:put #27 c:put '[0;0H s:put ;
 ~~~
 
 Hide the support words.
-
-~~~
-}}
-~~~
 
 # Standard Interactive Listener
 
@@ -237,31 +98,29 @@ startup flags passed.
 ~~~
 'NoEcho var
 
+:bye #0 unix:exit ;
+:ok  hook @NoEcho [ compiling? [ nl 'Ok_ s:put ] -if ] -if ;
+
 {{
-  :version (-)    @Version #100 /mod n:put $. c:put n:put ;
-  :eol?    (c-f)  [ ASCII:CR eq? ] [ ASCII:LF eq? ] [ ASCII:SPACE eq? ] tri or or ;
-  :valid?  (s-sf) dup s:length n:-zero? ;
-  :ok      (-)    @NoEcho not 0; drop compiling? [ nl 'Ok_ s:put ] -if ;
-  :check-eof (c-c) dup [ #-1 eq? ] [ #4 eq? ] bi or [ 'bye d:lookup d:xt fetch call ] if ;
-  :check-bs  (c-c) dup [ #8 eq? ] [ #127 eq? ] bi or [ buffer:get buffer:get drop-pair ] if ;
-  :s:get      (-s) [ TIB buffer:set
-                     [ c:get dup buffer:add check-eof check-bs eol? ] until
-                      buffer:start s:chop ] buffer:preserve ;
+  (-nn)  :version    @Version #100 /mod ;
+  (c-f)  :done?      [ ASCII:CR eq? ]
+                     [ ASCII:LF eq? ]
+                     [ ASCII:SPACE eq? ] tri or or ;
+  (s-sf) :valid?     dup s:length n:strictly-positive? ;
+  (c-c)  :check-eof  dup [ #-1 eq? ] [ ASCII:EOT eq? ] bi or &bye if ;
+         :bs         buffer:get buffer:get drop-pair ;
+  (c-c)  :check-bs   dup [ #8 eq? ] [ #127 eq? ] bi or &bs if ;
+  (c-c)  :check      check-eof check-bs ;
+  (-c)   :character  c:get dup buffer:add ;
+  (q-)   :buffer     [ TIB buffer:set call buffer:start ] buffer:preserve ;
+  (-s)   :read-token [ [ character check done? ] until ] buffer s:chop ;
+  (-sf)  :input      read-token valid? ;
+  (sf-)  :process    [ interpret ok ] &drop choose ;
 ---reveal---
-  :banner  (-)    @NoEcho not 0; drop
-                  'RETRO_12_(rx- s:put version $) c:put nl
-                  EOM n:put '_MAX,_TIB_@_1025,_Heap_@_ s:put here n:put nl ;
-  :bye     (-)    @FullScreenListener [ listen:fullscreen:bye ] if
-                  #0 unix:exit ;
-  :listen  (-)
-    @FullScreenListener [ listen:fullscreen ] if;
-    ok repeat s:get valid? [ interpret ok ] [ drop ] choose again ;
+  :banner  version 'RETRO_12_(%n.%n)\n s:format s:put
+           EOM here - here EOM '%n_Max,_%n_Used,_%n_Free\n s:format s:put ;
+  :listen  @NoEcho [ banner ] -if ok repeat input process again ;
 }}
 
 &listen #1 store
-~~~
-
-
-~~~
-:image:save (s-) #1000 io:scan-for io:invoke ;
 ~~~

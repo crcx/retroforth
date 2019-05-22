@@ -55,7 +55,6 @@ Dictionary                       D: -a  A: -  F: -
 EOM                              D: -n  A: -  F: -
 FALSE                            D: -n  A: -  F: -
 FREE                             D: -n  A: -  F: -
-FullScreenListener               D: -a  A: -  F: -
 Heap                             D: -a  A: -  F: -
 I                                D: -n  A: -  F: -
 J                                D: -n  A: -  F: -
@@ -317,8 +316,6 @@ io:query                         D: n-mN  A: -  F: -
 io:scan-for                      D: n-m  A: -  F: -
 io:unix-syscall                  D: ...n-  A: -  F: -
 listen                           D: -  A: -  F: -
-listen:fullscreen                D: -  A: -  F: -
-listen:fullscreen:bye            D: -  A: -  F: -
 lt?                              D: nn-f  A: -  F: -
 lteq?                            D: nn-f  A: -  F: -
 mod                              D: nm-o  A: -  F: -
@@ -349,6 +346,7 @@ n:zero?                          D: n-f  A: -  F: -
 nip                              D: nm-m  A: -  F: -
 nl                               D: -  A: -  F: -
 not                              D: n-m  A: -  F: -
+ok                               D: -  A: -  F: -
 or                               D: mn-o  A: -  F: -
 over                             D: nm-nmn  A: -  F: -
 parse-until                      D: q-s  A: -  F: -

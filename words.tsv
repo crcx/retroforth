@@ -55,7 +55,6 @@ Dictionary	-a	-	-	Variable. Holds a pointer to the most recent dictionary header
 EOM	-n	-	-	Constant. Returns the last addressable memory address.			class:word	{n/a}	{n/a}	global	all	
 FALSE	-n	-	-	Returns `0`, the value used to indicate a FALSE result.			class:word	{n/a}	{n/a}	global	all	
 FREE	-n	-	-	Returns the number of cells available to your application. This is the amount of memory, less the already consumed portion and buffers mapped for RETRO's internal use.			class:word	{n/a}	{n/a}	global	all	
-FullScreenListener	-a	-	-	Variable. This is set by the startup flags to the rre interface. If `TRUE`, rre will run the `listen:fullscreen` interface for interactive use instead of the `listen` interface.			class:data	{n/a}	{n/a}	global	rre	
 Heap	-a	-	-	Variable. Holds the address of the next available cell.			class:data	{n/a}	{n/a}	global	all	
 I	-n	-	-	Access the loop index for the current loop. (For loops made using `times<with-index>`)			class:word	{n/a}	{n/a}	global	all	
 J	-n	-	-	Access the parent loop index for the current loop. (For loops made using `times<with-index>`)			class:word	{n/a}	{n/a}	global	all	
@@ -317,8 +316,6 @@ io:query	n-mN	-	-	Ask an I/O device to identify itself. Returns a version (m) an
 io:scan-for	n-m	-	-	Scan the I/O devices for a device with a specified ID. Returns the device number, or -1 if not found.			class:word	{n/a}	{n/a}	io	all	
 io:unix-syscall	...n-	-	-	Trigger a Unix system call. This is not intended to be used directly.			class:word	{n/a}	{n/a}	io	rre	
 listen	-	-	-	Run interactive "listener" (a REPL).			class:word	{n/a}	{n/a}	global	rre	
-listen:fullscreen	-	-	-	Run interactive "listener" (a REPL) in fullscreen mode (with a minimalistic console UI).			class:word	{n/a}	{n/a}	listen	rre	
-listen:fullscreen:bye	-	-	-	Exit RETRO while running the fullscreen listener.			class:word	{n/a}	{n/a}	listen	rre	
 lt?	nn-f	-	-	Compare n1 and n2. Return `TRUE` if n1 is less than n2, or `FALSE` otherwise.			class:primitive	{n/a}	{n/a}	global	all	
 lteq?	nn-f	-	-	Compare n1 and n2. Return `TRUE` if n1 is less than or equal to n2, or `FALSE` otherwise.			class:word	{n/a}	{n/a}	global	all	
 mod	nm-o	-	-	Divide `n` by `m` and return the remainder.			class:word	{n/a}	{n/a}	global	all	
@@ -349,6 +346,7 @@ n:zero?	n-f	-	-	Return `TRUE` if number is zero, or `FALSE` otherwise.			class:w
 nip	nm-m	-	-	Remove the second item from the stack.			class:word	{n/a}	{n/a}	global	all	
 nl	-	-	-	Display a newline.			class:word	{n/a}	{n/a}	global	all	
 not	n-m	-	-	Perform a logical NOT operation.			class:word	{n/a}	{n/a}	global	all	
+ok	-	-	-	Display the "ok" prompt. This is a hook.			class:word	{n/a}	{n/a}	global	rre	
 or	mn-o	-	-	Perform a bitwise OR between the provided values.			class:primitive	{n/a}	{n/a}	global	all	
 over	nm-nmn	-	-	Put a copy of n over m.			class:word	{n/a}	{n/a}	global	all	
 parse-until	q-s	-	-	Read input from stdin (via `c:get`) until the returned character is matched by the quote. Returns a string.			class:word	  :read-until-period (-s)\n    [ $. eq? ] parse-until ;	{n/a}	all	rre	

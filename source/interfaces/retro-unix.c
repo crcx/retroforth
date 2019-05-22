@@ -421,7 +421,6 @@ void include_file(char *fname, int run_tests) {
   fp = fopen(fname, "r");          /* exit.                            */
   if (fp == NULL)
     return;
-
   while (!feof(fp))                /* Loop through the file            */
   {
     read_token(fp, source, 0);
@@ -436,8 +435,9 @@ void include_file(char *fname, int run_tests) {
           inBlock = 0;
       }
     } else {
-      if (inBlock == 1)            /* If we are, evaluate token        */
+      if (inBlock == 1) {
         rre_evaluate(source, -1);
+      }
     }
   }
 
@@ -453,14 +453,12 @@ void include_file(char *fname, int run_tests) {
 
 void help(char *exename) {
   printf("Scripting Usage: %s filename\n\n", exename);
-  printf("Interactive Usage: %s [-h] [-i[,fs]] [-s] [-f filename] [-t]\n\n", exename);
+  printf("Interactive Usage: %s [-h] [-i] [-s] [-f filename] [-t]\n\n", exename);
   printf("Valid Arguments:\n\n");
   printf("  -h\n");
   printf("    Display this help text\n");
   printf("  -i\n");
   printf("    Launches in interactive mode (line buffered)\n");
-  printf("  -i,fs\n");
-  printf("    Launches in interactive mode (character buffered, full screen)\n");
   printf("  -s\n");
   printf("    Suppress the 'ok' prompt and keyboard echo in interactive mode\n");
   printf("  -f filename\n");
@@ -502,7 +500,6 @@ int arg_is(char *argv, char *t) {
 
 enum flags {
   FLAG_HELP, FLAG_RUN_TESTS, FLAG_INCLUDE, FLAG_INTERACTIVE, FLAG_SILENT,
-  FLAG_FULLSCREEN
 };
 
 int main(int argc, char **argv) {
@@ -544,10 +541,6 @@ int main(int argc, char **argv) {
       exit(0);
     } else if (strcmp(argv[i], "-i") == 0) {
       modes[FLAG_INTERACTIVE] = 1;
-    } else if (strcmp(argv[i], "-i,fs") == 0) {
-      modes[FLAG_INTERACTIVE] = 1;
-      modes[FLAG_FULLSCREEN] = 1;
-      modes[FLAG_SILENT] = 1;
     } else if (strcmp(argv[i], "-s") == 0) {
       modes[FLAG_INTERACTIVE] = 1;
       modes[FLAG_SILENT] = 1;
@@ -558,6 +551,7 @@ int main(int argc, char **argv) {
     } else if (strcmp(argv[i], "-u") == 0) {
       i++;
       ngaLoadImage(argv[i]);
+      update_rx();
     } else if (strcmp(argv[i], "-t") == 0) {
       modes[FLAG_RUN_TESTS] = 1;
       run_tests = 1;
@@ -576,8 +570,6 @@ int main(int argc, char **argv) {
 
   /* Run the Listener (if interactive mode was set) */
   if (modes[FLAG_INTERACTIVE] == 1) {
-    if (modes[FLAG_FULLSCREEN] == 1) memory[d_xt_for("FullScreenListener", Dictionary)] = -1;
-    rre_execute(d_xt_for("banner", Dictionary), 0);
     while (1) rre_execute(0, -1);
   }
 }

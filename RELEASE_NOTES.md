@@ -64,3 +64,6 @@ July - September window for this release.
 - retro-compiler: runtime now supports scripting arguments
 - retro-unix: replaces earlier rre.c
 - retro-windows: rre, adapted for windows
+- retro-unix: remove FullScreenListener
+- retro-unix: ok prompt now a hook
+- retro-unix: rewrite the listener
