@@ -2110,7 +2110,7 @@ This is a very simple and straightforward system. There are
 bit values. And there are two stacks: one for data and one
 for return addresses.
 
-## Instrution Table
+## Instruction Table
 
 | Opcode | Muri | Full Name          | Data Stack | Address Stack |
 | ------ | ---- | ------------------ | ---------- | ------------- |
