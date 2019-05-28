@@ -9,6 +9,8 @@ Word names in RETRO generally follow the following conventions.
 * Don't use a prefix as the first character of a name
 * Don't use underscores in word names
 * Use short names for indices
+* Word names start with a `-` for "not"
+* Words returning a flag end in ?
 
 ## Typical Format
 
