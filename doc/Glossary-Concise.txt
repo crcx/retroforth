@@ -160,7 +160,7 @@ Variable. Holds the compiler state. If TRUE, the compiler is active. If FALSE, i
 Dictionary                       D: -a  A: -  F: -
 Variable. Holds a pointer to the most recent dictionary header.
 
-EOM                              D: -n  A: -  F: -
+EOM                              D: -a  A: -  F: -
 Constant. Returns the last addressable memory address.
 
 FALSE                            D: -n  A: -  F: -

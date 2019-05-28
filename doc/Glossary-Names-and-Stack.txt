@@ -52,7 +52,7 @@ ASCII:US                         D: -n  A: -  F: -
 ASCII:VT                         D: -n  A: -  F: -
 Compiler                         D: -a  A: -  F: -
 Dictionary                       D: -a  A: -  F: -
-EOM                              D: -n  A: -  F: -
+EOM                              D: -a  A: -  F: -
 FALSE                            D: -n  A: -  F: -
 FREE                             D: -n  A: -  F: -
 Heap                             D: -a  A: -  F: -

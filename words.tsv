@@ -52,7 +52,7 @@ ASCII:US	-n	-	-	Constant. Refers to specific ASCII code.			class:data	{n/a}	{n/a
 ASCII:VT	-n	-	-	Constant. Refers to specific ASCII code.			class:data	{n/a}	{n/a}	ASCII	all	
 Compiler	-a	-	-	Variable. Holds the compiler state. If TRUE, the compiler is active. If FALSE, it is not.			class:data	{n/a}	{n/a}	global	all	
 Dictionary	-a	-	-	Variable. Holds a pointer to the most recent dictionary header.			class:data	{n/a}	{n/a}	global	all	
-EOM	-n	-	-	Constant. Returns the last addressable memory address.			class:word	{n/a}	{n/a}	global	all	
+EOM	-a	-	-	Constant. Returns the last addressable memory address.			class:word	{n/a}	{n/a}	global	all	
 FALSE	-n	-	-	Returns `0`, the value used to indicate a FALSE result.			class:word	{n/a}	{n/a}	global	all	
 FREE	-n	-	-	Returns the number of cells available to your application. This is the amount of memory, less the already consumed portion and buffers mapped for RETRO's internal use.			class:word	{n/a}	{n/a}	global	all	
 Heap	-a	-	-	Variable. Holds the address of the next available cell.			class:data	{n/a}	{n/a}	global	all	

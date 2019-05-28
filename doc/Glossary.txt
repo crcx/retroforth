@@ -627,7 +627,7 @@ Class: class:data | Namespace: global | Interface Layer: all
 
 EOM
 
-  Data:  -n
+  Data:  -a
   Addr:  -
   Float: -
 
