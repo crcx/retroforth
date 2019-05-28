@@ -1,33 +1,40 @@
 # Byte_Addressing
 
-## Authors
-
-2010, Marc Simpson
-2011, 2018, Charles Childers
-
-## Description
-
 This adds words allowing access to memory at a byte level.
 
-Nga is cell addressed. There's no direct access to memory at a byte level. To access a specific byte one must fetch a cell, then extract the individual bytes by masking and shifting. Updating bytes is similarly annoying. The words here take care of these details.
+Nga is cell addressed. There's no direct access to memory at a byte
+level. To access a specific byte one must fetch a cell, then extract
+the individual bytes by masking and shifting. Updating bytes is
+similarly annoying. The words here take care of these details.
+
+It was originally developed for RETRO11 by Marc Simpson and has been
+updated for RETRO12 by Charles Childers.
+
+## Authors
+
+* 2010, Marc Simpson
+* 2011, 2018-2019, Charles Childers
 
 ## Functions
 
-+----------+--------+----------------------------+
-| Function | Stack  | Used For                   |
-+==========+========+============================+
-| b:unpack | c-bbbb | Given a byte-packed cell   |
-|          |        | on the stack, return the   |
-|          |        | bytes it contains          |
-+----------+--------+----------------------------+
-| b:pack   | bbbb-c | Pack four byes into a cell,|
-|          |        | return the cell on the     |
-|          |        | stack                      |
-+----------+--------+----------------------------+
-| b:fetch  | a-b    | Fetch a byte               |
-+----------+--------+----------------------------+
-| b:store  | ba-    | Store a byte into memory   |
-+----------+--------+----------------------------+
++-------------------+--------+----------------------------+
+| Function          | Stack  | Used For                   |
++===================+========+============================+
+| b:to-byte-address | a-a    | Return the byte address of |
+|                   |        | the first byte in a cell   |
++-------------------+--------+----------------------------+
+| b:unpack          | c-bbbb | Given a byte-packed cell   |
+|                   |        | on the stack, return the   |
+|                   |        | bytes it contains          |
++-------------------+--------+----------------------------+
+| b:pack            | bbbb-c | Pack four byes into a cell,|
+|                   |        | return the cell on the     |
+|                   |        | stack                      |
++-------------------+--------+----------------------------+
+| b:fetch           | a-b    | Fetch a byte               |
++-------------------+--------+----------------------------+
+| b:store           | ba-    | Store a byte into memory   |
++-------------------+--------+----------------------------+
 
 
 ## Code & Commentary
@@ -48,6 +55,8 @@ Nga is cell addressed. There's no direct access to memory at a byte level. To ac
     drop ;
 
 ---reveal---
+
+  :b:to-byte-address (a-a) #4 * ;
 
   :b:unpack (c-bbbb)
     dup           #255 and swap
@@ -72,10 +81,12 @@ Nga is cell addressed. There's no direct access to memory at a byte level. To ac
 }}
 ~~~
 
+
+## Some Tests
+
 ```
 &s:length #4 * #0 + b:fetch
 &s:length #4 * #1 + b:fetch
 &s:length #4 * #2 + b:fetch
 &s:length #4 * #3 + b:fetch
 ```
-
