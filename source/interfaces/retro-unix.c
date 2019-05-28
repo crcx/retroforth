@@ -668,7 +668,6 @@ void file_write() {
   slot = stack_pop();
   c = stack_pop();
   r = fputc(c, OpenFileHandles[slot]);
-  c = (r == EOF) ? 0 : 1;
 }
 
 
@@ -702,10 +701,10 @@ void file_get_position() {
   ---------------------------------------------------------------------*/
 
 void file_set_position() {
-  CELL slot, pos, r;
+  CELL slot, pos;
   slot = stack_pop();
   pos  = stack_pop();
-  r = fseek(OpenFileHandles[slot], pos, SEEK_SET);
+  fseek(OpenFileHandles[slot], pos, SEEK_SET);
 }
 
 
@@ -718,9 +717,8 @@ void file_set_position() {
 void file_get_size() {
   CELL slot, current, r, size;
   struct stat buffer;
-  int    status;
   slot = stack_pop();
-  status = fstat(fileno(OpenFileHandles[slot]), &buffer);
+  fstat(fileno(OpenFileHandles[slot]), &buffer);
   if (!S_ISDIR(buffer.st_mode)) {
     current = ftell(OpenFileHandles[slot]);
     r = fseek(OpenFileHandles[slot], 0, SEEK_END);
@@ -728,6 +726,7 @@ void file_get_size() {
     fseek(OpenFileHandles[slot], current, SEEK_SET);
   } else {
     r = -1;
+    size = 0;
   }
   stack_push((r == 0) ? size : 0);
 }
@@ -741,9 +740,8 @@ void file_get_size() {
 void file_delete() {
   char *request;
   CELL name = data[sp]; sp--;
-  CELL result;
   request = string_extract(name);
-  result = (unlink(request) == 0) ? -1 : 0;
+  unlink(request);
 }
 
 
