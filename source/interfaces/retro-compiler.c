@@ -197,6 +197,7 @@ int main(int argc, char **argv) {
   generate_turnkey();
   unlink("__ngaImage");
 
+  printf("\nFinal image is %d cells\n", memory[3]);
   return validate_image(tokens);
 }
 
