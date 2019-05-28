@@ -332,7 +332,7 @@ void read_token(FILE *file, char *token_buffer, int echo, int max) {
 
 CELL ngaLoadImage(char *imageFile) {
   FILE *fp;
-  CELL imageSize;
+  CELL imageSize = 0;
   long fileLen;
   if ((fp = fopen(imageFile, "rb")) != NULL) {
     /* Determine length (in cells) */

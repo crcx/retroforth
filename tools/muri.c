@@ -133,6 +133,10 @@ void pass2(char *fname) {
   buffer = (char *)source;
   here = 0;
   fp = fopen(fname, "r");
+  if (fp == NULL) {
+    printf("Unable to load file\n");
+    exit(2);
+  }
   while (!feof(fp)) {
     read_line(fp, buffer);
     if (strcmp(buffer, "~~~") == 0) {
