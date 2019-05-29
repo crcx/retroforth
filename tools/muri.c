@@ -34,7 +34,7 @@ int32_t lookup(char *name) {
 }
 void add_label(char *name, int32_t slice) {
   if (lookup(name) == -1) {
-    strlcpy(Labels[np], name, STRING_LEN);
+    bsd_strlcpy(Labels[np], name, STRING_LEN);
     Pointers[np] = slice;
     np++;
   } else {

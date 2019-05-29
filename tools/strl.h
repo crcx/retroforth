@@ -1,5 +1,3 @@
-#if defined __GNU_LIBRARY__ || defined __GLIBC__
-
 #include <sys/types.h>
 #include <string.h>
 
@@ -29,8 +27,7 @@
  * Returns strlen(src) + MIN(dsize, strlen(initial dst)).
  * If retval >= dsize, truncation occurred.
  */
-size_t
-strlcat(char *dst, const char *src, size_t dsize)
+size_t bsd_strlcat(char *dst, const char *src, size_t dsize)
 {
 	const char *odst = dst;
 	const char *osrc = src;
@@ -81,8 +78,7 @@ strlcat(char *dst, const char *src, size_t dsize)
  * chars will be copied.  Always NUL terminates (unless dsize == 0).
  * Returns strlen(src); if retval >= dsize, truncation occurred.
  */
-size_t
-strlcpy(char *dst, const char *src, size_t dsize)
+size_t bsd_strlcpy(char *dst, const char *src, size_t dsize)
 {
 	const char *osrc = src;
 	size_t nleft = dsize;
@@ -105,5 +101,3 @@ strlcpy(char *dst, const char *src, size_t dsize)
 
 	return(src - osrc - 1);	/* count does not include NUL */
 }
-#endif
-
