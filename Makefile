@@ -21,7 +21,6 @@ dirs:
 
 clean:
 	rm -f bin/*
-	find . -name "*.o" -type f -delete
 
 install: build install-data install-docs install-examples install-manpages
 	install -m 755 -d -- $(DESTDIR)$(PREFIX)/bin
