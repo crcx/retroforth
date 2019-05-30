@@ -2,11 +2,11 @@
 
 This is the changelog for the development builds of Retro.
 The version number is likely to change; I'm targetting a
-July - September window for this release.
+July window for this release.
 
 ## Bug Fixes
 
-- (all) strl* functions now only compiled if using GLIBC.
+- (all) strl* functions now renamed, included on all builds
 - (all) `d:add-header` is extended by retro.forth to remap spaces back to underscores
 - (doc) fixed stack comments in glossary
 - (ex ) fixed issue in mail.forth
@@ -16,6 +16,7 @@ July - September window for this release.
 ## Build
 
 - Merged Linux & BSD Makefiles
+- Now builds on Solaris
 
 ## Core Language
 
