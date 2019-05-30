@@ -1,9 +1,23 @@
 # A New Listener
 
-The basic listener is very minimalistic. This is the start of
-something a little nicer.
+The basic listener is very minimalistic. There are a few reasons
+for this.
 
-# Features
+- I don't use it often (I generally code in files or blocks,
+  using the listener only for brief tests)
+- A complex listener adds surface for bugs and incompatibilites
+  due to terminal and host configurations
+- It's harder to pipe data in and out of a more complex listener
+
+This can be worked around in a number of ways. Tools like
+`rlwrap` can be used to provide a line editor and history, and
+one can always write their own custom listener...
+
+But sometimes it's nice to experiment a bit. This is a modestly
+expanded version of the listener, adding some new functionality
+and providing a more flexible base to build on.
+
+# Current Features
 
 - character breaking input
 - suggestions on hitting TAB
@@ -16,42 +30,121 @@ something a little nicer.
 
 # The Code
 
+The RETRO image has a 512 cell buffer between the kernel and the
+high level code. This is used for the Text Input Buffer, or TIB.
+
+    +------------------+
+    | kernel           | 0-1023
+    | input buffer     | 1024-1536
+    | standard library | 1537+
+    | ...              |
+    | system buffers   | EOM - ???
+    +------------------+
+
+~~~
+#1024 'TIB const
+~~~
+
+The listener needs to determine what to treat as the end of the
+token. I define `end-of-token?` for this.
+
+~~~
+:end-of-token? (c-f) hook
+  { ASCII:CR ASCII:LF ASCII:SPACE } a:contains? ;
+~~~
+
+It's possible to get an empty string as an input. This isn't
+any good, so I define `s:blank?` for this.
+
+~~~
+:s:blank? (s-sf) dup s:length n:zero? ;
+~~~
+
+There are certain keys I want to handle differently from others.
+The initial ones are backspace, tab, escape, and CTRL+K. I am
+defining handlers for these.
+
+First is backspace. I trap ASCII:BS and ASCII:DEL for this.
+
+~~~
+:handle:backspace (c-c) hook
+  dup { ASCII:BS ASCII:DEL } a:contains?
+  [ buffer:get buffer:get drop-pair ] if ;
+~~~
+
+Tab is used to display suggestions, based on the token input so
+far.
+
 ~~~
 {{
-  #1025 'TIB const
-
-  :eol? (c-f)
-    { ASCII:CR ASCII:LF ASCII:SPACE } a:contains? ;
-
-  :valid? (s-sf)
-    dup s:length n:-zero? ;
-
-  :bs (c-c)
-    dup { #8 #127 } a:contains? [ buffer:get buffer:get drop-pair ] if ;
-
+  :prefix?
+    TIB fetch 'prefix:_ [ #7 + store ] sip d:lookup n:-zero? ; 
   :hint
-    nl TIB d:words-beginning-with nl TIB s:put ;
-
-  :hints (c-c)
-    dup ASCII:HT eq? [ buffer:get drop hint ] if ;
-
-  :stack (c-c)
-    dup ASCII:ESC eq? [ buffer:get drop nl &dump-stack dip nl TIB s:put ] if ;
-
-  :check (a-)
-    [ call ] a:for-each ;
-
-  :c:get (-c) as{ 'liii.... i #1 d }as ;
-
-  :s:get (-s) [ TIB buffer:set
-                [ c:get dup buffer:add { &bs &hints &stack } check eol? ] until
-                  buffer:start s:chop ] buffer:preserve ;
-
-  :forever (q-)
-    repeat &call sip again ;
+    nl TIB prefix? [ n:inc ] if d:words-beginning-with nl
+    TIB s:put ;
 ---reveal---
-  :new-listener (-)
-    'stty_cbreak unix:system
-    [ s:get valid? &interpret &drop choose ] forever ;
+  :handle:tab (c-c) hook
+    dup ASCII:HT eq? [ buffer:get drop hint ] if ;
 }}
 ~~~
+
+Control + k (`ASCII:VT`) will display help for the word being typed.
+This assumes that `retro-describe` is in your $PATH and that the
+typed text is a complete word name (without a prefix).
+
+~~~
+:handle:CTRL+K (c-c) hook
+  dup ASCII:VT eq? [ buffer:get drop
+                     TIB 'retro-describe_"%s" s:format nl
+                     unix:system TIB s:put ] if ;
+~~~
+
+The escape key will be used to display the stack.
+
+~~~
+:handle:escape (c-c) hook
+  dup ASCII:ESC eq?
+  [ buffer:get drop nl &dump-stack dip nl TIB s:put ] if ;
+~~~
+
+To control the checks, I define two words. The first returns an
+array of handlers, the second processes them.
+
+~~~
+:special-keys (-a) hook
+  { &handle:backspace &handle:tab &handle:escape &handle:CTRL+K } ;
+
+:check (q-) hook
+  &call a:for-each ;
+~~~
+
+And with these, I can quickly implement the `new-listener`.
+
+~~~
+{{
+  :guard   (-)  buffer:end TIB lt? [ TIB buffer:set ] if ;
+  :c:get   (-c) as{ 'liii.... i #1 d }as dup buffer:add ;
+  :s:get   (-s) [ TIB buffer:set
+                  [ guard c:get special-keys check end-of-token? ] until
+                  buffer:start s:chop ] buffer:preserve ;
+  :forever (q-) repeat &call sip again ;
+---reveal---
+  :new-listener (-) hook
+    'stty_cbreak unix:system
+    [ s:get s:blank? &drop &interpret choose ] forever ;
+
+  [ 'stty_cbreak unix:system
+    #0 unix:exit ] &bye set-hook
+}}
+~~~
+
+All of the exposed words are hooks: your code can patch in and
+replace them as you see fit, making this much more mallable at
+runtime.
+
+Future things to (maybe) explore:
+
+- tab completion
+- use of `retro-describe` on the current token to get help
+- line editing
+- input history
