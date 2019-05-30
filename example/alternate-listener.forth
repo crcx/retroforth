@@ -22,6 +22,7 @@ and providing a more flexible base to build on.
 - character breaking input
 - suggestions on hitting TAB
 - show stack on hitting ESC
+- use `retro-describe` to get help on CTRL+K
 
 # Loading
 
@@ -145,6 +146,5 @@ runtime.
 Future things to (maybe) explore:
 
 - tab completion
-- use of `retro-describe` on the current token to get help
 - line editing
 - input history
