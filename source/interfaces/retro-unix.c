@@ -1296,9 +1296,16 @@ void io_unix_handler() {
   BSD Sockets
   ---------------------------------------------------------------------*/
 
-int Sockets[16];
+#include <arpa/inet.h>
+#include <netinet/in.h>
+#include <sys/socket.h>
+
+int SocketID[16];
+struct sockaddr_in Sockets[16];
 
 void socket_create() {
+  int sock = socket(AF_INET, SOCK_STREAM, 0);
+  stack_push((CELL)sock);
 }
 
 void socket_bind() {
@@ -1328,8 +1335,15 @@ void socket_recvfrom() {
 void socket_close() {
 }
 
+Handler SocketActions[] = {
+  socket_create, socket_bind,    socket_listen,
+  socket_accept, socket_connect, socket_send,
+  socket_sendto, socket_recv,    socket_recvfrom,
+  socket_close
+};
+
 void io_socket() {
-  stack_pop();
+  SocketActions[stack_pop()]();
 }
 
 void query_socket() {
