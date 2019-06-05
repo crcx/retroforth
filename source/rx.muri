@@ -1512,10 +1512,12 @@ s err:notfound
 | prefix::        | s-        | : prefix for definitions                          |
 | prefix:&        | s-        | & prefix for pointers                             |
 | prefix:$        | s-        | $ prefix for ASCII characters                     |
+| prefix:(        | s-        | ( prefix for comments                             |
 | repeat          | -a        | Start an unconditional loop                       |
 | again           | a-        | End an unconditional loop                         |
 | interpret       | s-?       | Evaluate a token                                  |
 | d:lookup        | s-p       | Given a string, return the DT (or 0 if undefined) |
+| Version         | -a        | Variable; holds a version identifier              |
 | err:notfound    | -         | Handler for token not found errors                |
 
 ## Legalities
