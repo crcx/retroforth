@@ -50,7 +50,7 @@
 #define D_OFFSET_CLASS    2
 #define D_OFFSET_NAME     3
 
-#define NUM_DEVICES       7       /* Set the number of I/O devices     */
+#define NUM_DEVICES       8       /* Set the number of I/O devices     */
 
 #define MAX_OPEN_FILES  128
 
@@ -99,6 +99,9 @@ void io_scripting_query();
 void io_image();
 void io_image_query();
 
+void io_socket();
+void query_socket();
+
 size_t bsd_strlcat(char *dst, const char *src, size_t dsize);
 size_t bsd_strlcpy(char *dst, const char *src, size_t dsize);
 
@@ -116,7 +119,8 @@ Handler IO_deviceHandlers[NUM_DEVICES + 1] = {
   io_floatingpoint_handler,
   io_scripting_handler,
   io_unix_handler,
-  io_image
+  io_image,
+  io_socket
 };
 
 Handler IO_queryHandlers[NUM_DEVICES + 1] = {
@@ -126,7 +130,8 @@ Handler IO_queryHandlers[NUM_DEVICES + 1] = {
   io_floatingpoint_query,
   io_scripting_query,
   io_unix_query,
-  io_image_query
+  io_image_query,
+  query_socket
 };
 
 
@@ -1284,6 +1289,53 @@ void io_unix_handler() {
   UnixActions[stack_pop()]();
 }
 
+
+/*=====================================================================*/
+
+/*---------------------------------------------------------------------
+  BSD Sockets
+  ---------------------------------------------------------------------*/
+
+int Sockets[16];
+
+void socket_create() {
+}
+
+void socket_bind() {
+}
+
+void socket_listen() {
+}
+
+void socket_accept() {
+}
+
+void socket_connect() {
+}
+
+void socket_send() {
+}
+
+void socket_sendto() {
+}
+
+void socket_recv() {
+}
+
+void socket_recvfrom() {
+}
+
+void socket_close() {
+}
+
+void io_socket() {
+  stack_pop();
+}
+
+void query_socket() {
+  stack_push(0);
+  stack_push(7);
+}
 
 /*=====================================================================*/
 
