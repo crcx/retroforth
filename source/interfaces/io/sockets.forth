@@ -11,3 +11,7 @@
 }}
 ~~~
 
+~~~
+:socket:gethostbyname (as-)
+  #0 io:socket-operation ;
+~~~

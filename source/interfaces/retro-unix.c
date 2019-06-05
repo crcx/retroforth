@@ -1299,9 +1299,24 @@ void io_unix_handler() {
 #include <arpa/inet.h>
 #include <netinet/in.h>
 #include <sys/socket.h>
+#include <netdb.h>
 
 int SocketID[16];
 struct sockaddr_in Sockets[16];
+
+void socket_get_host() {
+  struct hostent *hp;
+  struct in_addr **addr_list;
+
+  hp = gethostbyname(string_extract(stack_pop()));
+  if (hp == NULL) {
+    memory[stack_pop()] = 0;
+    return;
+  }
+
+  addr_list = (struct in_addr **)hp->h_addr_list;
+  string_inject(inet_ntoa(*addr_list[0]), stack_pop());
+}
 
 void socket_create() {
   int sock = socket(AF_INET, SOCK_STREAM, 0);
@@ -1336,6 +1351,7 @@ void socket_close() {
 }
 
 Handler SocketActions[] = {
+  socket_get_host,
   socket_create, socket_bind,    socket_listen,
   socket_accept, socket_connect, socket_send,
   socket_sendto, socket_recv,    socket_recvfrom,
