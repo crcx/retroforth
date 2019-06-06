@@ -23,4 +23,5 @@
 :socket:recv          (-) #8 io:socket-operation ;
 :socket:recvfrom      (-) #9 io:socket-operation ;
 :socket:close         (n-) #10 io:socket-operation ;
+:socket:getaddrinfo   (ss-) #11 io:socket-operation ;
 ~~~

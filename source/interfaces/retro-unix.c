@@ -1304,6 +1304,16 @@ void io_unix_handler() {
 int SocketID[16];
 struct sockaddr_in Sockets[16];
 
+
+struct addrinfo hints, *res;
+
+void socket_getaddrinfo() {
+  char host[1025], port[6];
+  strlcpy(port, string_extract(stack_pop()), 5);
+  strlcpy(host, string_extract(stack_pop()), 1024);
+  getaddrinfo(host, port, &hints, &res);
+}
+
 void socket_get_host() {
   struct hostent *hp;
   struct in_addr **addr_list;
@@ -1319,8 +1329,15 @@ void socket_get_host() {
 }
 
 void socket_create() {
+  int i;
   int sock = socket(AF_INET, SOCK_STREAM, 0);
-  stack_push((CELL)sock);
+  for (i = 0; i < 16; i++) {
+    if (SocketID[i] == 0 && sock != 0) {
+      SocketID[i] = sock;
+      stack_push((CELL)sock);
+      sock = 0;  
+    }
+  }
 }
 
 void socket_bind() {
@@ -1334,6 +1351,7 @@ void socket_accept() {
 }
 
 void socket_connect() {
+  stack_push((CELL)connect(stack_pop(), res->ai_addr, res->ai_addrlen));
 }
 
 void socket_send() {
@@ -1349,7 +1367,9 @@ void socket_recvfrom() {
 }
 
 void socket_close() {
-  close(stack_pop());
+  int sock = stack_pop();
+  close(SocketID[sock]);
+  SocketID[sock] = 0;
 }
 
 Handler SocketActions[] = {
@@ -1357,7 +1377,7 @@ Handler SocketActions[] = {
   socket_create, socket_bind,    socket_listen,
   socket_accept, socket_connect, socket_send,
   socket_sendto, socket_recv,    socket_recvfrom,
-  socket_close
+  socket_close, socket_getaddrinfo
 };
 
 void io_socket() {
