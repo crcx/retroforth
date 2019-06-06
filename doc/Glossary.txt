@@ -5116,6 +5116,116 @@ Run quote. After execution completes, put a copy of n back on top of the stack.
 Class: class:word | Namespace: global | Interface Layer: all
 ------------------------------------------------------------------------
 
+socket:accept
+
+  Data:  n-nn
+  Addr:  -
+  Float: -
+
+Begin accepting connections. Returns a new socket and an error code.
+
+Class: class:word | Namespace: socket | Interface Layer: rre
+------------------------------------------------------------------------
+
+socket:bind
+
+  Data:  sn-n
+  Addr:  -
+  Float: -
+
+Bind a socket to a port. The port should be a string. Returns 0 if successful or -1 othewise.
+
+Class: class:word | Namespace: socket | Interface Layer: rre
+------------------------------------------------------------------------
+
+socket:close
+
+  Data:  n-
+  Addr:  -
+  Float: -
+
+Close a socket.
+
+Class: class:word | Namespace: socket | Interface Layer: rre
+------------------------------------------------------------------------
+
+socket:configure
+
+  Data:  ss-
+  Addr:  -
+  Float: -
+
+Configure internal settings for a host (s1) and port (s2). Use before `socket:bind`.
+
+Class: class:word | Namespace: socket | Interface Layer: rre
+------------------------------------------------------------------------
+
+socket:connect
+
+  Data:  n-nn
+  Addr:  -
+  Float: -
+
+Connect to a server. Provide a socket, this will return a status flag and an error code.
+
+Class: class:word | Namespace: socket | Interface Layer: rre
+------------------------------------------------------------------------
+
+socket:create
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Obtain a new socket.
+
+Class: class:word | Namespace: socket | Interface Layer: rre
+------------------------------------------------------------------------
+
+socket:gethostbyname
+
+  Data:  as-
+  Addr:  -
+  Float: -
+
+Get the host IP in dotted notation. The host is specified by the string and the address is the start of the buffer for the dotted IP.
+
+Class: class:word | Namespace: socket | Interface Layer: rre
+------------------------------------------------------------------------
+
+socket:listen
+
+  Data:  nn-nn
+  Addr:  -
+  Float: -
+
+Prepare a socket for accepting incoming quotations. Takes a backlog count (n1) and a socket (n2). Returns a flag (0 success, -1 failed) and an error code.
+
+Class: class:word | Namespace: socket | Interface Layer: rre
+------------------------------------------------------------------------
+
+socket:recv
+
+  Data:  ann-nn
+  Addr:  -
+  Float: -
+
+Receive data from a socket. This will read into memory starting at address *a*, up to *n1* bytes. *n2* is the socket. Returns the number of bytes read and an error code.
+
+Class: class:word | Namespace: socket | Interface Layer: rre
+------------------------------------------------------------------------
+
+socket:send
+
+  Data:  sn-nn
+  Addr:  -
+  Float: -
+
+Send a string to a socket. This will return the number of characters sent and an error code.
+
+Class: class:word | Namespace: socket | Interface Layer: rre
+------------------------------------------------------------------------
+
 sp
 
   Data:  -

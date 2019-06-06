@@ -3767,6 +3767,86 @@
 <p>Run quote. After execution completes, put a copy of n back on top of the stack.</p>
 <p><b>Class:</b> class:word | <b>Namespace:</b> global | <b>Interface Layer:</b> all</p>
 <hr/>
+<h1>socket:accept</h1>
+<div style='margin-left: 1em;'><p><b>Data:</b> n-nn<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Begin accepting connections. Returns a new socket and an error code.</p>
+<p><b>Class:</b> class:word | <b>Namespace:</b> socket | <b>Interface Layer:</b> rre</p>
+<hr/>
+<h1>socket:bind</h1>
+<div style='margin-left: 1em;'><p><b>Data:</b> sn-n<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Bind a socket to a port. The port should be a string. Returns 0 if successful or -1 othewise.</p>
+<p><b>Class:</b> class:word | <b>Namespace:</b> socket | <b>Interface Layer:</b> rre</p>
+<hr/>
+<h1>socket:close</h1>
+<div style='margin-left: 1em;'><p><b>Data:</b> n-<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Close a socket.</p>
+<p><b>Class:</b> class:word | <b>Namespace:</b> socket | <b>Interface Layer:</b> rre</p>
+<hr/>
+<h1>socket:configure</h1>
+<div style='margin-left: 1em;'><p><b>Data:</b> ss-<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Configure internal settings for a host (s1) and port (s2). Use before `socket:bind`.</p>
+<p><b>Class:</b> class:word | <b>Namespace:</b> socket | <b>Interface Layer:</b> rre</p>
+<hr/>
+<h1>socket:connect</h1>
+<div style='margin-left: 1em;'><p><b>Data:</b> n-nn<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Connect to a server. Provide a socket, this will return a status flag and an error code.</p>
+<p><b>Class:</b> class:word | <b>Namespace:</b> socket | <b>Interface Layer:</b> rre</p>
+<hr/>
+<h1>socket:create</h1>
+<div style='margin-left: 1em;'><p><b>Data:</b> -n<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Obtain a new socket.</p>
+<p><b>Class:</b> class:word | <b>Namespace:</b> socket | <b>Interface Layer:</b> rre</p>
+<hr/>
+<h1>socket:gethostbyname</h1>
+<div style='margin-left: 1em;'><p><b>Data:</b> as-<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Get the host IP in dotted notation. The host is specified by the string and the address is the start of the buffer for the dotted IP.</p>
+<p><b>Class:</b> class:word | <b>Namespace:</b> socket | <b>Interface Layer:</b> rre</p>
+<hr/>
+<h1>socket:listen</h1>
+<div style='margin-left: 1em;'><p><b>Data:</b> nn-nn<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Prepare a socket for accepting incoming quotations. Takes a backlog count (n1) and a socket (n2). Returns a flag (0 success, -1 failed) and an error code.</p>
+<p><b>Class:</b> class:word | <b>Namespace:</b> socket | <b>Interface Layer:</b> rre</p>
+<hr/>
+<h1>socket:recv</h1>
+<div style='margin-left: 1em;'><p><b>Data:</b> ann-nn<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Receive data from a socket. This will read into memory starting at address *a*, up to *n1* bytes. *n2* is the socket. Returns the number of bytes read and an error code.</p>
+<p><b>Class:</b> class:word | <b>Namespace:</b> socket | <b>Interface Layer:</b> rre</p>
+<hr/>
+<h1>socket:send</h1>
+<div style='margin-left: 1em;'><p><b>Data:</b> sn-nn<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Send a string to a socket. This will return the number of characters sent and an error code.</p>
+<p><b>Class:</b> class:word | <b>Namespace:</b> socket | <b>Interface Layer:</b> rre</p>
+<hr/>
 <h1>sp</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -<br>
 <b>Addr:</b> -<br>

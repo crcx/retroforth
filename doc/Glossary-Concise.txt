@@ -1300,6 +1300,36 @@ Peform a bitwise shift of m by n bits. If n is positive, shift right. If negativ
 sip                              D: nq-n  A: -  F: -
 Run quote. After execution completes, put a copy of n back on top of the stack.
 
+socket:accept                    D: n-nn  A: -  F: -
+Begin accepting connections. Returns a new socket and an error code.
+
+socket:bind                      D: sn-n  A: -  F: -
+Bind a socket to a port. The port should be a string. Returns 0 if successful or -1 othewise.
+
+socket:close                     D: n-  A: -  F: -
+Close a socket.
+
+socket:configure                 D: ss-  A: -  F: -
+Configure internal settings for a host (s1) and port (s2). Use before `socket:bind`.
+
+socket:connect                   D: n-nn  A: -  F: -
+Connect to a server. Provide a socket, this will return a status flag and an error code.
+
+socket:create                    D: -n  A: -  F: -
+Obtain a new socket.
+
+socket:gethostbyname             D: as-  A: -  F: -
+Get the host IP in dotted notation. The host is specified by the string and the address is the start of the buffer for the dotted IP.
+
+socket:listen                    D: nn-nn  A: -  F: -
+Prepare a socket for accepting incoming quotations. Takes a backlog count (n1) and a socket (n2). Returns a flag (0 success, -1 failed) and an error code.
+
+socket:recv                      D: ann-nn  A: -  F: -
+Receive data from a socket. This will read into memory starting at address *a*, up to *n1* bytes. *n2* is the socket. Returns the number of bytes read and an error code.
+
+socket:send                      D: sn-nn  A: -  F: -
+Send a string to a socket. This will return the number of characters sent and an error code.
+
 sp                               D: -  A: -  F: -
 Display a space (`ASCII:SPACE`)
 

@@ -1,3 +1,8 @@
+This implements the Forth part of the socket I/O interface.
+
+The sockets interface is low level, and very close to the
+underlying BSD sockets model.
+
 ~~~
 {{
   'io:Sockets var
@@ -9,19 +14,15 @@
   ---reveal---
   :io:socket-operation identify @io:Sockets io:invoke ;
 }}
-~~~
 
-~~~
-:socket:gethostbyname (as-)  #0 io:socket-operation ;
-:socket:create        (-n)   #1 io:socket-operation ;
-:socket:bind          (-) #2 io:socket-operation ;
-:socket:listen        (-) #3 io:socket-operation ;
-:socket:accept        (-) #4 io:socket-operation ;
-:socket:connect       (-) #5 io:socket-operation ;
-:socket:send          (-) #6 io:socket-operation ;
-:socket:sendto        (-) #7 io:socket-operation ;
-:socket:recv          (-) #8 io:socket-operation ;
-:socket:recvfrom      (-) #9 io:socket-operation ;
-:socket:close         (n-) #10 io:socket-operation ;
-:socket:getaddrinfo   (ss-) #11 io:socket-operation ;
+:socket:gethostbyname (as-)    #0 io:socket-operation ;
+:socket:create        (-n)     #1 io:socket-operation ;
+:socket:bind          (sn-n)   #2 io:socket-operation ;
+:socket:listen        (nn-nn)  #3 io:socket-operation ;
+:socket:accept        (n-nn)   #4 io:socket-operation ;
+:socket:connect       (n-nn)   #5 io:socket-operation ;
+:socket:send          (sn-nn)  #6 io:socket-operation ;
+:socket:recv          (ann-nn) #8 io:socket-operation ;
+:socket:close         (n-)     #10 io:socket-operation ;
+:socket:configure     (ss-)    #11 io:socket-operation ;
 ~~~

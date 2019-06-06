@@ -1353,8 +1353,8 @@ void socket_bind() {
 }
 
 void socket_listen() {
-  int backlog = stack_pop();
   int sock = stack_pop();
+  int backlog = stack_pop();
   stack_push(listen(SocketID[sock], backlog));
   stack_push(errno);
 }
