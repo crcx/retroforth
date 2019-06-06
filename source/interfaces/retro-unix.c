@@ -1304,7 +1304,6 @@ void io_unix_handler() {
 int SocketID[16];
 struct sockaddr_in Sockets[16];
 
-
 struct addrinfo hints, *res;
 
 void socket_getaddrinfo() {
@@ -1334,8 +1333,8 @@ void socket_create() {
   for (i = 0; i < 16; i++) {
     if (SocketID[i] == 0 && sock != 0) {
       SocketID[i] = sock;
-      stack_push((CELL)sock);
-      sock = 0;  
+      stack_push((CELL)i);
+      sock = 0;
     }
   }
 }
@@ -1351,16 +1350,29 @@ void socket_accept() {
 }
 
 void socket_connect() {
-  stack_push((CELL)connect(stack_pop(), res->ai_addr, res->ai_addrlen));
+  stack_push((CELL)connect(SocketID[stack_pop()], res->ai_addr, res->ai_addrlen));
 }
 
 void socket_send() {
+  int sock = stack_pop();
+  char *buf = string_extract(stack_pop());
+  stack_push(send(SocketID[sock], buf, strlen(buf), 0));
+  stack_push(errno);
 }
 
 void socket_sendto() {
 }
 
 void socket_recv() {
+  char buf[8193];
+  int sock = stack_pop();
+  int limit = stack_pop();
+  int dest = stack_pop();
+  int len = recv(SocketID[sock], buf, limit, 0);
+  if (len > 0)  buf[len] = '\0';
+  if (len > 0)  string_inject(buf, dest);
+  stack_push(len);
+  stack_push(errno);
 }
 
 void socket_recvfrom() {
