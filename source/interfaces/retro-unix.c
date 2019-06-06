@@ -1324,6 +1324,7 @@ void socket_create() {
 }
 
 void socket_bind() {
+
 }
 
 void socket_listen() {
@@ -1348,6 +1349,7 @@ void socket_recvfrom() {
 }
 
 void socket_close() {
+  close(stack_pop());
 }
 
 Handler SocketActions[] = {

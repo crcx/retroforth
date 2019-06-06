@@ -12,6 +12,15 @@
 ~~~
 
 ~~~
-:socket:gethostbyname (as-)
-  #0 io:socket-operation ;
+:socket:gethostbyname (as-)  #0 io:socket-operation ;
+:socket:create        (-n)   #1 io:socket-operation ;
+:socket:bind          (-) #2 io:socket-operation ;
+:socket:listen        (-) #3 io:socket-operation ;
+:socket:accept        (-) #4 io:socket-operation ;
+:socket:connect       (-) #5 io:socket-operation ;
+:socket:send          (-) #6 io:socket-operation ;
+:socket:sendto        (-) #7 io:socket-operation ;
+:socket:recv          (-) #8 io:socket-operation ;
+:socket:recvfrom      (-) #9 io:socket-operation ;
+:socket:close         (n-) #10 io:socket-operation ;
 ~~~
