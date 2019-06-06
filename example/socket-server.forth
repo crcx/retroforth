@@ -7,7 +7,7 @@ socket:create 'Sock var<n>
 Bind to port 9998.
 
 ~~~
-'9998 @Sock socket:bind drop
+'9998 @Sock socket:bind drop-pair
 ~~~
 
 Prepare to listen for connections.

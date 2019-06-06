@@ -433,7 +433,7 @@ set-hook                         D: aa-  A: -  F: -
 shift                            D: mn-o  A: -  F: -
 sip                              D: nq-n  A: -  F: -
 socket:accept                    D: n-nn  A: -  F: -
-socket:bind                      D: sn-n  A: -  F: -
+socket:bind                      D: sn-nn  A: -  F: -
 socket:close                     D: n-  A: -  F: -
 socket:configure                 D: ss-  A: -  F: -
 socket:connect                   D: n-nn  A: -  F: -

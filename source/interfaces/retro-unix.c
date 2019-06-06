@@ -1350,6 +1350,7 @@ void socket_bind() {
 
   getaddrinfo(NULL, string_extract(port), &hints, &res);
   stack_push((CELL) bind(SocketID[sock], res->ai_addr, res->ai_addrlen));
+  stack_push(errno);
 }
 
 void socket_listen() {

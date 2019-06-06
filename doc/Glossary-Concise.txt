@@ -1303,8 +1303,8 @@ Run quote. After execution completes, put a copy of n back on top of the stack.
 socket:accept                    D: n-nn  A: -  F: -
 Begin accepting connections. Returns a new socket and an error code.
 
-socket:bind                      D: sn-n  A: -  F: -
-Bind a socket to a port. The port should be a string. Returns 0 if successful or -1 othewise.
+socket:bind                      D: sn-nn  A: -  F: -
+Bind a socket to a port. The port should be a string. Returns 0 if successful or -1 othewise and an error code.
 
 socket:close                     D: n-  A: -  F: -
 Close a socket.

@@ -433,7 +433,7 @@ set-hook	aa-	-	-	Patch the hook point in a2 to point to a1.			class:word	    :fo
 shift	mn-o	-	-	Peform a bitwise shift of m by n bits. If n is positive, shift right. If negative, the shift will be to the left.			class:primitive	{n/a}	{n/a}	global	all	
 sip	nq-n	-	-	Run quote. After execution completes, put a copy of n back on top of the stack.			class:word	{n/a}	{n/a}	global	all	
 socket:accept	n-nn	-	-	Begin accepting connections. Returns a new socket and an error code.			class:word	{n/a}	{n/a}	socket	rre	
-socket:bind	sn-n	-	-	Bind a socket to a port. The port should be a string. Returns 0 if successful or -1 othewise.			class:word	{n/a}	{n/a}	socket	rre	
+socket:bind	sn-nn	-	-	Bind a socket to a port. The port should be a string. Returns 0 if successful or -1 othewise and an error code.			class:word	{n/a}	{n/a}	socket	rre	
 socket:close	n-	-	-	Close a socket.			class:word	{n/a}	{n/a}	socket	rre	
 socket:configure	ss-	-	-	Configure internal settings for a host (s1) and port (s2). Use before `socket:bind`.			class:word	{n/a}	{n/a}	socket	rre	
 socket:connect	n-nn	-	-	Connect to a server. Provide a socket, this will return a status flag and an error code.			class:word	{n/a}	{n/a}	socket	rre	

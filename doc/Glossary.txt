@@ -5129,11 +5129,11 @@ Class: class:word | Namespace: socket | Interface Layer: rre
 
 socket:bind
 
-  Data:  sn-n
+  Data:  sn-nn
   Addr:  -
   Float: -
 
-Bind a socket to a port. The port should be a string. Returns 0 if successful or -1 othewise.
+Bind a socket to a port. The port should be a string. Returns 0 if successful or -1 othewise and an error code.
 
 Class: class:word | Namespace: socket | Interface Layer: rre
 ------------------------------------------------------------------------
