@@ -1340,17 +1340,45 @@ void socket_create() {
 }
 
 void socket_bind() {
+  memset(&hints, 0, sizeof hints);
+  hints.ai_family = AF_UNSPEC;
+  hints.ai_socktype = SOCK_STREAM;
+  hints.ai_flags = AI_PASSIVE;
 
+  int sock = stack_pop();
+  int port = stack_pop();
+
+  getaddrinfo(NULL, string_extract(port), &hints, &res);
+  stack_push((CELL) bind(SocketID[sock], res->ai_addr, res->ai_addrlen));
 }
 
 void socket_listen() {
+  int backlog = stack_pop();
+  int sock = stack_pop();
+  stack_push(listen(SocketID[sock], backlog));
+  stack_push(errno);
 }
 
 void socket_accept() {
+  int i;
+  int sock = stack_pop();
+  struct sockaddr_storage their_addr;
+  socklen_t addr_size = sizeof their_addr;
+  int new_fd = accept(SocketID[sock], (struct sockaddr *)&their_addr, &addr_size);
+
+  for (i = 0; i < 16; i++) {
+    if (SocketID[i] == 0 && new_fd != 0) {
+      SocketID[i] = new_fd;
+      stack_push((CELL)i);
+      new_fd = 0;
+    }
+  }
+  stack_push(errno);
 }
 
 void socket_connect() {
   stack_push((CELL)connect(SocketID[stack_pop()], res->ai_addr, res->ai_addrlen));
+  stack_push(errno);
 }
 
 void socket_send() {
