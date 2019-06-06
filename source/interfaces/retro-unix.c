@@ -1308,8 +1308,8 @@ struct addrinfo hints, *res;
 
 void socket_getaddrinfo() {
   char host[1025], port[6];
-  strlcpy(port, string_extract(stack_pop()), 5);
-  strlcpy(host, string_extract(stack_pop()), 1024);
+  bsd_strlcpy(port, string_extract(stack_pop()), 5);
+  bsd_strlcpy(host, string_extract(stack_pop()), 1024);
   getaddrinfo(host, port, &hints, &res);
 }
 
