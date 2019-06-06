@@ -43,11 +43,14 @@ negative values are not supported.
 
 ~~~
 {{
-  'Number var
-  '0123456789ABCDEF 'DIGITS s:const
-  :convert    (c-)  &DIGITS swap s:index-of @Number #16 * + !Number ;
+  :hex (s-n)
+    dup fetch $- eq? [ n:inc #-1 ] [ #0 ] choose swap
+    #0 swap [ '0123456789ABCDEF swap s:index-of + #16 * ] s:for-each
+    #16 / swap 0; * ;
 ---reveal---
-  :prefix:0 (s-n)
-    n:inc #0 !Number [ convert ] s:for-each @Number class:data ; immediate
+  :prefix:0 (s-...)
+    dup n:dec d:lookup n:-zero?
+      [ n:dec d:lookup [ d:xt fetch ] [ d:class fetch ] bi call ] if;
+    n:inc hex class:data ; immediate
 }}
 ~~~
