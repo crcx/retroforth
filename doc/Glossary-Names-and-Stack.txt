@@ -476,6 +476,7 @@ unix:pclose                      D: n-  A: -  F: -
 unix:popen                       D: sn-n  A: -  F: -
 unix:putenv                      D: s-  A: -  F: -
 unix:sleep                       D: n-  A: -  F: -
+unix:slurp-pipe                  D: as-n  A: -  F: -
 unix:system                      D: s-  A: -  F: -
 unix:time                        D: -n  A: -  F: -
 unix:wait                        D: -n  A: -  F: -

@@ -5640,6 +5640,17 @@ Sleep for the specified number of seconds.
 Class: class:word | Namespace: unix | Interface Layer: rre
 ------------------------------------------------------------------------
 
+unix:slurp-pipe
+
+  Data:  as-n
+  Addr:  -
+  Float: -
+
+Open a pipe. Read all output from the pipe (until ASCII:NULL) is read into buffer. Return the number of bytes read.
+
+Class: class:word | Namespace: unix | Interface Layer: rre
+------------------------------------------------------------------------
+
 unix:system
 
   Data:  s-

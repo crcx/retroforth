@@ -1329,7 +1329,7 @@ void socket_get_host() {
 
 void socket_create() {
   int i;
-  int sock = socket(AF_INET, SOCK_STREAM, 0);
+  int sock = socket(PF_INET, SOCK_STREAM, 0);
   for (i = 0; i < 16; i++) {
     if (SocketID[i] == 0 && sock != 0) {
       SocketID[i] = sock;

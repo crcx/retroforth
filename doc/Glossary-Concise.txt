@@ -1432,6 +1432,9 @@ Takes a string in the form `name=value` and sets an environment variable named `
 unix:sleep                       D: n-  A: -  F: -
 Sleep for the specified number of seconds.
 
+unix:slurp-pipe                  D: as-n  A: -  F: -
+Open a pipe. Read all output from the pipe (until ASCII:NULL) is read into buffer. Return the number of bytes read.
+
 unix:system                      D: s-  A: -  F: -
 Runs another application using the system shell and returns after execution is completed.
 

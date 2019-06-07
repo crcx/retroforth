@@ -476,6 +476,7 @@ unix:pclose	n-	-	-	Close a pipe.			class:word	{n/a}	{n/a}	unix	rre
 unix:popen	sn-n	-	-	Open a pipe. Takes a command to run, and a file mode (`file:R` or `file:W`; `file:R+` may work on some systems). Returns a file ID usable with words in the `file:` namespace.			class:word	{n/a}	{n/a}	unix	rre	
 unix:putenv	s-	-	-	Takes a string in the form `name=value` and sets an environment variable named `name` to `value`.			class:word	  'EDITOR=vi unix:putenv	{n/a}	unix	rre	
 unix:sleep	n-	-	-	Sleep for the specified number of seconds.			class:word	{n/a}	{n/a}	unix	rre	
+unix:slurp-pipe	as-n	-	-	Open a pipe. Read all output from the pipe (until ASCII:NULL) is read into buffer. Return the number of bytes read.			class:word	{n/a}	{n/a}	unix	rre	
 unix:system	s-	-	-	Runs another application using the system shell and returns after execution is completed.			class:word	  'ls_-lh_/etc unix:system	{n/a}	unix	rre	
 unix:time	-n	-	-	Return a timestamp.			class:word	{n/a}	{n/a}	unix	rre	
 unix:wait	-n	-	-	Waits for a child process to complete. This maps to the wait() system call.			class:word	{n/a}	{n/a}	unix	rre	

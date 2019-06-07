@@ -149,3 +149,14 @@ seconds.
   unix:pclose drop ;
 ~~~
 
+
+~~~
+{{
+  :start  swap buffer:set file:R unix:popen ;
+  :read   dup file:read dup buffer:add n:zero? ;
+  :finish unix:pclose buffer:size ;
+---reveal---
+  :unix:slurp-pipe (as-n)
+    [ start [ read ] until finish ] buffer:preserve ;
+}}
+~~~
