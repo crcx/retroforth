@@ -3593,6 +3593,14 @@
 <p>Replace the first instance of s2 in s1 with s3.</p>
 <p><b>Class:</b> class:word | <b>Namespace:</b> s | <b>Interface Layer:</b> all</p>
 <hr/>
+<h1>s:replace-all</h1>
+<div style='margin-left: 1em;'><p><b>Data:</b> sss-s<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Replace all instances of s2 in s1 with s3.</p>
+<p><b>Class:</b> class:word | <b>Namespace:</b> s | <b>Interface Layer:</b> all</p>
+<hr/>
 <h1>s:reverse</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> s-s<br>
 <b>Addr:</b> -<br>
@@ -4157,7 +4165,7 @@
 <b>Addr:</b> -<br>
 <b>Float:</b> -</p>
 </div>
-<p>Open a pipe. Read all output from the pipe (until ASCII:NULL) is read into buffer. Return the number of bytes read.</p>
+<p>Open a pipe. Read all output from the pipe (until ASCII:NULL) and store in the specified buffer. Return the number of bytes read.</p>
 <p><b>Class:</b> class:word | <b>Namespace:</b> unix | <b>Interface Layer:</b> rre</p>
 <hr/>
 <h1>unix:system</h1>

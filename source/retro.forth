@@ -1138,7 +1138,7 @@ located.
 
 `s:tokenize` takes a string and a character to use as a
 separator. It splits the string into a set of substrings and
-returns a set containing pointers to each of them.
+returns an array containing pointers to each of them.
 
 ~~~
 {{
@@ -1152,27 +1152,6 @@ returns a set containing pointers to each of them.
     !Split-On s:keep
     here #0 , [ dup , dup [ step ] s:for-each drop ] dip
     here over - n:dec over store ;
-}}
-~~~
-
-`s:tokenize-on-string` is like `s:tokenize`, but for strings.
-
-~~~
-{{
-  'Tokens var
-  'Needle var
-  :-match?    (s-sf)
-    dup @Needle s:contains-string? ;
-  :save-token (s-s)
-    @Needle s:split-on-string s:keep buffer:add n:inc ;
-  :tokens-to-set (-a)
-    here @Tokens buffer:size dup , [ fetch-next , ] times drop ;
----reveal---
-  :s:tokenize-on-string (ss-a)
-    [ s:keep !Needle here #8192 + !Tokens
-      @Tokens buffer:set
-      [ repeat -match? 0; drop save-token again ] call
-      s:keep buffer:add tokens-to-set ] buffer:preserve ;
 }}
 ~~~
 
@@ -1532,6 +1511,46 @@ and `a:middle`.
     'abc 'abcac reorder bounds? [ drop-pair drop #-1 ] if; drop-pair
     dup-pair swap - n:inc
     here over , [ nip [ + n:inc ] dip &copy times drop ] dip ;
+}}
+~~~
+
+## Strings
+
+Returning to strings, leveraging the array words alongside them
+I can implement `s:replace-all` and `s:tokenize-on-string`.
+
+`s:tokenize-on-string` is like `s:tokenize`, but for strings.
+
+~~~
+{{
+  'Needle d:create #128 allot
+  'Needle<Len> var
+  'Tokens d:create #128 allot
+  'TP var
+  :save s:keep @TP &Tokens a:store &TP v:inc ;
+  :next [ @Needle<Len> + ] sip ;
+  :done s:length n:zero? ;
+---reveal---
+  :s:tokenize-on-string (ss-s)
+    #0 !TP
+    [ dup &Needle s:copy s:append ] [ s:length !Needle<Len> ] bi
+    [ &Needle s:split-on-string save next done ] until
+    &Tokens @TP n:dec !Tokens ;
+}}
+~~~
+
+~~~
+{{
+  'Replacement d:create #128 allot
+  :extract  &Replacement s:copy ;
+  :tokenize s:tokenize-on-string s:empty ;
+  :combine  &Replacement s:append s:append ;
+  :merge    swap [ combine ] a:for-each nip ;
+  :find-end dup s:length &Replacement s:length - over + ;
+  :clean    find-end #0 swap store ;
+---reveal---
+  :s:replace-all (sss-s)
+    &Heap [ extract tokenize merge clean s:temp ] v:preserve ;
 }}
 ~~~
 

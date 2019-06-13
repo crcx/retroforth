@@ -1243,6 +1243,9 @@ Display a string.
 s:replace                        D: sss-s  A: -  F: -
 Replace the first instance of s2 in s1 with s3.
 
+s:replace-all                    D: sss-s  A: -  F: -
+Replace all instances of s2 in s1 with s3.
+
 s:reverse                        D: s-s  A: -  F: -
 Reverse the order of ASCII characters in a string.
 
@@ -1433,7 +1436,7 @@ unix:sleep                       D: n-  A: -  F: -
 Sleep for the specified number of seconds.
 
 unix:slurp-pipe                  D: as-n  A: -  F: -
-Open a pipe. Read all output from the pipe (until ASCII:NULL) is read into buffer. Return the number of bytes read.
+Open a pipe. Read all output from the pipe (until ASCII:NULL) and store in the specified buffer. Return the number of bytes read.
 
 unix:system                      D: s-  A: -  F: -
 Runs another application using the system shell and returns after execution is completed.

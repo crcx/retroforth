@@ -4880,6 +4880,17 @@ Replace the first instance of s2 in s1 with s3.
 Class: class:word | Namespace: s | Interface Layer: all
 ------------------------------------------------------------------------
 
+s:replace-all
+
+  Data:  sss-s
+  Addr:  -
+  Float: -
+
+Replace all instances of s2 in s1 with s3.
+
+Class: class:word | Namespace: s | Interface Layer: all
+------------------------------------------------------------------------
+
 s:reverse
 
   Data:  s-s
@@ -5646,7 +5657,7 @@ unix:slurp-pipe
   Addr:  -
   Float: -
 
-Open a pipe. Read all output from the pipe (until ASCII:NULL) is read into buffer. Return the number of bytes read.
+Open a pipe. Read all output from the pipe (until ASCII:NULL) and store in the specified buffer. Return the number of bytes read.
 
 Class: class:word | Namespace: unix | Interface Layer: rre
 ------------------------------------------------------------------------

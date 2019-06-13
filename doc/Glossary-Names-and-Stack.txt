@@ -413,6 +413,7 @@ s:map                            D: sq-s  A: -  F: -
 s:prepend                        D: ss-s  A: -  F: -
 s:put                            D: s-  A: -  F: -
 s:replace                        D: sss-s  A: -  F: -
+s:replace-all                    D: sss-s  A: -  F: -
 s:reverse                        D: s-s  A: -  F: -
 s:right                          D: sn-s  A: -  F: -
 s:skip                           D: -  A: -  F: -
