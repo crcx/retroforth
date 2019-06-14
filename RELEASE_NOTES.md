@@ -24,6 +24,7 @@ July window for this release.
 - rename: `v:update-using` to `v:update`
 - add: `a:fetch`
 - add: `a:store`
+- add: `s:replace-all`
 - faster: `times`
 - faster: `times<with-index>`
 - faster: `while`
@@ -59,6 +60,8 @@ July window for this release.
 
 - (rre) added `clock:utc:` namespace
 - (rre) remove gopher downloader
+- (rre) add sockets interface
+- (rre) add `unix:slurp-pipe`
 
 ## Interfaces
 

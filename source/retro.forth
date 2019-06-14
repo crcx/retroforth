@@ -1846,7 +1846,7 @@ current, and up to two outer loops as well.
 ~~~
 {{
   'LP var
-  'Index d:create #128 allot
+  'Index d:create #32 allot
   :next (-) @LP &Index + v:inc ;
   :prep (-) &LP v:inc #0 @LP &Index + store ;
   :done (-) &LP v:dec ;
