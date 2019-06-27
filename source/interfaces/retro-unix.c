@@ -254,7 +254,7 @@ void io_image() {
   FILE *fp;
   char *f = string_extract(stack_pop());
   if ((fp = fopen(f, "wb")) == NULL) {
-    printf("Unable to save the image: %s!\n", f);
+    printf("ERROR (nga/io_image): Unable to save the image: %s!\n", f);
     exit(2);
   }
   fwrite(&memory, sizeof(CELL), memory[3] + 1, fp);
@@ -298,12 +298,12 @@ void rre_execute(CELL cell, int silent) {
     if (ngaValidatePackedOpcodes(opcode) != 0) {
       ngaProcessPackedOpcodes(opcode);
     } else {
-      printf("Invalid instruction!\n");
+      printf("ERROR (nga/rre_execute): Invalid instruction!\n");
       printf("At %d, opcode %d\n", ip, opcode);
       exit(1);
     }
     if (sp < 0 || sp > STACK_DEPTH) {
-      printf("\nStack Limits Exceeded!\n");
+      printf("\nERROR (nga/rre_execute): Stack Limits Exceeded!\n");
       printf("At %d, opcode %d\n", ip, opcode);
       exit(1);
     }
@@ -1445,7 +1445,7 @@ void query_socket() {
 CELL stack_pop() {
   sp--;
   if (sp < 0) {
-    printf("Data stack underflow.\n");
+    printf("ERROR (nga/stack_pop): Data stack underflow.\n");
     exit(1);
   }
   return data[sp + 1];
@@ -1454,7 +1454,7 @@ CELL stack_pop() {
 void stack_push(CELL value) {
   sp++;
   if (sp >= STACK_DEPTH) {
-    printf("Data stack overflow.\n");
+    printf("ERROR (nga/stack_push): Data stack overflow.\n");
     exit(1);
   }
   data[sp] = value;
@@ -1615,7 +1615,7 @@ CELL ngaLoadImage(char *imageFile) {
     fileLen = ftell(fp) / sizeof(CELL);
     if (fileLen > IMAGE_SIZE) {
       fclose(fp);
-      printf("Image is larger than alloted space!\n");
+      printf("ERROR (nga/ngaLoadImage): Image is larger than alloted space!\n");
       exit(1);
     }
     rewind(fp);
@@ -1729,11 +1729,17 @@ void inst_gt() {
 }
 
 void inst_fetch() {
-  switch (TOS) {
-    case -1: TOS = sp - 1; break;
-    case -2: TOS = rp; break;
-    case -3: TOS = IMAGE_SIZE; break;
-    default: TOS = memory[TOS]; break;
+  if (TOS >= IMAGE_SIZE || TOS < -3) {
+    ip = IMAGE_SIZE;
+    printf("\nERROR (nga/inst_fetch): Fetch beyond valid memory range\n");
+    exit(1);
+  } else {
+    switch (TOS) {
+      case -1: TOS = sp - 1; break;
+      case -2: TOS = rp; break;
+      case -3: TOS = IMAGE_SIZE; break;
+      default: TOS = memory[TOS]; break;
+    }
   }
 }
 
@@ -1744,6 +1750,8 @@ void inst_store() {
     inst_drop();
   } else {
     ip = IMAGE_SIZE;
+    printf("\nERROR (nga/inst_store): Store beyond valid memory range\n");
+    exit(1);
   }
 }
 
