@@ -653,7 +653,7 @@ void file_open() {
 
 void file_read() {
   CELL slot = stack_pop();
-  if (slot <= 0 || slot > MAX_OPEN_FILES) {
+  if (slot <= 0 || slot > MAX_OPEN_FILES || OpenFileHandles[slot] == 0) {
     printf("\nERROR (nga/file_read): Invalid file handle\n");
     exit(1);
   }
@@ -671,7 +671,7 @@ void file_read() {
 void file_write() {
   CELL slot, c, r;
   slot = stack_pop();
-  if (slot <= 0 || slot > MAX_OPEN_FILES) {
+  if (slot <= 0 || slot > MAX_OPEN_FILES || OpenFileHandles[slot] == 0) {
     printf("\nERROR (nga/file_write): Invalid file handle\n");
     exit(1);
   }
@@ -687,7 +687,7 @@ void file_write() {
 
 void file_close() {
   CELL slot = stack_pop();
-  if (slot <= 0 || slot > MAX_OPEN_FILES) {
+  if (slot <= 0 || slot > MAX_OPEN_FILES || OpenFileHandles[slot] == 0) {
     printf("\nERROR (nga/file_close): Invalid file handle\n");
     exit(1);
   }
@@ -703,7 +703,7 @@ void file_close() {
 
 void file_get_position() {
   CELL slot = stack_pop();
-  if (slot <= 0 || slot > MAX_OPEN_FILES) {
+  if (slot <= 0 || slot > MAX_OPEN_FILES || OpenFileHandles[slot] == 0) {
     printf("\nERROR (nga/file_get_position): Invalid file handle\n");
     exit(1);
   }
@@ -721,7 +721,7 @@ void file_set_position() {
   CELL slot, pos;
   slot = stack_pop();
   pos  = stack_pop();
-  if (slot <= 0 || slot > MAX_OPEN_FILES) {
+  if (slot <= 0 || slot > MAX_OPEN_FILES || OpenFileHandles[slot] == 0) {
     printf("\nERROR (nga/file_set_position): Invalid file handle\n");
     exit(1);
   }
@@ -739,7 +739,7 @@ void file_get_size() {
   CELL slot, current, r, size;
   struct stat buffer;
   slot = stack_pop();
-  if (slot <= 0 || slot > MAX_OPEN_FILES) {
+  if (slot <= 0 || slot > MAX_OPEN_FILES || OpenFileHandles[slot] == 0) {
     printf("\nERROR (nga/file_get_size): Invalid file handle\n");
     exit(1);
   }
@@ -778,7 +778,7 @@ void file_delete() {
 void file_flush() {
   CELL slot;
   slot = stack_pop();
-  if (slot <= 0 || slot > MAX_OPEN_FILES) {
+  if (slot <= 0 || slot > MAX_OPEN_FILES || OpenFileHandles[slot] == 0) {
     printf("\nERROR (nga/file_flush): Invalid file handle\n");
     exit(1);
   }
