@@ -254,7 +254,7 @@ void io_image() {
   FILE *fp;
   char *f = string_extract(stack_pop());
   if ((fp = fopen(f, "wb")) == NULL) {
-    printf("ERROR (nga/io_image): Unable to save the image: %s!\n", f);
+    printf("\nERROR (nga/io_image): Unable to save the image: %s!\n", f);
     exit(2);
   }
   fwrite(&memory, sizeof(CELL), memory[3] + 1, fp);
@@ -298,7 +298,7 @@ void rre_execute(CELL cell, int silent) {
     if (ngaValidatePackedOpcodes(opcode) != 0) {
       ngaProcessPackedOpcodes(opcode);
     } else {
-      printf("ERROR (nga/rre_execute): Invalid instruction!\n");
+      printf("\nERROR (nga/rre_execute): Invalid instruction!\n");
       printf("At %d, opcode %d\n", ip, opcode);
       exit(1);
     }
@@ -653,6 +653,10 @@ void file_open() {
 
 void file_read() {
   CELL slot = stack_pop();
+  if (slot <= 0 || slot > MAX_OPEN_FILES) {
+    printf("\nERROR (nga/file_read): Invalid file handle\n");
+    exit(1);
+  }
   CELL c = fgetc(OpenFileHandles[slot]);
   stack_push(feof(OpenFileHandles[slot]) ? 0 : c);
 }
@@ -667,6 +671,10 @@ void file_read() {
 void file_write() {
   CELL slot, c, r;
   slot = stack_pop();
+  if (slot <= 0 || slot > MAX_OPEN_FILES) {
+    printf("\nERROR (nga/file_write): Invalid file handle\n");
+    exit(1);
+  }
   c = stack_pop();
   r = fputc(c, OpenFileHandles[slot]);
 }
@@ -678,9 +686,13 @@ void file_write() {
   ---------------------------------------------------------------------*/
 
 void file_close() {
-  fclose(OpenFileHandles[data[sp]]);
-  OpenFileHandles[data[sp]] = 0;
-  sp--;
+  CELL slot = stack_pop();
+  if (slot <= 0 || slot > MAX_OPEN_FILES) {
+    printf("\nERROR (nga/file_close): Invalid file handle\n");
+    exit(1);
+  }
+  fclose(OpenFileHandles[slot]);
+  OpenFileHandles[slot] = 0;
 }
 
 
@@ -691,6 +703,10 @@ void file_close() {
 
 void file_get_position() {
   CELL slot = stack_pop();
+  if (slot <= 0 || slot > MAX_OPEN_FILES) {
+    printf("\nERROR (nga/file_get_position): Invalid file handle\n");
+    exit(1);
+  }
   stack_push((CELL) ftell(OpenFileHandles[slot]));
 }
 
@@ -705,6 +721,10 @@ void file_set_position() {
   CELL slot, pos;
   slot = stack_pop();
   pos  = stack_pop();
+  if (slot <= 0 || slot > MAX_OPEN_FILES) {
+    printf("\nERROR (nga/file_set_position): Invalid file handle\n");
+    exit(1);
+  }
   fseek(OpenFileHandles[slot], pos, SEEK_SET);
 }
 
@@ -719,6 +739,10 @@ void file_get_size() {
   CELL slot, current, r, size;
   struct stat buffer;
   slot = stack_pop();
+  if (slot <= 0 || slot > MAX_OPEN_FILES) {
+    printf("\nERROR (nga/file_get_size): Invalid file handle\n");
+    exit(1);
+  }
   fstat(fileno(OpenFileHandles[slot]), &buffer);
   if (!S_ISDIR(buffer.st_mode)) {
     current = ftell(OpenFileHandles[slot]);
@@ -754,6 +778,10 @@ void file_delete() {
 void file_flush() {
   CELL slot;
   slot = stack_pop();
+  if (slot <= 0 || slot > MAX_OPEN_FILES) {
+    printf("\nERROR (nga/file_flush): Invalid file handle\n");
+    exit(1);
+  }
   fflush(OpenFileHandles[slot]);
 }
 
@@ -1445,7 +1473,7 @@ void query_socket() {
 CELL stack_pop() {
   sp--;
   if (sp < 0) {
-    printf("ERROR (nga/stack_pop): Data stack underflow.\n");
+    printf("\nERROR (nga/stack_pop): Data stack underflow.\n");
     exit(1);
   }
   return data[sp + 1];
@@ -1454,7 +1482,7 @@ CELL stack_pop() {
 void stack_push(CELL value) {
   sp++;
   if (sp >= STACK_DEPTH) {
-    printf("ERROR (nga/stack_push): Data stack overflow.\n");
+    printf("\nERROR (nga/stack_push): Data stack overflow.\n");
     exit(1);
   }
   data[sp] = value;
@@ -1615,7 +1643,7 @@ CELL ngaLoadImage(char *imageFile) {
     fileLen = ftell(fp) / sizeof(CELL);
     if (fileLen > IMAGE_SIZE) {
       fclose(fp);
-      printf("ERROR (nga/ngaLoadImage): Image is larger than alloted space!\n");
+      printf("\nERROR (nga/ngaLoadImage): Image is larger than alloted space!\n");
       exit(1);
     }
     rewind(fp);
