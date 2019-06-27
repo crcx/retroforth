@@ -1,0 +1,153 @@
+# Historical Papers and Notes
+
+## On the Naming of RETRO
+
+Taken from http://lists.tunes.org/archives/tunes-lll/1999-July/000121.html
+
+On Fri, Jul 30, 1999 at 07:43:54PM -0400, Paul Dufresne wrote:
+
+> My brother did found it funny that Retro is called like that.
+> For him retro means going back (generally in time) so this
+> does not looks like a name of a OS to come. So he'd like to
+> know from where the name came.
+
+Heheh, here's the story: When I started playing with OS stuff
+last year (not seriously), I was reading about some old things
+like FORTH and ITS, dating back to the 1960's and 70's.  The
+past few years in America, there's been a revival of disco
+music (along with bell bottoms, platform shoes, and all that
+crap) and they call it "retro".  Now, my OS was named by
+musicians.. I was telling a fellow musician about my ideas,
+how it would be cool to have a small OS that isn't bloated and
+unmanageable like Windows... go back to the 70's and resurrect
+a line of software that died out.  He goes "hmm.. sounds kinda
+retro.."
+
+I think it sounds kinda rebellious, which is a Good Thing now
+that everybody hates the M$ empire. :) It seems like other
+people are as sick of the future as I am.  Look at TUNES, the
+idea there isn't to make some great new invention, just take
+some decades-old ideas and combine them in one OS.  The first
+time I saw Knuth's "Art of Computer Programming" in the library
+I thought "god that looks old.. 1973!!! nevermind.."  Now it's
+my programming bible.  Find me something better published in
+the 90's.. if such a thing exists, it'll be like a needle in a
+haystack.  "Newer" doesn't necessarily mean "better".
+
+	New cars = flimsier
+	New farming methods = more devastating
+	New version of Netscape = more bloat, more bullshit
+
+One thing is better now: computer hardware.  Give me 70's
+software on 90's and 00's hardware :)
+
+- Tom Novelli <tcn@tunes.org>
+
+
+## The Design Philosophy of RETRO Native Forth
+
+Computer software is a technology in its infancy, a mere fifty years
+old.  The last 25 years in particular have seen an explosion in the
+software business.  However, software has seen little innovation while
+hardware technology has improved phenomenally (notwithstanding the advent
+of lousy slave-made parts).  Proven software techniques of forty years ago
+have yet to reach widespread use, in deference to the "latest and
+greatest"  proprietary solutions of dubious value.  Thanks to agressive
+marketing, we make huge investments in these dead-end technologies
+(through our businesses and governments, if not personally) and we end up
+with a reliance on a heap of complicated, error-prone, poorly understood
+junk software.
+
+Complexity will dominate the software industry for the foreseeable
+future.  The Retro philosophy is a simple alternative for those willing to
+make a clean break with legacy software.  A Retro system can communicate
+with other systems, but it won't run much legacy software, especially
+proprietary software without source code.  An emulation layer could be
+added, but doing so would defeat the purpose of a simple operating system.
+I think TCP/IP support is all the compatibility that's needed.
+
+At first Retro will appeal to computer hobbyists and electronic
+engineers.  Once the rough edges are smoothed out, it could catch on with
+ordinary folks who don't like waiting five minutes just to check their
+email (not to mention the long hours of setup and maintenance).  Game
+programmers who take their craft seriously may also be interested.
+Businesses might even see a use for it, if the managers decide it's more
+cost-effective to carefully design software for specific needs, rather
+than buying off-the-shelf crap and spending countless manhours working
+around the bugs.  Since it's not practical for businesses to make a clean
+break, my advice is to run Retro (and its ilk) on separate machines
+connected by a network.  Retro is efficient enough to run on older
+machines that would otherwise sit idle, being too slow for the latest
+Microsoft bloatware (or Linux, for that matter).
+
+I strive to avoid the extraneous.  That applies even to proven
+technologies, if I don't need them.  If my computer isn't set up for
+people to log in over the network, I don't want security features; they
+just get in the way.  If I'm only running programs I wrote, I should be
+able to run them with full access to the hardware; I don't need protection
+from viruses.  If I download something I don't trust, then I can run it in
+an isolated process, which is customary with Unix and kin.  But that's not
+core functionality.  All that's needed is the flexibility to add things
+like security, graphical interfaces, and distributed processing - if the
+need ever arises.
+
+In programming languagues, I was misled.  It's the Tower of Babel all
+over again.  The thousands of languages in existence all fall into a
+handful of archetypes: Assembler, LISP, FORTRAN and FORTH represent the
+earliest descendants of nearly all languages.  I hesitate to name a
+definitive "object-oriented" language, and here's why: Object-Oriented
+programming is just a technique, and any language will suffice, even
+Assembler.  The complexites of fancy languages like Ada and C++ are a
+departure from reality -- the reality of the actual physical machine.
+When it all boils down, even LISP, FORTRAN and FORTH are only extensions
+of the machine.
+
+I chose FORTH as the "native tongue" of Retro.  LISP, FORTRAN, and
+other languages can be efficiently implemented as extensions of FORTH, but
+the reverse isn't so efficient.  Theoretically all languages are
+equivalent, but when design time, compilation time, and complexity are
+accounted for, FORTH is most efficient.  FORTH also translates most
+directly to the hardware.  (In fact, FORTH has been implemented in
+hardware; these "stack machines" are extremely efficient.)  FORTH is also
+the easiest language to implement from scratch - a major concern when
+you're trying to make a clean break.  So with simplicity in mind, FORTH
+was the obvious choice.
+
+I'm perfectly happy working with text only, and I go to great lengths
+to avoid using the standard graphical environments, which have major
+problems: windows, pulldown menus, and mice.  Windows can't share the
+screen nicely; that idea is hopeless.  Pulldowns are tedious.  Mice get in
+the way of typing without reducing the need for it; all they give me is
+tendonitis.  Their main use is for drawing.
+
+Some of my favorite interfaces: Telix, Telegard BBS, Pine, Pico, Lynx,
+and ScreamTracker.  All "hotkey" interfaces where you press a key or two
+to perform an action.  Usually the important commands are listed at the
+bottom of the screen, or at least on a help screen.  The same principles
+apply to graphical interfaces: use the full screen, except for a status
+and menu area on one edge.  Resist the temptation to clutter up the
+screen.
+
+As for switching between programs, the Windows methods suck; the only
+thing worse is Unix job control (jobs, fg, and such).  The Linux method is
+tolerable: Alt-Arrows, Alt-F1, Alt-F2, etc.  Still, things could be
+better: F11 and F12 cycle back and forth through all open programs; Alt-F1
+assigns the currently selected program to F1, and likewise for the other
+function keys.  Programs just won't use function keys - Control and Alt
+combinations are less awkward and easier to remember, besides.  I'll also
+want a "last channel" key and a "task list" key; maybe I'll borrow those
+stupid Win95 keys.  The Pause key will do like it says - pause the current
+program - and Ctrl-Pause (Break) will kill it.
+
+One more thing: consistency.  I like programs to look different so I
+can tell them apart, but the keys should be the same as much as possible.
+Keys should be configured in one place, for all programs.  Finally,
+remember the most consistent interface, one of the few constants
+throughout the history of computing - the text screen and keyboard, and
+the teletypewriter before that.  Don't overlook it.
+
+More to come, maybe... :)
+
+"If it's on line, it's a work in progress."
+
+Tom Novelli, 3/4/2000

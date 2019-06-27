@@ -1,56 +1,74 @@
-# RETRO 2019.12
+# RETRO 2019.7
 
 This is the changelog for the development builds of Retro.
-The version number is likely to change; I'm targetting a
-July window for this release.
+The version number is likely to change; I'm targetting an
+early July window for this release.
 
 ## Bug Fixes
 
-- (all) strl* functions now renamed, included on all builds
-- (all) `d:add-header` is extended by retro.forth to remap spaces back to underscores
-- (doc) fixed stack comments in glossary
-- (ex ) fixed issue in mail.forth
-- (rre) `clock:year` corrected
-- (rre) `clock:month` corrected
+- all
+  - strl* functions now renamed, included on all builds
+  - `d:add-header` is extended by retro.forth to remap
+    spaces back to underscores when creating headers
+  - fix overflow issue with `n:MIN`, `n:MAX`
+- build
+  - fix compile issue under Solaris
+- retro-unix
+  - `clock:year` corrected
+  - `clock:month` corrected
+- examples
+  - fixed issue in mail.forth
 
 ## Build
 
 - Merged Linux & BSD Makefiles
-- Now builds on Solaris
 
 ## Core Language
 
-- rename: `a:nth` to `a:th`
-- rename: `v:update-using` to `v:update`
-- add: `a:fetch`
-- add: `a:store`
-- add: `s:replace-all`
-- faster: `times`
-- faster: `times<with-index>`
-- faster: `while`
-- faster: `until`
+- new words
+  - `a:fetch`
+  - `a:store`
+  - `s:replace-all`
+- renamed
+  - `a:nth` to `a:th`
+  - `v:update-using` to `v:update`
+- performance improvements
+  - `times`
+  - `times<with-index>`
+  - `while`
+  - `until`
 
 ## Documentation
 
 - merged BSD, Linux, macOS build instructions
 - updated Starting instructions
 - added implementation notes on arrays
+- updated the initial word table in rx.muri
+- added a man page for retro-describe
+
+## Toolchain
+
+- fixed a bug in the glossary server
 
 ## Examples
 
-- add bury.forth
-- add compat.forth
-- add gopher.forth
-- add magic-8th-ball.forth
-- add mandelbrot.forth
-- add shell.forth
-- add sqlite3 wrapper
-- add unix-does-user-exist.forth
-- improved 99bottles.forth
-- improved edit.forth
-- corrected an issue in mail.forth
-- cleanup publish-examples.forth
-- publish-examples.forth now uses `retro-document` to generate glossaries
+- new examples
+  - bury.forth
+  - compat.forth
+  - gopher.forth
+  - magic-8th-ball.forth
+  - mandelbrot.forth
+  - RFC865.forth
+  - RFC867.forth
+  - shell.forth
+  - sqlite3 wrapper
+  - unix-does-user-exist.forth
+- improved examples
+  - 99bottles.forth
+  - edit.forth
+- other
+  - publish-examples.forth now uses `retro-document`
+    to generate glossaries
 
 ## General
 
@@ -58,16 +76,27 @@ July window for this release.
 
 ## I/O
 
-- (rre) added `clock:utc:` namespace
-- (rre) remove gopher downloader
-- (rre) add sockets interface
-- (rre) add `unix:slurp-pipe`
+- retro-unix (rre)
+  - added `clock:utc:` namespace
+  - remove gopher downloader
+  - add sockets interface
+  - add `unix:slurp-pipe`
 
 ## Interfaces
 
-- retro-compiler: runtime now supports scripting arguments
-- retro-unix: replaces earlier rre.c
-- retro-windows: rre, adapted for windows
-- retro-unix: remove FullScreenListener
-- retro-unix: ok prompt now a hook
-- retro-unix: rewrite the listener
+- retro-compiler
+  - runtime now supports scripting arguments
+- retro-unix
+  - remove FullScreenListener
+  - ok prompt now a hook
+  - rewrite the listener
+- retro-c#
+  - restored this to the source tree
+- native
+  - better `0x` prefix handling
+
+## Notes for the future:
+
+In a future release, the examples will start using a `.retro`
+file name extension rather than `.forth` to avoid possible
+confusion with other systems that use `.forth` (e.g., MPE).
