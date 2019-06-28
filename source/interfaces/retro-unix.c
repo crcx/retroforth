@@ -925,9 +925,9 @@ void float_mul() {
 }
 
 void float_div() {
-    double a = float_pop();
-    double b = float_pop();
-    float_push(b/a);
+  double a = float_pop();
+  double b = float_pop();
+  float_push(b/a);
 }
 
 void float_floor() {
@@ -1802,6 +1802,10 @@ void inst_divmod() {
   CELL a, b;
   a = TOS;
   b = NOS;
+  if (a == 0) {
+    printf("\nERROR (nga/inst_divmod): Division by zero\n");
+    exit(1);
+  }
   TOS = b / a;
   NOS = b % a;
 }
