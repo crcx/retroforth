@@ -1,0 +1,14 @@
+RETRO/Minimal (No LIBC)
+---------------------------------------------------------------
+This is a collection of minimal RETRO interfaces for various
+systems. Though using a VM written in C, they do not require
+linking against LIBC, instead using system calls to interact
+with the host.
+
+Current Implementations:
+
+- FreeBSD (32-bit, x86)
+- FreeBSD (64-bit, x86)
+- Linux (32-bit, x86)
+- macOS (64-bit, x86)
+---------------------------------------------------------------
