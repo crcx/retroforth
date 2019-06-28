@@ -53,8 +53,8 @@ install-docs:
 	install -m 755 -d -- $(DESTDIR)$(DOCSDIR)
 	cp -fpR doc $(DESTDIR)$(DOCSDIR)
 #	cp -fpR literate $(DESTDIR)$(DOCSDIR)
-	install -c -m 644 README.md $(DESTDIR)$(DOCSDIR)/README.md
-	install -c -m 644 RELEASE_NOTES.md $(DESTDIR)$(DOCSDIR)/RELEASE_NOTES.md
+	install -c -m 644 README $(DESTDIR)$(DOCSDIR)/README
+	install -c -m 644 RELEASE-NOTES $(DESTDIR)$(DOCSDIR)/RELEASE-NOTES
 
 install-examples:
 	install -m 755 -d -- $(DESTDIR)$(EXAMPLESDIR)
@@ -129,27 +129,23 @@ bin/retro: ngaImage bin/retro-embedimage bin/retro-extend source/interfaces/retr
 bin/retro-unu: tools/unu.c
 	$(CC) $(CFLAGS) $(LDFLAGS) -o bin/retro-unu tools/unu.c
 
-doc/Glossary.txt: bin/retro words.tsv
+sorted: words.tsv
 	LC_ALL=C sort -o sorted.tsv words.tsv
 	mv sorted.tsv words.tsv
+
+doc/Glossary.txt: bin/retro sorted
 	./bin/retro glossary.forth export glossary >doc/Glossary.txt
 
-doc/Glossary.html: bin/retro words.tsv
-	LC_ALL=C sort -o sorted.tsv words.tsv
-	mv sorted.tsv words.tsv
+doc/Glossary.html: bin/retro sorted
 	./bin/retro glossary.forth export html >doc/Glossary.html
 
-doc/Glossary-Concise.txt: bin/retro words.tsv
-	LC_ALL=C sort -o sorted.tsv words.tsv
-	mv sorted.tsv words.tsv
+doc/Glossary-Concise.txt: bin/retro sorted
 	./bin/retro glossary.forth export concise >doc/Glossary-Concise.txt
 
-doc/Glossary-Names-and-Stack.txt: bin/retro words.tsv
-	LC_ALL=C sort -o sorted.tsv words.tsv
-	mv sorted.tsv words.tsv
+doc/Glossary-Names-and-Stack.txt: bin/retro sorted
 	./bin/retro glossary.forth export concise-stack >doc/Glossary-Names-and-Stack.txt
 
-interfaces/image.c: bin/retro-embedimage bin/retro-extend bin/retro-muri source/retro.forth source/rx.md
+interfaces/image.c: bin/retro-embedimage bin/retro-extend bin/retro-muri source/retro.forth source/rx.muri
 	./bin/retro-muri source/rx.muri
 	./bin/retro-extend ngaImage source/retro.forth
 	./bin/retro-embedimage ngaImage > interfaces/image.c
