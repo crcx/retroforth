@@ -302,11 +302,13 @@ void rre_execute(CELL cell, int silent) {
       printf("At %d, opcode %d\n", ip, opcode);
       exit(1);
     }
+#ifndef NOCHECKS
     if (sp < 0 || sp > STACK_DEPTH) {
       printf("\nERROR (nga/rre_execute): Stack Limits Exceeded!\n");
       printf("At %d, opcode %d\n", ip, opcode);
       exit(1);
     }
+#endif
     ip++;
     if (rp == 0)
       ip = IMAGE_SIZE;
@@ -653,10 +655,12 @@ void file_open() {
 
 void file_read() {
   CELL slot = stack_pop();
+#ifndef NOCHECKS
   if (slot <= 0 || slot > MAX_OPEN_FILES || OpenFileHandles[slot] == 0) {
     printf("\nERROR (nga/file_read): Invalid file handle\n");
     exit(1);
   }
+#endif
   CELL c = fgetc(OpenFileHandles[slot]);
   stack_push(feof(OpenFileHandles[slot]) ? 0 : c);
 }
@@ -671,10 +675,12 @@ void file_read() {
 void file_write() {
   CELL slot, c, r;
   slot = stack_pop();
+#ifndef NOCHECKS
   if (slot <= 0 || slot > MAX_OPEN_FILES || OpenFileHandles[slot] == 0) {
     printf("\nERROR (nga/file_write): Invalid file handle\n");
     exit(1);
   }
+#endif
   c = stack_pop();
   r = fputc(c, OpenFileHandles[slot]);
 }
@@ -687,10 +693,12 @@ void file_write() {
 
 void file_close() {
   CELL slot = stack_pop();
+#ifndef NOCHECKS
   if (slot <= 0 || slot > MAX_OPEN_FILES || OpenFileHandles[slot] == 0) {
     printf("\nERROR (nga/file_close): Invalid file handle\n");
     exit(1);
   }
+#endif
   fclose(OpenFileHandles[slot]);
   OpenFileHandles[slot] = 0;
 }
@@ -703,10 +711,12 @@ void file_close() {
 
 void file_get_position() {
   CELL slot = stack_pop();
+#ifndef NOCHECKS
   if (slot <= 0 || slot > MAX_OPEN_FILES || OpenFileHandles[slot] == 0) {
     printf("\nERROR (nga/file_get_position): Invalid file handle\n");
     exit(1);
   }
+#endif
   stack_push((CELL) ftell(OpenFileHandles[slot]));
 }
 
@@ -721,10 +731,12 @@ void file_set_position() {
   CELL slot, pos;
   slot = stack_pop();
   pos  = stack_pop();
+#ifndef NOCHECKS
   if (slot <= 0 || slot > MAX_OPEN_FILES || OpenFileHandles[slot] == 0) {
     printf("\nERROR (nga/file_set_position): Invalid file handle\n");
     exit(1);
   }
+#endif
   fseek(OpenFileHandles[slot], pos, SEEK_SET);
 }
 
@@ -739,10 +751,12 @@ void file_get_size() {
   CELL slot, current, r, size;
   struct stat buffer;
   slot = stack_pop();
+#ifndef NOCHECKS
   if (slot <= 0 || slot > MAX_OPEN_FILES || OpenFileHandles[slot] == 0) {
     printf("\nERROR (nga/file_get_size): Invalid file handle\n");
     exit(1);
   }
+#endif
   fstat(fileno(OpenFileHandles[slot]), &buffer);
   if (!S_ISDIR(buffer.st_mode)) {
     current = ftell(OpenFileHandles[slot]);
@@ -778,10 +792,12 @@ void file_delete() {
 void file_flush() {
   CELL slot;
   slot = stack_pop();
+#ifndef NOCHECKS
   if (slot <= 0 || slot > MAX_OPEN_FILES || OpenFileHandles[slot] == 0) {
     printf("\nERROR (nga/file_flush): Invalid file handle\n");
     exit(1);
   }
+#endif
   fflush(OpenFileHandles[slot]);
 }
 
@@ -1472,19 +1488,23 @@ void query_socket() {
 
 CELL stack_pop() {
   sp--;
+#ifndef NOCHECKS
   if (sp < 0) {
     printf("\nERROR (nga/stack_pop): Data stack underflow.\n");
     exit(1);
   }
+#endif
   return data[sp + 1];
 }
 
 void stack_push(CELL value) {
   sp++;
+#ifndef NOCHECKS
   if (sp >= STACK_DEPTH) {
     printf("\nERROR (nga/stack_push): Data stack overflow.\n");
     exit(1);
   }
+#endif
   data[sp] = value;
 }
 
@@ -1757,30 +1777,38 @@ void inst_gt() {
 }
 
 void inst_fetch() {
+#ifndef NOCHECKS
   if (TOS >= IMAGE_SIZE || TOS < -3) {
     ip = IMAGE_SIZE;
     printf("\nERROR (nga/inst_fetch): Fetch beyond valid memory range\n");
     exit(1);
   } else {
+#endif
     switch (TOS) {
       case -1: TOS = sp - 1; break;
       case -2: TOS = rp; break;
       case -3: TOS = IMAGE_SIZE; break;
       default: TOS = memory[TOS]; break;
     }
+#ifndef NOCHECKS
   }
+#endif
 }
 
 void inst_store() {
+#ifndef NOCHECKS
   if (TOS <= IMAGE_SIZE && TOS >= 0) {
+#endif
     memory[TOS] = NOS;
     inst_drop();
     inst_drop();
+#ifndef NOCHECKS
   } else {
     ip = IMAGE_SIZE;
     printf("\nERROR (nga/inst_store): Store beyond valid memory range\n");
     exit(1);
   }
+#endif
 }
 
 void inst_add() {
@@ -1802,10 +1830,12 @@ void inst_divmod() {
   CELL a, b;
   a = TOS;
   b = NOS;
+#ifndef NOCHECKS
   if (a == 0) {
     printf("\nERROR (nga/inst_divmod): Division by zero\n");
     exit(1);
   }
+#endif
   TOS = b / a;
   NOS = b % a;
 }
