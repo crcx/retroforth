@@ -84,10 +84,6 @@ repl: bin/retro-repl
 
 retro-describe: bin/retro-describe
 
-update: bin/retro-unu literate/Unu.md literate/Muri.md
-	./bin/retro-unu literate/Unu.md >tools/unu.c
-	./bin/retro-unu literate/Muri.md >tools/muri.c
-
 # File targets.
 
 ngaImage: source/rx.muri source/retro.forth bin/retro-muri bin/retro-extend
