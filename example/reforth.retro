@@ -1,0 +1,106 @@
+Reforth by Sean Pringle has some interesting concepts. This implements
+some of these within RETRO.
+
+# Local Variables
+
+> Supporting random numbers of local variables in Forth makes for
+> complex handling of the return stack at run-time, or a complex
+> compiler, or both.
+>
+> Reforth supports precisely two local variables: at and my
+>
+> at is designed to hold an address and is set with at!. It is
+> like the A register from Chuck's later work, except it does
+> not have to be saved and restored when calling words that also
+> use it for their own purposes. The words @+ and !+ use and
+> increment it automatically. It also works well (and importantly,
+> reads well) as a pointer for relative addressing.
+>
+> my is a general purpose bucket set with my!. It fills the same
+> sort of role as >r, r@, and r>, but is faster, uses less code,
+> and doesn't need to be cleaned up.
+
+I haven't implemented anything using these yet, but here's a
+quick implementation. (The actual preseve/restore using the
+`v:preserve` combinator is done a bit later)
+
+~~~
+'At var
+'My var
+
+:at! !At ;
+:at  @At ;
+:my! !My ;
+:my  @My ;
+~~~
+
+# Subwords
+
+> Word definitions may be nested.
+>
+> : hiphip ( -- )
+>    : cheer "hip hip, hooray!" type ;
+>    cheer cheer cheer
+> ;
+> Ok, so one could do the above with a loop. But there is more to it:
+>
+> Sub-words are private and scoped so they are only visible in the
+> current definition, avoiding namespace pollution. Above, one could
+> not call cheer outside the definition of hiphip.
+>
+> Smaller definitions are a good thing for code clarity and maintenance.
+> Go ahead and break up those long definitions into sub-words. Try using
+> a sub-words instead of a nested code blocks.
+>
+> Private sub-words solve half the problem with vocabularies. More on
+> this later.
+
+I'm not comfortable with this as it does add some overhead. The colon
+prefix is extended to add a jump around word entries, so that nesting
+can work properly. This also extends the colon and semicolon words to
+add support for preserving the `my` and `at` variables.
+
+~~~
+{{
+  'Scope var
+  'Nest var
+  :def
+    here n:inc #0 compile:jump swap
+    d:create &class:word reclass
+    @Nest n:zero? [ @Dictionary !Scope ] if &Nest v:inc
+    @Compiler &Compiler v:on '&At_[_&My_[ s:evaluate ;
+  :-def
+    ']_v:preserve_]_v:preserve s:evaluate compile:ret
+    !Compiler here swap store
+    &Nest v:dec @Nest n:zero? [ @Scope !Dictionary ] if ; immediate
+---reveal---
+  :prefix:: def ; immediate
+  :; |-def -def immediate
+  #0 !Nest
+}}
+~~~
+
+Sean also extends this further, adding in support for using the
+subwords as a vocabulary of sorts. I'm *not* implementing this in
+RETRO as I rather dislike it. On the whole, I'd rather throw the
+words into a namespace, such that:
+
+> :hiphip (-)
+>    :cheer 'hip_hip,_hooray! s:put nl ;
+>    cheer cheer cheer
+> ;
+
+Would be:
+
+> :hiphip:cheer  'hip_hip,_hooray! s:put nl ;
+>
+> :hiphip (-)
+>   hiphip:cheer  hiphip:cheer  hiphip:cheer ;
+
+Or, if the `cheer` isn't needed later:
+
+> {{
+>   :cheer 'hip_hip,_hooray! s:put nl ;
+> ---reveal---
+>   :hiphip (-)   cheer cheer cheer ;
+> }}
