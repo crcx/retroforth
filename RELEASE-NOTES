@@ -60,6 +60,7 @@ early July window for this release.
   - mandelbrot.forth
   - RFC865.forth
   - RFC867.forth
+  - safety-net.retro
   - shell.forth
   - sqlite3 wrapper
   - unix-does-user-exist.forth

@@ -1,0 +1,24 @@
+This implements a sort of "safety net", adding some compile and runtime
+error checking and reporting.
+
+
+The first of these is to extend the `@` and `!` prefixes to check for
+the existence of a word name. In a basic image, if the name isn't found,
+it will resolve to address 0 silently. This will have it report an error
+if the word is not found.
+
+~~~
+:err:var-not-defined
+  '\nERROR:_variable_%s_not_defined\n s:format s:put bye ;
+
+:if:not-defined (sq-s)
+  over d:lookup n:zero? swap if ;
+
+:prefix:@
+  [ err:var-not-defined ] if:not-defined
+  d:lookup d:xt fetch class:data |fetch ; immediate
+
+:prefix:!
+  [ err:var-not-defined ] if:not-defined
+  d:lookup d:xt fetch class:data |store ; immediate
+~~~
