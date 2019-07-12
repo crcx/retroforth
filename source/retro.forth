@@ -816,7 +816,7 @@ both leading and trailing spaces.
 
 ~~~
 :s:trim-left (s-s)
-  s:temp [ fetch-next [ #32 eq? ] [ n:-zero? ] bi and ] while
+  s:temp [ fetch-next [ [ #32 eq? ] [ #10 eq? ] [ #13 eq? ] tri or or ] [ n:-zero? ] bi and ] while
   n:dec ;
 :s:trim-right (s-s) s:temp s:reverse s:trim-left s:reverse ;
 :s:trim (s-s) s:trim-right s:trim-left ;
@@ -1247,7 +1247,7 @@ In a traditional Forth this is similar in spirit to DOES>.
 
 ~~~
 :curry (vp-p)
-  here [ swap compile:lit compile:call compile:ret ] dip ;
+  here [ swap compile:lit compile:jump ] dip ;
 :does  (q-)
   d:last<xt> swap curry d:last d:xt store &class:word reclass ;
 ~~~
