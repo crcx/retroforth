@@ -378,7 +378,7 @@ This yields -1 (`TRUE`) as expected. So we can easily
 name it:
 
 ```
-:palindrome dup s:reverse s:eq? ;
+:palindrome? dup s:reverse s:eq? ;
 ```
 
 Naming uses the `:` prefix to add a new word to the dictionary.
