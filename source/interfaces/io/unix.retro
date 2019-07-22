@@ -82,10 +82,6 @@ The second, `unix:pclose` closes the pipe.
 :unix:pclose (n-) #11 io:unix-syscall ;
 ~~~
 
-~~~
-:unix:write (sh-) [ dup s:length ] dip #12 io:unix-syscall ;
-~~~
-
 `unix:chdir` changes the current working directory to the
 specified one.
 
@@ -103,11 +99,6 @@ seconds.
 
 ~~~
 :unix:sleep (n-) #16 io:unix-syscall ;
-~~~
-
-~~~
-:unix:io:n:put (n-) #17 io:unix-syscall ;
-:unix:io:s:put (s-) #18 io:unix-syscall ;
 ~~~
 
 ~~~

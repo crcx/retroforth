@@ -5575,7 +5575,7 @@ unix:io:n:put
   Addr:  -
   Float: -
 
-Display a number (in base 10) to the standard output device. This is faster than `n:put`, but not portable.
+Deprecated. Display a number (in base 10) to the standard output device. This is faster than `n:put`, but not portable.
 
 Class: class:word | Namespace: unix:io | Interface Layer: rre
 ------------------------------------------------------------------------
@@ -5586,7 +5586,7 @@ unix:io:s:put
   Addr:  -
   Float: -
 
-Display a string to stdout. This is faster than `s:put`, but not portable.
+Deprecated. Display a string to stdout. This is faster than `s:put`, but not portable.
 
 Class: class:word | Namespace: unix:io | Interface Layer: rre
 ------------------------------------------------------------------------
@@ -5706,7 +5706,7 @@ unix:write
   Addr:  -
   Float: -
 
-Write a string to the specified file handle.
+Deprecated. Write a string to the specified file handle.
 
 Class: class:word | Namespace: unix | Interface Layer: rre
 ------------------------------------------------------------------------

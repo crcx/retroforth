@@ -470,8 +470,8 @@ unix:fork	-n	-	-	Fork the current process. Returns a PID.			class:word	{n/a}	{n/
 unix:get-cwd	-s	-	-	Return the current working directory			class:word	{n/a}	{n/a}	unix	rre	
 unix:getenv	sa-	-	-	Get an environment variable. Provide the name and an address to store it in.			class:word	  'SHELL s:empty [ unix:getenv ] sip s:put nl	{n/a}	unix	rre	
 unix:getpid	-n	-	-	Return the PID of the current process.			class:word	{n/a}	{n/a}	unix	rre	
-unix:io:n:put	n-	-	-	Display a number (in base 10) to the standard output device. This is faster than `n:put`, but not portable.			class:word	{n/a}	{n/a}	unix:io	rre	
-unix:io:s:put	s-	-	-	Display a string to stdout. This is faster than `s:put`, but not portable.			class:word	{n/a}	{n/a}	unix:io	rre	
+unix:io:n:put	n-	-	-	Deprecated. Display a number (in base 10) to the standard output device. This is faster than `n:put`, but not portable.			class:word	{n/a}	{n/a}	unix:io	rre	
+unix:io:s:put	s-	-	-	Deprecated. Display a string to stdout. This is faster than `s:put`, but not portable.			class:word	{n/a}	{n/a}	unix:io	rre	
 unix:kill	nn-	-	-	Terminates a process. Takes a process and a signal to send.			class:word	{n/a}	{n/a}	unix	rre	
 unix:pclose	n-	-	-	Close a pipe.			class:word	{n/a}	{n/a}	unix	rre	
 unix:popen	sn-n	-	-	Open a pipe. Takes a command to run, and a file mode (`file:R` or `file:W`; `file:R+` may work on some systems). Returns a file ID usable with words in the `file:` namespace.			class:word	{n/a}	{n/a}	unix	rre	
@@ -481,7 +481,7 @@ unix:slurp-pipe	as-n	-	-	Open a pipe. Read all output from the pipe (until ASCII
 unix:system	s-	-	-	Runs another application using the system shell and returns after execution is completed.			class:word	  'ls_-lh_/etc unix:system	{n/a}	unix	rre	
 unix:time	-n	-	-	Return a timestamp.			class:word	{n/a}	{n/a}	unix	rre	
 unix:wait	-n	-	-	Waits for a child process to complete. This maps to the wait() system call.			class:word	{n/a}	{n/a}	unix	rre	
-unix:write	sh-	-	-	Write a string to the specified file handle.			class:word	{n/a}	{n/a}	unix	rre	
+unix:write	sh-	-	-	Deprecated. Write a string to the specified file handle.			class:word	{n/a}	{n/a}	unix	rre	
 until	q-	-	-	Execute quote repeatedly while the quote returns a value of `FALSE`. The quote should return a flag of either `TRUE` or `FALSE`, though `until` will treat any non-zero value as `TRUE`.			class:word	    #10 [ dup n:put nl n:dec dup n:zero? ] until	{n/a}	global	all	
 v:dec	a-	-	-	Decrement the value stored at the specified address by 1.			class:word	{n/a}	{n/a}	v	all	
 v:dec-by	na-	-	-	Decrement the value stored at the specified address by the specified value.			class:word	{n/a}	{n/a}	v	all	
