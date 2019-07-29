@@ -112,7 +112,7 @@ bin/RETRO12.html: bin/retro-injectimage-js
 bin/retro-repl: source/interfaces/repl.c source/interfaces/image.c
 	cd source/interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../../bin/retro-repl repl.c
 
-bin/retro: ngaImage bin/retro-embedimage bin/retro-extend source/interfaces/retro-image.c source/interfaces/retro-unix.c source/interfaces/retro-unix.retro source/interfaces/io/rng.retro source/interfaces/io/sockets.retro
+bin/retro: ngaImage bin/retro-embedimage bin/retro-extend source/interfaces/retro-image.c source/interfaces/retro-unix.c source/interfaces/io/unix.retro source/interfaces/io/rng.retro source/interfaces/io/sockets.retro
 	cp ngaImage rre.image
 	./bin/retro-extend rre.image source/interfaces/io/filesystem.retro source/interfaces/io/floatingpoint.retro source/interfaces/io/unix.retro source/interfaces/io/rng.retro source/interfaces/io/sockets.retro source/interfaces/retro-unix.retro
 	./bin/retro-embedimage rre.image >source/interfaces/retro-image.c
