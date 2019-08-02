@@ -308,6 +308,11 @@ void rre_execute(CELL cell, int silent) {
       printf("At %d, opcode %d\n", ip, opcode);
       exit(1);
     }
+    if (rp < 0 || rp > ADDRESSES) {
+      printf("\nERROR (nga/rre_execute): Address Stack Limits Exceeded!\n");
+      printf("At %d, opcode %d\n", ip, opcode);
+      exit(1);
+    }
 #endif
     ip++;
     if (rp == 0)

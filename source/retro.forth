@@ -412,7 +412,7 @@ Apply q to x, y, and z.
 Execute quote until quote returns a flag of 0. In high level code:
 
   :while  (q-)
-    [ repeat dup dup push call swap 0; drop again ] call drop ;
+    [ repeat dup push call pop swap 0; drop again ] call drop ;
 
 This is manually translated to assembly and inlined for performance.
 
