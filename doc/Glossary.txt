@@ -2210,7 +2210,7 @@ Class: class:word | Namespace: global | Interface Layer: all
 
 e:-INF
 
-  Data:  -u
+  Data:  -e
   Addr:  -
   Float: -
 
@@ -2221,7 +2221,7 @@ Class: class:word | Namespace: e | Interface Layer: rre
 
 e:-inf?
 
-  Data:  u-f
+  Data:  e-f
   Addr:  -
   Float: -
 
@@ -2232,7 +2232,7 @@ Class: class:word | Namespace: e | Interface Layer: rre
 
 e:INF
 
-  Data:  -u
+  Data:  -e
   Addr:  -
   Float: -
 
@@ -2243,7 +2243,7 @@ Class: class:word | Namespace: e | Interface Layer: rre
 
 e:MAX
 
-  Data:  -u
+  Data:  -e
   Addr:  -
   Float: -
 
@@ -2254,7 +2254,7 @@ Class: class:word | Namespace: e | Interface Layer: rre
 
 e:MIN
 
-  Data:  -u
+  Data:  -e
   Addr:  -
   Float: -
 
@@ -2265,7 +2265,7 @@ Class: class:word | Namespace: e | Interface Layer: rre
 
 e:NAN
 
-  Data:  -u
+  Data:  -e
   Addr:  -
   Float: -
 
@@ -2276,7 +2276,7 @@ Class: class:word | Namespace: e | Interface Layer: rre
 
 e:clip
 
-  Data:  u-U
+  Data:  e-E
   Addr:  -
   Float: -
 
@@ -2287,7 +2287,7 @@ Class: class:word | Namespace: e | Interface Layer: rre
 
 e:inf?
 
-  Data:  u-f
+  Data:  e-f
   Addr:  -
   Float: -
 
@@ -2298,7 +2298,7 @@ Class: class:word | Namespace: e | Interface Layer: rre
 
 e:max?
 
-  Data:  u-f
+  Data:  e-f
   Addr:  -
   Float: -
 
@@ -2309,7 +2309,7 @@ Class: class:word | Namespace: e | Interface Layer: rre
 
 e:min?
 
-  Data:  u-f
+  Data:  e-f
   Addr:  -
   Float: -
 
@@ -2320,7 +2320,7 @@ Class: class:word | Namespace: e | Interface Layer: rre
 
 e:n?
 
-  Data:  u-f
+  Data:  e-f
   Addr:  -
   Float: -
 
@@ -2331,7 +2331,7 @@ Class: class:word | Namespace: e | Interface Layer: rre
 
 e:nan?
 
-  Data:  u-f
+  Data:  e-f
   Addr:  -
   Float: -
 
@@ -2342,7 +2342,7 @@ Class: class:word | Namespace: e | Interface Layer: rre
 
 e:put
 
-  Data:  u-
+  Data:  e-
   Addr:  -
   Float: -
 
@@ -2353,7 +2353,7 @@ Class: class:word | Namespace: e | Interface Layer: rre
 
 e:to-f
 
-  Data:  u-
+  Data:  e-
   Addr:  -
   Float: -n
 
@@ -2364,7 +2364,7 @@ Class: class:word | Namespace: e | Interface Layer: rre
 
 e:zero?
 
-  Data:  u-f
+  Data:  e-f
   Addr:  -
   Float: -
 
@@ -3133,7 +3133,7 @@ Class: class:word | Namespace: f | Interface Layer: rre
 
 f:to-e
 
-  Data:  -u
+  Data:  -e
   Addr:  -
   Float: n-
 

@@ -191,21 +191,21 @@ drop-pair	nn-	-	-	Remove top two items on the stack.			class:word	{n/a}	{n/a}	gl
 dump-stack	-	-	-	Display the items on the data stack.			class:word	{n/a}	{n/a}	global	all	
 dup	n-nn	-	-	Duplicate the top item on the stack.			class:primitive	{n/a}	{n/a}	global	all	
 dup-pair	nm-nmnm	-	-	Duplicate the top two items on the stack.			class:word	{n/a}	{n/a}	global	all	
-e:-INF	-u	-	-	Constant. Negative infinity.  For encoded floating point values.			class:word	{n/a}	{n/a}	e	rre	{n/a}
-e:-inf?	u-f	-	-	Is encoded value negative infinity?			class:word	{n/a}	{n/a}	e	rre	{n/a}
-e:INF	-u	-	-	Constant. Infinity. For encoded floating point values.			class:word	{n/a}	{n/a}	e	rre	{n/a}
-e:MAX	-u	-	-	Constant. Maximum value. For encoded floating point values.			class:word	{n/a}	{n/a}	e	rre	
-e:MIN	-u	-	-	Constant. Minimum value. For encoded floating point values.			class:word	{n/a}	{n/a}	e	rre	{n/a}
-e:NAN	-u	-	-	Constant. Not a Number. For encoded floating point values.			class:word	{n/a}	{n/a}	e	rre	{n/a}
-e:clip	u-U	-	-	Constrain the encoded value to the allowable range.			class:word	{n/a}	{n/a}	e	rre	
-e:inf?	u-f	-	-	Is encoded value infinity?			class:word	{n/a}	{n/a}	e	rre	{n/a}
-e:max?	u-f	-	-	Is encoded value at the maximum?			class:word	{n/a}	{n/a}	e	rre	{n/a}
-e:min?	u-f	-	-	Is encoded value at the minimum?			class:word	{n/a}	{n/a}	e	rre	{n/a}
-e:n?	u-f	-	-	Return `TRUE` if the encoded value is a valid number, or `FALSE` otherwise.			class:word	{n/a}	{n/a}	e	rre	
-e:nan?	u-f	-	-	Is encoded value a Nan?			class:word	{n/a}	{n/a}	e	rre	{n/a}
-e:put	u-	-	-	Display an encoded number.			class:word	{n/a}	{n/a}	e	rre	
-e:to-f	u-	-	-n	Decode an encoded floating point value.			class:word	{n/a}	{n/a}	e	rre	
-e:zero?	u-f	-	-	Return `TRUE` if the value is zero, or `FALSE` otherwise.			class:word	{n/a}	{n/a}	e	rre	
+e:-INF	-e	-	-	Constant. Negative infinity.  For encoded floating point values.			class:word	{n/a}	{n/a}	e	rre	{n/a}
+e:-inf?	e-f	-	-	Is encoded value negative infinity?			class:word	{n/a}	{n/a}	e	rre	{n/a}
+e:INF	-e	-	-	Constant. Infinity. For encoded floating point values.			class:word	{n/a}	{n/a}	e	rre	{n/a}
+e:MAX	-e	-	-	Constant. Maximum value. For encoded floating point values.			class:word	{n/a}	{n/a}	e	rre	
+e:MIN	-e	-	-	Constant. Minimum value. For encoded floating point values.			class:word	{n/a}	{n/a}	e	rre	{n/a}
+e:NAN	-e	-	-	Constant. Not a Number. For encoded floating point values.			class:word	{n/a}	{n/a}	e	rre	{n/a}
+e:clip	e-E	-	-	Constrain the encoded value to the allowable range.			class:word	{n/a}	{n/a}	e	rre	
+e:inf?	e-f	-	-	Is encoded value infinity?			class:word	{n/a}	{n/a}	e	rre	{n/a}
+e:max?	e-f	-	-	Is encoded value at the maximum?			class:word	{n/a}	{n/a}	e	rre	{n/a}
+e:min?	e-f	-	-	Is encoded value at the minimum?			class:word	{n/a}	{n/a}	e	rre	{n/a}
+e:n?	e-f	-	-	Return `TRUE` if the encoded value is a valid number, or `FALSE` otherwise.			class:word	{n/a}	{n/a}	e	rre	
+e:nan?	e-f	-	-	Is encoded value a Nan?			class:word	{n/a}	{n/a}	e	rre	{n/a}
+e:put	e-	-	-	Display an encoded number.			class:word	{n/a}	{n/a}	e	rre	
+e:to-f	e-	-	-n	Decode an encoded floating point value.			class:word	{n/a}	{n/a}	e	rre	
+e:zero?	e-f	-	-	Return `TRUE` if the value is zero, or `FALSE` otherwise.			class:word	{n/a}	{n/a}	e	rre	
 eq?	nn-f	-	-	Compare two values for equality. Returns `TRUE` if they are equal or `FALSE` otherwise.			class:primitive	    #1 #2 eq?\n    $a $b eq?	{n/a}	global	all	
 err:notfound	-	-	-	Error handler. Called when a word is not found by `interpret`.			class:word	{n/a}	{n/a}	err	all	
 f:*	-	-	FF-F	Multiply two floating point numbers, returning the result.			class:word	    .3.1415 .22 f:*	{n/a}	f	rre	
@@ -269,7 +269,7 @@ f:square	-	-	f-f	Return the square of a floating point number.			class:word	{n/a
 f:store	a-	-	n-	Store a floating point value to the specified memory location.			class:word	{n/a}	{n/a}	f	rre	
 f:swap	-	-	FG-GF	Exchange the top and second items on the floating point stack.			class:word	{n/a}	{n/a}	f	rre	
 f:tan	-	-	F-F	Return the tangent of a floating point number.			class:word	{n/a}	{n/a}	f	rre	
-f:to-e	-u	-	n-	Encode the floating point value to an integer.			class:word	{n/a}	{n/a}	f	rre	
+f:to-e	-e	-	n-	Encode the floating point value to an integer.			class:word	{n/a}	{n/a}	f	rre	
 f:to-number	-n	-	F-	Convert a floating point value into a number.			class:word	{n/a}	{n/a}	f	rre	
 f:to-string	-s	-	F-	Convert a floating point value into a string.			class:word	{n/a}	{n/a}	f	rre	
 f:tuck	-	-	FG-GFG	Tuck a copy of the top floating point value under the second one.			class:word	{n/a}	{n/a}	f	rre	

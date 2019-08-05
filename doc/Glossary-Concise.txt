@@ -577,49 +577,49 @@ Duplicate the top item on the stack.
 dup-pair                         D: nm-nmnm  A: -  F: -
 Duplicate the top two items on the stack.
 
-e:-INF                           D: -u  A: -  F: -
+e:-INF                           D: -e  A: -  F: -
 Constant. Negative infinity.  For encoded floating point values.
 
-e:-inf?                          D: u-f  A: -  F: -
+e:-inf?                          D: e-f  A: -  F: -
 Is encoded value negative infinity?
 
-e:INF                            D: -u  A: -  F: -
+e:INF                            D: -e  A: -  F: -
 Constant. Infinity. For encoded floating point values.
 
-e:MAX                            D: -u  A: -  F: -
+e:MAX                            D: -e  A: -  F: -
 Constant. Maximum value. For encoded floating point values.
 
-e:MIN                            D: -u  A: -  F: -
+e:MIN                            D: -e  A: -  F: -
 Constant. Minimum value. For encoded floating point values.
 
-e:NAN                            D: -u  A: -  F: -
+e:NAN                            D: -e  A: -  F: -
 Constant. Not a Number. For encoded floating point values.
 
-e:clip                           D: u-U  A: -  F: -
+e:clip                           D: e-E  A: -  F: -
 Constrain the encoded value to the allowable range.
 
-e:inf?                           D: u-f  A: -  F: -
+e:inf?                           D: e-f  A: -  F: -
 Is encoded value infinity?
 
-e:max?                           D: u-f  A: -  F: -
+e:max?                           D: e-f  A: -  F: -
 Is encoded value at the maximum?
 
-e:min?                           D: u-f  A: -  F: -
+e:min?                           D: e-f  A: -  F: -
 Is encoded value at the minimum?
 
-e:n?                             D: u-f  A: -  F: -
+e:n?                             D: e-f  A: -  F: -
 Return `TRUE` if the encoded value is a valid number, or `FALSE` otherwise.
 
-e:nan?                           D: u-f  A: -  F: -
+e:nan?                           D: e-f  A: -  F: -
 Is encoded value a Nan?
 
-e:put                            D: u-  A: -  F: -
+e:put                            D: e-  A: -  F: -
 Display an encoded number.
 
-e:to-f                           D: u-  A: -  F: -n
+e:to-f                           D: e-  A: -  F: -n
 Decode an encoded floating point value.
 
-e:zero?                          D: u-f  A: -  F: -
+e:zero?                          D: e-f  A: -  F: -
 Return `TRUE` if the value is zero, or `FALSE` otherwise.
 
 eq?                              D: nn-f  A: -  F: -
@@ -811,7 +811,7 @@ Exchange the top and second items on the floating point stack.
 f:tan                            D: -  A: -  F: F-F
 Return the tangent of a floating point number.
 
-f:to-e                           D: -u  A: -  F: n-
+f:to-e                           D: -e  A: -  F: n-
 Encode the floating point value to an integer.
 
 f:to-number                      D: -n  A: -  F: F-
