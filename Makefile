@@ -74,7 +74,7 @@ test: bin/retro
 
 # Targets for development/interactive usage
 
-glossary: doc/Glossary.txt doc/Glossary.html doc/Glossary-Concise.txt doc/Glossary-Names-and-Stack.txt
+glossary: doc/Glossary.txt doc/Glossary.html doc/Glossary-Concise.txt doc/Glossary-Names-and-Stack.txt words.tsv
 
 image: source/interfaces/image.c
 

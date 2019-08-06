@@ -952,7 +952,7 @@ a:fetch
 
 Fetch the value stored at the specified index in the specified array.
 
-Class: class:word | Namespace: global | Interface Layer: all
+Class: class:word | Namespace: a | Interface Layer: all
 
 Example #1:
 
@@ -1111,7 +1111,7 @@ a:store
 
 Store a value into the array at the specified index.
 
-Class: class:word | Namespace: global | Interface Layer: all
+Class: class:word | Namespace: a | Interface Layer: all
 
 Example #1:
 
