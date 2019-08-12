@@ -18,7 +18,7 @@ And a test:
 
 ~~~
 :create-set (-a)
-  here #3000 , #2 #3002 [ dup , n:inc ] times drop ;
+  here #1000 , #2 #1002 [ dup , n:inc ] times drop ;
 
 create-set get-primes [ n:put sp ] a:for-each
 ~~~

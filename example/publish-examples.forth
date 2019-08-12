@@ -40,7 +40,7 @@ on the stack.
 :link  dup '<a_href="/examples/%s.html">%s</a>_ s:format s:put ;
 :link2 '<a_href="/examples/%s.glossary"><br>&rarr;_glossary</a> s:format s:put
        $. c:put ;
-:links dup '.forth s:ends-with? [ [ dup link link2 ] li ] if; drop ;
+:links dup '.forth s:ends-with? over '.retro s:ends-with? or [ [ dup link link2 ] li ] if; drop ;
 :body  '<body> s:put call '</body> s:put ;
 :make  dtd head body ;
 ~~~
@@ -58,7 +58,7 @@ FILE-PATH 'index.html s:append file:W file:open !FID
 # Generate HTML Files
 
 ~~~
-:export dup '.forth s:ends-with? &drop -if;
+:export dup '.forth s:ends-with? over '.retro s:ends-with? or &drop -if;
         FILE-PATH over
         './export-as-html.forth_%s_>%s%s.html s:format unix:system $. c:put ;
 
@@ -68,9 +68,9 @@ FILE-PATH 'index.html s:append file:W file:open !FID
 # Generate a Glossary File For Each
 
 ~~~
-:glossary dup '.forth s:ends-with? &drop -if;
+:glossary dup '.forth s:ends-with? over '.retro s:ends-with? or &drop -if;
    FILE-PATH over
   'retro-document_%s_>%s%s.glossary s:format unix:system $. c:put ;
 
-[ dir? &drop &glossary choose ] unix:for-each-file
+[ dir? &drop &glossary choose ] unix:for-each-file nl
 ~~~
