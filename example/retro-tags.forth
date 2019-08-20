@@ -2,7 +2,7 @@
 
 # ------------------------------------------------------------
 
-rm tags
+rm -f tags
 touch tags
 for f in *.forth; do retro $0 "$f" >>tags ; done
 for f in *.retro; do retro $0 "$f" >>tags ; done
