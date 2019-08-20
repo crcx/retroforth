@@ -1,103 +1,33 @@
-# RETRO 2019.7
-
-This is the changelog for the development builds of Retro.
-The version number is likely to change; I'm targetting an
-early July window for this release.
+# RETRO 2019.tbd
 
 ## Bug Fixes
 
 - all
-  - strl* functions now renamed, included on all builds
-  - `d:add-header` is extended by retro.forth to remap
-    spaces back to underscores when creating headers
-  - fix overflow issue with `n:MIN`, `n:MAX`
 - build
-  - fix compile issue under Solaris
 - retro-unix
-  - `clock:year` corrected
-  - `clock:month` corrected
 - examples
-  - fixed issue in mail.forth
 
 ## Build
 
-- Merged Linux & BSD Makefiles
-
 ## Core Language
-
-- new words
-  - `a:fetch`
-  - `a:store`
-  - `s:replace-all`
-- renamed
-  - `a:nth` to `a:th`
-  - `v:update-using` to `v:update`
-- performance improvements
-  - `times`
-  - `times<with-index>`
-  - `while`
-  - `until`
 
 ## Documentation
 
-- merged BSD, Linux, macOS build instructions
-- updated Starting instructions
-- added implementation notes on arrays
-- updated the initial word table in rx.muri
-- added a man page for retro-describe
-
 ## Toolchain
 
-- fixed a bug in the glossary server
+- added retro-tags
 
 ## Examples
 
 - new examples
-  - bury.forth
-  - compat.forth
-  - gopher.forth
-  - magic-8th-ball.forth
-  - mandelbrot.forth
-  - RFC865.forth
-  - RFC867.forth
-  - safety-net.retro
-  - shell.forth
-  - sqlite3 wrapper
-  - unix-does-user-exist.forth
-- improved examples
-  - 99bottles.forth
-  - edit.forth
-- other
-  - publish-examples.forth now uses `retro-document`
-    to generate glossaries
+  - retro-tags.retro
+  - Gott.retro
+- use .retro extension
 
 ## General
 
-- reorganized directory tree
-
 ## I/O
-
-- retro-unix (rre)
-  - added `clock:utc:` namespace
-  - remove gopher downloader
-  - add sockets interface
-  - add `unix:slurp-pipe`
 
 ## Interfaces
 
-- retro-compiler
-  - runtime now supports scripting arguments
-- retro-unix
-  - remove FullScreenListener
-  - ok prompt now a hook
-  - rewrite the listener
-- retro-c#
-  - restored this to the source tree
-- native
-  - better `0x` prefix handling
-
 ## Notes for the future:
-
-In a future release, the examples will start using a `.retro`
-file name extension rather than `.forth` to avoid possible
-confusion with other systems that use `.forth` (e.g., MPE).
