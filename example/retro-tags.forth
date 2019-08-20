@@ -1,4 +1,14 @@
-#!/usr/bin/env retro
+#!/bin/sh
+
+# ------------------------------------------------------------
+
+rm tags
+touch tags
+for f in *.forth; do retro $0 "$f" >>tags ; done
+for f in *.retro; do retro $0 "$f" >>tags ; done
+exit
+
+--------------------------------------------------------------
 
 This will scan a source file and create output for a `tags`
 file in the minimal *ctags* format. In this, the tags file
@@ -10,7 +20,7 @@ I am using the line number as the tag address.
 
 To generate a tags file:
 
-    retro-tags sourcefile > tags
+    retro-tags
 
 To start, I bring in the `retro-unu` tool to locate the code
 blocks and call a combinator for each line in the code block.
