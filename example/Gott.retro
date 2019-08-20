@@ -1,0 +1,230 @@
+# Gott
+
+This program takes three input items
+
+- The time something began.
+- A random time in the interval between the beginning and the end.
+- The portion of time that has elapsed at least.
+
+and produces the interval.
+
+The method is taken from the beginning part of the book
+
+  William Poundstone; The Doomsday Calculation; Little, Brown Spark, 2019
+
+In pp.14-18 of the book there is a description of a prediction 
+J. Richard Gott III made regarding the fall of the Berlin wall.
+
+The input items are
+
+- In 1961 the wall was built.
+- In 1969 Gott visited the wall, which he considers to be a random moment.
+- He proposes to make a prediction with a 50% level of confidence,
+  which is equivalent to saying that at least 25% of the total duration
+  is assumed to have elapsed.
+
+with which
+
+- There is a 50% chance that the wall falls sometime between 1972 and 1993.
+
+The wall actually fell in 1989.
+
+Since the method is controversial read the book before applying 
+the method to your personal problems.
+Pay attention to the randomness of `e:Now` and time scale invariance.
+
+# Program
+
+The input items are:
+
+~~~
+'e:Start var (time_when_it_began
+'e:Now   var (present_time_later_than__e:Start
+'e:Gone  var (portion_gone,_in_interval_(0,1)
+~~~
+
+Instead of the level of confidence I use `e:Gone` 
+which seems more intuitive.
+
+If for instance the level of confidence is 50%, then `e:Now` is 
+somewhere in the central 50% of the interval.
+
+            confidence interval
++---------+*********+**********+---------+
+0        1/4       1/2        3/4       1
+
+This means that `e:Now` is in the earliest at the 25% point 
+of the entire interval (0,1), and in the latest at the 75% point, 
+
+       earliest              latest
+          |                    |
+          V                    V
+|---------|*********|**********|---------|
+0        1/4       1/2        3/4       1
+
+
+implying that at the earliest `e:Now` at least 1/4 of the interval 
+has gone already.
+
+        gone
+          |
+  portion V
+|.........|---------|----------|---------|
+0        1/4       1/2        3/4        1
+
+Thus a conidence interval of level 1/2 corresponds to saying that 
+at least the (1 - 1/2)/2 = 1/4 = 25% = 0.25 part 
+of the total time has elapsed.
+This is the value to be set to `e:Gone`.
+
+Likewise, if the confidence level is to be taken at 90%, then
+`e:Gone` is at (100 - 90)/2 = 5% = 0.05.
+
+Helpers.
+
+~~~
+:.           (-)                    dump-stack
+  #0 f:depth  lt? [ nl 'f_  s:put f:dump-stack  ] if
+  #0 f:adepth lt? [ nl 'fa_ s:put f:dump-astack ] if ;
+:f:reset     (-__..-)        f:depth  [       f:drop ] times ; 
+:f:areset    (-__-__..-)     f:adepth [ f:pop f:drop ] times ; 
+:r           (..-__..-__..-) reset f:reset f:areset ; 
+
+:f:complement  (-__n-n)_1-f .1. f:swap f:- ;
+:e:@ (a-__-f)_fetch_as_float fetch e:to-f ;
+:e:! (a-__f-)_store_as_e     f:to-e swap store ;
+~~~
+
+Here is the program.
+
+~~~
+{{ 
+  :f:past       (-_-n)_n_=_now_-_start
+    e:Now e:@ e:Start e:@ f:- ; 
+  :f:long       (-__-n)_n=(1-p)/p_where_p=portion,_p=<1/2
+    e:Gone e:@ f:dup f:complement f:swap f:/ ;
+  :f:short      (-__-n)_n=p/(1-p)_where_p=portion,_p=<1/2
+    e:Gone e:@ f:dup f:complement        f:/ ;
+  :f:lo         (-_-n)   f:past f:short f:* ;
+  :f:hi         (-_-n)   f:past f:long  f:* ;
+---reveal---
+  :f:future.lo  (-__-n)  e:Now e:@ f:lo f:+ ;
+  :f:future.hi  (-__-n)  e:Now e:@ f:hi f:+ ;
+  :f:future     (-__-nn) f:future.lo f:future.hi ;
+}}
+~~~
+
+## Berlin wall
+
+This problem has been taken from the Poundstone's book.
+In pp.14-18 there is a description of a prediction J. Richard Gott III 
+made regarding the fall of the Berlin wall.
+
+### 50% confidence
+
+The input items are:
+
+~~~
+.1961. e:Start e:! (time_when_it_began
+.1969. e:Now   e:! (present_time
+.0.25  e:Gone  e:! (portion_gone,_between_0_and_1
+~~~
+
+It is crucial that `e:Now` may be considered a random moment 
+in the time line after `e:Start`. 
+This is a special case of the Copernican principle.
+
+1961 is when the wall was built.
+1969 is the time in which Gott visited the wall.
+He considers this point to be a random time in 
+the period of existence of the wall.
+0.5 is the confidence level; the prediction is made so that there is
+a 50% chance that the end of the wall will fall 
+within the time interval to be produced below.
+
+~~~
+'Berlin_wall_1/2 s:put
+f:future . nl nl
+~~~
+
+gives
+
+  f 1971.667193 1993.001517
+
+meaning that there is a 50% chance that the wall will fall 
+sometime between 1972 and 1993.
+
+  "His 1967 prediction was that there was a 50 percent chance that
+  the wall would stand at least 2.67 years after his visit but no
+  more than 24 years." (p.16)
+
+### 95% confidence
+
+To recalculate with a confidence level of 95% as in p.19 of the book,
+
+~~~
+'Berlin_wall_95% s:put
+r .0.025 e:Gone e:!
+f:future . nl nl
+~~~
+
+which gives
+
+  f 1969.205530 2281.030613
+
+or between 1969 and 2281.
+
+## Diana and Charles
+
+Now try the relationship duration between Diana and Charles that
+comes as the first example in the book, p.3.
+
+~~~
+r 'Di_&_Charles s:put
+.1981 .7 .12 f:/ f:+ e:Start  e:!
+.1993                e:Now   e:!
+.0.1                 e:Gone  e:!
+f:future.lo . nl nl
+~~~
+
+giving
+
+  f 1994.268668
+
+or after 1994.
+The `future.hi` is irrelevant, considering the couple's life span.
+Note that the value of `e:Gone` is set to 0.1 rather than 0.05,
+even though the level of confidence is stated to be 90%.
+
+Regarding this result the book says
+
+  "Gott's formula predicted a 90 percent chance that the royal marriage
+  would end in as little as 1.3 more years."
+
+which is misleading: if a 90% confidence level is assumed 
+the split will not take place at least until 1.3 years from "now."
+
+  "The split was formalized on August 28, 1996."
+
+## The Third Reich
+
+Poundstone book p.82.
+
+- 1934-09 The Third Reich proclaimed.
+- 20 months before, Hitler rised into power.
+- 95% confidence.
+
+~~~
+r '3rd_Reich s:put
+.1934 .9 .12 f:/ f:+      e:Now   e:!
+e:Now e:@ .20 .12 f:/ f:- e:Start e:!
+.0.05 .2. f:/             e:Gone  e:!
+f:future . nl nl
+~~~
+
+  f 1934.792456 1999.754388
+
+  "A Copernican would have predicted the Nazi state to survive somewhere 
+  between another two weeks and another sixty-five years (at 95 percent
+  conficence). The Third Reich lasted another eleven years."
+
