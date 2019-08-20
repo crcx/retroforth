@@ -60,7 +60,7 @@ FILE-PATH 'index.html s:append file:W file:open !FID
 ~~~
 :export dup '.forth s:ends-with? over '.retro s:ends-with? or &drop -if;
         FILE-PATH over
-        './export-as-html.forth_%s_>%s%s.html s:format unix:system $. c:put ;
+        './export-as-html.retro_%s_>%s%s.html s:format unix:system $. c:put ;
 
 [ dir? &drop [ export ] choose ] unix:for-each-file nl
 ~~~

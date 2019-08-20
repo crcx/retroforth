@@ -46,7 +46,7 @@ install-strip: build install-data install-docs install-examples
 
 install-data:
 	install -m 755 -d -- $(DESTDIR)$(DATADIR)
-	install -c -m 644 glossary.forth $(DESTDIR)$(DATADIR)/glossary.forth
+	install -c -m 644 glossary.retro $(DESTDIR)$(DATADIR)/glossary.retro
 	install -c -m 644 ngaImage $(DESTDIR)$(DATADIR)/ngaImage
 	cp -fpR tests $(DESTDIR)$(DATADIR)/
 	install -c -m 644 words.tsv $(DESTDIR)$(DATADIR)/words.tsv
@@ -93,8 +93,8 @@ ngaImage: source/rx.muri source/retro.forth bin/retro-muri bin/retro-extend
 	./bin/retro-muri source/rx.muri
 	./bin/retro-extend ngaImage source/retro.forth
 
-bin/retro-describe: retro-describe.forth words.tsv
-	cat retro-describe.forth words.tsv >bin/retro-describe
+bin/retro-describe: retro-describe.retro words.tsv
+	cat retro-describe.retro words.tsv >bin/retro-describe
 	chmod +x bin/retro-describe
 
 bin/retro-embedimage: tools/embedimage.c
@@ -133,16 +133,16 @@ sorted: words.tsv
 	mv sorted.tsv words.tsv
 
 doc/Glossary.txt: bin/retro sorted
-	./bin/retro glossary.forth export glossary >doc/Glossary.txt
+	./bin/retro glossary.retro export glossary >doc/Glossary.txt
 
 doc/Glossary.html: bin/retro sorted
-	./bin/retro glossary.forth export html >doc/Glossary.html
+	./bin/retro glossary.retro export html >doc/Glossary.html
 
 doc/Glossary-Concise.txt: bin/retro sorted
-	./bin/retro glossary.forth export concise >doc/Glossary-Concise.txt
+	./bin/retro glossary.retro export concise >doc/Glossary-Concise.txt
 
 doc/Glossary-Names-and-Stack.txt: bin/retro sorted
-	./bin/retro glossary.forth export concise-stack >doc/Glossary-Names-and-Stack.txt
+	./bin/retro glossary.retro export concise-stack >doc/Glossary-Names-and-Stack.txt
 
 interfaces/image.c: bin/retro-embedimage bin/retro-extend bin/retro-muri source/retro.forth source/rx.muri
 	./bin/retro-muri source/rx.muri
