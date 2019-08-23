@@ -1,0 +1,33 @@
+This is a little set of words to create an array with all of the
+currently defined namespaces in a RETRO image.
+
+Three words will be exposed.
+
+    Namespace              Array, holds the namespace strings
+    namespaces:identify    Rebuild the array
+    namespaces:put         Display the namespaces
+
+~~~
+'Namespaces d:create #513 allot
+
+{{
+  :has-namespace? dup $: s:contains-char? ;
+  :get-namespace  $: s:split nip ;
+  :known?  dup &Namespaces a:contains-string? ;
+  :add     s:keep buffer:add &Namespaces v:inc ;
+  :process get-namespace known? &drop &add choose ;
+---reveal---
+  :namespaces:identify
+    [ &Namespaces buffer:set #0 buffer:add
+      [ d:name has-namespace? &process &drop choose ] d:for-each
+    ] buffer:preserve ;
+  :namespaces:put &Namespaces [ s:put sp ] a:for-each ;
+}}
+~~~
+
+A quick test:
+
+```
+namespaces:identify
+namespaces:put nl
+```
