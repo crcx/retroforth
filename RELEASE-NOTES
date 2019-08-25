@@ -13,6 +13,8 @@
 
 ## Documentation
 
+- correct example for retro-compiler
+
 ## Toolchain
 
 - added retro-tags
@@ -22,6 +24,7 @@
 - new examples
   - retro-tags.retro
   - Gott.retro
+  - namespaces.retro
 - use .retro extension
 
 ## General

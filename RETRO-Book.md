@@ -2475,7 +2475,9 @@ Example:
 Given a `hello.forth`:
 
 ```
+~~~
 :hello 'Hello_World! s:put nl ;
+~~~
 ```
 
 Use:
