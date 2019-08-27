@@ -44,12 +44,16 @@ Pass the image name as the first argument, and then file names
 as susequent ones. Do *not* use this for things relying on I/O
 apart from the basic console output as it doesn't emulate other
 devices. If you need to load in things that rely on using the
-optional I/O devices, see the Advanced Builds chapter.
+optional I/O devices, see the **Advanced Builds** chapter.
 
 ## retro-muri
 
 This is the assembler for Nga. It's used to build the initial
 RETRO kernel and can be used by other tools as well.
+
+## retro-tags
+
+TBD
 
 ## retro-unu
 
