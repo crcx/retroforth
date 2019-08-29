@@ -169,7 +169,7 @@ export and (eventually) ePub.
   :header          '<h1>  s:put  call  '</h1>  s:put nl ;
   :paragraph       '<p>   s:put  call  '</p>   s:put nl ;
   :br              '<br>  s:put nl ;
-  :xmp             '<xmp> s:put  call  '</xmp> s:put nl ;
+  :xmp             '<xmp_style='background:#222'> s:put  call  '</xmp> s:put nl ;
   :b               '<b> s:put s:putfmtx '</b> s:put sp ;
 
   :name            field:name  '%s s:putfmtx ;
@@ -177,10 +177,10 @@ export and (eventually) ePub.
   :address         field:astack  'Addr:  b  '%s s:putfmtx ; 
   :float           field:fstack  'Float: b  '%s s:putfmtx ;
   :description     field:descr              '%s s:putfmtx ;
-  :|               '_|_ s:put ;
-  :class           field:class     'Class:           b '%s s:putfmt ;
-  :namespace       field:namespace 'Namespace:       b '%s s:putfmt ;
-  :interface       field:interface 'Interface_Layer: b '%s s:putfmt ;
+  :|               '</td><td> s:put ;
+  :class           field:class     'Class:           b | '%s s:putfmt ;
+  :namespace       field:namespace 'Namespace:       b | '%s s:putfmt ;
+  :interface       field:interface 'Interface_Layer: b | '%s s:putfmt ;
   :example1        field:ex1 '{n/a} s:eq? not 0; drop
                    [ 'Example: b br br [ field:ex1 s:format s:put ] xmp ] paragraph ;
   :example2        field:ex2 '{n/a} s:eq? not 0; drop
@@ -189,6 +189,8 @@ export and (eventually) ePub.
                    field:itime   '<p>Interpret_Time:\n__%s</p>\n\n s:putfmt ;
   :compile-time    field:ctime s:length 0; drop
                    field:ctime   '<p>Compile_Time:\n__%s</p>\n\n   s:putfmt ;
+  :table           '<table>  s:put call '</table>   s:put ;
+  :row             '<tr><td> s:put call '</td></tr> s:put ;
 ---reveal---
   :display-result<HTML>
     [ name ] header
@@ -198,7 +200,7 @@ export and (eventually) ePub.
     [ description ] paragraph
     interpret-time
     compile-time
-    [ class | namespace | interface ] paragraph
+    [ &class row &namespace row &interface row ] table
     example1
     example2 ;
 }}
@@ -597,11 +599,11 @@ This tool embeds a tiny Gopher and HTTP server designed to run
 under inetd.
 
 First, set the port and server to use. I default to 9999 and
-forthworks.com.
+forth.works.
 
 ~~~
 #9999           'PORT     const
-'forthworks.com 'DOMAIN s:const
+'forth.works    'DOMAIN s:const
 ~~~
 
 Next, words to display the main index (when requesting / or an
