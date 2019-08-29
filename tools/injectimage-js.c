@@ -69,7 +69,6 @@ void extract(char *fname, int32_t size) {
   fp = fopen(fname, "r");
   if (fp == NULL)
     return;
-  printf("1");
   while (!feof(fp)) {
     read_line(fp, buffer);
     if (strcmp(buffer, "<<<IMAGE>>>") == 0) {
@@ -102,7 +101,7 @@ int main(int argc, char **argv) {
   else
       size = ngaLoadImage("ngaImage");
 
-  extract("interfaces/retro12.html", size);
+  extract("source/interfaces/alternates/retro12.html", size);
 
   exit(0);
 }
