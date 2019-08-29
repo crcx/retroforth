@@ -1,5 +1,8 @@
 # RETRO 2019.tbd
 
+This is the current changelog for the next release of RETRO, which
+is currently targetting a late fall release.
+
 ## Bug Fixes
 
 - all
@@ -8,6 +11,8 @@
 - examples
 
 ## Build
+
+- now rebuild if the .retro source files are updated
 
 ## Core Language
 
