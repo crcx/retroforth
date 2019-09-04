@@ -1,0 +1,22 @@
+This will iterate over the attached devices, displaying a short
+description of each.
+
+~~~
+:id
+  #0 [ 'generic-output s:put nl ] case
+  #1 [ 'generic-input s:put nl ] case
+  #2 [ 'floating-point s:put nl ] case
+  #3 [ 'block-store s:put nl ] case
+  #4 [ 'filesystem s:put nl ] case
+  #5 [ 'reserved s:put nl ] case
+  #6 [ 'reserved s:put nl ] case
+  #7 [ 'sockets s:put nl ] case
+  #8 [ 'unix-syscalls s:put nl ] case
+  #9 [ 'scripting s:put nl ] case
+  #1000 [ 'saving-image s:put nl ] case
+  'unknown:_ s:put n:put nl ;
+
+'Detecting_devices... s:put nl
+io:enumerate [ $# c:put I dup n:put io:query nip tab id ] times<with-index>
+'Complete. s:put nl
+~~~
