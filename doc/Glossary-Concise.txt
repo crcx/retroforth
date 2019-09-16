@@ -454,6 +454,9 @@ Return the current month.
 clock:second                     D: -n  A: -  F: -
 Return the current second.
 
+clock:timestamp                  D: -n  A: -  F: -
+Return a host and implementation specific timestamp.
+
 clock:utc:day                    D: -n  A: -  F: -
 Return the current day.
 
@@ -1440,9 +1443,6 @@ Open a pipe. Read all output from the pipe (until ASCII:NULL) and store in the s
 
 unix:system                      D: s-  A: -  F: -
 Runs another application using the system shell and returns after execution is completed.
-
-unix:time                        D: -n  A: -  F: -
-Return a timestamp.
 
 unix:wait                        D: -n  A: -  F: -
 Waits for a child process to complete. This maps to the wait() system call.

@@ -150,6 +150,7 @@ clock:hour	-n	-	-	Return the current hour.			class:word	{n/a}	{n/a}	clock	iOS, r
 clock:minute	-n	-	-	Return the current minute.			class:word	{n/a}	{n/a}	clock	iOS, rre	
 clock:month	-n	-	-	Return the current month.			class:word	{n/a}	{n/a}	clock	iOS, rre	
 clock:second	-n	-	-	Return the current second.			class:word	{n/a}	{n/a}	clock	iOS, rre	
+clock:timestamp	-n	-	-	Return a host and implementation specific timestamp.			class:word	{n/a}	{n/a}	clock	rre	
 clock:utc:day	-n	-	-	Return the current day.			class:word	{n/a}	{n/a}	clock	iOS, rre	
 clock:utc:hour	-n	-	-	Return the current hour.			class:word	{n/a}	{n/a}	clock	iOS, rre	
 clock:utc:minute	-n	-	-	Return the current minute.			class:word	{n/a}	{n/a}	clock	iOS, rre	
@@ -479,7 +480,6 @@ unix:putenv	s-	-	-	Takes a string in the form `name=value` and sets an environme
 unix:sleep	n-	-	-	Sleep for the specified number of seconds.			class:word	{n/a}	{n/a}	unix	rre	
 unix:slurp-pipe	as-n	-	-	Open a pipe. Read all output from the pipe (until ASCII:NULL) and store in the specified buffer. Return the number of bytes read.			class:word	{n/a}	{n/a}	unix	rre	
 unix:system	s-	-	-	Runs another application using the system shell and returns after execution is completed.			class:word	  'ls_-lh_/etc unix:system	{n/a}	unix	rre	
-unix:time	-n	-	-	Return a timestamp.			class:word	{n/a}	{n/a}	unix	rre	
 unix:wait	-n	-	-	Waits for a child process to complete. This maps to the wait() system call.			class:word	{n/a}	{n/a}	unix	rre	
 unix:write	sh-	-	-	Deprecated. Write a string to the specified file handle.			class:word	{n/a}	{n/a}	unix	rre	
 until	q-	-	-	Execute quote repeatedly while the quote returns a value of `FALSE`. The quote should return a flag of either `TRUE` or `FALSE`, though `until` will treat any non-zero value as `TRUE`.			class:word	    #10 [ dup n:put nl n:dec dup n:zero? ] until	{n/a}	global	all	

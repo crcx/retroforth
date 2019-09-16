@@ -1757,6 +1757,17 @@ Return the current second.
 Class: class:word | Namespace: clock | Interface Layer: iOS, rre
 ------------------------------------------------------------------------
 
+clock:timestamp
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Return a host and implementation specific timestamp.
+
+Class: class:word | Namespace: clock | Interface Layer: rre
+------------------------------------------------------------------------
+
 clock:utc:day
 
   Data:  -n
@@ -5676,17 +5687,6 @@ Example #1:
 
   'ls_-lh_/etc unix:system
 
-------------------------------------------------------------------------
-
-unix:time
-
-  Data:  -n
-  Addr:  -
-  Float: -
-
-Return a timestamp.
-
-Class: class:word | Namespace: unix | Interface Layer: rre
 ------------------------------------------------------------------------
 
 unix:wait

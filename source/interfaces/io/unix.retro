@@ -102,7 +102,7 @@ seconds.
 ~~~
 
 ~~~
-:unix:time    (-n) #19 io:unix-syscall ;
+:clock:timestamp (-n) #19 io:unix-syscall ;
 :clock:day    (-s) #20 io:unix-syscall ;
 :clock:month  (-s) #21 io:unix-syscall ;
 :clock:year   (-s) #22 io:unix-syscall ;

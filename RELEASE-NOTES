@@ -37,6 +37,8 @@ is currently targetting a late fall release.
 
 ## I/O
 
+- unix:time is now clock:timestamp
+
 ## Interfaces
 
 ## Notes for the future:
