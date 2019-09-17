@@ -42,3 +42,6 @@ is currently targetting a late fall release.
 ## Interfaces
 
 ## Notes for the future:
+
+- updates to the VM source and tooling to make it easier to
+  create and use images with 64-bit cells

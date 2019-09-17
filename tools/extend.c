@@ -46,7 +46,7 @@ CELL memory[IMAGE_SIZE + 1];
 CELL ngaLoadImage(char *imageFile);
 void ngaPrepare();
 void ngaProcessOpcode(CELL opcode);
-void ngaProcessPackedOpcodes(int opcode);
+void ngaProcessPackedOpcodes(CELL opcode);
 int ngaValidatePackedOpcodes(CELL opcode);
 
 CELL max_sp, max_rsp;
@@ -67,7 +67,7 @@ CELL notfound, interpret;
 CELL stack_pop();
 void stack_push(CELL value);
 int string_inject(char *str, int buffer);
-char *string_extract(int at);
+char *string_extract(CELL at);
 int d_link(CELL dt);
 int d_xt(CELL dt);
 int d_class(CELL dt);
@@ -76,7 +76,7 @@ int d_lookup(CELL Dictionary, char *name);
 CELL d_xt_for(char *Name, CELL Dictionary);
 CELL d_class_for(char *Name, CELL Dictionary);
 void update_rx();
-void execute(int cell);
+void execute(CELL cell);
 void evaluate(char *s);
 int not_eol(int ch);
 void read_token(FILE *file, char *token_buffer, int echo, int max);
@@ -98,9 +98,9 @@ void dump_stack() {
   printf("\nStack: ");
   for (i = 1; i <= sp; i++) {
     if (i == sp)
-      printf("[ TOS: %d ]", data[i]);
+      printf("[ TOS: %lld ]", (long long)data[i]);
     else
-      printf("%d ", data[i]);
+      printf("%lld ", (long long)data[i]);
   }
   printf("\n");
 }
@@ -142,15 +142,15 @@ int main(int argc, char **argv) {
   max_rsp = 0;
   ngaLoadImage(argv[1]);
   update_rx();
-  printf("Initial Image Size: %d\n", Heap);
+  printf("Initial Image Size: %lld\n", (long long)Heap);
   dump_stack();
   for (i = 2; i < argc; i++) {
     tokens = include_file(argv[i]);
-    printf("   + %d tokens from %s\n", tokens, argv[i]);
+    printf("   + %lld tokens from %s\n", (long long)tokens, argv[i]);
   }
   update_rx();
-  printf("New Image Size: %d\n", Heap);
-  printf("MAX SP: %d, RP: %d\n", max_sp, max_rsp);
+  printf("New Image Size: %lld\n", (long long)Heap);
+  printf("MAX SP: %lld, RP: %lld\n", (long long)max_sp, (long long)max_rsp);
   if ((fp = fopen(argv[1], "wb")) == NULL) {
     printf("Unable to save the ngaImage!\n");
     exit(2);
@@ -184,7 +184,7 @@ int string_inject(char *str, int buffer) {
 }
 
 char string_data[8192];
-char *string_extract(int at) {
+char *string_extract(CELL at) {
   CELL starting = at;
   CELL i = 0;
   while(memory[starting] && i < 8192)

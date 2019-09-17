@@ -38,7 +38,7 @@
   Configuration
   ---------------------------------------------------------------------*/
 
-#define CELL         int32_t      /* Cell size (32 bit, signed integer */
+#define CELL         int32_t      /* Cell size                         */
 #define IMAGE_SIZE   524288 * 2   /* Amount of RAM. 4MiB (1M) cells    */
 #define ADDRESSES    256          /* Depth of address stack            */
 #define STACK_DEPTH  256          /* Depth of data stack               */
@@ -299,18 +299,18 @@ void rre_execute(CELL cell, int silent) {
       ngaProcessPackedOpcodes(opcode);
     } else {
       printf("\nERROR (nga/rre_execute): Invalid instruction!\n");
-      printf("At %d, opcode %d\n", ip, opcode);
+      printf("At %lld, opcode %lld\n", (long long)ip, (long long)opcode);
       exit(1);
     }
 #ifndef NOCHECKS
     if (sp < 0 || sp > STACK_DEPTH) {
       printf("\nERROR (nga/rre_execute): Stack Limits Exceeded!\n");
-      printf("At %d, opcode %d\n", ip, opcode);
+      printf("At %lld, opcode %lld\n", (long long)ip, (long long)opcode);
       exit(1);
     }
     if (rp < 0 || rp > ADDRESSES) {
       printf("\nERROR (nga/rre_execute): Address Stack Limits Exceeded!\n");
-      printf("At %d, opcode %d\n", ip, opcode);
+      printf("At %lld, opcode %lld\n", (long long)ip, (long long)opcode);
       exit(1);
     }
 #endif
@@ -379,9 +379,9 @@ void dump_stack() {
   printf("\nStack: ");
   for (i = 1; i <= sp; i++) {
     if (i == sp)
-      printf("[ TOS: %d ]", data[i]);
+      printf("[ TOS: %lld ]", (long long)data[i]);
     else
-      printf("%d ", data[i]);
+      printf("%lld ", (long long)data[i]);
   }
   printf("\n");
 }
@@ -1200,7 +1200,7 @@ void unix_getpid() {
 }
 
 void unix_wait() {
-  CELL a;
+  int a;
   stack_push(wait(&a));
 }
 

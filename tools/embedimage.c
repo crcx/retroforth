@@ -17,7 +17,7 @@
 #include <string.h>
 #include <stdint.h>
 
-#define CELL         int32_t
+#define CELL int32_t
 CELL memory[512*1024];
 
 CELL ngaLoadImage(char *imageFile) {
@@ -42,7 +42,7 @@ CELL ngaLoadImage(char *imageFile) {
 
 void output_header(int size) {
   printf("#include <stdint.h>\n");
-  printf("int32_t ngaImageCells = %d;\n", size);
+  printf("int32_t ngaImageCells = %lld;\n", (long long)size);
   printf("int32_t ngaImage[] = { ");
 }
 
@@ -67,9 +67,9 @@ int main(int argc, char **argv) {
       n = 0;
     }
     if (i+1 < size)
-      printf("%d,", memory[i]);
+      printf("%lld,", (long long)memory[i]);
     else
-      printf("%d };\n", memory[i]);
+      printf("%lld };\n", (long long)memory[i]);
     i++;
   }
   exit(0);

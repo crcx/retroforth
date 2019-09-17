@@ -3,28 +3,29 @@
 #include <stdint.h>
 #include <string.h>
 #include "strl.h"
+#define CELL int32_t
 #define KiB * 1024
 #define MAX_NAMES 1024
 #define STRING_LEN 64
 #define IMAGE_SIZE 128 KiB
 char    Labels[MAX_NAMES][STRING_LEN];
-int32_t Pointers[MAX_NAMES];
-int32_t np;
+CELL Pointers[MAX_NAMES];
+CELL np;
 char source[1 KiB];
-int32_t target[IMAGE_SIZE];
-int32_t here;
+CELL target[IMAGE_SIZE];
+CELL here;
 void save() {
   FILE *fp;
   if ((fp = fopen("ngaImage", "wb")) == NULL) {
     printf("Unable to save the image!\n");
     exit(2);
   }
-  fwrite(&target, sizeof(int32_t), here, fp);
+  fwrite(&target, sizeof(CELL), here, fp);
   fclose(fp);
 }
-int32_t lookup(char *name) {
-  int32_t slice = -1;
-  int32_t n = np;
+CELL lookup(char *name) {
+  CELL slice = -1;
+  CELL n = np;
   while (n > 0) {
     n--;
     if (strcmp(Labels[n], name) == 0)
@@ -32,7 +33,7 @@ int32_t lookup(char *name) {
   }
   return slice;
 }
-void add_label(char *name, int32_t slice) {
+void add_label(char *name, CELL slice) {
   if (lookup(name) == -1) {
     bsd_strlcpy(Labels[np], name, STRING_LEN);
     Pointers[np] = slice;
@@ -52,7 +53,7 @@ void read_line(FILE *file, char *line_buffer) {
   }
   line_buffer[count] = '\0';
 }
-int32_t opcode_for(char *s) {
+CELL opcode_for(char *s) {
   if (strcmp(s, "..") == 0) return 0;  if (strcmp(s, "li") == 0) return 1;
   if (strcmp(s, "du") == 0) return 2;  if (strcmp(s, "dr") == 0) return 3;
   if (strcmp(s, "sw") == 0) return 4;  if (strcmp(s, "pu") == 0) return 5;
@@ -167,7 +168,7 @@ int main(int argc, char **argv) {
     pass1(argv[1]);
     pass2(argv[1]);
     save();
-    printf("Wrote %d cells to ngaImage\n", here);
+    printf("Wrote %lld cells to ngaImage\n", (long long)here);
   }
   else
     printf("muri\n(c) 2017-2019 charles childers\n\n%s filename\n", argv[0]);
