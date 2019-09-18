@@ -1,6 +1,6 @@
 #!/usr/bin/env retro
 
-# Export as HTML
+# Export Muri as HTML
 
 This tool processes the code in Unu code blocks, generating HTML
 output. It assumes that CSS will be used to style the results.
@@ -8,9 +8,6 @@ The default CSS is included at the end of this file and will be
 embedded into the generated HTML.
 
 # Code
-
-I include my `unu` file processor here as it makes it easy to
-process the relevant lines from the source file.
 
 Some characters need to be escaped. The `:put-html` words will
 be used to handle these.
@@ -24,6 +21,9 @@ be used to handle these.
   c:put ;
 :s:put-html [ c:put-html ] s:for-each ;
 ~~~
+
+I include my `unu` file processor here as it makes it easy to
+process the relevant lines from the source file.
 
 ~~~
 {{
@@ -45,6 +45,19 @@ be used to handle these.
 Formatting is pretty straightforward. I have a `span` word to
 generate the HTML for the token, and a `format` word to identify
 the token type and use `span`.
+
+For Muri this is really easy as the character in the first column
+indicates how the line should be processed.
+
+I have:
+
+    :   create a label
+    s   inline a string (null terminated)
+    r   assemble a pointer to a label
+    d   convert to decimal and inline
+    i   assemble instruction bundle
+
+Everything else gets treated as text.
 
 ~~~
 :span '<span_class=' s:put s:put ''> s:put s:put-html '</span> s:put ;
