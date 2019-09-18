@@ -21,19 +21,11 @@ retro -i
 
 This should be sufficient for most uses.
 
-Starting the interactive system (without displaying the `Ok`
-prompt or startup banner):
+Starting the interactive system (without displaying the
+startup banner):
 
 ```
 retro -s
-```
-
-RETRO also has a *character breaking* mode, in which input is
-processed directly as entered, this is started with the `-c`
-option:
-
-```
-retro -i,c
 ```
 
 ## Using In a Pipe
@@ -88,9 +80,6 @@ For a summary of the full command line arguments available:
 
       -h           Display this help text
       -i           Interactive mode (line buffered)
-      -i,c         Interactive mode (character buffered)
-      -i,fs        Interactive mode (fullscreen)
-      -s           Suppress the 'ok' prompt and keyboard
-                   echo in interactive mode
+      -s           Suppress the startup text
       -f filename  Run the contents of the specified file
       -t           Run tests (in ``` blocks) in any loaded files

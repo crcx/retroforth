@@ -161,19 +161,11 @@ retro -i
 
 This should be sufficient for most uses.
 
-Starting the interactive system (without displaying the `Ok`
-prompt or startup banner):
+Starting the interactive system (without displaying the
+startup banner):
 
 ```
 retro -s
-```
-
-RETRO also has a *character breaking* mode, in which input is
-processed directly as entered, this is started with the `-c`
-option:
-
-```
-retro -i,c
 ```
 
 ## Using In a Pipe
@@ -228,10 +220,7 @@ For a summary of the full command line arguments available:
 
       -h           Display this help text
       -i           Interactive mode (line buffered)
-      -i,c         Interactive mode (character buffered)
-      -i,fs        Interactive mode (fullscreen)
-      -s           Suppress the 'ok' prompt and keyboard
-                   echo in interactive mode
+      -s           Suppress the startup text
       -f filename  Run the contents of the specified file
       -t           Run tests (in ``` blocks) in any loaded files
 
@@ -247,8 +236,6 @@ You should see something similar to this:
 
     RETRO 12 (rx-2019.6)
     8388608 MAX, TIB @ 1025, Heap @ 9374
-
-    Ok
 
 At this point you are at the *listener*, which reads and
 processes your input. You are now set to begin exploring
@@ -2375,12 +2362,16 @@ Pass the image name as the first argument, and then file names
 as susequent ones. Do *not* use this for things relying on I/O
 apart from the basic console output as it doesn't emulate other
 devices. If you need to load in things that rely on using the
-optional I/O devices, see the Advanced Builds chapter.
+optional I/O devices, see the **Advanced Builds** chapter.
 
 ## retro-muri
 
 This is the assembler for Nga. It's used to build the initial
 RETRO kernel and can be used by other tools as well.
+
+## retro-tags
+
+TBD
 
 ## retro-unu
 

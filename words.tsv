@@ -347,7 +347,6 @@ n:zero?	n-f	-	-	Return `TRUE` if number is zero, or `FALSE` otherwise.			class:w
 nip	nm-m	-	-	Remove the second item from the stack.			class:word	{n/a}	{n/a}	global	all	
 nl	-	-	-	Display a newline.			class:word	{n/a}	{n/a}	global	all	
 not	n-m	-	-	Perform a logical NOT operation.			class:word	{n/a}	{n/a}	global	all	
-ok	-	-	-	Display the "ok" prompt. This is a hook.			class:word	{n/a}	{n/a}	global	rre	
 or	mn-o	-	-	Perform a bitwise OR between the provided values.			class:primitive	{n/a}	{n/a}	global	all	
 over	nm-nmn	-	-	Put a copy of n over m.			class:word	{n/a}	{n/a}	global	all	
 parse-until	q-s	-	-	Read input from stdin (via `c:get`) until the returned character is matched by the quote. Returns a string.			class:word	  :read-until-period (-s)\n    [ $. eq? ] parse-until ;	{n/a}	all	rre	

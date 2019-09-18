@@ -1045,9 +1045,6 @@ Display a newline.
 not                              D: n-m  A: -  F: -
 Perform a logical NOT operation.
 
-ok                               D: -  A: -  F: -
-Display the "ok" prompt. This is a hook.
-
 or                               D: mn-o  A: -  F: -
 Perform a bitwise OR between the provided values.
 

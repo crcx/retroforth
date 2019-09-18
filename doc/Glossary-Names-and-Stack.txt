@@ -347,7 +347,6 @@ n:zero?                          D: n-f  A: -  F: -
 nip                              D: nm-m  A: -  F: -
 nl                               D: -  A: -  F: -
 not                              D: n-m  A: -  F: -
-ok                               D: -  A: -  F: -
 or                               D: mn-o  A: -  F: -
 over                             D: nm-nmn  A: -  F: -
 parse-until                      D: q-s  A: -  F: -

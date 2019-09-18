@@ -99,7 +99,6 @@ startup flags passed.
 'NoEcho var
 
 :bye #0 unix:exit ;
-:ok  hook @NoEcho [ compiling? [ nl 'Ok_ s:put ] -if ] -if ;
 
 {{
   (-nn)  :version    @Version #100 /mod ;
@@ -115,11 +114,11 @@ startup flags passed.
   (q-)   :buffer     [ TIB buffer:set call buffer:start ] buffer:preserve ;
   (-s)   :read-token [ [ character check done? ] until ] buffer s:chop ;
   (-sf)  :input      read-token valid? ;
-  (sf-)  :process    [ interpret ok ] &drop choose ;
+  (sf-)  :process    &interpret &drop choose ;
 ---reveal---
   :banner  version 'RETRO_12_(%n.%n)\n s:format s:put
            EOM here - here EOM '%n_Max,_%n_Used,_%n_Free\n s:format s:put ;
-  :listen  @NoEcho [ banner ] -if ok repeat input process again ;
+  :listen  @NoEcho [ banner ] -if repeat input process again ;
 }}
 
 &listen #1 store

@@ -41,6 +41,10 @@ is currently targetting a late fall release.
 
 ## Interfaces
 
+- retro/unix
+  - remove `ok`
+  - clarify the use of `-s` startup flag
+
 ## Notes for the future:
 
 - updates to the VM source and tooling to make it easier to

@@ -461,14 +461,14 @@ void include_file(char *fname, int run_tests) {
 
 void help(char *exename) {
   printf("Scripting Usage: %s filename\n\n", exename);
-  printf("Interactive Usage: %s [-h] [-i] [-s] [-f filename] [-t]\n\n", exename);
+  printf("Interactive Usage: %s [-h] [-i] [-f filename] [-t]\n\n", exename);
   printf("Valid Arguments:\n\n");
   printf("  -h\n");
   printf("    Display this help text\n");
   printf("  -i\n");
-  printf("    Launches in interactive mode (line buffered)\n");
+  printf("    Launches in interactive mode\n");
   printf("  -s\n");
-  printf("    Suppress the 'ok' prompt and keyboard echo in interactive mode\n");
+  printf("    Suppress the startup banner in interactive mode. Implies -i.\n");
   printf("  -f filename\n");
   printf("    Run the contents of the specified file\n");
   printf("  -u filename\n");

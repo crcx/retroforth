@@ -4074,17 +4074,6 @@ Perform a logical NOT operation.
 Class: class:word | Namespace: global | Interface Layer: all
 ------------------------------------------------------------------------
 
-ok
-
-  Data:  -
-  Addr:  -
-  Float: -
-
-Display the "ok" prompt. This is a hook.
-
-Class: class:word | Namespace: global | Interface Layer: rre
-------------------------------------------------------------------------
-
 or
 
   Data:  mn-o
