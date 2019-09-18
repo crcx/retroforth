@@ -1,0 +1,134 @@
+#!/usr/bin/env retro
+
+# Export as HTML
+
+This tool processes the code in Unu code blocks, generating HTML
+output. It assumes that CSS will be used to style the results.
+The default CSS is included at the end of this file and will be
+embedded into the generated HTML.
+
+# Code
+
+I include my `unu` file processor here as it makes it easy to
+process the relevant lines from the source file.
+
+Some characters need to be escaped. The `:put-html` words will
+be used to handle these.
+
+~~~
+:c:put-html
+  $< [ '&lt;  s:put ] case
+  $> [ '&gt;  s:put ] case
+  $& [ '&amp; s:put ] case
+  ASCII:SPACE [ '&nbsp; s:put ] case
+  c:put ;
+:s:put-html [ c:put-html ] s:for-each ;
+~~~
+
+~~~
+{{
+  :span '<span_class='text'> s:put s:put-html '</span> s:put ;
+  'Fenced var
+  :toggle-fence @Fenced not !Fenced ;
+  :fenced? (-f) @Fenced ;
+  :handle-line (s-)
+    fenced? [ over call ] [ span '<br> s:put nl ] choose ;
+---reveal---
+  :unu (sq-)
+    swap [ dup '~~~ s:eq?
+           [ toggle-fence s:put '<br> s:put nl ]
+           [ handle-line ] choose
+         ] file:for-each-line drop ;
+}}
+~~~
+
+Formatting is pretty straightforward. I have a `span` word to
+generate the HTML for the token, and a `format` word to identify
+the token type and use `span`.
+
+~~~
+:span '<span_class=' s:put s:put ''> s:put s:put-html '</span> s:put ;
+
+:format (s-)
+  (ignore_empty_tokens)
+  dup s:length n:zero? [ drop ] if;
+
+  (tokens_with_prefixes)
+  dup fetch
+  $: [ 'name      span ] case
+  $s [ 'string    span ] case
+  $d [ 'number    span ] case
+  $r [ 'pointer   span ] case
+  $i [ 'instr     span ] case
+
+  'text span ;
+~~~
+
+Next is the HTML page generation. This has words to generate
+the header, embeds the CSS (from the end of this file), and
+then processes the lines in the source file to generate the
+body.
+
+Output is written to stdout.
+
+~~~
+'CSS var
+:embed-css
+  '<style> s:put nl
+  sys:name [ dup '/*_CSS_Begins_*/ s:eq? [ &CSS v:on ] if
+             @CSS [ s:put nl ] [ drop ] choose ] file:for-each-line
+  '</style> s:put nl ;
+
+:header
+  '<!DOCTYPE_html> s:put nl
+  '<html> s:put nl
+  '<head> s:put nl embed-css '</head> s:put nl ;
+
+:body (s-)
+  '<body> s:put nl
+  [ format
+    '<br> s:put nl ] unu
+  '</body> s:put nl ;
+
+:footer
+  '</html> s:put nl ;
+
+:generate (s-)
+  header body footer ;
+~~~
+
+And finally, run it.
+
+~~~
+#0 sys:argv generate
+~~~
+
+# CSS
+
+/* CSS Begins */
+
+* {
+  background: #111;
+  color: white;
+  font-family: monospace;
+}
+
+.text {
+  color: white;
+}
+
+.name {
+  color: red;
+}
+.string {
+  color: yellow;
+}
+.pointer {
+  color: orange;
+}
+.number {
+  color: cyan;
+}
+.instr {
+  color: greenyellow;
+}
