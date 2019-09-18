@@ -49,3 +49,13 @@ is currently targetting a late fall release.
 
 - updates to the VM source and tooling to make it easier to
   create and use images with 64-bit cells
+
+----
+
+This release changes a few things.
+
+(1) `unix:time` is now removed
+(2) `clock:timestamp` is added
+(3) the system can now be built as a fully 64-bit system
+    with minimal changes
+(4) the `ok` prompt has been removed

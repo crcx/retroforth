@@ -1564,26 +1564,22 @@ useful. The major elements are:
 
 **Instruction Set**
 
-Nga has 27 instructions. These are:
+Nga has 30 instructions. These are:
 
-    0  nop        7  jump      14  gt        21  and
-    1  lit <v>    8  call      15  fetch     22  or
-    2  dup        9  ccall     16  store     23  xor
-    3  drop      10  return    17  add       24  shift
-    4  swap      11  eq        18  sub       25  zret
-    5  push      12  neq       19  mul       26  end
-    6  pop       13  lt        20  divmod
+    0 nop   5 push  10 ret   15 fetch 20 div   25 zret
+    1 lit   6 pop   11 eq    16 store 21 and   26 end
+    2 dup   7 jump  12 neq   17 add   22 or    27 ienum
+    3 drop  8 call  13 lt    18 sub   23 xor   28 iquery
+    4 swap  9 ccall 14 gt    19 mul   24 shift 29 iinvoke
 
 The mnemonics allow for each name to be reduced to just two
 characters. In the same order as above:
 
-    no  ju  gt  an
-    li  ca  fe  or
-    du  cc  st  xo
-    dr  re  ad  sh
-    sw  eq  su  zr
-    pu  ne  mu  en
-    po  lt  di
+    0 ..    5 pu    10 re    15 fe    20 di    25 zr
+    1 li    6 po    11 eq    16 st    21 an    26 en
+    2 du    7 ju    12 ne    17 ad    22 or    27 ie
+    3 dr    8 ca    13 lt    18 su    23 xo    28 iq
+    4 sw    9 cc    14 gt    19 mu    24 sh    29 ii
 
 Up to four instructions can be packed into a single memory
 location. (You can only use *no*p after a *ju*mp, *ca*ll,
