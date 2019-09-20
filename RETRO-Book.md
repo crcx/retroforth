@@ -2631,8 +2631,6 @@ is an example of a small program in it:
       lit 35
       lit &square
       call
-      lit &square
-      call
       end
 
 The other assembler is Muri. This is a far more minimalistic
