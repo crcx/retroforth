@@ -159,11 +159,11 @@ more on this.
 
 ## Nga Instruction Set
 
-As mentioned earlier, Nga provides 27 instructions. Rx begins
-the actual coding by assigning each to a separate function.
-These are not intended for direct use; the compiler will fetch
-the opcode values to use from these functions when compiling.
-Many will also be exposed in the initial dictionary.
+As mentioned earlier, Nga provides 30 instructions. Rx begins
+the actual coding by assigning most of these to a separate
+function. These are not intended for direct use; the compiler
+will fetch the opcode values to use from these functions when
+compiling. Many will also be exposed in the initial dictionary.
 
 ~~~
 : _nop
