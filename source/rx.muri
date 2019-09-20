@@ -23,7 +23,7 @@ This source is written in Muri, an assembler for Nga.
 Before going on, I should explain a bit about Nga and Muri.
 
 Nga provides a MISC inspired virtual machine for a dual stack
-architecture. There are 27 instructions, with up to four packed
+architecture. There are 30 instructions, with up to four packed
 into each memory location (*cell*). The instructions are:
 
     0 nop   5 push  10 ret   15 fetch 20 div   25 zret
@@ -42,7 +42,6 @@ RETURN, and ZRET. Additionally, if the instruction bundle
 contains a LIT, a value must be in the following cell. (One for
 each LIT in the bundle)
 
-
 The reason for this relates to how Nga processes the opcodes.
 To illustrate, assume a stack with a couple of values:
 
@@ -51,28 +50,40 @@ To illustrate, assume a stack with a couple of values:
 And a function that consumes two values before returning a
 some new ones:
 
-    :function * #3 ;
+    : function
+    i mulire..
+    d 3
 
-If we were to use an instruction bundle like:
+(In the `i` line, the instructions are mul, lit, return, and
+nop).
 
-    lit call add nop
-    function
+If we were to use this along with an instruction bundle like:
 
-Nga will:
+    : test
+    i licaadre
+    r function
 
-    (1) push a pointer to the function to the stack
+(In the `i` line, the instructions are lit, call, add, and
+return).
+
+On running the code in `test` Nga will:
+
+    (1) push a pointer to `function` to the stack
     (2) setup a call to the function
     (3) add the top values on the stack (#1 #2),
         leaving a single value (#3)
-    (4) do nothing
+    (4) setup a return to the caller
 
 At this point the bundle is done, so control goes to the
 called function. But we now have only one value on the stack,
 so the stack underflows and Nga will crash.
 
-It's not forbidden, and this can be useful to improve code
-density, but exercise caution and be sure to keep track of
-this behavior to avoid hard to identify bugs.
+It's not forbidden by my VM implementation, but John's Impexus
+implementation differs here in that it does not process the
+instructions after jump, call, ccall, ret, or zret. I really
+recommend making sure your bundles don't contain anything after
+these instructions to keep things portable and predictable in
+behavior.
 
 Muri uses the first two characters of each instruction name
 when composing the bundles, with NOP being named as two dots.
@@ -88,7 +99,7 @@ Is a bundle named:
 And with two `li` instructions, must be followed by two values.
 
 Muri uses a directive in the first line to tell it what to
-expect. Directives are:
+expect. Valid directives are:
 
     i   instruction bundle
     d   decimal value
@@ -156,107 +167,107 @@ Many will also be exposed in the initial dictionary.
 
 ~~~
 : _nop
-d 0
+i ........
 i re......
 
 : _lit
-d 1
+i li......
 i re......
 
 : _dup
-d 2
+i du......
 i re......
 
 : _drop
-d 3
+i dr......
 i re......
 
 : _swap
-d 4
+i sw......
 i re......
 
 : _push
-d 5
+i pu......
 i re......
 
 : _pop
-d 6
+i po......
 i re......
 
 : _jump
-d 7
+i ju......
 i re......
 
 : _call
-d 8
+i ca......
 i re......
 
 : _ccall
-d 9
+i cc......
 i re......
 
 : _ret
-d 10
+i re......
 i re......
 
 : _eq
-d 11
+i eq......
 i re......
 
 : _neq
-d 12
+i ne......
 i re......
 
 : _lt
-d 13
+i lt......
 i re......
 
 : _gt
-d 14
+i gt......
 i re......
 
 : _fetch
-d 15
+i fe......
 i re......
 
 : _store
-d 16
+i st......
 i re......
 
 : _add
-d 17
+i ad......
 i re......
 
 : _sub
-d 18
+i su......
 i re......
 
 : _mul
-d 19
+i mu......
 i re......
 
 : _divmod
-d 20
+i di......
 i re......
 
 : _and
-d 21
+i an......
 i re......
 
 : _or
-d 22
+i or......
 i re......
 
 : _xor
-d 23
+i xo......
 i re......
 
 : _shift
-d 24
+i sh......
 i re......
 
 : _zret
-d 25
+i zr......
 i re......
 ~~~
 
