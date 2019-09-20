@@ -1,7 +1,7 @@
 # System Interaction
 
 The `unix:` namespace contains words for interacting with the
-host operating system.
+host operating system on Unix style systems.
 
 ~~~
 {{
@@ -102,22 +102,6 @@ seconds.
 ~~~
 
 ~~~
-:clock:timestamp (-n) #19 io:unix-syscall ;
-:clock:day    (-s) #20 io:unix-syscall ;
-:clock:month  (-s) #21 io:unix-syscall ;
-:clock:year   (-s) #22 io:unix-syscall ;
-:clock:hour   (-s) #23 io:unix-syscall ;
-:clock:minute (-n) #24 io:unix-syscall ;
-:clock:second (-s) #25 io:unix-syscall ;
-:clock:utc:day    (-s) #26 io:unix-syscall ;
-:clock:utc:month  (-s) #27 io:unix-syscall ;
-:clock:utc:year   (-s) #28 io:unix-syscall ;
-:clock:utc:hour   (-s) #29 io:unix-syscall ;
-:clock:utc:minute (-n) #30 io:unix-syscall ;
-:clock:utc:second (-s) #31 io:unix-syscall ;
-~~~
-
-~~~
 :unix:get-cwd (-s)
   'pwd file:R unix:popen
     dup file:read-line s:trim swap
@@ -149,4 +133,28 @@ seconds.
   :unix:slurp-pipe (as-n)
     [ start [ read ] until finish ] buffer:preserve ;
 }}
+~~~
+
+
+The clock device provides access to an interface specific
+timestamp as well as the current date and time in both
+local and UTC.
+
+This is currently grouped with the `unix:` words, but
+will be a fully separate device in the future.
+
+~~~
+:clock:timestamp (-n) #19 io:unix-syscall ;
+:clock:day    (-s) #20 io:unix-syscall ;
+:clock:month  (-s) #21 io:unix-syscall ;
+:clock:year   (-s) #22 io:unix-syscall ;
+:clock:hour   (-s) #23 io:unix-syscall ;
+:clock:minute (-n) #24 io:unix-syscall ;
+:clock:second (-s) #25 io:unix-syscall ;
+:clock:utc:day    (-s) #26 io:unix-syscall ;
+:clock:utc:month  (-s) #27 io:unix-syscall ;
+:clock:utc:year   (-s) #28 io:unix-syscall ;
+:clock:utc:hour   (-s) #29 io:unix-syscall ;
+:clock:utc:minute (-n) #30 io:unix-syscall ;
+:clock:utc:second (-s) #31 io:unix-syscall ;
 ~~~
