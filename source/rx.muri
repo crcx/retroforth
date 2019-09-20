@@ -57,7 +57,8 @@ some new ones:
 (In the `i` line, the instructions are mul, lit, return, and
 nop).
 
-If we were to use this along with an instruction bundle like:
+If we were to use this along with an instruction bundle (the
+line starting with `i`) like:
 
     : test
     i licaadre
