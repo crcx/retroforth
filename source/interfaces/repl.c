@@ -40,7 +40,10 @@
   that RETRO runs on.
   ---------------------------------------------------------------------*/
 
-#define CELL         int32_t      /* Cell size (32 bit, signed integer */
+
+#ifndef CELL
+#define CELL         int32_t      /* Cell size                         */
+#endif
 #define IMAGE_SIZE   242000       /* Amount of RAM. 968kB by default.  */
 #define ADDRESSES    256          /* Depth of address stack            */
 #define STACK_DEPTH  128          /* Depth of data stack               */

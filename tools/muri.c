@@ -3,7 +3,9 @@
 #include <stdint.h>
 #include <string.h>
 #include "strl.h"
+#ifndef CELL
 #define CELL int32_t
+#endif
 #define KiB * 1024
 #define MAX_NAMES 1024
 #define STRING_LEN 64

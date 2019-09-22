@@ -13,7 +13,9 @@
 #include <unistd.h>
 #include <string.h>
 
-#define CELL         int32_t
+#ifndef CELL
+#define CELL         int32_t      /* Cell size                         */
+#endif
 #define IMAGE_SIZE   524288
 #define ADDRESSES    2048
 #define STACK_DEPTH  512

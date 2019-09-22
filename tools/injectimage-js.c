@@ -17,8 +17,9 @@
 #include <string.h>
 #include <stdint.h>
 
-#define CELL         int32_t
-
+#ifndef CELL
+#define CELL         int32_t      /* Cell size                         */
+#endif
 #define KiB * 1024
 CELL memory[128 KiB];
 char source[16 KiB];

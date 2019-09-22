@@ -211,7 +211,7 @@ top level word called returns.
 :xt-for (s-a)
   here store
   image:Dictionary fetch &Image +
-  [ repeat fetch 0; dup d:name here fetch s:eq?
+  [ repeat fetch 0; &Image + dup d:name here fetch s:eq?
     [ dup d:xt fetch here n:inc store ] if again ] call
   here n:inc fetch ;
 

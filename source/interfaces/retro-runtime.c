@@ -38,7 +38,9 @@
   Configuration
   ---------------------------------------------------------------------*/
 
-#define CELL         int32_t      /* Cell size (32 bit, signed integer */
+#ifndef CELL
+#define CELL         int32_t      /* Cell size                         */
+#endif
 #define IMAGE_SIZE   524288 * 2   /* Amount of RAM. 12MiB by default.  */
 #define ADDRESSES    256          /* Depth of address stack            */
 #define STACK_DEPTH  256          /* Depth of data stack               */
