@@ -1,3 +1,6 @@
+// Copyright (c) 2017-2019 Charles Childers
+// Copyright (c)      2019 Luke Parrish
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
@@ -184,6 +187,6 @@ int main(int argc, char **argv) {
     printf("Wrote %lld cells to ngaImage\n", (long long)here);
   }
   else
-    printf("muri\n(c) 2017-2019 charles childers\n\n%s filename\n", argv[0]);
+    printf("muri\n(c) 2017-2019 charles childers, (c) 2019 luke parrish\n\n%s filename\n", argv[0]);
   return 0;
 }
