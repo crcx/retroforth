@@ -62,6 +62,7 @@ Since the code is in C, we have to include some headers.
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
+#include <limits.h>
 ~~~
 
 Nga uses a call table for dispatching instruction handlers. I define
@@ -398,12 +399,14 @@ void inst_gt() {
 This doubles as a means of introspection into the VM state. Negative
 addresses correspond to VM queries:
 
-| Address | Returns             |
-| ------- | ------------------- |
-| -1      | Data stack depth    |
-| -2      | Address stack depth |
-| -3      | Maximum Image Size  |
-
+| Address | Returns              |
+| ------- | -------------------- |
+| -1      | Data stack depth     |
+| -2      | Address stack depth  |
+| -3      | Maximum Image Size   |
+| -4      | Min value for a cell |
+| -5      | Max value for a cell |
+ 
 An implementation may use negative values below -100 for implementation
 specific inquiries.
 
@@ -413,6 +416,8 @@ void inst_fetch() {
     case -1: TOS = sp - 1; break;
     case -2: TOS = rp; break;
     case -3: TOS = IMAGE_SIZE; break;
+    case -4: TOS = INT_MIN; break;
+    case -5: TOS = INT_MAX; break;
     default: TOS = memory[TOS]; break;
   }
 }

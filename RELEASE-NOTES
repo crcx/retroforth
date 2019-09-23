@@ -45,10 +45,23 @@ is currently targetting a late fall release.
   - remove `ok`
   - clarify the use of `-s` startup flag
 
+## Nga
+
+New queries via fetch:
+
+    -4 for min integer
+    -5 for max integer
+
 ## Notes for the future:
 
-- updates to the VM source and tooling to make it easier to
-  create and use images with 64-bit cells
+You can now build a 64-bit RETRO by doing:
+
+    make clean; make CFLAGS="-O2 -DBIT64"
+
+This is not well tested yet, but everything should work as
+normal, you just get a much larger integer range. Note that
+this requires a newer version of the VM with added queries
+via fetch to fully support.
 
 ----
 

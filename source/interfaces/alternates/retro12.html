@@ -265,6 +265,10 @@ instructions[vm.FETCH] = function() {
         data.push(address.sp);
     else if (x == -3)
         data.push(IMAGE_SIZE);
+    else if (x == -4)
+        data.push(-2147483648);
+    else if (x == -5)
+        data.push(2147483647);
     else
         data.push(image[x]);
 }
@@ -603,3 +607,4 @@ PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER
 TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
 PERFORMANCE OF THIS SOFTWARE.
 -->
+

@@ -8,7 +8,7 @@
     output. It's used to create the `image.c` that gets
     linked into `rre`.
 
-    Copyright (c) 2016, 2017 Charles Childers
+    Copyright (c) 2016-2019 Charles Childers
 */
 
 #include <stdio.h>
@@ -17,9 +17,16 @@
 #include <string.h>
 #include <stdint.h>
 
-#ifndef CELL
-#define CELL         int32_t      /* Cell size                         */
+#ifndef BIT64
+#define CELL int32_t
+#define CELL_MIN INT_MIN + 1
+#define CELL_MAX INT_MAX - 1
+#else
+#define CELL int64_t
+#define CELL_MIN LLONG_MIN + 1
+#define CELL_MAX LLONG_MAX - 1
 #endif
+
 #define KiB * 1024
 CELL memory[128 KiB];
 char source[16 KiB];

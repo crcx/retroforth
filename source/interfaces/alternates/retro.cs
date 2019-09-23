@@ -216,6 +216,10 @@ namespace Nga
             data[sp] = rsp - 1;
           else if (x == -3)
             data[sp] = 524288 * 16;
+          else if (x == -4)
+            data[sp] = -2147483648;
+          else if (x == -5)
+            data[sp] = 2147483647;
           else
             data[sp] = memory[x];
           break;

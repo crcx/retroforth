@@ -38,9 +38,16 @@
   Configuration
   ---------------------------------------------------------------------*/
 
-#ifndef CELL
-#define CELL         int32_t      /* Cell size                         */
+#ifndef BIT64
+#define CELL int32_t
+#define CELL_MIN INT_MIN + 1
+#define CELL_MAX INT_MAX - 1
+#else
+#define CELL int64_t
+#define CELL_MIN LLONG_MIN + 1
+#define CELL_MAX LLONG_MAX - 1
 #endif
+
 #define IMAGE_SIZE   524288 * 2   /* Amount of RAM. 4MiB (1M) cells    */
 #define ADDRESSES    256          /* Depth of address stack            */
 #define STACK_DEPTH  256          /* Depth of data stack               */
@@ -330,7 +337,7 @@ void rre_execute(CELL cell, int silent) {
 
 void rre_evaluate(char *s, int silent) {
   if (strlen(s) == 0)  return;
-  update_rx();
+//  update_rx();
   string_inject(s, TIB);
   stack_push(TIB);
   rre_execute(interpret, silent);
@@ -1785,7 +1792,7 @@ void inst_gt() {
 
 void inst_fetch() {
 #ifndef NOCHECKS
-  if (TOS >= IMAGE_SIZE || TOS < -3) {
+  if (TOS >= IMAGE_SIZE || TOS < -6) {
     ip = IMAGE_SIZE;
     printf("\nERROR (nga/inst_fetch): Fetch beyond valid memory range\n");
     exit(1);
@@ -1795,6 +1802,8 @@ void inst_fetch() {
       case -1: TOS = sp - 1; break;
       case -2: TOS = rp; break;
       case -3: TOS = IMAGE_SIZE; break;
+      case -4: TOS = CELL_MIN; break;
+      case -5: TOS = CELL_MAX; break;
       default: TOS = memory[TOS]; break;
     }
 #ifndef NOCHECKS

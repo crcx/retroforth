@@ -4,6 +4,7 @@
   -----------------------------------------------------------*/
 
 #include <sys/types.h>
+#include <sys/limits.h>
 #include "image.c"
 
 /*-------------------------------------------------------------
@@ -11,7 +12,16 @@
   machine that RETRO runs on.
   -----------------------------------------------------------*/
 
-#define CELL         long        /* Cell size                */
+#ifndef BIT64
+#define CELL int32_t
+#define CELL_MIN INT_MIN + 1
+#define CELL_MAX INT_MAX - 1
+#else
+#define CELL int64_t
+#define CELL_MIN LLONG_MIN + 1
+#define CELL_MAX LLONG_MAX - 1
+#endif
+
 #define IMAGE_SIZE   524288 * 8  /* Amount of RAM.           */
 #define ADDRESSES    1024        /* Depth of address stack   */
 #define STACK_DEPTH  128         /* Depth of data stack      */

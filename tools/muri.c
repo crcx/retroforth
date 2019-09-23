@@ -3,19 +3,29 @@
 #include <stdint.h>
 #include <string.h>
 #include "strl.h"
-#ifndef CELL
+
+#ifndef BIT64
 #define CELL int32_t
+#define CELL_MIN INT_MIN + 1
+#define CELL_MAX INT_MAX - 1
+#else
+#define CELL int64_t
+#define CELL_MIN LLONG_MIN + 1
+#define CELL_MAX LLONG_MAX - 1
 #endif
+
 #define KiB * 1024
 #define MAX_NAMES 1024
 #define STRING_LEN 64
 #define IMAGE_SIZE 128 KiB
-char    Labels[MAX_NAMES][STRING_LEN];
+
+char Labels[MAX_NAMES][STRING_LEN];
 CELL Pointers[MAX_NAMES];
 CELL np;
 char source[1 KiB];
 CELL target[IMAGE_SIZE];
 CELL here;
+
 void save() {
   FILE *fp;
   if ((fp = fopen("ngaImage", "wb")) == NULL) {
@@ -25,6 +35,7 @@ void save() {
   fwrite(&target, sizeof(CELL), here, fp);
   fclose(fp);
 }
+
 CELL lookup(char *name) {
   CELL slice = -1;
   CELL n = np;
@@ -35,6 +46,7 @@ CELL lookup(char *name) {
   }
   return slice;
 }
+
 void add_label(char *name, CELL slice) {
   if (lookup(name) == -1) {
     bsd_strlcpy(Labels[np], name, STRING_LEN);
@@ -45,6 +57,7 @@ void add_label(char *name, CELL slice) {
     exit(0);
   }
 }
+
 void read_line(FILE *file, char *line_buffer) {
   int ch = getc(file);
   int count = 0;
@@ -55,6 +68,7 @@ void read_line(FILE *file, char *line_buffer) {
   }
   line_buffer[count] = '\0';
 }
+
 CELL opcode_for(char *s) {
   if (strcmp(s, "..") == 0) return 0;  if (strcmp(s, "li") == 0) return 1;
   if (strcmp(s, "du") == 0) return 2;  if (strcmp(s, "dr") == 0) return 3;
@@ -73,6 +87,7 @@ CELL opcode_for(char *s) {
   if (strcmp(s, "iq") == 0) return 28; if (strcmp(s, "ii") == 0) return 29;
   return 0;
 }
+
 void pass1(char *fname) {
   int inBlock = 0;
   char *buffer = (char *)source;
@@ -128,6 +143,7 @@ void pass1(char *fname) {
   }
   fclose(fp);
 }
+
 void pass2(char *fname) {
   char *buffer;
   FILE *fp;
@@ -164,6 +180,7 @@ void pass2(char *fname) {
   }
   fclose(fp);
 }
+
 int main(int argc, char **argv) {
   np = 0;
   if (argc > 1) {

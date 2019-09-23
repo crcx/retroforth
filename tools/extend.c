@@ -12,10 +12,18 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
+#include <limits.h>
 
-#ifndef CELL
-#define CELL         int32_t      /* Cell size                         */
+#ifndef BIT64
+#define CELL int32_t
+#define CELL_MIN INT_MIN + 1
+#define CELL_MAX INT_MAX - 1
+#else
+#define CELL int64_t
+#define CELL_MIN LLONG_MIN + 1
+#define CELL_MAX LLONG_MAX - 1
 #endif
+
 #define IMAGE_SIZE   524288
 #define ADDRESSES    2048
 #define STACK_DEPTH  512
@@ -454,6 +462,8 @@ void inst_fetch() {
     case -1: TOS = sp - 1; break;
     case -2: TOS = rp; break;
     case -3: TOS = IMAGE_SIZE; break;
+    case -4: TOS = CELL_MIN; break;
+    case -5: TOS = CELL_MAX; break;
     default: TOS = memory[TOS]; break;
   }
 }

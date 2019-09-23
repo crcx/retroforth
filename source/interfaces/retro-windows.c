@@ -36,7 +36,16 @@
   Configuration
   ---------------------------------------------------------------------*/
 
-#define CELL         int32_t      /* Cell size (32 bit, signed integer */
+#ifndef BIT64
+#define CELL int32_t
+#define CELL_MIN INT_MIN
+#define CELL_MAX INT_MAX
+#else
+#define CELL int64_t
+#define CELL_MIN LLONG_MIN
+#define CELL_MAX LLONG_MAX
+#endif
+
 #define IMAGE_SIZE   524288 * 2   /* Amount of RAM. 4MiB (1M) cells    */
 #define ADDRESSES    256          /* Depth of address stack            */
 #define STACK_DEPTH  256          /* Depth of data stack               */

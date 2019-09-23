@@ -20,7 +20,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <stdint.h>
-
+#include <limits.h>
 
 /*---------------------------------------------------------------------
   First, a few constants relating to the image format and memory
@@ -40,10 +40,16 @@
   that RETRO runs on.
   ---------------------------------------------------------------------*/
 
-
-#ifndef CELL
-#define CELL         int32_t      /* Cell size                         */
+#ifndef BIT64
+#define CELL int32_t
+#define CELL_MIN INT_MIN + 1
+#define CELL_MAX INT_MAX - 1
+#else
+#define CELL int64_t
+#define CELL_MIN LLONG_MIN + 1
+#define CELL_MAX LLONG_MAX - 1
 #endif
+
 #define IMAGE_SIZE   242000       /* Amount of RAM. 968kB by default.  */
 #define ADDRESSES    256          /* Depth of address stack            */
 #define STACK_DEPTH  128          /* Depth of data stack               */

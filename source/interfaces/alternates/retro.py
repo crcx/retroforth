@@ -142,7 +142,12 @@ def i_gt():
 
 def i_fe():
     global ip, memory, stack, address
-    stack[-1] = memory[stack[-1]]
+    if stack[-1] == -1: stack[-1] = len(stack)
+    elif stack[-1] == -2: stack[-1] = len(address)
+    elif stack[-1] == -3: stack[-1] = len(memory)
+    elif stack[-1] == -4: stack[-1] = -2147483648
+    elif stack[-1] == -5: stack[-1] = 2147483647
+    else: stack[-1] = memory[stack[-1]]
 
 def i_st():
     global ip, memory, stack, address
