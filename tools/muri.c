@@ -70,21 +70,15 @@ void read_line(FILE *file, char *line_buffer) {
 }
 
 CELL opcode_for(char *s) {
-  if (strcmp(s, "..") == 0) return 0;  if (strcmp(s, "li") == 0) return 1;
-  if (strcmp(s, "du") == 0) return 2;  if (strcmp(s, "dr") == 0) return 3;
-  if (strcmp(s, "sw") == 0) return 4;  if (strcmp(s, "pu") == 0) return 5;
-  if (strcmp(s, "po") == 0) return 6;  if (strcmp(s, "ju") == 0) return 7;
-  if (strcmp(s, "ca") == 0) return 8;  if (strcmp(s, "cc") == 0) return 9;
-  if (strcmp(s, "re") == 0) return 10; if (strcmp(s, "eq") == 0) return 11;
-  if (strcmp(s, "ne") == 0) return 12; if (strcmp(s, "lt") == 0) return 13;
-  if (strcmp(s, "gt") == 0) return 14; if (strcmp(s, "fe") == 0) return 15;
-  if (strcmp(s, "st") == 0) return 16; if (strcmp(s, "ad") == 0) return 17;
-  if (strcmp(s, "su") == 0) return 18; if (strcmp(s, "mu") == 0) return 19;
-  if (strcmp(s, "di") == 0) return 20; if (strcmp(s, "an") == 0) return 21;
-  if (strcmp(s, "or") == 0) return 22; if (strcmp(s, "xo") == 0) return 23;
-  if (strcmp(s, "sh") == 0) return 24; if (strcmp(s, "zr") == 0) return 25;
-  if (strcmp(s, "en") == 0) return 26; if (strcmp(s, "ie") == 0) return 27;
-  if (strcmp(s, "iq") == 0) return 28; if (strcmp(s, "ii") == 0) return 29;
+  char* opcodeList = "..lidudrswpupojucaccreeqneltgtfestadsumudianorxoshzrenieiqii";
+  int16_t* s16 = (int16_t *)s;
+  int16_t* op16 = (int16_t *)opcodeList;
+  int i = 0;
+  for(i = 0; i <= 30; i++){
+    if(s16[0] == op16[i]){
+      return i;
+    }
+  }
   return 0;
 }
 

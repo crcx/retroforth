@@ -2140,19 +2140,19 @@ Up to four instructions can be packed into each memory cell.
 
 As an example,
 
-    Opcode 1 Opcode 2 Opcode 3 Opcode 4
+    Opcode 4 Opcode 3 Opcode 2 Opcode 1
     00000000:00000000:00000000:00000000
 
-If we have a bundle of `lidumu..`, it would look like:
+If we have a bundle of `duliswst`, it would look like:
 
-          li       du       mu       ..
-    00000001:00000010:00010011:00000000
+    st       sw       li       du
+    00010000:00000100:00000001:00000010
 
 Each `li` should have a value in the following cell(s). These
 values will be pushed to the stack. E.g., `lili....` and
 1, 2:
 
-    00000001:00000001:00000000:00000000
+    00000000:00000000:00000001:00000001
     00000000 00000000 00000000 00000001 (1)
     00000000 00000000 00000000 00000010 (2)
 
@@ -2177,11 +2177,13 @@ The `fe` instruction allows queries of some data related to
 the Nga VM state. These are returned by reading from negative
 addresses:
 
-| Address | Returns             |
-| ------- | ------------------- |
-| -1      | Data stack depth    |
-| -2      | Address stack depth |
-| -3      | Maximum Image Size  |
+| Address | Returns                |
+| ------- | ---------------------- |
+| -1      | Data stack depth       |
+| -2      | Address stack depth    |
+| -3      | Maximum Image Size     |
+| -4      | Minimum Integer Value  |
+| -5      | Maximum Integer Value  |
 
 ## I/O Devices
 
