@@ -4,8 +4,8 @@
 
 rm -f tags
 touch tags
-for f in *.forth; do retro $0 "$f" >>tags ; done
-for f in *.retro; do retro $0 "$f" >>tags ; done
+find . -name '*.retro' -print0 | xargs -0 -n 1 retro $0 >>tags
+find . -name '*.forth' -print0 | xargs -0 -n 1 retro $0 >>tags
 exit
 
 --------------------------------------------------------------
@@ -60,7 +60,7 @@ First, colon definitions.
   dup ': s:begins-with? ;
 
 :output-location
-  tab @TagFile s:put tab @TagAddress n:put nl ;
+  tab @TagFile #2 + s:put tab @TagAddress n:put nl ;
 
 :output-name
   ASCII:SPACE s:tokenize #0 a:fetch n:inc s:put ;
