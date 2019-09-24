@@ -145,17 +145,17 @@ Deal with special cases.
 
 ~~~
 :f:to-e (-e|f:n-)
-  f:dup f:nan?  [ f:drop drop e:NAN  ]    if;
-  f:dup f:inf?  [ f:drop drop e:INF  ]    if;
-  f:dup f:-inf? [ f:drop drop e:-INF ]    if;
+  f:dup f:nan?  [ f:drop e:NAN  ]    if;
+  f:dup f:inf?  [ f:drop e:INF  ]    if;
+  f:dup f:-inf? [ f:drop e:-INF ]    if;
   f:+encode f:round f:to-number e:clip      (e
-  e:MIN         [ f:drop             ] case
-  e:MAX         [ f:drop             ] case ;
+  e:MIN         [ f:drop        ] case
+  e:MAX         [ f:drop        ] case ;
 
 :e:to-f (e-|f:-n)
-  e:NAN  [ drop  f:NAN ] case
-  e:INF  [ drop  f:INF ] case
-  e:-INF [ drop f:-INF ] case
+  e:NAN  [ f:NAN ] case
+  e:INF  [ f:INF ] case
+  e:-INF [ f:-INF ] case
   n:to-float f:-encode ;
 ~~~
 
