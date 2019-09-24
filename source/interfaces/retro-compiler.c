@@ -19,6 +19,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <sys/stat.h>
+#include <limits.h>
 
 #ifndef BIT64
 #define CELL int32_t
