@@ -314,13 +314,12 @@ void rre_execute(CELL cell, int silent) {
 #ifndef NOCHECKS
     if (sp < 0 || sp > STACK_DEPTH) {
       printf("\nERROR (nga/rre_execute): Stack Limits Exceeded!\n");
-      printf("At %lld, opcode %lld\n", (long long)ip, (long long)opcode);
+      printf("At %lld, opcode %lld. sp = %lld\n", (long long)ip, (long long)opcode, (long long)sp);
       exit(1);
     }
     if (rp < 0 || rp > ADDRESSES) {
       printf("\nERROR (nga/rre_execute): Address Stack Limits Exceeded!\n");
-      printf("At %lld, opcode %lld\n", (long long)ip, (long long)opcode);
-      exit(1);
+      printf("At %lld, opcode %lld. rp = %lld\n", (long long)ip, (long long)opcode, (long long)rp);
     }
 #endif
     ip++;
