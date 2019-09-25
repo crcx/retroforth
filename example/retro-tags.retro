@@ -22,6 +22,17 @@ To generate a tags file:
 
     retro-tags
 
+Tags for variables, constants, and data structures are not
+always identified correctly. Specifically:
+
+    'foo d:create ....             <- not identified
+    #1 'foo const  #2 'bar const   <- only the last is identified
+    'foo var  'bar var             <- only the last is identified
+
+For these, this assumes one name defined per line, with nothing
+following. Better detection and handling of this is left open
+for a future project.
+
 To start, I bring in the `retro-unu` tool to locate the code
 blocks and call a combinator for each line in the code block.
 This one is extended to keep track of the tag address and
@@ -75,7 +86,7 @@ Then variables.
   dup 'var s:ends-with? over 'var<n> s:ends-with? or ;
 
 :output-name
-  ASCII:SPACE s:tokenize [ s:trim dup '' s:begins-with? [ n:inc s:put ] &drop choose ] a:for-each ;
+  ASCII:SPACE s:tokenize dup a:length #2 - a:fetch n:inc s:put ;
 
 #0 sys:argv [ s:trim variable? &drop -if; output-name output-location ] unu
 ~~~
@@ -87,7 +98,7 @@ Constants.
   dup 'const s:ends-with? ;
 
 :output-name
-  ASCII:SPACE s:tokenize [ s:trim dup '' s:begins-with? [ n:inc s:put ] &drop choose ] a:for-each ;
+  ASCII:SPACE s:tokenize dup a:length #2 - a:fetch n:inc s:put ;
 
 #0 sys:argv [ s:trim constant? &drop -if; output-name output-location ] unu
 ~~~
@@ -99,7 +110,7 @@ And finally, words made with `d:create`:
   dup 'd:create s:ends-with? ;
 
 :output-name
-  ASCII:SPACE s:tokenize [ s:trim dup '' s:begins-with? [ n:inc s:put ] &drop choose ] a:for-each ;
+  ASCII:SPACE s:tokenize dup a:length #2 - a:fetch n:inc s:put ;
 
 #0 sys:argv [ s:trim created? &drop -if; output-name output-location ] unu
 ~~~
