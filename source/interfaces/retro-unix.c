@@ -849,10 +849,10 @@ void io_filesystem_handler() {
   pointer (`fsp`).  
   ---------------------------------------------------------------------*/
 
-double Floats[8192];
+double Floats[256];
 CELL fsp;
 
-double AFloats[8192];
+double AFloats[256];
 CELL afsp;
 
 
@@ -861,24 +861,43 @@ CELL afsp;
   the stack.
   ---------------------------------------------------------------------*/
 
+void float_guard() {
+#ifndef NOCHECKS
+  if (fsp < 0 || fsp > 255) {
+    printf("\nERROR (nga/float_guard): Float Stack Limits Exceeded!\n");
+    printf("At %lld, fsp = %lld\n", (long long)ip, (long long)fsp);
+    exit(1);
+  }
+  if (afsp < 0 || afsp > 255) {
+    printf("\nERROR (nga/float_guard): 	Alternate Float Stack Limits Exceeded!\n");
+    printf("At %lld, afsp = %lld\n", (long long)ip, (long long)afsp);
+    exit(1);
+  }
+#endif
+}
+
 void float_push(double value) {
-    fsp++;
-    Floats[fsp] = value;
+  fsp++;
+  float_guard();
+  Floats[fsp] = value;
 }
 
 double float_pop() {
-    fsp--;
-    return Floats[fsp + 1];
+  fsp--;
+  float_guard();
+  return Floats[fsp + 1];
 }
 
 void float_to_alt() {
   afsp++;
+  float_guard();
   AFloats[afsp] = float_pop();
 }
 
 void float_from_alt() {
   float_push(AFloats[afsp]);
   afsp--;
+  float_guard();
 }
 
 
