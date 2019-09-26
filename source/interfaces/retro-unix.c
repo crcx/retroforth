@@ -336,7 +336,6 @@ void rre_execute(CELL cell, int silent) {
 
 void rre_evaluate(char *s, int silent) {
   if (strlen(s) == 0)  return;
-//  update_rx();
   string_inject(s, TIB);
   stack_push(TIB);
   rre_execute(interpret, silent);
@@ -496,7 +495,6 @@ void initialize() {
   ngaPrepare();
   for (i = 0; i < ngaImageCells; i++)
     memory[i] = ngaImage[i];
-  update_rx();
 }
 
 
@@ -567,12 +565,13 @@ int main(int argc, char **argv) {
     } else if (strcmp(argv[i], "-u") == 0) {
       i++;
       ngaLoadImage(argv[i]);
-      update_rx();
     } else if (strcmp(argv[i], "-t") == 0) {
       modes[FLAG_RUN_TESTS] = 1;
       run_tests = 1;
     }
   }
+
+  update_rx();
 
   /* Include Startup Files */
   for (i = 0; i < fsp; i++) {
