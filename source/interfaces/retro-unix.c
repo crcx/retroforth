@@ -530,6 +530,7 @@ int main(int argc, char **argv) {
   sys_argv = argv;                        /* argv to the actual ones   */
 
   if (argc >= 2 && argv[1][0] != '-') {
+    update_rx();
     include_file(argv[1], 0);             /* If no flags were passed,  */
     if (sp >= 1)  dump_stack();           /* load the file specified,  */
     exit(0);                              /* and exit                  */
