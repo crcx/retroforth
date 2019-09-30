@@ -1,13 +1,49 @@
-# RETRO 2019.tbd
+# RETRO 2019.10
 
-This is the current changelog for the next release of RETRO, which
-is currently targetting a late fall release.
+The next release will be 2019.10.
+
+This is a worthwhile release, bringing changes and improvements
+in several areas.
+
+64-Bit
+
+RETRO has been 32-bit only since the days of RETRO2 apart from
+some limited experiments with RETRO11. I'm pleased to say that
+this release of RETRO12 adds support for building a system with
+64-bit cells.
+
+This carries the same limitations regarding instruction packing,
+addressing, etc as the standard 32-bit system, and is not built
+by default. If you want to build a 64-bit system, do:
+
+    make clean; make CFLAGS="-O2 -DBIT64"
+
+Compatibility
+
+There are a few small breaks in compatibility.
+
+`unix:time` was removed. There is some discussion ongoing about
+this, but leaving it in would be problematic on 32-bit systems
+in a couple of years when the counter overflows. For now, I have
+added `clock:timestamp`, but the value of the epoch this uses
+may change in the future.
+
+Interface
+
+The 'ok' prompt has been removed.
+
+----
 
 ## Bug Fixes
 
 - all
+
 - build
+
 - retro-unix
+
+  - fix an issue when using custom images
+
 - examples
 
 ## Build
@@ -51,24 +87,3 @@ New queries via fetch:
 
     -4 for min integer
     -5 for max integer
-
-## Notes for the future:
-
-You can now build a 64-bit RETRO by doing:
-
-    make clean; make CFLAGS="-O2 -DBIT64"
-
-This is not well tested yet, but everything should work as
-normal, you just get a much larger integer range. Note that
-this requires a newer version of the VM with added queries
-via fetch to fully support.
-
-----
-
-This release changes a few things.
-
-(1) `unix:time` is now removed
-(2) `clock:timestamp` is added
-(3) the system can now be built as a fully 64-bit system
-    with minimal changes
-(4) the `ok` prompt has been removed

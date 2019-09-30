@@ -1,1506 +1,1488 @@
-"                                D: -s  A: -  F: -
+"                        D: -s  A: -  F: -
 Return an empty string.
 
-$                                D: -c  A: -  F: -
+$                        D: -c  A: -  F: -
 Return ASCII:NUL (0).
 
-'                                D: -s  A: -  F: -
+'                        D: -s  A: -  F: -
 Return an empty string.
 
-(                                D: -  A: -  F: -
+(                        D: -  A: -  F: -
 Provide a visual indication of a code group.
 
-)                                D: -  A: -  F: -
+)                        D: -  A: -  F: -
 Provide a visual indication of a code group.
 
-*                                D: nn-n  A: -  F: -
+*                        D: nn-n  A: -  F: -
 Multiply `n1` by `n2` and return the result.
 
-+                                D: nn-n  A: -  F: -
++                        D: nn-n  A: -  F: -
 Add `n1` to `n2` and return the result.
 
-,                                D: n-  A: -  F: -
+,                        D: n-  A: -  F: -
 Store the specified value into the memory at `here` and increment `Heap` by 1.
 
--                                D: nn-n  A: -  F: -
+-                        D: nn-n  A: -  F: -
 Subtract `n2` from `n1` and return the result.
 
----reveal---                     D: -  A: -  F: -
+---reveal---             D: -  A: -  F: -
 Switch to the exposed (public) portion of a lexical namespace.
 
--eq?                             D: nn-f  A: -  F: -
+-eq?                     D: nn-f  A: -  F: -
 Compare two values for inequality. Returns `TRUE` if they are not equal or `FALSE` otherwise.
 
--if                              D: fq-  A: -  F: -
+-if                      D: fq-  A: -  F: -
 Execute the quotation if the flag is `FALSE`.
 
--if;                             D: fq-  A: -  F: -
+-if;                     D: fq-  A: -  F: -
 Execute the quotation if the flag is `FALSE`. If false, also exit the word.
 
-/                                D: nm-q  A: -  F: -
+/                        D: nm-q  A: -  F: -
 Divide `n` by `m` and return the integer part of the quotient.
 
-/mod                             D: nm-rq  A: -  F: -
+/mod                     D: nm-rq  A: -  F: -
 Divide `n` by `m` and return the integer part of the quotient and remainder.
 
-0;                               D: n-n || n-  A: -  F: -
+0;                       D: n-n || n-  A: -  F: -
 If `n` is zero, drop `n` and exit the current word. If non-zero, leave `n` alone and allow execution to continue.
 
-;                                D: -  A: -  F: -
+;                        D: -  A: -  F: -
 End the current definition.
 
-?dup                             D: n-nn || n-n  A: -  F: -
+?dup                     D: n-nn || n-n  A: -  F: -
 Duplicate top value on stack if not zero. If zero, do nothing.
 
-ASCII:ACK                        D: -n  A: -  F: -
+ASCII:ACK                D: -n  A: -  F: -
 Constant. Refers to specific ASCII code.
 
-ASCII:BEL                        D: -n  A: -  F: -
+ASCII:BEL                D: -n  A: -  F: -
 Constant. Refers to specific ASCII code.
 
-ASCII:BS                         D: -n  A: -  F: -
+ASCII:BS                 D: -n  A: -  F: -
 Constant. Refers to specific ASCII code.
 
-ASCII:CAN                        D: -n  A: -  F: -
+ASCII:CAN                D: -n  A: -  F: -
 Constant. Refers to specific ASCII code.
 
-ASCII:CR                         D: -n  A: -  F: -
+ASCII:CR                 D: -n  A: -  F: -
 Constant. Refers to specific ASCII code.
 
-ASCII:DC1                        D: -n  A: -  F: -
+ASCII:DC1                D: -n  A: -  F: -
 Constant. Refers to specific ASCII code.
 
-ASCII:DC2                        D: -n  A: -  F: -
+ASCII:DC2                D: -n  A: -  F: -
 Constant. Refers to specific ASCII code.
 
-ASCII:DC3                        D: -n  A: -  F: -
+ASCII:DC3                D: -n  A: -  F: -
 Constant. Refers to specific ASCII code.
 
-ASCII:DC4                        D: -n  A: -  F: -
+ASCII:DC4                D: -n  A: -  F: -
 Constant. Refers to specific ASCII code.
 
-ASCII:DEL                        D: -n  A: -  F: -
+ASCII:DEL                D: -n  A: -  F: -
 Constant. Refers to specific ASCII code.
 
-ASCII:DLE                        D: -n  A: -  F: -
+ASCII:DLE                D: -n  A: -  F: -
 Constant. Refers to specific ASCII code.
 
-ASCII:EM                         D: -n  A: -  F: -
+ASCII:EM                 D: -n  A: -  F: -
 Constant. Refers to specific ASCII code.
 
-ASCII:ENQ                        D: -n  A: -  F: -
+ASCII:ENQ                D: -n  A: -  F: -
 Constant. Refers to specific ASCII code.
 
-ASCII:EOT                        D: -n  A: -  F: -
+ASCII:EOT                D: -n  A: -  F: -
 Constant. Refers to specific ASCII code.
 
-ASCII:ESC                        D: -n  A: -  F: -
+ASCII:ESC                D: -n  A: -  F: -
 Constant. Refers to specific ASCII code.
 
-ASCII:ETB                        D: -n  A: -  F: -
+ASCII:ETB                D: -n  A: -  F: -
 Constant. Refers to specific ASCII code.
 
-ASCII:ETX                        D: -n  A: -  F: -
+ASCII:ETX                D: -n  A: -  F: -
 Constant. Refers to specific ASCII code.
 
-ASCII:FF                         D: -n  A: -  F: -
+ASCII:FF                 D: -n  A: -  F: -
 Constant. Refers to specific ASCII code.
 
-ASCII:FS                         D: -n  A: -  F: -
+ASCII:FS                 D: -n  A: -  F: -
 Constant. Refers to specific ASCII code.
 
-ASCII:GS                         D: -n  A: -  F: -
+ASCII:GS                 D: -n  A: -  F: -
 Constant. Refers to specific ASCII code.
 
-ASCII:HT                         D: -n  A: -  F: -
+ASCII:HT                 D: -n  A: -  F: -
 Constant. Refers to specific ASCII code.
 
-ASCII:LF                         D: -n  A: -  F: -
+ASCII:LF                 D: -n  A: -  F: -
 Constant. Refers to specific ASCII code.
 
-ASCII:NAK                        D: -n  A: -  F: -
+ASCII:NAK                D: -n  A: -  F: -
 Constant. Refers to specific ASCII code.
 
-ASCII:NUL                        D: -n  A: -  F: -
+ASCII:NUL                D: -n  A: -  F: -
 Constant. Refers to specific ASCII code.
 
-ASCII:RS                         D: -n  A: -  F: -
+ASCII:RS                 D: -n  A: -  F: -
 Constant. Refers to specific ASCII code.
 
-ASCII:SI                         D: -n  A: -  F: -
+ASCII:SI                 D: -n  A: -  F: -
 Constant. Refers to specific ASCII code.
 
-ASCII:SO                         D: -n  A: -  F: -
+ASCII:SO                 D: -n  A: -  F: -
 Constant. Refers to specific ASCII code.
 
-ASCII:SOH                        D: -n  A: -  F: -
+ASCII:SOH                D: -n  A: -  F: -
 Constant. Refers to specific ASCII code.
 
-ASCII:SPACE                      D: -n  A: -  F: -
+ASCII:SPACE              D: -n  A: -  F: -
 Constant. Refers to specific ASCII code.
 
-ASCII:STX                        D: -n  A: -  F: -
+ASCII:STX                D: -n  A: -  F: -
 Constant. Refers to specific ASCII code.
 
-ASCII:SUB                        D: -n  A: -  F: -
+ASCII:SUB                D: -n  A: -  F: -
 Constant. Refers to specific ASCII code.
 
-ASCII:SYN                        D: -n  A: -  F: -
+ASCII:SYN                D: -n  A: -  F: -
 Constant. Refers to specific ASCII code.
 
-ASCII:US                         D: -n  A: -  F: -
+ASCII:US                 D: -n  A: -  F: -
 Constant. Refers to specific ASCII code.
 
-ASCII:VT                         D: -n  A: -  F: -
+ASCII:VT                 D: -n  A: -  F: -
 Constant. Refers to specific ASCII code.
 
-Compiler                         D: -a  A: -  F: -
+Compiler                 D: -a  A: -  F: -
 Variable. Holds the compiler state. If TRUE, the compiler is active. If FALSE, it is not.
 
-Dictionary                       D: -a  A: -  F: -
+Dictionary               D: -a  A: -  F: -
 Variable. Holds a pointer to the most recent dictionary header.
 
-EOM                              D: -a  A: -  F: -
+EOM                      D: -a  A: -  F: -
 Constant. Returns the last addressable memory address.
 
-FALSE                            D: -n  A: -  F: -
+FALSE                    D: -n  A: -  F: -
 Returns `0`, the value used to indicate a FALSE result.
 
-FREE                             D: -n  A: -  F: -
+FREE                     D: -n  A: -  F: -
 Returns the number of cells available to your application. This is the amount of memory, less the already consumed portion and buffers mapped for RETRO's internal use.
 
-Heap                             D: -a  A: -  F: -
+Heap                     D: -a  A: -  F: -
 Variable. Holds the address of the next available cell.
 
-I                                D: -n  A: -  F: -
+I                        D: -n  A: -  F: -
 Access the loop index for the current loop. (For loops made using `times<with-index>`)
 
-J                                D: -n  A: -  F: -
+J                        D: -n  A: -  F: -
 Access the parent loop index for the current loop. (For loops made using `times<with-index>`)
 
-K                                D: -n  A: -  F: -
+K                        D: -n  A: -  F: -
 Access the grandparent loop index for the current loop. (For loops made using `times<with-index>`)
 
-NoEcho                           D: -a  A: -  F: -
+NoEcho                   D: -a  A: -  F: -
 Variable. If TRUE, allow display of the "ok" prompt and startup banner.
 
-RewriteUnderscores               D: -a  A: -  F: -
+RewriteUnderscores       D: -a  A: -  F: -
 Variable. When set to `TRUE`, RETRO will replace underscores in strings with spaces. When `FALSE`, RETRO does not.
 
-STRINGS                          D: -a  A: -  F: -
+STRINGS                  D: -a  A: -  F: -
 Return the address of the start of the temporary string pool.
 
-ScopeList                        D: -a  A: -  F: -
+ScopeList                D: -a  A: -  F: -
 Variable. This holds some information used by `{{` and `}}`.
 
-TIB                              D: -a  A: -  F: -
+TIB                      D: -a  A: -  F: -
 Constant. Returns a pointer to the text input buffer.
 
-TRUE                             D: -n  A: -  F: -
+TRUE                     D: -n  A: -  F: -
 Returns `-1`, the value used to indicate a TRUE result.
 
-TempStringMax                    D: -a  A: -  F: -
+TempStringMax            D: -a  A: -  F: -
 Variable. Holds the maximum length of a temporary string.
 
-TempStrings                      D: -a  A: -  F: -
+TempStrings              D: -a  A: -  F: -
 Variable. Holds the number of temporary strings.
 
-Version                          D: -a  A: -  F: -
+Version                  D: -a  A: -  F: -
 Variable. This stores the version number.
 
-[                                D: -  A: -  F: -
+[                        D: -  A: -  F: -
 Begin a quotation.
 
-]                                D: -  A: -  F: -
+]                        D: -  A: -  F: -
 End a quotation.
 
-a:-eq?                           D: aa-f  A: -  F: -
+a:-eq?                   D: aa-f  A: -  F: -
 Compare all values in the array. Return `FALSE` if all values are equal or `TRUE` otherwise. This assumes the array contains only numeric values.
 
-a:append                         D: aa-a  A: -  F: -
+a:append                 D: aa-a  A: -  F: -
 Return a new array consisting of the values in a1 followed by the values in a2.
 
-a:begins-with?                   D: aa-f  A: -  F: -
+a:begins-with?           D: aa-f  A: -  F: -
 Return `TRUE` if a1 begins with a2 or `FALSE` otherwise.
 
-a:chop                           D: a-a  A: -  F: -
+a:chop                   D: a-a  A: -  F: -
 Return a new array containing all but the last value in the source array.
 
-a:contains-string?               D: sa-f  A: -  F: -
+a:contains-string?       D: sa-f  A: -  F: -
 Return `TRUE` if the string value is in the array or`FALSE` otherwise.
 
-a:contains?                      D: na-f  A: -  F: -
+a:contains?              D: na-f  A: -  F: -
 Return `TRUE` if the value is in the array or `FALSE` otherwise.
 
-a:copy                           D: aa-  A: -  F: -
+a:copy                   D: aa-  A: -  F: -
 Copy an array (a1) to a destination (a2).
 
-a:counted-results                D: q-a  A: -  F: -
+a:counted-results        D: q-a  A: -  F: -
 Run a quote and construct a new array from the returned values. The quote should return the values and the number of values to put into the array.
 
-a:dup                            D: a-b  A: -  F: -
+a:dup                    D: a-b  A: -  F: -
 Make a copy of an array. Return the address of the copy.
 
-a:ends-with?                     D: aa-f  A: -  F: -
+a:ends-with?             D: aa-f  A: -  F: -
 Return `TRUE` if a1 ends with a2 or `FALSE` otherwise.
 
-a:eq?                            D: aa-f  A: -  F: -
+a:eq?                    D: aa-f  A: -  F: -
 Compare all values in the array. Return `TRUE` if all values are equal or `FALSE` otherwise. This assumes the array contains only numeric values.
 
-a:fetch                          D: an-n  A: -  F: -
+a:fetch                  D: an-n  A: -  F: -
 Fetch the value stored at the specified index in the specified array.
 
-a:filter                         D: aq-b  A: -  F: -
+a:filter                 D: aq-b  A: -  F: -
 For each item in the initial array, run the specified quote. If the quote returns `TRUE`, copy the item into a new array. If `FALSE`, discard it. Returns a pointer to the new array.
 
-a:for-each                       D: aq-  A: -  F: -
+a:for-each               D: aq-  A: -  F: -
 Execute the quote once for each item in the array.
 
-a:from-string                    D: s-a  A: -  F: -
+a:from-string            D: s-a  A: -  F: -
 Create a new array with the characters in the source string.
 
-a:index-of                       D: an-n  A: -  F: -
+a:index-of               D: an-n  A: -  F: -
 Return the location of the first instance of the specified value in the array.
 
-a:left                           D: an-a  A: -  F: -
+a:left                   D: an-a  A: -  F: -
 Return a new array containing the first `n` values from the source array.
 
-a:length                         D: a-n  A: -  F: -
+a:length                 D: a-n  A: -  F: -
 Return the length of a array.
 
-a:make                           D: q-a  A: -  F: -
+a:make                   D: q-a  A: -  F: -
 Execute quote. Return a new array containing the values the quote leaves on the stack. This is identical to doing `a:counted-results a:reverse`
 
-a:map                            D: aq-b  A: -  F: -
+a:map                    D: aq-b  A: -  F: -
 Execute quote once for each item in the array. Constructs a new array from the value returned by the quote.
 
-a:middle                         D: afl-a  A: -  F: -
+a:middle                 D: afl-a  A: -  F: -
 Extract a new array from the middle of the specified array. This will take the values starting at `f` and extend to the `l` last value.
 
-a:prepend                        D: aa-a  A: -  F: -
+a:prepend                D: aa-a  A: -  F: -
 Return a new array consisting of the values in a2 followed by the values in a1.
 
-a:reduce                         D: pnq-n  A: -  F: -
+a:reduce                 D: pnq-n  A: -  F: -
 Takes an array, a starting value, and a quote. This will apply the quote to each item in the array; the quote should consume two values and return one.
 
-a:reverse                        D: a-b  A: -  F: -
+a:reverse                D: a-b  A: -  F: -
 Reverse the order of items in a array. This will return a new array.
 
-a:right                          D: an-a  A: -  F: -
+a:right                  D: an-a  A: -  F: -
 Return a new array containing the specified number of values from the right side of the array.
 
-a:store                          D: vna-  A: -  F: -
+a:store                  D: vna-  A: -  F: -
 Store a value into the array at the specified index.
 
-a:th                             D: an-b  A: -  F: -
+a:th                     D: an-b  A: -  F: -
 Return the actual address of the `n`th item in the array.
 
-a:to-string                      D: a-s  A: -  F: -
+a:to-string              D: a-s  A: -  F: -
 Create a new string from the provided array. This string will be stored in the temporal string buffers.
 
-again                            D: -  A: -  F: -
+again                    D: -  A: -  F: -
 Close an unconditional loop. Branches back to the prior `repeat`.
 
-allot                            D: n-  A: -  F: -
+allot                    D: n-  A: -  F: -
 Allocate the specified number of cells from the `Heap`.
 
-and                              D: nm-o  A: -  F: -
+and                      D: nm-o  A: -  F: -
 Perform a bitwise AND operation between the two provided values.
 
-as{                              D: -f  A: -  F: -
+as{                      D: -f  A: -  F: -
 Begin an assembly section.
 
-banner                           D: -  A: -  F: -
+banner                   D: -  A: -  F: -
 Display a welcome message on startup.
 
-bi                               D: xqq-?  A: -  F: -
+bi                       D: xqq-?  A: -  F: -
 Execute q1 against x, then execute q2 against a copy of x.
 
-bi*                              D: xyqq-?  A: -  F: -
+bi*                      D: xyqq-?  A: -  F: -
 Execute q1 against x and q2 against y.
 
-bi@                              D: xyq-?  A: -  F: -
+bi@                      D: xyq-?  A: -  F: -
 Execute q against x, then execute q against y.
 
-buffer:add                       D: n-  A: -  F: -
+buffer:add               D: n-  A: -  F: -
 Append a value to the current buffer.
 
-buffer:empty                     D: -  A: -  F: -
+buffer:empty             D: -  A: -  F: -
 Reset the current buffer to an empty state.
 
-buffer:end                       D: -a  A: -  F: -
+buffer:end               D: -a  A: -  F: -
 Return a pointer to the current end of the active buffer.
 
-buffer:get                       D: -n  A: -  F: -
+buffer:get               D: -n  A: -  F: -
 Remove the last value from the current buffer.
 
-buffer:preserve                  D: q-  A: -  F: -
+buffer:preserve          D: q-  A: -  F: -
 Save and restore the current buffer before and after executing the specified quote.
 
-buffer:set                       D: a-  A: -  F: -
+buffer:set               D: a-  A: -  F: -
 Assign a new buffer as the current one.
 
-buffer:size                      D: -n  A: -  F: -
+buffer:size              D: -n  A: -  F: -
 Return the number of cells in the buffer.
 
-buffer:start                     D: -a  A: -  F: -
+buffer:start             D: -a  A: -  F: -
 Return the start address of the current buffer.
 
-bye                              D: -  A: -  F: -
+bye                      D: -  A: -  F: -
 Exit RETRO.
 
-c:-consonant?                    D: c-f  A: -  F: -
+c:-consonant?            D: c-f  A: -  F: -
 Return TRUE if character is a not consonant or FALSE otherwise.
 
-c:-digit?                        D: c-f  A: -  F: -
+c:-digit?                D: c-f  A: -  F: -
 Return TRUE if character is a not numeric digit or FALSE otherwise.
 
-c:-lowercase?                    D: c-f  A: -  F: -
+c:-lowercase?            D: c-f  A: -  F: -
 Return TRUE if character is not lowercase or FALSE otherwise.
 
-c:-uppercase?                    D: c-f  A: -  F: -
+c:-uppercase?            D: c-f  A: -  F: -
 Return TRUE if character is not uppercase or FALSE otherwise.
 
-c:-visible?                      D: c-f  A: -  F: -
+c:-visible?              D: c-f  A: -  F: -
 Return TRUE if character is not printable or FALSE otherwise.
 
-c:-vowel?                        D: c-f  A: -  F: -
+c:-vowel?                D: c-f  A: -  F: -
 Return TRUE if character is not a vowel or FALSE otherwise.
 
-c:-whitespace?                   D: c-f  A: -  F: -
+c:-whitespace?           D: c-f  A: -  F: -
 Return TRUE if character is not whitespace, or FALSE otherwise.
 
-c:consonant?                     D: c-f  A: -  F: -
+c:consonant?             D: c-f  A: -  F: -
 Return TRUE if character is a consonant or FALSE otherwise.
 
-c:digit?                         D: c-f  A: -  F: -
+c:digit?                 D: c-f  A: -  F: -
 Return TRUE if character is a numeric digit or FALSE otherwise.
 
-c:get                            D: -c  A: -  F: -
+c:get                    D: -c  A: -  F: -
 Read a single keypress.
 
-c:letter?                        D: c-f  A: -  F: -
+c:letter?                D: c-f  A: -  F: -
 Return TRUE if character is an ASCII letter or FALSE otherwise.
 
-c:lowercase?                     D: c-f  A: -  F: -
+c:lowercase?             D: c-f  A: -  F: -
 Return TRUE if character is lowercase or FALSE otherwise.
 
-c:put                            D: c-  A: -  F: -
+c:put                    D: c-  A: -  F: -
 Display a single character.
 
-c:to-lower                       D: c-c  A: -  F: -
+c:to-lower               D: c-c  A: -  F: -
 Convert character to lowercase equivalent.
 
-c:to-number                      D: c-n  A: -  F: -
+c:to-number              D: c-n  A: -  F: -
 Convert an ASCII digit character into the corresponding decimal value
 
-c:to-string                      D: c-s  A: -  F: -
+c:to-string              D: c-s  A: -  F: -
 Convert character into a string.
 
-c:to-upper                       D: c-c  A: -  F: -
+c:to-upper               D: c-c  A: -  F: -
 Convert character to uppercase equivalent.
 
-c:toggle-case                    D: c-c  A: -  F: -
+c:toggle-case            D: c-c  A: -  F: -
 Convert an ASCII character to the opposite case.
 
-c:uppercase?                     D: c-f  A: -  F: -
+c:uppercase?             D: c-f  A: -  F: -
 Return TRUE if character is uppercase or FALSE otherwise.
 
-c:visible?                       D: c-f  A: -  F: -
+c:visible?               D: c-f  A: -  F: -
 Return TRUE if character is printable or FALSE otherwise.
 
-c:vowel?                         D: c-f  A: -  F: -
+c:vowel?                 D: c-f  A: -  F: -
 Return TRUE if character is a vowel or FALSE otherwise.
 
-c:whitespace?                    D: c-f  A: -  F: -
+c:whitespace?            D: c-f  A: -  F: -
 Return TRUE if character is whitespace, or FALSE otherwise.
 
-call                             D: a-  A: -  F: -
+call                     D: a-  A: -  F: -
 Call a function.
 
-case                             D: nmq- || nmq-n  A: -  F: -
+case                     D: nmq- || nmq-n  A: -  F: -
 If `n` is equal to `m`, drop both and execute the specified quote before exiting the calling word. If not equal, leave `n` on the stack and let execution continue.
 
-choose                           D: fqq-  A: -  F: -
+choose                   D: fqq-  A: -  F: -
 Execute q1 if the flag is true (-1) or q2 if the flag is false (0). Only these flags are valid when using `choose`.
 
-class:data                       D: n- || n-n  A: -  F: -
+class:data               D: n- || n-n  A: -  F: -
 Class handler for data structures.
 
-class:macro                      D: a-  A: -  F: -
+class:macro              D: a-  A: -  F: -
 Class handler for compiler macros (immediate words)
 
-class:primitive                  D: a-  A: -  F: -
+class:primitive          D: a-  A: -  F: -
 Class handler for primitive words (words which map to Nga instructions)
 
-class:word                       D: a-  A: -  F: -
+class:word               D: a-  A: -  F: -
 Class handler for normal words.
 
-clear                            D: -  A: -  F: -
+clear                    D: -  A: -  F: -
 Clear the display.
 
-clock:day                        D: -n  A: -  F: -
+clock:day                D: -n  A: -  F: -
 Return the current day.
 
-clock:hour                       D: -n  A: -  F: -
+clock:hour               D: -n  A: -  F: -
 Return the current hour.
 
-clock:minute                     D: -n  A: -  F: -
+clock:minute             D: -n  A: -  F: -
 Return the current minute.
 
-clock:month                      D: -n  A: -  F: -
+clock:month              D: -n  A: -  F: -
 Return the current month.
 
-clock:second                     D: -n  A: -  F: -
+clock:second             D: -n  A: -  F: -
 Return the current second.
 
-clock:timestamp                  D: -n  A: -  F: -
+clock:timestamp          D: -n  A: -  F: -
 Return a host and implementation specific timestamp.
 
-clock:utc:day                    D: -n  A: -  F: -
+clock:utc:day            D: -n  A: -  F: -
 Return the current day.
 
-clock:utc:hour                   D: -n  A: -  F: -
+clock:utc:hour           D: -n  A: -  F: -
 Return the current hour.
 
-clock:utc:minute                 D: -n  A: -  F: -
+clock:utc:minute         D: -n  A: -  F: -
 Return the current minute.
 
-clock:utc:month                  D: -n  A: -  F: -
+clock:utc:month          D: -n  A: -  F: -
 Return the current month.
 
-clock:utc:second                 D: -n  A: -  F: -
+clock:utc:second         D: -n  A: -  F: -
 Return the current second.
 
-clock:utc:year                   D: -n  A: -  F: -
+clock:utc:year           D: -n  A: -  F: -
 Return the current year.
 
-clock:year                       D: -n  A: -  F: -
+clock:year               D: -n  A: -  F: -
 Return the current year.
 
-compile:call                     D: a-  A: -  F: -
+compile:call             D: a-  A: -  F: -
 Compile a call to the specified address into the current definition.
 
-compile:jump                     D: a-  A: -  F: -
+compile:jump             D: a-  A: -  F: -
 Compile a jump to the specified address into the current definition.
 
-compile:lit                      D: n-  A: -  F: -
+compile:lit              D: n-  A: -  F: -
 Compile the code to push a number to the stack into the current definition.
 
-compile:ret                      D: -  A: -  F: -
+compile:ret              D: -  A: -  F: -
 Compile a return instruction into the current definition.
 
-compiling?                       D: -f  A: -  F: -
+compiling?               D: -f  A: -  F: -
 Return `TRUE` if compiler is on or `FALSE` otherwise.
 
-const                            D: ns-  A: -  F: -
+const                    D: ns-  A: -  F: -
 Create a constant returning the specified value.
 
-copy                             D: sdl-  A: -  F: -
+copy                     D: sdl-  A: -  F: -
 Copy `l` cells from memory at `s` to the memory at `d`. These should not overlap.
 
-curry                            D: nq-q  A: -  F: -
+curry                    D: nq-q  A: -  F: -
 Bind a value to a function and return a new quote that calls the bound action.
 
-d                                D: n-  A: -  F: -
+d                        D: n-  A: -  F: -
 Inline a numeric value to the current assembly segment.
 
-d:add-header                     D: saa-  A: -  F: -
+d:add-header             D: saa-  A: -  F: -
 Create a header. Provide a string (s) for the name, a pointer to the class handler (a1) and a pointer to the word definition (a2) Generally this won't be used directly.
 
-d:class                          D: d-a  A: -  F: -
+d:class                  D: d-a  A: -  F: -
 Given a dictionary header, return the class field.
 
-d:create                         D: s-  A: -  F: -
+d:create                 D: s-  A: -  F: -
 Create a new dictionary header named the specified string. The new header will point to `here` and have a class of `class:data`.
 
-d:for-each                       D: q-  A: -  F: -
+d:for-each               D: q-  A: -  F: -
 Execute the specified quote once for each header in the dictionary. Before running the quote, this also pushes a pointer to the header onto the stack.
 
-d:last                           D: -d  A: -  F: -
+d:last                   D: -d  A: -  F: -
 Return the most recent dictionary header.
 
-d:last<class>                    D: -a  A: -  F: -
+d:last<class>            D: -a  A: -  F: -
 Return a pointer to the class field of the most recent dictionary header.
 
-d:last<name>                     D: -s  A: -  F: -
+d:last<name>             D: -s  A: -  F: -
 Return a pointer to the name field of the most recent dictionary header.
 
-d:last<xt>                       D: -a  A: -  F: -
+d:last<xt>               D: -a  A: -  F: -
 Return a pointer to the xt field of the most recent dictionary header.
 
-d:link                           D: d-a  A: -  F: -
+d:link                   D: d-a  A: -  F: -
 Given a dictionary header, return the link field.
 
-d:lookup                         D: s-d  A: -  F: -
+d:lookup                 D: s-d  A: -  F: -
 Lookup the specified name in the dictionary and return a pointer to its dictionary header. This returns zero if the word is not found.
 
-d:lookup-xt                      D: a-d  A: -  F: -
+d:lookup-xt              D: a-d  A: -  F: -
 Lookup the specified address in the dictionary and return a pointer to its dictionary header. This returns zero if the word is not found.
 
-d:name                           D: d-s  A: -  F: -
+d:name                   D: d-s  A: -  F: -
 Given a dictionary header, return the name field.
 
-d:words                          D: -  A: -  F: -
+d:words                  D: -  A: -  F: -
 Display a list of all named items in the `Dictionary`.
 
-d:words-beginning-with           D: s-  A: -  F: -
+d:words-beginning-with   D: s-  A: -  F: -
 Display a list of all named items in the `Dictionary` that begin with the provided substring.
 
-d:words-with                     D: s-  A: -  F: -
+d:words-with             D: s-  A: -  F: -
 Display a list of all named items in the `Dictionary` that contain the provided substring.
 
-d:xt                             D: d-a  A: -  F: -
+d:xt                     D: d-a  A: -  F: -
 Given a dictionary header, return the xt field.
 
-data                             D: -  A: -  F: -
+data                     D: -  A: -  F: -
 Change the class of the most recently defined word to `class:data`.
 
-depth                            D: -n  A: -  F: -
+depth                    D: -n  A: -  F: -
 Return the number of items on the stack.
 
-dip                              D: nq-n  A: -  F: -
+dip                      D: nq-n  A: -  F: -
 Temporarily remove n from the stack, execute the quotation, and then restore n to the stack.
 
-does                             D: q-  A: -  F: -
+does                     D: q-  A: -  F: -
 Attach an action to the most recently created word. This is used in a manner similar to CREATE/DOES> in traditional Forth.
 
-drop                             D: n-  A: -  F: -
+drop                     D: n-  A: -  F: -
 Discard the top value on the stack.
 
-drop-pair                        D: nn-  A: -  F: -
+drop-pair                D: nn-  A: -  F: -
 Remove top two items on the stack.
 
-dump-stack                       D: -  A: -  F: -
+dump-stack               D: -  A: -  F: -
 Display the items on the data stack.
 
-dup                              D: n-nn  A: -  F: -
+dup                      D: n-nn  A: -  F: -
 Duplicate the top item on the stack.
 
-dup-pair                         D: nm-nmnm  A: -  F: -
+dup-pair                 D: nm-nmnm  A: -  F: -
 Duplicate the top two items on the stack.
 
-e:-INF                           D: -e  A: -  F: -
+e:-INF                   D: -e  A: -  F: -
 Constant. Negative infinity.  For encoded floating point values.
 
-e:-inf?                          D: e-f  A: -  F: -
+e:-inf?                  D: e-f  A: -  F: -
 Is encoded value negative infinity?
 
-e:INF                            D: -e  A: -  F: -
+e:INF                    D: -e  A: -  F: -
 Constant. Infinity. For encoded floating point values.
 
-e:MAX                            D: -e  A: -  F: -
+e:MAX                    D: -e  A: -  F: -
 Constant. Maximum value. For encoded floating point values.
 
-e:MIN                            D: -e  A: -  F: -
+e:MIN                    D: -e  A: -  F: -
 Constant. Minimum value. For encoded floating point values.
 
-e:NAN                            D: -e  A: -  F: -
+e:NAN                    D: -e  A: -  F: -
 Constant. Not a Number. For encoded floating point values.
 
-e:clip                           D: e-E  A: -  F: -
+e:clip                   D: e-E  A: -  F: -
 Constrain the encoded value to the allowable range.
 
-e:inf?                           D: e-f  A: -  F: -
+e:inf?                   D: e-f  A: -  F: -
 Is encoded value infinity?
 
-e:max?                           D: e-f  A: -  F: -
+e:max?                   D: e-f  A: -  F: -
 Is encoded value at the maximum?
 
-e:min?                           D: e-f  A: -  F: -
+e:min?                   D: e-f  A: -  F: -
 Is encoded value at the minimum?
 
-e:n?                             D: e-f  A: -  F: -
+e:n?                     D: e-f  A: -  F: -
 Return `TRUE` if the encoded value is a valid number, or `FALSE` otherwise.
 
-e:nan?                           D: e-f  A: -  F: -
+e:nan?                   D: e-f  A: -  F: -
 Is encoded value a Nan?
 
-e:put                            D: e-  A: -  F: -
+e:put                    D: e-  A: -  F: -
 Display an encoded number.
 
-e:to-f                           D: e-  A: -  F: -n
+e:to-f                   D: e-  A: -  F: -n
 Decode an encoded floating point value.
 
-e:zero?                          D: e-f  A: -  F: -
+e:zero?                  D: e-f  A: -  F: -
 Return `TRUE` if the value is zero, or `FALSE` otherwise.
 
-eq?                              D: nn-f  A: -  F: -
+eq?                      D: nn-f  A: -  F: -
 Compare two values for equality. Returns `TRUE` if they are equal or `FALSE` otherwise.
 
-err:notfound                     D: -  A: -  F: -
+err:notfound             D: -  A: -  F: -
 Error handler. Called when a word is not found by `interpret`.
 
-f:*                              D: -  A: -  F: FF-F
+f:*                      D: -  A: -  F: FF-F
 Multiply two floating point numbers, returning the result.
 
-f:+                              D: -  A: -  F: FF-F
+f:+                      D: -  A: -  F: FF-F
 Add two floating point numbers, returning the result.
 
-f:-                              D: -  A: -  F: FF-F
+f:-                      D: -  A: -  F: FF-F
 Subtract F2 from F1 returing the result.
 
-f:-INF                           D: -  A: -  F: -n
+f:-INF                   D: -  A: -  F: -n
 Return a value corresponding to negative infinity
 
-f:-eq?                           D: -f  A: -  F: FF-
+f:-eq?                   D: -f  A: -  F: FF-
 Compare two floating point values for inequality. Returns `TRUE` if they are not equal or `FALSE` otherwise.
 
-f:-inf?                          D: -f  A: -  F: F-
+f:-inf?                  D: -f  A: -  F: F-
 Return `TRUE` if floating point value is -INF or `FALSE` otherwise.
 
-f:/                              D: -  A: -  F: FF-F
+f:/                      D: -  A: -  F: FF-F
 Divide floating point value F1 by F2.
 
-f:E                              D: -  A: -  F: -F
+f:E                      D: -  A: -  F: -F
 Return the floating point value for Euler's number.
 
-f:E1                             D: -  A: -  F: -f
+f:E1                     D: -  A: -  F: -f
 Hook. Return a constant used as the scaling factor for the e: words.
 
-f:INF                            D: -  A: -  F: -n
+f:INF                    D: -  A: -  F: -n
 Return a value corresponding to positive infinity
 
-f:NAN                            D: -  A: -  F: -n
+f:NAN                    D: -  A: -  F: -n
 Return a value corresponding to NaN
 
-f:PI                             D: -  A: -  F: -F
+f:PI                     D: -  A: -  F: -F
 Return the floating point value for PI.
 
-f:abs                            D: -  A: -  F: F-F
+f:abs                    D: -  A: -  F: F-F
 Return the absolute value for a floating point value.
 
-f:acos                           D: -  A: -  F: F-F
+f:acos                   D: -  A: -  F: F-F
 Return the arc cosine of a floating point number.
 
-f:adepth                         D: -n  A: -  F: -
+f:adepth                 D: -n  A: -  F: -
 Return the number of items on the alternate floating point stack.
 
-f:asin                           D: -  A: -  F: F-F
+f:asin                   D: -  A: -  F: F-F
 Return the arc sine of a floating point number.
 
-f:atan                           D: -  A: -  F: F-F
+f:atan                   D: -  A: -  F: F-F
 Return the arc tangent of a floating point number.
 
-f:between?                       D: -f  A: -  F: nlu-
+f:between?               D: -f  A: -  F: nlu-
 Return TRUE if number is between the lower (l) and upper (u) bounds. If not, return FALSE. This is inclusive of the limits.
 
-f:case                           D: q-  A: -  F: nm-n
+f:case                   D: q-  A: -  F: nm-n
 If `n` is equal to `m`, drop both and execute the specified quote before exiting the calling word. If not equal, leave `n` on the stack and let execution continue.
 
-f:ceiling                        D: -  A: -  F: F-F
+f:ceiling                D: -  A: -  F: F-F
 Return the smallest integral value greater than or equal to the specified value.
 
-f:cos                            D: -  A: -  F: F-F
+f:cos                    D: -  A: -  F: F-F
 Return the cosine of a floating point number.
 
-f:dec                            D: -  A: -  F: n-m
+f:dec                    D: -  A: -  F: n-m
 Decrement n by one.
 
-f:depth                          D: -n  A: -  F: -
+f:depth                  D: -n  A: -  F: -
 Return the number of items on the floating point stack.
 
-f:drop                           D: -  A: -  F: F-
+f:drop                   D: -  A: -  F: F-
 Discard the top item on the floating point stack.
 
-f:drop-pair                      D: -  A: -  F: FF-
+f:drop-pair              D: -  A: -  F: FF-
 Remove top two items on the stack.
 
-f:dump-astack                    D: -  A: -  F: -
+f:dump-astack            D: -  A: -  F: -
 Display the items on the alternate floating point stack.
 
-f:dump-stack                     D: -  A: -  F: -
+f:dump-stack             D: -  A: -  F: -
 Display the items on the floating point stack.
 
-f:dup                            D: -  A: -  F: F-FF
+f:dup                    D: -  A: -  F: F-FF
 Duplicate the top item on the floating point stack.
 
-f:dup-pair                       D: -  A: -  F: nm-nmnm
+f:dup-pair               D: -  A: -  F: nm-nmnm
 Duplicate the top two items on the stack.
 
-f:eq?                            D: -f  A: -  F: FF-
+f:eq?                    D: -f  A: -  F: FF-
 Compare two floating point values for equality. Returns `TRUE` if they are equal or `FALSE` otherwise.
 
-f:fetch                          D: a-  A: -  F: -n
+f:fetch                  D: a-  A: -  F: -n
 Fetch a stored floating point value.
 
-f:floor                          D: -  A: -  F: F-F
+f:floor                  D: -  A: -  F: F-F
 Perform a mathmatical floor operation on the floating point value.
 
-f:gt?                            D: -f  A: -  F: FF-
+f:gt?                    D: -f  A: -  F: FF-
 Compare two floating point values for greater than.
 
-f:inc                            D: -  A: -  F: n-m
+f:inc                    D: -  A: -  F: n-m
 Increment n by one.
 
-f:inf?                           D: -f  A: -  F: F-
+f:inf?                   D: -f  A: -  F: F-
 Return `TRUE` if floating point value is INF or `FALSE` otherwise.
 
-f:limit                          D: -  A: -  F: nlu-m
+f:limit                  D: -  A: -  F: nlu-m
 Return n if it is within the lower (l) and upper (u) bounds. If outside the bounds, return the closes boundary value.
 
-f:log                            D: -  A: -  F: FF-F
+f:log                    D: -  A: -  F: FF-F
 Return log(F1) for base F2 for floating point values.
 
-f:lt?                            D: -f  A: -  F: FF-
+f:lt?                    D: -f  A: -  F: FF-
 Compare two floating point values for less than.
 
-f:max                            D: -  A: -  F: mn-o
+f:max                    D: -  A: -  F: mn-o
 Return the greater of two values.
 
-f:min                            D: -  A: -  F: mn-o
+f:min                    D: -  A: -  F: mn-o
 Return the lesser of two values.
 
-f:nan?                           D: -f  A: -  F: F-
+f:nan?                   D: -f  A: -  F: F-
 Return `TRUE` if floating point value is NaN or `FALSE` otherwise.
 
-f:negate                         D: -  A: -  F: F-F
+f:negate                 D: -  A: -  F: F-F
 Invert the sign of the floating point value.
 
-f:negative?                      D: -f  A: -  F: F-
+f:negative?              D: -f  A: -  F: F-
 Return `TRUE` if floating point value is negative or `FALSE` if not.
 
-f:nip                            D: -  A: -  F: NM-M
+f:nip                    D: -  A: -  F: NM-M
 Remove the second item from the stack.
 
-f:over                           D: -  A: -  F: FG-FGF
+f:over                   D: -  A: -  F: FG-FGF
 Put a copy of the second floating point value over the top one.
 
-f:pop                            D: -  A: -  F: -F
+f:pop                    D: -  A: -  F: -F
 Pop a floating point value from the alternate stack.
 
-f:positive?                      D: -f  A: -  F: F-
+f:positive?              D: -f  A: -  F: F-
 Return `TRUE` if floating point value is positive or `FALSE` otherwise.
 
-f:power                          D: -  A: -  F: FF-F
+f:power                  D: -  A: -  F: FF-F
 Return F1^F2 for floating point values.
 
-f:push                           D: -  A: -  F: F-
+f:push                   D: -  A: -  F: F-
 Push a floating point value to an alternative stack.
 
-f:put                            D: -  A: -  F: F-
+f:put                    D: -  A: -  F: F-
 Display a floating point number.
 
-f:rot                            D: -  A: -  F: abc-bca
+f:rot                    D: -  A: -  F: abc-bca
 Rotate the top three values.
 
-f:round                          D: -  A: -  F: f-f
+f:round                  D: -  A: -  F: f-f
 Round a floating point value.
 
-f:sign                           D: -n  A: -  F: F-
+f:sign                   D: -n  A: -  F: F-
 Return 1 if the floating point value is positive or -1 if it is negative.
 
-f:signed-sqrt                    D: -  A: -  F: F-F
+f:signed-sqrt            D: -  A: -  F: F-F
 Return the square root of a floating point number.
 
-f:signed-square                  D: -  A: -  F: f-f
+f:signed-square          D: -  A: -  F: f-f
 Return the square of a floating point number.
 
-f:sin                            D: -  A: -  F: F-F
+f:sin                    D: -  A: -  F: F-F
 Return the sine of a floating point number.
 
-f:sqrt                           D: -  A: -  F: F-F
+f:sqrt                   D: -  A: -  F: F-F
 Return the square root of a floating point number.
 
-f:square                         D: -  A: -  F: f-f
+f:square                 D: -  A: -  F: f-f
 Return the square of a floating point number.
 
-f:store                          D: a-  A: -  F: n-
+f:store                  D: a-  A: -  F: n-
 Store a floating point value to the specified memory location.
 
-f:swap                           D: -  A: -  F: FG-GF
+f:swap                   D: -  A: -  F: FG-GF
 Exchange the top and second items on the floating point stack.
 
-f:tan                            D: -  A: -  F: F-F
+f:tan                    D: -  A: -  F: F-F
 Return the tangent of a floating point number.
 
-f:to-e                           D: -e  A: -  F: n-
+f:to-e                   D: -e  A: -  F: n-
 Encode the floating point value to an integer.
 
-f:to-number                      D: -n  A: -  F: F-
+f:to-number              D: -n  A: -  F: F-
 Convert a floating point value into a number.
 
-f:to-string                      D: -s  A: -  F: F-
+f:to-string              D: -s  A: -  F: F-
 Convert a floating point value into a string.
 
-f:tuck                           D: -  A: -  F: FG-GFG
+f:tuck                   D: -  A: -  F: FG-GFG
 Tuck a copy of the top floating point value under the second one.
 
-fetch                            D: a-n  A: -  F: -
+fetch                    D: a-n  A: -  F: -
 Fetch the value stored at the specified address.
 
-fetch-next                       D: a-an  A: -  F: -
+fetch-next               D: a-an  A: -  F: -
 Fetch the value stored at the specified address. Returns the next address and the value.
 
-file:A                           D: -n  A: -  F: -
+file:A                   D: -n  A: -  F: -
 Constant for opening a file in APPEND mode.
 
-file:R                           D: -n  A: -  F: -
+file:R                   D: -n  A: -  F: -
 Constant for opening a file in READ mode.
 
-file:R+                          D: -n  A: -  F: -
+file:R+                  D: -n  A: -  F: -
 Constant for opening a file in READ & WRITE mode.
 
-file:W                           D: -n  A: -  F: -
+file:W                   D: -n  A: -  F: -
 Constant for opening a file in WRITE mode.
 
-file:close                       D: h-  A: -  F: -
+file:close               D: h-  A: -  F: -
 Given a file handle, close the file.
 
-file:delete                      D: s-  A: -  F: -
+file:delete              D: s-  A: -  F: -
 Delete the named file.
 
-file:exists?                     D: s-f  A: -  F: -
+file:exists?             D: s-f  A: -  F: -
 Given a file name, return `TRUE` if it exists or `FALSE` if it does not.
 
-file:flush                       D: h-  A: -  F: -
+file:flush               D: h-  A: -  F: -
 Given a file handle, flush any pending writes to disk.
 
-file:for-each-line               D: sq-  A: -  F: -
+file:for-each-line       D: sq-  A: -  F: -
 Given a file name, open it and run the quote once for each line in the file.
 
-file:open                        D: sm-h  A: -  F: -
+file:open                D: sm-h  A: -  F: -
 Open a named file (s) with the given mode (m). Returns a handle identifying the file.
 
-file:open<for-append>            D: s-nn  A: -  F: -
+file:open<for-append>    D: s-nn  A: -  F: -
 Open a file for reading & writing. Returns the size (NOS) and a file ID (TOS)
 
-file:open<for-reading>           D: s-nn  A: -  F: -
+file:open<for-reading>   D: s-nn  A: -  F: -
 Open a file for reading. Returns the size (NOS) and a file ID (TOS)
 
-file:open<for-writing>           D: s-n  A: -  F: -
+file:open<for-writing>   D: s-n  A: -  F: -
 Open a file for writing. Returns the file ID
 
-file:read                        D: h-c  A: -  F: -
+file:read                D: h-c  A: -  F: -
 Given a file handle, read and return the next character in it.
 
-file:read-line                   D: f-s  A: -  F: -
+file:read-line           D: f-s  A: -  F: -
 Given a file handle, read a line and return a pointer to it.
 
-file:seek                        D: nh-  A: -  F: -
+file:seek                D: nh-  A: -  F: -
 Move the current offset into a file to the specified one.
 
-file:size                        D: h-n  A: -  F: -
+file:size                D: h-n  A: -  F: -
 Given a file handle, return the size of the file (in bytes).
 
-file:slurp                       D: as-  A: -  F: -
+file:slurp               D: as-  A: -  F: -
 Given an address and a file name, read the file contents into memory starting at the address.
 
-file:spew                        D: ss-  A: -  F: -
+file:spew                D: ss-  A: -  F: -
 Given a string (s1) and a file name (s2), write the string into the file, replacing any existing cotent.
 
-file:tell                        D: h-n  A: -  F: -
+file:tell                D: h-n  A: -  F: -
 Given a file handle, return the current offset in the file.
 
-file:write                       D: ch-  A: -  F: -
+file:write               D: ch-  A: -  F: -
 Write a character to the file represented by the handle.
 
-gopher:get                       D: asns-n  A: -  F: -
+gopher:get               D: asns-n  A: -  F: -
 Takes an address, a server, a port, and a selector. Fetch the resource and store it at address. Return the number of bytes received.
 
-gt?                              D: nn-f  A: -  F: -
+gt?                      D: nn-f  A: -  F: -
 Compare n1 and n2. Return `TRUE` if n1 is greater than n2, or `FALSE` otherwise.
 
-gteq?                            D: nn-f  A: -  F: -
+gteq?                    D: nn-f  A: -  F: -
 Compare n1 and n2. Return `TRUE` if n1 is greater than or equal to n2, or `FALSE` otherwise.
 
-here                             D: -a  A: -  F: -
+here                     D: -a  A: -  F: -
 Return the next free address in memory.
 
-hook                             D: -  A: -  F: -
+hook                     D: -  A: -  F: -
 Add a hook point into the current word. This should only be used as the first word in a definition.
 
-i                                D: s-  A: -  F: -
+i                        D: s-  A: -  F: -
 Assemble the instructions specified by the string into the current assembly scope.
 
-if                               D: fq-  A: -  F: -
+if                       D: fq-  A: -  F: -
 Execute the quote if the flag is `TRUE`.
 
-if;                              D: fq-  A: -  F: -
+if;                      D: fq-  A: -  F: -
 Execute the quotation if the flag is `TRUE`. If true, also exit the word.
 
-image:save                       D: s-  A: -  F: -
+image:save               D: s-  A: -  F: -
 Save the current system to a new image file.
 
-immediate                        D: -  A: -  F: -
+immediate                D: -  A: -  F: -
 Change the class of the most recently defined word to `class:macro`.
 
-include                          D: s-  A: -  F: -
+include                  D: s-  A: -  F: -
 Run the code in the specified file. 
 
-interpret                        D: s-  A: -  F: -
+interpret                D: s-  A: -  F: -
 Interpret a single input token.
 
-io:enumerate                     D: -n  A: -  F: -
+io:enumerate             D: -n  A: -  F: -
 Return the number of I/O devices.
 
-io:file-operation                D: ...n-  A: -  F: -
+io:file-operation        D: ...n-  A: -  F: -
 Trigger a file I/O operation. This is not intended to be used directly.
 
-io:float-operation               D: ...n-  A: -  F: -
+io:float-operation       D: ...n-  A: -  F: -
 Trigger a floating point operation. This is not intended to be used directly.
 
-io:invoke                        D: n-  A: -  F: -
+io:invoke                D: n-  A: -  F: -
 Invoke an interaction with an I/O device.
 
-io:query                         D: n-mN  A: -  F: -
+io:query                 D: n-mN  A: -  F: -
 Ask an I/O device to identify itself. Returns a version (m) and device ID (N).
 
-io:scan-for                      D: n-m  A: -  F: -
+io:scan-for              D: n-m  A: -  F: -
 Scan the I/O devices for a device with a specified ID. Returns the device number, or -1 if not found.
 
-io:unix-syscall                  D: ...n-  A: -  F: -
+io:unix-syscall          D: ...n-  A: -  F: -
 Trigger a Unix system call. This is not intended to be used directly.
 
-listen                           D: -  A: -  F: -
+listen                   D: -  A: -  F: -
 Run interactive "listener" (a REPL).
 
-lt?                              D: nn-f  A: -  F: -
+lt?                      D: nn-f  A: -  F: -
 Compare n1 and n2. Return `TRUE` if n1 is less than n2, or `FALSE` otherwise.
 
-lteq?                            D: nn-f  A: -  F: -
+lteq?                    D: nn-f  A: -  F: -
 Compare n1 and n2. Return `TRUE` if n1 is less than or equal to n2, or `FALSE` otherwise.
 
-mod                              D: nm-o  A: -  F: -
+mod                      D: nm-o  A: -  F: -
 Divide `n` by `m` and return the remainder.
 
-n:-zero?                         D: n-f  A: -  F: -
+n:-zero?                 D: n-f  A: -  F: -
 Return `TRUE` if number is not zero, or `FALSE` otherwise.
 
-n:MAX                            D: -n  A: -  F: -
+n:MAX                    D: -n  A: -  F: -
 Return the maximum value that will fit in a cell.
 
-n:MIN                            D: -n  A: -  F: -
+n:MIN                    D: -n  A: -  F: -
 Return the minimum value that will fit in a cell.
 
-n:abs                            D: n-n  A: -  F: -
+n:abs                    D: n-n  A: -  F: -
 Return the absolute value of a number.
 
-n:between?                       D: nlu-f  A: -  F: -
+n:between?               D: nlu-f  A: -  F: -
 Return TRUE if number is between the lower (l) and upper (u) bounds. If not, return FALSE. This is inclusive of the limits.
 
-n:dec                            D: n-m  A: -  F: -
+n:dec                    D: n-m  A: -  F: -
 Decrement n by one.
 
-n:even?                          D: n-f  A: -  F: -
+n:even?                  D: n-f  A: -  F: -
 Return `TRUE` if number is even, or `FALSE` if not.
 
-n:inc                            D: n-m  A: -  F: -
+n:inc                    D: n-m  A: -  F: -
 Increment n by one.
 
-n:limit                          D: nlu-m  A: -  F: -
+n:limit                  D: nlu-m  A: -  F: -
 Return n if it is within the lower (l) and upper (u) bounds. If outside the bounds, return the closes boundary value.
 
-n:max                            D: mn-o  A: -  F: -
+n:max                    D: mn-o  A: -  F: -
 Return the greater of two values.
 
-n:min                            D: mn-o  A: -  F: -
+n:min                    D: mn-o  A: -  F: -
 Return the lesser of two values.
 
-n:negate                         D: n-n  A: -  F: -
+n:negate                 D: n-n  A: -  F: -
 Invert the sign of a number.
 
-n:negative?                      D: n-f  A: -  F: -
+n:negative?              D: n-f  A: -  F: -
 Return `TRUE` if number is negative, or `FALSE` if not.
 
-n:odd?                           D: n-f  A: -  F: -
+n:odd?                   D: n-f  A: -  F: -
 Return `TRUE` if number is odd, or `FALSE` if not.
 
-n:positive?                      D: n-f  A: -  F: -
+n:positive?              D: n-f  A: -  F: -
 Return `TRUE` if number is positive, or `FALSE` if not.
 
-n:pow                            D: bp-n  A: -  F: -
+n:pow                    D: bp-n  A: -  F: -
 Return base (b) to power (p).
 
-n:put                            D: n-  A: -  F: -
+n:put                    D: n-  A: -  F: -
 Display a number.
 
-n:random                         D: -n  A: -  F: -
+n:random                 D: -n  A: -  F: -
 Return a random number
 
-n:sqrt                           D: n-m  A: -  F: -
+n:sqrt                   D: n-m  A: -  F: -
 Return the square root of a number.
 
-n:square                         D: n-m  A: -  F: -
+n:square                 D: n-m  A: -  F: -
 Return the square of a number.
 
-n:strictly-positive?             D: n-f  A: -  F: -
+n:strictly-positive?     D: n-f  A: -  F: -
 Return TRUE if number is greater than zero or FALSE if it is zero or less.
 
-n:to-float                       D: n-  A: -  F: -F
+n:to-float               D: n-  A: -  F: -F
 Convert a number into a floating point value.
 
-n:to-string                      D: n-s  A: -  F: -
+n:to-string              D: n-s  A: -  F: -
 Convert a number into a string.
 
-n:zero?                          D: n-f  A: -  F: -
+n:zero?                  D: n-f  A: -  F: -
 Return `TRUE` if number is zero, or `FALSE` otherwise.
 
-nip                              D: nm-m  A: -  F: -
+nip                      D: nm-m  A: -  F: -
 Remove the second item from the stack.
 
-nl                               D: -  A: -  F: -
+nl                       D: -  A: -  F: -
 Display a newline.
 
-not                              D: n-m  A: -  F: -
+not                      D: n-m  A: -  F: -
 Perform a logical NOT operation.
 
-or                               D: mn-o  A: -  F: -
+or                       D: mn-o  A: -  F: -
 Perform a bitwise OR between the provided values.
 
-over                             D: nm-nmn  A: -  F: -
+over                     D: nm-nmn  A: -  F: -
 Put a copy of n over m.
 
-parse-until                      D: q-s  A: -  F: -
+parse-until              D: q-s  A: -  F: -
 Read input from stdin (via `c:get`) until the returned character is matched by the quote. Returns a string.
 
-pb:get                           D: a-  A: -  F: -
+pb:get                   D: a-  A: -  F: -
 Copy a string from the pasteboard to the specified address.
 
-pb:length                        D: -n  A: -  F: -
+pb:length                D: -n  A: -  F: -
 Return the length of the string on the pasteboard.
 
-pb:set                           D: s-  A: -  F: -
+pb:set                   D: s-  A: -  F: -
 Copy a string to the pasteboard.
 
-pop                              D: -n  A: n-  F: -
+pop                      D: -n  A: n-  F: -
 Move a value from the return stack to the data stack.
 
-prefix:!                         D: ns-  A: -  F: -
+prefix:!                 D: ns-  A: -  F: -
 Store a value into a variable.
 
-prefix:"                         D: s-s  A: -  F: -
+prefix:"                 D: s-s  A: -  F: -
 Process token as a string.
 
-prefix:#                         D: s-n  A: -  F: -
+prefix:#                 D: s-n  A: -  F: -
 Process token as a number.
 
-prefix:$                         D: s-c  A: -  F: -
+prefix:$                 D: s-c  A: -  F: -
 Process token as an ASCII character.
 
-prefix:&                         D: s-a  A: -  F: -
+prefix:&                 D: s-a  A: -  F: -
 Return a pointer to a named item.
 
-prefix:'                         D: s-s  A: -  F: -
+prefix:'                 D: s-s  A: -  F: -
 Process token as a string.
 
-prefix:(                         D: s-  A: -  F: -
+prefix:(                 D: s-  A: -  F: -
 Process token as a comment.
 
-prefix:.                         D: s-  A: -  F: -F
+prefix:.                 D: s-  A: -  F: -F
 Interpret time: convert string to a floating point value. Compile time: convert string to a floating point value and compile code to push this value to the float stack.
 
-prefix::                         D: s-  A: -  F: -
+prefix::                 D: s-  A: -  F: -
 Process token as a new definition.
 
-prefix:@                         D: s-n  A: -  F: -
+prefix:@                 D: s-n  A: -  F: -
 Fetch from a stored variable.
 
-prefix:`                         D: s-  A: -  F: -
+prefix:`                 D: s-  A: -  F: -
 Process token as a bytecode.
 
-prefix:|                         D: s-  A: -  F: -
+prefix:|                 D: s-  A: -  F: -
 POSTPONE equivalent.
 
-primitive                        D: -  A: -  F: -
+primitive                D: -  A: -  F: -
 Change the class of the most recently defined word to `class:primitive`.
 
-push                             D: n-  A: -n  F: -
+push                     D: n-  A: -n  F: -
 Move a value from the data stack to the return stack.
 
-r                                D: s-  A: -  F: -
+r                        D: s-  A: -  F: -
 Lookup a reference by name and inline its pointer to the current assembly segment.
 
-random:mersenne                  D: -n  A: -  F: -
-Return a random number using a mersenne shifter
-
-random:mersenne:set-seed         D: n-  A: -  F: -
-Seed random:mersenne with the specified value
-
-random:xoroshiro128**            D: -n  A: -  F: -
-Return a random number using xoroshiro128**
-
-random:xoroshiro128**:jump       D: -  A: -  F: -
-Updates the internal xoroshiro128** state registers with the equivalent of 2^64 calls to random:xoroshiro128**.
-
-random:xoroshiro128**:set-seed   D: n-  A: -  F: -
-Seed random:xoroshiro128** with the specified value
-
-random:xoroshiro128**:test-seed  D: nnnn-  A: -  F: -
-Sets the internal xoroshiro128** state registers s0..s3 starting with TOS.
-
-reclass                          D: a-  A: -  F: -
+reclass                  D: a-  A: -  F: -
 Change the class handler of the most recently defined word to the specified one.
 
-reorder                          D: ...ss-?  A: -  F: -
+reorder                  D: ...ss-?  A: -  F: -
 Restructure the order of items on the stack.
 
-repeat                           D: -  A: -  F: -
+repeat                   D: -  A: -  F: -
 Begin an unconditional loop.
 
-reset                            D: ...-  A: -  F: -
+reset                    D: ...-  A: -  F: -
 Remove all items from the stack.
 
-rot                              D: abc-bca  A: -  F: -
+rot                      D: abc-bca  A: -  F: -
 Rotate the top three values.
 
-s,                               D: s-  A: -  F: -
+s,                       D: s-  A: -  F: -
 Compile the code needed to push a string pointer to the stack and inline the string data into the current definition.
 
-s:ASCII-LETTERS                  D: -s  A: -  F: -
+s:ASCII-LETTERS          D: -s  A: -  F: -
 Constant. Returns a string of the ASCII letters (upper and lower case)
 
-s:ASCII-LOWERCASE                D: -s  A: -  F: -
+s:ASCII-LOWERCASE        D: -s  A: -  F: -
 Constant. Returns a string of the ASCII letters in lowercase
 
-s:ASCII-UPPERCASE                D: -s  A: -  F: -
+s:ASCII-UPPERCASE        D: -s  A: -  F: -
 Constant. Returns a string of the ASCII letters in uppercase
 
-s:DIGITS                         D: -s  A: -  F: -
+s:DIGITS                 D: -s  A: -  F: -
 Constant. Return a string of characters recognized as numeric digits.
 
-s:PUNCTUATION                    D: -s  A: -  F: -
+s:PUNCTUATION            D: -s  A: -  F: -
 Constant. Return a string of characters recognized as punctuation.
 
-s:WHITESPACE                     D: -s  A: -  F: -
+s:WHITESPACE             D: -s  A: -  F: -
 Constant. Returns a string of characters recognized as whitespace.
 
-s:append                         D: ss-s  A: -  F: -
+s:append                 D: ss-s  A: -  F: -
 Return a new string consisting of s1 followed by s2.
 
-s:begins-with?                   D: ss-f  A: -  F: -
+s:begins-with?           D: ss-f  A: -  F: -
 Return `TRUE` if s1 begins with s2 or `FALSE` otherwise.
 
-s:case                           D: sSq- || sSq-s  A: -  F: -
+s:case                   D: sSq- || sSq-s  A: -  F: -
 If the `s` matches `S`, discard `s` and run the quote before exiting the caller. If they do not match, discard the quote and leave `s` on the stack.
 
-s:chop                           D: s-s  A: -  F: -
+s:chop                   D: s-s  A: -  F: -
 Remove the last character from a string. Returns a new string.
 
-s:const                          D: ss-  A: -  F: -
+s:const                  D: ss-  A: -  F: -
 Create a constant named s2, returning a pointer to s1. This will use `s:keep` to preserve the original string.
 
-s:contains-char?                 D: sc-f  A: -  F: -
+s:contains-char?         D: sc-f  A: -  F: -
 Return `TRUE` if the character is present in the string or `FALSE` otherwise.
 
-s:contains-string?               D: ss-f  A: -  F: -
+s:contains-string?       D: ss-f  A: -  F: -
 Return `TRUE` if the second string is present in the first string or `FALSE` otherwise.
 
-s:copy                           D: sa-  A: -  F: -
+s:copy                   D: sa-  A: -  F: -
 Copy a string (s) to a destination (a). This will include the terminator character when copying.
 
-s:empty                          D: -s  A: -  F: -
+s:empty                  D: -s  A: -  F: -
 Return an empty string.
 
-s:ends-with?                     D: ss-f  A: -  F: -
+s:ends-with?             D: ss-f  A: -  F: -
 Return `TRUE` if s1 ends with s2 or `FALSE` otherwise.
 
-s:eq?                            D: ss-f  A: -  F: -
+s:eq?                    D: ss-f  A: -  F: -
 Compare two strings for equality. Return `TRUE` if identical or `FALSE` if not.
 
-s:evaluate                       D: s-?  A: -  F: -
+s:evaluate               D: s-?  A: -  F: -
 Evaluate string as if it was typed into the interpreter.
 
-s:filter                         D: sq-s  A: -  F: -
+s:filter                 D: sq-s  A: -  F: -
 Execute the quote once for each value in the string. If the quote returns `TRUE`, append the value into a new string. If `FALSE` the value will be discarded.
 
-s:for-each                       D: sq-  A: -  F: -
+s:for-each               D: sq-  A: -  F: -
 Execute the quote once for each value in the string.
 
-s:format                         D: ...s-s  A: -  F: -
+s:format                 D: ...s-s  A: -  F: -
 Construct a new string using the template passed and items from the stack.
 
-s:get                            D: -s  A: -  F: -
+s:get                    D: -s  A: -  F: -
 Read input from standard in (via `c:get`) until a CR or LF is encountered. Returns a strig.
 
-s:hash                           D: s-n  A: -  F: -
+s:hash                   D: s-n  A: -  F: -
 Calculate a hash value for a string. This uses the djb2 algorithm.
 
-s:index-of                       D: sc-n  A: -  F: -
+s:index-of               D: sc-n  A: -  F: -
 Return the location of the first instance of the specified character in the string.
 
-s:index-of-string                D: ss-n  A: -  F: -
+s:index-of-string        D: ss-n  A: -  F: -
 Return the location of the first instance of the specified substring (s2) in the string (s1). Returns -1 if not found.
 
-s:keep                           D: s-s  A: -  F: -
+s:keep                   D: s-s  A: -  F: -
 Store a string into the heap and return a pointer to the start of it.
 
-s:left                           D: sn-s  A: -  F: -
+s:left                   D: sn-s  A: -  F: -
 Return a new string containing the first `n` characters from the source string.
 
-s:length                         D: s-n  A: -  F: -
+s:length                 D: s-n  A: -  F: -
 Return the number of characters in a string, excluding the NULL terminator.
 
-s:map                            D: sq-s  A: -  F: -
+s:map                    D: sq-s  A: -  F: -
 Execute the specified quote once for each character in the string. Builds a new string from the return value of the quote. The quote should return only one value.
 
-s:prepend                        D: ss-s  A: -  F: -
+s:prepend                D: ss-s  A: -  F: -
 Return a new string consisting of s2 followed by s1.
 
-s:put                            D: s-  A: -  F: -
+s:put                    D: s-  A: -  F: -
 Display a string.
 
-s:replace                        D: sss-s  A: -  F: -
+s:replace                D: sss-s  A: -  F: -
 Replace the first instance of s2 in s1 with s3.
 
-s:replace-all                    D: sss-s  A: -  F: -
+s:replace-all            D: sss-s  A: -  F: -
 Replace all instances of s2 in s1 with s3.
 
-s:reverse                        D: s-s  A: -  F: -
+s:reverse                D: s-s  A: -  F: -
 Reverse the order of ASCII characters in a string.
 
-s:right                          D: sn-s  A: -  F: -
+s:right                  D: sn-s  A: -  F: -
 Return a new string containing the specified number of characters from the right side of the string.
 
-s:skip                           D: -  A: -  F: -
+s:skip                   D: -  A: -  F: -
 Internal helper function used to skip over a string in a definition.
 
-s:split                          D: sc-ss  A: -  F: -
+s:split                  D: sc-ss  A: -  F: -
 Split a string on the first occurrance of the specified character.
 
-s:split-on-string                D: ss-ss  A: -  F: -
+s:split-on-string        D: ss-ss  A: -  F: -
 Split a string on the first occurrance of the specified string. After the split, the top stack item will be the part of the string before the specified subsring, and the second item will be the rest of the original string.
 
-s:substr                         D: sfl-s  A: -  F: -
+s:substr                 D: sfl-s  A: -  F: -
 Extract a substring from the specified string. This will take the characters starting at `f` and extend `l` characters in length.
 
-s:temp                           D: s-s  A: -  F: -
+s:temp                   D: s-s  A: -  F: -
 Move a string into the temporary string buffers.
 
-s:to-float                       D: s-  A: -  F: -F
+s:to-float               D: s-  A: -  F: -F
 Convert a string representation into a floating point value.
 
-s:to-lower                       D: s-s  A: -  F: -
+s:to-lower               D: s-s  A: -  F: -
 Convert uppercase ASCII characters in a string to lowercase.
 
-s:to-number                      D: s-n  A: -  F: -
+s:to-number              D: s-n  A: -  F: -
 Convert a string to a number.
 
-s:to-upper                       D: s-s  A: -  F: -
+s:to-upper               D: s-s  A: -  F: -
 Convert lowercase ASCII characters in a string to uppercase.
 
-s:tokenize                       D: sc-a  A: -  F: -
+s:tokenize               D: sc-a  A: -  F: -
 Takes a string and a character to use as a separator. It splits the string into substrings and returns an array containing pointers to each of them.
 
-s:tokenize-on-string             D: ss-a  A: -  F: -
+s:tokenize-on-string     D: ss-a  A: -  F: -
 Takes a string (s1) and a substring (s2)  use as a separator. It splits the string into substrings and returns as array containing pointers to each of them.
 
-s:trim                           D: s-s  A: -  F: -
+s:trim                   D: s-s  A: -  F: -
 Trim leading and trailing whitespace from a string.
 
-s:trim-left                      D: s-s  A: -  F: -
+s:trim-left              D: s-s  A: -  F: -
 Trim leading whitespace from a string.
 
-s:trim-right                     D: s-s  A: -  F: -
+s:trim-right             D: s-s  A: -  F: -
 Trim trailing whitespace from a string.
 
-set-hook                         D: aa-  A: -  F: -
+set-hook                 D: aa-  A: -  F: -
 Patch the hook point in a2 to point to a1.
 
-shift                            D: mn-o  A: -  F: -
+shift                    D: mn-o  A: -  F: -
 Peform a bitwise shift of m by n bits. If n is positive, shift right. If negative, the shift will be to the left.
 
-sip                              D: nq-n  A: -  F: -
+sip                      D: nq-n  A: -  F: -
 Run quote. After execution completes, put a copy of n back on top of the stack.
 
-socket:accept                    D: n-nn  A: -  F: -
+socket:accept            D: n-nn  A: -  F: -
 Begin accepting connections. Returns a new socket and an error code.
 
-socket:bind                      D: sn-nn  A: -  F: -
+socket:bind              D: sn-nn  A: -  F: -
 Bind a socket to a port. The port should be a string. Returns 0 if successful or -1 othewise and an error code.
 
-socket:close                     D: n-  A: -  F: -
+socket:close             D: n-  A: -  F: -
 Close a socket.
 
-socket:configure                 D: ss-  A: -  F: -
+socket:configure         D: ss-  A: -  F: -
 Configure internal settings for a host (s1) and port (s2). Use before `socket:bind`.
 
-socket:connect                   D: n-nn  A: -  F: -
+socket:connect           D: n-nn  A: -  F: -
 Connect to a server. Provide a socket, this will return a status flag and an error code.
 
-socket:create                    D: -n  A: -  F: -
+socket:create            D: -n  A: -  F: -
 Obtain a new socket.
 
-socket:gethostbyname             D: as-  A: -  F: -
+socket:gethostbyname     D: as-  A: -  F: -
 Get the host IP in dotted notation. The host is specified by the string and the address is the start of the buffer for the dotted IP.
 
-socket:listen                    D: nn-nn  A: -  F: -
+socket:listen            D: nn-nn  A: -  F: -
 Prepare a socket for accepting incoming quotations. Takes a backlog count (n1) and a socket (n2). Returns a flag (0 success, -1 failed) and an error code.
 
-socket:recv                      D: ann-nn  A: -  F: -
+socket:recv              D: ann-nn  A: -  F: -
 Receive data from a socket. This will read into memory starting at address *a*, up to *n1* bytes. *n2* is the socket. Returns the number of bytes read and an error code.
 
-socket:send                      D: sn-nn  A: -  F: -
+socket:send              D: sn-nn  A: -  F: -
 Send a string to a socket. This will return the number of characters sent and an error code.
 
-sp                               D: -  A: -  F: -
+sp                       D: -  A: -  F: -
 Display a space (`ASCII:SPACE`)
 
-store                            D: na-  A: -  F: -
+store                    D: na-  A: -  F: -
 Store a value into the specified address.
 
-store-next                       D: na-a  A: -  F: -
+store-next               D: na-a  A: -  F: -
 Store a value into the specified address and return the next address.
 
-swap                             D: nm-mn  A: -  F: -
+swap                     D: nm-mn  A: -  F: -
 Exchange the position of the top two items on the stack
 
-sys:argc                         D: -n  A: -  F: -
+sys:argc                 D: -n  A: -  F: -
 Return the number of arguments passed to the program.
 
-sys:argv                         D: n-s  A: -  F: -
+sys:argv                 D: n-s  A: -  F: -
 Given an argument number, return the argument as a string.
 
-sys:name                         D: -s  A: -  F: -
+sys:name                 D: -s  A: -  F: -
 Return the filename of the program being run.
 
-tab                              D: -  A: -  F: -
+tab                      D: -  A: -  F: -
 Display a tab (`ASCII:HT`)
 
-times                            D: nq-  A: -  F: -
+times                    D: nq-  A: -  F: -
 Run the specified quote the specified number of times.
 
-times<with-index>                D: nq-  A: -  F: -
+times<with-index>        D: nq-  A: -  F: -
 Run a quote the specified number of times, tracking the loop index in `I`.
 
-tri                              D: xqqq-?  A: -  F: -
+tri                      D: xqqq-?  A: -  F: -
 Apply q1 against x, then q2 against a copy of x, and finally q3 against another copy of x.
 
-tri*                             D: xyzqqq-?  A: -  F: -
+tri*                     D: xyzqqq-?  A: -  F: -
 Apply q1 against x, q2 against y, and q3 against z.
 
-tri@                             D: xyzq-?  A: -  F: -
+tri@                     D: xyzq-?  A: -  F: -
 Apply q against x, then against y, and finally against z.
 
-tuck                             D: nm-mnm  A: -  F: -
+tuck                     D: nm-mnm  A: -  F: -
 Put a copy of the top item on the stack under the second one.
 
-unhook                           D: a-  A: -  F: -
+unhook                   D: a-  A: -  F: -
 Reset the hook point in a1 to the default definition.
 
-unix:chdir                       D: s-  A: -  F: -
+unix:chdir               D: s-  A: -  F: -
 Change the current working directory to the specified one.
 
-unix:count-files-in-cwd          D: -n  A: -  F: -
+unix:count-files-in-cwd  D: -n  A: -  F: -
 Return the number of files (and subdirectories) in the current working directory
 
-unix:exec0                       D: s-  A: -  F: -
+unix:exec0               D: s-  A: -  F: -
 Execute a process by running the application specified by s.
 
-unix:exec1                       D: ss-  A: -  F: -
+unix:exec1               D: ss-  A: -  F: -
 Execute a process by running the application specified by s1. Pass s2 as an argument.
 
-unix:exec2                       D: sss-  A: -  F: -
+unix:exec2               D: sss-  A: -  F: -
 Execute a process by running the application specified by s1. Pass s2 and s3 as arguments.
 
-unix:exec3                       D: ssss-  A: -  F: -
+unix:exec3               D: ssss-  A: -  F: -
 Execute a process by running the application specified by s1. Pass s2, s3, and s4 as arguments.
 
-unix:exit                        D: n-  A: -  F: -
+unix:exit                D: n-  A: -  F: -
 Exit the current process, returning the specified return code.
 
-unix:for-each-file               D: q-  A: -  F: -
+unix:for-each-file       D: q-  A: -  F: -
 Run a quote once for each file or subdirectory in the current directory. The quote will receive the file name as a string and should consume this and return nothing on the stack.
 
-unix:fork                        D: -n  A: -  F: -
+unix:fork                D: -n  A: -  F: -
 Fork the current process. Returns a PID.
 
-unix:get-cwd                     D: -s  A: -  F: -
+unix:get-cwd             D: -s  A: -  F: -
 Return the current working directory
 
-unix:getenv                      D: sa-  A: -  F: -
+unix:getenv              D: sa-  A: -  F: -
 Get an environment variable. Provide the name and an address to store it in.
 
-unix:getpid                      D: -n  A: -  F: -
+unix:getpid              D: -n  A: -  F: -
 Return the PID of the current process.
 
-unix:io:n:put                    D: n-  A: -  F: -
+unix:io:n:put            D: n-  A: -  F: -
 Deprecated. Display a number (in base 10) to the standard output device. This is faster than `n:put`, but not portable.
 
-unix:io:s:put                    D: s-  A: -  F: -
+unix:io:s:put            D: s-  A: -  F: -
 Deprecated. Display a string to stdout. This is faster than `s:put`, but not portable.
 
-unix:kill                        D: nn-  A: -  F: -
+unix:kill                D: nn-  A: -  F: -
 Terminates a process. Takes a process and a signal to send.
 
-unix:pclose                      D: n-  A: -  F: -
+unix:pclose              D: n-  A: -  F: -
 Close a pipe.
 
-unix:popen                       D: sn-n  A: -  F: -
+unix:popen               D: sn-n  A: -  F: -
 Open a pipe. Takes a command to run, and a file mode (`file:R` or `file:W`; `file:R+` may work on some systems). Returns a file ID usable with words in the `file:` namespace.
 
-unix:putenv                      D: s-  A: -  F: -
+unix:putenv              D: s-  A: -  F: -
 Takes a string in the form `name=value` and sets an environment variable named `name` to `value`.
 
-unix:sleep                       D: n-  A: -  F: -
+unix:sleep               D: n-  A: -  F: -
 Sleep for the specified number of seconds.
 
-unix:slurp-pipe                  D: as-n  A: -  F: -
+unix:slurp-pipe          D: as-n  A: -  F: -
 Open a pipe. Read all output from the pipe (until ASCII:NULL) and store in the specified buffer. Return the number of bytes read.
 
-unix:system                      D: s-  A: -  F: -
+unix:system              D: s-  A: -  F: -
 Runs another application using the system shell and returns after execution is completed.
 
-unix:wait                        D: -n  A: -  F: -
+unix:wait                D: -n  A: -  F: -
 Waits for a child process to complete. This maps to the wait() system call.
 
-unix:write                       D: sh-  A: -  F: -
+unix:write               D: sh-  A: -  F: -
 Deprecated. Write a string to the specified file handle.
 
-until                            D: q-  A: -  F: -
+until                    D: q-  A: -  F: -
 Execute quote repeatedly while the quote returns a value of `FALSE`. The quote should return a flag of either `TRUE` or `FALSE`, though `until` will treat any non-zero value as `TRUE`.
 
-v:dec                            D: a-  A: -  F: -
+v:dec                    D: a-  A: -  F: -
 Decrement the value stored at the specified address by 1.
 
-v:dec-by                         D: na-  A: -  F: -
+v:dec-by                 D: na-  A: -  F: -
 Decrement the value stored at the specified address by the specified value.
 
-v:inc                            D: a-  A: -  F: -
+v:inc                    D: a-  A: -  F: -
 Increment the value stored at the specified address by 1.
 
-v:inc-by                         D: na-  A: -  F: -
+v:inc-by                 D: na-  A: -  F: -
 Increment the value stored at the specified address by the specified value.
 
-v:limit                          D: alu-  A: -  F: -
+v:limit                  D: alu-  A: -  F: -
 Fetch the value stored at the address, then run `n:limit` against it, using the specified lower and upper bounds. Then store the resulting value back to the original address.
 
-v:off                            D: a-  A: -  F: -
+v:off                    D: a-  A: -  F: -
 Set a variable to 0.
 
-v:on                             D: a-  A: -  F: -
+v:on                     D: a-  A: -  F: -
 Set a variable to -1.
 
-v:preserve                       D: aq-  A: -  F: -
+v:preserve               D: aq-  A: -  F: -
 Make a copy of the value at the address, then run the quote. Once the quote completes, restore the address to the specified value.
 
-v:update                         D: aq-  A: -  F: -
+v:update                 D: aq-  A: -  F: -
 Fetch a value from the specified address, then run the quotation with this value on the stack. Afterwards, store the returned value at the original address.
 
-var                              D: s-  A: -  F: -
+var                      D: s-  A: -  F: -
 Create a variable. The variable is initialized to 0.
 
-var<n>                           D: ns-  A: -  F: -
+var<n>                   D: ns-  A: -  F: -
 Create a variable with the specified initial value.
 
-while                            D: q-  A: -  F: -
+while                    D: q-  A: -  F: -
 Execute quote repeatedly while the quote returns a `TRUE` value. The quote should return a flag of either `TRUE` or `FALSE`, though `while` will treat any non-zero value as `TRUE`.
 
-xor                              D: mn-o  A: -  F: -
+xor                      D: mn-o  A: -  F: -
 Perform a bitwise XOR operation.
 
-{                                D: -  A: -  F: -
+{                        D: -  A: -  F: -
 Begin an array. This is intended to make creating arrays a bit cleaner than using a quotation and `a:counted-results`.
 
-{{                               D: -  A: -  F: -
+{{                       D: -  A: -  F: -
 Begin a lexically scoped area.
 
-}                                D: -a  A: -  F: -
+}                        D: -a  A: -  F: -
 Complete an array begun by `{`. Returns a pointer to the data.
 
-}as                              D: f-  A: -  F: -
+}as                      D: f-  A: -  F: -
 End an assembly section.
 
-}}                               D: -  A: -  F: -
+}}                       D: -  A: -  F: -
 End a lexically scoped area. This will hide any headers between `{{` and `---reveal---`, leaving only headers between `---reveal---` and the `}}` visible.
 

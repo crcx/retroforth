@@ -369,12 +369,6 @@ prefix:|	s-	-	-	POSTPONE equivalent.	Discard the string.	Convert the string to a
 primitive	-	-	-	Change the class of the most recently defined word to `class:primitive`.			class:word	{n/a}	{n/a}	global	all	
 push	n-	-n	-	Move a value from the data stack to the return stack.			class:macro	{n/a}	{n/a}	global	all	
 r	s-	-	-	Lookup a reference by name and inline its pointer to the current assembly segment.			class:word	{n/a}	{n/a}	global	all	
-random:mersenne	-n	-	-	Return a random number using a mersenne shifter			class:word	{n/a}	{n/a}	random	rre	
-random:mersenne:set-seed	n-	-	-	Seed random:mersenne with the specified value			class:word	{n/a}	{n/a}	random	rre	
-random:xoroshiro128**	-n	-	-	Return a random number using xoroshiro128**			class:word	{n/a}	{n/a}	random	rre	
-random:xoroshiro128**:jump	-	-	-	Updates the internal xoroshiro128** state registers with the equivalent of 2^64 calls to random:xoroshiro128**.			class:word	{n/a}	{n/a}	random	rre	
-random:xoroshiro128**:set-seed	n-	-	-	Seed random:xoroshiro128** with the specified value			class:word	{n/a}	{n/a}	random	rre	
-random:xoroshiro128**:test-seed	nnnn-	-	-	Sets the internal xoroshiro128** state registers s0..s3 starting with TOS.			class:word	{n/a}	{n/a}	random	rre	
 reclass	a-	-	-	Change the class handler of the most recently defined word to the specified one.			class:word	{n/a}	{n/a}	global	all	
 reorder	...ss-?	-	-	Restructure the order of items on the stack.			class:word	{n/a}	{n/a}	global	all	
 repeat	-	-	-	Begin an unconditional loop.			class:macro	{n/a}	{n/a}	global	all	
