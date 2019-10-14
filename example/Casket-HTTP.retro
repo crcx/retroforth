@@ -153,7 +153,7 @@ and content.
   get-mime-type
   dup 'application/fsp s:eq?
   [ drop filename include ]
-  [ 'Content_type:_%s s:format s:put eol eol
+  [ 'Content-type:_%s s:format s:put eol eol
     read-file [ fetch-next c:put ] times drop ] choose ;
 ~~~
 
