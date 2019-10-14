@@ -31,15 +31,20 @@ This will count the number of successful tests.
 'Flag var
 'Tests var
 'InTestState var
+
 :Testing (s-)
   'Test:__ s:put s:put nl #-1 !Flag #0 !Tests  &WordsTested v:inc reset ;
+
 :passed (-)
   '->_ s:put @Tests n:put '_tests_passed s:put nl
   '----------------------------------- s:put nl ;
+
 :exit-on-fail (-)
   @Flag [ passed '->_1_test_failed s:put nl err:die ] -if ; 
+
 :match (n-)
   eq? @InTestState and !InTestState ;
+
 :try (qq-)
   #-1 !InTestState
   [ call ] dip call
@@ -81,6 +86,8 @@ passed
 
 ~~~
 '; Testing
+  [ here &; call here swap - ] [ #1 eq? ] try
+  [ here &; call fetch ] [ #10 eq? ] try
 passed
 ~~~
 
@@ -144,6 +151,8 @@ passed
 
 ~~~
 '0; Testing
+  [ #1 0; #2 0; ] [ #2 eq? swap #1 eq? and ] try
+  [ #1 0; #0 0; #2 0; ] [ #1 eq? ] try
 passed
 ~~~
 
@@ -2057,6 +2066,7 @@ passed
 
 ~~~
 'TRUE Testing
+  [ TRUE ] [ #-1 eq? ] try
 passed
 ~~~
 
@@ -2202,7 +2212,7 @@ passed
 -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
 
 ~~~
-'v:update-using Testing
+'v:update Testing
 passed
 ~~~
 
@@ -2210,13 +2220,6 @@ passed
 
 ~~~
 'while Testing
-passed
-~~~
-
--+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
-
-~~~
-'words Testing
 passed
 ~~~
 
