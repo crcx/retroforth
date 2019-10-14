@@ -49,6 +49,7 @@ Examples
 - add an example showing how to generate an
   array of namespaces
 - fixed content type header in Casket
+- add irc-bot.retro
 
 retro-unix
 

@@ -1,0 +1,207 @@
+This is a little IRC bot written in RETRO. Currently it's being
+used for testing the socket: words. In the near future, it'll
+also be used for logging and interactive tests. Longer term,
+a future version will be used as part of my Para order and bid
+management system, for interactive lookups and updates.
+
+Consider this to be public domain, or use under the ISC license
+if your country does not recognize the public domain.
+
+Todo:
+
+  - support direct messages
+  - support retro-describe: queries
+
+In Process:
+
+  - logging of channel
+    - append to log working
+    - need to add timestamps
+    - need to only log things we care about:
+      - join part quit privmsg
+    - tools to generate more readable output from the
+      raw logs
+
+Done:
+
+  - add a configuration section
+  - connect to IRC server
+  - join a channel
+  - handle PING
+  - process messages
+  - run retro code in a separate vm/image
+    - image persists across runs
+    - stacks reset each run
+  - support multiple channels
+  - wrappers over socket: words
+
+Possible future additions:
+
+  - per-user images for the retro-via-pipe
+
+----
+
+Configuration
+
+I'm connecting to one of the plaintext ports on Freenode. I have
+the server IP hard coded here, but the socket words do work with
+domain names.
+
+~~~
+'/home/crc/retro-irc.image 'IMAGE s:const
+'retro-sandboxed           'VM s:const
+'193.10.255.100:6665       'SERVER s:const
+'retroforth-bot            'NICK s:const
+{ '#retro '#forth '#retrotesting } 'CHANNELS const
+~~~
+
+These words allow me to capture output into a buffer, which
+I can send out via the socket words. It's best if you use
+these in a `buffer:preserve` block.
+
+~~~
+'Output d:create
+  #32768 allot
+
+:capture{  &Output buffer:set &buffer:add &c:put set-hook ;
+:}output   &c:put unhook ;
+~~~
+
+This is a higher level set of words for interacting with a
+single socket.
+
+~~~
+'Sock var
+
+:connect (s-)
+  socket:create !Sock
+  $: s:split swap n:inc socket:configure
+  @Sock socket:connect drop ;
+
+:s:transmit @Sock socket:send drop-pair ;
+
+{{
+  :eol?
+    [ ASCII:CR eq? ] [ ASCII:LF eq? ] bi or ;
+
+  :terminate
+    buffer:get drop #0 buffer:add ;
+---reveal---
+  :s:receive
+    [ here buffer:set
+      s:empty dup #256 @Sock socket:recv drop-pair
+      [ dup buffer:add eol? [ terminate ] if ] s:for-each ] buffer:preserve ;
+}}
+
+:disconnect
+  @Sock socket:close ;
+~~~
+
+Create a socket and connect to the IRC network. I'm using
+Freenode on a plain text port.
+
+~~~
+SERVER connect
+~~~
+
+Next, some helpers. One to send a line of text to the server and
+one to read a line from the server.
+
+~~~
+:irc:send
+  '%s\r\n s:format s:transmit ;
+~~~
+
+Log into the desired channel. Adjust your user name, nick, and
+the channel(s) here.
+
+~~~
+:login 'USER_retrobot_crc@forth.works_forth.works_charles irc:send
+        NICK 'NICK_%s s:format irc:send
+        CHANNELS [ 'JOIN_%s s:format irc:send ] a:for-each ;
+
+login
+~~~
+
+The server will send a PING periodically to see if we are still
+active. Send the correct PONG message back in reply.
+
+~~~
+:ping?
+  here 'PING s:begins-with? ;
+
+:pong
+  'PONG here #4 + s:append irc:send ;
+~~~
+
+Messages in the channel contain PRIVMSG. Here is where I
+process them. If the actual message starts with `retro:`,
+I pass it to `s:evaluate`, capturing and relaying the output.
+
+~~~
+'Channel d:create
+  #128 allot
+
+:message?
+  here 'PRIVMSG s:contains-string? ;
+
+:channel
+  here 'PRIVMSG s:split-on-string drop #8 + $: s:split nip s:chop &Channel s:copy ;
+
+:transmit
+  'PRIVMSG_ s:transmit
+  &Channel s:transmit
+  '_: s:transmit
+  &Output s:transmit
+  '\r\n s:format s:transmit ;
+
+:export (ss-
+  [ '~~~\n%s\n;\n~~~ s:format ] dip file:spew ;
+
+:run (s-s)
+  [ dup IMAGE VM '%s_-u_%s_-f_%s_>%s.out s:format unix:system ] sip ;
+
+:send-results
+  [ '.out s:append [ &Output s:copy transmit ] file:for-each-line ] sip ;
+
+:cleanup
+  dup '.out s:append [ file:delete ] bi@ ;
+
+:sandbox
+  #7 + n:random '/tmp/retro-%n s:format
+  [ export ] sip run send-results cleanup ;
+
+:process (s-
+  channel sandbox ;
+
+:command
+  dup 'retro:_ s:begins-with? [ process ] [ drop ] choose ;
+
+:process
+  here 'PRIVMSG s:split-on-string drop $: s:split drop n:inc dup s:put nl
+  command ;
+~~~
+
+~~~
+:log
+  here s:put nl
+  'irc.log file:A file:open here
+  [ over file:write ] s:for-each ASCII:LF over file:write file:close ;
+~~~
+
+Run the main loop to read and send messages.
+
+~~~
+[ repeat
+    s:receive log
+    message? [ process ] if
+    ping?    [ pong    ] if
+  again ] call
+~~~
+
+Clean up before exiting. Normally we won't reach this point as the
+above loop is endless.
+
+~~~
+disconnect
+~~~
