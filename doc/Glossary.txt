@@ -730,7 +730,7 @@ STRINGS
   Addr:  -
   Float: -
 
-Return the address of the start of the temporary string pool.
+Return the address of the start of the temporary string pool. This can be altered by changing the values of `TempStrings` and `TempStringMax`.
 
 Class: class:word | Namespace: global | Interface Layer: all
 ------------------------------------------------------------------------
@@ -1618,7 +1618,7 @@ choose
   Addr:  -
   Float: -
 
-Execute q1 if the flag is true (-1) or q2 if the flag is false (0). Only these flags are valid when using `choose`.
+Execute q1 if the flag is true (-1) or q2 if the flag is false (0). Only these flags are valid when using `choose`; passing other values as flags will result in memory corruption.
 
 Class: class:word | Namespace: global | Interface Layer: all
 ------------------------------------------------------------------------
@@ -5326,7 +5326,7 @@ times<with-index>
   Addr:  -
   Float: -
 
-Run a quote the specified number of times, tracking the loop index in `I`.
+Run a quote the specified number of times, tracking the loop index in `I`. This is less efficient than `times`, so if the index is not needed, this should be avoided.
 
 Class: class:word | Namespace: global | Interface Layer: all
 ------------------------------------------------------------------------

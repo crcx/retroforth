@@ -188,7 +188,7 @@ RewriteUnderscores       D: -a  A: -  F: -
 Variable. When set to `TRUE`, RETRO will replace underscores in strings with spaces. When `FALSE`, RETRO does not.
 
 STRINGS                  D: -a  A: -  F: -
-Return the address of the start of the temporary string pool.
+Return the address of the start of the temporary string pool. This can be altered by changing the values of `TempStrings` and `TempStringMax`.
 
 ScopeList                D: -a  A: -  F: -
 Variable. This holds some information used by `{{` and `}}`.
@@ -422,7 +422,7 @@ case                     D: nmq- || nmq-n  A: -  F: -
 If `n` is equal to `m`, drop both and execute the specified quote before exiting the calling word. If not equal, leave `n` on the stack and let execution continue.
 
 choose                   D: fqq-  A: -  F: -
-Execute q1 if the flag is true (-1) or q2 if the flag is false (0). Only these flags are valid when using `choose`.
+Execute q1 if the flag is true (-1) or q2 if the flag is false (0). Only these flags are valid when using `choose`; passing other values as flags will result in memory corruption.
 
 class:data               D: n- || n-n  A: -  F: -
 Class handler for data structures.
@@ -1352,7 +1352,7 @@ times                    D: nq-  A: -  F: -
 Run the specified quote the specified number of times.
 
 times<with-index>        D: nq-  A: -  F: -
-Run a quote the specified number of times, tracking the loop index in `I`.
+Run a quote the specified number of times, tracking the loop index in `I`. This is less efficient than `times`, so if the index is not needed, this should be avoided.
 
 tri                      D: xqqq-?  A: -  F: -
 Apply q1 against x, then q2 against a copy of x, and finally q3 against another copy of x.

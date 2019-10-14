@@ -61,7 +61,7 @@ J	-n	-	-	Access the parent loop index for the current loop. (For loops made usin
 K	-n	-	-	Access the grandparent loop index for the current loop. (For loops made using `times<with-index>`)			class:word	{n/a}	{n/a}	global	all	
 NoEcho	-a	-	-	Variable. If TRUE, allow display of the "ok" prompt and startup banner.			class:word	{n/a}	{n/a}	global	rre	
 RewriteUnderscores	-a	-	-	Variable. When set to `TRUE`, RETRO will replace underscores in strings with spaces. When `FALSE`, RETRO does not.			class:data	{n/a}	{n/a}	global	all	
-STRINGS	-a	-	-	Return the address of the start of the temporary string pool.			class:word	{n/a}	{n/a}	global	all	
+STRINGS	-a	-	-	Return the address of the start of the temporary string pool. This can be altered by changing the values of `TempStrings` and `TempStringMax`.			class:word	{n/a}	{n/a}	global	all	
 ScopeList	-a	-	-	Variable. This holds some information used by `{{` and `}}`.			class:data	{n/a}	{n/a}	global	all	
 TIB	-a	-	-	Constant. Returns a pointer to the text input buffer.			class:data	{n/a}	{n/a}	global	rre	
 TRUE	-n	-	-	Returns `-1`, the value used to indicate a TRUE result.			class:word	{n/a}	{n/a}	global	all	
@@ -139,7 +139,7 @@ c:vowel?	c-f	-	-	Return TRUE if character is a vowel or FALSE otherwise.			class
 c:whitespace?	c-f	-	-	Return TRUE if character is whitespace, or FALSE otherwise.			class:word	{n/a}	{n/a}	c	all	
 call	a-	-	-	Call a function.			class:primitive	{n/a}	{n/a}	global	all	
 case	nmq- || nmq-n	-	-	If `n` is equal to `m`, drop both and execute the specified quote before exiting the calling word. If not equal, leave `n` on the stack and let execution continue.			class:word	{n/a}	{n/a}	global	all	
-choose	fqq-	-	-	Execute q1 if the flag is true (-1) or q2 if the flag is false (0). Only these flags are valid when using `choose`.			class:word	{n/a}	{n/a}	global	all	
+choose	fqq-	-	-	Execute q1 if the flag is true (-1) or q2 if the flag is false (0). Only these flags are valid when using `choose`; passing other values as flags will result in memory corruption.			class:word	{n/a}	{n/a}	global	all	
 class:data	n- || n-n	-	-	Class handler for data structures.	Keep the address or value on the stack.	Compile the value or address as a literal into the current definition.	class:word	{n/a}	{n/a}	class	all	
 class:macro	a-	-	-	Class handler for compiler macros (immediate words)	Execute the function at the provided address.	Execute the function at the provided address.	class:word	{n/a}	{n/a}	class	all	
 class:primitive	a-	-	-	Class handler for primitive words (words which map to Nga instructions)	Execute the function.	Compile the machine code in the definiton into the current definition.	class:word	{n/a}	{n/a}	class	all	
@@ -449,7 +449,7 @@ sys:argv	n-s	-	-	Given an argument number, return the argument as a string.			cl
 sys:name	-s	-	-	Return the filename of the program being run.			class:word	{n/a}	{n/a}	sys	rre	
 tab	-	-	-	Display a tab (`ASCII:HT`)			class:word	{n/a}	{n/a}	global	all	
 times	nq-	-	-	Run the specified quote the specified number of times.			class:word	    #12 [ $- c:put ] times	{n/a}	global	all	
-times<with-index>	nq-	-	-	Run a quote the specified number of times, tracking the loop index in `I`.			class:word	{n/a}	{n/a}	global	all	
+times<with-index>	nq-	-	-	Run a quote the specified number of times, tracking the loop index in `I`. This is less efficient than `times`, so if the index is not needed, this should be avoided.			class:word	{n/a}	{n/a}	global	all	
 tri	xqqq-?	-	-	Apply q1 against x, then q2 against a copy of x, and finally q3 against another copy of x.			class:word	{n/a}	{n/a}	global	all	
 tri*	xyzqqq-?	-	-	Apply q1 against x, q2 against y, and q3 against z.			class:word	{n/a}	{n/a}	global	all	
 tri@	xyzq-?	-	-	Apply q against x, then against y, and finally against z.			class:word	{n/a}	{n/a}	global	all	

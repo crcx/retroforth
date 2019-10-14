@@ -471,7 +471,7 @@
 <b>Addr:</b> -<br>
 <b>Float:</b> -</p>
 </div>
-<p>Return the address of the start of the temporary string pool.</p>
+<p>Return the address of the start of the temporary string pool. This can be altered by changing the values of `TempStrings` and `TempStringMax`.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>global</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
 <h1>ScopeList</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> -a<br>
@@ -1041,7 +1041,7 @@
 <b>Addr:</b> -<br>
 <b>Float:</b> -</p>
 </div>
-<p>Execute q1 if the flag is true (-1) or q2 if the flag is false (0). Only these flags are valid when using `choose`.</p>
+<p>Execute q1 if the flag is true (-1) or q2 if the flag is false (0). Only these flags are valid when using `choose`; passing other values as flags will result in memory corruption.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>global</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
 <h1>class:data</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> n- || n-n<br>
@@ -3471,7 +3471,7 @@
 <b>Addr:</b> -<br>
 <b>Float:</b> -</p>
 </div>
-<p>Run a quote the specified number of times, tracking the loop index in `I`.</p>
+<p>Run a quote the specified number of times, tracking the loop index in `I`. This is less efficient than `times`, so if the index is not needed, this should be avoided.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>global</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
 <h1>tri</h1>
 <div style='margin-left: 1em;'><p><b>Data:</b> xqqq-?<br>
