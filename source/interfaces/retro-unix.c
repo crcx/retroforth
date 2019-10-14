@@ -30,7 +30,6 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <sys/wait.h>
-#include <time.h>
 #include <unistd.h>
 #include <limits.h>
 #include <fcntl.h>
@@ -60,7 +59,7 @@
 #define D_OFFSET_CLASS    2
 #define D_OFFSET_NAME     3
 
-#define NUM_DEVICES       9       /* Set the number of I/O devices     */
+#define NUM_DEVICES      10       /* Set the number of I/O devices     */
 
 #define MAX_OPEN_FILES  128
 
@@ -102,6 +101,8 @@ void io_filesystem_query();
 void io_filesystem_handler();
 void io_unix_query();
 void io_unix_handler();
+void io_clock_handler();
+void io_clock_query();
 void io_floatingpoint_query();
 void io_floatingpoint_handler();
 void io_scripting_handler();
@@ -127,30 +128,32 @@ typedef void (*Handler)(void);
 Handler IO_deviceHandlers[NUM_DEVICES + 1] = {
   io_output_handler,
   io_keyboard_handler,
-  io_filesystem_handler,
   io_floatingpoint_handler,
-  io_scripting_handler,
-  io_unix_handler,
-  io_image,
+  io_filesystem_handler,
+  io_clock_handler,
   io_socket,
+  io_unix_handler,
+  io_scripting_handler,
   io_random,
+  io_image,
 };
 
 Handler IO_queryHandlers[NUM_DEVICES + 1] = {
   io_output_query,
   io_keyboard_query,
-  io_filesystem_query,
   io_floatingpoint_query,
-  io_scripting_query,
-  io_unix_query,
-  io_image_query,
+  io_filesystem_query,
+  io_clock_query,
   query_socket,
+  io_unix_query,
+  io_scripting_query,
   io_random_query,
+  io_image_query,
 };
 
 
-/*---------------------------------------------------------------------
-  Variables Related To Image Introspection
+/*--------------------------------------------------------------------- 
+  Variables Related To Image Introspection 
   ---------------------------------------------------------------------*/
 
 CELL Compiler;
@@ -1286,6 +1289,9 @@ void unix_io_puts() {
 /*---------------------------------------------------------------------
   Time and Date Functions
   ---------------------------------------------------------------------*/
+
+#include <time.h>
+
 void unix_time() {
   stack_push((CELL)time(NULL));
 }
@@ -1368,6 +1374,24 @@ void io_unix_query() {
 
 void io_unix_handler() {
   UnixActions[stack_pop()]();
+}
+
+
+Handler ClockActions[] = {
+  unix_time,
+  unix_time_day,      unix_time_month,      unix_time_year,
+  unix_time_hour,     unix_time_minute,     unix_time_second,
+  unix_time_day_utc,  unix_time_month_utc,  unix_time_year_utc,
+  unix_time_hour_utc, unix_time_minute_utc, unix_time_second_utc
+};
+
+void io_clock_query() {
+  stack_push(0);
+  stack_push(5);
+}
+
+void io_clock_handler() {
+  ClockActions[stack_pop()]();
 }
 
 

@@ -46,7 +46,7 @@ All other devices are optional and can be specified in any order.
 0002 | Floating Point   |                            |
 0003 | Block Storage    | Raw, 1024 cell blocks      |
 0004 | Filesystem       | Unix-style Files           |
-0005 |                  |                            |
+0005 | Clock            |                            |
 0006 |                  |                            |
 0007 | Network: Sockets |                            |
 0008 | Syscalls: Unix   |                            |

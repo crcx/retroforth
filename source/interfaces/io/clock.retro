@@ -1,0 +1,31 @@
+# Time and Date
+
+The `clock:` namespace contains words for interacting with the
+system clock.
+
+~~~
+{{
+  'io:ClockSyscall var
+  :identify
+    @io:ClockSyscall n:zero? [
+      #5 io:scan-for dup n:negative?
+      [ drop 'IO_DEVICE_TYPE_0005_NOT_FOUND s:put nl ]
+      [ !io:ClockSyscall ] choose ] if ;
+---reveal---
+  :io:clock-syscall identify @io:ClockSyscall io:invoke ;
+}}
+
+:clock:timestamp  (-n) #0 io:clock-syscall ;
+:clock:day        (-n) #1 io:clock-syscall ;
+:clock:month      (-n) #2 io:clock-syscall ;
+:clock:year       (-n) #3 io:clock-syscall ;
+:clock:hour       (-n) #4 io:clock-syscall ;
+:clock:minute     (-n) #5 io:clock-syscall ;
+:clock:second     (-n) #6 io:clock-syscall ;
+:clock:utc:day    (-n) #7 io:clock-syscall ;
+:clock:utc:month  (-n) #8 io:clock-syscall ;
+:clock:utc:year   (-n) #9 io:clock-syscall ;
+:clock:utc:hour   (-n) #10 io:clock-syscall ;
+:clock:utc:minute (-n) #11 io:clock-syscall ;
+:clock:utc:second (-n) #12 io:clock-syscall ;
+~~~

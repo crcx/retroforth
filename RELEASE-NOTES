@@ -1,11 +1,9 @@
 # RETRO 2019.10
 
-The next release will be 2019.10.
-
 This is a worthwhile release, bringing changes and improvements
 in several areas.
 
-64-Bit
+## 64-Bit
 
 RETRO has been 32-bit only since the days of RETRO2 apart from
 some limited experiments with RETRO11. I'm pleased to say that
@@ -18,7 +16,7 @@ by default. If you want to build a 64-bit system, do:
 
     make clean; make CFLAGS="-O2 -DBIT64"
 
-Compatibility
+## Compatibility
 
 There are a few small breaks in compatibility.
 
@@ -28,62 +26,80 @@ in a couple of years when the counter overflows. For now, I have
 added `clock:timestamp`, but the value of the epoch this uses
 may change in the future.
 
-Interface
+The time functions in the `clock:` namespace are now part of
+their own I/O device. This aids in allowing them to be enabled
+on a VM that disables the Unix system interface. In this release
+the time functions remain accessible via the Unix device, but
+this will be dropped in the next release.
+
+## User Interface
 
 The 'ok' prompt has been removed.
 
 ----
 
-## Bug Fixes
+# Detailed Changelog
 
-- all
+Examples
 
-- build
+- use a `.retro` extension instead of `.forth`
+- add `Gott.retro`
+- add `wordwrap.retro`
+- add `reforth.retro`
+- add an example showing how to generate an
+  array of namespaces
+- fixed content type header in Casket
 
-- retro-unix
+retro-unix
 
-  - fix an issue when using custom images
+- deprecate unix:io:n:put
+- deprecate unix:io:s:put
+- deprecate unix:write
+- remove unix:time
+- add clock:timestamp
+- move clock: words to their own device handler
+- move rng to its own device handler
+- fix unix:getcwd
+- fixes to f:to-e and e:to-f
+- better output on stack under/overflow errors
+- add guards for floating point stack over/underflow
+- fix an issue w/loading images
+- moved xorshift and mersenne rng to examples
 
-- examples
+retro-compiler
 
-## Build
+- add new clock, rng devices to runtime
 
-- now rebuild if the .retro source files are updated
+retro-javascript
 
-## Core Language
+- new interface layout
 
-## Documentation
+Documentation
 
-- correct example for retro-compiler
-- add notes on retro-tags
+- fix typos
+- fix stack comments in the glossary
+- fix some namespace listings in the glossary
+- correct an example in the book
+- formatting improvements in html for glossary server
 
-## Toolchain
+Kernel
 
-- added retro-tags
+- fix assembly listing in rx.muri
+- remove an unused function
+- several clarifications to commentary
 
-## Examples
+Tooling
 
-- new examples
-  - retro-tags.retro
-  - Gott.retro
-  - namespaces.retro
-- use .retro extension
+- use Luke's proposed changes in retro-muri (C)
+- add retro-tags
+- add a tool to export rx.muri as html for better
+  reabability
 
-## General
+Build
 
-## I/O
+- fix a dependency issue with the .retro sources
+- fix the retro/javascript build tool
 
-- unix:time is now clock:timestamp
+VM
 
-## Interfaces
-
-- retro/unix
-  - remove `ok`
-  - clarify the use of `-s` startup flag
-
-## Nga
-
-New queries via fetch:
-
-    -4 for min integer
-    -5 for max integer
+- added new queries for cell min/max values
