@@ -125,6 +125,8 @@ a look at the extension, and mapping this to a MIME type.
     '.json  [ 'application/json         ] s:case
     '.js    [ 'application/x-javascript ] s:case
     '.xml   [ 'application/xml          ] s:case
+    '.tar.gz      [ 'application/gzip   ] s:case
+    '.retro.html  [ 'text/html          ] s:case
   drop 'text/plain ;
 ~~~
 
