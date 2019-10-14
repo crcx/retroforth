@@ -1,17 +1,20 @@
 ## Random Value
 
+~~~
+{{
+  'io var
+  :identify
+    @io n:zero? [
+      #10 io:scan-for dup n:negative?
+      [ drop 'IO_DEVICE_TYPE_0010_NOT_FOUND s:put nl ]
+      [ !io ] choose ] if ;
+  ---reveal---
+  :io:rng identify @io io:invoke ;
+}}
+~~~
+
 Return a random value from /dev/urandom
 
 ~~~
-{{
-  :random:byte 
-    '/dev/urandom file:R file:open
-    &file:read sip file:close ;
----reveal---
-  :n:random
-    random:byte   #-8 shift
-    random:byte + #-8 shift
-    random:byte + #8 shift
-    random:byte + ;
-}}
+:n:random (-n)  io:rng ;
 ~~~

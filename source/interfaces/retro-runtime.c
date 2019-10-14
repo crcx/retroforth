@@ -33,7 +33,7 @@
 #include <time.h>
 #include <unistd.h>
 #include <limits.h>
-
+#include <fcntl.h>
 
 /*---------------------------------------------------------------------
   Configuration
@@ -60,7 +60,7 @@
 #define D_OFFSET_CLASS    2
 #define D_OFFSET_NAME     3
 
-#define NUM_DEVICES       7       /* Set the number of I/O devices     */
+#define NUM_DEVICES       8       /* Set the number of I/O devices     */
 
 #define MAX_OPEN_FILES  128
 
@@ -108,6 +108,8 @@ void io_scripting_handler();
 void io_scripting_query();
 void io_image();
 void io_image_query();
+void io_random();
+void io_random_query();
 
 #if defined __GNU_LIBRARY__ || defined __GLIBC__
 size_t strlcat(char *dst, const char *src, size_t dsize);
@@ -130,7 +132,8 @@ Handler IO_deviceHandlers[NUM_DEVICES + 1] = {
   io_floatingpoint_handler,
   io_scripting_handler,
   io_unix_handler,
-  io_image
+  io_image,
+  io_random,
 };
 
 Handler IO_queryHandlers[NUM_DEVICES + 1] = {
@@ -140,7 +143,8 @@ Handler IO_queryHandlers[NUM_DEVICES + 1] = {
   io_floatingpoint_query,
   io_scripting_query,
   io_unix_query,
-  io_image_query
+  io_image_query,
+  io_random_query,
 };
 
 
@@ -274,6 +278,33 @@ void io_image_query() {
   stack_push(0);
   stack_push(1000);
 }
+
+
+/*=====================================================================*/
+
+/*---------------------------------------------------------------------
+  Random Number Generator
+  ---------------------------------------------------------------------*/
+
+void io_random() {
+  CELL r = 0;
+  char buffer[8];
+  int fd = open("/dev/urandom", O_RDONLY);
+  read(fd, buffer, 8);
+  close(fd);
+  for(int i = 0; i < 8; ++i) {
+    r = r << 8;
+    r += ((CELL)buffer[i] & 0xFF);
+  }
+  stack_push(abs(r));
+}
+
+void io_random_query() {
+  stack_push(0);
+  stack_push(10);
+}
+
+/*=====================================================================*/
 
 
 /*=====================================================================*/

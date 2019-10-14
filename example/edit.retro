@@ -1,4 +1,11 @@
-#!/usr/bin/env retro
+#!/bin/sh
+
+stty cbreak
+/usr/bin/env retro $0 $1
+stty -cbreak
+exit
+
+---------------------------------------------------------------
      _   _             
     | | | |_   _  __ _ 
     | |_| | | | |/ _` |
@@ -348,11 +355,10 @@ top level loop.
       $h [ &CurrentLine v:inc constrain   ] case
       $t [ &CurrentLine v:dec constrain   ] case
       $g [ goto               constrain   ] case
-      $q [ 'stty_-cbreak unix:system bye  ] case
+      $q [ bye                            ] case
     drop ;
 
 :edit
-  'stty_cbreak unix:system
   repeat
     display help handler
   again ;
