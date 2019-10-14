@@ -1719,7 +1719,7 @@ clock:hour
   Addr:  -
   Float: -
 
-Return the current hour.
+Return the current hour. This will be in the range of 0-23, inclusive.
 
 Class: class:word | Namespace: clock | Interface Layer: iOS, rre
 ------------------------------------------------------------------------
@@ -1730,7 +1730,7 @@ clock:minute
   Addr:  -
   Float: -
 
-Return the current minute.
+Return the current minute. This will be in the range of 0-59, inclusive.
 
 Class: class:word | Namespace: clock | Interface Layer: iOS, rre
 ------------------------------------------------------------------------
@@ -1741,7 +1741,7 @@ clock:month
   Addr:  -
   Float: -
 
-Return the current month.
+Return the current month. This will be in the range of 1-12, inclusive.
 
 Class: class:word | Namespace: clock | Interface Layer: iOS, rre
 ------------------------------------------------------------------------
@@ -1752,7 +1752,7 @@ clock:second
   Addr:  -
   Float: -
 
-Return the current second.
+Return the current second. This will be in the range of 0-59, inclusive.
 
 Class: class:word | Namespace: clock | Interface Layer: iOS, rre
 ------------------------------------------------------------------------
@@ -1763,7 +1763,7 @@ clock:timestamp
   Addr:  -
   Float: -
 
-Return a host and implementation specific timestamp.
+Return a host specific timestamp. In the standard system, this is a 32-bit Unix timestamp, but this is not required.
 
 Class: class:word | Namespace: clock | Interface Layer: rre
 ------------------------------------------------------------------------
@@ -1774,7 +1774,7 @@ clock:utc:day
   Addr:  -
   Float: -
 
-Return the current day.
+Return the current day in UTC.
 
 Class: class:word | Namespace: clock | Interface Layer: iOS, rre
 ------------------------------------------------------------------------
@@ -1785,7 +1785,7 @@ clock:utc:hour
   Addr:  -
   Float: -
 
-Return the current hour.
+Return the current hour in UTC.
 
 Class: class:word | Namespace: clock | Interface Layer: iOS, rre
 ------------------------------------------------------------------------
@@ -1796,7 +1796,7 @@ clock:utc:minute
   Addr:  -
   Float: -
 
-Return the current minute.
+Return the current minute in UTC.
 
 Class: class:word | Namespace: clock | Interface Layer: iOS, rre
 ------------------------------------------------------------------------
@@ -1807,7 +1807,7 @@ clock:utc:month
   Addr:  -
   Float: -
 
-Return the current month.
+Return the current month in UTC.
 
 Class: class:word | Namespace: clock | Interface Layer: iOS, rre
 ------------------------------------------------------------------------
@@ -1818,7 +1818,7 @@ clock:utc:second
   Addr:  -
   Float: -
 
-Return the current second.
+Return the current second in UTC.
 
 Class: class:word | Namespace: clock | Interface Layer: iOS, rre
 ------------------------------------------------------------------------
@@ -1829,7 +1829,7 @@ clock:utc:year
   Addr:  -
   Float: -
 
-Return the current year.
+Return the current year in UTC.
 
 Class: class:word | Namespace: clock | Interface Layer: iOS, rre
 ------------------------------------------------------------------------
@@ -3598,6 +3598,17 @@ Example #1:
 
 ------------------------------------------------------------------------
 
+io:clock-operation
+
+  Data:  ...n-
+  Addr:  -
+  Float: -
+
+Trigger a clock operation. This is not intended to be used directly.
+
+Class: class:word | Namespace: io | Interface Layer: rre
+------------------------------------------------------------------------
+
 io:enumerate
 
   Data:  -n
@@ -3653,6 +3664,17 @@ Ask an I/O device to identify itself. Returns a version (m) and device ID (N).
 Class: class:word | Namespace: io | Interface Layer: all
 ------------------------------------------------------------------------
 
+io:rng-operation
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Trigger a rng operation. This is not intended to be used directly.
+
+Class: class:word | Namespace: io | Interface Layer: rre
+------------------------------------------------------------------------
+
 io:scan-for
 
   Data:  n-m
@@ -3662,6 +3684,17 @@ io:scan-for
 Scan the I/O devices for a device with a specified ID. Returns the device number, or -1 if not found.
 
 Class: class:word | Namespace: io | Interface Layer: all
+------------------------------------------------------------------------
+
+io:socket-operation
+
+  Data:  ...n-
+  Addr:  -
+  Float: -
+
+Trigger a socket operation. This is not intended to be used directly.
+
+Class: class:word | Namespace: io | Interface Layer: rre
 ------------------------------------------------------------------------
 
 io:unix-syscall

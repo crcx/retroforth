@@ -1,4 +1,4 @@
-## Random Value
+## Random Number Generator
 
 ~~~
 {{
@@ -9,12 +9,8 @@
       [ drop 'IO_DEVICE_TYPE_0010_NOT_FOUND s:put nl ]
       [ !io ] choose ] if ;
   ---reveal---
-  :io:rng identify @io io:invoke ;
+  :io:rng-operation identify @io io:invoke ;
 }}
-~~~
 
-Return a random value from /dev/urandom
-
-~~~
-:n:random (-n)  io:rng ;
+:n:random (-n)  io:rng-operation ;
 ~~~

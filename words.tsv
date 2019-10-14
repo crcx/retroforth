@@ -146,17 +146,17 @@ class:primitive	a-	-	-	Class handler for primitive words (words which map to Nga
 class:word	a-	-	-	Class handler for normal words.	Execute the function at the provided address.	Compile a call to the specified address into the current definition.	class:word	{n/a}	{n/a}	class	all	
 clear	-	-	-	Clear the display.			class:word	{n/a}	{n/a}	global	rre	
 clock:day	-n	-	-	Return the current day.			class:word	{n/a}	{n/a}	clock	iOS, rre	
-clock:hour	-n	-	-	Return the current hour.			class:word	{n/a}	{n/a}	clock	iOS, rre	
-clock:minute	-n	-	-	Return the current minute.			class:word	{n/a}	{n/a}	clock	iOS, rre	
-clock:month	-n	-	-	Return the current month.			class:word	{n/a}	{n/a}	clock	iOS, rre	
-clock:second	-n	-	-	Return the current second.			class:word	{n/a}	{n/a}	clock	iOS, rre	
-clock:timestamp	-n	-	-	Return a host and implementation specific timestamp.			class:word	{n/a}	{n/a}	clock	rre	
-clock:utc:day	-n	-	-	Return the current day.			class:word	{n/a}	{n/a}	clock	iOS, rre	
-clock:utc:hour	-n	-	-	Return the current hour.			class:word	{n/a}	{n/a}	clock	iOS, rre	
-clock:utc:minute	-n	-	-	Return the current minute.			class:word	{n/a}	{n/a}	clock	iOS, rre	
-clock:utc:month	-n	-	-	Return the current month.			class:word	{n/a}	{n/a}	clock	iOS, rre	
-clock:utc:second	-n	-	-	Return the current second.			class:word	{n/a}	{n/a}	clock	iOS, rre	
-clock:utc:year	-n	-	-	Return the current year.			class:word	{n/a}	{n/a}	clock	iOS, rre	
+clock:hour	-n	-	-	Return the current hour. This will be in the range of 0-23, inclusive.			class:word	{n/a}	{n/a}	clock	iOS, rre	
+clock:minute	-n	-	-	Return the current minute. This will be in the range of 0-59, inclusive.			class:word	{n/a}	{n/a}	clock	iOS, rre	
+clock:month	-n	-	-	Return the current month. This will be in the range of 1-12, inclusive.			class:word	{n/a}	{n/a}	clock	iOS, rre	
+clock:second	-n	-	-	Return the current second. This will be in the range of 0-59, inclusive.			class:word	{n/a}	{n/a}	clock	iOS, rre	
+clock:timestamp	-n	-	-	Return a host specific timestamp. In the standard system, this is a 32-bit Unix timestamp, but this is not required.			class:word	{n/a}	{n/a}	clock	rre	
+clock:utc:day	-n	-	-	Return the current day in UTC.			class:word	{n/a}	{n/a}	clock	iOS, rre	
+clock:utc:hour	-n	-	-	Return the current hour in UTC.			class:word	{n/a}	{n/a}	clock	iOS, rre	
+clock:utc:minute	-n	-	-	Return the current minute in UTC.			class:word	{n/a}	{n/a}	clock	iOS, rre	
+clock:utc:month	-n	-	-	Return the current month in UTC.			class:word	{n/a}	{n/a}	clock	iOS, rre	
+clock:utc:second	-n	-	-	Return the current second in UTC.			class:word	{n/a}	{n/a}	clock	iOS, rre	
+clock:utc:year	-n	-	-	Return the current year in UTC.			class:word	{n/a}	{n/a}	clock	iOS, rre	
 clock:year	-n	-	-	Return the current year.			class:word	{n/a}	{n/a}	clock	iOS, rre	
 compile:call	a-	-	-	Compile a call to the specified address into the current definition.			class:word	{n/a}	{n/a}	compile	all	
 compile:jump	a-	-	-	Compile a jump to the specified address into the current definition.			class:word	{n/a}	{n/a}	compile	all	
@@ -309,12 +309,15 @@ image:save	s-	-	-	Save the current system to a new image file.			class:word	{n/a
 immediate	-	-	-	Change the class of the most recently defined word to `class:macro`.			class:word	{n/a}	{n/a}	global	all	
 include	s-	-	-	Run the code in the specified file. 			class:word	{n/a}	{n/a}	global	rre	
 interpret	s-	-	-	Interpret a single input token.			class:word	    '#100 interpret\n    'words interpret	{n/a}	global	all	
+io:clock-operation	...n-	-	-	Trigger a clock operation. This is not intended to be used directly.			class:word	{n/a}	{n/a}	io	rre	
 io:enumerate	-n	-	-	Return the number of I/O devices.			class:word	{n/a}	{n/a}	io	all	
 io:file-operation	...n-	-	-	Trigger a file I/O operation. This is not intended to be used directly.			class:word	{n/a}	{n/a}	io	rre	
 io:float-operation	...n-	-	-	Trigger a floating point operation. This is not intended to be used directly.			class:word	{n/a}	{n/a}	io	rre	
 io:invoke	n-	-	-	Invoke an interaction with an I/O device.			class:word	{n/a}	{n/a}	io	all	
 io:query	n-mN	-	-	Ask an I/O device to identify itself. Returns a version (m) and device ID (N).			class:word	{n/a}	{n/a}	io	all	
+io:rng-operation	-n	-	-	Trigger a rng operation. This is not intended to be used directly.			class:word	{n/a}	{n/a}	io	rre	
 io:scan-for	n-m	-	-	Scan the I/O devices for a device with a specified ID. Returns the device number, or -1 if not found.			class:word	{n/a}	{n/a}	io	all	
+io:socket-operation	...n-	-	-	Trigger a socket operation. This is not intended to be used directly.			class:word	{n/a}	{n/a}	io	rre	
 io:unix-syscall	...n-	-	-	Trigger a Unix system call. This is not intended to be used directly.			class:word	{n/a}	{n/a}	io	rre	
 listen	-	-	-	Run interactive "listener" (a REPL).			class:word	{n/a}	{n/a}	global	rre	
 lt?	nn-f	-	-	Compare n1 and n2. Return `TRUE` if n1 is less than n2, or `FALSE` otherwise.			class:primitive	{n/a}	{n/a}	global	all	

@@ -309,12 +309,15 @@ image:save               D: s-  A: -  F: -
 immediate                D: -  A: -  F: -
 include                  D: s-  A: -  F: -
 interpret                D: s-  A: -  F: -
+io:clock-operation       D: ...n-  A: -  F: -
 io:enumerate             D: -n  A: -  F: -
 io:file-operation        D: ...n-  A: -  F: -
 io:float-operation       D: ...n-  A: -  F: -
 io:invoke                D: n-  A: -  F: -
 io:query                 D: n-mN  A: -  F: -
+io:rng-operation         D: -n  A: -  F: -
 io:scan-for              D: n-m  A: -  F: -
+io:socket-operation      D: ...n-  A: -  F: -
 io:unix-syscall          D: ...n-  A: -  F: -
 listen                   D: -  A: -  F: -
 lt?                      D: nn-f  A: -  F: -

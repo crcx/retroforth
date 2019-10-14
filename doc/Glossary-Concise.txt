@@ -443,37 +443,37 @@ clock:day                D: -n  A: -  F: -
 Return the current day.
 
 clock:hour               D: -n  A: -  F: -
-Return the current hour.
+Return the current hour. This will be in the range of 0-23, inclusive.
 
 clock:minute             D: -n  A: -  F: -
-Return the current minute.
+Return the current minute. This will be in the range of 0-59, inclusive.
 
 clock:month              D: -n  A: -  F: -
-Return the current month.
+Return the current month. This will be in the range of 1-12, inclusive.
 
 clock:second             D: -n  A: -  F: -
-Return the current second.
+Return the current second. This will be in the range of 0-59, inclusive.
 
 clock:timestamp          D: -n  A: -  F: -
-Return a host and implementation specific timestamp.
+Return a host specific timestamp. In the standard system, this is a 32-bit Unix timestamp, but this is not required.
 
 clock:utc:day            D: -n  A: -  F: -
-Return the current day.
+Return the current day in UTC.
 
 clock:utc:hour           D: -n  A: -  F: -
-Return the current hour.
+Return the current hour in UTC.
 
 clock:utc:minute         D: -n  A: -  F: -
-Return the current minute.
+Return the current minute in UTC.
 
 clock:utc:month          D: -n  A: -  F: -
-Return the current month.
+Return the current month in UTC.
 
 clock:utc:second         D: -n  A: -  F: -
-Return the current second.
+Return the current second in UTC.
 
 clock:utc:year           D: -n  A: -  F: -
-Return the current year.
+Return the current year in UTC.
 
 clock:year               D: -n  A: -  F: -
 Return the current year.
@@ -931,6 +931,9 @@ Run the code in the specified file.
 interpret                D: s-  A: -  F: -
 Interpret a single input token.
 
+io:clock-operation       D: ...n-  A: -  F: -
+Trigger a clock operation. This is not intended to be used directly.
+
 io:enumerate             D: -n  A: -  F: -
 Return the number of I/O devices.
 
@@ -946,8 +949,14 @@ Invoke an interaction with an I/O device.
 io:query                 D: n-mN  A: -  F: -
 Ask an I/O device to identify itself. Returns a version (m) and device ID (N).
 
+io:rng-operation         D: -n  A: -  F: -
+Trigger a rng operation. This is not intended to be used directly.
+
 io:scan-for              D: n-m  A: -  F: -
 Scan the I/O devices for a device with a specified ID. Returns the device number, or -1 if not found.
+
+io:socket-operation      D: ...n-  A: -  F: -
+Trigger a socket operation. This is not intended to be used directly.
 
 io:unix-syscall          D: ...n-  A: -  F: -
 Trigger a Unix system call. This is not intended to be used directly.
