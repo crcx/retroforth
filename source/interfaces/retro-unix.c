@@ -1543,16 +1543,20 @@ void query_socket() {
   ---------------------------------------------------------------------*/
 
 void io_random() {
-  CELL r = 0;
+  int64_t r = 0;
   char buffer[8];
   int fd = open("/dev/urandom", O_RDONLY);
   read(fd, buffer, 8);
   close(fd);
   for(int i = 0; i < 8; ++i) {
     r = r << 8;
-    r += ((CELL)buffer[i] & 0xFF);
+    r += ((int64_t)buffer[i] & 0xFF);
   }
-  stack_push(abs(r));
+#ifndef BIT64
+  stack_push((CELL)abs((CELL)r));
+#else
+  stack_push(llabs(r));
+#endif
 }
 
 void io_random_query() {
