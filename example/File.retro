@@ -1,0 +1,64 @@
+~~~
+'/Users/yoneda/retro/package/File.retro d:create data
+~~~
+
+`file:load` includes a file and registers the file name into the dictionary.
+With it, the words in the file become viewable.
+
+Put file name into dictionary.
+
+~~~
+{{
+  :load:try (s-) dup file:exists?
+    [ include ] [ 'file__ s:prepend '__not_found s:append s:abort ] choose ;
+---reveal---
+  :file:load (s-) dup d:lookup n:-zero?
+    [ 'file:load_:__ s:prepend '__already_loaded s:append s:abort ]
+    [ dup d:create data load:try ] choose ;
+  :file:load.retro (s-) '.retro s:append file:load ;
+}}
+~~~
+
+Given a word, find the file in which the word was defined.
+Works imperfectly, but useful.
+
+~~~
+  RETRO (defined_in_Init.retro) 'source/retro.forth s:append 
+'SOURCE/RETRO s:const
+{{
+  'FileName var  'FileID var  'Size var  'Word var  'Line var
+  :word          (s-)  #0 !Word dup d:lookup dup n:zero?
+    [ drop 'word_%s_not_found s:format s:abort ] [ !Word drop ] choose ;
+  :word-name     (-a)  @Word d:name ;
+  :retro?        (a-f) d:name '.retro s:ends-with? ;
+  :search        (a-a)_a='.retro'_found__or__0=not
+    [ fetch dup retro? not over #0 -eq? and ] while ;
+  :file          (-)_assumes_@Word_is_not_zero
+    @Word d:link search dup n:zero?
+    [ drop SOURCE/RETRO ] [ d:name ] choose !FileName ;
+  :count-lines   (-)   #1 !Line 
+    (open @FileName file:open<for-reading> !FileID !Size )
+    [ @FileID file:read-line word-name s:contains-string? 
+      dup [ &Line v:inc ] -if not (-eof? @FileID file:tell @Size lt? ) and ] 
+    while (close @FileID file:close ) ;
+  :pre           (a-f) word file ;
+---reveal---
+  :d:file (s-) pre @FileName s:put nl ; 
+  :d:view (s-) pre count-lines @FileName @Line 
+      'ne_--read-only_+%n_%s s:format unix:system ; 
+  :d:edit (s-) pre count-lines @FileName @Line 
+    'ne_+%n_%s s:format unix:system ;
+}}
+~~~
+
+## BUGS
+
+The search fails when a word has been defined in a file that was
+not `file:load`ed but `include`d , or 
+when the word has been typed in from the console.
+In particular, words in files `include`d before `Load.retro`
+will not be found correctly..
+
+Also, words defined in Rx such as 
+`push`, `pop`, `drop`, `swap`, and `dup` are not found.
+
