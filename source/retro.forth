@@ -1035,9 +1035,9 @@ values can be stored.
 First are a bunch of words to help identify character values.
 
 ~~~
-:c:letter?      (c-f) $A $z n:between? ;
 :c:lowercase?   (c-f) $a $z n:between? ;
 :c:uppercase?   (c-f) $A $Z n:between? ;
+:c:letter?      (c-f) [ c:lowercase? ] [ c:uppercase? ] bi or ;
 :c:digit?       (c-f) $0 $9 n:between? ;
 :c:visible?     (c-f) #32 #126 n:between? ;
 :c:vowel?       (c-f) 'aeiouAEIOU swap s:contains-char? ;
