@@ -55,6 +55,15 @@ FILE-PATH 'index.html s:append file:W file:open !FID
 @FID file:close
 ~~~
 
+# Generate gophermap
+
+~~~
+FILE-PATH 'gophermap s:append file:W file:open !FID
+'Examples\n\n s:format s:put
+  [ dir? &drop [ dup '0%s\texamples/%s.html\n s:format s:put ] choose ] unix:for-each-file
+@FID file:close
+~~~
+
 # Generate HTML Files
 
 ~~~

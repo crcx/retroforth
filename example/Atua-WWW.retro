@@ -1,4 +1,4 @@
-#!/usr/bin/retro
+#!/usr/bin/env retro
 
 # Atua-WWW: A Gopher Server for the Web
 
@@ -166,6 +166,7 @@ These are just simple accessor words to aid in overall readability.
     '.md    [ 'text/markdown            ] s:case
     '.htm   [ 'text/html                ] s:case
     '.html  [ 'text/html                ] s:case
+    '.retro.html  [ 'text/html                ] s:case
     '.css   [ 'text/css                 ] s:case
     '.c     [ 'text/plain               ] s:case
     '.h     [ 'text/plain               ] s:case
