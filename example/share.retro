@@ -27,9 +27,9 @@ Next, I construct string constants for the destination file
 and URL's for Gopher and HTTPS.
 
 ~~~
-MD5 '/home/crc/public/%s        s:format 'DEST s:const
-MD5 'http://forth.works/%s      s:format 'HTTP s:const
-MD5 'gopher://forth.works/0/%s  s:format 'GOPH s:const
+MD5 '/home/crc/public/share/%s        s:format 'DEST s:const
+MD5 'http://forth.works/share/%s      s:format 'HTTP s:const
+MD5 'gopher://forth.works/0/share/%s  s:format 'GOPH s:const
 ~~~
 
 Then copy the source file to the destination directory.

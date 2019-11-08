@@ -306,6 +306,7 @@ The `gopher:icon` displays an indicator for menu items.
   '<!DOCTYPE_HTML_PUBLIC_"-//W3C//DTD_HTML_4.01//EN" s:put sp
   '"http://www.w3.org/TR/html4/strict.dtd"> s:put eol
   '<html><head><meta_http-equiv="Content-Type"_content="text/html;_charset=utf-8"> s:put
+  '<link_href=data:,_rel=icon> s:put
   '<style_type="text/css">tt_{_white-space:_pre;_} s:put
   '_*_{_color:_#bbb;_background:_#090909;_font-size:_large;_}_a_{_color:_#FF6600;_} s:put
   '</style><title>forthworks.com</title></head><body><p> s:put eol eol
