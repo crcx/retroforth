@@ -48,7 +48,7 @@
 #define CELL_MAX LLONG_MAX - 1
 #endif
 
-#define IMAGE_SIZE   524288 * 2   /* Amount of RAM. 4MiB (1M) cells    */
+#define IMAGE_SIZE   524288       /* Amount of RAM, in cells           */
 #define ADDRESSES    256          /* Depth of address stack            */
 #define STACK_DEPTH  256          /* Depth of data stack               */
 
@@ -61,7 +61,7 @@
 
 #define NUM_DEVICES      10       /* Set the number of I/O devices     */
 
-#define MAX_OPEN_FILES  128
+#define MAX_OPEN_FILES   32
 
 
 /*---------------------------------------------------------------------

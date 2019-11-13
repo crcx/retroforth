@@ -15,8 +15,7 @@ it using separate file to make the actual editing process easier
 for me.
 
 ~~~
-{
-  'Overview
+{ 'Overview
   'Obtaining-Retro
   'Building-Unix
   'Building-Windows
