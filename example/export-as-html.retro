@@ -20,7 +20,6 @@ be used to handle these.
   $< [ '&lt;  s:put ] case
   $> [ '&gt;  s:put ] case
   $& [ '&amp; s:put ] case
-  ASCII:SPACE [ '&nbsp; s:put ] case
   c:put ;
 :s:put-html [ c:put-html ] s:for-each ;
 ~~~
@@ -47,20 +46,20 @@ generate the HTML for the token, and a `format` word to identify
 the token type and use `span`.
 
 ~~~
-:span '<span_class=' s:put s:put ''> s:put s:put-html '</span> s:put ;
+:span '<span_class=' s:put s:put ''> s:put s:put-html '</span>_ s:put ;
 
 :format (s-)
   (ignore_empty_tokens)
-  dup s:length n:zero? [ drop ] if;
+  dup s:length n:zero? [ '&nbsp; s:put drop ] if;
 
   (tokens_with_prefixes)
   dup fetch
   $: [ 'colon     span ] case
   $( [ 'comment   span ] case
-  $' [ 'string    span ] case
-  $# [ 'number    span ] case
-  $& [ 'pointer   span ] case
-  $$ [ 'character span ] case
+  $' [ 'str       span ] case
+  $# [ 'num       span ] case
+  $& [ 'ptr       span ] case
+  $$ [ 'char      span ] case
   $` [ 'inst      span ] case
   $| [ 'defer     span ] case
   $@ [ 'fetch     span ] case
@@ -69,12 +68,12 @@ the token type and use `span`.
   (immediate_and_primitives)
   drop dup
   d:lookup d:class fetch
-  &class:macro     [ 'immediate span ] case
-  &class:primitive [ 'primitive span ] case
+  &class:macro     [ 'imm  span ] case
+  &class:primitive [ 'prim span ] case
   drop
 
   (normal_words)
-  s:put-html ;
+  s:put-html sp ;
 ~~~
 
 Next is the HTML page generation. This has words to generate
@@ -99,7 +98,7 @@ Output is written to stdout.
 
 :body (s-)
   '<body> s:put nl
-  [ ASCII:SPACE s:tokenize [ format '&nbsp; s:put ] a:for-each
+  [ ASCII:SPACE s:tokenize [ format ] a:for-each
     '<br> s:put nl ] unu
   '</body> s:put nl ;
 
@@ -120,51 +119,18 @@ And finally, run it.
 
 /* CSS Begins */
 
-* {
-  background: #111;
-  color: #44dd44;
-  font-family: monospace;
-}
-
-.text {
-  color: white;
-}
-
-.colon {
-  color: red;
-}
-.comment {
-  color: #888;
-}
-.string {
-  color: yellow;
-}
-.number {
-  color: cyan;
-}
-.pointer {
-  color: mediumorchid;
-}
-.fetch {
-  color: orchid;
-}
-.store {
-  color: orchid;
-}
-.character {
-  color: brown;
-}
-.inst {
-  color: tomato;
-}
-.defer {
-  color: #888;
-}
-
-.immediate {
-  color: orange;
-}
-
-.primitive {
-  color: greenyellow;
-}
+* { background: #111; color: #44dd44; font-family: monospace; }
+span { white-space: pre }
+.text { color: white; white-space: normal }
+.colon {  color: red; }
+.comment {  color: #888; }
+.str {  color: yellow; }
+.num { color: cyan; }
+.ptr { color: mediumorchid; }
+.fetch { color: orchid; }
+.store { color: orchid; }
+.char { color: brown; }
+.inst { color: tomato; }
+.defer { color: #888; }
+.imm { color: orange; }
+.prim { color: greenyellow; }
