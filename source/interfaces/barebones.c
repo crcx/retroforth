@@ -254,6 +254,8 @@ void inst_fetch() {
     case -1: TOS = sp - 1; break;
     case -2: TOS = rp; break;
     case -3: TOS = IMAGE_SIZE; break;
+    case -4: TOS = CELL_MIN; break;
+    case -5: TOS = CELL_MAX; break;
     default: TOS = memory[TOS]; break;
   }
 }
