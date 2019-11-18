@@ -1,0 +1,17 @@
+This directory contains the signing keys for the current and
+next release of RETRO. The signature files for releases will
+be generated using the OpenBSD signify tool.
+
+Releases are generally planned to be quarterly; so the first
+release would be 2020.01, and the second would be 2020.04.
+
+Two additional keys are also included, but will only be used
+if there are unplanned releases to fix significant issues that
+arise outside of the standard release schedule.
+
+For 2020, the planned releases are:
+
+  January: 2020.01
+  April:   2020.04
+  July:    2020.07
+  October: 2020.10
