@@ -263,18 +263,28 @@ instructions[vm.END] = function() {
   ip = IMAGE_SIZE;
 }
 instructions[vm.IE] = function() {
-  data.push(1);
+  data.push(2);
 }
 instructions[vm.IQ] = function() {
-  data.drop();
-  data.push(0);
-  data.push(0);
+  var chosen = data.pop();
+  if (chosen == 0) {
+    data.push(0);
+    data.push(0);
+  } else if (chosen == 1) {
+    data.push(20);
+    data.push(0);
+  }
 }
 instructions[vm.II] = function() {
-  data.pop();
-  var s = String.fromCharCode(data.pop());
-  document.getElementById('console').innerHTML += s;
+  var chosen = data.pop();
+  if (chosen == 0) {
+    var s = String.fromCharCode(data.pop());
+    document.getElementById('console').innerHTML += s;
+  } else if (chosen == 1) {
+    draw(data.pop())
+  }
 }
+
 window.addEventListener('load', function(e) {
   rxPrepareVM();
 }, false);
@@ -494,4 +504,19 @@ function saveproject() {
 function loadproject() {
   src = localStorage.getItem("Snapshot");
   document.getElementById("input").value = src;
+}
+
+function draw(fb_start) {
+  var canvas = document.getElementById('canvas');
+  var ctx = canvas.getContext('2d');
+  console.log(ctx);
+  var imgData = ctx.createImageData(300, 300);
+  var i;
+  for (i = 0; i < imgData.data.length / 4; i += 1) {
+    imgData.data[i * 4 + 0] = ((image[i + fb_start] >> 8) >> 8) & 255;
+    imgData.data[i * 4 + 1] = (image[i + fb_start] >> 8) & 255;
+    imgData.data[i * 4 + 2] = image[i + fb_start] & 255;
+    imgData.data[i * 4 + 3] = 255;
+  }
+  ctx.putImageData(imgData, 0, 0);
 }
