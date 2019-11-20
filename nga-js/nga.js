@@ -341,7 +341,7 @@ function execute(offset) {
     opcode = image[ip];
     if (ip == notfound) {
       document.getElementById('console').value +=
-        "err:notfound : " + string_extract(1471) + "\n";
+        "err:notfound : " + string_extract(1024) + "\n";
     }
     if (validatePackedOpcodes(opcode) != 0) {
       ngaProcessPackedOpcodes(opcode);
@@ -392,30 +392,12 @@ function string_extract(at) {
   return string_data;
 }
 
-function d_link(dt) {
-  return dt + 0;
-}
-
 function d_xt(dt) {
   return dt + 1;
 }
 
-function d_class(dt) {
-  return dt + 2;
-}
-
 function d_name(dt) {
   return dt + 3;
-}
-
-function d_count_entries() {
-  var c = 0;
-  var i = image[2];
-  while (image[i] != 0) {
-    c++;
-    i = image[i];
-  }
-  return c;
 }
 
 function d_lookup(name) {
@@ -438,15 +420,11 @@ function d_xt_for(name) {
   return image[d_xt(d_lookup(name))];
 }
 
-function d_class_for(name) {
-  return image[d_class(d_lookup(name))];
-}
-
 function evaluate(s) {
   if (s.length == 0)
     return;
-  string_inject(s, 1471);
-  data.push(1471);
+  string_inject(s, 1024);
+  data.push(1024);
   execute(interpret);
 }
 
