@@ -1,0 +1,27 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>RETRO FORTH</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="image.js"></script>
+  <script src="nga.js"></script>
+</head>
+<body onLoad='loadproject()'>
+<div class='left'>
+<textarea id='input' onchange='saveproject()'>
+</textarea>
+</div>
+<div class='mid'>
+<div style='border-bottom: 1px solid #FDF6E3; color: #657B83; background: #FDF6E3;'>
+  <button onclick='cls()'>Clear</button>
+  <button onclick='go()'>Go</button>
+</div>
+<div>
+<xmp id='console'>
+</xmp>
+</div>
+</div>
+<div class='right'>
+<iframe src='http://forth.works:9999'></iframe>
+</div>
+</body>
+</html>
