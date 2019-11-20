@@ -1,66 +1,64 @@
-  *::-webkit-scrollbar {
-    width: 0.5em;
-  }
- 
-  *::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-  }
-
-  *::-webkit-scrollbar-thumb {
-    background-color: rgba(0,0,0,0.3);
-    outline: 1px solid slategrey;
-  }
-
-body {
-  background: #657B83;
-  color: #FDF6E3;
-  font-size: 16pt;
-  font-family: monospace;
-  height:100%;
-  margin:0;
-  padding:0;
-}
-
-.left, .mid, .right {
-  float: left;
-  height: 100vp;
-  overflow: auto; overflow-x:hidden;
-  height:100%;
-}
-
-.left, .mid {
-  width: 39%;
-  border-right: 1px solid #FDF6E3;
-}
-
-.mid {
-  background: #657B83;
-}
-
-.right {
-  width: 21.5%;
-}
-
-textarea, iframe {
-  width:100%;
-  height:100%; 
-  box-sizing: border-box;         /* For IE and modern versions of Chrome */
-  -moz-box-sizing: border-box;    /* For Firefox                          */
-  -webkit-box-sizing: border-box; /* For Safari                           */
-  background: #657B83;
-  color: #FDF6E3;
-  font-size: 14pt;
-  border: 0px;
-  direction: ltr;
-}
-
-button {
-  color: #657B83;
-  background: #FDF6E3;
-  border: none;
-  font-size: 14pt;
-}
-
-xmp {
-  margin-left: 0.5em;
-}
+ *::-webkit-scrollbar {
+ 	width: 0.5em;
+ }
+ *::-webkit-scrollbar-track {
+ 	-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+ }
+ *::-webkit-scrollbar-thumb {
+ 	background-color: rgba(0, 0, 0, 0.3);
+ 	outline: 1px solid slategrey;
+ }
+ body {
+ 	background: #657B83;
+ 	color: #FDF6E3;
+ 	font-size: 16pt;
+ 	font-family: monospace;
+ 	height: 100%;
+ 	margin: 0;
+ 	padding: 0;
+ }
+ .left,
+ .mid,
+ .right {
+ 	float: left;
+ 	height: 100vp;
+ 	overflow: auto;
+ 	overflow-x: hidden;
+ 	height: 100%;
+ }
+ .left,
+ .mid {
+ 	width: 39%;
+ 	border-right: 1px solid #FDF6E3;
+ }
+ .mid {
+ 	background: #657B83;
+ }
+ .right {
+ 	width: 21.5%;
+ }
+ textarea,
+ iframe {
+ 	width: 100%;
+ 	height: 100%;
+ 	box-sizing: border-box;
+ 	/* For IE and modern versions of Chrome */
+ 	-moz-box-sizing: border-box;
+ 	/* For Firefox */
+ 	-webkit-box-sizing: border-box;
+ 	/* For Safari */
+ 	background: #657B83;
+ 	color: #FDF6E3;
+ 	font-size: 14pt;
+ 	border: 0px;
+ 	direction: ltr;
+ }
+ button {
+ 	color: #657B83;
+ 	background: #FDF6E3;
+ 	border: none;
+ 	font-size: 14pt;
+ }
+ xmp {
+ 	margin-left: 0.5em;
+ }
