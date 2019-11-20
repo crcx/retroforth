@@ -89,6 +89,8 @@ var address = new Stack(ADDRESS_DEPTH);
 var image = new Array(IMAGE_SIZE);
 var vm = new Opcodes();
 var instructions = new Array(vm.II + 1);
+var notfound = 0;
+var interpret = 0;
 
 function rxPrepareVM() {
   ip = 0;
@@ -335,7 +337,6 @@ function execute(offset) {
   var opcode;
   address.sp = 1;
   ip = offset;
-  var notfound = d_xt_for("err:notfound");
   while (ip < IMAGE_SIZE) {
     opcode = image[ip];
     if (ip == notfound) {
@@ -444,10 +445,9 @@ function d_class_for(name) {
 function evaluate(s) {
   if (s.length == 0)
     return;
-  var i = d_xt_for("interpret");
   string_inject(s, 1471);
   data.push(1471);
-  execute(i);
+  execute(interpret);
 }
 
 function cls() {
@@ -478,6 +478,8 @@ function unu(src) {
 function go() {
   rxPrepareVM();
   loadInitialImage();
+  notfound = d_xt_for("err:notfound");
+  interpret = d_xt_for("interpret");
   document.getElementById("console").innerHTML = "";
   src = document.getElementById("input").value;
   tokens = unu(src).match(/\S+/g);
