@@ -452,6 +452,8 @@ function evaluate(s) {
 
 function cls() {
   document.getElementById('console').innerHTML = "";
+  const context = canvas.getContext('2d');
+  context.clearRect(0, 0, canvas.width, canvas.height);
 }
 
 function unu(src) {
@@ -497,7 +499,6 @@ function go() {
 
 function saveproject() {
   src = document.getElementById("input").value;
-  console.log('saving ' + src);
   localStorage.setItem("Snapshot", src);
 }
 
@@ -509,7 +510,6 @@ function loadproject() {
 function draw(fb_start) {
   var canvas = document.getElementById('canvas');
   var ctx = canvas.getContext('2d');
-  console.log(ctx);
   var imgData = ctx.createImageData(300, 300);
   var i;
   for (i = 0; i < imgData.data.length / 4; i += 1) {
