@@ -1,8 +1,17 @@
 # RETRO 2020.01
 
+- rename package/list to package/list.forth
 - include signing keys for this and the next release
 - fix n:MIN and n:MAX queries on some of the interfaces
 - reduce default image size; max number of open files
 - updated html export for retro sources: averages 7.4% faster conversion, 26% smaller output across my test set
 - use a trick from https://getkiss.org/blog/20191004a to disable requests for a favicon in Atua-WWW
+
+In progress:
+
+- refactor and improve the nga-in-javascript implementation
+  - add a framebuffer (via canvas element)
+  - remove dead code
+  - reformat consistently
+  - performance improvements
 
