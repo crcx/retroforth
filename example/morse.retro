@@ -1,0 +1,121 @@
+Adjust this for your system.
+
+~~~
+:MS (n-)  #2000 * [ ] times ;
+~~~
+
+Ported from http://thecutecuttlefish.org/tmp/morse.fth
+
+~~~
+'SPEAKER var
+
+:START-SOUND (--)
+  './dev_dsp file:W file:open !SPEAKER ;
+
+:STOP-SOUND (--)
+  @SPEAKER file:close ;
+
+:BEEP (cycles--)
+  START-SOUND
+  [ '----**** [ @SPEAKER file:write ] s:for-each ] times
+  STOP-SOUND
+;
+
+
+:- #45 c:put #500 BEEP #50 MS  ; (Long
+:. #46 c:put #100 BEEP #10 MS  ; (Short
+
+:P  #50 MS      ; (Pause
+:LP #500 MS sp  ; (Long_Pause
+
+:A? dup $A eq? [ . - P     ] if ;
+:B? dup $B eq? [ - . . . P ] if ;
+:C? dup $C eq? [ - . - . P ] if ;
+:D? dup $D eq? [ - . . P   ] if ;
+:E? dup $E eq? [ . P       ] if ;
+:F? dup $F eq? [ . . - . P ] if ;
+:G? dup $G eq? [ - - . P   ] if ;
+:H? dup $H eq? [ . . . . P ] if ;
+:I? dup $I eq? [ . . P     ] if ;
+:J? dup $J eq? [ . - - - P ] if ;
+:K? dup $K eq? [ - . - P   ] if ;
+:L? dup $L eq? [ . - . . P ] if ;
+:M? dup $M eq? [ - - P     ] if ;
+:N? dup $N eq? [ - . P     ] if ;
+:O? dup $O eq? [ - - - P   ] if ;
+:P? dup $P eq? [ . - - . P ] if ;
+:Q? dup $Q eq? [ - - . - P ] if ;
+:R? dup $R eq? [ . - . P   ] if ;
+:S? dup $S eq? [ . . . P   ] if ;
+:T? dup $T eq? [ - P       ] if ;
+:U? dup $U eq? [ . . - P   ] if ;
+:V? dup $V eq? [ . . . - P ] if ;
+:W? dup $W eq? [ . - - P   ] if ;
+:X? dup $X eq? [ - . . - P ] if ;
+:Y? dup $Y eq? [ - . - - P ] if ;
+:Z? dup $Z eq? [ - - . . P ] if ;
+
+:SP? dup #32 eq? [ LP ] if ;
+
+:1? dup $1 eq? [ . - - - - P ] if ;
+:2? dup $2 eq? [ . . - - - P ] if ;
+:3? dup $3 eq? [ . . . - - P ] if ;
+:4? dup $4 eq? [ . . . . - P ] if ;
+:5? dup $5 eq? [ . . . . . P ] if ;
+:6? dup $6 eq? [ - . . . . P ] if ;
+:7? dup $7 eq? [ - - . . . P ] if ;
+:8? dup $8 eq? [ - - - . . P ] if ;
+:9? dup $9 eq? [ - - - - . P ] if ;
+:0? dup $0 eq? [ - - - - - P ] if ;
+
+
+:MORSE (s--)
+  nl
+  [
+    A?
+    B?
+    C?
+    D?
+    E?
+    F?
+    G?
+    H?
+    I?
+    J?
+    K?
+    L?
+    M?
+    N?
+    O?
+    P?
+    Q?
+    R?
+    S?
+    T?
+    U?
+    V?
+    W?
+    X?
+    Y?
+    Z?
+    
+    SP?
+
+    1?
+    2?
+    3?
+    4?
+    5?
+    6?
+    7?
+    8?
+    9?
+    0? drop ] s:for-each
+;
+~~~
+
+A simple test case:
+
+```
+'SOS_OR_NOT MORSE
+```

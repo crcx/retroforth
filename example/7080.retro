@@ -1,0 +1,145 @@
+#!/usr/bin/env retro
+
+# 7080: Gopher via HTTP
+
+There are a number of Gopher via HTTP Proxies now. But none of
+them are written in Forth, and I have a rather strong desire to
+use tools I've written and understand fully, so I decided to
+write my own.
+
+7080 is my Gopher via HTTP Proxy. It's not done yet, but is
+functional enough to be useful to me.
+
+To use:
+
+- replace all instances of HTTP-DOMAIN with the server URL.
+  (e.g., http://server.tld:port)
+- setup inetd to run this
+- visit http://server.tld:port/gopher-url
+
+  e.g., for floodgap:
+
+  http://server.tld:port/gopher.floodgap.com/1/
+
+
+~~~
+{ 'Server 'Port 'Selector 'Response 'Size } [ var ] a:for-each
+
+'Requested d:create #1025 allot
+'Host      d:create #1025 allot 
+'Buffer    d:create #500000 allot
+~~~
+
+A minimal HTTP/1.0 session will look like:
+
+    C: GET / HTTP/1.0
+    S: HTTP/1.0 200 OK
+    S: Content-Type: text/html
+    S: ... body ...
+    <disconnect>
+
+There are a lot more things the client and server can send,
+but this is all I need to care about for this proxy.
+
+~~~
+{{
+  'Done var
+
+  :eot? (c-f)
+    { ASCII:CR  ASCII:LF  ASCII:SPACE } a:contains? ;
+
+  :s:get (a-)
+    buffer:set [ c:get [ buffer:add ] [ eot? ] bi ] until
+    buffer:get drop ;
+---reveal---
+  :read (-)
+    [ here s:get
+      here s:to-upper 'GET   s:eq? [ &Requested s:get &Done v:inc ] if
+      @Done #1 eq? ] until ;
+}}
+~~~
+
+The fetch is currently done with a pipe to curl. This is
+reliable, but I'll probably redo this using raw sockets later
+so I can remove the need for something other than RETRO.
+
+~~~
+:net:fetch (san-n)
+  [ [ buffer:set
+      'curl_-s_%s s:format file:R unix:popen ] dip
+    [ dup file:read 0; buffer:add ] times unix:pclose
+    buffer:start s:length ] buffer:preserve ;
+
+:request (-)
+  &Requested 'http:// s:begins-with? [ &Requested #7 + ] [ &Requested n:inc ] choose
+  'gopher:// s:prepend
+  &Buffer FREE net:fetch &Buffer !Response !Size ;
+~~~
+
+~~~
+:parse-url (s-)
+  $: s:split s:keep !Server
+  $/ s:split n:inc s:to-number !Port
+  s:keep !Selector ;
+
+
+'Line var
+
+:put
+  $< [ '&lt;  s:put ] case
+  $> [ '&gt;  s:put ] case
+  $& [ '&amp; s:put ] case
+  c:put ;
+
+:s:putm [ put ] s:for-each ;
+
+:type
+  fetch-next ;
+
+:port        @Line #3 a:fetch ;
+:server      @Line #2 a:fetch ;
+:selector    @Line #1 a:fetch ;
+:description @Line #0 a:fetch ;
+
+:indicate
+  $0 [ 'TXT_ s:put selector port server '<a_href="HTTP-DOMAIN/%s:%s/0%s">%s</a> s:format s:put ] case
+  $1 [ 'DIR_ s:put selector port server '<a_href="HTTP-DOMAIN/%s:%s/1%s">%s</a> s:format s:put ] case
+  $2 [ 'CSO_ s:put s:put ] case
+  $3 [ 'ERR_ s:put s:put ] case
+  $4 [ 'BHX_ s:put s:put ] case
+  $5 [ 'DOS_ s:put s:put ] case
+  $6 [ 'UUE_ s:put s:put ] case
+  $7 [ 'FND_ s:put s:put ] case
+  $8 [ 'TEL_ s:put s:put ] case
+  $9 [ 'BIN_ s:put s:put ] case
+  $h [ 'HTM_ s:put selector #4 + '<a_href="%s">%s</a> s:format s:put ] case
+  $I [ 'IMG_ s:put s:put ] case
+  $g [ 'GIF_ s:put s:put ] case
+  $i [ '____ s:put s:put ] case
+  drop 'UNK_ s:put description s:put drop ;
+
+:tt '<tt_style='white-space:_pre'> s:put call '</tt><br> s:put nl ;
+:line
+  dup ASCII:HT s:contains-char?
+    [ ASCII:HT s:tokenize !Line @Line a:length #3 gteq? [ [ @Line #0 a:fetch type indicate ] tt ]
+                                                        [ @Line [ '<tt> s:put s:put '</tt> s:put ] a:for-each  nl ] choose ] if;
+  [ s:putm ] tt ;
+
+:css
+  '<style> s:put nl
+  '*_{_background:_black;_color:_silver;_} s:put nl
+  'a_{_color:_orange;_} s:put nl
+  '</style> s:put nl ;
+
+:process
+  &Buffer ASCII:HT s:contains-char? [ &Buffer ASCII:CR s:tokenize [ s:trim line ] a:for-each ] if;
+  '<xmp> s:put &Buffer s:put '</xmp> s:put ;
+
+:eol ASCII:CR c:put ASCII:LF c:put ;
+:headers 'HTTP/1.1_200_OK s:put eol 'Content-Type:_text/html s:put eol eol ;
+:7080 read request headers css process ;
+
+7080
+~~~
+
+&Requested '/home/crc/retro/proxy.log file:spew

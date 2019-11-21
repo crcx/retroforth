@@ -1,0 +1,16 @@
+Building a 64-bit RETRO system:
+
+- change CELL to int64_t in these files:
+
+    source/interfaces/retro-unix.c
+    tools/muri.c
+    tools/embedimage.c
+    tools/extend.c
+
+- update the `n:MIN` and `n:MAX` in source/retro.forth to:
+
+    :n:MAX        (-n)    #9223372036854775806 ;
+    :n:MIN        (-n)    #-9223372036854775807 ;
+
+Rebuild and enjoy your new 64-bit RETRO system.
+
