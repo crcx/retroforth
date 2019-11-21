@@ -79,7 +79,7 @@ test: bin/retro
 
 glossary: doc/Glossary.txt doc/Glossary.html doc/Glossary-Concise.txt doc/Glossary-Names-and-Stack.txt words.tsv
 
-image: source/interfaces/image.c
+image: interface/image.c
 
 js: bin/RETRO12.html
 
@@ -112,18 +112,19 @@ bin/retro-muri: tools/muri.c
 bin/RETRO12.html: bin/retro-injectimage-js
 	./bin/retro-injectimage-js >bin/RETRO12.html
 
-bin/retro-repl: source/interfaces/repl.c source/interfaces/image.c
-	cd source/interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../../bin/retro-repl repl.c
+bin/retro-repl: interface/repl.c interface/image.c
+	cd interface && $(CC) $(CFLAGS) $(LDFLAGS) -o ../bin/retro-repl repl.c
 
-bin/retro: ngaImage bin/retro-embedimage bin/retro-extend source/interfaces/retro-image.c source/interfaces/retro-unix.c source/interfaces/io/filesystem.retro source/interfaces/io/floatingpoint.retro source/interfaces/io/unix.retro source/interfaces/io/rng.retro source/interfaces/io/sockets.retro source/interfaces/retro-unix.retro source/interfaces/io/clock.retro
+bin/retro: ngaImage bin/retro-embedimage bin/retro-extend interface/retro-image.c interface/retro-unix.c interface/io/filesystem.retro interface/io/floatingpoint.retro interface/io/unix.retro interface/io/rng.retro interface/io/sockets.retro interface/retro-unix.retro interface/io/clock.retro
 	cp ngaImage rre.image
-	./bin/retro-extend rre.image source/interfaces/io/filesystem.retro source/interfaces/io/floatingpoint.retro source/interfaces/io/unix.retro source/interfaces/io/rng.retro source/interfaces/io/sockets.retro source/interfaces/retro-unix.retro source/interfaces/io/clock.retro 
-	./bin/retro-embedimage rre.image >source/interfaces/retro-image.c
-	cd source/interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../../bin/retro retro-unix.c $(LIBM)
+	./bin/retro-extend rre.image interface/io/filesystem.retro interface/io/floatingpoint.retro interface/io/unix.retro interface/io/rng.retro interface/io/sockets.retro interface/retro-unix.retro interface/io/clock.retro 
+	./bin/retro-embedimage rre.image >interface/retro-image.c
+	cd interface && $(CC) $(CFLAGS) $(LDFLAGS) -o ../bin/retro retro-unix.c $(LIBM)
 	cd package && ../bin/retro -f list.forth
-	./bin/retro-embedimage rre.image >source/interfaces/retro-image.c
+	./bin/retro-embedimage rre.image >interface/retro-image.c
 	rm rre.image
-	cd source/interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../../bin/retro retro-unix.c $(LIBM)
+
+	cd interface && $(CC) $(CFLAGS) $(LDFLAGS) -o ../bin/retro retro-unix.c $(LIBM)
 
 bin/retro-unu: tools/unu.c
 	$(CC) $(CFLAGS) $(LDFLAGS) -o bin/retro-unu tools/unu.c
@@ -144,16 +145,16 @@ doc/Glossary-Concise.txt: bin/retro sorted
 doc/Glossary-Names-and-Stack.txt: bin/retro sorted
 	./bin/retro glossary.retro export concise-stack >doc/Glossary-Names-and-Stack.txt
 
-interfaces/image.c: bin/retro-embedimage bin/retro-extend bin/retro-muri image/retro.forth image/rx.muri
+interface/image.c: bin/retro-embedimage bin/retro-extend bin/retro-muri image/retro.forth image/rx.muri
 	./bin/retro-muri image/rx.muri
 	./bin/retro-extend ngaImage image/retro.forth
-	./bin/retro-embedimage ngaImage > interfaces/image.c
+	./bin/retro-embedimage ngaImage > interface/image.c
 
-bin/retro-compiler: bin/retro-extend source/interfaces/retro-compiler.c source/interfaces/retro-runtime.c
+bin/retro-compiler: bin/retro-extend interface/retro-compiler.c interface/retro-runtime.c
 	cp ngaImage runtime.image
-	./bin/retro-extend runtime.image source/interfaces/io/filesystem.retro source/interfaces/io/floatingpoint.retro source/interfaces/io/unix.retro source/interfaces/io/rng.retro source/interfaces/retro-unix.retro source/interfaces/io/clock.retro
-	cd source/interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../../retro-runtime retro-runtime.c $(LIBM)
-	cd source/interfaces && $(CC) $(CFLAGS) $(LDFLAGS) -o ../../bin/retro-compiler retro-compiler.c
+	./bin/retro-extend runtime.image interface/io/filesystem.retro interface/io/floatingpoint.retro interface/io/unix.retro interface/io/rng.retro interface/retro-unix.retro interface/io/clock.retro
+	cd interface && $(CC) $(CFLAGS) $(LDFLAGS) -o ../retro-runtime retro-runtime.c $(LIBM)
+	cd interface && $(CC) $(CFLAGS) $(LDFLAGS) -o ../bin/retro-compiler retro-compiler.c
 	objcopy --add-section .ngaImage=runtime.image --set-section-flags .ngaImage=noload,readonly bin/retro-compiler
 	objcopy --add-section .runtime=retro-runtime --set-section-flags .runtime=noload,readonly bin/retro-compiler
 	rm runtime.image retro-runtime

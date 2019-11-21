@@ -109,7 +109,7 @@ int main(int argc, char **argv) {
   else
       size = ngaLoadImage("ngaImage");
 
-  extract("source/interfaces/alternates/retro12.html", size);
+  extract("interface/alternates/retro12.html", size);
 
   exit(0);
 }
