@@ -63,4 +63,6 @@
  	margin-left: 0.5em;
  }
  canvas {
+	width:100%;
+	height:auto;
  }
