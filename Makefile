@@ -89,9 +89,9 @@ retro-describe: bin/retro-describe
 
 # File targets.
 
-ngaImage: source/rx.muri source/retro.forth bin/retro-muri bin/retro-extend
-	./bin/retro-muri source/rx.muri
-	./bin/retro-extend ngaImage source/retro.forth
+ngaImage: image/rx.muri image/retro.forth bin/retro-muri bin/retro-extend
+	./bin/retro-muri image/rx.muri
+	./bin/retro-extend ngaImage image/retro.forth
 
 bin/retro-describe: retro-describe.retro words.tsv
 	cat retro-describe.retro words.tsv >bin/retro-describe
@@ -144,9 +144,9 @@ doc/Glossary-Concise.txt: bin/retro sorted
 doc/Glossary-Names-and-Stack.txt: bin/retro sorted
 	./bin/retro glossary.retro export concise-stack >doc/Glossary-Names-and-Stack.txt
 
-interfaces/image.c: bin/retro-embedimage bin/retro-extend bin/retro-muri source/retro.forth source/rx.muri
-	./bin/retro-muri source/rx.muri
-	./bin/retro-extend ngaImage source/retro.forth
+interfaces/image.c: bin/retro-embedimage bin/retro-extend bin/retro-muri image/retro.forth image/rx.muri
+	./bin/retro-muri image/rx.muri
+	./bin/retro-extend ngaImage image/retro.forth
 	./bin/retro-embedimage ngaImage > interfaces/image.c
 
 bin/retro-compiler: bin/retro-extend source/interfaces/retro-compiler.c source/interfaces/retro-runtime.c
