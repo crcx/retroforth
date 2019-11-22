@@ -94,7 +94,7 @@ ngaImage: image/rx.muri image/retro.forth bin/retro-muri bin/retro-extend
 	./bin/retro-extend ngaImage image/retro.forth
 
 bin/retro-describe: retro-describe.retro words.tsv
-	cat retro-describe.retro words.tsv >bin/retro-describe
+	cat tools/retro-describe.retro words.tsv >bin/retro-describe
 	chmod +x bin/retro-describe
 
 bin/retro-embedimage: tools/embedimage.c
