@@ -989,7 +989,7 @@ characters that are of some general interest.
 :s:PUNCTUATION     (-s)
   '_!"#$%&'()*+,-./:;<=>?@[\]^`{|}~ $_ over store ;
 's:WHITESPACE d:create
-  #32, #9 , #10 , #13 , #0 ,
+  #32 , #9 , #10 , #13 , #0 ,
 ~~~
 
 I have a few words that correspond to empty versions of the
@@ -1043,13 +1043,7 @@ First are a bunch of words to help identify character values.
 :c:vowel?       (c-f) 'aeiouAEIOU swap s:contains-char? ;
 :c:consonant?   (c-f)
   dup c:letter? [ c:vowel? not ] [ drop FALSE ] choose ;
-
-{{
-  'WS d:create
-    ASCII:SPACE , ASCII:HT , ASCII:LF , ASCII:CR , #0 ,
----reveal---
-  :c:whitespace?  (c-f) &WS swap s:contains-char? ;
-}}
+:c:whitespace?  (c-f) s:WHITESPACE swap s:contains-char? ;
 ~~~
 
 And the inverse forms. (These are included for readability and
