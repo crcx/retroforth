@@ -66,7 +66,7 @@ for me.
 :\n            ASCII:LF @Out file:write ;
 :add-to-book   here [ @Out file:write ] s:for-each \n ;
 :process-files [ import add-to-book $. c:put ] a:for-each nl ;
-:open          'RETRO-Book.md file:open<for-writing> !Out ;
+:open          'doc/RETRO-Book.md file:open<for-writing> !Out ;
 :close         @Out file:close ;
 :assemble      open process-files close ;
 ~~~
@@ -82,7 +82,7 @@ for me.
 
 
 ~~~
-:process       dup assemble gophermap ;
+:process       (dup assemble (gophermap ;
 
 TOC process
 ~~~
