@@ -46,10 +46,10 @@ install-strip: build install-data install-docs install-examples
 
 install-data:
 	install -m 755 -d -- $(DESTDIR)$(DATADIR)
-	install -c -m 644 glossary.retro $(DESTDIR)$(DATADIR)/glossary.retro
+	install -c -m 644 tools/glossary.retro $(DESTDIR)$(DATADIR)/glossary.retro
 	install -c -m 644 ngaImage $(DESTDIR)$(DATADIR)/ngaImage
 	cp -fpR tests $(DESTDIR)$(DATADIR)/
-	install -c -m 644 words.tsv $(DESTDIR)$(DATADIR)/words.tsv
+	install -c -m 644 hoc/words.tsv $(DESTDIR)$(DATADIR)/words.tsv
 
 install-docs:
 	install -m 755 -d -- $(DESTDIR)$(DOCSDIR)
@@ -77,7 +77,7 @@ test: bin/retro
 
 # Targets for development/interactive usage
 
-glossary: doc/Glossary.txt doc/Glossary.html doc/Glossary-Concise.txt doc/Glossary-Names-and-Stack.txt words.tsv
+glossary: doc/Glossary.txt doc/Glossary.html doc/Glossary-Concise.txt doc/Glossary-Names-and-Stack.txt doc/words.tsv
 
 image: vm/nga-c/image.c
 
@@ -93,8 +93,8 @@ ngaImage: image/rx.muri image/retro.forth bin/retro-muri bin/retro-extend
 	./bin/retro-muri image/rx.muri
 	./bin/retro-extend ngaImage image/retro.forth
 
-bin/retro-describe: retro-describe.retro words.tsv
-	cat tools/retro-describe.retro words.tsv >bin/retro-describe
+bin/retro-describe: tools/retro-describe.retro doc/words.tsv
+	cat tools/retro-describe.retro doc/words.tsv >bin/retro-describe
 	chmod +x bin/retro-describe
 
 bin/retro-embedimage: tools/embedimage.c
@@ -128,21 +128,21 @@ bin/retro: ngaImage bin/retro-embedimage bin/retro-extend vm/nga-c/retro-image.c
 bin/retro-unu: tools/unu.c
 	$(CC) $(CFLAGS) $(LDFLAGS) -o bin/retro-unu tools/unu.c
 
-sorted: words.tsv
-	LC_ALL=C sort -o sorted.tsv words.tsv
-	mv sorted.tsv words.tsv
+sorted: doc/words.tsv
+	LC_ALL=C sort -o sorted.tsv doc/words.tsv
+	mv sorted.tsv doc/words.tsv
 
 doc/Glossary.txt: bin/retro sorted
-	./bin/retro glossary.retro export glossary >doc/Glossary.txt
+	./bin/retro tools/glossary.retro export glossary >doc/Glossary.txt
 
 doc/Glossary.html: bin/retro sorted
-	./bin/retro glossary.retro export html >doc/Glossary.html
+	./bin/retro tools/glossary.retro export html >doc/Glossary.html
 
 doc/Glossary-Concise.txt: bin/retro sorted
-	./bin/retro glossary.retro export concise >doc/Glossary-Concise.txt
+	./bin/retro tools/glossary.retro export concise >doc/Glossary-Concise.txt
 
 doc/Glossary-Names-and-Stack.txt: bin/retro sorted
-	./bin/retro glossary.retro export concise-stack >doc/Glossary-Names-and-Stack.txt
+	./bin/retro tools/glossary.retro export concise-stack >doc/Glossary-Names-and-Stack.txt
 
 vm/nga-c/image.c: bin/retro-embedimage bin/retro-extend bin/retro-muri image/retro.forth image/rx.muri
 	./bin/retro-muri image/rx.muri

@@ -257,7 +257,7 @@ There are five primary roles:
   :matched? (-f) field:name TARGET s:eq? ;
 ---reveal---
   :find-and-display-entry
-   'words.tsv [ s:keep !SourceLine matched? [ display-result ] if ] file:for-each-line ;
+   'doc/words.tsv [ s:keep !SourceLine matched? [ display-result ] if ] file:for-each-line ;
 }}
 ~~~
 
@@ -281,7 +281,7 @@ before doing the checks.
 
   :restrict-scope  'GLOSSARY-TOOL d:lookup fetch !Dictionary ;
   :record-name     !SourceLine field:name s:keep over &GlossaryNames + store ;
-  :populate-names  #1 'words.tsv [ record-name n:inc ] file:for-each-line
+  :populate-names  #1 'doc/words.tsv [ record-name n:inc ] file:for-each-line
                    n:dec &GlossaryNames store ;
   :in-set?         dup &GlossaryNames a:contains-string? ;
 ---reveal---
@@ -294,7 +294,7 @@ before doing the checks.
 
 ## Add a Word
 
-This just adds a stub to the end of the words.tsv file. You'll
+This just adds a stub to the end of the doc/words.tsv file. You'll
 need to run the edit commands for each field to fully populate
 it.
 
@@ -302,7 +302,7 @@ it.
 {{
   'ADD var
   :template '%s\t-\t-\t-\t{n/a}\t\t\tclass:word\t{n/a}\t{n/a}\t{n/a}\t{n/a}\t{n/a}\n ;
-  :prepare  'words.tsv file:A file:open !ADD ;
+  :prepare  'doc/words.tsv file:A file:open !ADD ;
   :cleanup  @ADD file:close ;
 ---reveal---
   :add-word
@@ -317,7 +317,7 @@ it.
 
 This works by reading each line and writing them to a new file.
 Entries that match the word to delete are discarded. The new
-file then replaces the original `words.tsv`.
+file then replaces the original `doc/words.tsv`.
 
 ~~~
 {{
@@ -329,7 +329,7 @@ file then replaces the original `words.tsv`.
 ---reveal---
   :delete-entry
     prepare
-    'words.tsv [ s:keep !SourceLine matched? [ keep-entry ] -if ] file:for-each-line
+    'doc/words.tsv [ s:keep !SourceLine matched? [ keep-entry ] -if ] file:for-each-line
     cleanup ;
 }}
 ~~~
@@ -466,7 +466,7 @@ Next, get the editor from the $EDITOR environment variable.
 ---reveal---
   :handle-edit
     prepare
-    'words.tsv
+    'doc/words.tsv
     [ s:keep !SourceLine field:name TARGET2 s:eq?
       [ select-field generate-entry ]
       [ @SourceLine  write-line     ] choose write-nl
@@ -493,15 +493,15 @@ a separator bar between each entry.
 {{
   :horizontal-line #72 [ $- c:put ] times nl nl ;
   :export-glossary
-    'words.tsv
+    'doc/words.tsv
     [ s:keep !SourceLine display-result horizontal-line ] file:for-each-line ;
 
   :export-concise
-    'words.tsv
+    'doc/words.tsv
     [ s:keep !SourceLine display-concise-result ] file:for-each-line ;
 
   :export-concise-stack
-    'words.tsv
+    'doc/words.tsv
     [ s:keep !SourceLine display-concise-result<stack-only> ] file:for-each-line ;
 
 ~~~
@@ -510,8 +510,8 @@ a separator bar between each entry.
 
 ~~~
   :export-html
-    'words.tsv [ s:keep !SourceLine
-                 display-result<HTML> '<hr/> s:put nl ] file:for-each-line ;
+    'doc/words.tsv [ s:keep !SourceLine
+                     display-result<HTML> '<hr/> s:put nl ] file:for-each-line ;
 ~~~
 
 #### TSV
@@ -537,7 +537,7 @@ you edit/save the TSV data with a spreadsheet application.
     [ call s:put tab ] a:for-each nl ;
 
   :export-tsv
-    'words.tsv [ s:keep !SourceLine display-fields ] file:for-each-line ;
+    'doc/words.tsv [ s:keep !SourceLine display-fields ] file:for-each-line ;
 ---reveal---
 ~~~
 
@@ -632,7 +632,7 @@ generating the directory line for each.
 
 ~~~
   :gopher:list-words (-)
-    'words.tsv [ s:keep !SourceLine display-entry ] file:for-each-line ;
+    'doc/words.tsv [ s:keep !SourceLine display-entry ] file:for-each-line ;
 ~~~
 
 With the Gopher side of the index taken care of, I turn my
@@ -657,7 +657,7 @@ this to build an index.
     field:name sanitize over '<a_href="/%n">%s</a><br>\n s:format s:put ;
 
   :http:list-words (-)
-    #0 'words.tsv [ s:keep !SourceLine display-entry n:inc ] file:for-each-line drop ;
+    #0 'doc/words.tsv [ s:keep !SourceLine display-entry n:inc ] file:for-each-line drop ;
 ~~~
 
 Next, words to display a specific word.
@@ -667,7 +667,7 @@ Next, words to display a specific word.
   :matched? (-f) field:name @Target s:eq? ;
 
   :gopher:display
-   'words.tsv [ s:keep !SourceLine matched? [ display-result ] if ] file:for-each-line ;
+   'doc/words.tsv [ s:keep !SourceLine matched? [ display-result ] if ] file:for-each-line ;
 ~~~
 
 And then the actual top level server.
@@ -693,7 +693,7 @@ And then the actual top level server.
   :entry display-result<HTML> ;
 
   :http:display (-)
-    #0 'words.tsv [ s:keep !SourceLine dup-pair eq? [ entry ] if n:inc ] file:for-each-line drop-pair ;
+    #0 'doc/words.tsv [ s:keep !SourceLine dup-pair eq? [ entry ] if n:inc ] file:for-each-line drop-pair ;
 
   :send-http-headers
     'HTTP/1.0_200_OK\nContent-Type:_text/html\n\n s:format s:put ;
