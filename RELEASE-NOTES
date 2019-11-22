@@ -7,6 +7,7 @@
 - updated html export for retro sources: averages 7.4% faster conversion, 26% smaller output across my test set
 - use a trick from https://getkiss.org/blog/20191004a to disable requests for a favicon in Atua-WWW
 - fix a bug in s:WHITESPACE and use it in c:whitespace?
+- reorganize source tree
 
 In progress:
 
