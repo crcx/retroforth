@@ -18,29 +18,24 @@
  	padding: 0;
  }
  .left,
- .mid,
  .right {
  	float: left;
  	height: 100vp;
  	overflow: auto;
  	overflow-x: hidden;
  	height: 100%;
- }
- .left,
- .mid {
- 	width: 39%;
  	border-right: 1px solid #FDF6E3;
  }
- .mid {
- 	background: #657B83;
+ .left {
+ 	width: 49.5%;
  }
  .right {
- 	width: 21.5%;
+ 	width: 49.5%;
  }
  textarea,
  iframe {
  	width: 100%;
- 	height: 100%;
+ 	height: 70%;
  	box-sizing: border-box;
  	/* For IE and modern versions of Chrome */
  	-moz-box-sizing: border-box;
@@ -52,6 +47,9 @@
  	font-size: 14pt;
  	border: 0px;
  	direction: ltr;
+ }
+ iframe {
+ 	height: 30%;
  }
  button {
  	color: #657B83;

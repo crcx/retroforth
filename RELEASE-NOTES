@@ -16,4 +16,4 @@ In progress:
   - remove dead code
   - reformat consistently
   - performance improvements
-
+- split the glossary tool into smaller parts

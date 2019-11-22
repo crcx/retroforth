@@ -10,6 +10,8 @@ var IMAGE_SIZE = 524288;    /* Amount of simulated RAM    */
 var DATA_DEPTH = 8192;      /* Depth of data stack        */
 var ADDRESS_DEPTH = 32768;  /* Depth of the stacks        */
 
+var framebuffer = 0;
+
 function Stack(size) {
   this.sp = 0;
   this.data = new Array(size);
@@ -96,6 +98,7 @@ function rxPrepareVM() {
   ip = 0;
   data.reset();
   address.reset();
+  framebuffer = 0;
 }
 
 instructions[vm.NOP] = function() {}
@@ -475,6 +478,13 @@ function go() {
     j++;
   }
   document.getElementById("console").innerHTML += "\n" + s;
+  if (framebuffer === 0) {
+    var canvas = document.getElementById('canvas');
+    canvas.style.display = "none";
+  } else {
+    var canvas = document.getElementById('canvas');
+    canvas.style.display = "block";
+  }
 }
 
 function saveproject() {
@@ -488,6 +498,7 @@ function loadproject() {
 }
 
 function draw(fb_start) {
+  framebuffer = 1;
   var canvas = document.getElementById('canvas');
   var ctx = canvas.getContext('2d');
   var imgData = ctx.createImageData(300, 300);

@@ -166,7 +166,7 @@ export and (eventually) ePub.
                      c:put ] s:for-each ;
 
   :div             '<div_style='margin-left:_1em;'> s:put  call  '</div> s:put nl ;
-  :header          '<h1>  s:put  call  '</h1>  s:put nl ;
+  :header          '<h2>  s:put  call  '</h2>  s:put nl ;
   :paragraph       '<p>   s:put  call  '</p>   s:put nl ;
   :br              '<br>  s:put nl ;
   :xmp             '<xmp_style='background:#222'> s:put  call  '</xmp> s:put nl ;
