@@ -467,8 +467,6 @@ unix:fork                D: -n  A: -  F: -
 unix:get-cwd             D: -s  A: -  F: -
 unix:getenv              D: sa-  A: -  F: -
 unix:getpid              D: -n  A: -  F: -
-unix:io:n:put            D: n-  A: -  F: -
-unix:io:s:put            D: s-  A: -  F: -
 unix:kill                D: nn-  A: -  F: -
 unix:pclose              D: n-  A: -  F: -
 unix:popen               D: sn-n  A: -  F: -
@@ -477,7 +475,6 @@ unix:sleep               D: n-  A: -  F: -
 unix:slurp-pipe          D: as-n  A: -  F: -
 unix:system              D: s-  A: -  F: -
 unix:wait                D: -n  A: -  F: -
-unix:write               D: sh-  A: -  F: -
 until                    D: q-  A: -  F: -
 v:dec                    D: a-  A: -  F: -
 v:dec-by                 D: na-  A: -  F: -

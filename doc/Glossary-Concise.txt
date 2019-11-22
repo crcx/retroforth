@@ -1405,12 +1405,6 @@ Get an environment variable. Provide the name and an address to store it in.
 unix:getpid              D: -n  A: -  F: -
 Return the PID of the current process.
 
-unix:io:n:put            D: n-  A: -  F: -
-Deprecated. Display a number (in base 10) to the standard output device. This is faster than `n:put`, but not portable.
-
-unix:io:s:put            D: s-  A: -  F: -
-Deprecated. Display a string to stdout. This is faster than `s:put`, but not portable.
-
 unix:kill                D: nn-  A: -  F: -
 Terminates a process. Takes a process and a signal to send.
 
@@ -1434,9 +1428,6 @@ Runs another application using the system shell and returns after execution is c
 
 unix:wait                D: -n  A: -  F: -
 Waits for a child process to complete. This maps to the wait() system call.
-
-unix:write               D: sh-  A: -  F: -
-Deprecated. Write a string to the specified file handle.
 
 until                    D: q-  A: -  F: -
 Execute quote repeatedly while the quote returns a value of `FALSE`. The quote should return a flag of either `TRUE` or `FALSE`, though `until` will treat any non-zero value as `TRUE`.

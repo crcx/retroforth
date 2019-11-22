@@ -5536,28 +5536,6 @@ Return the PID of the current process.
 Class: class:word | Namespace: unix | Interface Layer: rre
 ------------------------------------------------------------------------
 
-unix:io:n:put
-
-  Data:  n-
-  Addr:  -
-  Float: -
-
-Deprecated. Display a number (in base 10) to the standard output device. This is faster than `n:put`, but not portable.
-
-Class: class:word | Namespace: unix:io | Interface Layer: rre
-------------------------------------------------------------------------
-
-unix:io:s:put
-
-  Data:  s-
-  Addr:  -
-  Float: -
-
-Deprecated. Display a string to stdout. This is faster than `s:put`, but not portable.
-
-Class: class:word | Namespace: unix:io | Interface Layer: rre
-------------------------------------------------------------------------
-
 unix:kill
 
   Data:  nn-
@@ -5652,17 +5630,6 @@ unix:wait
   Float: -
 
 Waits for a child process to complete. This maps to the wait() system call.
-
-Class: class:word | Namespace: unix | Interface Layer: rre
-------------------------------------------------------------------------
-
-unix:write
-
-  Data:  sh-
-  Addr:  -
-  Float: -
-
-Deprecated. Write a string to the specified file handle.
 
 Class: class:word | Namespace: unix | Interface Layer: rre
 ------------------------------------------------------------------------
