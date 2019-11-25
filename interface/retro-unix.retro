@@ -56,6 +56,7 @@ a quote which looks for an end of line character.
 
 ~~~
 :s:get (-s) [ [ ASCII:LF eq? ] [ ASCII:CR eq? ] bi or ] parse-until ;
+:s:get-word (-s) [ c:whitespace? ] parse-until ;
 ~~~
 
 

@@ -4737,6 +4737,17 @@ Read input from standard in (via `c:get`) until a CR or LF is encountered. Retur
 Class: class:word | Namespace: all | Interface Layer: rre
 ------------------------------------------------------------------------
 
+s:get-word
+
+  Data:  -s
+  Addr:  -
+  Float: -
+
+Read input from standard in (via `c:get`) until a whitespace is encountered. Returns a strig.
+
+Class: class:word | Namespace: all | Interface Layer: rre
+------------------------------------------------------------------------
+
 s:hash
 
   Data:  s-n

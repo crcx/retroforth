@@ -400,6 +400,7 @@ s:filter                 D: sq-s  A: -  F: -
 s:for-each               D: sq-  A: -  F: -
 s:format                 D: ...s-s  A: -  F: -
 s:get                    D: -s  A: -  F: -
+s:get-word               D: -s  A: -  F: -
 s:hash                   D: s-n  A: -  F: -
 s:index-of               D: sc-n  A: -  F: -
 s:index-of-string        D: ss-n  A: -  F: -

@@ -1204,6 +1204,9 @@ Construct a new string using the template passed and items from the stack.
 s:get                    D: -s  A: -  F: -
 Read input from standard in (via `c:get`) until a CR or LF is encountered. Returns a strig.
 
+s:get-word               D: -s  A: -  F: -
+Read input from standard in (via `c:get`) until a whitespace is encountered. Returns a strig.
+
 s:hash                   D: s-n  A: -  F: -
 Calculate a hash value for a string. This uses the djb2 algorithm.
 

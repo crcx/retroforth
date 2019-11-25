@@ -400,6 +400,7 @@ s:filter	sq-s	-	-	Execute the quote once for each value in the string. If the qu
 s:for-each	sq-	-	-	Execute the quote once for each value in the string.			class:word	{n/a}	{n/a}	s	all	
 s:format	...s-s	-	-	Construct a new string using the template passed and items from the stack.			class:word	{n/a}	{n/a}	s	all	
 s:get	-s	-	-	Read input from standard in (via `c:get`) until a CR or LF is encountered. Returns a strig.			class:word	{n/a}	{n/a}	all	rre	
+s:get-word	-s	-	-	Read input from standard in (via `c:get`) until a whitespace is encountered. Returns a strig.			class:word	{n/a}	{n/a}	all	rre	
 s:hash	s-n	-	-	Calculate a hash value for a string. This uses the djb2 algorithm.			class:word	{n/a}	{n/a}	s	all	
 s:index-of	sc-n	-	-	Return the location of the first instance of the specified character in the string.			class:word	{n/a}	{n/a}	s	all	
 s:index-of-string	ss-n	-	-	Return the location of the first instance of the specified substring (s2) in the string (s1). Returns -1 if not found.			class:word	{n/a}	{n/a}	s	all	
