@@ -488,6 +488,8 @@ void help(char *exename) {
   printf("    Run the contents of the specified file\n");
   printf("  -u filename\n");
   printf("    Use the image in the specified file instead of the internal one\n");
+  printf("  -r filename\n");
+  printf("    Use the image in the specified file instead of the internal one and run the code in it\n");
   printf("  -t\n");
   printf("    Run tests (in ``` blocks) in any loaded files\n\n");
 }
@@ -522,6 +524,7 @@ int arg_is(char *argv, char *t) {
 
 enum flags {
   FLAG_HELP, FLAG_RUN_TESTS, FLAG_INCLUDE, FLAG_INTERACTIVE, FLAG_SILENT,
+  FLAG_RUN,
 };
 
 int main(int argc, char **argv) {
@@ -574,6 +577,10 @@ int main(int argc, char **argv) {
     } else if (strcmp(argv[i], "-u") == 0) {
       i++;
       ngaLoadImage(argv[i]);
+    } else if (strcmp(argv[i], "-r") == 0) {
+      i++;
+      ngaLoadImage(argv[i]);
+      modes[FLAG_RUN] = 1;
     } else if (strcmp(argv[i], "-t") == 0) {
       modes[FLAG_RUN_TESTS] = 1;
       run_tests = 1;
@@ -595,6 +602,10 @@ int main(int argc, char **argv) {
   /* Run the Listener (if interactive mode was set) */
   if (modes[FLAG_INTERACTIVE] == 1) {
     while (1) rre_execute(0, -1);
+  }
+
+  if (modes[FLAG_RUN] == 1) {
+    rre_execute(0, -1);
   }
 }
 

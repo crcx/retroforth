@@ -11,6 +11,7 @@
 .Op Fl t
 .Op Fl f Ar filename
 .Op Fl u Ar filename
+.Op Fl r Ar filename
 .Op Ar filename Ar script-args
 .Sh DESCRIPTION
 RETRO is a modern, pragmatic Forth drawing influences from many sources.
@@ -33,6 +34,8 @@ Run any test blocks in the loaded files.
 Run any code blocks in the specified file.
 .It Fl u Ar filename
 Load and use the specified image file rather than the integral one.
+.It Fl r Ar filename
+Load and run the code in the specified image file rather than the integral one.
 .It filename script-args
 Run code blocks in a single file. Pass script-args to the code being run.
 .El
