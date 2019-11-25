@@ -49,7 +49,7 @@ install-data:
 	install -c -m 644 tools/glossary.retro $(DESTDIR)$(DATADIR)/glossary.retro
 	install -c -m 644 ngaImage $(DESTDIR)$(DATADIR)/ngaImage
 	cp -fpR tests $(DESTDIR)$(DATADIR)/
-	install -c -m 644 hoc/words.tsv $(DESTDIR)$(DATADIR)/words.tsv
+	install -c -m 644 doc/words.tsv $(DESTDIR)$(DATADIR)/words.tsv
 
 install-docs:
 	install -m 755 -d -- $(DESTDIR)$(DOCSDIR)
