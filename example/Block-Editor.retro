@@ -86,7 +86,7 @@ hosted Retro systems the block file will be replaced by a
 block storage device.
 
 ~~~
-#1024         'BLOCKS       const
+#128          'BLOCKS       const
 'retro.blocks 'BLOCK-FILE s:const
 ~~~
 

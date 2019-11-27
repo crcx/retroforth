@@ -121,7 +121,7 @@ And finally, run it.
 
 * { background: #111; color: #44dd44; font-family: monospace; }
 span { white-space: pre }
-.text { color: white; white-space: normal }
+.text { color: white; white-space: pre }
 .colon {  color: red; }
 .comment {  color: #888; }
 .str {  color: yellow; }

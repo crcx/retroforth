@@ -10,7 +10,6 @@ if your country does not recognize the public domain.
 Todo:
 
   - support direct messages
-  - support retro-describe: queries
 
 In Process:
 
@@ -34,6 +33,7 @@ Done:
     - stacks reset each run
   - support multiple channels
   - wrappers over socket: words
+  - retro-describe: queries
 
 Possible future additions:
 
@@ -174,8 +174,20 @@ I pass it to `s:evaluate`, capturing and relaying the output.
 :process (s-
   channel sandbox ;
 
+:run-code
+  dup 'retro:_ s:begins-with? [ process s:empty ] if ;
+
+:pipe>  (s-s) dup s:put nl file:R unix:popen [ file:read-line ] [ unix:pclose ] bi ;
+
+:process
+  channel #16 + 'retro-describe_"%s"_|_curl_-F_'sprunge=<-'_http://sprunge.us
+  s:format pipe> &Output s:copy transmit ;
+
+:document
+  dup 'retro-describe:_ s:begins-with? [ process s:empty ] if ;
+
 :command
-  dup 'retro:_ s:begins-with? [ process ] [ drop ] choose ;
+  run-code document drop dump-stack nl ;
 
 :process
   here 'PRIVMSG s:split-on-string drop $: s:split drop n:inc dup s:put nl
