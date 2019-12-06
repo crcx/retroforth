@@ -1,0 +1,100 @@
+# Linked Lists
+
+A linked list is a linear collection of data elements, where the
+order is not given by their physical locations in memory. Each
+element (called a node) has a secondary field that points to the
+next.
+
+    +----+---+   +----+---+
+    | 11 | ----->| 22 | x |
+    +----+---+   +----+---+
+
+This implements a basic linked list in RETRO. The words here are
+in a `ll` namespace. I'm *not* focusing on short names here; I
+expect that anything making extensive use of this will provide a
+set of aliases or extensions to make things more readable. E.g.,
+
+Rather than:
+
+    #1 ll:node<n> #2 ll:node<n> ll:append #3 ll:node<n>
+    ll:append #4 ll:node<n> ll:append
+
+It's easy to write wrappers that allow for things like:
+
+    #1 < #2 > #3 > #4 >
+
+# Code
+
+A node is a simple structure with two fields. The first (which I
+am calling `head`) holds a value and the second (`next`) holds a
+pointer to the next node in the list. If the `next` field points
+to an address of zero it is considered the end of the list.
+
+So:
+
+    ll:head     (a-a)  return the address of the head field for a node
+    ll:next     (a-a)  return the address of the next field for a node
+    ll:node<n>  (n-a)  create a new node with a head of n and a next of 0
+    ll:node     (-a)   create a new node with both fields set to 0
+
+~~~ 
+:ll:head ;
+:ll:next n:inc ;
+
+:ll:node<n> here swap , #0 , ;
+:ll:node    here   #0 , #0 , ;
+~~~
+
+Next is a helper word to find the end of a list and one to add a node
+to the end of the list.
+
+    ll:to-end   (a-a)  return the address of the last node in the list
+    ll:append   (aa-a) set the next field of a1 to the address of a2,
+                       return a1
+
+~~~
+:ll:to-end  [ ll:next dup fetch n:zero? ] until n:dec ;
+:ll:append  swap [ ll:to-end ll:next store ] sip ;
+~~~
+
+I have a `for-each` combinator to handle performing an action on
+each node in a list. As an example:
+
+    :<  ll:node<n> ;
+    :>  ll:node<n> ll:append ;
+
+    #1 < #2 > #3 > #5 > #1 > #2 > #3 >
+    [ ll:head fetch n:put sp ] ll:for-each
+
+The docstring for this is:
+
+    ll:for-each (aq-a) run q once for each node in the list, passing
+                       the node address to q each time.
+
+~~~
+{{
+  'Action var
+  :perform
+    [ @Action call ] sip ;
+  :at-end?
+    ll:next fetch dup n:zero? ;
+---reveal---
+  :ll:for-each
+    &Action [ !Action [ perform at-end? ] until drop ] v:preserve ;
+~~~
+
+# Undocumented
+
+~~~
+:ll:length
+  #0 swap [ [ n:inc ] dip ll:next dup fetch n:zero? ] until drop
+  n:dec #1 n:max ;
+~~~
+
+Tests
+
+```
+:< ll:node<n> ;
+:>   ll:node<n> ll:append ;
+#1 < #2 > #3 > #5 > #1 > #2 > #3 > [ ll:head fetch n:put sp ] ll:for-each
+```
