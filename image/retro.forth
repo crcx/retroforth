@@ -557,7 +557,7 @@ so they can be inlined. Here's the high level forms:
   #1 [ repeat dup-pair / over - #2 / 0; + again ] call nip ;
 :n:min     (nn-n)  dup-pair lt? [ drop ] [ nip ] choose ;
 :n:max     (nn-n)  dup-pair gt? [ drop ] [ nip ] choose ;
-:n:abs     (n-n)   dup n:negate n:max ;
+:n:abs     (n-n)   dup n:negative? [ n:negate ] if ;
 :n:limit   (nlu-n) swap push n:min pop n:max ;
 :n:inc     (n-n)   #1 + ;
 :n:dec     (n-n)   #1 - ;
