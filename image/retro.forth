@@ -1355,7 +1355,7 @@ I then define `a:append` and `a:prepend` to combine arrays.
 :a:prepend (aa-a)
   here #0 , [      dup fetch [ &, a:for-each ] dip
               swap dup fetch [ &, a:for-each ] dip + ] dip
-  [ store ] sip ;
+  &store sip ;
 
 :a:append (aa-a)
   swap a:prepend ;
@@ -1845,7 +1845,8 @@ current, and up to two outer loops as well.
   :K (-n) @LP &Index + #2 - fetch ;
   :times<with-index>
     prep swap
-      [ repeat 0; #1 - push dup push call pop pop next again ] call
+      [ repeat 0; (#1_-_push_dup `33886721 `1 (push_call `2053
+               (pop_pop `1542 next again ] call
     drop done ;
 }}
 ~~~
