@@ -475,7 +475,7 @@ Example:
 ~~~
 :prefix:|
   d:lookup [ d:xt fetch ] [ d:class fetch ] bi
-  compiling? [ [ class:data ] dip compile:call ]
+  compiling? [ &class:data dip compile:call ]
              &call choose ; immediate
 ~~~
 
@@ -509,12 +509,12 @@ provide here.
 And then some numeric comparators.
 
 ~~~
-:n:MAX        (-n)    #-5 fetch ;
-:n:MIN        (-n)    #-4 fetch ;
-:n:zero?      (n-f)   #0 eq? ;
-:n:-zero?     (n-f)   #0 -eq? ;
-:n:negative?  (n-f)   #0 lt? ;
-:n:positive?  (n-f)   #-1 gt? ;
+:n:MAX        (-n)   #-5 fetch ;
+:n:MIN        (-n)   #-4 fetch ;
+:n:zero?      (n-f)  #0 eq? ;
+:n:-zero?     (n-f)  #0 -eq? ;
+:n:negative?  (n-f)  #0 lt? ;
+:n:positive?  (n-f)  #-1 gt? ;
 :n:strictly-positive?  (n-f)  #0 gt? ;
 :n:even?      (n-f)  #2 /mod drop n:zero? ;
 :n:odd?       (n-f)  #2 /mod drop n:-zero? ;
@@ -913,8 +913,7 @@ from another string that are filtered by a quotation.
 :s:filter (sq-s)
   [ s:empty buffer:set swap
     [ dup-pair swap call
-        [ buffer:add ]
-        [ drop       ] choose
+        &buffer:add &drop choose
     ] s:for-each drop buffer:start
   ] buffer:preserve ;
 ~~~
@@ -937,7 +936,7 @@ string, a starting offset, and a length.
 
 ~~~
 :s:substr (sfl-s)
-  [ + s:empty ] dip [ over [ copy ] dip ] sip
+  [ + s:empty ] dip [ over &copy dip ] sip
   over [ + #0 swap store ] dip ;
 ~~~
 
@@ -954,10 +953,10 @@ a string starts or ends with a specific substring.
 
 ~~~
 :s:begins-with? (ss-f)
-  dup s:length [ swap ] dip s:left s:eq? ;
+  dup s:length &swap dip s:left s:eq? ;
 
 :s:ends-with? (ss-f)
-  dup s:length [ swap ] dip s:right s:eq? ;
+  dup s:length &swap dip s:right s:eq? ;
 ~~~
 
 Hash (using DJB2)
@@ -1064,9 +1063,9 @@ The next few words perform simple transformations.
 ~~~
 :c:to-upper     (c-c) dup c:lowercase? 0; drop ASCII:SPACE - ;
 :c:to-lower     (c-c) dup c:uppercase? 0; drop ASCII:SPACE + ;
-:c:to-string    (c-s) '. s:temp [ store ] sip ;
+:c:to-string    (c-s) '. s:temp &store sip ;
 :c:toggle-case  (c-c)
-  dup c:lowercase? [ c:to-upper ] [ c:to-lower ] choose ;
+  dup c:lowercase? &c:to-upper &c:to-lower choose ;
 :c:to-number    (c-n)
   dup c:digit? [ $0 - ] [ drop #0 ] choose ;
 ~~~
@@ -1077,8 +1076,8 @@ With the character transformations a few more string words are
 possible.
 
 ~~~
-:s:to-upper  (s-s)  [ c:to-upper ] s:map ;
-:s:to-lower  (s-s)  [ c:to-lower ] s:map ;
+:s:to-upper  (s-s)  &c:to-upper s:map ;
+:s:to-lower  (s-s)  &c:to-lower s:map ;
 ~~~
 
 Convert a decimal (base 10) number to a string.
