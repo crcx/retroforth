@@ -476,7 +476,7 @@ Example:
 :prefix:|
   d:lookup [ d:xt fetch ] [ d:class fetch ] bi
   compiling? [ [ class:data ] dip compile:call ]
-             [ call ] choose ; immediate
+             &call choose ; immediate
 ~~~
 
 ## Conditionals
@@ -603,7 +603,7 @@ a bit clearer.
 
 ~~~
 :v:preserve (aq-)
-  swap dup fetch [ [ call ] dip ] dip swap store ;
+  swap dup fetch [ &call dip ] dip swap store ;
 ~~~
 
 If you need to update a stored variable there are two typical
@@ -713,7 +713,7 @@ null) and other simple structures.
   :buffer:size   (-n) buffer:end buffer:start - ;
   :buffer:set    (a-) !Buffer buffer:empty ;
   :buffer:preserve (q-)
-    @Buffer @Ptr [ [ call ] dip !Buffer ] dip !Ptr ;
+    @Buffer @Ptr [ &call dip !Buffer ] dip !Ptr ;
 }}
 ~~~
 
@@ -1380,7 +1380,7 @@ a `TRUE` flag for.
 
 ~~~
 :a:filter (aq-)
-  [ over [ call ] dip swap [ , ] [ drop ] choose ] curry
+  [ over &call dip swap &, &drop choose ] curry
   here [ over fetch , a:for-each ] dip
   here over - n:dec over store ;
 ~~~
@@ -1960,7 +1960,7 @@ prior to creating the header.
   :fields        @Dictionary , (link) , (xt) , (class) ;
   :invalid-name? dup ASCII:SPACE s:contains-char? ;
   :rewrite       [ ASCII:SPACE [ $_ ] case ] s:map ;
-  :entry         here [ call ] dip !Dictionary ;
+  :entry         here &call dip !Dictionary ;
   [ [ fields invalid-name? &rewrite if s, (name) ] entry ]
 }}
 
