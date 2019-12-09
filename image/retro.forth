@@ -497,13 +497,13 @@ The basic Rx kernel doesn't provide two useful forms which I'll
 provide here.
 
 ~~~
-:lteq?  (nn-f)  dup-pair eq? [ lt? ] dip or ;
-:gteq?  (nn-f)  dup-pair eq? [ gt? ] dip or ;
+:lteq?  (nn-f)  dup-pair eq? &lt? dip or ;
+:gteq?  (nn-f)  dup-pair eq? &gt? dip or ;
 ~~~
 
 ~~~
-:if;   (qf-)  over [  if ] dip         0; pop drop-pair ;
-:-if;  (qf-)  over [ -if ] dip #-1 xor 0; pop drop-pair ;
+:if;   (qf-)  over &if  dip         0; pop drop-pair ;
+:-if;  (qf-)  over &-if dip #-1 xor 0; pop drop-pair ;
 ~~~
 
 And then some numeric comparators.
@@ -775,7 +775,7 @@ pointer to skip to the code following the stored string.
 
 :s:keep (s-s)
   compiling? [ &s:skip compile:call ] if
-  here [ s, ] dip class:data ;
+  here &s, dip class:data ;
 ~~~
 
 And now a quick `'` prefix. (This will be replaced later). What
@@ -839,7 +839,7 @@ a key part of building the other high-level string operations.
       over fetch 0; drop
       dup-pair
       [ [ &fetch dip call ] dip ] dip
-      [ n:inc ] dip
+      &n:inc dip
     again
   ] call drop-pair ;
 ~~~
@@ -1119,10 +1119,10 @@ located.
 
 ~~~
 :s:split (sc-ss)
-  dup-pair s:index-of nip dup-pair s:left [ + ] dip ;
+  dup-pair s:index-of nip dup-pair s:left &+ dip ;
 
 :s:split-on-string (ss-ss)
-  dup-pair s:index-of-string n:inc nip dup-pair s:left [ + ] dip ;
+  dup-pair s:index-of-string n:inc nip dup-pair s:left &+ dip ;
 
 :s:replace (sss-s)
   over s:length here store
@@ -1139,11 +1139,11 @@ returns an array containing pointers to each of them.
   :match?    (c-f) @Split-On eq? ;
   :terminate (s-s) #0 over n:dec store ;
   :step      (ss-s)
-    [ n:inc ] dip match? [ dup , terminate ] if ;
+    &n:inc dip match? [ dup , terminate ] if ;
 ---reveal---
   :s:tokenize (sc-a)
     !Split-On s:keep
-    here #0 , [ dup , dup [ step ] s:for-each drop ] dip
+    here #0 , [ dup , dup &step s:for-each drop ] dip
     here over - n:dec over store ;
 }}
 ~~~
@@ -1197,7 +1197,7 @@ The format language is simple:
 ~~~
 
 ~~~
-:s:const (ss-)  [ s:keep ] dip const ;
+:s:const (ss-)  &s:keep dip const ;
 ~~~
 
 ## The Ultimate Stack Shuffler
@@ -1224,7 +1224,7 @@ into:
   :from s:length dup [ [ &Values + store ] sip n:dec ] times drop ;
   :to dup s:length [ fetch-next $a -  n:inc &Values + fetch swap ] times drop ;
 ---reveal---
-  :reorder (...ss-?) [ from ] dip to ;
+  :reorder (...ss-?) &from dip to ;
 }}
 ~~~
 
