@@ -358,7 +358,7 @@ equivilent:
     #10 #12 push #3 - pop
 
 ~~~
-:dip  (nq-n)  swap push call pop ;
+:dip  (nq-n) (swap_push_call `525572 pop ;
 ~~~
 
 `sip` is similar to dip, but leaves a copy of the value on the
@@ -368,7 +368,7 @@ stack while the quotation is executed. These are equivilent:
     #10 dup push #3 * pop
 
 ~~~
-:sip  (nq-n)  push dup pop swap &call dip ;
+:sip  (nq-n)  (push_dup_pop_swap `67502597 &call dip ;
 ~~~
 
 Apply each quote to a copy of x.
