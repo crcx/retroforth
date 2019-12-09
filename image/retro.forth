@@ -810,18 +810,6 @@ handle conversion of _ into spaces.
   buffer:preserve ;
 ~~~
 
-Trimming removes leading (`s:trim-left`) or trailing
-(`s:trim-right`) spaces from a string. `s:trim` removes
-both leading and trailing spaces.
-
-~~~
-:s:trim-left (s-s)
-  s:temp [ fetch-next [ [ #32 eq? ] [ #10 eq? ] [ #13 eq? ] tri or or ] [ n:-zero? ] bi and ] while
-  n:dec ;
-:s:trim-right (s-s) s:temp s:reverse s:trim-left s:reverse ;
-:s:trim (s-s) s:trim-right s:trim-left ;
-~~~
-
 `s:prepend` and `s:append` for concatenating strings together.
 
 ~~~
@@ -1036,7 +1024,7 @@ First are a bunch of words to help identify character values.
 ~~~
 :c:lowercase?   (c-f) $a $z n:between? ;
 :c:uppercase?   (c-f) $A $Z n:between? ;
-:c:letter?      (c-f) [ c:lowercase? ] [ c:uppercase? ] bi or ;
+:c:letter?      (c-f) &c:lowercase? &c:uppercase? bi or ;
 :c:digit?       (c-f) $0 $9 n:between? ;
 :c:visible?     (c-f) #32 #126 n:between? ;
 :c:vowel?       (c-f) 'aeiouAEIOU swap s:contains-char? ;
@@ -1079,6 +1067,19 @@ possible.
 :s:to-upper  (s-s)  &c:to-upper s:map ;
 :s:to-lower  (s-s)  &c:to-lower s:map ;
 ~~~
+
+Trimming removes leading (`s:trim-left`) or trailing
+(`s:trim-right`) spaces from a string. `s:trim` removes
+both leading and trailing spaces.
+
+~~~
+:s:trim-left (s-s)
+  s:temp [ fetch-next [ c:whitespace? ] [ n:-zero? ] bi and ] while
+  n:dec ;
+:s:trim-right (s-s) s:temp s:reverse s:trim-left s:reverse ;
+:s:trim (s-s) s:trim-right s:trim-left ;
+~~~
+
 
 Convert a decimal (base 10) number to a string.
 
