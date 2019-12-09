@@ -555,9 +555,9 @@ so they can be inlined. Here's the high level forms:
 :n:square  (n-n)   dup * ;
 :n:sqrt    (n-n)
   #1 [ repeat dup-pair / over - #2 / 0; + again ] call nip ;
-:n:min     (nn-n)  dup-pair lt? [ drop ] [ nip ] choose ;
-:n:max     (nn-n)  dup-pair gt? [ drop ] [ nip ] choose ;
-:n:abs     (n-n)   dup n:negative? [ n:negate ] if ;
+:n:min     (nn-n)  dup-pair lt? &drop &nip choose ;
+:n:max     (nn-n)  dup-pair gt? &drop &nip choose ;
+:n:abs     (n-n)   dup n:negative? &n:negate if ;
 :n:limit   (nlu-n) swap push n:min pop n:max ;
 :n:inc     (n-n)   #1 + ;
 :n:dec     (n-n)   #1 - ;
@@ -790,7 +790,7 @@ Later in the code I'll add a better implementation which can
 handle conversion of _ into spaces.
 
 ~~~
-:prefix:' compiling? [ s:keep ] [ s:temp ] choose ; immediate
+:prefix:' compiling? &s:keep &s:temp choose ; immediate
 ~~~
 
 `s:chop` removes the last character from a string.
