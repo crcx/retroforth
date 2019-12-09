@@ -441,7 +441,7 @@ to:
 
 ~~~
 :times  (nq-)
-  [ swap repeat 0; #1 - push dup push call pop pop again ] call drop ;
+  [ swap repeat 0; `33886721 `1 `2053 `1542 again ] call drop ;
 ~~~
 
 `case` is a conditional combinator. It's actually pretty
