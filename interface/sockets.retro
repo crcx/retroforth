@@ -5,14 +5,14 @@ underlying BSD sockets model.
 
 ~~~
 {{
-  'io:Sockets var
+  'Sockets var
   :identify
-    @io:Sockets n:zero? [
+    @Sockets n:zero? [
       #7 io:scan-for dup n:negative?
       [ drop 'IO_DEVICE_TYPE_0004_NOT_FOUND s:put nl ]
-      [ !io:Sockets ] choose ] if ;
+      [ !Sockets ] choose ] if ;
   ---reveal---
-  :io:socket-operation identify @io:Sockets io:invoke ;
+  :io:socket-operation identify @Sockets io:invoke ;
 }}
 
 :socket:gethostbyname (as-)    #0 io:socket-operation ;

@@ -22,14 +22,14 @@ via `c:get`.
 
 ~~~
 {{
-  'io:Keyboard var
+  'Keyboard var
   :identify
-    @io:Keyboard n:zero? [
+    @Keyboard n:zero? [
       #1 io:scan-for dup n:negative?
       [ drop 'IO_DEVICE_TYPE_0001_NOT_FOUND s:put nl ]
-      [ !io:Keyboard ] choose ] if ;
+      [ !Keyboard ] choose ] if ;
 ---reveal---
-  :c:get (-c) identify @io:Keyboard io:invoke ;
+  :c:get (-c) identify @Keyboard io:invoke ;
 }}
 ~~~
 
@@ -43,7 +43,7 @@ not `TRUE` it will add the character to the buffer.
 ~~~
 {{
   :gather (c-)
-    dup [ #8 eq? ] [ #127 eq? ] bi or [ drop ] [ buffer:add ] choose ;
+    dup [ #8 eq? ] [ #127 eq? ] bi or &drop &buffer:add choose ;
   :cycle (q-qc)  repeat c:get dup-pair swap call not 0; drop gather again ;
 ---reveal---
   :parse-until (q-s)
@@ -56,7 +56,7 @@ a quote which looks for an end of line character.
 
 ~~~
 :s:get (-s) [ [ ASCII:LF eq? ] [ ASCII:CR eq? ] bi or ] parse-until ;
-:s:get-word (-s) [ c:whitespace? ] parse-until ;
+:s:get-word (-s) &c:whitespace? parse-until ;
 ~~~
 
 
@@ -68,17 +68,17 @@ words we can use.
 
 ~~~
 {{
-  'io:Scripting var
+  'Scripting var
   :identify
-    @io:Scripting n:zero? [
+    @Scripting n:zero? [
       #9 io:scan-for dup n:negative?
       [ drop 'IO_DEVICE_TYPE_0009_NOT_FOUND s:put nl ]
-      [ !io:Scripting ] choose ] if ;
+      [ !Scripting ] choose ] if ;
 ---reveal---
-  :sys:argc (-n)               identify #0 @io:Scripting io:invoke ;
-  :sys:argv (n-s) s:empty swap identify #1 @io:Scripting io:invoke ;
-  :include  (s-)               identify #2 @io:Scripting io:invoke ;
-  :sys:name (-s)       s:empty identify #3 @io:Scripting io:invoke ;
+  :sys:argc (-n)               identify #0 @Scripting io:invoke ;
+  :sys:argv (n-s) s:empty swap identify #1 @Scripting io:invoke ;
+  :include  (s-)               identify #2 @Scripting io:invoke ;
+  :sys:name (-s)       s:empty identify #3 @Scripting io:invoke ;
 }}
 ~~~
 

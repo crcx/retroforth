@@ -2,14 +2,14 @@
 
 ~~~
 {{
-  'io:Filesystem var
+  'Files var
   :identify
-    @io:Filesystem n:zero? [
+    @Files n:zero? [
       #4 io:scan-for dup n:negative?
       [ drop 'IO_DEVICE_TYPE_0004_NOT_FOUND s:put nl ]
-      [ !io:Filesystem ] choose ] if ;
+      [ !Files ] choose ] if ;
   ---reveal---
-  :io:file-operation identify @io:Filesystem io:invoke ;
+  :io:file-operation identify @Files io:invoke ;
 }}
 ~~~
 
@@ -28,9 +28,9 @@ First up, constants for the file modes.
 | A | Mode for APPENDING |
 
 ~~~
-#0 'file:R const
-#1 'file:W const
-#2 'file:A const
+#0 'file:R  const
+#1 'file:W  const
+#2 'file:A  const
 #3 'file:R+ const
 ~~~
 
@@ -95,7 +95,7 @@ Given a file name, return `TRUE` if it exists or `FALSE` otherwise.
 :file:exists?  (s-f)
   file:R file:open dup n:-zero?
   [ file:close TRUE ]
-  [ drop FALSE ] choose ;
+  [ drop FALSE      ] choose ;
 ~~~
 
 ~~~
@@ -127,7 +127,7 @@ once for each line in a file. This makes some things trivial. E.g., a simple
   'Action var
   'Buffer var
   :-eof? (-f) @FID file:tell @Size lt? ;
-  :preserve (q-) &FID [ &Size [ call ] v:preserve ] v:preserve ;
+  :preserve (q-) &FID [ &Size &call v:preserve ] v:preserve ;
 ---reveal---
   :file:read-line (f-s)
     !FID
@@ -163,12 +163,6 @@ once for each line in a file. This makes some things trivial. E.g., a simple
 ~~~
 
 ~~~
-{{
-  'FID var
----reveal---
-  :file:spew (ss-)
-    file:open<for-writing> !FID
-    [ @FID file:write ] s:for-each
-    @FID file:close ; 
-}}
+:file:spew (ss-)
+  file:open<for-writing> swap [ over file:write ] s:for-each file:close ;
 ~~~

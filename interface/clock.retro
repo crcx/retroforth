@@ -5,14 +5,14 @@ system clock.
 
 ~~~
 {{
-  'io:ClockSyscall var
+  'Clock var
   :identify
-    @io:ClockSyscall n:zero? [
+    @Clock n:zero? [
       #5 io:scan-for dup n:negative?
       [ drop 'IO_DEVICE_TYPE_0005_NOT_FOUND s:put nl ]
-      [ !io:ClockSyscall ] choose ] if ;
+      [ !Clock ] choose ] if ;
 ---reveal---
-  :io:clock-operation identify @io:ClockSyscall io:invoke ;
+  :io:clock-operation identify @Clock io:invoke ;
 }}
 
 :clock:timestamp  (-n) #0 io:clock-operation ;

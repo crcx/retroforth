@@ -1,13 +1,13 @@
 ~~~
 {{
-  'io:FloatingPoint var
+  'FPU var
   :identify
-    @io:FloatingPoint n:zero? [
+    @FPU n:zero? [
       #2 io:scan-for dup n:negative?
       [ drop 'IO_DEVICE_TYPE_0002_NOT_FOUND s:put nl ]
-      [ !io:FloatingPoint ] choose ] if ;
+      [ !FPU ] choose ] if ;
   ---reveal---
-  :io:float-operation identify @io:FloatingPoint io:invoke ;
+  :io:float-operation identify @FPU io:invoke ;
 }}
 ~~~
 
@@ -54,17 +54,17 @@
 :f:positive? (-f__f:a-) #0 n:to-float f:gt? ;
 :f:negative? (-f__f:a-) #0 n:to-float f:lt? ;
 :f:negate (f:a-b)  #-1 n:to-float f:* ;
-:f:abs    (f:a-b)  f:dup f:negative? [ f:negate ] if ;
+:f:abs    (f:a-b)  f:dup f:negative? &f:negate if ;
 :prefix:. (s-__f:-a)
-  compiling? [ s:keep ] [ s:temp ] choose &s:to-float class:word ; immediate
-:f:put (f:a-) f:to-string s:put ;
-:f:PI (f:-F) .3.141592 ;
-:f:E  (f:-F) .2.718281 ;
-:f:NAN (f:-n) .0 .0 f:/ ;
-:f:INF (f:-n) .1.0 .0 f:/ ;
+  compiling? &s:keep &s:temp choose &s:to-float class:word ; immediate
+:f:put  (f:a-) f:to-string s:put ;
+:f:PI   (f:-F) .3.141592 ;
+:f:E    (f:-F) .2.718281 ;
+:f:NAN  (f:-n) .0 .0 f:/ ;
+:f:INF  (f:-n) .1.0 .0 f:/ ;
 :f:-INF (f:-n) .-1.0 .0 f:/ ;
-:f:nan? (f:n-,-f) f:dup f:-eq? ;
-:f:inf? (f:n-,-f) f:INF f:eq? ;
+:f:nan? (f:n-,-f)  f:dup f:-eq? ;
+:f:inf? (f:n-,-f)  f:INF f:eq? ;
 :f:-inf? (f:n-,-f) f:-INF f:eq? ;
 :f:round (-|f:a-b)
   f:dup f:negative?
@@ -145,16 +145,16 @@ Deal with special cases.
 
 ~~~
 :f:to-e (-e|f:n-)
-  f:dup f:nan?  [ f:drop e:NAN  ]    if;
-  f:dup f:inf?  [ f:drop e:INF  ]    if;
-  f:dup f:-inf? [ f:drop e:-INF ]    if;
+  f:dup f:nan?  [ f:drop e:NAN  ] if;
+  f:dup f:inf?  [ f:drop e:INF  ] if;
+  f:dup f:-inf? [ f:drop e:-INF ] if;
   f:+encode f:round f:to-number e:clip      (e
   e:MIN         [ f:drop        ] case
   e:MAX         [ f:drop        ] case ;
 
 :e:to-f (e-|f:-n)
-  e:NAN  [ f:NAN ] case
-  e:INF  [ f:INF ] case
+  e:NAN  [ f:NAN  ] case
+  e:INF  [ f:INF  ] case
   e:-INF [ f:-INF ] case
   n:to-float f:-encode ;
 ~~~
@@ -166,10 +166,10 @@ Deal with special cases.
 
 ~~~
 :f:dump-stack  (-)
-  f:depth dup [ f:push ] times
+  f:depth dup &f:push times
               [ f:pop f:dup f:put sp ] times ;
 :f:dump-astack (-)
-  f:adepth dup [ f:pop ] times
+  f:adepth dup &f:pop times
                [ f:dup f:put sp f:push ] times ;
 ~~~
 
