@@ -209,7 +209,6 @@ i re......
 
 : _ret
 i re......
-i re......
 
 : _eq
 i eq......
@@ -847,6 +846,11 @@ the dictionary entry for the handler function. If not found,
 `prefix:handler` is set to zero. The check, done by `prefix?`,
 also returns a flag.
 
+    '_         'prefix:no s:const
+    'prefix:_  'prefixed  s:const
+
+    'prefix:handler var
+
 ~~~
 : prefix:no
 d 32
@@ -857,13 +861,23 @@ d 0
 
 : prefixed
 s prefix:_
+~~~
 
+    :prefix:prepare
+      fetch &prefixed #7 + store ;
+
+~~~
 : prefix:prepare
 i feliliad
 r prefixed
 d 7
 i stre....
+~~~
 
+    :prefix:has-token?
+      dup s:length #1 0; drop-pair &prefix:no ;
+
+~~~
 : prefix:has-token?
 i dulica..
 r s:length
@@ -871,7 +885,13 @@ i lieqzr..
 d 1
 i drdrlire
 r prefix:no
+~~~
 
+    :prefix?
+      prefix:has-token? prefix:prepare &prefixed d:lookup
+      dup &prefix:handler store #0 -eq? ;
+
+~~~
 : prefix?
 i lica....
 r prefix:has-token?
@@ -898,7 +918,6 @@ obtaining pointers (prefix with `&`), and defining functions
 | &      | pointers          | &swap   |
 | :      | definitions       | :foo    |
 | (      | Comments          | (n-)    |
-
 
     :prefix:(  (s-)  drop ;
 
@@ -972,6 +991,8 @@ smaller and faster.
 For those familiar with traditional Forth, the `&` prefix
 replaces both `'` and `[']`.
 
+    :prefix:&  d:lookup d:xt fetch class:data ;
+
 ~~~
 : prefix:&
 i lica....
@@ -1002,11 +1023,10 @@ restoring the `Compiler` state.
 i lifeliad
 r Heap
 d 2
-i lifelili
+i lifelica
 r Compiler
-d -1
-r Compiler
-i stlilica
+r compiler:on
+i lilica..
 d 1793
 r comma
 i lifelili
@@ -1174,6 +1194,67 @@ r choose
 
 ## Muri
 
+Muri is my minimalist assembler for Nga. This is an attempt to
+implement something similar in Retro.
+
+This requires some knowledge of the Nga architecture to be
+useful. The major elements are:
+
+**Instruction Set**
+
+Nga has 30 instructions. These are:
+
+    0 nop   5 push  10 ret   15 fetch 20 div   25 zret
+    1 lit   6 pop   11 eq    16 store 21 and   26 end
+    2 dup   7 jump  12 neq   17 add   22 or    27 ienum
+    3 drop  8 call  13 lt    18 sub   23 xor   28 iquery
+    4 swap  9 ccall 14 gt    19 mul   24 shift 29 iinvoke
+
+The mnemonics allow for each name to be reduced to just two
+characters. In the same order as above:
+
+    0 ..    5 pu    10 re    15 fe    20 di    25 zr
+    1 li    6 po    11 eq    16 st    21 an    26 en
+    2 du    7 ju    12 ne    17 ad    22 or    27 ie
+    3 dr    8 ca    13 lt    18 su    23 xo    28 iq
+    4 sw    9 cc    14 gt    19 mu    24 sh    29 ii
+
+Up to four instructions can be packed into a single memory
+location. (You can only use *no*p after a *ju*mp, *ca*ll,
+*cc*all, *re*t, or *zr*et as these alter the instruction
+pointer.)
+
+So a bundled sequence like:
+
+    lit 100
+    lit 200
+    add
+    ret
+
+Would look like:
+
+    'liliadre i
+    100       d
+    200       d
+
+And:
+
+    lit s:eq?
+    call
+
+Would become:
+
+    'lica.... i
+    's:eq?    r
+
+Note the use of `..` instead of `no` for the nop's; this is
+done to improve readability a little.
+
+Instruction bundles are specified as strings, and are converted
+to actual instructions by the `i` word. As in the standard Muri
+assembler, the RETRO version uses `d` for decimal values and `r`
+for references to named functions.
+
 ~~~
 : Instructions
 d 2116 
@@ -1208,23 +1289,13 @@ d 11865
 d 11025
 d 0
 
-: get-opcode
+: muri:r
 i lica....
-r name-to-id
-i lica....
-r id-to-opcode
-i re......
-
-: muri:d
+r d:lookup
+i liadfe..
+d 1
 i liju....
 r comma
-
-: (muri:i)
-i swliaddu
-d 2
-i lica....
-r get-opcode
-i re......
 
 : muri:i
 i dulica..
@@ -1265,6 +1336,12 @@ i swzr....
 i drliju..
 r opcode-lookup
 
+: (muri:i)
+i swliaddu
+d 2
+: get-opcode
+i lica....
+r name-to-id
 : id-to-opcode
 i lilica....
 r Instructions
@@ -1569,7 +1646,7 @@ r class:word
 s i
 : 0057
 r 0056
-r muri:d
+r comma
 r class:word
 s d
 : 0058
@@ -1582,8 +1659,13 @@ r 0058
 r compiler:on
 r class:macro
 s }as
-: 9999
+: 0060
 r 0059
+r muri:r
+r class:word
+s r
+: 9999
+r 0060
 r err:notfound
 r class:word
 s err:notfound
