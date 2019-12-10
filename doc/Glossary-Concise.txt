@@ -1105,6 +1105,9 @@ Process token as a new definition.
 prefix:@                 D: s-n  A: -  F: -
 Fetch from a stored variable.
 
+prefix:\                 D: s-  A: -  F: -
+Process token as an instruction bundle.
+
 prefix:`                 D: s-  A: -  F: -
 Process token as a bytecode.
 

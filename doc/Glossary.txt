@@ -4356,6 +4356,23 @@ Compile Time:
 Class: class:macro | Namespace: prefix | Interface Layer: all
 ------------------------------------------------------------------------
 
+prefix:\
+
+  Data:  s-
+  Addr:  -
+  Float: -
+
+Process token as an instruction bundle.
+
+Interpret Time:
+  Discard the string.
+
+Compile Time:
+  Assemble the opcodes in the string and use `,` to inline it into the current definition.
+
+Class: class:macro | Namespace: prefix | Interface Layer: all
+------------------------------------------------------------------------
+
 prefix:`
 
   Data:  s-
