@@ -80,7 +80,7 @@ function Opcodes() {
   this.XOR = 23;
   this.SHIFT = 24;
   this.ZERO_EXIT = 25;
-  this.END = 26;
+  this.HALT = 26;
   this.IE = 27;
   this.IQ = 28;
   this.II = 29;
@@ -264,7 +264,7 @@ instructions[vm.ZERO_EXIT] = function() {
     ip = address.pop();
   }
 }
-instructions[vm.END] = function() {
+instructions[vm.HALT] = function() {
   ip = IMAGE_SIZE;
 }
 instructions[vm.IE] = function() {

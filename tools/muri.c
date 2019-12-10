@@ -73,7 +73,7 @@ void read_line(FILE *file, char *line_buffer) {
 }
 
 CELL opcode_for(char *s) {
-  char* opcodeList = "..lidudrswpupojucaccreeqneltgtfestadsumudianorxoshzrenieiqii";
+  char* opcodeList = "..lidudrswpupojucaccreeqneltgtfestadsumudianorxoshzrhaieiqii";
   int16_t* s16 = (int16_t *)s;
   int16_t* op16 = (int16_t *)opcodeList;
   int i = 0;

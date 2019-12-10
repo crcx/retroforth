@@ -283,7 +283,7 @@ begin
   end;
 end;
 
-procedure inst_end();
+procedure inst_halt();
 begin
   ip := IMAGE_SIZE - 1;
 end;
@@ -338,7 +338,7 @@ begin
     23 : inst_xor();
     24 : inst_shift();
     25 : inst_zret();
-    26 : inst_end();
+    26 : inst_halt();
     27 : inst_in();
     28 : inst_iq();
     29 : inst_ii();

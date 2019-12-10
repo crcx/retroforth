@@ -27,7 +27,7 @@ architecture. There are 30 instructions, with up to four packed
 into each memory location (*cell*). The instructions are:
 
     0 nop   5 push  10 ret   15 fetch 20 div   25 zret
-    1 lit   6 pop   11 eq    16 store 21 and   26 end
+    1 lit   6 pop   11 eq    16 store 21 and   26 halt
     2 dup   7 jump  12 neq   17 add   22 or    27 ienum
     3 drop  8 call  13 lt    18 sub   23 xor   28 iquery
     4 swap  9 ccall 14 gt    19 mul   24 shift 29 iinvoke
@@ -1257,7 +1257,7 @@ for references to named functions.
 
 ~~~
 : Instructions
-d 2116 
+d 2116
 d 11340
 d 11700
 d 11400
@@ -1283,7 +1283,7 @@ d 12654
 d 13320
 d 11960
 d 13908
-d 11110
+d 10088
 d 10605
 d 11865
 d 11025

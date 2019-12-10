@@ -29,7 +29,7 @@ executed.
 
 Instruction processing: the **IP** is incremented and the opcode at the
 current address is invoked. This process then repeats. Execution ends
-if the **END** instruction is run or end of memory is reached.
+if the **HALT** instruction is run or end of memory is reached.
 
 Endian: the image files are stored in little endian format.
 
@@ -104,7 +104,7 @@ corresponding values (in decimal):
     2  dup      9  ccall     16  store     23  xor
     3  drop    10  return    17  add       24  shift
     4  swap    11  eq        18  sub       25  zret
-    5  push    12  neq       19  mul       26  end
+    5  push    12  neq       19  mul       26  halt
     6  pop     13  lt        20  divmod    27  io enumerate
 
 ~~~
@@ -112,7 +112,7 @@ enum vm_opcode {
   VM_NOP,  VM_LIT,    VM_DUP,   VM_DROP,    VM_SWAP,   VM_PUSH,  VM_POP,
   VM_JUMP, VM_CALL,   VM_CCALL, VM_RETURN,  VM_EQ,     VM_NEQ,   VM_LT,
   VM_GT,   VM_FETCH,  VM_STORE, VM_ADD,     VM_SUB,    VM_MUL,   VM_DIVMOD,
-  VM_AND,  VM_OR,     VM_XOR,   VM_SHIFT,   VM_ZRET,   VM_END,   VM_IO_ENUM,
+  VM_AND,  VM_OR,     VM_XOR,   VM_SHIFT,   VM_ZRET,   VM_HALT,  VM_IO_ENUM,
   VM_IO_QUERY,        VM_IO_INTERACT
 };
 #define NUM_OPS VM_IO_INTERACT + 1
@@ -333,7 +333,7 @@ Example:
       ccall
       li f
       call
-    end
+    halt
 
 ~~~
 void inst_ccall() {
@@ -622,10 +622,10 @@ void inst_zret() {
 }
 ~~~
 
-**END** tells Nga that execution should end.
+**HALT** tells Nga that execution should end.
 
 ~~~
-void inst_end() {
+void inst_halt() {
   ip = IMAGE_SIZE;
 }
 ~~~
@@ -677,7 +677,7 @@ Handler instructions[NUM_OPS] = {
   inst_nop, inst_lit, inst_dup, inst_drop, inst_swap, inst_push, inst_pop,
   inst_jump, inst_call, inst_ccall, inst_return, inst_eq, inst_neq, inst_lt,
   inst_gt, inst_fetch, inst_store, inst_add, inst_sub, inst_mul, inst_divmod,
-  inst_and, inst_or, inst_xor, inst_shift, inst_zret, inst_end, inst_ie,
+  inst_and, inst_or, inst_xor, inst_shift, inst_zret, inst_halt, inst_ie,
   inst_iq, inst_ii
 };
 ~~~

@@ -208,7 +208,7 @@ def i_zr():
         stack.pop()
         ip = address.pop()
 
-def i_en():
+def i_ha():
     global ip, memory, stack, address
     ip = 9000000
 
@@ -224,7 +224,7 @@ def i_ii():
     stack.pop()
     rxDisplayCharacter()
 
-instructions = [i_no, i_li, i_du, i_dr, i_sw, i_pu, i_po, i_ju, i_ca, i_cc, i_re, i_eq, i_ne, i_lt, i_gt, i_fe, i_st, i_ad, i_su, i_mu, i_di, i_an, i_or, i_xo, i_sh, i_zr, i_en, i_ie, i_iq, i_ii]
+instructions = [i_no, i_li, i_du, i_dr, i_sw, i_pu, i_po, i_ju, i_ca, i_cc, i_re, i_eq, i_ne, i_lt, i_gt, i_fe, i_st, i_ad, i_su, i_mu, i_di, i_an, i_or, i_xo, i_sh, i_zr, i_ha, i_ie, i_iq, i_ii]
 
 def validateOpcode(opcode):
     I0 = opcode & 0xFF

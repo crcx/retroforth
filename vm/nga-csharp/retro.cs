@@ -31,7 +31,7 @@ namespace Nga
       VM_FETCH,    VM_STORE,      VM_ADD,
       VM_SUB,      VM_MUL,        VM_DIVMOD,
       VM_AND,      VM_OR,         VM_XOR,
-      VM_SHIFT,    VM_ZRET,       VM_END,
+      VM_SHIFT,    VM_ZRET,       VM_HALT,
       VM_IE,       VM_IQ,         VM_II
     }
 
@@ -275,7 +275,7 @@ namespace Nga
             ip = address[rsp]; rsp--;
           }
           break;
-        case OpCodes.VM_END:
+        case OpCodes.VM_HALT:
           ip = 524288 * 16;
           break;
         case OpCodes.VM_IE:
