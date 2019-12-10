@@ -419,7 +419,7 @@ Execute quote until quote returns a flag of 0. In high level code:
 This is manually translated to assembly and inlined for performance.
 
 ~~~
-:while  (q-) [ repeat `525570 `1639430 drop again ] call drop ;
+:while  (q-) [ repeat \dupuca.. \poswzr.. drop again ] call drop ;
 ~~~
 
 Execute quote until quote returns a non-zero flag. As with `while`
@@ -431,7 +431,7 @@ the high level code:
 is manually translated to assembly and inlined for performance.
 
 ~~~
-:until (q-) [ repeat `525570 `385942534 `-1 0; drop again ] call drop ;
+:until (q-) [ repeat \dupuca.. \poswlixo `-1 0; drop again ] call drop ;
 ~~~
 
 The `times` combinator runs a quote (n) times.
@@ -443,7 +443,7 @@ to:
 
 ~~~
 :times  (nq-)
-  [ swap repeat 0; `33886721 `1 `2053 `1542 again ] call drop ;
+  [ swap repeat 0; \lisupudu `1 \puca.... \popo.... again ] call drop ;
 ~~~
 
 `case` is a conditional combinator. It's actually pretty
@@ -533,7 +533,7 @@ High level:
 And low level, for inlining:
 
 ~~~
-:rot (abc-bca) (puswposw `67503109 ) ; primitive
+:rot (abc-bca) \puswposw ; primitive
 ~~~
 
 ## Numeric Operations
@@ -549,8 +549,8 @@ so they can be inlined. Here's the high level forms:
     :mod       (nq-r)  /mod drop ;
 
 ~~~
-:/         (nq-d)  (diswdr.. `197652 ) ; primitive
-:mod       (nq-r)  (didr.... `788    ) ; primitive
+:/         (nq-d)  \diswdr.. ; primitive
+:mod       (nq-r)  \didr.... ; primitive
 :not       (n-n)   #-1 xor ;
 :n:pow     (bp-n)  #1 swap [ over * ] times nip ;
 :n:negate  (n-n)   #-1 * ;
@@ -1700,10 +1700,10 @@ And finally, tie it all together into the single exposed word
 ~~~
 {{
   'Flag var
-  :compare    as{ 'dufepusw i 'dufepoeq i }as ;
-  :length     as{ 'dufere.. i }as ;
-  :next       as{ 'liadswli i #1 d #1 d 'adre.... i }as ;
-  :not-equal  as{ 'podrdrdr i 'lire...... i #0 d }as ;
+  :compare    \dufepusw \dufepoeq ;
+  :length     \dufere.. ;
+  :next       \liadswli `1 `1 \adre.... ;
+  :not-equal  \podrdrdr \lire...... `0 ;
   :loop       repeat
                 as{ 'pulica.. i &next d }as
                 as{ 'lica.... i &compare d }as
@@ -1793,9 +1793,9 @@ original one.
 ## I/O
 
 ~~~
-:io:enumerate (-n)   as{ 'ie...... i }as ;
-:io:query     (n-mN) as{ 'iq...... i }as ;
-:io:invoke    (n-)   as{ 'ii...... i }as ;
+:io:enumerate (-n)   \ie...... ;
+:io:query     (n-mN) \iq...... ;
+:io:invoke    (n-)   \ii...... ;
 
 {{
   'Slot var
