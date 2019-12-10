@@ -312,6 +312,8 @@ address.
 `fetch-next` takes an address and fetches the stored value. It
 returns the next address and the stored value.
 
+    :fetch-next  dup #1 + swap fetch ;
+
 ~~~
 : fetch-next
 i duliadsw
@@ -321,6 +323,8 @@ i fere....
 
 `store-next` takes a value and an address. It stores the value
 to the address and returns the next address.
+
+    :store-next dup #1 + push store pop ;
 
 ~~~
 : store-next
@@ -348,6 +352,10 @@ Note that this requires that the flags be -1 (for TRUE) and 0
 (for FALSE). It's possible to make this more flexible, but at a
 significant performance hit, so I'm leaving it this way.
 
+    :choose
+      &choice:false store &choice:true store
+      &choice:false + fetch call ;    
+
 ~~~
 : choice:true
 d 0
@@ -366,6 +374,9 @@ i re......
 
 Next the two *if* forms. Note that `-if` falls into `if`. This
 saves two cells of memory.
+
+    :-if push #0 eq? pop \cc...... ;
+    :if                  \cc...... ;
 
 ~~~
 : -if
@@ -394,6 +405,9 @@ First up, string length. The process here is trivial:
 
 * When done subtract the original address from the current one
 * Then subtract one (to account for the zero terminator)
+
+    :count repeat fetch-next 0; drop again ;
+    :s:length dup count #1 - swap - ;
 
 ~~~
 : count
@@ -459,6 +473,8 @@ The heart of the compiler is `comma` which stores a value into
 memory and increments a variable (`Heap`) pointing to the next
 free address.
 
+    :, &Heap fetch store-next &Heap store ;
+
 ~~~
 : comma
 i lifelica
@@ -477,6 +493,8 @@ hard coding the opcodes.
 This performs a jump to the `comma` word instead of using a
 `call/ret` to save a cell and slightly improve performance. I
 will use this technique frequently.
+
+    :comma:opcode  fetch , ;
 
 ~~~
 : comma:opcode
@@ -527,6 +545,9 @@ Next is *semicolon*; which compiles the code to terminate a
 function and sets the `Compiler` to an off state (0). This
 just needs to compile in a RET.
 
+    :compiler:off #0 &Compiler store ;
+    :; &_ret comma:opcode compiler:off ; immediate
+
 ~~~
 : ;
 i lilica..
@@ -552,6 +573,8 @@ Rx provides several  classes with differing behaviors:
 | interpret            | compile                       |
 | -------------------- | ----------------------------- |
 | leave value on stack | compile value into definition |
+
+    :class:data &Compiler fetch 0; drop &_lit comma:opcode comma ;
 
 ~~~
 : class:data
