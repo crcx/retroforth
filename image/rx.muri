@@ -533,6 +533,7 @@ just needs to compile in a RET.
 i lilica..
 r _ret
 r comma:opcode
+: compiler:off
 i lilistre
 d 0
 r Compiler
@@ -941,10 +942,11 @@ r Heap
 r Dictionary
 i lica....
 r d:xt
-i stlilist
+i st......
+: compiler:on
+i lilistre
 d -1
 r Compiler
-i re......
 ~~~
 
 The `&` prefix is used to return the address of a named item.
@@ -1168,6 +1170,109 @@ i lililiju
 r interpret:prefix
 r interpret:noprefix
 r choose
+~~~
+
+## Muri
+
+~~~
+: Instructions
+d 2116 
+d 11340
+d 11700
+d 11400
+d 13685
+d 13104
+d 12432
+d 12402
+d 9603
+d 9801
+d 11514
+d 11413
+d 11110
+d 12528
+d 11948
+d 10302
+d 13340
+d 9700
+d 13455
+d 12753
+d 10500
+d 10670
+d 12654
+d 13320
+d 11960
+d 13908
+d 11110
+d 10605
+d 11865
+d 11025
+d 0
+
+: get-opcode
+i lica....
+r name-to-id
+i lica....
+r id-to-opcode
+i re......
+
+: muri:d
+i liju....
+r comma
+
+: (muri:i)
+i swliaddu
+d 2
+i lica....
+r get-opcode
+i re......
+
+: muri:i
+i dulica..
+r get-opcode
+
+i lica....
+r (muri:i)
+i lica....
+r (muri:i)
+
+i swliadli
+d 2
+r get-opcode
+i ca......
+
+i lishswli
+d -24
+d -16
+i shadswli
+d -8
+i shadad..
+
+i liju....
+r comma
+
+: name-to-id
+i dufeswli
+d 1
+i adfemure
+
+: opcode-lookup
+i lica....
+r fetch-next
+i zr......
+i swpupudu
+i poswnepo
+i swzr....
+i drliju..
+r opcode-lookup
+
+: id-to-opcode
+i lilica....
+r Instructions
+r opcode-lookup
+i swdrlisu
+r Instructions
+i lisure..
+d 1
 ~~~
 
 ## The Initial Dictionary
@@ -1457,8 +1562,28 @@ r 0054
 r Version
 r class:data
 s Version
-: 9999
+: 0056
 r 0055
+r muri:i
+r class:word
+s i
+: 0057
+r 0056
+r muri:d
+r class:word
+s d
+: 0058
+r 0057
+r compiler:off
+r class:macro
+s as{
+: 0059
+r 0058
+r compiler:on
+r class:macro
+s }as
+: 9999
+r 0059
 r err:notfound
 r class:word
 s err:notfound

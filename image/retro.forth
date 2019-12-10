@@ -228,6 +228,8 @@ backtick prefix for this.
 ~~~
 :prefix:`  (s-)
   s:to-number , ; immediate
+:prefix:\
+  i ; immediate
 ~~~
 
 It's traditional to have a word named `here` which returns the
@@ -329,11 +331,11 @@ are:
 And the low level forms:
 
 ~~~
-:tuck      (xy-yxy)   (dupuswpo `100926722 ) ; primitive
-:over      (xy-xyx)   (puduposw `67502597  ) ; primitive
-:nip       (xy-y)     (swdr.... `772       ) ; primitive
-:drop-pair (nn-)      (drdr.... `771       ) ; primitive
-:?dup      (n-nn|n-n) (duzr.... `6402      ) ; primitive
+:tuck      (xy-yxy)   \dupuswpo ; primitive
+:over      (xy-xyx)   \puduposw ; primitive
+:nip       (xy-y)     \swdr.... ; primitive
+:drop-pair (nn-)      \drdr.... ; primitive
+:?dup      (n-nn|n-n) \duzr.... ; primitive
 :dup-pair  (xy-xyxy)  over over ;
 ~~~
 
@@ -358,7 +360,7 @@ equivilent:
     #10 #12 push #3 - pop
 
 ~~~
-:dip  (nq-n) (swap_push_call `525572 pop ;
+:dip  (nq-n) \swpuca.. pop ;
 ~~~
 
 `sip` is similar to dip, but leaves a copy of the value on the
@@ -368,7 +370,7 @@ stack while the quotation is executed. These are equivilent:
     #10 dup push #3 * pop
 
 ~~~
-:sip  (nq-n)  (push_dup_pop_swap `67502597 &call dip ;
+:sip  (nq-n)  \puduposw &call dip ;
 ~~~
 
 Apply each quote to a copy of x.
@@ -1614,104 +1616,10 @@ for references to named functions.
 This is kept in the global namespace, but several portions are
 kept private.
 
-~~~
-{{
-~~~
-
-I allocate a small buffer for each portion of an instruction
-bundle.
-
-~~~
-  'I0 d:create #3 allot
-  'I1 d:create #3 allot
-  'I2 d:create #3 allot
-  'I3 d:create #3 allot
-~~~
-
-The `opcode` word maps a two character instruction to an opcode
-number.
-
-~~~
-  :opcode (s-n)
-    '.. [ #0  ] s:case  'li [ #1  ] s:case
-    'du [ #2  ] s:case  'dr [ #3  ] s:case
-    'sw [ #4  ] s:case  'pu [ #5  ] s:case
-    'po [ #6  ] s:case  'ju [ #7  ] s:case
-    'ca [ #8  ] s:case  'cc [ #9  ] s:case
-    're [ #10 ] s:case  'eq [ #11 ] s:case
-    'ne [ #12 ] s:case  'lt [ #13 ] s:case
-    'gt [ #14 ] s:case  'fe [ #15 ] s:case
-    'st [ #16 ] s:case  'ad [ #17 ] s:case
-    'su [ #18 ] s:case  'mu [ #19 ] s:case
-    'di [ #20 ] s:case  'an [ #21 ] s:case
-    'or [ #22 ] s:case  'xo [ #23 ] s:case
-    'sh [ #24 ] s:case  'zr [ #25 ] s:case
-    'en [ #26 ] s:case  'ie [ #27 ] s:case
-    'iq [ #28 ] s:case  'ii [ #29 ] s:case
-    drop #0 ;
-~~~
-
-I use `pack` to combine the individual parts of the instruction
-bundle into a single cell.
-
-~~~
-  :pack (-n)
-    &I0 opcode  &I1 opcode
-    &I2 opcode  &I3 opcode
-    #-24 shift   swap
-    #-16 shift + swap
-    #-8  shift + swap + ;
-~~~
-
-Switch to the public portion of the code.
-
-~~~
----reveal---
-~~~
-
-With this it's pretty easy to implement the instruction bundle
-handler. Named `i`, this takes a string with four instruction
-names, splits it into each part, calls `opcode` on each and
-then `pack` to combine them before using `,` to write them into
-the `Heap`.
-
-~~~
-  :i (s-)
-    dup &I0 #2 copy #2 +
-    dup &I1 #2 copy #2 +
-    dup &I2 #2 copy #2 +
-        &I3 #2 copy
-    pack , ;
-~~~
-
-The `d` word inlines a data item.
-
-~~~
-  :d (n-)  , ;
-~~~
-
 And `r` inlines a reference (pointer).
 
 ~~~
   :r (s-)  d:lookup d:xt fetch , ;
-~~~
-
-The final bits are `as{` and `}as`, which start and stop the
-assembler. (Basically, they just turn the `Compiler` on and
-off, restoring its state as needed).
-
-~~~
-  :as{ (-f)
-    @Compiler &Compiler v:off ; immediate
-
-  :}as (f-?)
-    !Compiler ; immediate
-~~~
-
-This finishes by sealing off the private words.
-
-~~~
-}}
 ~~~
 
 ## Evaluating Source
