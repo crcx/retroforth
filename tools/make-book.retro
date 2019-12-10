@@ -63,8 +63,8 @@ for me.
 'Out var
 
 :import        here swap BOOK-BASE s:prepend file:slurp ;
-:\n            ASCII:LF @Out file:write ;
-:add-to-book   here [ @Out file:write ] s:for-each \n ;
+:+nl           ASCII:LF @Out file:write ;
+:add-to-book   here [ @Out file:write ] s:for-each +nl ;
 :process-files [ import add-to-book $. c:put ] a:for-each nl ;
 :open          'doc/RETRO-Book.md file:open<for-writing> !Out ;
 :close         @Out file:close ;
