@@ -166,7 +166,9 @@ These are just simple accessor words to aid in overall readability.
     '.md    [ 'text/markdown            ] s:case
     '.htm   [ 'text/html                ] s:case
     '.html  [ 'text/html                ] s:case
-    '.retro.html  [ 'text/html                ] s:case
+    '.retro.html [ 'text/html           ] s:case
+    '.muri.html  [ 'text/html           ] s:case
+    '.forth.html [ 'text/html           ] s:case
     '.css   [ 'text/css                 ] s:case
     '.c     [ 'text/plain               ] s:case
     '.h     [ 'text/plain               ] s:case

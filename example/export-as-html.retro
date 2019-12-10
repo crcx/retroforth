@@ -61,6 +61,7 @@ the token type and use `span`.
   $& [ 'ptr       span ] case
   $$ [ 'char      span ] case
   $` [ 'inst      span ] case
+  $\ [ 'inst      span ] case
   $| [ 'defer     span ] case
   $@ [ 'fetch     span ] case
   $! [ 'store     span ] case
