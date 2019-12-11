@@ -9,12 +9,78 @@
 - fix a bug in s:WHITESPACE and use it in c:whitespace?
 - reorganize source tree
 - add s:get-word
+- moved the assembler into rx.muri
+- add prefix:\
+- add prefix:^
+- deprecate as{
+- deprecate }as
 
-In progress:
+Security.
 
-- refactor and improve the nga-in-javascript implementation
-  - add a framebuffer (via canvas element)
-  - remove dead code
-  - reformat consistently
-  - performance improvements
-- split the glossary tool into smaller parts
+Starting with 2020.1, each release will include a signing key to
+allow verification of the release. Additionally, each release will
+include the signing key to be used for the following release so
+that there is both reliable key rotation and a verifiable chain
+of trust across releases.
+
+Tooling updates.
+
+The HTML export for the examples has been updated. It now averages
+a 7.4% decrease in conversion and a 26% decrease in exported file
+size.
+
+Assembler.
+
+The assembler is now provided by Rx. This was a technical challenge,
+but well worth the effort. By making it part of the kernel it has
+become possible to use assembly, rather than raw bytecode, in all
+parts of retro.forth. This is allowing for a significant amount of
+hand tuning to the standard library, reducing the memory footprint
+and improving performance overall.
+
+Some highlights of this:
+
+- Reduced the assembler size from 661 cells to 109 cells
+- No increase to the size of the reserved space for Rx
+- Renamed the `en`d instruction to `ha`lt
+- Added new prefixes for working with the assembler instead of
+  requiring use `as{` and `}as`.
+- Deprecated `as{` and `}as` (these will be removed in the
+  2020.04 release)
+
+Example of the changes:
+
+    (old)
+    as{ 'liliad.. i #2 d #3 d 'lica.... i 'n:put r }as
+
+    (new)
+    \liliad.. `2 `3 \lica.... ^n:put
+
+Standard Library.
+
+I fixed bugs in a few places, including the `c:whitespace?` word.
+The assembler was moved into the kernel; this has allowed me to
+remove all uses of raw bytecode from the main sources which aids
+in readability. I also used the assembler to hand tune a number
+of words to reduce the image size and improve performance.
+
+Nga.
+
+Reorganized the source tree. This separates the implementations
+by language and tries to keep things better structured. The Forth
+code for the I/O devices is now in a separate directory, allowing
+it to be more easily shared across implementations. Bugs related
+to the numeric range queries were fixed.
+
+The JavaScript implementation has seen a number of changes. Dead
+code was removed, the formatting was redone to ensure consistency,
+a framebuffer device was added, and performance was improved. The
+code now consists of multiple files, making editing easier, and
+the interface layout has been updated.
+
+Retro on Unix.
+
+I added an `s:get-word`, removed some deprecated words, and updated
+the memory limits to reduce overall memory usage under the default
+configuration.
+
