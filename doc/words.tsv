@@ -101,7 +101,7 @@ a:to-string	a-s	-	-	Create a new string from the provided array. This string wil
 again	-	-	-	Close an unconditional loop. Branches back to the prior `repeat`.			class:macro	{n/a}	{n/a}	global	all	
 allot	n-	-	-	Allocate the specified number of cells from the `Heap`.			class:word	    'Buffer d:create  #100 allot	{n/a}	global	all	
 and	nm-o	-	-	Perform a bitwise AND operation between the two provided values.			class:primitive	{n/a}	{n/a}	global	all	
-as{	-f	-	-	Begin an assembly section.			class:macro	{n/a}	{n/a}	global	all	
+as{	-f	-	-	Begin an assembly section. Deprecated; will be removed in 2020.			class:macro	{n/a}	{n/a}	global	all	
 banner	-	-	-	Display a welcome message on startup.			class:word	{n/a}	{n/a}	global	rre	{n/a}
 bi	xqq-?	-	-	Execute q1 against x, then execute q2 against a copy of x.			class:word	    #100 [ #10 * ] [ #10 - ] bi	{n/a}	global	all	
 bi*	xyqq-?	-	-	Execute q1 against x and q2 against y.			class:word	    #10 #20 [ #2 * ] [ #10 / ] bi*	{n/a}	global	all	
@@ -495,5 +495,5 @@ xor	mn-o	-	-	Perform a bitwise XOR operation.			class:primitive	{n/a}	{n/a}	glob
 {	-	-	-	Begin an array. This is intended to make creating arrays a bit cleaner than using a quotation and `a:counted-results`.			class:word	{n/a}	{n/a}	global	all	
 {{	-	-	-	Begin a lexically scoped area.			class:word	{n/a}	{n/a}	global	all	
 }	-a	-	-	Complete an array begun by `{`. Returns a pointer to the data.			class:word	{n/a}	{n/a}	global	all	
-}as	f-	-	-	End an assembly section.			class:macro	{n/a}	{n/a}	global	all	
+}as	f-	-	-	End an assembly section. Deprecated; will be removed in 2020.			class:macro	{n/a}	{n/a}	global	all	
 }}	-	-	-	End a lexically scoped area. This will hide any headers between `{{` and `---reveal---`, leaving only headers between `---reveal---` and the `}}` visible.			class:word	{n/a}	{n/a}	global	all	
