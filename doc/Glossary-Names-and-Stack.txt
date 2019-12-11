@@ -368,6 +368,7 @@ prefix:.                 D: s-  A: -  F: -F
 prefix::                 D: s-  A: -  F: -
 prefix:@                 D: s-n  A: -  F: -
 prefix:\                 D: s-  A: -  F: -
+prefix:^                 D: s-  A: -  F: -
 prefix:`                 D: s-  A: -  F: -
 prefix:|                 D: s-  A: -  F: -
 primitive                D: -  A: -  F: -

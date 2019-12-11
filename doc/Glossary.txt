@@ -4373,6 +4373,23 @@ Compile Time:
 Class: class:macro | Namespace: prefix | Interface Layer: all
 ------------------------------------------------------------------------
 
+prefix:^
+
+  Data:  s-
+  Addr:  -
+  Float: -
+
+Process token as a function reference.
+
+Interpret Time:
+  Discard the string.
+
+Compile Time:
+  Comma the XT of the word into the current definition.
+
+Class: class:macro | Namespace: prefix | Interface Layer: all
+------------------------------------------------------------------------
+
 prefix:`
 
   Data:  s-

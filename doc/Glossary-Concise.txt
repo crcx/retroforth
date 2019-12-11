@@ -1108,6 +1108,9 @@ Fetch from a stored variable.
 prefix:\                 D: s-  A: -  F: -
 Process token as an instruction bundle.
 
+prefix:^                 D: s-  A: -  F: -
+Process token as a function reference.
+
 prefix:`                 D: s-  A: -  F: -
 Process token as a bytecode.
 

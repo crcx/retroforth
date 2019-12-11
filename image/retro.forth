@@ -1632,19 +1632,19 @@ And finally, tie it all together into the single exposed word
   :next       \liadswli `1 `1 \adre.... ;
   :not-equal  \podrdrdr \lire...... `0 ;
   :loop       repeat
-                as{ 'pulica.. i &next d }as
-                as{ 'lica.... i &compare d }as
-                as{ 'lifeanli i &Flag d &Flag d 'st...... i }as
-                as{ 'polisuzr i #1 d }as
+                \pulica.. ^next
+                \lica.... ^compare
+                \lifeanli ^Flag ^Flag \st......
+                \polisuzr `1
               again ;
 ---reveal---
   :a:eq? (aa-f)
-    as{ 'lilist.. i #-1 d &Flag d      }as
-    as{ 'lica.... i &compare d         }as
-    as{ 'lixolicc i #-1 d &not-equal d }as
-    as{ 'lica.... i &length d          }as
-    as{ 'lica.... i &loop d            }as
-    as{ 'drdrlife i &Flag d            }as ;
+    \lilist.. `-1 ^Flag
+    \lica.... ^compare
+    \lixolicc `-1 ^not-equal
+    \lica.... ^length
+    \lica.... ^loop
+    \drdrlife ^Flag ;
   :a:-eq? (aa-f) a:eq? not ;
 }}
 ~~~
