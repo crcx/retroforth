@@ -226,10 +226,9 @@ It's sometimes useful to inline values directly. I use a
 backtick prefix for this.
 
 ~~~
-:prefix:`  (s-)
-  s:to-number , ; immediate
-:prefix:\
-  i ; immediate
+:prefix:`  (s-)  s:to-number , ; immediate
+:prefix:\  (s-)  i ; immediate
+:prefix:^  (s-)  r ; immediate
 ~~~
 
 It's traditional to have a word named `here` which returns the
