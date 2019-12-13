@@ -9,15 +9,15 @@ Output will be written to stdout.
 
 ## References
 
-[1] source/interfaces/retro-unix.c
-[2] source/interfaces/retro-image.c
+[1] vm/nga-c/retro-unix.c
+[2] vm/nga-c/retro-image.c
 
 ## Code
 
 ~~~
 {{
   :image:inline
-    'source/interfaces/retro-image.c [ s:put nl ] file:for-each-line ;
+    'vm/nga-c/retro-image.c [ s:put nl ] file:for-each-line ;
 
   :source:line
     dup '#include_"retro-image.c" s:eq?
@@ -26,7 +26,7 @@ Output will be written to stdout.
 ---reveal---
 
   :amalgamate
-    'source/interfaces/retro-unix.c [ source:line ] file:for-each-line ;
+    'vm/nga-c/retro-unix.c [ source:line ] file:for-each-line ;
 }}
 
 amalgamate
