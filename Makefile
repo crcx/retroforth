@@ -81,8 +81,6 @@ glossary: doc/Glossary.txt doc/Glossary.html doc/Glossary-Concise.txt doc/Glossa
 
 image: vm/nga-c/image.c
 
-js: bin/RETRO12.html
-
 repl: bin/retro-repl
 
 retro-describe: bin/retro-describe
@@ -109,11 +107,8 @@ bin/retro-injectimage-js: tools/injectimage-js.c
 bin/retro-muri: tools/muri.c
 	$(CC) $(CFLAGS) $(LDFLAGS) -o bin/retro-muri tools/muri.c
 
-bin/RETRO12.html: bin/retro-injectimage-js
-	./bin/retro-injectimage-js >bin/RETRO12.html
-
 bin/retro-repl: vm/nga-c/repl.c vm/nga-c/image.c
-	cd interface && $(CC) $(CFLAGS) $(LDFLAGS) -o ../bin/retro-repl repl.c
+	cd vm/nga-c && $(CC) $(CFLAGS) $(LDFLAGS) -o ../../bin/retro-repl repl.c
 
 bin/retro: ngaImage bin/retro-embedimage bin/retro-extend vm/nga-c/retro-image.c vm/nga-c/retro-unix.c interface/filesystem.retro interface/floatingpoint.retro interface/unix.retro interface/rng.retro interface/sockets.retro interface/retro-unix.retro interface/clock.retro
 	cp ngaImage rre.image
