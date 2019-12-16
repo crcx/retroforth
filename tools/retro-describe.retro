@@ -23,11 +23,10 @@ was passed, just exit.
 
 ~~~
 sys:argc n:zero? [ #0 unix:exit ] if
-#0 sys:argv 'TARGET s:const
 ~~~
 
 ~~~
-#165 'DATA-START const
+#167 'DATA-START const
 ~~~
 
 # Data File
@@ -142,13 +141,16 @@ the description.
 
 ~~~
 {{
+  'Target var
   'LineNumber var
-  :matched? (-f) field:name TARGET s:eq? ;
+  :matched? (-f) field:name @Target s:eq? ;
   :entry?   (-f)
     @LineNumber DATA-START gteq? &LineNumber v:inc ;
 ---reveal---
   :find-and-display-entry
-    sys:name [ s:keep !SourceLine entry? 0; drop matched? [ display-result ] if ] file:for-each-line nl ;
+    #0 !LineNumber
+    s:keep !Target
+    sys:name [ &Heap [ s:keep !SourceLine entry? 0; drop matched? [ display-result ] if ] v:preserve ] file:for-each-line nl ;
 }}
 ~~~
 
@@ -158,7 +160,7 @@ This checks the command line arguments and calls the proper words to
 handle each case.
 
 ~~~
-find-and-display-entry
+sys:argc [ I sys:argv find-and-display-entry ] times<with-index>
 ~~~
 
 # Glossary Data
