@@ -26,6 +26,10 @@ sys:argc n:zero? [ #0 unix:exit ] if
 #0 sys:argv 'TARGET s:const
 ~~~
 
+~~~
+#165 'DATA-START const
+~~~
+
 # Data File
 
 /usr/local/share/RETRO12/words.tsv
@@ -138,11 +142,13 @@ the description.
 
 ~~~
 {{
+  'LineNumber var
   :matched? (-f) field:name TARGET s:eq? ;
-  :entry?   (-f) @SourceLine ASCII:HT s:contains-char? ;
+  :entry?   (-f)
+    @LineNumber DATA-START gteq? &LineNumber v:inc ;
 ---reveal---
   :find-and-display-entry
-   sys:name [ s:keep !SourceLine entry? 0; drop matched? [ display-result ] if ] file:for-each-line nl ;
+    sys:name [ s:keep !SourceLine entry? 0; drop matched? [ display-result ] if ] file:for-each-line nl ;
 }}
 ~~~
 
@@ -156,4 +162,3 @@ find-and-display-entry
 ~~~
 
 # Glossary Data
-
