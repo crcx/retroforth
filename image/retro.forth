@@ -633,8 +633,11 @@ stored value, and updating with the resulting value.
 I have a simple word `copy` which copies memory to another
 location.
 
+    :copy   (aan-) [ &fetch-next dip store-next ] times drop drop ;
+
 ~~~
-:copy   (aan-) [ &fetch-next dip store-next ] times drop drop ;
+:copy  (aan-)
+  [ \puduliad `1 \swfepodu \liadpust `1 \po...... ] times drop drop ;
 ~~~
 
 ## Lexical Scope
