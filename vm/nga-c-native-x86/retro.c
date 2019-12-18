@@ -52,8 +52,8 @@ void ngaPrepare();
 void ngaProcessOpcode(CELL opcode);
 void ngaProcessPackedOpcodes(CELL opcode);
 int ngaValidatePackedOpcodes(CELL opcode);
-long stack_pop();
-void stack_push(long value);
+CELL stack_pop();
+void stack_push(CELL value);
 
 int getchar(void);
 

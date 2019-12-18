@@ -1,9 +1,9 @@
 all: native386 clean
 
 native386:
-	cp ../../../ngaImage nativeImage
-	../../../bin/retro-extend nativeImage x86/common.retro x86/cmos-rtc.retro x86/serial.retro x86/display.retro x86/ata.retro x86/listener.retro x86/Block-Editor.retro
-	../../../bin/retro-embedimage nativeImage >image.c
+	cp ../../ngaImage nativeImage
+	../../bin/retro-extend nativeImage x86/common.retro x86/cmos-rtc.retro x86/serial.retro x86/display.retro x86/ata.retro x86/listener.retro x86/Block-Editor.retro
+	../../bin/retro-embedimage nativeImage >image.c
 	cc -fno-pie -Wall -m32 -DTARGET_X86              -c retro.c -o retro_qwerty.o
 	cc -fno-pie -Wall -m32 -DTARGET_X86 -DUSE_DVORAK -c retro.c -o retro_dvorak.o
 	nasm -f elf 386.s
