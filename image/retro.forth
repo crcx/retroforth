@@ -780,7 +780,7 @@ pointer to skip to the code following the stored string.
 
 ~~~
 :s:skip (-)
-  pop [ fetch-next n:-zero? ] while n:dec push ;
+  pop [ \duliadsw `1 \feline.. `0 ] while n:dec push ;
 
 :s:keep (s-s)
   compiling? [ &s:skip compile:call ] if
@@ -1544,12 +1544,12 @@ I can implement `s:replace-all` and `s:tokenize-on-string`.
 
 ~~~
 {{
-  'Replacement d:create #128 allot
-  :extract  &Replacement s:copy ;
+  :replacement STRINGS #2048 - ;
+  :extract  replacement s:copy ;
   :tokenize s:tokenize-on-string s:empty ;
-  :combine  &Replacement s:append s:append ;
+  :combine  replacement s:append s:append ;
   :merge    swap [ combine ] a:for-each nip ;
-  :find-end dup s:length &Replacement s:length - over + ;
+  :find-end dup s:length replacement s:length - over + ;
   :clean    find-end #0 swap store ;
 ---reveal---
   :s:replace-all (sss-s)
