@@ -3,15 +3,24 @@
 ; =============================================================
 
 bits 64
+
+section .note.openbsd.ident
+        align   2
+        dd      8,4,1
+        db      "OpenBSD",0
+        dd      0
+        align   2
+
 section .text
 global putchar
 global getchar
 global _start
+
 extern main
 
 align 8
 _start:
-        call    main
+        jmp    main
         jmp     $
 
 align 8

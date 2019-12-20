@@ -10,9 +10,6 @@
   I'll include commentary throughout the source, so read on.
   ---------------------------------------------------------------------*/
 
-
-#include "image.c"
-
 int getchar(void);
 int putchar(int c);
 
@@ -70,6 +67,8 @@ typedef void (*Handler)(void);
 
 Handler IO_deviceHandlers[NUM_DEVICES + 1];
 Handler IO_queryHandlers[NUM_DEVICES + 1];
+
+#include "image.c"
 
 /*---------------------------------------------------------------------
   Moving forward, a few variables. These are updated to point to the
