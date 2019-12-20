@@ -631,13 +631,18 @@ stored value, and updating with the resulting value.
 ~~~
 
 I have a simple word `copy` which copies memory to another
-location.
+location. This originally was defined as:
 
-    :copy   (aan-) [ &fetch-next dip store-next ] times drop drop ;
+    :copy   (aan-)
+      [ [ fetch-next ] dip store-next ] times drop drop ;
+
+It is now written with the loop body using inline assembly
+to improve performance.
 
 ~~~
 :copy  (aan-)
-  [ \puduliad `1 \swfepodu \liadpust `1 \po...... ] times drop drop ;
+  [ \puduliad `1 \swfepodu \liadpust `1 \po...... ] times
+  drop drop ;
 ~~~
 
 ## Lexical Scope
@@ -1684,8 +1689,7 @@ current, and up to two outer loops as well.
   :K (-n) @LP &Index + #2 - fetch ;
   :times<with-index>
     prep swap
-      [ repeat 0; (#1_-_push_dup `33886721 `1 (push_call `2053
-               (pop_pop `1542 next again ] call
+      [ repeat 0; \lisupudu `1 \puca.... \popo.... next again ] call
     drop done ;
 }}
 ~~~
@@ -1703,7 +1707,7 @@ the first word in the definition. This will compile a jump
 to the actual definition start. 
 
 ~~~
-:hook (-)  #1793 , here n:inc , ; immediate
+:hook (-)  'liju.... i here n:inc , ; immediate
 ~~~
 
 `set-hook` takes a pointer to the new word or quote and a
@@ -1768,7 +1772,7 @@ examples provide much better tools, and interface layers can
 provide much more than I can do here.
 
 ~~~
-:reset      (...-) depth repeat 0; push drop pop #1 - again ;
+:reset      (...-) repeat depth 0; drop-pair again ;
 :dump-stack (-)  depth 0; drop push dump-stack pop dup n:put sp ;
 ~~~
 
