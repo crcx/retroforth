@@ -1544,12 +1544,12 @@ I can implement `s:replace-all` and `s:tokenize-on-string`.
 
 ~~~
 {{
-  :replacement STRINGS #2048 - ;
-  :extract  replacement s:copy ;
+  :substitute STRINGS #129 - ;
+  :extract  substitute s:copy ;
   :tokenize s:tokenize-on-string s:empty ;
-  :combine  replacement s:append s:append ;
-  :merge    swap [ combine ] a:for-each nip ;
-  :find-end dup s:length replacement s:length - over + ;
+  :combine  substitute s:append s:append ;
+  :merge    swap &combine a:for-each nip ;
+  :find-end dup s:length substitute s:length - over + ;
   :clean    find-end #0 swap store ;
 ---reveal---
   :s:replace-all (sss-s)
