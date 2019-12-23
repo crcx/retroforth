@@ -1399,19 +1399,11 @@ compare a given value to each item in the array and returns
 a flag.
 
 ~~~
-{{
-  'F var
----reveal---
-  :a:contains? (na-f)
-    &F v:off
-    [ over eq? @F or !F ] a:for-each
-    drop @F ;
+:a:contains? (na-f)
+  #0 swap [ swap push over eq? pop or ] a:for-each nip ;
 
-  :a:contains-string? (sa-f)
-    &F v:off
-    [ over s:eq? @F or !F ] a:for-each
-    drop @F ;
-}}
+:a:contains-string? (na-f)
+  #0 swap [ swap push over s:eq? pop or ] a:for-each nip ;
 ~~~
 
 `a:index-of` builds on these to return the offset of a value in the
