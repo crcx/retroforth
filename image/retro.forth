@@ -710,19 +710,19 @@ null) and other simple structures.
     
 ~~~
 {{
-  :Buffer `0 ; data
-  :Ptr    `0 ; data
-  :terminate (-) #0 @Ptr store ;
+  :Start `0 ; data
+  :End   `0 ; data
+  :terminate (-) #0 @End store ;
 ---reveal---
-  :buffer:start  (-a) @Buffer ;
-  :buffer:end    (-a) @Ptr ;
-  :buffer:add    (c-) buffer:end store &Ptr v:inc terminate ;
-  :buffer:get    (-c) &Ptr v:dec buffer:end fetch terminate ;
-  :buffer:empty  (-)  buffer:start !Ptr terminate ;
-  :buffer:size   (-n) buffer:end buffer:start - ;
-  :buffer:set    (a-) !Buffer buffer:empty ;
+  :buffer:start  (-a) @Start ;
+  :buffer:end    (-a) @End ;
+  :buffer:add    (c-) @End store &End v:inc terminate ;
+  :buffer:get    (-c) &End v:dec @End fetch terminate ;
+  :buffer:empty  (-)  @Start !End terminate ;
+  :buffer:size   (-n) @End @Start - ;
+  :buffer:set    (a-) !Start buffer:empty ;
   :buffer:preserve (q-)
-    @Buffer @Ptr [ &call dip !Buffer ] dip !Ptr ;
+    @Start @End [ &call dip !Start ] dip !End ;
 }}
 ~~~
 
