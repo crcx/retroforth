@@ -1478,7 +1478,7 @@ and return a new value.
 
 ~~~
 :a:reduce (pnp-n)
-  [ swap ] dip a:for-each ;
+  &swap dip a:for-each ;
 ~~~
 
 When making an array, I often want the values in the original
