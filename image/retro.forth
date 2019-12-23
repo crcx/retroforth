@@ -1420,14 +1420,14 @@ array.
 ~~~
 {{
   'Location var
-  :prepare  #-1 !Location ;
+  :prepare  swap #-1 !Location ;
   :next     @Location n:negative? [ &Location v:dec ] if ;
   :match?   over eq? [ @Location n:negative? ] [ FALSE ] choose ;
   :update   @Location n:abs n:dec !Location ;
 ---reveal---
-  :a:index-of (na-n)
+  :a:index-of (an-n)
     prepare dup-pair a:contains? [ drop-pair #-1 ] -if;
-    [ match? [ update ] if next ] a:for-each
+    [ match? &update if next ] a:for-each
     drop @Location ;
 }}
 ~~~
@@ -1527,16 +1527,16 @@ I can implement `s:replace-all` and `s:tokenize-on-string`.
 ~~~
 {{
   'Needle d:create #128 allot
-  'Needle<Len> var
+  'Length var
   'Tokens d:create #128 allot
   'TP var
   :save s:keep @TP &Tokens a:store &TP v:inc ;
-  :next [ @Needle<Len> + ] sip ;
+  :next [ @Length + ] sip ;
   :done s:length n:zero? ;
 ---reveal---
   :s:tokenize-on-string (ss-s)
     #0 !TP
-    [ dup &Needle s:copy s:append ] [ s:length !Needle<Len> ] bi
+    [ dup &Needle s:copy s:append ] [ s:length !Length ] bi
     [ &Needle s:split-on-string save next done ] until
     &Tokens @TP n:dec !Tokens ;
 }}
