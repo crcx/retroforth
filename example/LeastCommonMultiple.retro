@@ -1,4 +1,14 @@
-# example|LeastCommonMultiple
+# Least Common Multiple
+
+The least common multiple of two integers a and b, is the
+smallest positive integer that is divisible by both a and b.
+
+This implements a word to find this in RETRO.
+
+It uses a formula that reduces the problem to computing the
+greatest common divisor (gcd), as in:
+
+    lcm(a,b) = |a*b| / gcd(a,b)
 
 ~~~
 :gcd (ab-n)
