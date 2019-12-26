@@ -1,122 +1,176 @@
+(~~~
+:rl (-)_ReLoad reset d:wipe 'Gott file:load.package ;
+(~~~
+
 # Gott
 
-This program takes three input items
+This program takes
 
-- The time something began.
-- A random time in the interval between the beginning and the end.
-- The portion of time that has elapsed at least.
+- $g$ in $]0, infty[$, a random time gone since something began.
+- $p$ in $]0, 1[$, the portion of time that you consider to have elapsed.
 
-and produces the interval.
+and produces the interval in which that something should end.
 
-The method is taken from the beginning part of the book
+The method is taken from
 
   William Poundstone; The Doomsday Calculation; Little, Brown Spark, 2019
 
-In pp.14-18 of the book there is a description of a prediction 
+The relevant part of this book can be read as
+
+  Amazon preview
+  https://www.amazon.com/Doomsday-Calculation-Equation-Transforming-Everything-ebook/dp/B07J4WCSMR
+
+If you prefer an audio introduction, watch on YouTube
+
+  The Doomsday Calculation: Book Trailer
+  https://youtu.be/jr693Q6M8OY
+
+Also, an interview with the author is available as
+  Michael Shermer with William Poundstone 
+  — The Doomsday Calculation (SCIENCE SALON # 76)
+  https://youtu.be/M0tHz4BdrvA
+
+In pp.14-18 of Poundstone's book there is a description of a prediction 
 J. Richard Gott III made regarding the fall of the Berlin wall.
 
-The input items are
+The input data are
 
 - In 1961 the wall was built.
-- In 1969 Gott visited the wall, which he considers to be a random moment.
+- In 1969 Gott visited the wall, which he considers that
+  to have been a random moment in time.
 - He proposes to make a prediction with a 50% level of confidence,
   which is equivalent to saying that at least 25% of the total duration
   is assumed to have elapsed.
 
-with which
+so that
 
-- There is a 50% chance that the wall falls sometime between 1972 and 1993.
+- `gone` is 1969 - 1961 = 7 years.
+- `portion` of the time gone is a half the 50% or 1/4.
+
+which produces the interval $[3, 24]$, which translates to
+
+- There is a 50% chance that the wall falls sometime between 
+  $1969 + 3 = 1972$ and $1969 + 24 = 1993$ .
 
 The wall actually fell in 1989.
 
-Since the method is controversial read the book before applying 
-the method to your personal problems.
-Pay attention to the randomness of `e:Now` and time scale invariance.
+Since the method is controversial, read the book before applying 
+it to your personal problems.
+Pay attention to the randomness of `gone` and time scale invariance.
 
 # Program
 
-The input items are:
+Consider something of interest that began at time `start`.
+Take the origin 0 of the time axis to be a random time `now`.
+Assuming that the end does come, it has to be within finite time from `now`.
+Let that maximum time be the unit $1$.
+Since the maximum time is unknown, 
+the time unit 1 is unknown in any time scale.
 
-~~~
-'e:Start var (time_when_it_began
-'e:Now   var (present_time_later_than__e:Start
-'e:Gone  var (portion_gone,_in_interval_(0,1)
-~~~
+```
+    now                                 maximum time
+     |                                       |
+...--+---------+---------+---------+---------+--...--> time
+     0                                       1
+```
 
-Instead of the level of confidence I use `e:Gone` 
-which seems more intuitive.
+Consider the $100 \, q$% confidence interval within which the period ends.
 
-If for instance the level of confidence is 50%, then `e:Now` is 
-somewhere in the central 50% of the interval.
+```
+                      100 q %
+    now   |<--- confidence interval --->|   max
+     |    |                             |    |
+...--+----v****+*********+*********+****v----+--...--> time
+     0  (1-q)/2                   1-(1-q)/2  1
+```
 
-            confidence interval
-+---------+*********+**********+---------+
-0        1/4       1/2        3/4       1
+Let $p := (1 - q)/2$.
+The `end` falls somewhere within the confidence interval $[p, 1-p]$
+with probability $q$.
 
-This means that `e:Now` is in the earliest at the 25% point 
-of the entire interval (0,1), and in the latest at the 75% point, 
+```
+    now   |<------------ q ------------>|   max
+     |    |                             |    |
+...--+----v****+*********+*********+****v----+--...--> time
+     0    p                            1-p   1
+```
 
-       earliest              latest
-          |                    |
-          V                    V
-|---------|*********|**********|---------|
-0        1/4       1/2        3/4       1
+The `end` will come with probability 1 sometime after 0,
+but with probability $q$ only after $p$ and before $1-p$.
+This means that with probability $q$ the time elapsed between `start` and
+`now`
+equals $p$.
 
+Let the time `gone` be $g :=$ `now` $-$ `start`.
+This quantity comes with a time scale since `now` and `start` are measured in
+some unit such as days or years.
+Now let $\ell$ be the time corresponding to $p$ in the scale of $g$.
+Then $\ell/g = p/(1-p)$ so that
+$$
+\ell = \frac{p}{1-p} \, g
+$$
 
-implying that at the earliest `e:Now` at least 1/4 of the interval 
-has gone already.
+Similarly, the time corresponding to $1-p$ in the scale of $g$ is
+$$
+u = \frac{1-p}{p} \, g
+$$
 
-        gone
-          |
-  portion V
-|.........|---------|----------|---------|
-0        1/4       1/2        3/4        1
+Now the end will come neither until the next moment of `now`, which is 0,
+nor after the earliest end within the confidence interval which is at $p$.
 
-Thus a conidence interval of level 1/2 corresponds to saying that 
-at least the (1 - 1/2)/2 = 1/4 = 25% = 0.25 part 
-of the total time has elapsed.
-This is the value to be set to `e:Gone`.
+To sum up, with $100 \, q$% confidence 
+$l := g \, r$ and $u := g / r$, with $r := p/(1-p)$.
 
-Likewise, if the confidence level is to be taken at 90%, then
-`e:Gone` is at (100 - 90)/2 = 5% = 0.05.
+```
+start          l                             u
+  |            |<------------ q ------------>|
+  V            |                             |
+--+--...--+----v****+*********+*********+****v----+--...--> time
+          0    p                            1-p   1
+```
+
+Implementing this method, I make a function called `gott` which takes
+`start`, `now`, `gone` and returns `l` and `u`, where
+
+- `l`: shortest time from `now` that the event may take place
+- `u`: longest time from `now` that the event may take place
+
+both with $100 \, q$% confidence.
 
 Helpers.
 
 ~~~
-:.           (-)                    dump-stack
+:f:rot-       (-_abc-cab) f:rot f:rot ;
+:n:to-f       (n-_-n) n:to-float ;
+:.            (-)                    dump-stack
   #0 f:depth  lt? [ nl 'f_  s:put f:dump-stack  ] if
   #0 f:adepth lt? [ nl 'fa_ s:put f:dump-astack ] if ;
-:f:reset     (-__..-)        f:depth  [       f:drop ] times ; 
-:f:areset    (-__-__..-)     f:adepth [ f:pop f:drop ] times ; 
-:r           (..-__..-__..-) reset f:reset f:areset ; 
-
-:f:complement  (-__n-n)_1-f .1. f:swap f:- ;
-:e:@ (a-__-f)_fetch_as_float fetch e:to-f ;
-:e:! (a-__f-)_store_as_e     f:to-e swap store ;
+:f:reset      (-__..-)        f:depth  [       f:drop ] times ; 
+:f:areset     (-__-__..-)     f:adepth [ f:pop f:drop ] times ; 
+:r            (..-__..-__..-) reset f:reset f:areset ; 
+:f:complement (-__n-n)_1-f .1. f:swap f:- ;
 ~~~
 
 Here is the program.
 
 ~~~
 {{ 
-  :f:past       (-_-n)_n_=_now_-_start
-    e:Now e:@ e:Start e:@ f:- ; 
-  :f:long       (-__-n)_n=(1-p)/p_where_p=portion,_p=<1/2
-    e:Gone e:@ f:dup f:complement f:swap f:/ ;
-  :f:short      (-__-n)_n=p/(1-p)_where_p=portion,_p=<1/2
-    e:Gone e:@ f:dup f:complement        f:/ ;
-  :f:lo         (-_-n)   f:past f:short f:* ;
-  :f:hi         (-_-n)   f:past f:long  f:* ;
+  :f:short      (-__p-r)_r=p/(1-p)_where_p=portion,_p=<1/2
+    f:dup f:complement f:/ ;
+  :f:lo         (-_gp-s)_g=gone f:short f:* ;
+  :f:hi         (-_gp-l)        f:short f:/ ;
 ---reveal---
-  :f:future.lo  (-__-n)  e:Now e:@ f:lo f:+ ;
-  :f:future.hi  (-__-n)  e:Now e:@ f:hi f:+ ;
-  :f:future     (-__-nn) f:future.lo f:future.hi ;
+  :f:future.lo  (-__ngp-l)_n=now f:lo f:+ ;
+  :f:future.hi  (-__ngp-h)       f:hi f:+ ;
+  :f:future     (-__ngp-lh) 
+    #3 [ f:dup f:push f:rot- ] times f:future.lo 
+    #3 &f:pop                  times f:future.hi ;
 }}
 ~~~
 
 ## Berlin wall
 
-This problem has been taken from the Poundstone's book.
+This problem has been taken from Poundstone's book.
 In pp.14-18 there is a description of a prediction J. Richard Gott III 
 made regarding the fall of the Berlin wall.
 
@@ -124,14 +178,12 @@ made regarding the fall of the Berlin wall.
 
 The input items are:
 
-~~~
-.1961. e:Start e:! (time_when_it_began
-.1969. e:Now   e:! (present_time
-.0.25  e:Gone  e:! (portion_gone,_between_0_and_1
-~~~
+- .1961. `start`   : floating time when it began
+- .1969. `now`     : floating present time
+- .0.25  `portion` : floating portion `gone`, between 0 and 1
 
-It is crucial that `e:Now` may be considered a random moment 
-in the time line after `e:Start`. 
+It is crucial that `now` may be considered a random moment 
+in time line after `start`. 
 This is a special case of the Copernican principle.
 
 1961 is when the wall was built.
@@ -143,13 +195,15 @@ a 50% chance that the end of the wall will fall
 within the time interval to be produced below.
 
 ~~~
-'Berlin_wall_1/2 s:put
+r 'Berlin_wall_1/2 s:put nl
+#1969 n:to-f (now)       f:dup #1961 n:to-f  (now_now_start) 
+f:-         (now_gone)   .1. .4. f:/         (now_gone_portion) 
 f:future . nl nl
 ~~~
 
 gives
 
-  f 1971.667193 1993.001517
+  f 1971.666667 1993.000000
 
 meaning that there is a 50% chance that the wall will fall 
 sometime between 1972 and 1993.
@@ -163,16 +217,17 @@ sometime between 1972 and 1993.
 To recalculate with a confidence level of 95% as in p.19 of the book,
 
 ~~~
-'Berlin_wall_95% s:put
-r .0.025 e:Gone e:!
+r 'Berlin_wall_95% s:put nl
+#1969 n:to-f (now)       f:dup #1961 n:to-f (now_now_start) 
+f:-          (now_gone)  .0.025             (now_gone_portion) 
 f:future . nl nl
 ~~~
 
 which gives
 
-  f 1969.205530 2281.030613
+  f 1969.205128 2281.000000
 
-or between 1969 and 2281.
+or between 1969 and 2281; reasonable but uninteresting.
 
 ## Diana and Charles
 
@@ -180,20 +235,20 @@ Now try the relationship duration between Diana and Charles that
 comes as the first example in the book, p.3.
 
 ~~~
-r 'Di_&_Charles s:put
-.1981 .7 .12 f:/ f:+ e:Start  e:!
-.1993                e:Now   e:!
-.0.1                 e:Gone  e:!
+r 'Di_&_Charles s:put nl
+.1993 f:dup          (now_now)
+.1981 .7 .12 f:/ f:+ (now_now_start)     f:- (now_gone)
+.0.1                 (now_gone_portion)
 f:future.lo . nl nl
 ~~~
 
 giving
 
-  f 1994.268668
+  f 1994.268519
 
 or after 1994.
-The `future.hi` is irrelevant, considering the couple's life span.
-Note that the value of `e:Gone` is set to 0.1 rather than 0.05,
+`future.hi` is irrelevant, considering the couple's life span.
+Note that the value of `Gone` is set to 0.1 rather than 0.05,
 even though the level of confidence is stated to be 90%.
 
 Regarding this result the book says
@@ -215,16 +270,93 @@ Poundstone book p.82.
 - 95% confidence.
 
 ~~~
-r '3rd_Reich s:put
-.1934 .9 .12 f:/ f:+      e:Now   e:!
-e:Now e:@ .20 .12 f:/ f:- e:Start e:!
-.0.05 .2. f:/             e:Gone  e:!
+r '3rd_Reich s:put nl
+.1934 .9 .12 f:/ f:+ f:dup f:dup (now_now_now)
+.20 .12 f:/ f:-                  (now_now_start)     f:- (now_gone)
+.0.05 .2. f:/                    (now_gone_portion)
 f:future . nl nl
 ~~~
 
-  f 1934.792456 1999.754388
+  f 1934.792735 1999.750000
 
   "A Copernican would have predicted the Nazi state to survive somewhere 
   between another two weeks and another sixty-five years (at 95 percent
   conficence). The Third Reich lasted another eleven years."
+
+# Personal applications
+
+Dates are in YYMMDD.
+
+## 190816--191126 UL project
+
+190726  Brasilia Time (BRT)
+        Project proposal from a software company FS to 
+        a chemical company UL, both in Brazil, upon a request from UL.
+190815  Received a message from FS that UL has 
+        not yet made a decision.
+        19 days have passed since the proposal.
+
+~~~
+r 'UL_BR s:put nl
+.0. .19. .0.2 (now_gone_portion}
+f:future . nl nl
+~~~
+
+  f 4.750000 76.000000
+
+So there is an 80% chance that UL will not give its decision
+within 5 days.
+
+190822  No notice yet, as predicted.
+
+Since 76 days are about 2.5 months, the chance that a notification
+will arrive by the end of November is 80%.
+
+191112  Project cancelled due to a change in market prices.
+
+This is also as predicted.
+
+## 190816 HE worker evaluation
+
+190722  HE, a Japanese company, asked me to comment on 
+        its employee's work, so they can make a decision on her.
+190724  HE sent me related data.
+190730  I turned in my report to HE.
+190801  HE asked me to wait for their decision.
+190816  Today.
+
+~~~
+r 'HE_on_an_employee s:put nl
+.16. f:dup (now_now)   .-1. (now_now_start)
+f:-        (now_gone)  .0.2 (now_gone_portion)
+f:future . nl nl
+~~~
+
+  f 20.250000
+
+So there is an 80% chance that HE will not send me
+their decision before 190820.
+
+190822  Received HE's decision on its employe.
+
+This is as predicted.
+
+## 190922 War Japan
+
+~~~
+r 'War_JP s:put nl
+.2019. f:dup .1945. (now_now_start) f:- (now_gone)
+#2 [ f:dup-pair f:push f:push ] times (fa:gone_now_gone_now)
+.0.05            (now_gone_portion)
+f:future.lo
+f:pop f:pop .0.1 (now_gone_portion)
+f:future.lo
+f:pop f:pop .0.2 (now_gone_portion)
+f:future . nl
+~~~
+
+  f 2022.894737 2027.222222 2037.500000 2315.000000
+
+There are 90, 80, and 70% chances that Japan will not go into a war 
+until 2023, 2027, and 2038, respectively.
 
