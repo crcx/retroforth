@@ -1,0 +1,46 @@
+This implements a FIFO queue. It's directly based on the code in
+a comp.lang.forth post titled "A queue without move". See
+https://narkive.com/khcCauFY for the original posting.
+
+~~~
+:q:named (size,string) d:create #0 , #0 , dup , allot ;
+:q:head  (q-a) ; immediate
+:q:tail  (q-a) n:inc ;
+:q:size  (q-n) #2 + fetch ;
+:q:list  (q-a) #3 + ;
+:q:mask  (q-n) q:size n:dec ;
+:q:len   (q-n) [ q:head fetch ] [ q:tail fetch ] bi - ;
+:q:free  (q-n) [ q:size ] sip q:len - ;
+:q:clear (q-) [ q:head v:off ] [ q:tail v:off ] bi ;
+:q:masked (aq-n) q:mask swap fetch and ;
+:q:reset0 (q-) dup q:len n:zero? [ q:clear ] [ drop ] choose ;
+
+{{
+  'R var
+  :head?    @R q:tail @R q:masked eq? ;
+  :tail?    @R q:head fetch n:dec @R q:mask and eq? ;
+  :display  nl I dup n:put sp dup @R q:list + fetch n:put sp ;
+---reveal---
+  :q:add (nq-f)
+    [ !R ] [ q:free n:strictly-positive? ] bi
+    [ @R q:list @R q:head @R q:masked + store
+      @R q:head v:inc TRUE ]
+    [ drop FALSE ] choose ;
+
+  :q:get (q-nf)
+    [ !R ] [ q:len n:strictly-positive? ] bi
+    [ @R q:list @R q:tail @R q:masked + fetch @R q:tail
+      v:inc TRUE @R q:reset0 ]
+    [ #0 FALSE ] choose ;
+
+  :q:put (q-)
+    [ !R ] [ q:free ] [ q:len ] tri
+    '\nin_que:_%n,_free:_%n s:format s:put
+    @R q:len n:strictly-positive?
+    [ @R q:size
+      [ display dup head? [ '<--_tail s:put ] if
+                    tail? [ '<--_head s:put ] if
+      ] times<with-index> ]
+    [ 'queue_is_empty s:put nl ] choose ;
+}}
+~~~
