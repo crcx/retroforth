@@ -24,12 +24,6 @@ freebsd-x86-64bit: common
 	nasm -f elf64 fbsd64.s
 	ld -nostdlib -m elf_x86_64_fbsd fbsd64.o retro.o -o bin/retro.freebsd64
 
-openbsd-x86-64bit: common
-	cc -m64 -c retro.c
-	nasm -f elf64 obsd64.s
-	ld.bfd  -m elf_x86_64_obsd -r obsd64.o retro.o -o bin/retro.openbsd64
-	chmod +x bin/retro.openbsd64
-
 macos: common
 	cc -m64 -c retro.c
 	nasm -f macho64 macos.s
