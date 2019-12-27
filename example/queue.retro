@@ -20,10 +20,12 @@ The queue size needs to be a power of 2.
 :q:list   (q-a) #3 + ;
 :q:mask   (q-n) q:size n:dec ;
 :q:length (q-n) [ q:head fetch ] [ q:tail fetch ] bi - ;
-:q:free   (q-n) [ q:size ] sip q:length - ;
+:q:free   (q-n) &q:size sip q:length - ;
 :q:clear  (q-)  [ q:head v:off ] [ q:tail v:off ] bi ;
 :q:masked (aq-n) q:mask swap fetch and ;
-:q:reset0 (q-)   dup q:length n:zero? &q:clear &drop choose ;
+:q:empty? (q-f)  q:length n:zero? ;
+:q:full?  (q-f)  &q:length &q:size bi eq? ;
+:q:reset0 (q-)   dup q:empty? &q:clear &drop choose ;
 
 {{
   'R var
@@ -33,8 +35,8 @@ The queue size needs to be a power of 2.
                 @R q:head v:inc ;
  
   (for_fetching_values)
-  :fetch-value  @R q:list @R q:tail @R q:masked + fetch
-                @R q:tail v:inc swap @R q:reset0 ;
+  :peek-value   @R q:list  @R q:tail @R q:masked + fetch ;
+  :fetch-value  peek-value @R q:tail v:inc swap @R q:reset0 ;
 ---reveal---
   :q:add (nq-f)
     [ !R ] [ q:free n:strictly-positive? dup ] bi
@@ -43,6 +45,10 @@ The queue size needs to be a power of 2.
   :q:get (q-nf)
     [ !R ] [ q:length n:strictly-positive? dup ] bi
     [ fetch-value ] if; #0 swap ;
+
+  :q:peek (q-nf)
+    [ !R ] [ q:length n:strictly-positive? dup ] bi
+    [ peek-value swap ] if; #0 swap ;
 }}
 ~~~
 
@@ -119,15 +125,31 @@ Queue Queries:
 
 ```
 #16 'Q q:named
+Q q:empty? n:put nl
+#100 Q q:add drop
+Q q:empty? n:put nl
+Q q:get drop-pair
+Q q:empty? n:put nl nl
+
+Q q:full? n:put nl
+#16 [ #100 Q q:add drop ] times
+Q q:full? n:put nl
+Q q:size [ Q q:get drop-pair ] times
+Q q:full? n:put nl nl
+
 #100 Q q:add
 #200 Q q:add
 #300 Q q:add
 #400 Q q:add
 #500 Q q:add dump-stack nl reset
 Q q:put
+nl 'values:_ s:put
 Q q:get drop n:put sp
 Q q:get drop n:put sp
-Q q:get drop n:put nl
-Q q:get drop n:put nl
+Q q:peek drop n:put sp
+Q q:peek drop n:put sp
+Q q:peek drop n:put sp
+Q q:get drop n:put sp
+Q q:get drop n:put nl nl
 Q q:put
 ```
