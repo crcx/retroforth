@@ -58,6 +58,7 @@ the token type and use `span`.
   $( [ 'comment   span ] case
   $' [ 'str       span ] case
   $# [ 'num       span ] case
+  $. [ 'fnum      span ] case
   $& [ 'ptr       span ] case
   $$ [ 'char      span ] case
   $` [ 'inst      span ] case
@@ -127,6 +128,7 @@ span { white-space: pre }
 .comment {  color: #888; }
 .str {  color: yellow; }
 .num { color: cyan; }
+.fnum { color: cyan; font-weight: bold; }
 .ptr { color: mediumorchid; }
 .fetch { color: orchid; }
 .store { color: orchid; }
