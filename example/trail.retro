@@ -1,0 +1,71 @@
+Some consider  abort  to be the most fundamental building block 
+in writing programs. `trail` and `listen` abort execution.
+
+~~~
+:s:shout   (s-) '!!->_ s:prepend '_<-!! s:append s:put nl ;
+{{
+  :put-name (a-) fetch d:lookup-xt
+    dup n:-zero? [ d:name s:put nl ] &drop choose ;
+---reveal---
+  :trail (-0) '1_or_more_0s_left_on_the_stack s:shout
+    repeat pop put-name again ;
+}}
+~~~
+
+`trail` adds at least one 0 ( FALSE flag ) on top of stack.
+
+```
+:t0 trail ;
+:t1 t0 ;
+:t2 t1 ;
+t2
+```
+
+Example of `0;` killing a session:
+
+```
+:t 'before_ s:put 0; 'after s:put nl ;
+#0 t    (works
+#1 t    (works
+reset t (kills_session
+```
+
+If this is dangerous, place a `guard` or a `check` before `0;` .
+
+~~~
+:d:ego (-s) d:last d:name compile:lit ; immediate
+:s:prepend;put  s:prepend s:put nl ;
+:s:trail  (s-0) '(_s:trail_)__  s:prepend;put trail  ;
+:s:listen (s-)  '(_s:listen_)__ s:prepend;put listen ;
+
+:guard    (q-)  call &trail  -if ;
+:check    (q-)  call &listen -if ;
+
+:s:guard  (sq-) call &drop &s:trail  choose ;
+:s:check  (sq-) call &drop &s:listen choose ;
+~~~
+
+`check` is less noisy than `trail` .
+
+```
+:t0 (q-) 'Doing... s:put nl
+  d:ego '_charlie s:append swap s:guard
+  'Next... s:put nl ;
+:u0 t0 ;
+:v0 d:ego '_calling_u0 s:append s:put;nl u0 ;
+nl nl
+&TRUE v0 nl
+&FALSE v0 nl
+```
+
+```
+:t1 (q-) 'Doing... s:put nl
+  d:ego '_ckpt s:append swap s:check
+  'Next... s:put nl ;
+:u1 t1 ;
+:v1 d:ego '_calling_u1 s:append s:put;nl u1 ;
+nl nl
+&TRUE v1 nl
+&FALSE v1 nl
+```
+

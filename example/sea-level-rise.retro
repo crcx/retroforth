@@ -1,0 +1,31 @@
+This is a small thing to calculate the potential impact of ice cap melt
+on the global sea level.
+
+~~~
+:ice:ANTARTIC    .26.54 .1000000 f:* ;  (from_the_bedrock2_survey
+:ice:GREENLAND   .2900000 ;             (from_web.viu.ca/earle/geol305
+:ice:total       ice:ANTARTIC ice:GREENLAND f:+ ;
+:ice:rise<mm>    ice:total .361 f:/ ;
+:ice:rise<m>     ice:rise<mm> .1000 f:/ ;
+:ice:rise<m,adj> ice:rise<m> .0.91 f:* ;
+
+ice:total       'Total_volume_(km^3):_ s:put f:put nl
+ice:rise<mm>    'Rise_(mm):___________ s:put f:put nl
+ice:rise<m>     'Rise_(m):____________ s:put f:put nl nl
+
+ice:rise<m,adj> 'Rise_(m,_adjusted_for_density):_ s:put f:put nl
+~~~
+
+Output:
+
+    Total volume (km^3): 29440000.000000
+    Rise (mm):           81551.246537
+    Rise (m):            81.551247
+
+    Rise (m, adjusted for density): 74.211634
+
+Sources:
+
+- bedrock2 survey: https://www.the-cryosphere.net/7/375/2013/tc-7-375-2013.pdf
+- greenland ice:   https://web.viu.ca/earle/geol305/The%20Greenland%20Ice%20Sheet.pdf
+- sea level rise:  https://www.realworldvisuals.com/blog-1/could-rocks-cause-sea-levels-to-rise
