@@ -1,5 +1,5 @@
 "                        D: -s  A: -  F: -
-Return an empty string.
+Return an empty string. Deprecated.
 
 $                        D: -c  A: -  F: -
 Return ASCII:NUL (0).

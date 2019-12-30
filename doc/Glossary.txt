@@ -4,7 +4,7 @@
   Addr:  -
   Float: -
 
-Return an empty string.
+Return an empty string. Deprecated.
 
 Class: class:macro | Namespace: global | Interface Layer: all
 ------------------------------------------------------------------------
@@ -4224,7 +4224,7 @@ Interpret Time:
   Keep string as permanent. If `RewriteUnderscores` is `TRUE`, replace all instances of _ with space.
 
 Compile Time:
-  Keep string as permanent. If `RewriteUnderscores` is `TRUE`, replace all instances of _ with space. Then compile the string into the current definition.
+  Keep string as permanent. If `RewriteUnderscores` is `TRUE`, replace all instances of _ with space. Then compile the string into the current definition. Deprecated.
 
 Class: class:macro | Namespace: prefix | Interface Layer: all
 ------------------------------------------------------------------------
