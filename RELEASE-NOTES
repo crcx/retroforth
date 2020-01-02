@@ -14,8 +14,12 @@
 - add prefix:^
 - deprecate as{
 - deprecate }as
+- deprecate prefix:"
+- deprecate "
 
-Security.
+The 2020.1 release of RETRO brings many improvements.
+
+# Signed Releases
 
 Starting with 2020.1, each release will include a signing key to
 allow verification of the release. Additionally, each release will
@@ -23,13 +27,13 @@ include the signing key to be used for the following release so
 that there is both reliable key rotation and a verifiable chain
 of trust across releases.
 
-Tooling updates.
+# Tooling Updates
 
 The HTML export for the examples has been updated. It now averages
 a 7.4% decrease in conversion and a 26% decrease in exported file
 size.
 
-Assembler.
+# Assembler
 
 The assembler is now provided by Rx. This was a technical challenge,
 but well worth the effort. By making it part of the kernel it has
@@ -56,17 +60,26 @@ Example of the changes:
     (new)
     \liliad.. `2 `3 \lica.... ^n:put
 
-Standard Library.
+# Standard Library
 
-I fixed bugs in a few places, including the `c:whitespace?` word.
-The assembler was moved into the kernel; this has allowed me to
-remove all uses of raw bytecode from the main sources which aids
-in readability. I also used the assembler to hand tune a number
-of words to reduce the image size and improve performance.
+I fixed all reported bugs.
 
-Nga.
+As noted previously, the assembler is now in the kernel. This
+allowed replacement of raw bytecode in the standard library
+with actual assembly, aiding in readability and maintainability.
+The use of assembly to fine tune select words has allowed both
+size reduction and performance improvements.
 
-Reorganized the source tree. This separates the implementations
+A few words have been deprecated due to lack of use and will be
+removed in the 2020.04 release:
+
+- prefix:"
+- "
+
+
+# Nga
+
+I reorganized the source tree. This separates the implementations
 by language and tries to keep things better structured. The Forth
 code for the I/O devices is now in a separate directory, allowing
 it to be more easily shared across implementations. Bugs related
@@ -78,10 +91,11 @@ a framebuffer device was added, and performance was improved. The
 code now consists of multiple files, making editing easier, and
 the interface layout has been updated.
 
-Retro on Unix.
+Testing with the optional 64-bit cells has been completed and no
+issues were found.
+
+# Retro on Unix
 
 I added an `s:get-word`, removed some deprecated words, and updated
 the memory limits to reduce overall memory usage under the default
 configuration.
-
-

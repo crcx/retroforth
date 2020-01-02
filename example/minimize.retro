@@ -1,0 +1,158 @@
+# Single variable function minimizer
+
+The function must be continuous unimodal, 
+taking a floating point argument and returning a floating point value.
+
+The method is binary search based on the derivative at the splitting point.
+Convergence is judged by the change in function value.
+
+First, words defined elsewhere.
+
+~~~
+{{
+  :d:another-name (as-)
+    d:create &class:word reclass d:last d:xt swap d:xt fetch swap store ;
+---reveal---
+  :d:aka (s-)_Also-Known-As,_make_alias_of_the_last_defined_word
+    [ d:last ]   dip d:another-name ; 'aka   d:aka
+  :d:alias (ss-)_make_alias_s2_of_s1
+    [ d:lookup ] dip d:another-name ; 'alias d:aka
+}}
+
+'var<n> 'var! (n-)  alias
+'lt?    'n:<?       alias
+'lteq?  'n:=<?      alias
+:v:put (a-) fetch n:put ;
+:e:fetch (a-__-f)_fetch_as_float  fetch e:to-f ; 'e:@ aka
+:e:store (a-__f-)_store_as_e f:to-e swap store ; 'e:! aka
+:e:call.vv (aaa-)_call_floating_point_function_variable-to-variable
+  rot e:@ (aa_n) call (a_n) e:! ;
+
+:s:shout (s-) '!_%s s:format s:put ;
+{{
+  'Depth var
+  :message (-)
+    'abort_with__trail__invoked s:shout nl
+    'Do__reset__to_clear_stack. s:put   nl ;
+  :put-name (a-) fetch d:lookup-xt
+    dup n:-zero? [ d:name s:put nl ] [ drop ] choose ;
+---reveal---
+  :trail repeat pop put-name again ;
+  :abort (-0) depth !Depth message trail ;
+  :s:abort (s-0) 's:abort_:_ s:prepend s:put nl abort ;
+}}
+
+:assert         (q-) call [                  abort ] -if ;
+:assert.verbous (q-) call [ 'assert_:_fail s:abort ] -if ;
+
+:dump-stacks (-)                    dump-stack
+  #0 f:depth  lt? [ nl 'f_  s:put f:dump-stack  ] if
+  #0 f:adepth lt? [ nl 'fa_ s:put f:dump-astack ] if ; '. aka
+~~~
+
+Program.
+
+~~~
+{{
+  (input_variables
+    'F    var (Function_to_minimize_(-_n-n)_float_to_float
+    'L    var (e:low
+    'H    var (e:high
+
+    TRUE             'Tr    var!  (trace_flag
+    .0.000001 f:to-e 'TOL   const (=173=tolerance
+    #30              'ITMAX const (max_#_of_iterations
+
+  (working_variables
+    'Ly   var (e:low-value
+    'Hy   var
+    'X1y  var (y_at_upper_next_to_x
+    'Y    var (function_value_at_X
+    'Itr  var (iterations
+
+  (output_variable
+    'X    var (candidate
+
+  :trace  (-) @Tr [ ( Itr v:put sp ) 
+      ( @L e:put sp ) ( @X e:put sp ) ( @H e:put sp ) nl ] if ;
+  :y      (-) X Y  @F e:call.vv ;
+  :x      (-)_(L_H_->_X) @L @H + #2 / !X ;
+  :x1y    (-) @X n:inc e:to-f @F call X1y e:! ; 
+
+---reveal---
+  :minimize (a-_nn-x)_(L_H_F_->_X)
+    (minimize_floating_point_function_F_over_[L,H]
+    (initialize ( !F f:to-e !H f:to-e !L )
+      ( L Ly @F e:call.vv ) ( H Hy @F e:call.vv ) x y ( #0 !Itr )
+    [ trace x1y 
+      ( @Y @X1y n:<? ) [ @X !H  @Y !Hy ] [ @X !L  @Y !Ly ] choose
+      x y Itr v:inc [ @Itr ITMAX n:=<? ] assert.verbous
+      TOL @Y @X1y - n:abs n:<? ] while X e:@ ;
+}}
+~~~
+
+```
+:f (-_x-y)_(x-2)^2  .2. f:- f:dup f:* ;
+.-3 .10 &f minimize . nl
+```
+
+```
+:f (-_x-y) f:abs ;
+.-5. .5 &f minimize . nl
+```
+
+Note how `x` is defined without conversios as
+
+  :x (-)_(L_H_->_X) @L @H + 2 / !X ;
+
+rather than
+
+  :x (-)_(L_H_->_X) ( L e:@ ) ( H e:@ ) f:+ .2. f:/ X e:! ;
+
+Doing
+
+```
+:f (-_x-y) ;
+.0 .5 &f minimize . nl
+```
+
+with the first definition gives
+
+   # low      mid      high 
+   0 0.000000 1.249991 5.000009
+   1 0.000000 0.312492 1.249991
+   2 0.000000 0.078120 0.312492
+   3 0.000000 0.019530 0.078120
+   4 0.000000 0.004882 0.019530
+   5 0.000000 0.001220 0.004882
+   6 0.000000 0.000305 0.001220
+   7 0.000000 0.000076 0.000305
+   8 0.000000 0.000019 0.000076
+   9 0.000000 0.000005 0.000019
+  10 0.000000 0.000001 0.000005
+  final x =  0.000000
+
+whereas with the second definition gives
+
+   # low      mid      high
+   0 0.000000 2.500004 5.000009
+   1 0.000000 1.249991 2.500004
+   2 0.000000 0.625001 1.249991
+   3 0.000000 0.312503 0.625001
+   4 0.000000 0.156254 0.312503
+   5 0.000000 0.078126 0.156254
+   6 0.000000 0.039062 0.078126
+   7 0.000000 0.019530 0.039062
+   8 0.000000 0.009765 0.019530
+   9 0.000000 0.004883 0.009765
+  10 0.000000 0.002441 0.004883
+  11 0.000000 0.001221 0.002441
+  12 0.000000 0.000611 0.001221
+  13 0.000000 0.000305 0.000611
+  14 0.000000 0.000153 0.000305
+  15 0.000000 0.000076 0.000153
+  16 0.000000 0.000038 0.000076
+  17 0.000000 0.000019 0.000038
+  18 0.000000 0.000009 0.000019
+  final x = 0.000005
+
