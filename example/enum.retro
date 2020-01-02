@@ -1,0 +1,49 @@
+# enumeration
+
+This is a method of creating a set of constants from names
+provided in an array.
+
+The approach was inspired by 8th[1], in which a short modifier
+allows setting the enum value at any time. In use this looks
+like:
+
+    { 'a 'b=10 'c 'd=998 'e 'f 'g=33 } a:enum
+
+In this case:
+
+    a is 0
+    b is 10
+    c is 11
+    d is 998
+    e is 999
+    f is 1000
+    g is 33
+
+Enumerations start at zero by default.
+
+# Code
+
+The approach used here is to iterate over strings in an array.
+If the string contains a `=`, split the string, convert the
+part after the `=` to a number, which will replace the enum
+value. It then creates a constant using the string and
+increments the counter.
+
+~~~
+:a:enum (a-)
+  #0 swap
+  [ dup $= s:contains-char?
+    [ nip $= s:split [ n:inc s:to-number ] dip ] if
+    over &const dip n:inc
+  ] a:for-each drop ;
+~~~
+
+# Test
+
+```
+{ 'a=10 'b 'c 'd=998 'e 'f } a:enum
+```
+
+# References
+
+[1] https://8th-dev.com/forum/index.php/topic,1979.msg11377.html
