@@ -1,0 +1,165 @@
+# Working With Files
+
+On Unix and Windows systems RETRO provides a set of words for
+working with files. As a pragmatic choice these are mostly
+modeled after the file functions in libc.
+
+The file words are in the `file:` namespace.
+
+## File Access Modes
+
+You can open a file for various operations. The functionality
+allowed depends on the file access mode. Valid modes in RETRO
+are:
+
+    file:A    Open for appending; file pointer set to end of file
+    file:R    Open for reading; file pointer set to start of file
+    file:R+   Open for reading and writing
+    file:W    Open for writing
+
+## Opening A File
+
+To open a file, pass the file name and a file mode to `file:open`.
+
+    '/etc/motd file:R file:open
+
+On a successful open this will return a file handle greater than
+zero.
+
+Additionally, RETRO provides a few other forms for opening files.
+
+To open a file for reading:
+
+    '/etc/motd file:open<for-reading>
+
+This will return the size of the file (as NOS) and the file handle
+(as TOS).
+
+To open a file for writing:
+
+    '/tmp/test file:open<for-writing>
+
+This returns the file handle.
+
+To open a file for append operations:
+
+    '/tmp/test file:open<for-append>
+
+As with `file:open<for-reading>`, this returns both the size of
+the file and the file handle.
+
+## Closing A File
+
+To close a file, pass the file handle to `file:close`.
+
+    '/etc/motd file:A file:open file:close
+
+## Reading From A File
+
+To read a byte from an open file, pass the file handle to the
+`file:read` word.
+
+    @FID file:read n:put
+
+To read a line from a file, pass the file handle to the word
+`file:read-line`.
+
+    @FID file:read-line s:put
+
+The line is read into a temporary string buffer. Move the
+text to a safe place if you aren't using it quickly or if
+the length of the line is bigger than the size of a temporary
+string.
+
+## Writing To A File
+
+To write a byte to a file, pass it and the file handle to
+`file:write`.
+
+    $h @FID file:write
+    $e @FID file:write
+    $l @FID file:write
+    $l @FID file:write
+    $o @FID file:write
+
+Though cells are 32 or 64 bits in size, only the byte value will
+be written to the file.
+
+## Deleting Files
+
+You can delete a file by passing the file name to `file:delete`.
+
+    /tmp/test file:delete
+
+## Check For File Existance
+
+Use `file:exists?` to detect the existance of a file. Pass it a
+file name and it will return `TRUE` if existing or `FALSE` if
+it does not.
+
+    '/etc/motd file:exists?
+
+This will also return `TRUE` if the filename is a directory.
+
+## Flush Caches
+
+Use `file:flush` to flush the system caches for a file. Pass a
+file handle to this.
+
+    @FID file:flush
+
+## Seek A Position Within A File
+
+You can use `file:seek` to move the internal file pointer
+for a given file. Pass this the new location and a file.
+
+    #100 @FID file:seek
+
+The location for the file pointer is a fixed offset from the
+start of the file, not a relative offset.
+
+## Get The Current Position Within A File
+
+To find the current value of the file pointer within a file
+just pass the file handle to `file:tell`.
+
+    @FID file:tell
+
+This returns a number that is the number of bytes into the file
+that the file pointer is currently at.
+
+## Determine The Size Of A File
+
+Use `file:size` to return the size of a file. Pass this a file
+handle and it will return the size of a file, or 0 if empty. If
+the file is a directory, it returns -1.
+
+    @FID file:size
+
+## Reading An Entire File
+
+If you want to read an entire file into memory you can use
+`file:slurp`. This takes the starting address of a memory
+region and the name of the file.
+
+    here '/etc/motd file:slurp
+
+Take care that the memory buffer is large enough for the file
+being read or you will run into problems.
+
+## Writing A String To A File
+
+If you have a string that you want to write to a file, replacing
+any existing contents, you can use `file:spew`. This takes the
+string to write and a file name.
+
+    'hello_world '/tmp/test.txt file:spew
+
+## Iterating Over A File, Line By Line
+
+You can easily iterate over each line in a file using the word
+`file:for-each-line`. This will take a file name and a quote,
+read each line into a temporary string, then pass this string to
+the quote.
+
+    '/etc/motd [ s:put nl ] file:for-each-line
