@@ -1,0 +1,21 @@
+RETRO-EMBEDIMAGE(1)	    General Commands Manual	   RETRO-EMBEDIMAGE(1)
+
+RETRO-EMBEDIMAGE
+     retro-embedimage - a modern, pragmatic forth development system
+
+SYNOPSIS
+     retro-embedimage [filename]
+
+DESCRIPTION
+     RETRO is a modern, pragmatic Forth drawing influences from many sources.
+     It's clean, elegant, tiny, and easy to grasp and adapt to various uses.
+
+     retro-embedimage loads the specified image (or `ngaImage` from the
+     current directory if none is specified). It converts this into C code
+     that can be compiled for inclusion in a RETRO executable.	It will write
+     the output to stdout.
+
+AUTHORS
+     Charles Childers <crc@forthworks.com>
+
+OpenBSD 6.4			 February 2019			   OpenBSD 6.4

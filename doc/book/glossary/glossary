@@ -1,0 +1,5911 @@
+"
+
+  Data:  -s
+  Addr:  -
+  Float: -
+
+Return an empty string. Deprecated.
+
+Class: class:macro | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+$
+
+  Data:  -c
+  Addr:  -
+  Float: -
+
+Return ASCII:NUL (0).
+
+Class: class:macro | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+'
+
+  Data:  -s
+  Addr:  -
+  Float: -
+
+Return an empty string.
+
+Class: class:macro | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+(
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Provide a visual indication of a code group.
+
+Class: class:macro | Namespace: prefix | Interface Layer: all
+------------------------------------------------------------------------
+
+)
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Provide a visual indication of a code group.
+
+Class: class:macro | Namespace: prefix | Interface Layer: all
+------------------------------------------------------------------------
+
+*
+
+  Data:  nn-n
+  Addr:  -
+  Float: -
+
+Multiply `n1` by `n2` and return the result.
+
+Class: class:primitive | Namespace: global | Interface Layer: all
+
+Example #1:
+
+    #2 #6 *
+    #-1 #100 *
+
+------------------------------------------------------------------------
+
++
+
+  Data:  nn-n
+  Addr:  -
+  Float: -
+
+Add `n1` to `n2` and return the result.
+
+Class: class:primitive | Namespace: global | Interface Layer: all
+
+Example #1:
+
+    #1 #2 + 
+
+------------------------------------------------------------------------
+
+,
+
+  Data:  n-
+  Addr:  -
+  Float: -
+
+Store the specified value into the memory at `here` and increment `Heap` by 1.
+
+Class: class:word | Namespace: global | Interface Layer: all
+
+Example #1:
+
+    $a , $b , $c , #0 ,
+
+------------------------------------------------------------------------
+
+-
+
+  Data:  nn-n
+  Addr:  -
+  Float: -
+
+Subtract `n2` from `n1` and return the result.
+
+Class: class:primitive | Namespace: global | Interface Layer: all
+
+Example #1:
+
+    #2 #1 - 
+
+------------------------------------------------------------------------
+
+---reveal---
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Switch to the exposed (public) portion of a lexical namespace.
+
+Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+-eq?
+
+  Data:  nn-f
+  Addr:  -
+  Float: -
+
+Compare two values for inequality. Returns `TRUE` if they are not equal or `FALSE` otherwise.
+
+Class: class:primitive | Namespace: global | Interface Layer: all
+
+Example #1:
+
+    #1 #2 -eq?
+    $a $b -eq?
+
+------------------------------------------------------------------------
+
+-if
+
+  Data:  fq-
+  Addr:  -
+  Float: -
+
+Execute the quotation if the flag is `FALSE`.
+
+Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+-if;
+
+  Data:  fq-
+  Addr:  -
+  Float: -
+
+Execute the quotation if the flag is `FALSE`. If false, also exit the word.
+
+Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+/
+
+  Data:  nm-q
+  Addr:  -
+  Float: -
+
+Divide `n` by `m` and return the integer part of the quotient.
+
+Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+/mod
+
+  Data:  nm-rq
+  Addr:  -
+  Float: -
+
+Divide `n` by `m` and return the integer part of the quotient and remainder.
+
+Class: class:primitive | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+0;
+
+  Data:  n-n || n-
+  Addr:  -
+  Float: -
+
+If `n` is zero, drop `n` and exit the current word. If non-zero, leave `n` alone and allow execution to continue.
+
+Class: class:macro | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+;
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+End the current definition.
+
+Class: class:macro | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+?dup
+
+  Data:  n-nn || n-n
+  Addr:  -
+  Float: -
+
+Duplicate top value on stack if not zero. If zero, do nothing.
+
+Class: class:word | Namespace: global | Interface Layer: all
+
+Example #1:
+
+    #1 ?dup
+    #0 ?dup
+
+------------------------------------------------------------------------
+
+ASCII:ACK
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Constant. Refers to specific ASCII code.
+
+Class: class:data | Namespace: ASCII | Interface Layer: all
+------------------------------------------------------------------------
+
+ASCII:BEL
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Constant. Refers to specific ASCII code.
+
+Class: class:data | Namespace: ASCII | Interface Layer: all
+------------------------------------------------------------------------
+
+ASCII:BS
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Constant. Refers to specific ASCII code.
+
+Class: class:data | Namespace: ASCII | Interface Layer: all
+------------------------------------------------------------------------
+
+ASCII:CAN
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Constant. Refers to specific ASCII code.
+
+Class: class:data | Namespace: ASCII | Interface Layer: all
+------------------------------------------------------------------------
+
+ASCII:CR
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Constant. Refers to specific ASCII code.
+
+Class: class:data | Namespace: ASCII | Interface Layer: all
+------------------------------------------------------------------------
+
+ASCII:DC1
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Constant. Refers to specific ASCII code.
+
+Class: class:data | Namespace: ASCII | Interface Layer: all
+------------------------------------------------------------------------
+
+ASCII:DC2
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Constant. Refers to specific ASCII code.
+
+Class: class:data | Namespace: ASCII | Interface Layer: all
+------------------------------------------------------------------------
+
+ASCII:DC3
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Constant. Refers to specific ASCII code.
+
+Class: class:data | Namespace: ASCII | Interface Layer: all
+------------------------------------------------------------------------
+
+ASCII:DC4
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Constant. Refers to specific ASCII code.
+
+Class: class:data | Namespace: ASCII | Interface Layer: all
+------------------------------------------------------------------------
+
+ASCII:DEL
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Constant. Refers to specific ASCII code.
+
+Class: class:data | Namespace: ASCII | Interface Layer: all
+------------------------------------------------------------------------
+
+ASCII:DLE
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Constant. Refers to specific ASCII code.
+
+Class: class:data | Namespace: ASCII | Interface Layer: all
+------------------------------------------------------------------------
+
+ASCII:EM
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Constant. Refers to specific ASCII code.
+
+Class: class:data | Namespace: ASCII | Interface Layer: all
+------------------------------------------------------------------------
+
+ASCII:ENQ
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Constant. Refers to specific ASCII code.
+
+Class: class:data | Namespace: ASCII | Interface Layer: all
+------------------------------------------------------------------------
+
+ASCII:EOT
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Constant. Refers to specific ASCII code.
+
+Class: class:data | Namespace: ASCII | Interface Layer: all
+------------------------------------------------------------------------
+
+ASCII:ESC
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Constant. Refers to specific ASCII code.
+
+Class: class:data | Namespace: ASCII | Interface Layer: all
+------------------------------------------------------------------------
+
+ASCII:ETB
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Constant. Refers to specific ASCII code.
+
+Class: class:data | Namespace: ASCII | Interface Layer: all
+------------------------------------------------------------------------
+
+ASCII:ETX
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Constant. Refers to specific ASCII code.
+
+Class: class:data | Namespace: ASCII | Interface Layer: all
+------------------------------------------------------------------------
+
+ASCII:FF
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Constant. Refers to specific ASCII code.
+
+Class: class:data | Namespace: ASCII | Interface Layer: all
+------------------------------------------------------------------------
+
+ASCII:FS
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Constant. Refers to specific ASCII code.
+
+Class: class:data | Namespace: ASCII | Interface Layer: all
+------------------------------------------------------------------------
+
+ASCII:GS
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Constant. Refers to specific ASCII code.
+
+Class: class:data | Namespace: ASCII | Interface Layer: all
+------------------------------------------------------------------------
+
+ASCII:HT
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Constant. Refers to specific ASCII code.
+
+Class: class:data | Namespace: ASCII | Interface Layer: all
+------------------------------------------------------------------------
+
+ASCII:LF
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Constant. Refers to specific ASCII code.
+
+Class: class:data | Namespace: ASCII | Interface Layer: all
+------------------------------------------------------------------------
+
+ASCII:NAK
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Constant. Refers to specific ASCII code.
+
+Class: class:data | Namespace: ASCII | Interface Layer: all
+------------------------------------------------------------------------
+
+ASCII:NUL
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Constant. Refers to specific ASCII code.
+
+Class: class:data | Namespace: ASCII | Interface Layer: all
+------------------------------------------------------------------------
+
+ASCII:RS
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Constant. Refers to specific ASCII code.
+
+Class: class:data | Namespace: ASCII | Interface Layer: all
+------------------------------------------------------------------------
+
+ASCII:SI
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Constant. Refers to specific ASCII code.
+
+Class: class:data | Namespace: ASCII | Interface Layer: all
+------------------------------------------------------------------------
+
+ASCII:SO
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Constant. Refers to specific ASCII code.
+
+Class: class:data | Namespace: ASCII | Interface Layer: all
+------------------------------------------------------------------------
+
+ASCII:SOH
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Constant. Refers to specific ASCII code.
+
+Class: class:data | Namespace: ASCII | Interface Layer: all
+------------------------------------------------------------------------
+
+ASCII:SPACE
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Constant. Refers to specific ASCII code.
+
+Class: class:data | Namespace: ASCII | Interface Layer: all
+------------------------------------------------------------------------
+
+ASCII:STX
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Constant. Refers to specific ASCII code.
+
+Class: class:data | Namespace: ASCII | Interface Layer: all
+------------------------------------------------------------------------
+
+ASCII:SUB
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Constant. Refers to specific ASCII code.
+
+Class: class:data | Namespace: ASCII | Interface Layer: all
+------------------------------------------------------------------------
+
+ASCII:SYN
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Constant. Refers to specific ASCII code.
+
+Class: class:data | Namespace: ASCII | Interface Layer: all
+------------------------------------------------------------------------
+
+ASCII:US
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Constant. Refers to specific ASCII code.
+
+Class: class:data | Namespace: ASCII | Interface Layer: all
+------------------------------------------------------------------------
+
+ASCII:VT
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Constant. Refers to specific ASCII code.
+
+Class: class:data | Namespace: ASCII | Interface Layer: all
+------------------------------------------------------------------------
+
+Compiler
+
+  Data:  -a
+  Addr:  -
+  Float: -
+
+Variable. Holds the compiler state. If TRUE, the compiler is active. If FALSE, it is not.
+
+Class: class:data | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+Dictionary
+
+  Data:  -a
+  Addr:  -
+  Float: -
+
+Variable. Holds a pointer to the most recent dictionary header.
+
+Class: class:data | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+EOM
+
+  Data:  -a
+  Addr:  -
+  Float: -
+
+Constant. Returns the last addressable memory address.
+
+Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+FALSE
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Returns `0`, the value used to indicate a FALSE result.
+
+Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+FREE
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Returns the number of cells available to your application. This is the amount of memory, less the already consumed portion and buffers mapped for RETRO's internal use.
+
+Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+Heap
+
+  Data:  -a
+  Addr:  -
+  Float: -
+
+Variable. Holds the address of the next available cell.
+
+Class: class:data | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+I
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Access the loop index for the current loop. (For loops made using `times<with-index>`)
+
+Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+J
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Access the parent loop index for the current loop. (For loops made using `times<with-index>`)
+
+Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+K
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Access the grandparent loop index for the current loop. (For loops made using `times<with-index>`)
+
+Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+NoEcho
+
+  Data:  -a
+  Addr:  -
+  Float: -
+
+Variable. If TRUE, allow display of the "ok" prompt and startup banner.
+
+Class: class:word | Namespace: global | Interface Layer: rre
+------------------------------------------------------------------------
+
+RewriteUnderscores
+
+  Data:  -a
+  Addr:  -
+  Float: -
+
+Variable. When set to `TRUE`, RETRO will replace underscores in strings with spaces. When `FALSE`, RETRO does not.
+
+Class: class:data | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+STRINGS
+
+  Data:  -a
+  Addr:  -
+  Float: -
+
+Return the address of the start of the temporary string pool. This can be altered by changing the values of `TempStrings` and `TempStringMax`.
+
+Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+ScopeList
+
+  Data:  -a
+  Addr:  -
+  Float: -
+
+Variable. This holds some information used by `{{` and `}}`.
+
+Class: class:data | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+TIB
+
+  Data:  -a
+  Addr:  -
+  Float: -
+
+Constant. Returns a pointer to the text input buffer.
+
+Class: class:data | Namespace: global | Interface Layer: rre
+------------------------------------------------------------------------
+
+TRUE
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Returns `-1`, the value used to indicate a TRUE result.
+
+Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+TempStringMax
+
+  Data:  -a
+  Addr:  -
+  Float: -
+
+Variable. Holds the maximum length of a temporary string.
+
+Class: class:data | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+TempStrings
+
+  Data:  -a
+  Addr:  -
+  Float: -
+
+Variable. Holds the number of temporary strings.
+
+Class: class:data | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+Version
+
+  Data:  -a
+  Addr:  -
+  Float: -
+
+Variable. This stores the version number.
+
+Class: class:data | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+[
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Begin a quotation.
+
+Class: class:macro | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+]
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+End a quotation.
+
+Class: class:macro | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+a:-eq?
+
+  Data:  aa-f
+  Addr:  -
+  Float: -
+
+Compare all values in the array. Return `FALSE` if all values are equal or `TRUE` otherwise. This assumes the array contains only numeric values.
+
+Class: class:word | Namespace: a | Interface Layer: all
+------------------------------------------------------------------------
+
+a:append
+
+  Data:  aa-a
+  Addr:  -
+  Float: -
+
+Return a new array consisting of the values in a1 followed by the values in a2.
+
+Class: class:word | Namespace: a | Interface Layer: all
+------------------------------------------------------------------------
+
+a:begins-with?
+
+  Data:  aa-f
+  Addr:  -
+  Float: -
+
+Return `TRUE` if a1 begins with a2 or `FALSE` otherwise.
+
+Class: class:word | Namespace: a | Interface Layer: all
+------------------------------------------------------------------------
+
+a:chop
+
+  Data:  a-a
+  Addr:  -
+  Float: -
+
+Return a new array containing all but the last value in the source array.
+
+Class: class:word | Namespace: a | Interface Layer: all
+------------------------------------------------------------------------
+
+a:contains-string?
+
+  Data:  sa-f
+  Addr:  -
+  Float: -
+
+Return `TRUE` if the string value is in the array or`FALSE` otherwise.
+
+Class: class:word | Namespace: a | Interface Layer: all
+------------------------------------------------------------------------
+
+a:contains?
+
+  Data:  na-f
+  Addr:  -
+  Float: -
+
+Return `TRUE` if the value is in the array or `FALSE` otherwise.
+
+Class: class:word | Namespace: a | Interface Layer: all
+------------------------------------------------------------------------
+
+a:copy
+
+  Data:  aa-
+  Addr:  -
+  Float: -
+
+Copy an array (a1) to a destination (a2).
+
+Class: class:word | Namespace: a | Interface Layer: all
+------------------------------------------------------------------------
+
+a:counted-results
+
+  Data:  q-a
+  Addr:  -
+  Float: -
+
+Run a quote and construct a new array from the returned values. The quote should return the values and the number of values to put into the array.
+
+Class: class:word | Namespace: a | Interface Layer: all
+------------------------------------------------------------------------
+
+a:dup
+
+  Data:  a-b
+  Addr:  -
+  Float: -
+
+Make a copy of an array. Return the address of the copy.
+
+Class: class:word | Namespace: a | Interface Layer: all
+------------------------------------------------------------------------
+
+a:ends-with?
+
+  Data:  aa-f
+  Addr:  -
+  Float: -
+
+Return `TRUE` if a1 ends with a2 or `FALSE` otherwise.
+
+Class: class:word | Namespace: a | Interface Layer: all
+------------------------------------------------------------------------
+
+a:eq?
+
+  Data:  aa-f
+  Addr:  -
+  Float: -
+
+Compare all values in the array. Return `TRUE` if all values are equal or `FALSE` otherwise. This assumes the array contains only numeric values.
+
+Class: class:word | Namespace: a | Interface Layer: all
+------------------------------------------------------------------------
+
+a:fetch
+
+  Data:  an-n
+  Addr:  -
+  Float: -
+
+Fetch the value stored at the specified index in the specified array.
+
+Class: class:word | Namespace: a | Interface Layer: all
+
+Example #1:
+
+    { #0 #1 #3 } #2 a:fetch
+
+------------------------------------------------------------------------
+
+a:filter
+
+  Data:  aq-b
+  Addr:  -
+  Float: -
+
+For each item in the initial array, run the specified quote. If the quote returns `TRUE`, copy the item into a new array. If `FALSE`, discard it. Returns a pointer to the new array.
+
+Class: class:word | Namespace: a | Interface Layer: all
+------------------------------------------------------------------------
+
+a:for-each
+
+  Data:  aq-
+  Addr:  -
+  Float: -
+
+Execute the quote once for each item in the array.
+
+Class: class:word | Namespace: a | Interface Layer: all
+------------------------------------------------------------------------
+
+a:from-string
+
+  Data:  s-a
+  Addr:  -
+  Float: -
+
+Create a new array with the characters in the source string.
+
+Class: class:word | Namespace: a | Interface Layer: all
+------------------------------------------------------------------------
+
+a:index-of
+
+  Data:  an-n
+  Addr:  -
+  Float: -
+
+Return the location of the first instance of the specified value in the array.
+
+Class: class:word | Namespace: a | Interface Layer: all
+------------------------------------------------------------------------
+
+a:left
+
+  Data:  an-a
+  Addr:  -
+  Float: -
+
+Return a new array containing the first `n` values from the source array.
+
+Class: class:word | Namespace: a | Interface Layer: all
+------------------------------------------------------------------------
+
+a:length
+
+  Data:  a-n
+  Addr:  -
+  Float: -
+
+Return the length of a array.
+
+Class: class:word | Namespace: a | Interface Layer: all
+------------------------------------------------------------------------
+
+a:make
+
+  Data:  q-a
+  Addr:  -
+  Float: -
+
+Execute quote. Return a new array containing the values the quote leaves on the stack. This is identical to doing `a:counted-results a:reverse`
+
+Class: class:word | Namespace: a | Interface Layer: all
+------------------------------------------------------------------------
+
+a:map
+
+  Data:  aq-b
+  Addr:  -
+  Float: -
+
+Execute quote once for each item in the array. Constructs a new array from the value returned by the quote.
+
+Class: class:word | Namespace: a | Interface Layer: all
+------------------------------------------------------------------------
+
+a:middle
+
+  Data:  afl-a
+  Addr:  -
+  Float: -
+
+Extract a new array from the middle of the specified array. This will take the values starting at `f` and extend to the `l` last value.
+
+Class: class:word | Namespace: a | Interface Layer: all
+------------------------------------------------------------------------
+
+a:prepend
+
+  Data:  aa-a
+  Addr:  -
+  Float: -
+
+Return a new array consisting of the values in a2 followed by the values in a1.
+
+Class: class:word | Namespace: a | Interface Layer: all
+------------------------------------------------------------------------
+
+a:reduce
+
+  Data:  pnq-n
+  Addr:  -
+  Float: -
+
+Takes an array, a starting value, and a quote. This will apply the quote to each item in the array; the quote should consume two values and return one.
+
+Class: class:word | Namespace: a | Interface Layer: all
+------------------------------------------------------------------------
+
+a:reverse
+
+  Data:  a-b
+  Addr:  -
+  Float: -
+
+Reverse the order of items in a array. This will return a new array.
+
+Class: class:word | Namespace: a | Interface Layer: all
+------------------------------------------------------------------------
+
+a:right
+
+  Data:  an-a
+  Addr:  -
+  Float: -
+
+Return a new array containing the specified number of values from the right side of the array.
+
+Class: class:word | Namespace: a | Interface Layer: all
+------------------------------------------------------------------------
+
+a:store
+
+  Data:  vna-
+  Addr:  -
+  Float: -
+
+Store a value into the array at the specified index.
+
+Class: class:word | Namespace: a | Interface Layer: all
+
+Example #1:
+
+    #3 { #0 #1 #2 } #1 a:store
+
+------------------------------------------------------------------------
+
+a:th
+
+  Data:  an-b
+  Addr:  -
+  Float: -
+
+Return the actual address of the `n`th item in the array.
+
+Class: class:word | Namespace: a | Interface Layer: all
+------------------------------------------------------------------------
+
+a:to-string
+
+  Data:  a-s
+  Addr:  -
+  Float: -
+
+Create a new string from the provided array. This string will be stored in the temporal string buffers.
+
+Class: class:word | Namespace: a | Interface Layer: all
+------------------------------------------------------------------------
+
+again
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Close an unconditional loop. Branches back to the prior `repeat`.
+
+Class: class:macro | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+allot
+
+  Data:  n-
+  Addr:  -
+  Float: -
+
+Allocate the specified number of cells from the `Heap`.
+
+Class: class:word | Namespace: global | Interface Layer: all
+
+Example #1:
+
+    'Buffer d:create  #100 allot
+
+------------------------------------------------------------------------
+
+and
+
+  Data:  nm-o
+  Addr:  -
+  Float: -
+
+Perform a bitwise AND operation between the two provided values.
+
+Class: class:primitive | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+as{
+
+  Data:  -f
+  Addr:  -
+  Float: -
+
+Begin an assembly section. Deprecated; will be removed in 2020.
+
+Class: class:macro | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+banner
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Display a welcome message on startup.
+
+Class: class:word | Namespace: global | Interface Layer: rre
+------------------------------------------------------------------------
+
+bi
+
+  Data:  xqq-?
+  Addr:  -
+  Float: -
+
+Execute q1 against x, then execute q2 against a copy of x.
+
+Class: class:word | Namespace: global | Interface Layer: all
+
+Example #1:
+
+    #100 [ #10 * ] [ #10 - ] bi
+
+------------------------------------------------------------------------
+
+bi*
+
+  Data:  xyqq-?
+  Addr:  -
+  Float: -
+
+Execute q1 against x and q2 against y.
+
+Class: class:word | Namespace: global | Interface Layer: all
+
+Example #1:
+
+    #10 #20 [ #2 * ] [ #10 / ] bi*
+
+------------------------------------------------------------------------
+
+bi@
+
+  Data:  xyq-?
+  Addr:  -
+  Float: -
+
+Execute q against x, then execute q against y.
+
+Class: class:word | Namespace: global | Interface Layer: all
+
+Example #1:
+
+    #10 #20 [ #3 * ] bi@
+
+------------------------------------------------------------------------
+
+buffer:add
+
+  Data:  n-
+  Addr:  -
+  Float: -
+
+Append a value to the current buffer.
+
+Class: class:word | Namespace: buffer | Interface Layer: all
+------------------------------------------------------------------------
+
+buffer:empty
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Reset the current buffer to an empty state.
+
+Class: class:word | Namespace: buffer | Interface Layer: all
+------------------------------------------------------------------------
+
+buffer:end
+
+  Data:  -a
+  Addr:  -
+  Float: -
+
+Return a pointer to the current end of the active buffer.
+
+Class: class:word | Namespace: buffer | Interface Layer: all
+------------------------------------------------------------------------
+
+buffer:get
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Remove the last value from the current buffer.
+
+Class: class:word | Namespace: buffer | Interface Layer: all
+------------------------------------------------------------------------
+
+buffer:preserve
+
+  Data:  q-
+  Addr:  -
+  Float: -
+
+Save and restore the current buffer before and after executing the specified quote.
+
+Class: class:word | Namespace: buffer | Interface Layer: all
+------------------------------------------------------------------------
+
+buffer:set
+
+  Data:  a-
+  Addr:  -
+  Float: -
+
+Assign a new buffer as the current one.
+
+Class: class:word | Namespace: buffer | Interface Layer: all
+------------------------------------------------------------------------
+
+buffer:size
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Return the number of cells in the buffer.
+
+Class: class:word | Namespace: buffer | Interface Layer: all
+------------------------------------------------------------------------
+
+buffer:start
+
+  Data:  -a
+  Addr:  -
+  Float: -
+
+Return the start address of the current buffer.
+
+Class: class:word | Namespace: buffer | Interface Layer: all
+------------------------------------------------------------------------
+
+bye
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Exit RETRO.
+
+Class: class:word | Namespace: global | Interface Layer: rre
+------------------------------------------------------------------------
+
+c:-consonant?
+
+  Data:  c-f
+  Addr:  -
+  Float: -
+
+Return TRUE if character is a not consonant or FALSE otherwise.
+
+Class: class:word | Namespace: c | Interface Layer: all
+------------------------------------------------------------------------
+
+c:-digit?
+
+  Data:  c-f
+  Addr:  -
+  Float: -
+
+Return TRUE if character is a not numeric digit or FALSE otherwise.
+
+Class: class:word | Namespace: c | Interface Layer: all
+------------------------------------------------------------------------
+
+c:-lowercase?
+
+  Data:  c-f
+  Addr:  -
+  Float: -
+
+Return TRUE if character is not lowercase or FALSE otherwise.
+
+Class: class:word | Namespace: c | Interface Layer: all
+------------------------------------------------------------------------
+
+c:-uppercase?
+
+  Data:  c-f
+  Addr:  -
+  Float: -
+
+Return TRUE if character is not uppercase or FALSE otherwise.
+
+Class: class:word | Namespace: c | Interface Layer: all
+------------------------------------------------------------------------
+
+c:-visible?
+
+  Data:  c-f
+  Addr:  -
+  Float: -
+
+Return TRUE if character is not printable or FALSE otherwise.
+
+Class: class:word | Namespace: c | Interface Layer: all
+------------------------------------------------------------------------
+
+c:-vowel?
+
+  Data:  c-f
+  Addr:  -
+  Float: -
+
+Return TRUE if character is not a vowel or FALSE otherwise.
+
+Class: class:word | Namespace: c | Interface Layer: all
+------------------------------------------------------------------------
+
+c:-whitespace?
+
+  Data:  c-f
+  Addr:  -
+  Float: -
+
+Return TRUE if character is not whitespace, or FALSE otherwise.
+
+Class: class:word | Namespace: c | Interface Layer: all
+------------------------------------------------------------------------
+
+c:consonant?
+
+  Data:  c-f
+  Addr:  -
+  Float: -
+
+Return TRUE if character is a consonant or FALSE otherwise.
+
+Class: class:word | Namespace: c | Interface Layer: all
+------------------------------------------------------------------------
+
+c:digit?
+
+  Data:  c-f
+  Addr:  -
+  Float: -
+
+Return TRUE if character is a numeric digit or FALSE otherwise.
+
+Class: class:word | Namespace: c | Interface Layer: all
+------------------------------------------------------------------------
+
+c:get
+
+  Data:  -c
+  Addr:  -
+  Float: -
+
+Read a single keypress.
+
+Class: class:word | Namespace: global | Interface Layer: rre
+------------------------------------------------------------------------
+
+c:letter?
+
+  Data:  c-f
+  Addr:  -
+  Float: -
+
+Return TRUE if character is an ASCII letter or FALSE otherwise.
+
+Class: class:word | Namespace: c | Interface Layer: all
+------------------------------------------------------------------------
+
+c:lowercase?
+
+  Data:  c-f
+  Addr:  -
+  Float: -
+
+Return TRUE if character is lowercase or FALSE otherwise.
+
+Class: class:word | Namespace: c | Interface Layer: all
+------------------------------------------------------------------------
+
+c:put
+
+  Data:  c-
+  Addr:  -
+  Float: -
+
+Display a single character.
+
+Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+c:to-lower
+
+  Data:  c-c
+  Addr:  -
+  Float: -
+
+Convert character to lowercase equivalent.
+
+Class: class:word | Namespace: c | Interface Layer: all
+------------------------------------------------------------------------
+
+c:to-number
+
+  Data:  c-n
+  Addr:  -
+  Float: -
+
+Convert an ASCII digit character into the corresponding decimal value
+
+Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+c:to-string
+
+  Data:  c-s
+  Addr:  -
+  Float: -
+
+Convert character into a string.
+
+Class: class:word | Namespace: c | Interface Layer: all
+------------------------------------------------------------------------
+
+c:to-upper
+
+  Data:  c-c
+  Addr:  -
+  Float: -
+
+Convert character to uppercase equivalent.
+
+Class: class:word | Namespace: c | Interface Layer: all
+------------------------------------------------------------------------
+
+c:toggle-case
+
+  Data:  c-c
+  Addr:  -
+  Float: -
+
+Convert an ASCII character to the opposite case.
+
+Class: class:word | Namespace: c | Interface Layer: all
+------------------------------------------------------------------------
+
+c:uppercase?
+
+  Data:  c-f
+  Addr:  -
+  Float: -
+
+Return TRUE if character is uppercase or FALSE otherwise.
+
+Class: class:word | Namespace: c | Interface Layer: all
+------------------------------------------------------------------------
+
+c:visible?
+
+  Data:  c-f
+  Addr:  -
+  Float: -
+
+Return TRUE if character is printable or FALSE otherwise.
+
+Class: class:word | Namespace: c | Interface Layer: all
+------------------------------------------------------------------------
+
+c:vowel?
+
+  Data:  c-f
+  Addr:  -
+  Float: -
+
+Return TRUE if character is a vowel or FALSE otherwise.
+
+Class: class:word | Namespace: c | Interface Layer: all
+------------------------------------------------------------------------
+
+c:whitespace?
+
+  Data:  c-f
+  Addr:  -
+  Float: -
+
+Return TRUE if character is whitespace, or FALSE otherwise.
+
+Class: class:word | Namespace: c | Interface Layer: all
+------------------------------------------------------------------------
+
+call
+
+  Data:  a-
+  Addr:  -
+  Float: -
+
+Call a function.
+
+Class: class:primitive | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+case
+
+  Data:  nmq- || nmq-n
+  Addr:  -
+  Float: -
+
+If `n` is equal to `m`, drop both and execute the specified quote before exiting the calling word. If not equal, leave `n` on the stack and let execution continue.
+
+Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+choose
+
+  Data:  fqq-
+  Addr:  -
+  Float: -
+
+Execute q1 if the flag is true (-1) or q2 if the flag is false (0). Only these flags are valid when using `choose`; passing other values as flags will result in memory corruption.
+
+Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+class:data
+
+  Data:  n- || n-n
+  Addr:  -
+  Float: -
+
+Class handler for data structures.
+
+Interpret Time:
+  Keep the address or value on the stack.
+
+Compile Time:
+  Compile the value or address as a literal into the current definition.
+
+Class: class:word | Namespace: class | Interface Layer: all
+------------------------------------------------------------------------
+
+class:macro
+
+  Data:  a-
+  Addr:  -
+  Float: -
+
+Class handler for compiler macros (immediate words)
+
+Interpret Time:
+  Execute the function at the provided address.
+
+Compile Time:
+  Execute the function at the provided address.
+
+Class: class:word | Namespace: class | Interface Layer: all
+------------------------------------------------------------------------
+
+class:primitive
+
+  Data:  a-
+  Addr:  -
+  Float: -
+
+Class handler for primitive words (words which map to Nga instructions)
+
+Interpret Time:
+  Execute the function.
+
+Compile Time:
+  Compile the machine code in the definiton into the current definition.
+
+Class: class:word | Namespace: class | Interface Layer: all
+------------------------------------------------------------------------
+
+class:word
+
+  Data:  a-
+  Addr:  -
+  Float: -
+
+Class handler for normal words.
+
+Interpret Time:
+  Execute the function at the provided address.
+
+Compile Time:
+  Compile a call to the specified address into the current definition.
+
+Class: class:word | Namespace: class | Interface Layer: all
+------------------------------------------------------------------------
+
+clear
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Clear the display.
+
+Class: class:word | Namespace: global | Interface Layer: rre
+------------------------------------------------------------------------
+
+clock:day
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Return the current day.
+
+Class: class:word | Namespace: clock | Interface Layer: iOS, rre
+------------------------------------------------------------------------
+
+clock:hour
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Return the current hour. This will be in the range of 0-23, inclusive.
+
+Class: class:word | Namespace: clock | Interface Layer: iOS, rre
+------------------------------------------------------------------------
+
+clock:minute
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Return the current minute. This will be in the range of 0-59, inclusive.
+
+Class: class:word | Namespace: clock | Interface Layer: iOS, rre
+------------------------------------------------------------------------
+
+clock:month
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Return the current month. This will be in the range of 1-12, inclusive.
+
+Class: class:word | Namespace: clock | Interface Layer: iOS, rre
+------------------------------------------------------------------------
+
+clock:second
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Return the current second. This will be in the range of 0-59, inclusive.
+
+Class: class:word | Namespace: clock | Interface Layer: iOS, rre
+------------------------------------------------------------------------
+
+clock:timestamp
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Return a host specific timestamp. In the standard system, this is a 32-bit Unix timestamp, but this is not required.
+
+Class: class:word | Namespace: clock | Interface Layer: rre
+------------------------------------------------------------------------
+
+clock:utc:day
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Return the current day in UTC.
+
+Class: class:word | Namespace: clock | Interface Layer: iOS, rre
+------------------------------------------------------------------------
+
+clock:utc:hour
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Return the current hour in UTC.
+
+Class: class:word | Namespace: clock | Interface Layer: iOS, rre
+------------------------------------------------------------------------
+
+clock:utc:minute
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Return the current minute in UTC.
+
+Class: class:word | Namespace: clock | Interface Layer: iOS, rre
+------------------------------------------------------------------------
+
+clock:utc:month
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Return the current month in UTC.
+
+Class: class:word | Namespace: clock | Interface Layer: iOS, rre
+------------------------------------------------------------------------
+
+clock:utc:second
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Return the current second in UTC.
+
+Class: class:word | Namespace: clock | Interface Layer: iOS, rre
+------------------------------------------------------------------------
+
+clock:utc:year
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Return the current year in UTC.
+
+Class: class:word | Namespace: clock | Interface Layer: iOS, rre
+------------------------------------------------------------------------
+
+clock:year
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Return the current year.
+
+Class: class:word | Namespace: clock | Interface Layer: iOS, rre
+------------------------------------------------------------------------
+
+compile:call
+
+  Data:  a-
+  Addr:  -
+  Float: -
+
+Compile a call to the specified address into the current definition.
+
+Class: class:word | Namespace: compile | Interface Layer: all
+------------------------------------------------------------------------
+
+compile:jump
+
+  Data:  a-
+  Addr:  -
+  Float: -
+
+Compile a jump to the specified address into the current definition.
+
+Class: class:word | Namespace: compile | Interface Layer: all
+------------------------------------------------------------------------
+
+compile:lit
+
+  Data:  n-
+  Addr:  -
+  Float: -
+
+Compile the code to push a number to the stack into the current definition.
+
+Class: class:word | Namespace: compile | Interface Layer: all
+------------------------------------------------------------------------
+
+compile:ret
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Compile a return instruction into the current definition.
+
+Class: class:word | Namespace: compile | Interface Layer: all
+------------------------------------------------------------------------
+
+compiling?
+
+  Data:  -f
+  Addr:  -
+  Float: -
+
+Return `TRUE` if compiler is on or `FALSE` otherwise.
+
+Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+const
+
+  Data:  ns-
+  Addr:  -
+  Float: -
+
+Create a constant returning the specified value.
+
+Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+copy
+
+  Data:  sdl-
+  Addr:  -
+  Float: -
+
+Copy `l` cells from memory at `s` to the memory at `d`. These should not overlap.
+
+Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+curry
+
+  Data:  nq-q
+  Addr:  -
+  Float: -
+
+Bind a value to a function and return a new quote that calls the bound action.
+
+Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+d
+
+  Data:  n-
+  Addr:  -
+  Float: -
+
+Inline a numeric value to the current assembly segment.
+
+Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+d:add-header
+
+  Data:  saa-
+  Addr:  -
+  Float: -
+
+Create a header. Provide a string (s) for the name, a pointer to the class handler (a1) and a pointer to the word definition (a2) Generally this won't be used directly.
+
+Class: class:word | Namespace: d | Interface Layer: all
+------------------------------------------------------------------------
+
+d:class
+
+  Data:  d-a
+  Addr:  -
+  Float: -
+
+Given a dictionary header, return the class field.
+
+Class: class:word | Namespace: d | Interface Layer: all
+------------------------------------------------------------------------
+
+d:create
+
+  Data:  s-
+  Addr:  -
+  Float: -
+
+Create a new dictionary header named the specified string. The new header will point to `here` and have a class of `class:data`.
+
+Class: class:word | Namespace: d | Interface Layer: all
+------------------------------------------------------------------------
+
+d:for-each
+
+  Data:  q-
+  Addr:  -
+  Float: -
+
+Execute the specified quote once for each header in the dictionary. Before running the quote, this also pushes a pointer to the header onto the stack.
+
+Class: class:word | Namespace: d | Interface Layer: all
+------------------------------------------------------------------------
+
+d:last
+
+  Data:  -d
+  Addr:  -
+  Float: -
+
+Return the most recent dictionary header.
+
+Class: class:word | Namespace: d | Interface Layer: all
+------------------------------------------------------------------------
+
+d:last<class>
+
+  Data:  -a
+  Addr:  -
+  Float: -
+
+Return a pointer to the class field of the most recent dictionary header.
+
+Class: class:word | Namespace: d | Interface Layer: all
+------------------------------------------------------------------------
+
+d:last<name>
+
+  Data:  -s
+  Addr:  -
+  Float: -
+
+Return a pointer to the name field of the most recent dictionary header.
+
+Class: class:word | Namespace: d | Interface Layer: all
+------------------------------------------------------------------------
+
+d:last<xt>
+
+  Data:  -a
+  Addr:  -
+  Float: -
+
+Return a pointer to the xt field of the most recent dictionary header.
+
+Class: class:word | Namespace: d | Interface Layer: all
+------------------------------------------------------------------------
+
+d:link
+
+  Data:  d-a
+  Addr:  -
+  Float: -
+
+Given a dictionary header, return the link field.
+
+Class: class:word | Namespace: d | Interface Layer: all
+------------------------------------------------------------------------
+
+d:lookup
+
+  Data:  s-d
+  Addr:  -
+  Float: -
+
+Lookup the specified name in the dictionary and return a pointer to its dictionary header. This returns zero if the word is not found.
+
+Class: class:word | Namespace: d | Interface Layer: all
+------------------------------------------------------------------------
+
+d:lookup-xt
+
+  Data:  a-d
+  Addr:  -
+  Float: -
+
+Lookup the specified address in the dictionary and return a pointer to its dictionary header. This returns zero if the word is not found.
+
+Class: class:word | Namespace: d | Interface Layer: all
+------------------------------------------------------------------------
+
+d:name
+
+  Data:  d-s
+  Addr:  -
+  Float: -
+
+Given a dictionary header, return the name field.
+
+Class: class:word | Namespace: d | Interface Layer: all
+------------------------------------------------------------------------
+
+d:words
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Display a list of all named items in the `Dictionary`.
+
+Class: class:word | Namespace: d | Interface Layer: rre
+------------------------------------------------------------------------
+
+d:words-beginning-with
+
+  Data:  s-
+  Addr:  -
+  Float: -
+
+Display a list of all named items in the `Dictionary` that begin with the provided substring.
+
+Class: class:word | Namespace: d | Interface Layer: rre
+------------------------------------------------------------------------
+
+d:words-with
+
+  Data:  s-
+  Addr:  -
+  Float: -
+
+Display a list of all named items in the `Dictionary` that contain the provided substring.
+
+Class: class:word | Namespace: d | Interface Layer: rre
+------------------------------------------------------------------------
+
+d:xt
+
+  Data:  d-a
+  Addr:  -
+  Float: -
+
+Given a dictionary header, return the xt field.
+
+Class: class:word | Namespace: d | Interface Layer: all
+------------------------------------------------------------------------
+
+data
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Change the class of the most recently defined word to `class:data`.
+
+Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+depth
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Return the number of items on the stack.
+
+Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+dip
+
+  Data:  nq-n
+  Addr:  -
+  Float: -
+
+Temporarily remove n from the stack, execute the quotation, and then restore n to the stack.
+
+Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+does
+
+  Data:  q-
+  Addr:  -
+  Float: -
+
+Attach an action to the most recently created word. This is used in a manner similar to CREATE/DOES> in traditional Forth.
+
+Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+drop
+
+  Data:  n-
+  Addr:  -
+  Float: -
+
+Discard the top value on the stack.
+
+Class: class:primitive | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+drop-pair
+
+  Data:  nn-
+  Addr:  -
+  Float: -
+
+Remove top two items on the stack.
+
+Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+dump-stack
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Display the items on the data stack.
+
+Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+dup
+
+  Data:  n-nn
+  Addr:  -
+  Float: -
+
+Duplicate the top item on the stack.
+
+Class: class:primitive | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+dup-pair
+
+  Data:  nm-nmnm
+  Addr:  -
+  Float: -
+
+Duplicate the top two items on the stack.
+
+Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+e:-INF
+
+  Data:  -e
+  Addr:  -
+  Float: -
+
+Constant. Negative infinity.  For encoded floating point values.
+
+Class: class:word | Namespace: e | Interface Layer: rre
+------------------------------------------------------------------------
+
+e:-inf?
+
+  Data:  e-f
+  Addr:  -
+  Float: -
+
+Is encoded value negative infinity?
+
+Class: class:word | Namespace: e | Interface Layer: rre
+------------------------------------------------------------------------
+
+e:INF
+
+  Data:  -e
+  Addr:  -
+  Float: -
+
+Constant. Infinity. For encoded floating point values.
+
+Class: class:word | Namespace: e | Interface Layer: rre
+------------------------------------------------------------------------
+
+e:MAX
+
+  Data:  -e
+  Addr:  -
+  Float: -
+
+Constant. Maximum value. For encoded floating point values.
+
+Class: class:word | Namespace: e | Interface Layer: rre
+------------------------------------------------------------------------
+
+e:MIN
+
+  Data:  -e
+  Addr:  -
+  Float: -
+
+Constant. Minimum value. For encoded floating point values.
+
+Class: class:word | Namespace: e | Interface Layer: rre
+------------------------------------------------------------------------
+
+e:NAN
+
+  Data:  -e
+  Addr:  -
+  Float: -
+
+Constant. Not a Number. For encoded floating point values.
+
+Class: class:word | Namespace: e | Interface Layer: rre
+------------------------------------------------------------------------
+
+e:clip
+
+  Data:  e-E
+  Addr:  -
+  Float: -
+
+Constrain the encoded value to the allowable range.
+
+Class: class:word | Namespace: e | Interface Layer: rre
+------------------------------------------------------------------------
+
+e:inf?
+
+  Data:  e-f
+  Addr:  -
+  Float: -
+
+Is encoded value infinity?
+
+Class: class:word | Namespace: e | Interface Layer: rre
+------------------------------------------------------------------------
+
+e:max?
+
+  Data:  e-f
+  Addr:  -
+  Float: -
+
+Is encoded value at the maximum?
+
+Class: class:word | Namespace: e | Interface Layer: rre
+------------------------------------------------------------------------
+
+e:min?
+
+  Data:  e-f
+  Addr:  -
+  Float: -
+
+Is encoded value at the minimum?
+
+Class: class:word | Namespace: e | Interface Layer: rre
+------------------------------------------------------------------------
+
+e:n?
+
+  Data:  e-f
+  Addr:  -
+  Float: -
+
+Return `TRUE` if the encoded value is a valid number, or `FALSE` otherwise.
+
+Class: class:word | Namespace: e | Interface Layer: rre
+------------------------------------------------------------------------
+
+e:nan?
+
+  Data:  e-f
+  Addr:  -
+  Float: -
+
+Is encoded value a Nan?
+
+Class: class:word | Namespace: e | Interface Layer: rre
+------------------------------------------------------------------------
+
+e:put
+
+  Data:  e-
+  Addr:  -
+  Float: -
+
+Display an encoded number.
+
+Class: class:word | Namespace: e | Interface Layer: rre
+------------------------------------------------------------------------
+
+e:to-f
+
+  Data:  e-
+  Addr:  -
+  Float: -n
+
+Decode an encoded floating point value.
+
+Class: class:word | Namespace: e | Interface Layer: rre
+------------------------------------------------------------------------
+
+e:zero?
+
+  Data:  e-f
+  Addr:  -
+  Float: -
+
+Return `TRUE` if the value is zero, or `FALSE` otherwise.
+
+Class: class:word | Namespace: e | Interface Layer: rre
+------------------------------------------------------------------------
+
+eq?
+
+  Data:  nn-f
+  Addr:  -
+  Float: -
+
+Compare two values for equality. Returns `TRUE` if they are equal or `FALSE` otherwise.
+
+Class: class:primitive | Namespace: global | Interface Layer: all
+
+Example #1:
+
+    #1 #2 eq?
+    $a $b eq?
+
+------------------------------------------------------------------------
+
+err:notfound
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Error handler. Called when a word is not found by `interpret`.
+
+Class: class:word | Namespace: err | Interface Layer: all
+------------------------------------------------------------------------
+
+f:*
+
+  Data:  -
+  Addr:  -
+  Float: FF-F
+
+Multiply two floating point numbers, returning the result.
+
+Class: class:word | Namespace: f | Interface Layer: rre
+
+Example #1:
+
+    .3.1415 .22 f:*
+
+------------------------------------------------------------------------
+
+f:+
+
+  Data:  -
+  Addr:  -
+  Float: FF-F
+
+Add two floating point numbers, returning the result.
+
+Class: class:word | Namespace: f | Interface Layer: rre
+
+Example #1:
+
+    .3.1 .22 f:+
+
+------------------------------------------------------------------------
+
+f:-
+
+  Data:  -
+  Addr:  -
+  Float: FF-F
+
+Subtract F2 from F1 returing the result.
+
+Class: class:word | Namespace: f | Interface Layer: rre
+
+Example #1:
+
+    .22.3 .0.12 f:-
+
+------------------------------------------------------------------------
+
+f:-INF
+
+  Data:  -
+  Addr:  -
+  Float: -n
+
+Return a value corresponding to negative infinity
+
+Class: class:word | Namespace: f | Interface Layer: rre
+------------------------------------------------------------------------
+
+f:-eq?
+
+  Data:  -f
+  Addr:  -
+  Float: FF-
+
+Compare two floating point values for inequality. Returns `TRUE` if they are not equal or `FALSE` otherwise.
+
+Class: class:word | Namespace: f | Interface Layer: rre
+------------------------------------------------------------------------
+
+f:-inf?
+
+  Data:  -f
+  Addr:  -
+  Float: F-
+
+Return `TRUE` if floating point value is -INF or `FALSE` otherwise.
+
+Class: class:word | Namespace: f | Interface Layer: rre
+------------------------------------------------------------------------
+
+f:/
+
+  Data:  -
+  Addr:  -
+  Float: FF-F
+
+Divide floating point value F1 by F2.
+
+Class: class:word | Namespace: f | Interface Layer: rre
+------------------------------------------------------------------------
+
+f:E
+
+  Data:  -
+  Addr:  -
+  Float: -F
+
+Return the floating point value for Euler's number.
+
+Class: class:word | Namespace: f | Interface Layer: rre
+------------------------------------------------------------------------
+
+f:E1
+
+  Data:  -
+  Addr:  -
+  Float: -f
+
+Hook. Return a constant used as the scaling factor for the e: words.
+
+Class: class:word | Namespace: f | Interface Layer: rre
+------------------------------------------------------------------------
+
+f:INF
+
+  Data:  -
+  Addr:  -
+  Float: -n
+
+Return a value corresponding to positive infinity
+
+Class: class:word | Namespace: f | Interface Layer: rre
+------------------------------------------------------------------------
+
+f:NAN
+
+  Data:  -
+  Addr:  -
+  Float: -n
+
+Return a value corresponding to NaN
+
+Class: class:word | Namespace: f | Interface Layer: rre
+------------------------------------------------------------------------
+
+f:PI
+
+  Data:  -
+  Addr:  -
+  Float: -F
+
+Return the floating point value for PI.
+
+Class: class:word | Namespace: f | Interface Layer: rre
+------------------------------------------------------------------------
+
+f:abs
+
+  Data:  -
+  Addr:  -
+  Float: F-F
+
+Return the absolute value for a floating point value.
+
+Class: class:word | Namespace: f | Interface Layer: rre
+------------------------------------------------------------------------
+
+f:acos
+
+  Data:  -
+  Addr:  -
+  Float: F-F
+
+Return the arc cosine of a floating point number.
+
+Class: class:word | Namespace: f | Interface Layer: rre
+------------------------------------------------------------------------
+
+f:adepth
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Return the number of items on the alternate floating point stack.
+
+Class: class:word | Namespace: f | Interface Layer: rre
+------------------------------------------------------------------------
+
+f:asin
+
+  Data:  -
+  Addr:  -
+  Float: F-F
+
+Return the arc sine of a floating point number.
+
+Class: class:word | Namespace: f | Interface Layer: rre
+------------------------------------------------------------------------
+
+f:atan
+
+  Data:  -
+  Addr:  -
+  Float: F-F
+
+Return the arc tangent of a floating point number.
+
+Class: class:word | Namespace: f | Interface Layer: rre
+------------------------------------------------------------------------
+
+f:between?
+
+  Data:  -f
+  Addr:  -
+  Float: nlu-
+
+Return TRUE if number is between the lower (l) and upper (u) bounds. If not, return FALSE. This is inclusive of the limits.
+
+Class: class:word | Namespace: f | Interface Layer: rre
+
+Example #1:
+
+    .3 .1 .100 f:between?
+    .100 .200 .300   f:between?
+
+------------------------------------------------------------------------
+
+f:case
+
+  Data:  q-
+  Addr:  -
+  Float: nm-n
+
+If `n` is equal to `m`, drop both and execute the specified quote before exiting the calling word. If not equal, leave `n` on the stack and let execution continue.
+
+Class: class:word | Namespace: f | Interface Layer: rre
+------------------------------------------------------------------------
+
+f:ceiling
+
+  Data:  -
+  Addr:  -
+  Float: F-F
+
+Return the smallest integral value greater than or equal to the specified value.
+
+Class: class:word | Namespace: f | Interface Layer: rre
+------------------------------------------------------------------------
+
+f:cos
+
+  Data:  -
+  Addr:  -
+  Float: F-F
+
+Return the cosine of a floating point number.
+
+Class: class:word | Namespace: f | Interface Layer: rre
+------------------------------------------------------------------------
+
+f:dec
+
+  Data:  -
+  Addr:  -
+  Float: n-m
+
+Decrement n by one.
+
+Class: class:word | Namespace: f | Interface Layer: rre
+
+Example #1:
+
+    .100 f:dec
+
+------------------------------------------------------------------------
+
+f:depth
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Return the number of items on the floating point stack.
+
+Class: class:word | Namespace: f | Interface Layer: rre
+------------------------------------------------------------------------
+
+f:drop
+
+  Data:  -
+  Addr:  -
+  Float: F-
+
+Discard the top item on the floating point stack.
+
+Class: class:word | Namespace: f | Interface Layer: rre
+------------------------------------------------------------------------
+
+f:drop-pair
+
+  Data:  -
+  Addr:  -
+  Float: FF-
+
+Remove top two items on the stack.
+
+Class: class:word | Namespace: f | Interface Layer: rre
+------------------------------------------------------------------------
+
+f:dump-astack
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Display the items on the alternate floating point stack.
+
+Class: class:word | Namespace: f | Interface Layer: rre
+------------------------------------------------------------------------
+
+f:dump-stack
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Display the items on the floating point stack.
+
+Class: class:word | Namespace: f | Interface Layer: rre
+------------------------------------------------------------------------
+
+f:dup
+
+  Data:  -
+  Addr:  -
+  Float: F-FF
+
+Duplicate the top item on the floating point stack.
+
+Class: class:word | Namespace: f | Interface Layer: rre
+------------------------------------------------------------------------
+
+f:dup-pair
+
+  Data:  -
+  Addr:  -
+  Float: nm-nmnm
+
+Duplicate the top two items on the stack.
+
+Class: class:word | Namespace: f | Interface Layer: rre
+------------------------------------------------------------------------
+
+f:eq?
+
+  Data:  -f
+  Addr:  -
+  Float: FF-
+
+Compare two floating point values for equality. Returns `TRUE` if they are equal or `FALSE` otherwise.
+
+Class: class:word | Namespace: f | Interface Layer: rre
+------------------------------------------------------------------------
+
+f:fetch
+
+  Data:  a-
+  Addr:  -
+  Float: -n
+
+Fetch a stored floating point value.
+
+Class: class:word | Namespace: f | Interface Layer: rre
+------------------------------------------------------------------------
+
+f:floor
+
+  Data:  -
+  Addr:  -
+  Float: F-F
+
+Perform a mathmatical floor operation on the floating point value.
+
+Class: class:word | Namespace: f | Interface Layer: rre
+------------------------------------------------------------------------
+
+f:gt?
+
+  Data:  -f
+  Addr:  -
+  Float: FF-
+
+Compare two floating point values for greater than.
+
+Class: class:word | Namespace: f | Interface Layer: rre
+------------------------------------------------------------------------
+
+f:inc
+
+  Data:  -
+  Addr:  -
+  Float: n-m
+
+Increment n by one.
+
+Class: class:word | Namespace: f | Interface Layer: rre
+
+Example #1:
+
+    .100 f:inc
+
+------------------------------------------------------------------------
+
+f:inf?
+
+  Data:  -f
+  Addr:  -
+  Float: F-
+
+Return `TRUE` if floating point value is INF or `FALSE` otherwise.
+
+Class: class:word | Namespace: f | Interface Layer: rre
+------------------------------------------------------------------------
+
+f:limit
+
+  Data:  -
+  Addr:  -
+  Float: nlu-m
+
+Return n if it is within the lower (l) and upper (u) bounds. If outside the bounds, return the closes boundary value.
+
+Class: class:word | Namespace: f | Interface Layer: rre
+
+Example #1:
+
+    .-10 .5 .8 f:limit
+    .10  .1 .15 f:limit
+
+------------------------------------------------------------------------
+
+f:log
+
+  Data:  -
+  Addr:  -
+  Float: FF-F
+
+Return log(F1) for base F2 for floating point values.
+
+Class: class:word | Namespace: f | Interface Layer: rre
+------------------------------------------------------------------------
+
+f:lt?
+
+  Data:  -f
+  Addr:  -
+  Float: FF-
+
+Compare two floating point values for less than.
+
+Class: class:word | Namespace: f | Interface Layer: rre
+------------------------------------------------------------------------
+
+f:max
+
+  Data:  -
+  Addr:  -
+  Float: mn-o
+
+Return the greater of two values.
+
+Class: class:word | Namespace: f | Interface Layer: rre
+
+Example #1:
+
+    .1 .7 f:max
+    .-8 .-10 f:max
+
+------------------------------------------------------------------------
+
+f:min
+
+  Data:  -
+  Addr:  -
+  Float: mn-o
+
+Return the lesser of two values.
+
+Class: class:word | Namespace: f | Interface Layer: rre
+
+Example #1:
+
+    .1 .7 f:min
+    .-8 .-10 f:min
+
+------------------------------------------------------------------------
+
+f:nan?
+
+  Data:  -f
+  Addr:  -
+  Float: F-
+
+Return `TRUE` if floating point value is NaN or `FALSE` otherwise.
+
+Class: class:word | Namespace: f | Interface Layer: rre
+------------------------------------------------------------------------
+
+f:negate
+
+  Data:  -
+  Addr:  -
+  Float: F-F
+
+Invert the sign of the floating point value.
+
+Class: class:word | Namespace: f | Interface Layer: rre
+
+Example #1:
+
+    .3.1415 f:negate
+
+------------------------------------------------------------------------
+
+f:negative?
+
+  Data:  -f
+  Addr:  -
+  Float: F-
+
+Return `TRUE` if floating point value is negative or `FALSE` if not.
+
+Class: class:word | Namespace: f | Interface Layer: rre
+------------------------------------------------------------------------
+
+f:nip
+
+  Data:  -
+  Addr:  -
+  Float: NM-M
+
+Remove the second item from the stack.
+
+Class: class:word | Namespace: f | Interface Layer: rre
+------------------------------------------------------------------------
+
+f:over
+
+  Data:  -
+  Addr:  -
+  Float: FG-FGF
+
+Put a copy of the second floating point value over the top one.
+
+Class: class:word | Namespace: f | Interface Layer: rre
+------------------------------------------------------------------------
+
+f:pop
+
+  Data:  -
+  Addr:  -
+  Float: -F
+
+Pop a floating point value from the alternate stack.
+
+Class: class:word | Namespace: f | Interface Layer: rre
+------------------------------------------------------------------------
+
+f:positive?
+
+  Data:  -f
+  Addr:  -
+  Float: F-
+
+Return `TRUE` if floating point value is positive or `FALSE` otherwise.
+
+Class: class:word | Namespace: f | Interface Layer: rre
+------------------------------------------------------------------------
+
+f:power
+
+  Data:  -
+  Addr:  -
+  Float: FF-F
+
+Return F1^F2 for floating point values.
+
+Class: class:word | Namespace: f | Interface Layer: rre
+------------------------------------------------------------------------
+
+f:push
+
+  Data:  -
+  Addr:  -
+  Float: F-
+
+Push a floating point value to an alternative stack.
+
+Class: class:word | Namespace: f | Interface Layer: rre
+------------------------------------------------------------------------
+
+f:put
+
+  Data:  -
+  Addr:  -
+  Float: F-
+
+Display a floating point number.
+
+Class: class:word | Namespace: global | Interface Layer: rre
+------------------------------------------------------------------------
+
+f:rot
+
+  Data:  -
+  Addr:  -
+  Float: abc-bca
+
+Rotate the top three values.
+
+Class: class:word | Namespace: f | Interface Layer: rre
+------------------------------------------------------------------------
+
+f:round
+
+  Data:  -
+  Addr:  -
+  Float: f-f
+
+Round a floating point value.
+
+Class: class:word | Namespace: f | Interface Layer: rre
+------------------------------------------------------------------------
+
+f:sign
+
+  Data:  -n
+  Addr:  -
+  Float: F-
+
+Return 1 if the floating point value is positive or -1 if it is negative.
+
+Class: class:word | Namespace: f | Interface Layer: rre
+
+Example #1:
+
+    .3.1415 f:sign
+
+------------------------------------------------------------------------
+
+f:signed-sqrt
+
+  Data:  -
+  Addr:  -
+  Float: F-F
+
+Return the square root of a floating point number.
+
+Class: class:word | Namespace: f | Interface Layer: rre
+------------------------------------------------------------------------
+
+f:signed-square
+
+  Data:  -
+  Addr:  -
+  Float: f-f
+
+Return the square of a floating point number.
+
+Class: class:word | Namespace: f | Interface Layer: rre
+------------------------------------------------------------------------
+
+f:sin
+
+  Data:  -
+  Addr:  -
+  Float: F-F
+
+Return the sine of a floating point number.
+
+Class: class:word | Namespace: f | Interface Layer: rre
+------------------------------------------------------------------------
+
+f:sqrt
+
+  Data:  -
+  Addr:  -
+  Float: F-F
+
+Return the square root of a floating point number.
+
+Class: class:word | Namespace: f | Interface Layer: rre
+------------------------------------------------------------------------
+
+f:square
+
+  Data:  -
+  Addr:  -
+  Float: f-f
+
+Return the square of a floating point number.
+
+Class: class:word | Namespace: f | Interface Layer: rre
+------------------------------------------------------------------------
+
+f:store
+
+  Data:  a-
+  Addr:  -
+  Float: n-
+
+Store a floating point value to the specified memory location.
+
+Class: class:word | Namespace: f | Interface Layer: rre
+------------------------------------------------------------------------
+
+f:swap
+
+  Data:  -
+  Addr:  -
+  Float: FG-GF
+
+Exchange the top and second items on the floating point stack.
+
+Class: class:word | Namespace: f | Interface Layer: rre
+------------------------------------------------------------------------
+
+f:tan
+
+  Data:  -
+  Addr:  -
+  Float: F-F
+
+Return the tangent of a floating point number.
+
+Class: class:word | Namespace: f | Interface Layer: rre
+------------------------------------------------------------------------
+
+f:to-e
+
+  Data:  -e
+  Addr:  -
+  Float: n-
+
+Encode the floating point value to an integer.
+
+Class: class:word | Namespace: f | Interface Layer: rre
+------------------------------------------------------------------------
+
+f:to-number
+
+  Data:  -n
+  Addr:  -
+  Float: F-
+
+Convert a floating point value into a number.
+
+Class: class:word | Namespace: f | Interface Layer: rre
+------------------------------------------------------------------------
+
+f:to-string
+
+  Data:  -s
+  Addr:  -
+  Float: F-
+
+Convert a floating point value into a string.
+
+Class: class:word | Namespace: f | Interface Layer: rre
+------------------------------------------------------------------------
+
+f:tuck
+
+  Data:  -
+  Addr:  -
+  Float: FG-GFG
+
+Tuck a copy of the top floating point value under the second one.
+
+Class: class:word | Namespace: f | Interface Layer: rre
+------------------------------------------------------------------------
+
+fetch
+
+  Data:  a-n
+  Addr:  -
+  Float: -
+
+Fetch the value stored at the specified address.
+
+Class: class:primitive | Namespace: global | Interface Layer: all
+
+Example #1:
+
+    &Version fetch
+
+------------------------------------------------------------------------
+
+fetch-next
+
+  Data:  a-an
+  Addr:  -
+  Float: -
+
+Fetch the value stored at the specified address. Returns the next address and the value.
+
+Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+file:A
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Constant for opening a file in APPEND mode.
+
+Class: class:data | Namespace: file | Interface Layer: rre
+------------------------------------------------------------------------
+
+file:R
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Constant for opening a file in READ mode.
+
+Class: class:data | Namespace: file | Interface Layer: rre
+------------------------------------------------------------------------
+
+file:R+
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Constant for opening a file in READ & WRITE mode.
+
+Class: class:data | Namespace: file | Interface Layer: rre
+------------------------------------------------------------------------
+
+file:W
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Constant for opening a file in WRITE mode.
+
+Class: class:data | Namespace: file | Interface Layer: rre
+------------------------------------------------------------------------
+
+file:close
+
+  Data:  h-
+  Addr:  -
+  Float: -
+
+Given a file handle, close the file.
+
+Class: class:word | Namespace: file | Interface Layer: rre
+------------------------------------------------------------------------
+
+file:delete
+
+  Data:  s-
+  Addr:  -
+  Float: -
+
+Delete the named file.
+
+Class: class:word | Namespace: file | Interface Layer: rre
+------------------------------------------------------------------------
+
+file:exists?
+
+  Data:  s-f
+  Addr:  -
+  Float: -
+
+Given a file name, return `TRUE` if it exists or `FALSE` if it does not.
+
+Class: class:word | Namespace: file | Interface Layer: rre
+------------------------------------------------------------------------
+
+file:flush
+
+  Data:  h-
+  Addr:  -
+  Float: -
+
+Given a file handle, flush any pending writes to disk.
+
+Class: class:word | Namespace: file | Interface Layer: rre
+------------------------------------------------------------------------
+
+file:for-each-line
+
+  Data:  sq-
+  Addr:  -
+  Float: -
+
+Given a file name, open it and run the quote once for each line in the file.
+
+Class: class:word | Namespace: file | Interface Layer: rre
+------------------------------------------------------------------------
+
+file:open
+
+  Data:  sm-h
+  Addr:  -
+  Float: -
+
+Open a named file (s) with the given mode (m). Returns a handle identifying the file.
+
+Class: class:word | Namespace: file | Interface Layer: rre
+
+Example #1:
+
+  '/etc/motd file:R file:open
+
+------------------------------------------------------------------------
+
+file:open<for-append>
+
+  Data:  s-nn
+  Addr:  -
+  Float: -
+
+Open a file for reading & writing. Returns the size (NOS) and a file ID (TOS)
+
+Class: class:word | Namespace: file | Interface Layer: rre
+------------------------------------------------------------------------
+
+file:open<for-reading>
+
+  Data:  s-nn
+  Addr:  -
+  Float: -
+
+Open a file for reading. Returns the size (NOS) and a file ID (TOS)
+
+Class: class:word | Namespace: file | Interface Layer: rre
+------------------------------------------------------------------------
+
+file:open<for-writing>
+
+  Data:  s-n
+  Addr:  -
+  Float: -
+
+Open a file for writing. Returns the file ID
+
+Class: class:word | Namespace: file | Interface Layer: rre
+------------------------------------------------------------------------
+
+file:read
+
+  Data:  h-c
+  Addr:  -
+  Float: -
+
+Given a file handle, read and return the next character in it.
+
+Class: class:word | Namespace: file | Interface Layer: rre
+------------------------------------------------------------------------
+
+file:read-line
+
+  Data:  f-s
+  Addr:  -
+  Float: -
+
+Given a file handle, read a line and return a pointer to it.
+
+Class: class:word | Namespace: file | Interface Layer: rre
+------------------------------------------------------------------------
+
+file:seek
+
+  Data:  nh-
+  Addr:  -
+  Float: -
+
+Move the current offset into a file to the specified one.
+
+Class: class:word | Namespace: file | Interface Layer: rre
+------------------------------------------------------------------------
+
+file:size
+
+  Data:  h-n
+  Addr:  -
+  Float: -
+
+Given a file handle, return the size of the file (in bytes).
+
+Class: class:word | Namespace: file | Interface Layer: rre
+------------------------------------------------------------------------
+
+file:slurp
+
+  Data:  as-
+  Addr:  -
+  Float: -
+
+Given an address and a file name, read the file contents into memory starting at the address.
+
+Class: class:word | Namespace: file | Interface Layer: rre
+------------------------------------------------------------------------
+
+file:spew
+
+  Data:  ss-
+  Addr:  -
+  Float: -
+
+Given a string (s1) and a file name (s2), write the string into the file, replacing any existing cotent.
+
+Class: class:word | Namespace: file | Interface Layer: rre
+------------------------------------------------------------------------
+
+file:tell
+
+  Data:  h-n
+  Addr:  -
+  Float: -
+
+Given a file handle, return the current offset in the file.
+
+Class: class:word | Namespace: file | Interface Layer: rre
+------------------------------------------------------------------------
+
+file:write
+
+  Data:  ch-
+  Addr:  -
+  Float: -
+
+Write a character to the file represented by the handle.
+
+Class: class:word | Namespace: file | Interface Layer: rre
+------------------------------------------------------------------------
+
+gopher:get
+
+  Data:  asns-n
+  Addr:  -
+  Float: -
+
+Takes an address, a server, a port, and a selector. Fetch the resource and store it at address. Return the number of bytes received.
+
+Class: class:word | Namespace: gopher | Interface Layer: ios
+
+Example #1:
+
+    here 'forthworks.com #70 '/ gopher:get
+    here s:put
+
+------------------------------------------------------------------------
+
+gt?
+
+  Data:  nn-f
+  Addr:  -
+  Float: -
+
+Compare n1 and n2. Return `TRUE` if n1 is greater than n2, or `FALSE` otherwise.
+
+Class: class:primitive | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+gteq?
+
+  Data:  nn-f
+  Addr:  -
+  Float: -
+
+Compare n1 and n2. Return `TRUE` if n1 is greater than or equal to n2, or `FALSE` otherwise.
+
+Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+here
+
+  Data:  -a
+  Addr:  -
+  Float: -
+
+Return the next free address in memory.
+
+Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+hook
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Add a hook point into the current word. This should only be used as the first word in a definition.
+
+Class: class:macro | Namespace: global | Interface Layer: global
+
+Example #1:
+
+    :foo hook ;
+
+------------------------------------------------------------------------
+
+i
+
+  Data:  s-
+  Addr:  -
+  Float: -
+
+Assemble the instructions specified by the string into the current assembly scope.
+
+Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+if
+
+  Data:  fq-
+  Addr:  -
+  Float: -
+
+Execute the quote if the flag is `TRUE`.
+
+Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+if;
+
+  Data:  fq-
+  Addr:  -
+  Float: -
+
+Execute the quotation if the flag is `TRUE`. If true, also exit the word.
+
+Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+image:save
+
+  Data:  s-
+  Addr:  -
+  Float: -
+
+Save the current system to a new image file.
+
+Class: class:word | Namespace: image | Interface Layer: rre
+------------------------------------------------------------------------
+
+immediate
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Change the class of the most recently defined word to `class:macro`.
+
+Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+include
+
+  Data:  s-
+  Addr:  -
+  Float: -
+
+Run the code in the specified file. 
+
+Class: class:word | Namespace: global | Interface Layer: rre
+------------------------------------------------------------------------
+
+interpret
+
+  Data:  s-
+  Addr:  -
+  Float: -
+
+Interpret a single input token.
+
+Class: class:word | Namespace: global | Interface Layer: all
+
+Example #1:
+
+    '#100 interpret
+    'words interpret
+
+------------------------------------------------------------------------
+
+io:clock-operation
+
+  Data:  ...n-
+  Addr:  -
+  Float: -
+
+Trigger a clock operation. This is not intended to be used directly.
+
+Class: class:word | Namespace: io | Interface Layer: rre
+------------------------------------------------------------------------
+
+io:enumerate
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Return the number of I/O devices.
+
+Class: class:word | Namespace: io | Interface Layer: all
+------------------------------------------------------------------------
+
+io:file-operation
+
+  Data:  ...n-
+  Addr:  -
+  Float: -
+
+Trigger a file I/O operation. This is not intended to be used directly.
+
+Class: class:word | Namespace: io | Interface Layer: rre
+------------------------------------------------------------------------
+
+io:float-operation
+
+  Data:  ...n-
+  Addr:  -
+  Float: -
+
+Trigger a floating point operation. This is not intended to be used directly.
+
+Class: class:word | Namespace: io | Interface Layer: rre
+------------------------------------------------------------------------
+
+io:invoke
+
+  Data:  n-
+  Addr:  -
+  Float: -
+
+Invoke an interaction with an I/O device.
+
+Class: class:word | Namespace: io | Interface Layer: all
+------------------------------------------------------------------------
+
+io:query
+
+  Data:  n-mN
+  Addr:  -
+  Float: -
+
+Ask an I/O device to identify itself. Returns a version (m) and device ID (N).
+
+Class: class:word | Namespace: io | Interface Layer: all
+------------------------------------------------------------------------
+
+io:rng-operation
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Trigger a rng operation. This is not intended to be used directly.
+
+Class: class:word | Namespace: io | Interface Layer: rre
+------------------------------------------------------------------------
+
+io:scan-for
+
+  Data:  n-m
+  Addr:  -
+  Float: -
+
+Scan the I/O devices for a device with a specified ID. Returns the device number, or -1 if not found.
+
+Class: class:word | Namespace: io | Interface Layer: all
+------------------------------------------------------------------------
+
+io:socket-operation
+
+  Data:  ...n-
+  Addr:  -
+  Float: -
+
+Trigger a socket operation. This is not intended to be used directly.
+
+Class: class:word | Namespace: io | Interface Layer: rre
+------------------------------------------------------------------------
+
+io:unix-syscall
+
+  Data:  ...n-
+  Addr:  -
+  Float: -
+
+Trigger a Unix system call. This is not intended to be used directly.
+
+Class: class:word | Namespace: io | Interface Layer: rre
+------------------------------------------------------------------------
+
+listen
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Run interactive "listener" (a REPL).
+
+Class: class:word | Namespace: global | Interface Layer: rre
+------------------------------------------------------------------------
+
+lt?
+
+  Data:  nn-f
+  Addr:  -
+  Float: -
+
+Compare n1 and n2. Return `TRUE` if n1 is less than n2, or `FALSE` otherwise.
+
+Class: class:primitive | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+lteq?
+
+  Data:  nn-f
+  Addr:  -
+  Float: -
+
+Compare n1 and n2. Return `TRUE` if n1 is less than or equal to n2, or `FALSE` otherwise.
+
+Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+mod
+
+  Data:  nm-o
+  Addr:  -
+  Float: -
+
+Divide `n` by `m` and return the remainder.
+
+Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+n:-zero?
+
+  Data:  n-f
+  Addr:  -
+  Float: -
+
+Return `TRUE` if number is not zero, or `FALSE` otherwise.
+
+Class: class:word | Namespace: n | Interface Layer: all
+------------------------------------------------------------------------
+
+n:MAX
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Return the maximum value that will fit in a cell.
+
+Class: class:word | Namespace: n | Interface Layer: all
+------------------------------------------------------------------------
+
+n:MIN
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Return the minimum value that will fit in a cell.
+
+Class: class:word | Namespace: n | Interface Layer: all
+------------------------------------------------------------------------
+
+n:abs
+
+  Data:  n-n
+  Addr:  -
+  Float: -
+
+Return the absolute value of a number.
+
+Class: class:word | Namespace: n | Interface Layer: all
+
+Example #1:
+
+    #10 n:abs
+    #-10 n:abs
+
+
+------------------------------------------------------------------------
+
+n:between?
+
+  Data:  nlu-f
+  Addr:  -
+  Float: -
+
+Return TRUE if number is between the lower (l) and upper (u) bounds. If not, return FALSE. This is inclusive of the limits.
+
+Class: class:word | Namespace: n | Interface Layer: all
+
+Example #1:
+
+    #3 #1 #100 n:between?
+    $q $a $b   n:between?
+
+------------------------------------------------------------------------
+
+n:dec
+
+  Data:  n-m
+  Addr:  -
+  Float: -
+
+Decrement n by one.
+
+Class: class:word | Namespace: n | Interface Layer: all
+
+Example #1:
+
+    #100 n:dec
+
+------------------------------------------------------------------------
+
+n:even?
+
+  Data:  n-f
+  Addr:  -
+  Float: -
+
+Return `TRUE` if number is even, or `FALSE` if not.
+
+Class: class:word | Namespace: n | Interface Layer: all
+
+Example #1:
+
+    #12 n:even?
+    #11 n:even?
+
+------------------------------------------------------------------------
+
+n:inc
+
+  Data:  n-m
+  Addr:  -
+  Float: -
+
+Increment n by one.
+
+Class: class:word | Namespace: n | Interface Layer: all
+
+Example #1:
+
+    #100 n:inc
+
+------------------------------------------------------------------------
+
+n:limit
+
+  Data:  nlu-m
+  Addr:  -
+  Float: -
+
+Return n if it is within the lower (l) and upper (u) bounds. If outside the bounds, return the closes boundary value.
+
+Class: class:word | Namespace: n | Interface Layer: all
+
+Example #1:
+
+    #-10 #5 #8 n:limit
+    #10  #1 #15 n:limit
+
+------------------------------------------------------------------------
+
+n:max
+
+  Data:  mn-o
+  Addr:  -
+  Float: -
+
+Return the greater of two values.
+
+Class: class:word | Namespace: n | Interface Layer: all
+
+Example #1:
+
+    #1 #7 n:max
+    #-8 #-10 n:max
+
+------------------------------------------------------------------------
+
+n:min
+
+  Data:  mn-o
+  Addr:  -
+  Float: -
+
+Return the lesser of two values.
+
+Class: class:word | Namespace: n | Interface Layer: all
+
+Example #1:
+
+    #1 #7 n:min
+    #-8 #-10 n:min
+
+------------------------------------------------------------------------
+
+n:negate
+
+  Data:  n-n
+  Addr:  -
+  Float: -
+
+Invert the sign of a number.
+
+Class: class:word | Namespace: n | Interface Layer: rre
+
+Example #1:
+
+    #10 n:negate
+    #-10 n:negate
+
+------------------------------------------------------------------------
+
+n:negative?
+
+  Data:  n-f
+  Addr:  -
+  Float: -
+
+Return `TRUE` if number is negative, or `FALSE` if not.
+
+Class: class:word | Namespace: n | Interface Layer: all
+------------------------------------------------------------------------
+
+n:odd?
+
+  Data:  n-f
+  Addr:  -
+  Float: -
+
+Return `TRUE` if number is odd, or `FALSE` if not.
+
+Class: class:word | Namespace: n | Interface Layer: all
+------------------------------------------------------------------------
+
+n:positive?
+
+  Data:  n-f
+  Addr:  -
+  Float: -
+
+Return `TRUE` if number is positive, or `FALSE` if not.
+
+Class: class:word | Namespace: n | Interface Layer: all
+------------------------------------------------------------------------
+
+n:pow
+
+  Data:  bp-n
+  Addr:  -
+  Float: -
+
+Return base (b) to power (p).
+
+Class: class:word | Namespace: n | Interface Layer: all
+------------------------------------------------------------------------
+
+n:put
+
+  Data:  n-
+  Addr:  -
+  Float: -
+
+Display a number.
+
+Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+n:random
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Return a random number
+
+Class: class:word | Namespace: n | Interface Layer: rre
+
+Example #1:
+
+    n:random n:put
+
+------------------------------------------------------------------------
+
+n:sqrt
+
+  Data:  n-m
+  Addr:  -
+  Float: -
+
+Return the square root of a number.
+
+Class: class:word | Namespace: n | Interface Layer: all
+------------------------------------------------------------------------
+
+n:square
+
+  Data:  n-m
+  Addr:  -
+  Float: -
+
+Return the square of a number.
+
+Class: class:word | Namespace: n | Interface Layer: all
+------------------------------------------------------------------------
+
+n:strictly-positive?
+
+  Data:  n-f
+  Addr:  -
+  Float: -
+
+Return TRUE if number is greater than zero or FALSE if it is zero or less.
+
+Class: class:word | Namespace: n | Interface Layer: all
+------------------------------------------------------------------------
+
+n:to-float
+
+  Data:  n-
+  Addr:  -
+  Float: -F
+
+Convert a number into a floating point value.
+
+Class: class:word | Namespace: n | Interface Layer: rre
+------------------------------------------------------------------------
+
+n:to-string
+
+  Data:  n-s
+  Addr:  -
+  Float: -
+
+Convert a number into a string.
+
+Class: class:word | Namespace: n | Interface Layer: all
+------------------------------------------------------------------------
+
+n:zero?
+
+  Data:  n-f
+  Addr:  -
+  Float: -
+
+Return `TRUE` if number is zero, or `FALSE` otherwise.
+
+Class: class:word | Namespace: n | Interface Layer: all
+------------------------------------------------------------------------
+
+nip
+
+  Data:  nm-m
+  Addr:  -
+  Float: -
+
+Remove the second item from the stack.
+
+Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+nl
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Display a newline.
+
+Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+not
+
+  Data:  n-m
+  Addr:  -
+  Float: -
+
+Perform a logical NOT operation.
+
+Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+or
+
+  Data:  mn-o
+  Addr:  -
+  Float: -
+
+Perform a bitwise OR between the provided values.
+
+Class: class:primitive | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+over
+
+  Data:  nm-nmn
+  Addr:  -
+  Float: -
+
+Put a copy of n over m.
+
+Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+parse-until
+
+  Data:  q-s
+  Addr:  -
+  Float: -
+
+Read input from stdin (via `c:get`) until the returned character is matched by the quote. Returns a string.
+
+Class: class:word | Namespace: all | Interface Layer: rre
+
+Example #1:
+
+  :read-until-period (-s)
+    [ $. eq? ] parse-until ;
+
+------------------------------------------------------------------------
+
+pb:get
+
+  Data:  a-
+  Addr:  -
+  Float: -
+
+Copy a string from the pasteboard to the specified address.
+
+Class: class:word | Namespace: pb | Interface Layer: iOS
+------------------------------------------------------------------------
+
+pb:length
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Return the length of the string on the pasteboard.
+
+Class: class:word | Namespace: pb | Interface Layer: iOS
+
+Example #1:
+
+pb
+
+------------------------------------------------------------------------
+
+pb:set
+
+  Data:  s-
+  Addr:  -
+  Float: -
+
+Copy a string to the pasteboard.
+
+Class: class:word | Namespace: pb | Interface Layer: iOS
+------------------------------------------------------------------------
+
+pop
+
+  Data:  -n
+  Addr:  n-
+  Float: -
+
+Move a value from the return stack to the data stack.
+
+Class: class:macro | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+prefix:!
+
+  Data:  ns-
+  Addr:  -
+  Float: -
+
+Store a value into a variable.
+
+Interpret Time:
+  Store a value into the named variable.
+
+Compile Time:
+  Compile the code to store a value into a named variable.
+
+Class: class:macro | Namespace: prefix | Interface Layer: all
+------------------------------------------------------------------------
+
+prefix:"
+
+  Data:  s-s
+  Addr:  -
+  Float: -
+
+Process token as a string.
+
+Interpret Time:
+  Keep string as permanent. If `RewriteUnderscores` is `TRUE`, replace all instances of _ with space.
+
+Compile Time:
+  Keep string as permanent. If `RewriteUnderscores` is `TRUE`, replace all instances of _ with space. Then compile the string into the current definition. Deprecated.
+
+Class: class:macro | Namespace: prefix | Interface Layer: all
+------------------------------------------------------------------------
+
+prefix:#
+
+  Data:  s-n
+  Addr:  -
+  Float: -
+
+Process token as a number.
+
+Interpret Time:
+  Convert the string into a number and leave on the stack.
+
+Compile Time:
+  Convert the string into a number and compile into the current definition as a literal.
+
+Class: class:macro | Namespace: prefix | Interface Layer: all
+------------------------------------------------------------------------
+
+prefix:$
+
+  Data:  s-c
+  Addr:  -
+  Float: -
+
+Process token as an ASCII character.
+
+Interpret Time:
+  Fetch first character from string. Leave on stack.
+
+Compile Time:
+  Fetch first character from the string. Compile into the current definition as  literal.
+
+Class: class:macro | Namespace: prefix | Interface Layer: all
+------------------------------------------------------------------------
+
+prefix:&
+
+  Data:  s-a
+  Addr:  -
+  Float: -
+
+Return a pointer to a named item.
+
+Interpret Time:
+  Lookup name in dictionary, return contents of the xt field on the stack.
+
+Compile Time:
+  Lookup name in dictionary, compile code to push the contents of the xt field into the current definition.
+
+Class: class:macro | Namespace: prefix | Interface Layer: all
+------------------------------------------------------------------------
+
+prefix:'
+
+  Data:  s-s
+  Addr:  -
+  Float: -
+
+Process token as a string.
+
+Interpret Time:
+  Move string into temporary buffer. If `RewriteUnderscores` is `TRUE`, replace all instances of _ with space.
+
+Compile Time:
+  Move string into temporary buffer. If `RewriteUnderscores` is `TRUE`, replace all instances of _ with space. Then compile the string into the current definition.
+
+Class: class:macro | Namespace: prefix | Interface Layer: all
+------------------------------------------------------------------------
+
+prefix:(
+
+  Data:  s-
+  Addr:  -
+  Float: -
+
+Process token as a comment.
+
+Interpret Time:
+  Discard the string.
+
+Compile Time:
+  Discard the string.
+
+Class: class:macro | Namespace: prefix | Interface Layer: all
+------------------------------------------------------------------------
+
+prefix:.
+
+  Data:  s-
+  Addr:  -
+  Float: -F
+
+Interpret time: convert string to a floating point value. Compile time: convert string to a floating point value and compile code to push this value to the float stack.
+
+Class: class:macro | Namespace: prefix | Interface Layer: rre
+------------------------------------------------------------------------
+
+prefix::
+
+  Data:  s-
+  Addr:  -
+  Float: -
+
+Process token as a new definition.
+
+Interpret Time:
+  Create a header pointing to `here` with the provided string as the name. Sets class to `class:word`.
+
+Class: class:macro | Namespace: prefix | Interface Layer: all
+------------------------------------------------------------------------
+
+prefix:@
+
+  Data:  s-n
+  Addr:  -
+  Float: -
+
+Fetch from a stored variable.
+
+Interpret Time:
+  Fetch a value from a named variable.
+
+Compile Time:
+  Compile the code to fetch a value from a named variable into the current definition.
+
+Class: class:macro | Namespace: prefix | Interface Layer: all
+------------------------------------------------------------------------
+
+prefix:\
+
+  Data:  s-
+  Addr:  -
+  Float: -
+
+Process token as an instruction bundle.
+
+Interpret Time:
+  Discard the string.
+
+Compile Time:
+  Assemble the opcodes in the string and use `,` to inline it into the current definition.
+
+Class: class:macro | Namespace: prefix | Interface Layer: all
+------------------------------------------------------------------------
+
+prefix:^
+
+  Data:  s-
+  Addr:  -
+  Float: -
+
+Process token as a function reference.
+
+Interpret Time:
+  Discard the string.
+
+Compile Time:
+  Comma the XT of the word into the current definition.
+
+Class: class:macro | Namespace: prefix | Interface Layer: all
+------------------------------------------------------------------------
+
+prefix:`
+
+  Data:  s-
+  Addr:  -
+  Float: -
+
+Process token as a bytecode.
+
+Interpret Time:
+  Discard the string.
+
+Compile Time:
+  Convert the string to a number and use `,` to inline it into the current definition.
+
+Class: class:macro | Namespace: prefix | Interface Layer: all
+------------------------------------------------------------------------
+
+prefix:|
+
+  Data:  s-
+  Addr:  -
+  Float: -
+
+POSTPONE equivalent.
+
+Interpret Time:
+  Discard the string.
+
+Compile Time:
+  Convert the string to a number and use `,` to inline it into the current definition.
+
+Class: class:macro | Namespace: prefix | Interface Layer: all
+------------------------------------------------------------------------
+
+primitive
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Change the class of the most recently defined word to `class:primitive`.
+
+Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+push
+
+  Data:  n-
+  Addr:  -n
+  Float: -
+
+Move a value from the data stack to the return stack.
+
+Class: class:macro | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+r
+
+  Data:  s-
+  Addr:  -
+  Float: -
+
+Lookup a reference by name and inline its pointer to the current assembly segment.
+
+Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+reclass
+
+  Data:  a-
+  Addr:  -
+  Float: -
+
+Change the class handler of the most recently defined word to the specified one.
+
+Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+reorder
+
+  Data:  ...ss-?
+  Addr:  -
+  Float: -
+
+Restructure the order of items on the stack.
+
+Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+repeat
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Begin an unconditional loop.
+
+Class: class:macro | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+reset
+
+  Data:  ...-
+  Addr:  -
+  Float: -
+
+Remove all items from the stack.
+
+Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+rot
+
+  Data:  abc-bca
+  Addr:  -
+  Float: -
+
+Rotate the top three values.
+
+Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+s,
+
+  Data:  s-
+  Addr:  -
+  Float: -
+
+Compile the code needed to push a string pointer to the stack and inline the string data into the current definition.
+
+Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+s:ASCII-LETTERS
+
+  Data:  -s
+  Addr:  -
+  Float: -
+
+Constant. Returns a string of the ASCII letters (upper and lower case)
+
+Class: class:data | Namespace: s | Interface Layer: all
+------------------------------------------------------------------------
+
+s:ASCII-LOWERCASE
+
+  Data:  -s
+  Addr:  -
+  Float: -
+
+Constant. Returns a string of the ASCII letters in lowercase
+
+Class: class:data | Namespace: s | Interface Layer: all
+------------------------------------------------------------------------
+
+s:ASCII-UPPERCASE
+
+  Data:  -s
+  Addr:  -
+  Float: -
+
+Constant. Returns a string of the ASCII letters in uppercase
+
+Class: class:data | Namespace: s | Interface Layer: all
+------------------------------------------------------------------------
+
+s:DIGITS
+
+  Data:  -s
+  Addr:  -
+  Float: -
+
+Constant. Return a string of characters recognized as numeric digits.
+
+Class: class:data | Namespace: s | Interface Layer: all
+------------------------------------------------------------------------
+
+s:PUNCTUATION
+
+  Data:  -s
+  Addr:  -
+  Float: -
+
+Constant. Return a string of characters recognized as punctuation.
+
+Class: class:data | Namespace: s | Interface Layer: all
+------------------------------------------------------------------------
+
+s:WHITESPACE
+
+  Data:  -s
+  Addr:  -
+  Float: -
+
+Constant. Returns a string of characters recognized as whitespace.
+
+Class: class:data | Namespace: s | Interface Layer: all
+------------------------------------------------------------------------
+
+s:append
+
+  Data:  ss-s
+  Addr:  -
+  Float: -
+
+Return a new string consisting of s1 followed by s2.
+
+Class: class:word | Namespace: s | Interface Layer: all
+------------------------------------------------------------------------
+
+s:begins-with?
+
+  Data:  ss-f
+  Addr:  -
+  Float: -
+
+Return `TRUE` if s1 begins with s2 or `FALSE` otherwise.
+
+Class: class:word | Namespace: s | Interface Layer: all
+------------------------------------------------------------------------
+
+s:case
+
+  Data:  sSq- || sSq-s
+  Addr:  -
+  Float: -
+
+If the `s` matches `S`, discard `s` and run the quote before exiting the caller. If they do not match, discard the quote and leave `s` on the stack.
+
+Class: class:word | Namespace: s | Interface Layer: all
+------------------------------------------------------------------------
+
+s:chop
+
+  Data:  s-s
+  Addr:  -
+  Float: -
+
+Remove the last character from a string. Returns a new string.
+
+Class: class:word | Namespace: s | Interface Layer: all
+------------------------------------------------------------------------
+
+s:const
+
+  Data:  ss-
+  Addr:  -
+  Float: -
+
+Create a constant named s2, returning a pointer to s1. This will use `s:keep` to preserve the original string.
+
+Class: class:word | Namespace: s | Interface Layer: all
+------------------------------------------------------------------------
+
+s:contains-char?
+
+  Data:  sc-f
+  Addr:  -
+  Float: -
+
+Return `TRUE` if the character is present in the string or `FALSE` otherwise.
+
+Class: class:word | Namespace: s | Interface Layer: all
+------------------------------------------------------------------------
+
+s:contains-string?
+
+  Data:  ss-f
+  Addr:  -
+  Float: -
+
+Return `TRUE` if the second string is present in the first string or `FALSE` otherwise.
+
+Class: class:word | Namespace: s | Interface Layer: all
+------------------------------------------------------------------------
+
+s:copy
+
+  Data:  sa-
+  Addr:  -
+  Float: -
+
+Copy a string (s) to a destination (a). This will include the terminator character when copying.
+
+Class: class:word | Namespace: s | Interface Layer: all
+------------------------------------------------------------------------
+
+s:empty
+
+  Data:  -s
+  Addr:  -
+  Float: -
+
+Return an empty string.
+
+Class: class:word | Namespace: s | Interface Layer: all
+------------------------------------------------------------------------
+
+s:ends-with?
+
+  Data:  ss-f
+  Addr:  -
+  Float: -
+
+Return `TRUE` if s1 ends with s2 or `FALSE` otherwise.
+
+Class: class:word | Namespace: s | Interface Layer: all
+------------------------------------------------------------------------
+
+s:eq?
+
+  Data:  ss-f
+  Addr:  -
+  Float: -
+
+Compare two strings for equality. Return `TRUE` if identical or `FALSE` if not.
+
+Class: class:word | Namespace: s | Interface Layer: all
+
+Example #1:
+
+    'hello 'again s:eq?
+    'test  'test  s:eq?
+
+------------------------------------------------------------------------
+
+s:evaluate
+
+  Data:  s-?
+  Addr:  -
+  Float: -
+
+Evaluate string as if it was typed into the interpreter.
+
+Class: class:word | Namespace: s | Interface Layer: all
+------------------------------------------------------------------------
+
+s:filter
+
+  Data:  sq-s
+  Addr:  -
+  Float: -
+
+Execute the quote once for each value in the string. If the quote returns `TRUE`, append the value into a new string. If `FALSE` the value will be discarded.
+
+Class: class:word | Namespace: s | Interface Layer: all
+------------------------------------------------------------------------
+
+s:for-each
+
+  Data:  sq-
+  Addr:  -
+  Float: -
+
+Execute the quote once for each value in the string.
+
+Class: class:word | Namespace: s | Interface Layer: all
+------------------------------------------------------------------------
+
+s:format
+
+  Data:  ...s-s
+  Addr:  -
+  Float: -
+
+Construct a new string using the template passed and items from the stack.
+
+Class: class:word | Namespace: s | Interface Layer: all
+------------------------------------------------------------------------
+
+s:get
+
+  Data:  -s
+  Addr:  -
+  Float: -
+
+Read input from standard in (via `c:get`) until a CR or LF is encountered. Returns a strig.
+
+Class: class:word | Namespace: all | Interface Layer: rre
+------------------------------------------------------------------------
+
+s:get-word
+
+  Data:  -s
+  Addr:  -
+  Float: -
+
+Read input from standard in (via `c:get`) until a whitespace is encountered. Returns a strig.
+
+Class: class:word | Namespace: all | Interface Layer: rre
+------------------------------------------------------------------------
+
+s:hash
+
+  Data:  s-n
+  Addr:  -
+  Float: -
+
+Calculate a hash value for a string. This uses the djb2 algorithm.
+
+Class: class:word | Namespace: s | Interface Layer: all
+------------------------------------------------------------------------
+
+s:index-of
+
+  Data:  sc-n
+  Addr:  -
+  Float: -
+
+Return the location of the first instance of the specified character in the string.
+
+Class: class:word | Namespace: s | Interface Layer: all
+------------------------------------------------------------------------
+
+s:index-of-string
+
+  Data:  ss-n
+  Addr:  -
+  Float: -
+
+Return the location of the first instance of the specified substring (s2) in the string (s1). Returns -1 if not found.
+
+Class: class:word | Namespace: s | Interface Layer: all
+------------------------------------------------------------------------
+
+s:keep
+
+  Data:  s-s
+  Addr:  -
+  Float: -
+
+Store a string into the heap and return a pointer to the start of it.
+
+Class: class:word | Namespace: s | Interface Layer: all
+------------------------------------------------------------------------
+
+s:left
+
+  Data:  sn-s
+  Addr:  -
+  Float: -
+
+Return a new string containing the first `n` characters from the source string.
+
+Class: class:word | Namespace: s | Interface Layer: all
+------------------------------------------------------------------------
+
+s:length
+
+  Data:  s-n
+  Addr:  -
+  Float: -
+
+Return the number of characters in a string, excluding the NULL terminator.
+
+Class: class:word | Namespace: s | Interface Layer: all
+------------------------------------------------------------------------
+
+s:map
+
+  Data:  sq-s
+  Addr:  -
+  Float: -
+
+Execute the specified quote once for each character in the string. Builds a new string from the return value of the quote. The quote should return only one value.
+
+Class: class:word | Namespace: s | Interface Layer: all
+------------------------------------------------------------------------
+
+s:prepend
+
+  Data:  ss-s
+  Addr:  -
+  Float: -
+
+Return a new string consisting of s2 followed by s1.
+
+Class: class:word | Namespace: s | Interface Layer: all
+------------------------------------------------------------------------
+
+s:put
+
+  Data:  s-
+  Addr:  -
+  Float: -
+
+Display a string.
+
+Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+s:replace
+
+  Data:  sss-s
+  Addr:  -
+  Float: -
+
+Replace the first instance of s2 in s1 with s3.
+
+Class: class:word | Namespace: s | Interface Layer: all
+------------------------------------------------------------------------
+
+s:replace-all
+
+  Data:  sss-s
+  Addr:  -
+  Float: -
+
+Replace all instances of s2 in s1 with s3.
+
+Class: class:word | Namespace: s | Interface Layer: all
+------------------------------------------------------------------------
+
+s:reverse
+
+  Data:  s-s
+  Addr:  -
+  Float: -
+
+Reverse the order of ASCII characters in a string.
+
+Class: class:word | Namespace: s | Interface Layer: all
+------------------------------------------------------------------------
+
+s:right
+
+  Data:  sn-s
+  Addr:  -
+  Float: -
+
+Return a new string containing the specified number of characters from the right side of the string.
+
+Class: class:word | Namespace: s | Interface Layer: all
+------------------------------------------------------------------------
+
+s:skip
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Internal helper function used to skip over a string in a definition.
+
+Class: class:word | Namespace: s | Interface Layer: all
+------------------------------------------------------------------------
+
+s:split
+
+  Data:  sc-ss
+  Addr:  -
+  Float: -
+
+Split a string on the first occurrance of the specified character.
+
+Class: class:word | Namespace: s | Interface Layer: all
+------------------------------------------------------------------------
+
+s:split-on-string
+
+  Data:  ss-ss
+  Addr:  -
+  Float: -
+
+Split a string on the first occurrance of the specified string. After the split, the top stack item will be the part of the string before the specified subsring, and the second item will be the rest of the original string.
+
+Class: class:word | Namespace: s | Interface Layer: all
+
+Example #1:
+
+  'Hello_Brave_World! 'Brave s:split-on-string s:put nl s:put nl
+
+------------------------------------------------------------------------
+
+s:substr
+
+  Data:  sfl-s
+  Addr:  -
+  Float: -
+
+Extract a substring from the specified string. This will take the characters starting at `f` and extend `l` characters in length.
+
+Class: class:word | Namespace: s | Interface Layer: all
+------------------------------------------------------------------------
+
+s:temp
+
+  Data:  s-s
+  Addr:  -
+  Float: -
+
+Move a string into the temporary string buffers.
+
+Class: class:word | Namespace: s | Interface Layer: all
+------------------------------------------------------------------------
+
+s:to-float
+
+  Data:  s-
+  Addr:  -
+  Float: -F
+
+Convert a string representation into a floating point value.
+
+Class: class:word | Namespace: s | Interface Layer: rre
+------------------------------------------------------------------------
+
+s:to-lower
+
+  Data:  s-s
+  Addr:  -
+  Float: -
+
+Convert uppercase ASCII characters in a string to lowercase.
+
+Class: class:word | Namespace: s | Interface Layer: all
+------------------------------------------------------------------------
+
+s:to-number
+
+  Data:  s-n
+  Addr:  -
+  Float: -
+
+Convert a string to a number.
+
+Class: class:word | Namespace: s | Interface Layer: all
+------------------------------------------------------------------------
+
+s:to-upper
+
+  Data:  s-s
+  Addr:  -
+  Float: -
+
+Convert lowercase ASCII characters in a string to uppercase.
+
+Class: class:word | Namespace: s | Interface Layer: all
+------------------------------------------------------------------------
+
+s:tokenize
+
+  Data:  sc-a
+  Addr:  -
+  Float: -
+
+Takes a string and a character to use as a separator. It splits the string into substrings and returns an array containing pointers to each of them.
+
+Class: class:word | Namespace: s | Interface Layer: all
+------------------------------------------------------------------------
+
+s:tokenize-on-string
+
+  Data:  ss-a
+  Addr:  -
+  Float: -
+
+Takes a string (s1) and a substring (s2)  use as a separator. It splits the string into substrings and returns as array containing pointers to each of them.
+
+Class: class:word | Namespace: s | Interface Layer: all
+------------------------------------------------------------------------
+
+s:trim
+
+  Data:  s-s
+  Addr:  -
+  Float: -
+
+Trim leading and trailing whitespace from a string.
+
+Class: class:word | Namespace: s | Interface Layer: all
+
+Example #1:
+
+    '__hello__ s:trim
+
+------------------------------------------------------------------------
+
+s:trim-left
+
+  Data:  s-s
+  Addr:  -
+  Float: -
+
+Trim leading whitespace from a string.
+
+Class: class:word | Namespace: s | Interface Layer: all
+
+Example #1:
+
+    '__hello__ s:trim-left
+
+------------------------------------------------------------------------
+
+s:trim-right
+
+  Data:  s-s
+  Addr:  -
+  Float: -
+
+Trim trailing whitespace from a string.
+
+Class: class:word | Namespace: s | Interface Layer: all
+
+Example #1:
+
+    '__hello__ s:trim-right
+
+------------------------------------------------------------------------
+
+set-hook
+
+  Data:  aa-
+  Addr:  -
+  Float: -
+
+Patch the hook point in a2 to point to a1.
+
+Class: class:word | Namespace: global | Interface Layer: all
+
+Example #1:
+
+    :foo hook ;
+    :bar #1 ;
+    &bar &foo set-hook
+
+------------------------------------------------------------------------
+
+shift
+
+  Data:  mn-o
+  Addr:  -
+  Float: -
+
+Peform a bitwise shift of m by n bits. If n is positive, shift right. If negative, the shift will be to the left.
+
+Class: class:primitive | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+sip
+
+  Data:  nq-n
+  Addr:  -
+  Float: -
+
+Run quote. After execution completes, put a copy of n back on top of the stack.
+
+Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+socket:accept
+
+  Data:  n-nn
+  Addr:  -
+  Float: -
+
+Begin accepting connections. Returns a new socket and an error code.
+
+Class: class:word | Namespace: socket | Interface Layer: rre
+------------------------------------------------------------------------
+
+socket:bind
+
+  Data:  sn-nn
+  Addr:  -
+  Float: -
+
+Bind a socket to a port. The port should be a string. Returns 0 if successful or -1 othewise and an error code.
+
+Class: class:word | Namespace: socket | Interface Layer: rre
+------------------------------------------------------------------------
+
+socket:close
+
+  Data:  n-
+  Addr:  -
+  Float: -
+
+Close a socket.
+
+Class: class:word | Namespace: socket | Interface Layer: rre
+------------------------------------------------------------------------
+
+socket:configure
+
+  Data:  ss-
+  Addr:  -
+  Float: -
+
+Configure internal settings for a host (s1) and port (s2). Use before `socket:bind`.
+
+Class: class:word | Namespace: socket | Interface Layer: rre
+------------------------------------------------------------------------
+
+socket:connect
+
+  Data:  n-nn
+  Addr:  -
+  Float: -
+
+Connect to a server. Provide a socket, this will return a status flag and an error code.
+
+Class: class:word | Namespace: socket | Interface Layer: rre
+------------------------------------------------------------------------
+
+socket:create
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Obtain a new socket.
+
+Class: class:word | Namespace: socket | Interface Layer: rre
+------------------------------------------------------------------------
+
+socket:gethostbyname
+
+  Data:  as-
+  Addr:  -
+  Float: -
+
+Get the host IP in dotted notation. The host is specified by the string and the address is the start of the buffer for the dotted IP.
+
+Class: class:word | Namespace: socket | Interface Layer: rre
+------------------------------------------------------------------------
+
+socket:listen
+
+  Data:  nn-nn
+  Addr:  -
+  Float: -
+
+Prepare a socket for accepting incoming quotations. Takes a backlog count (n1) and a socket (n2). Returns a flag (0 success, -1 failed) and an error code.
+
+Class: class:word | Namespace: socket | Interface Layer: rre
+------------------------------------------------------------------------
+
+socket:recv
+
+  Data:  ann-nn
+  Addr:  -
+  Float: -
+
+Receive data from a socket. This will read into memory starting at address *a*, up to *n1* bytes. *n2* is the socket. Returns the number of bytes read and an error code.
+
+Class: class:word | Namespace: socket | Interface Layer: rre
+------------------------------------------------------------------------
+
+socket:send
+
+  Data:  sn-nn
+  Addr:  -
+  Float: -
+
+Send a string to a socket. This will return the number of characters sent and an error code.
+
+Class: class:word | Namespace: socket | Interface Layer: rre
+------------------------------------------------------------------------
+
+sp
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Display a space (`ASCII:SPACE`)
+
+Class: class:word | Namespace: global | Interface Layer: all
+
+Example #1:
+
+    :spaces (n-)  [ sp ] times ;
+    #12 spaces
+
+------------------------------------------------------------------------
+
+store
+
+  Data:  na-
+  Addr:  -
+  Float: -
+
+Store a value into the specified address.
+
+Class: class:primitive | Namespace: global | Interface Layer: all
+
+Example #1:
+
+    'Base var
+    #10 &Base store
+
+------------------------------------------------------------------------
+
+store-next
+
+  Data:  na-a
+  Addr:  -
+  Float: -
+
+Store a value into the specified address and return the next address.
+
+Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+swap
+
+  Data:  nm-mn
+  Addr:  -
+  Float: -
+
+Exchange the position of the top two items on the stack
+
+Class: class:primitive | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+sys:argc
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Return the number of arguments passed to the program.
+
+Class: class:word | Namespace: sys | Interface Layer: rre
+------------------------------------------------------------------------
+
+sys:argv
+
+  Data:  n-s
+  Addr:  -
+  Float: -
+
+Given an argument number, return the argument as a string.
+
+Class: class:word | Namespace: sys | Interface Layer: rre
+------------------------------------------------------------------------
+
+sys:name
+
+  Data:  -s
+  Addr:  -
+  Float: -
+
+Return the filename of the program being run.
+
+Class: class:word | Namespace: sys | Interface Layer: rre
+------------------------------------------------------------------------
+
+tab
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Display a tab (`ASCII:HT`)
+
+Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+times
+
+  Data:  nq-
+  Addr:  -
+  Float: -
+
+Run the specified quote the specified number of times.
+
+Class: class:word | Namespace: global | Interface Layer: all
+
+Example #1:
+
+    #12 [ $- c:put ] times
+
+------------------------------------------------------------------------
+
+times<with-index>
+
+  Data:  nq-
+  Addr:  -
+  Float: -
+
+Run a quote the specified number of times, tracking the loop index in `I`. This is less efficient than `times`, so if the index is not needed, this should be avoided.
+
+Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+tri
+
+  Data:  xqqq-?
+  Addr:  -
+  Float: -
+
+Apply q1 against x, then q2 against a copy of x, and finally q3 against another copy of x.
+
+Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+tri*
+
+  Data:  xyzqqq-?
+  Addr:  -
+  Float: -
+
+Apply q1 against x, q2 against y, and q3 against z.
+
+Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+tri@
+
+  Data:  xyzq-?
+  Addr:  -
+  Float: -
+
+Apply q against x, then against y, and finally against z.
+
+Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+tuck
+
+  Data:  nm-mnm
+  Addr:  -
+  Float: -
+
+Put a copy of the top item on the stack under the second one.
+
+Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+unhook
+
+  Data:  a-
+  Addr:  -
+  Float: -
+
+Reset the hook point in a1 to the default definition.
+
+Class: class:word | Namespace: global | Interface Layer: all
+
+Example #1:
+
+    :foo hook #1 ;
+    :bar #2 ;
+    &bar &foo set-hook
+    &foo unhook
+
+------------------------------------------------------------------------
+
+unix:chdir
+
+  Data:  s-
+  Addr:  -
+  Float: -
+
+Change the current working directory to the specified one.
+
+Class: class:word | Namespace: unix | Interface Layer: rre
+
+Example #1:
+
+  '/etc unix:chdir
+
+------------------------------------------------------------------------
+
+unix:count-files-in-cwd
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Return the number of files (and subdirectories) in the current working directory
+
+Class: class:word | Namespace: unix | Interface Layer: rre
+------------------------------------------------------------------------
+
+unix:exec0
+
+  Data:  s-
+  Addr:  -
+  Float: -
+
+Execute a process by running the application specified by s.
+
+Class: class:word | Namespace: unix | Interface Layer: rre
+------------------------------------------------------------------------
+
+unix:exec1
+
+  Data:  ss-
+  Addr:  -
+  Float: -
+
+Execute a process by running the application specified by s1. Pass s2 as an argument.
+
+Class: class:word | Namespace: unix | Interface Layer: rre
+------------------------------------------------------------------------
+
+unix:exec2
+
+  Data:  sss-
+  Addr:  -
+  Float: -
+
+Execute a process by running the application specified by s1. Pass s2 and s3 as arguments.
+
+Class: class:word | Namespace: unix | Interface Layer: rre
+------------------------------------------------------------------------
+
+unix:exec3
+
+  Data:  ssss-
+  Addr:  -
+  Float: -
+
+Execute a process by running the application specified by s1. Pass s2, s3, and s4 as arguments.
+
+Class: class:word | Namespace: unix | Interface Layer: rre
+------------------------------------------------------------------------
+
+unix:exit
+
+  Data:  n-
+  Addr:  -
+  Float: -
+
+Exit the current process, returning the specified return code.
+
+Class: class:word | Namespace: unix | Interface Layer: rre
+------------------------------------------------------------------------
+
+unix:for-each-file
+
+  Data:  q-
+  Addr:  -
+  Float: -
+
+Run a quote once for each file or subdirectory in the current directory. The quote will receive the file name as a string and should consume this and return nothing on the stack.
+
+Class: class:word | Namespace: unix | Interface Layer: rre
+------------------------------------------------------------------------
+
+unix:fork
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Fork the current process. Returns a PID.
+
+Class: class:word | Namespace: unix | Interface Layer: rre
+------------------------------------------------------------------------
+
+unix:get-cwd
+
+  Data:  -s
+  Addr:  -
+  Float: -
+
+Return the current working directory
+
+Class: class:word | Namespace: unix | Interface Layer: rre
+------------------------------------------------------------------------
+
+unix:getenv
+
+  Data:  sa-
+  Addr:  -
+  Float: -
+
+Get an environment variable. Provide the name and an address to store it in.
+
+Class: class:word | Namespace: unix | Interface Layer: rre
+
+Example #1:
+
+  'SHELL s:empty [ unix:getenv ] sip s:put nl
+
+------------------------------------------------------------------------
+
+unix:getpid
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Return the PID of the current process.
+
+Class: class:word | Namespace: unix | Interface Layer: rre
+------------------------------------------------------------------------
+
+unix:kill
+
+  Data:  nn-
+  Addr:  -
+  Float: -
+
+Terminates a process. Takes a process and a signal to send.
+
+Class: class:word | Namespace: unix | Interface Layer: rre
+------------------------------------------------------------------------
+
+unix:pclose
+
+  Data:  n-
+  Addr:  -
+  Float: -
+
+Close a pipe.
+
+Class: class:word | Namespace: unix | Interface Layer: rre
+------------------------------------------------------------------------
+
+unix:popen
+
+  Data:  sn-n
+  Addr:  -
+  Float: -
+
+Open a pipe. Takes a command to run, and a file mode (`file:R` or `file:W`; `file:R+` may work on some systems). Returns a file ID usable with words in the `file:` namespace.
+
+Class: class:word | Namespace: unix | Interface Layer: rre
+------------------------------------------------------------------------
+
+unix:putenv
+
+  Data:  s-
+  Addr:  -
+  Float: -
+
+Takes a string in the form `name=value` and sets an environment variable named `name` to `value`.
+
+Class: class:word | Namespace: unix | Interface Layer: rre
+
+Example #1:
+
+  'EDITOR=vi unix:putenv
+
+------------------------------------------------------------------------
+
+unix:sleep
+
+  Data:  n-
+  Addr:  -
+  Float: -
+
+Sleep for the specified number of seconds.
+
+Class: class:word | Namespace: unix | Interface Layer: rre
+------------------------------------------------------------------------
+
+unix:slurp-pipe
+
+  Data:  as-n
+  Addr:  -
+  Float: -
+
+Open a pipe. Read all output from the pipe (until ASCII:NULL) and store in the specified buffer. Return the number of bytes read.
+
+Class: class:word | Namespace: unix | Interface Layer: rre
+------------------------------------------------------------------------
+
+unix:system
+
+  Data:  s-
+  Addr:  -
+  Float: -
+
+Runs another application using the system shell and returns after execution is completed.
+
+Class: class:word | Namespace: unix | Interface Layer: rre
+
+Example #1:
+
+  'ls_-lh_/etc unix:system
+
+------------------------------------------------------------------------
+
+unix:wait
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Waits for a child process to complete. This maps to the wait() system call.
+
+Class: class:word | Namespace: unix | Interface Layer: rre
+------------------------------------------------------------------------
+
+until
+
+  Data:  q-
+  Addr:  -
+  Float: -
+
+Execute quote repeatedly while the quote returns a value of `FALSE`. The quote should return a flag of either `TRUE` or `FALSE`, though `until` will treat any non-zero value as `TRUE`.
+
+Class: class:word | Namespace: global | Interface Layer: all
+
+Example #1:
+
+    #10 [ dup n:put nl n:dec dup n:zero? ] until
+
+------------------------------------------------------------------------
+
+v:dec
+
+  Data:  a-
+  Addr:  -
+  Float: -
+
+Decrement the value stored at the specified address by 1.
+
+Class: class:word | Namespace: v | Interface Layer: all
+------------------------------------------------------------------------
+
+v:dec-by
+
+  Data:  na-
+  Addr:  -
+  Float: -
+
+Decrement the value stored at the specified address by the specified value.
+
+Class: class:word | Namespace: v | Interface Layer: all
+------------------------------------------------------------------------
+
+v:inc
+
+  Data:  a-
+  Addr:  -
+  Float: -
+
+Increment the value stored at the specified address by 1.
+
+Class: class:word | Namespace: v | Interface Layer: all
+------------------------------------------------------------------------
+
+v:inc-by
+
+  Data:  na-
+  Addr:  -
+  Float: -
+
+Increment the value stored at the specified address by the specified value.
+
+Class: class:word | Namespace: v | Interface Layer: all
+------------------------------------------------------------------------
+
+v:limit
+
+  Data:  alu-
+  Addr:  -
+  Float: -
+
+Fetch the value stored at the address, then run `n:limit` against it, using the specified lower and upper bounds. Then store the resulting value back to the original address.
+
+Class: class:word | Namespace: v | Interface Layer: all
+------------------------------------------------------------------------
+
+v:off
+
+  Data:  a-
+  Addr:  -
+  Float: -
+
+Set a variable to 0.
+
+Class: class:word | Namespace: v | Interface Layer: all
+------------------------------------------------------------------------
+
+v:on
+
+  Data:  a-
+  Addr:  -
+  Float: -
+
+Set a variable to -1.
+
+Class: class:word | Namespace: v | Interface Layer: all
+------------------------------------------------------------------------
+
+v:preserve
+
+  Data:  aq-
+  Addr:  -
+  Float: -
+
+Make a copy of the value at the address, then run the quote. Once the quote completes, restore the address to the specified value.
+
+Class: class:word | Namespace: v | Interface Layer: all
+------------------------------------------------------------------------
+
+v:update
+
+  Data:  aq-
+  Addr:  -
+  Float: -
+
+Fetch a value from the specified address, then run the quotation with this value on the stack. Afterwards, store the returned value at the original address.
+
+Class: class:word | Namespace: v | Interface Layer: all
+------------------------------------------------------------------------
+
+var
+
+  Data:  s-
+  Addr:  -
+  Float: -
+
+Create a variable. The variable is initialized to 0.
+
+Class: class:word | Namespace: global | Interface Layer: all
+
+Example #1:
+
+    'Base var
+
+------------------------------------------------------------------------
+
+var<n>
+
+  Data:  ns-
+  Addr:  -
+  Float: -
+
+Create a variable with the specified initial value.
+
+Class: class:word | Namespace: global | Interface Layer: all
+
+Example #1:
+
+    #10 'Base var<n>
+
+
+------------------------------------------------------------------------
+
+while
+
+  Data:  q-
+  Addr:  -
+  Float: -
+
+Execute quote repeatedly while the quote returns a `TRUE` value. The quote should return a flag of either `TRUE` or `FALSE`, though `while` will treat any non-zero value as `TRUE`.
+
+Class: class:word | Namespace: global | Interface Layer: all
+
+Example #1:
+
+    #10 [ dup n:put nl n:dec dup n:-zero? ] while
+
+------------------------------------------------------------------------
+
+xor
+
+  Data:  mn-o
+  Addr:  -
+  Float: -
+
+Perform a bitwise XOR operation.
+
+Class: class:primitive | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+{
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Begin an array. This is intended to make creating arrays a bit cleaner than using a quotation and `a:counted-results`.
+
+Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+{{
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Begin a lexically scoped area.
+
+Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+}
+
+  Data:  -a
+  Addr:  -
+  Float: -
+
+Complete an array begun by `{`. Returns a pointer to the data.
+
+Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+}as
+
+  Data:  f-
+  Addr:  -
+  Float: -
+
+End an assembly section. Deprecated; will be removed in 2020.
+
+Class: class:macro | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+}}
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+End a lexically scoped area. This will hide any headers between `{{` and `---reveal---`, leaving only headers between `---reveal---` and the `}}` visible.
+
+Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+

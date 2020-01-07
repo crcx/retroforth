@@ -1,7 +1,8 @@
-# Building RETRO on BSD, Linux, macOS
+# Building on BSD, Linux, macOS, and outher Inix Targets
 
-RETRO is well supported on BSD (FreeBSD, NetBSD, OpenBSD),
-Linux, and macOS systems. It should build on any of these
+RETRO is well supported on BSD (tested on FreeBSD, NetBSD,
+OpenBSD), Linux, and macOS systems. It should build on any
+of these
 without issue.
 
 ## Requirements
@@ -12,7 +13,13 @@ without issue.
 
 ## Process
 
+For a standard 32-bit system:
+
 Run `make`
+
+For a 64-bit system:
+
+Run `make OPTIONS=-DBIT64`
 
 This will build the toolchain and then the main `retro`
 executable.

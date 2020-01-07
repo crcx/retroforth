@@ -18,6 +18,133 @@ Glossary on hand is highly recommended as you learn to use RETRO.
 This book will hopefully help you develop a better understanding
 of RETRO and how it works.
 
+The text in these files is Copyright (c) 2018-2020 by
+Charles Childers.
+
+To the extent possible under law, Charles Childers has
+waived all copyright and related or neighboring rights
+to the RETRO Documentation. This work is published from:
+United States.
+
+The historical papers are Copyright (c) 1999-2000 by
+Tom Novelli.
+
+## Legal Text
+
+See https://creativecommons.org/publicdomain/zero/1.0/legalcode
+
+The laws of most jurisdictions throughout the world automatically confer 
+exclusive Copyright and Related Rights (defined below) upon the creator 
+and subsequent owner(s) (each and all, an "owner") of an original work 
+of authorship and/or a database (each, a "Work").
+
+Certain owners wish to permanently relinquish those rights to a Work for 
+the purpose of contributing to a commons of creative, cultural and 
+scientific works ("Commons") that the public can reliably and without 
+fear of later claims of infringement build upon, modify, incorporate in 
+other works, reuse and redistribute as freely as possible in any form 
+whatsoever and for any purposes, including without limitation commercial 
+purposes. These owners may contribute to the Commons to promote the 
+ideal of a free culture and the further production of creative, cultural 
+and scientific works, or to gain reputation or greater distribution for 
+their Work in part through the use and efforts of others.
+
+For these and/or other purposes and motivations, and without any 
+expectation of additional consideration or compensation, the person 
+associating CC0 with a Work (the "Affirmer"), to the extent that he or 
+she is an owner of Copyright and Related Rights in the Work, voluntarily 
+elects to apply CC0 to the Work and publicly distribute the Work under 
+its terms, with knowledge of his or her Copyright and Related Rights in 
+the Work and the meaning and intended legal effect of CC0 on those 
+rights.
+
+1. Copyright and Related Rights. A Work made available under CC0 may be 
+protected by copyright and related or neighboring rights ("Copyright and 
+Related Rights"). Copyright and Related Rights include, but are not 
+limited to, the following:
+
+- the right to reproduce, adapt, distribute, perform, display, 
+   communicate, and translate a Work;
+- moral rights retained by the original author(s) and/or performer(s);
+- publicity and privacy rights pertaining to a person's image or 
+  likeness depicted in a Work;
+- rights protecting against unfair competition in regards to a Work, 
+  subject to the limitations in paragraph 4(a), below;
+- rights protecting the extraction, dissemination, use and reuse of data 
+  in a Work;
+- database rights (such as those arising under Directive 96/9/EC of the 
+  European Parliament and of the Council of 11 March 1996 on the legal 
+  protection of databases, and under any national implementation thereof, 
+  including any amended or successor version of such directive); and
+- other similar, equivalent or corresponding rights throughout the world
+  based on applicable law or treaty, and any national implementations 
+  thereof.
+
+2. Waiver. To the greatest extent permitted by, but not in contravention 
+of, applicable law, Affirmer hereby overtly, fully, permanently, 
+irrevocably and unconditionally waives, abandons, and surrenders all of 
+Affirmer's Copyright and Related Rights and associated claims and causes 
+of action, whether now known or unknown (including existing as well as 
+future claims and causes of action), in the Work (i) in all territories 
+worldwide, (ii) for the maximum duration provided by applicable law or 
+treaty (including future time extensions), (iii) in any current or 
+future medium and for any number of copies, and (iv) for any purpose 
+whatsoever, including without limitation commercial, advertising or 
+promotional purposes (the "Waiver"). Affirmer makes the Waiver for the 
+benefit of each member of the public at large and to the detriment of 
+Affirmer's heirs and successors, fully intending that such Waiver shall 
+not be subject to revocation, rescission, cancellation, termination, or 
+any other legal or equitable action to disrupt the quiet enjoyment of 
+the Work by the public as contemplated by Affirmer's express Statement 
+of Purpose.
+
+3. Public License Fallback. Should any part of the Waiver for any reason 
+be judged legally invalid or ineffective under applicable law, then the 
+Waiver shall be preserved to the maximum extent permitted taking into 
+account Affirmer's express Statement of Purpose. In addition, to the 
+extent the Waiver is so judged Affirmer hereby grants to each affected 
+person a royalty-free, non transferable, non sublicensable, non 
+exclusive, irrevocable and unconditional license to exercise Affirmer's 
+Copyright and Related Rights in the Work (i) in all territories 
+worldwide, (ii) for the maximum duration provided by applicable law or 
+treaty (including future time extensions), (iii) in any current or 
+future medium and for any number of copies, and (iv) for any purpose 
+whatsoever, including without limitation commercial, advertising or 
+promotional purposes (the "License"). The License shall be deemed 
+effective as of the date CC0 was applied by Affirmer to the Work. Should 
+any part of the License for any reason be judged legally invalid or 
+ineffective under applicable law, such partial invalidity or 
+ineffectiveness shall not invalidate the remainder of the License, and 
+in such case Affirmer hereby affirms that he or she will not (i) 
+exercise any of his or her remaining Copyright and Related Rights in the 
+Work or (ii) assert any associated claims and causes of action with 
+respect to the Work, in either case contrary to Affirmer's express 
+Statement of Purpose.
+
+4. Limitations and Disclaimers.
+
+No trademark or patent rights held by Affirmer are waived, abandoned, 
+surrendered, licensed or otherwise affected by this document.
+
+Affirmer offers the Work as-is and makes no representations or 
+warranties of any kind concerning the Work, express, implied, statutory 
+or otherwise, including without limitation warranties of title, 
+merchantability, fitness for a particular purpose, non infringement, or 
+the absence of latent or other defects, accuracy, or the present or 
+absence of errors, whether or not discoverable, all to the greatest 
+extent permissible under applicable law.
+
+Affirmer disclaims responsibility for clearing rights of other persons 
+that may apply to the Work or any use thereof, including without 
+limitation any person's Copyright and Related Rights in the Work. 
+Further, Affirmer disclaims responsibility for obtaining any necessary 
+consents, permissions or other rights required for any use of the Work.
+
+Affirmer understands and acknowledges that Creative Commons is not a 
+party to this document and has no duty or obligation with respect to 
+this CC0 or use of the Work.
+
+
 # Obtaining RETRO
 
 The RETRO source code can be obtained from http://forthworks.com/retro
@@ -67,10 +194,11 @@ If you have problems, check the version of Fossil you are
 using. I am currently using Fossil 2.7, you may experience
 issues checking out or cloning if using older versions.
 
-# Building RETRO on BSD, Linux, macOS
+# Building on BSD, Linux, macOS, and outher Inix Targets
 
-RETRO is well supported on BSD (FreeBSD, NetBSD, OpenBSD),
-Linux, and macOS systems. It should build on any of these
+RETRO is well supported on BSD (tested on FreeBSD, NetBSD,
+OpenBSD), Linux, and macOS systems. It should build on any
+of these
 without issue.
 
 ## Requirements
@@ -81,7 +209,13 @@ without issue.
 
 ## Process
 
+For a standard 32-bit system:
+
 Run `make`
+
+For a 64-bit system:
+
+Run `make OPTIONS=-DBIT64`
 
 This will build the toolchain and then the main `retro`
 executable.
@@ -137,6 +271,138 @@ Building will require use of the command line. Assuming that
 tcc.exe is in the current directory along with the RETRO sources:
 
     tcc retro-windows.c -o retro.exe
+
+# Building Alternative Systems
+
+In addition to the C implementation, there are a few other
+interfaces that can be built.
+
+## Requirements
+
+- c compiler (tested: clang, tcc, gcc)
+- make
+- standard unix shell
+
+## retro-repl
+
+A basic interactive system can be built by using:
+
+    make bin/retro-repl
+
+This requires a copy of `ngaImage` to be in the current
+directory.
+
+## Barebones
+
+This is a minimal version of the `retro-repl`. It keeps the C
+portion as short as possible, making it a useful starting point
+for new interfaces.
+
+To build:
+
+    make bin/retro-barebones
+
+## retro-compiler
+
+This is a turnkey compiler. It can compile a new executable
+bundling a Retro VM and image.
+
+Requirements:
+
+- BSD or Linux
+- objcopy in $PATH
+
+To build:
+
+    make bin/retro-compiler
+
+Example use:
+
+1. Given a source file like "Hello.forth":
+
+    ~~~
+    :hello 'hello_world! s:put nl ;
+    ~~~
+
+2. Use:
+
+    ./bin/retro-compiler Hello.forth hello
+
+The first argument is the source file, the second is the
+word to run on startup.
+
+3. Run the generated `a.out`
+
+Limits:
+
+This only supports the core words ('all' interface) and the
+file i/o words. Support for other I/O extensions will be
+added in the future.
+
+## Pascal
+
+There is a Pascal version of `retro-repl`.
+
+Dependencies:
+
+- freepascal
+
+Building:
+
+    cd vm/nga-pascal
+    fpc listener.lpr
+
+This will require a copy of the `ngaImage` in the
+current directory.
+
+## Python: retro.py
+
+This is an implementation of `retro-repl` in Python. As
+with `retro-repl` it requires the `ngaImage` in the current
+directory when starting.
+
+## C#: retro.cs
+
+This is an implementation of `retro-repl` in C#. As with
+`retro-repl` it requires the `ngaImage` in the current
+directory when starting.
+
+Building:
+
+    cd vm\nga-csharp
+    csc retro.cs
+
+You'll need to make sure your path has the CSC.EXE in it,
+or provide a full path to it. Something like this should
+reveal the path to use:
+
+    dir /s %WINDIR%\CSC.EXE
+
+I've only tested building this using Microsoft's .NET tools.
+It should also build and run under Mono.
+
+# Advanced Builds
+
+## Custom Image
+
+For users of BSD, Linux, macOS, you can customize the image at
+build time.
+
+In the top level directory is a `package` directory containing
+a file named `list.forth`. You can add files to compile into
+your system by adding them to the `list.forth` and rebuilding.
+
+Example:
+
+If you have wanted to include the NumbersWithoutPrefixes.forth
+example, add:
+
+    ~~~
+    'example/NumbersWithoutPrefixes.forth include
+    ~~~
+
+To the start of the `list.forth` file and then run `make` again.
+The newly built `bin/retro` will now include your additions.
 
 # Starting RETRO
 
@@ -247,6 +513,102 @@ To exit, run `bye`:
 bye
 ```
 
+# Unu: Simple, Literate Source Files
+
+RETRO is written in a literate style. Most of the sources
+are in a format called Unu. This allows easy mixing of
+commentary and code blocks, making it simple to document
+the code.
+
+As an example,
+
+    # Determine The Average Word Name Length
+
+    To determine the average length of a word name two values
+    are needed. First, the total length of all names in the
+    Dictionary:
+
+    ~~~
+    #0 [ d:name s:length + ] d:for-each
+    ~~~
+
+    And then the number of words in the Dictionary:
+
+    ~~~
+    #0 [ drop n:inc ] d:for-each
+    ~~~
+
+    With these, a simple division is all that's left.
+
+    ~~~
+    /
+    ~~~
+
+    Finally, display the results:
+
+
+    ~~~
+    'Average_name_length:_%n\n s:format s:put
+    ~~~
+
+This illustrates the format. Only code in the fenced blocks
+(between \~~~ pairs) get extracted and run.
+
+(Note: this only applies to *source files*; fences are not used
+when entering code interactively).
+
+## On The Name
+
+The name Unu comes from the Maori language, where it means:
+
+    (verb) (-hia) pull out, withdraw, draw out, extract.
+    Taken from https://maoridictionary.co.nz/
+
+# A Quick Tutorial
+
+Programming in RETRO is all about creating words to solve
+the problem at hand. Words operate on data, which can be
+kept in memory or on the stack.
+
+Let's look at this by solving a small problem: writing a
+word to determine if a string is a palindrome.
+
+A palindrome is a phrase which reads the same backward
+and forward.
+
+We first need a string to look at. Starting with something
+easy:
+
+```
+'anna
+```
+
+Looking in the Glossary, there is a `s:reverse` word for
+reversing a string. We can find `dup` to copy a value, and
+`s:eq?` to compare two strings. So testing:
+
+```
+'anna dup s:reverse s:eq?
+```
+
+This yields -1 (`TRUE`) as expected. So we can easily
+name it:
+
+```
+:palindrome? dup s:reverse s:eq? ;
+```
+
+Naming uses the `:` prefix to add a new word to the dictionary.
+The words that make up the definition are then placed, with a
+final word (`;`) ending the definition. We can then use this:
+
+```
+'anna palindrome?
+```
+
+Once defined there is no difference between our new word and
+any of the words already provided by the RETRO system.
+
 # Syntax
 
 RETRO has more syntax than a traditional Forth due to ideas
@@ -334,154 +696,983 @@ but essentially they decide *how* to execute or compile specific
 types of words.
 
 
-# A Quick Tutorial
+# Additional Tools
 
-Programming in RETRO is all about creating words to solve
-the problem at hand. Words operate on data, which can be
-kept in memory or on the stack.
+In addition to the core `retro` binary, the `bin` directory
+will contain a few other tools.
 
-Let's look at this by solving a small problem: writing a
-word to determine if a string is a palindrome.
+## retro
 
-A palindrome is a phrase which reads the same backward
-and forward.
+This is the main RETRO binary.
 
-We first need a string to look at. Starting with something
-easy:
+## retro-describe
 
-```
-'anna
-```
+This is a program that looks up entries in the Glossary.
 
-Looking in the Glossary, there is a `s:reverse` word for
-reversing a string. We can find `dup` to copy a value, and
-`s:eq?` to compare two strings. So testing:
+At the command line, you can use it like:
 
 ```
-'anna dup s:reverse s:eq?
+retro-describe s:for-each
 ```
 
-This yields -1 (`TRUE`) as expected. So we can easily
-name it:
+## retro-embedimage
+
+This is a program which generates a C file with the ngaImage
+contents. It's used when building `retro`.
 
 ```
-:palindrome? dup s:reverse s:eq? ;
+retro-embedimage ngaImage
 ```
 
-Naming uses the `:` prefix to add a new word to the dictionary.
-The words that make up the definition are then placed, with a
-final word (`;`) ending the definition. We can then use this:
+The output is written to stdout; redirect it as needed.
+
+## retro-extend
+
+This is a program which compiles code into the ngaImage.
+It's used when building `retro` and when you want to make a
+standalone image with custom additions.
+
+Example command line:
 
 ```
-'anna palindrome?
+retro-extend ngaImage example/rot13.forth
 ```
 
-Once defined there is no difference between our new word and
-any of the words already provided by the RETRO system.
+Pass the image name as the first argument, and then file names
+as susequent ones. Do *not* use this for things relying on I/O
+apart from the basic console output as it doesn't emulate other
+devices. If you need to load in things that rely on using the
+optional I/O devices, see the **Advanced Builds** chapter.
 
-# Using The Glossary
+## retro-muri
 
-The Glossary is a valuable resource. It provides information
-on the RETRO words.
+This is the assembler for Nga. It's used to build the initial
+RETRO kernel and can be used by other tools as well.
 
-## Example Entry
+## retro-tags
 
-    f:+
+TBD
 
-      Data:  -
-      Addr:  -
-      Float: FF-F
+## retro-unu
 
-    Add two floating point numbers, returning the result.
+This is the literate source extraction tool for RETRO. It
+is used in building `retro`.
 
-    Class: class:word | Namespace: f | Interface Layer: rre
+Example usage:
 
-    Example #1:
+```
+retro-unu literate/RetroForth.md
+```
 
-        .3.1 .22 f:+
+Output is written to stdout; redirect as neeeded.
 
-## Reading The Entry
+# The Optional Retro Compiler
 
-An entry starts with the word name.
+In addition to the base system, users of RETRO on Unix hosts
+with ELF executables can build and use the `retro-compiler`
+to generate turnkey executables.
 
-This is followed by the stack effect for each stack. All RETRO
-systems have Data and Address stacks, some also include a
-floating point stack).
+## Requirements
 
-The stack effect diagrams are followed by a short description
-of the word.
+- Unix host
+- ELF executable support
+- objcpy in the $PATH
 
-After the description is a line providing some useful data. This
-includes the class handler, namespace prefix, and the interface
-layer that provides the word.
+## Building
 
-Words in all systems will be listed as `all`. Some words (like
-the `pb:` words) are only on specific systems like iOS. These
-can be identified by looking at the interface layer field.
+BSD users:
 
-At the end of the entry may be an example or two.
+   make bin/retro-compiler
 
-## Access Online
+Linux users:
 
-The latest Glossary can be browsed at http://forthworks.com:9999
-or gopher://forthworks.com:9999
+   make -f Makefile.linux bin/retro-compiler
 
-# Programming Techniques
+## Installing
 
-The upcoming chapters provide helpful information on using RETRO
-with different types of data and hints on how to solve problems
-in a way consistent with the RETRO system.
+Copy `bin/retro-compiler` to somewhere in your $PATH.
 
-# Unu: Simple, Literate Source Files
+## Using
 
-RETRO is written in a literate style. Most of the sources
-are in a format called Unu. This allows easy mixing of
-commentary and code blocks, making it simple to document
-the code.
+`retro-compiler` takes two arguments: the source file to
+compile and the name of the word to use as the main entry
+point.
 
-As an example,
+Example:
 
-    # Determine The Average Word Name Length
+Given a `hello.forth`:
 
-    To determine the average length of a word name two values
-    are needed. First, the total length of all names in the
-    Dictionary:
+```
+~~~
+:hello 'Hello_World! s:put nl ;
+~~~
+```
+
+Use:
+
+```
+retro-compiler hello.forth hello
+```
+
+The compiler will generate an `a.out` file which you can
+then rename.
+
+## Known Limitations
+
+This does not provide the scripting support for command line
+arguments that the standard `retro` interface offers.
+
+A copy of `objcopy` needs to be in the path for compilation
+to work.
+
+The current working directory must be writable.
+
+This only supports hosts using ELF executables.
+
+The output file name is fixed to `a.out`.
+
+# Working With Arrays
+
+RETRO offers a number of words for operating on statically sized
+arrays.
+
+## Namespace
+
+The words operating on arrays are kept in an `a:` namespace.
+
+## Creating Arrays
+
+The easiest way to create an array is to wrap the values in a
+`{` and `}` pair:
+
+```
+{ #1 #2 #3 #4 }
+{ 'this 'is 'an 'array 'of 'strings }
+{ 'this 'is 'a 'mixed 'array #1 #2 #3 }
+```
+
+You can also make an array from a quotation which returns
+values and the number of values to store in the a:
+
+```
+[ #1 #2 #3  #3 ] a:counted-results
+[ #1 #2 #3  #3 ] a:make
+```
+
+## Accessing Elements
+
+You can access a specific value with `a:th` and `fetch` or
+`store`:
+
+```
+{ #1 #2 #3 #4 } #3 a:th fetch
+```
+
+## Find The Length
+
+Use `a:length` to find the size of the array.
+
+```
+{ #1 #2 #3 #4 } a:length
+```
+
+## Duplicate
+
+Use `a:dup` to make a copy of an a:
+
+```
+{ #1 #2 #3 #4 } a:dup
+```
+
+## Filtering
+
+RETRO provides `a:filter` which extracts matching values
+from an array. This is used like:
+
+```
+{ #1 #2 #3 #4 #5 #6 #7 #8 } [ n:even? ] a:filter
+```
+
+The quote will be passed each value in the array and should
+return TRUE or FALSE. Values that lead to TRUE will be collected
+into a new array.
+
+## Mapping
+
+`a:map` applies a quotation to each item in an array and
+constructs a new array from the returned values.
+
+Example:
+
+```
+{ #1 #2 #3 } [ #10 * ] a:map
+```
+
+## Reduce
+
+`a:reduce` takes an array, a starting value, and a quote. It
+executes the quote once for each item in the array, passing the
+item and the value to the quote. The quote should consume both
+and return a new value.
+
+```
+{ #1 #2 #3 } #0 [ + ] a:reduce
+```
+
+## Search
+
+RETRO provides `a:contains?` and `a:contains-string?`
+to search an array for a value (either a number or string) and
+return either TRUE or FALSE.
+
+```
+#100  { #1 #2 #3 } a:contains?
+'test { 'abc 'def 'test 'ghi } a:contains-string?
+```
+
+## Implementation
+
+In memory, an array is a count followed by the values. As an
+example, if you have an array:
+
+    { #10 #20 #30 }
+
+In memory this would be setup as:
+
+    | Offset | Value |
+    | ------ | ----- |
+    | 000    | 3     |
+    | 001    | 10    |
+    | 002    | 20    |
+    | 003    | 30    |
+
+You can construct one on the fly by keeping a pointer to
+`here` and using `,` to place the values. E.g.,
+
+    here [ #3 , #10 , #20 , #30 , ] dip
+
+An example of this can be seen in this excerpt from an example
+(*example/Primes.forth*):
+
+    :create-set (-a) 
+        here #3000 , #2 #3002 [ dup , n:inc ] times drop ;
+
+# Working With Assembly Language
+
+RETRO runs on a virtual machine called Nga. It provides a
+standard assembler for this called *Muri*.
+
+Muri is a simple, multipass model that's not fancy, but
+suffices for RETRO's needs.
+
+## Assembling A Standalone File
+
+A small example (*test.muri*)
 
     ~~~
-    #0 [ d:name s:length + ] d:for-each
+    i liju....
+    r main
+    : c:put
+    i liiire..
+    i 0
+    : main
+    i lilica..
+    d 97
+    i liju....
+    r main
     ~~~
 
-    And then the number of words in the Dictionary:
+Assembling it:
 
-    ~~~
-    #0 [ drop n:inc ] d:for-each
-    ~~~
+    retro-muri test.muri
 
-    With these, a simple division is all that's left.
+So breaking down: Muri extracts the assembly code blocks to
+assemble, then proceeds to do the assembly. Each source line
+starts with a directive, followed by a space, and then ending
+with a value.
 
-    ~~~
-    /
-    ~~~
+The directives are:
 
-    Finally, display the results:
+    :    value is a label
+    i    value is an instruction bundle
+    d    value is a numeric value
+    r    value is a reference
+    s    value is a string to inline
+
+Instructions for Nga are provided as bundles. Each memory
+location can store up to four instructions. And each instruction
+gets a two character identifier.
+
+From the list of instructions:
+
+    0 nop   5 push  10 ret   15 fetch 20 div   25 zret
+    1 lit   6 pop   11 eq    16 store 21 and   26 halt
+    2 dup   7 jump  12 neq   17 add   22 or    27 ienum
+    3 drop  8 call  13 lt    18 sub   23 xor   28 iquery
+    4 swap  9 ccall 14 gt    19 mul   24 shift 29 iinvoke
+
+This reduces to:
+
+    0 ..    5 pu    10 re    15 fe    20 di    25 zr
+    1 li    6 po    11 eq    16 st    21 an    26 ha
+    2 du    7 ju    12 ne    17 ad    22 or    27 ie
+    3 dr    8 ca    13 lt    18 su    23 xo    28 iq
+    4 sw    9 cc    14 gt    19 mu    24 sh    29 ii
+
+Most are just the first two letters of the instruction name. I
+use `..` instead of `no` for `NOP`, and the first letter of
+each I/O instruction name. So a bundle may look like:
+
+    dumure..
+
+(This would correspond to `dup multiply return nop`).
+
+## Runtime Assembler
+
+RETRO also has a runtime variation of Muri that can be used
+when you need to generate more optimal code. So one can write:
+
+    :n:square dup * ;
+
+Or:
+
+    :n:square \dumure.. ;
+
+The second one will be faster, as the entire definition is one
+bundle, which reduces memory reads and decoding by 2/3.
+
+Doing this is less readable, so I only recommend doing so after
+you have finalized working RETRO level code and determined the
+best places to optimize.
+
+The runtime assembler has the following directives:
+
+    i    value is an instruction bundle
+    d    value is a numeric value
+    r    value is a reference
+
+Additionally, in the runtime assembler, these are reversed:
+
+    'dudumu.. i
+
+Instead of:
+
+    i dudumu..
+
+# Working With a Buffer
+
+RETRO provides words for operating on a linear memory area.
+This can be useful in building strings or custom data
+structures.
+
+## Namespace
+
+Words operating on the buffer are kept in the `buffer:`
+namespace.
+
+## Implementation
+
+A buffer is a linear sequence of memory. The buffer words
+provide a means of incrementally storing and retrieving
+values from it.
+
+The buffer words keep track of the start and end of the
+buffer. They also ensure that an `ASCII:NULL` is written
+after the last value, which make using them for string
+data easy.
+
+## Limitations
+
+Only one buffer can be active at a time. RETRO provides a
+`buffer:preserve` combinator to allow using a second one
+before returning to the prior one.
+
+## Set The Active Buffer
+
+To set a buffer as the active one use `buffer:set`. This takes
+an address.
+
+The buffer will be assumed to be empty. The inital value will
+be set to ASCII:NULL.
+
+## Add Value
+
+Use `buffer:add` to append a value to the buffer. This takes
+a single value and will also add an ASCII:NULL after the end
+of the buffer.
+
+## Fetch Last Value
+
+To return the last value in the buffer you can use `buffer:get`.
+This removes the value and sets an ASCII:NULL in the memory
+location the returned value occupied.
+
+## Get Data About The Buffer
+
+RETRO provides `buffer:start` to get the initial address in
+the buffer, `buffer:end` to get the last address (ignoring the
+ASCII:NULL), and `buffer:size` to return the number of values
+in the buffer.
+
+## Reset
+
+You can reset a buffer to the empty state using `buffer:empty`.
+
+## Example
+
+To begin, create a memory region to use as a buffer.
+
+```
+'Test d:create #1025 allot
+```
+
+Then you can set this as the current buffer:
+
+```
+&Test buffer:set
+```
+
+When a buffer is set, the vocabulary sets an internal
+index to the first address in it. This will be
+incremented when you add data and decremented when you
+remove data.
+
+Let's add some stuff using `buffer:add`:
+
+```
+#100 buffer:add
+#200 buffer:add
+#300 buffer:add
+```
+
+And then retreive the values:
+
+```
+buffer:get n:put nl
+buffer:get n:put nl
+buffer:get n:put nl
+```
+
+You can remove all values using `buffer:empty`:
+
+```
+#100 buffer:add
+#200 buffer:add
+#300 buffer:add
+buffer:empty
+```
+
+And ask the buffer how many items it contains:
+
+```
+buffer:size n:put nl
+#100 buffer:add
+#200 buffer:add
+#300 buffer:add
+buffer:size n:put nl
+buffer:empty
+```
+
+The other functions are `buffer:start`, which returns
+the address of the buffer, `buffer:end`, which returns
+the address of the last value, and `buffer:preserve`.
+The first is easy to demo:
+
+```
+buffer:start Test eq? n:put nl
+```
+
+The last one is useful. Only one buffer is ever active
+at a given time. The `buffer:preserve` combinator lets
+you execute a word, saving and restoring the current
+buffer indexes. So the word could assign and use a new
+buffer and this will reset the previous one after
+control returns.
+
+There are a few notes that need to be considered. The
+preserve combinator saves the start and current index
+but *not* the contents. If the word you call uses the
+same buffer, the contents will remain altered.
+
+Finally, the buffer words have one interesting trait:
+they store an ASCII NULL after adding each item to the
+buffer. This lets one use them to build strings easily.
+
+```
+Test buffer:set
+$h buffer:add
+$e buffer:add
+$l buffer:add
+$l buffer:add
+$o buffer:add
+$, buffer:add
+#32 buffer:add
+$w buffer:add
+$o buffer:add
+$r buffer:add
+$l buffer:add
+$d buffer:add
+buffer:start s:put nl
+```
+
+# Working With Characters
+
+RETRO provides words for working with ASCII characters.
+
+## Prefix
+
+Character constants are returned using the `$` prefix.
+
+## Namespace
+
+Words operating on characters are in the `c:` namespace.
+
+## Classification
+
+RETRO provides a number of words to determine if a character
+fits into predefined groups.
+
+The primary words for this are:
+
+* `c:consonant?`
+* `c:digit?`
+* `c:letter?`
+* `c:lowercase?`
+* `c:uppercase?`
+* `c:visible?`
+* `c:vowel?`
+* `c:whitespace?`
+
+There are also corresponding "not" forms:
+
+* `c:-consonant?`
+* `c:-digit?`
+* `c:-lowercase?`
+* `c:-uppercase?`
+* `c:-visible?`
+* `c:-vowel?`
+* `c:-whitespace?`
+
+All of these take a character and return either a `TRUE` or
+`FALSE` flag.
+
+## Conversions
+
+A few words are provided to convert case. Each takes a character
+and returns the modified character.
+
+* `c:to-lower`
+* `c:to-number`
+* `c:to-upper`
+* `c:toggle-case`
+
+RETRO also has `c:to-string`, which takes a character and
+creates a new temporary string with the character.
+
+## I/O
+
+Characters can be displayed using `c:put`.
+
+```
+$a c:put
+```
+
+With the default system on BSD, Linux, and macOS (and other
+Unix style hosts), `c:get` is provided to read input. This
+may be buffered, depending on the host.
+
+# Checking The Version
+
+RETRO releases add and change things. You can use the `Version`
+variable to determine the version in use and react accordingly.
+
+```
+@Version #201906 eq? [ 'Needs_2019.6! s:put nl bye ] if
+```
+
+This can be also be used to conditionally load compatibility files:
+
+```
+(If_newer_than_2016.6,_load_aliases_for_renamed_words)
+@Version #201906 gt? [ 'Renamed_2019.6.forth include ] if
+```
+
+## Version Number Format
+
+The version is a six digit number encoding the year and month of
+the release. So:
+
+    201901  is  2019.1
+    201906  is  2019.6
+    201911  is  2019.11
+
+A `#100 /mod` will suffice to split these if needed.
+
+# Working With The Dictionary
+
+The Dictionary is a linked list containing the dictionary
+headers.
+
+## Namespace
+
+Words operating on the dictionary are in the `d:` namespace.
+
+## Variables
+
+`Dictionary` is a variable holding a pointer to the most recent
+header.
+
+## Header Structure
+
+Each entry follows the following structure:
+
+    Offset   Contains
+    ------   ---------------------------
+    0000     Link to Prior Header
+    0001     Link to XT
+    0002     Link to Class Handler
+    0003+    Word name (null terminated)
+
+RETRO provides words for accessing the fields in a portable
+manner. It's recommended to use these to allow for future
+revision of the header structure.
+
+## Accessing Fields
+
+Given a pointer to a header, you can use `d:xt`, `d:class`,
+and `d:name` to access the address of each specific field.
+There is no `d:link`, as the link will always be the first
+field.
+
+## Shortcuts For The Latest Header
+
+RETRO provides several words for operating on the most recent
+header.
+
+`d:last` returns a pointer to the latest header. `d:last<xt>`
+will give the contents of the `d:xt` field for the latest
+header. There are also `d:last<class>` and `d:last<name>`.
+
+## Adding Headers
+
+Two words exist for making new headers. The easy one is
+`d:create`. This takes a string for the name and makes a
+new header with the class set to `class:data` and the XT
+field pointing to `here`.
+
+Example:
+
+```
+'Base d:create
+```
+
+The other is `d:add-header`. This takes a string, a pointer
+to the class handler, and a pointer for the XT field and
+builds a new header using these.
+
+Example:
+
+```
+'Base &class:data #10000 d:add-header
+```
+
+## Searching
+
+RETRO provides two words for searching the dictionary.
+
+`d:lookup` takes a string and tries to find it in the
+dictionary. It will return a pointer to the dictionary header
+or a value of zero if the word was not found.
+
+`d:lookup-xt` takes a pointer and will return the dictionary
+header that has this as the `d:xt` field, or zero if no match
+is found.
+
+## Iteration
+
+You can use the `d:for-each` combinator to iterate over all
+entries in the dictionary. For instance, to display the names
+of all words:
+
+```
+[ d:name s:put sp ] d:for-each
+```
+
+For each entry, this combinator will push a pointer to the
+entry to the stack and call the quotation.
+
+## Listing Words
+
+Most Forth systems provide WORDS for listing the names of all
+words in the dictionary. RETRO does as well, but this is named
+`d:words`.
+
+This isn't super useful as looking through several hundred
+names is annoying. RETRO also provides `d:words-with` to help
+in filtering the results.
+
+Example:
+
+```
+'class: d:words-with
+```
 
 
-    ~~~
-    'Average_name_length:_%n\n s:format s:put
-    ~~~
+# Errors
 
-This illustrates the format. Only code in the fenced blocks
-(between \~~~ pairs) get extracted and run.
+RETRO does only minimal error checking.
 
-(Note: this only applies to *source files*; fences are not used
-when entering code interactively).
+## Non-Fatal
 
-## On The Name
+A non-fatal error will be reported on *word not found* during
+interactive or compile time. Note that this only applies to
+calls: if you try to get a pointer to an undefined word, the
+returned pointer will be zero.
 
-The name Unu comes from the Maori language, where it means:
+## Fatal
 
-    (verb) (-hia) pull out, withdraw, draw out, extract.
-    Taken from https://maoridictionary.co.nz/
+A number of conditions are known to cause fatal errors. The
+main ones are stack overflow, stack underflow, and division
+by zero.
+
+On these, RETRO will generally exit. For stack depth issues,
+the VM will attempt to display an error prior to exiting.
+
+In some cases, the VM may get stuck in an endless loop. If this
+occurs, try using CTRL+C to kill the process, or kill it using
+whatever means your host system provides.
+
+## Rationale
+
+Error checks are useful, but slow - especially on a minimal
+system like RETRO. The overhead of doing depth or other checks
+adds up quickly.
+
+As an example, adding a depth check to `drop` increases the
+time to use it 250,000 times in a loop from 0.16 seconds to
+1.69 seconds.
+
+
+# Working With Floating Point
+
+Some RETRO systems include support for floating point numbers.
+When present, this is built over the system `libm` using the
+C `double` type.
+
+Floating point values are typically 64 bit IEEE 754 double
+precision (1 bit for the sign, 11 bits for the exponent, and
+the remaining 52 bits for the value), i.e. 15 decimal digits
+of precision.
+
+## Prefix
+
+Floating point numbers start with a `.`
+
+Examples:
+
+   Token    Value
+    .1       1.0
+    .0.5     0.5
+    .-.4    -0.4
+    .1.3     1.3
+
+## Namespace
+
+Floating point words are in the `f:` namespace. There is also
+a related `e:` namespace for *encoded values*, which allows
+storing of floats in standard memory.
+
+## Operation
+
+Floating point values exist on a separate stack, and are bigger
+than the standard memory cells, so can not be directly stored
+and fetched from memory.
+
+The floating point system also provides an alternate stack that
+can be used to temporarily store values.
+
+The following words exist for arranging values on the floating
+point stack. These are direct analogs to the non-prefiexd words
+for dealing with the data stack.
+
+- `f:nip`
+- `f:over`
+- `f:depth`
+- `f:drop`
+- `f:drop-pair`
+- `f:dup`
+- `f:dup-pair`
+- `f:dump-stack`
+- `f:tuck`
+- `f:swap`
+- `f:rot`
+
+For the secondary floating point stack, the following words are
+provided:
+
+- `f:push`
+- `f:pop`
+- `f:adepth`
+- `f:dump-astack`
+
+## Constants
+
+    | Name     | Returns           |
+    | -------- | ----------------- |
+    | `f:E`    | Euler's number    |
+    | `f:-INF` | Negative infinity |
+    | `f:INF`  | Positive infinity |
+    | `f:NAN`  | Not a Number      |
+    | `f:PI`   | PI                |
+
+## Comparisons
+
+The basic set of comparators are the same as those for
+operating on integers. These are:
+
+- `f:-eq?`
+- `f:between?`
+- `f:eq?`
+- `f:gt?`
+- `f:lt?`
+- `f:negative?`
+- `f:positive?`
+- `f:case`
+
+There are also a few additions for comparing to special values
+like infinity and NaN.
+
+- `f:-inf?`
+- `f:inf?`
+- `f:nan?`
+
+## Basic Math
+
+- `f:*`
+- `f:+`
+- `f:-`
+- `f:/`
+- `f:abs`
+- `f:floor`
+- `f:inc`
+- `f:limit`
+- `f:max`
+- `f:min`
+- `f:negate`
+- `f:power`
+- `f:ceiling`
+- `f:dec`
+- `f:log`
+- `f:sqrt`
+- `f:square`
+- `f:round`
+- `f:sign`
+- `f:signed-sqrt`
+- `f:signed-square`
+
+## Geometry
+
+RETRO provides a small number of words for doing geometric
+related calculations.
+
+| Word     | Returns      |
+| -------- | ------------ |
+| `f:acos` | arc cosine   |
+| `f:asin` | arc sine     |
+| `f:atan` | arc tangent  |
+| `f:cos`  | cosine       |
+| `f:sin`  | sine         |
+| `f:tan`  | tangent      |
+
+## Storage and Retrieval
+
+By leveraging the encoded value functions, RETRO is able to
+allow storage of floating point values in memory. This does
+have a tradeoff in accuracy as the memory cells are considerably
+smaller than a full floating point size.
+
+You can use `f:fetch` to fetch a floating point value and
+`f:store` to store one.
+
+If you need more precision, try Kiyoshi Yoneda's FloatVar
+example (`example/FloatVar.forth`), which includes words to
+store and retrieve values using multiple cells.
+
+- `f:to-number`
+- `f:to-string`
+
+## I/O
+
+The floating point vocabulary has a single I/O word, `f:put`,
+for the display of floating point numbers.
+
+## Encoded Values
+
+RETRO provides a means of encoding and decoding floating point
+values into standard integer cells. This is based on the paper
+"Encoding floating point values to shorter integers" by Kiyoshi
+Yoneda and Charles Childers.
+
+- `f:E1`
+- `f:to-e`
+- `e:-INF`
+- `e:-inf?`
+- `e:INF`
+- `e:MAX`
+- `e:MIN`
+- `e:NAN`
+- `e:clip`
+- `e:inf?`
+- `e:max?`
+- `e:min?`
+- `e:n?`
+- `e:nan?`
+- `e:put`
+- `e:to-f`
+- `e:zero?`
+
+# Lexical Scope
+
+RETRO has a single dictionary, but does provide a means of using
+lexical scope to keep this dictionary clean.
+
+## Example
+
+```
+{{
+  'A var
+  :++A  &A v:inc ;
+---reveal---
+  :B ++A ++A @A n:put nl ;
+}}
+```
+
+In this example, the lexical namespace is created with `{{`. A
+variable (`A`) and word (`++A`) are defined. Then a marker is
+set with `---reveal---`. Another word (`B`) is defined, and the
+lexical area is closed with `}}`.
+
+The headers between `{{` and `---reveal---` are then hidden from
+the dictionary, leaving only the headers between `---reveal---`
+and `}}` exposed.
+
+## Notes
+
+This only affects word visibility within the scoped area. As an
+example:
+
+```
+:a #1 ;
+
+{{
+  :a #2 ;
+---reveal---
+  :b 'a s:evaluate n:put ;
+}}
+```
+
+In this, after `}}` closes the area, the `:a #2 ;` is hidden and
+the `s:evaluate` will find the `:a #1 ;` when `b` is run.
 
 # Naming Conventions
 
@@ -585,6 +1776,69 @@ incorrect address.
 I personally recommend avoiding the use of underscores in any word
 names.
 
+# Working With Numbers
+
+Numbers in RETRO are signed, 32 bit integers with a range of
+-2,147,483,648 to 2,147,483,647.
+
+## Token Prefix
+
+All numbers start with a `#` prefix.
+
+## Namespace
+
+Most words operating on numbers are in the `n:` namespace.
+
+
+
+# Working With Pointers
+
+## Prefix
+
+Pointers are returned by the `&` prefix.
+
+## Examples
+
+```
+'Base var
+&Base fetch
+#10 &Base store
+
+#10 &n:inc call
+```
+
+## Notes
+
+The use of `&` to get a pointer to a data structure (with a
+word class of `class:data`) is not required. I like to use it
+anyway as it makes my intent a little clearer.
+
+Pointers are useful with combinators. Consider:
+
+```
+:abs dup n:negative? [ n:negate ] if ;
+```
+
+Since the target quote body is a single word, it is more
+efficient to use a pointer instead:
+
+```
+:abs dup n:negative? &n:negate if ;
+```
+
+The advantages are speed (saves a level of call/return by
+avoiding the quotation) and size (for the same reason).
+This may be less readable though, so consider the balance
+of performance to readability when using this approach.
+
+# The Return Stack
+
+RETRO has two stacks. The primary one is used to pass data
+beween words. The second one primarily holds return addresses.
+
+Each time a word is called, the next address is pushed to
+the return stack.
+
 # Stack Diagrams
 
 Most words in RETRO have a stack comment. These look like:
@@ -618,62 +1872,313 @@ the stack.
 
 Words with no stack effect have a comment of (-)
 
-# Word Classes
+# Working With Strings
 
-Word classes are one of the two elements at the heart of
-RETRO's interpreter.
+Strings in RETRO are NULL terminated sequences of values
+representing characters. Being NULL terminated, they can't
+contain a NULL (ASCII 0).
 
-There are different types of words in a Forth system. At a
-minimum there are data words, regular words, and immediate
-words. There are numerous approaches to dealing with this.
+The character words in RETRO are built around ASCII, but
+strings can contain UTF8 encoded data if the host platform
+allows. Words like `s:length` will return the number of bytes,
+not the number of logical characters in this case.
 
-In RETRO I define special words which receive a pointer and
-decide how to deal with it. These are grouped into a `class:`
-namespace.
+## Prefix
 
-## How It Works
-
-When a word is found in the dictionary, RETRO will push a
-pointer to the definition (the `d:xt` field) to the stack
-and then call the word specified by the `d:class` field.
-
-The word called is responsible for processing the pointer
-passed to it.
-
-As a simple case, let's look at `immediate` words. These are
-words which will always be called when encountered. A common
-strategy is to have an immediacy bit which the interpreter
-will look at, but RETRO uses a class for this. The class is
-defined:
+Strings begin with a single `'`.
 
 ```
-:class:immediate (a-)  call ;
+'Hello
+'This_is_a_string
+'This_is_a_much_longer_string_12345_67890_!!!
 ```
 
-Or a normal word. These should be called at interpret time
-or compiled into definitions. The handler for this can look
-like:
+RETRO will replace spaces with underscores. If you need both
+spaces and underscores in a string, escape the underscores and
+use `s:format`:
 
 ```
-:class:word (a-) compiling? [ compile:call ] [ call ] choose ;
+'This_has_spaces_and_under\_scored_words. s:format
 ```
 
-## Using Classes
+## Namespace
 
-The ability to add new classes is useful. If I wanted to add
-a category of word that preserves an input value, I could do
-it with a class:
+Words operating on strings are in the `s:` namespace.
+
+## Lifetime
+
+At the interpreter, strings get allocated in a rotating buffer.
+This is used by the words operating on strings, so if you need
+to keep them around, use `s:keep` or `s:copy` to move them to
+more permanent storage.
+
+In a definition, the string is compiled inline and so is in
+permanent memory.
+
+You can manually manage the string lifetime by using `s:keep`
+to place it into permanent memory or `s:temp` to copy it to
+the rotating buffer.
+
+## Mutability
+
+Strings are mutable. If you need to ensure that a string is
+not altered, make a copy before operating on it or see the
+individual glossary entries for notes on words that may do
+this automatically.
+
+## Searching
+
+RETRO provides four words for searching within a string.
+
+`s:contains-char?` 
+`s:contains-string?`
+`s:index-of`
+`s:index-of-string`
+
+## Comparisons
+
+`s:eq?`
+`s:case`
+
+## Extraction
+
+To obtain a new string containing the first `n` characters from
+a source string, use `s:left`:
 
 ```
-:class:duplicating (a-)
-  compiling? [ &dup compile:call ] [ &dup dip ] choose
-  class:word ; 
-
-:duplicating &class:duplicating reclass ;
-
-:. n:put nl ; duplicating
-#100 . . .
+'Hello_World #5 s:left
 ```
+
+To obtain a new string containing the last `n` characters from
+a source string, use `s:right`:
+
+```
+'Hello_World #5 s:right
+```
+
+If you need to extract data from the middle of the string, use
+`s:substr`. This takes a string, the offset of the first
+character, and the number of characters to extract.
+
+```
+'Hello_World #3 #5 s:substr
+```
+
+## Joining
+
+You can use `s:append` or `s:prepend` to merge two strings.
+
+```
+'First 'Second s:append
+'Second 'First s:prepend
+```
+
+## Tokenization
+
+`s:tokenize`
+`s:tokenize-on-string`
+`s:split`
+`s:split-on-string`
+
+## Conversions
+
+To convert the case of a string, RETRO provides `s:to-lower`
+and `s:to-upper`.
+
+`s:to-number` is provided to convert a string to an integer
+value. This has a few limitations:
+
+- only supports decimal
+- non-numeric characters will result in incorrect values
+
+## Cleanup
+
+RETRO provides a handful of words for cleaning up strings.
+
+`s:chop` will remove the last character from a string. This
+is done by replacing it with an ASCII:NULL.
+
+`s:trim` removes leading and trailing whitespace from a string.
+For more control, there is also `s:trim-left` and `s:trim-right`
+which let you trim just the leading or trailing end as desired.
+
+## Combinators
+
+`s:for-each`
+`s:filter`
+`s:map`
+
+## Other
+
+`s:evaluate`
+`s:copy`
+`s:reverse`
+`s:hash`
+`s:length`
+`s:replace`
+`s:format`
+`s:empty`
+
+## Controlling The Temporary Buffers
+
+As dicussed in the Lifetime subsection, temporary strings are
+allocated in a rotating buffer. The details of this can be
+altered by updating two variables.
+
+| Variable      | Holds                                    |
+| ------------- | ---------------------------------------- |
+| TempStrings   | The number of temporary strings          |
+| TempStringMax | The maximum length of a temporary string |
+
+For example, to increase the number of temporary strings to
+48:
+
+```
+#48 !TempStrings
+```
+
+The defaults are:
+
+| Variable      | Default |
+| ------------- | ------- |
+| TempStrings   | 32      |
+| TempStringMax | 512     |
+
+It's also important to note that altering these will affect
+the memory map for all temporary buffers. Do not use anything
+already in the buffers after updating these or you will risk
+data corruption and possible crashes.
+
+# The Stacks
+
+The stacks are a defining feature of Forth. They are are used
+to pass data between words and to track return addresses for
+function calls.
+
+RETRO always has two stacks, and optionally (if built with
+floating point support) a third.
+
+## Data Stack
+
+This is the primary stack. Values are placed here, passed to
+words which consume them and then return results. When I
+refer to "the stack", this is the one I mean. Learning to use
+the stack is a crucial part to making effective use of RETRO.
+
+### Placing Values On The Stack
+
+Values can be placed on the stack directly.
+
+| Example        | Action                                   |
+| -------------- | ---------------------------------------- |
+| `#300123`      | Push the number `300123` to the stack    |
+| `$h`           | Push the ASCII code for `h` to the stack |
+| `'hello_world` | Push a pointer to a string to the stack  |
+| `&fetch`       | Push the address of `fetch` to the stack |
+
+### Reordering The Stack
+
+RETRO provides a number of *shufflers* for reordering items
+on the stack.
+
+Some of the most common ones are:
+
+| Word    | Before   | After    |
+| ------- |--------- | -------- |
+| dup     | #1       | #1 #1    |
+| drop    | #1 #2    | #1       |
+| swap    | #1 #2    | #2 #1    |
+| over    | #1 #2    | #1 #2 #1 |
+| tuck    | #1 #2    | #2 #1 #2 |
+| nip     | #1 #2    | #2       |
+| rot     | #1 #2 #3 | #3 #1 #2 |
+
+You can use `push` and `pop` to move values to and from the
+address stack. Make sure you `pop` them back before the word
+ends or RETRO will crash. These two words can not be used
+at the interpreter.
+
+There is also a special one, `reorder`, which allows for big
+stack restructuring. This is slow but can be very useful.
+
+As an example, let's say we have four values:
+
+```
+#1 #2 #3 #4
+```
+
+And we want them to become:
+
+```
+#4 #3 #2 #1
+```
+
+Doing this with the basic shufflers is difficult. You could end
+up with something similar to:
+
+```
+swap rot push rot pop swap 
+```
+
+But with `reorder`, you can just express the before and after
+states:
+
+```
+'abcd 'dcba reorder
+```
+
+### Resetting The Stack
+
+If you need to quickly empty the stack, use `reset`.
+
+### Get The Stack Depth
+
+To find out how many items are on the stack, use `depth`.
+
+### Displaying The Stack
+
+You can display the stack by running `dump-stack`.
+
+### Data Flow Combinators
+
+RETRO provides *combinators* for working with data order on
+the stack. These are covered in a later chapter and are worth
+learning to use as they can help provide a cleaner, more
+structured means of working.
+
+### Tips
+
+The stack is *not* an array in addressable memory. Don't try
+to treat it like one.
+
+## Address Stack
+
+This stack primarily holds return addresses for function calls.
+You normally won't need to directly interact with this stack,
+but you can use `push` and `pop` to move values between the
+data stack and this.
+
+## Floating Point Stack
+
+If you are using a build with floating point support a third
+stack will be present. Floating point values are kept and
+passed between words using this.
+
+See the Floating Point chapter for more details on this.
+
+## Tips
+
+I recommend keeping the data stack shallow. Don't try to juggle
+too much; it's better to factor definitions into shorter ones
+that deal with simpler parts of the stack values than to have
+a big definition with a lot of complex shuffling.
+
+## Notes
+
+The standard system is configured with a very deep data stack
+(around 2,000 items) and an address stack that is 3x deeper.
+In actual use, your programs are unlikely to ever need this,
+but if you do, keep the limits in mind.
 
 # Using Combinators
 
@@ -908,1184 +2413,62 @@ RETRO also provides `for-each` combinators for various data
 structures. The exact usage of these varies; consult the
 Glossary and relevant chapters for more details on these.
 
+# Word Classes
 
-# The Stacks
+Word classes are one of the two elements at the heart of
+RETRO's interpreter.
 
-The stacks are a defining feature of Forth. They are are used
-to pass data between words and to track return addresses for
-function calls.
+There are different types of words in a Forth system. At a
+minimum there are data words, regular words, and immediate
+words. There are numerous approaches to dealing with this.
 
-RETRO always has two stacks, and optionally (if built with
-floating point support) a third.
-
-## Data Stack
-
-This is the primary stack. Values are placed here, passed to
-words which consume them and then return results. When I
-refer to "the stack", this is the one I mean. Learning to use
-the stack is a crucial part to making effective use of RETRO.
-
-### Placing Values On The Stack
-
-Values can be placed on the stack directly.
-
-| Example        | Action                                   |
-| -------------- | ---------------------------------------- |
-| `#300123`      | Push the number `300123` to the stack    |
-| `$h`           | Push the ASCII code for `h` to the stack |
-| `'hello_world` | Push a pointer to a string to the stack  |
-| `&fetch`       | Push the address of `fetch` to the stack |
-
-### Reordering The Stack
-
-RETRO provides a number of *shufflers* for reordering items
-on the stack.
-
-Some of the most common ones are:
-
-| Word    | Before   | After    |
-| ------- |--------- | -------- |
-| dup     | #1       | #1 #1    |
-| drop    | #1 #2    | #1       |
-| swap    | #1 #2    | #2 #1    |
-| over    | #1 #2    | #1 #2 #1 |
-| tuck    | #1 #2    | #2 #1 #2 |
-| nip     | #1 #2    | #2       |
-| rot     | #1 #2 #3 | #3 #1 #2 |
-
-You can use `push` and `pop` to move values to and from the
-address stack. Make sure you `pop` them back before the word
-ends or RETRO will crash. These two words can not be used
-at the interpreter.
-
-There is also a special one, `reorder`, which allows for big
-stack restructuring. This is slow but can be very useful.
-
-As an example, let's say we have four values:
-
-```
-#1 #2 #3 #4
-```
-
-And we want them to become:
-
-```
-#4 #3 #2 #1
-```
-
-Doing this with the basic shufflers is difficult. You could end
-up with something similar to:
-
-```
-swap rot push rot pop swap 
-```
-
-But with `reorder`, you can just express the before and after
-states:
-
-```
-'abcd 'dcba reorder
-```
-
-### Resetting The Stack
-
-If you need to quickly empty the stack, use `reset`.
-
-### Get The Stack Depth
-
-To find out how many items are on the stack, use `depth`.
-
-### Displaying The Stack
-
-You can display the stack by running `dump-stack`.
-
-### Data Flow Combinators
-
-RETRO provides *combinators* for working with data order on
-the stack. These are covered in a later chapter and are worth
-learning to use as they can help provide a cleaner, more
-structured means of working.
-
-### Tips
-
-The stack is *not* an array in addressable memory. Don't try
-to treat it like one.
-
-## Address Stack
-
-This stack primarily holds return addresses for function calls.
-You normally won't need to directly interact with this stack,
-but you can use `push` and `pop` to move values between the
-data stack and this.
-
-## Floating Point Stack
-
-If you are using a build with floating point support a third
-stack will be present. Floating point values are kept and
-passed between words using this.
-
-See the Floating Point chapter for more details on this.
-
-## Tips
-
-I recommend keeping the data stack shallow. Don't try to juggle
-too much; it's better to factor definitions into shorter ones
-that deal with simpler parts of the stack values than to have
-a big definition with a lot of complex shuffling.
-
-## Notes
-
-The standard system is configured with a very deep data stack
-(around 2,000 items) and an address stack that is 3x deeper.
-In actual use, your programs are unlikely to ever need this,
-but if you do, keep the limits in mind.
-
-# Working With Arrays
-
-RETRO offers a number of words for operating on statically sized
-arrays.
-
-## Namespace
-
-The words operating on arrays are kept in an `a:` namespace.
-
-## Creating Arrays
-
-The easiest way to create an array is to wrap the values in a
-`{` and `}` pair:
-
-```
-{ #1 #2 #3 #4 }
-{ 'this 'is 'an 'array 'of 'strings }
-{ 'this 'is 'a 'mixed 'array #1 #2 #3 }
-```
-
-You can also make an array from a quotation which returns
-values and the number of values to store in the a:
-
-```
-[ #1 #2 #3  #3 ] a:counted-results
-[ #1 #2 #3  #3 ] a:make
-```
-
-## Accessing Elements
-
-You can access a specific value with `a:th` and `fetch` or
-`store`:
-
-```
-{ #1 #2 #3 #4 } #3 a:th fetch
-```
-
-## Find The Length
-
-Use `a:length` to find the size of the array.
-
-```
-{ #1 #2 #3 #4 } a:length
-```
-
-## Duplicate
-
-Use `a:dup` to make a copy of an a:
-
-```
-{ #1 #2 #3 #4 } a:dup
-```
-
-## Filtering
-
-RETRO provides `a:filter` which extracts matching values
-from an array. This is used like:
-
-```
-{ #1 #2 #3 #4 #5 #6 #7 #8 } [ n:even? ] a:filter
-```
-
-The quote will be passed each value in the array and should
-return TRUE or FALSE. Values that lead to TRUE will be collected
-into a new array.
-
-## Mapping
-
-`a:map` applies a quotation to each item in an array and
-constructs a new array from the returned values.
-
-Example:
-
-```
-{ #1 #2 #3 } [ #10 * ] a:map
-```
-
-## Reduce
-
-`a:reduce` takes an array, a starting value, and a quote. It
-executes the quote once for each item in the array, passing the
-item and the value to the quote. The quote should consume both
-and return a new value.
-
-```
-{ #1 #2 #3 } #0 [ + ] a:reduce
-```
-
-## Search
-
-RETRO provides `a:contains?` and `a:contains-string?`
-to search an array for a value (either a number or string) and
-return either TRUE or FALSE.
-
-```
-#100  { #1 #2 #3 } a:contains?
-'test { 'abc 'def 'test 'ghi } a:contains-string?
-```
-
-## Implementation
-
-In memory, an array is a count followed by the values. As an
-example, if you have an array:
-
-    { #10 #20 #30 }
-
-In memory this would be setup as:
-
-    | Offset | Value |
-    | ------ | ----- |
-    | 000    | 3     |
-    | 001    | 10    |
-    | 002    | 20    |
-    | 003    | 30    |
-
-You can construct one on the fly by keeping a pointer to
-`here` and using `,` to place the values. E.g.,
-
-    here [ #3 , #10 , #20 , #30 , ] dip
-
-An example of this can be seen in this excerpt from an example
-(*example/Primes.forth*):
-
-    :create-set (-a) 
-        here #3000 , #2 #3002 [ dup , n:inc ] times drop ;
-
-# Working With a Buffer
-
-RETRO provides words for operating on a linear memory area.
-This can be useful in building strings or custom data
-structures.
-
-## Namespace
-
-Words operating on the buffer are kept in the `buffer:`
+In RETRO I define special words which receive a pointer and
+decide how to deal with it. These are grouped into a `class:`
 namespace.
 
-## Implementation
+## How It Works
 
-A buffer is a linear sequence of memory. The buffer words
-provide a means of incrementally storing and retrieving
-values from it.
+When a word is found in the dictionary, RETRO will push a
+pointer to the definition (the `d:xt` field) to the stack
+and then call the word specified by the `d:class` field.
 
-The buffer words keep track of the start and end of the
-buffer. They also ensure that an `ASCII:NULL` is written
-after the last value, which make using them for string
-data easy.
+The word called is responsible for processing the pointer
+passed to it.
 
-## Limitations
-
-Only one buffer can be active at a time. RETRO provides a
-`buffer:preserve` combinator to allow using a second one
-before returning to the prior one.
-
-## Set The Active Buffer
-
-To set a buffer as the active one use `buffer:set`. This takes
-an address.
-
-The buffer will be assumed to be empty. The inital value will
-be set to ASCII:NULL.
-
-## Add Value
-
-Use `buffer:add` to append a value to the buffer. This takes
-a single value and will also add an ASCII:NULL after the end
-of the buffer.
-
-## Fetch Last Value
-
-To return the last value in the buffer you can use `buffer:get`.
-This removes the value and sets an ASCII:NULL in the memory
-location the returned value occupied.
-
-## Get Data About The Buffer
-
-RETRO provides `buffer:start` to get the initial address in
-the buffer, `buffer:end` to get the last address (ignoring the
-ASCII:NULL), and `buffer:size` to return the number of values
-in the buffer.
-
-## Reset
-
-You can reset a buffer to the empty state using `buffer:empty`.
-
-## Example
-
-To begin, create a memory region to use as a buffer.
+As a simple case, let's look at `immediate` words. These are
+words which will always be called when encountered. A common
+strategy is to have an immediacy bit which the interpreter
+will look at, but RETRO uses a class for this. The class is
+defined:
 
 ```
-'Test d:create #1025 allot
+:class:immediate (a-)  call ;
 ```
 
-Then you can set this as the current buffer:
+Or a normal word. These should be called at interpret time
+or compiled into definitions. The handler for this can look
+like:
 
 ```
-&Test buffer:set
+:class:word (a-) compiling? [ compile:call ] [ call ] choose ;
 ```
 
-When a buffer is set, the vocabulary sets an internal
-index to the first address in it. This will be
-incremented when you add data and decremented when you
-remove data.
+## Using Classes
 
-Let's add some stuff using `buffer:add`:
-
-```
-#100 buffer:add
-#200 buffer:add
-#300 buffer:add
-```
-
-And then retreive the values:
+The ability to add new classes is useful. If I wanted to add
+a category of word that preserves an input value, I could do
+it with a class:
 
 ```
-buffer:get n:put nl
-buffer:get n:put nl
-buffer:get n:put nl
+:class:duplicating (a-)
+  compiling? [ &dup compile:call ] [ &dup dip ] choose
+  class:word ; 
+
+:duplicating &class:duplicating reclass ;
+
+:. n:put nl ; duplicating
+#100 . . .
 ```
-
-You can remove all values using `buffer:empty`:
-
-```
-#100 buffer:add
-#200 buffer:add
-#300 buffer:add
-buffer:empty
-```
-
-And ask the buffer how many items it contains:
-
-```
-buffer:size n:put nl
-#100 buffer:add
-#200 buffer:add
-#300 buffer:add
-buffer:size n:put nl
-buffer:empty
-```
-
-The other functions are `buffer:start`, which returns
-the address of the buffer, `buffer:end`, which returns
-the address of the last value, and `buffer:preserve`.
-The first is easy to demo:
-
-```
-buffer:start Test eq? n:put nl
-```
-
-The last one is useful. Only one buffer is ever active
-at a given time. The `buffer:preserve` combinator lets
-you execute a word, saving and restoring the current
-buffer indexes. So the word could assign and use a new
-buffer and this will reset the previous one after
-control returns.
-
-There are a few notes that need to be considered. The
-preserve combinator saves the start and current index
-but *not* the contents. If the word you call uses the
-same buffer, the contents will remain altered.
-
-Finally, the buffer words have one interesting trait:
-they store an ASCII NULL after adding each item to the
-buffer. This lets one use them to build strings easily.
-
-```
-Test buffer:set
-$h buffer:add
-$e buffer:add
-$l buffer:add
-$l buffer:add
-$o buffer:add
-$, buffer:add
-#32 buffer:add
-$w buffer:add
-$o buffer:add
-$r buffer:add
-$l buffer:add
-$d buffer:add
-buffer:start s:put nl
-```
-
-# Working With Characters
-
-RETRO provides words for working with ASCII characters.
-
-## Prefix
-
-Character constants are returned using the `$` prefix.
-
-## Namespace
-
-Words operating on characters are in the `c:` namespace.
-
-## Classification
-
-RETRO provides a number of words to determine if a character
-fits into predefined groups.
-
-The primary words for this are:
-
-* `c:consonant?`
-* `c:digit?`
-* `c:letter?`
-* `c:lowercase?`
-* `c:uppercase?`
-* `c:visible?`
-* `c:vowel?`
-* `c:whitespace?`
-
-There are also corresponding "not" forms:
-
-* `c:-consonant?`
-* `c:-digit?`
-* `c:-lowercase?`
-* `c:-uppercase?`
-* `c:-visible?`
-* `c:-vowel?`
-* `c:-whitespace?`
-
-All of these take a character and return either a `TRUE` or
-`FALSE` flag.
-
-## Conversions
-
-A few words are provided to convert case. Each takes a character
-and returns the modified character.
-
-* `c:to-lower`
-* `c:to-number`
-* `c:to-upper`
-* `c:toggle-case`
-
-RETRO also has `c:to-string`, which takes a character and
-creates a new temporary string with the character.
-
-## I/O
-
-Characters can be displayed using `c:put`.
-
-```
-$a c:put
-```
-
-With the default system on BSD, Linux, and macOS (and other
-Unix style hosts), `c:get` is provided to read input. This
-may be buffered, depending on the host.
-
-# Working With The Dictionary
-
-The Dictionary is a linked list containing the dictionary
-headers.
-
-## Namespace
-
-Words operating on the dictionary are in the `d:` namespace.
-
-## Variables
-
-`Dictionary` is a variable holding a pointer to the most recent
-header.
-
-## Header Structure
-
-Each entry follows the following structure:
-
-    Offset   Contains
-    ------   ---------------------------
-    0000     Link to Prior Header
-    0001     Link to XT
-    0002     Link to Class Handler
-    0003+    Word name (null terminated)
-
-RETRO provides words for accessing the fields in a portable
-manner. It's recommended to use these to allow for future
-revision of the header structure.
-
-## Accessing Fields
-
-Given a pointer to a header, you can use `d:xt`, `d:class`,
-and `d:name` to access the address of each specific field.
-There is no `d:link`, as the link will always be the first
-field.
-
-## Shortcuts For The Latest Header
-
-RETRO provides several words for operating on the most recent
-header.
-
-`d:last` returns a pointer to the latest header. `d:last<xt>`
-will give the contents of the `d:xt` field for the latest
-header. There are also `d:last<class>` and `d:last<name>`.
-
-## Adding Headers
-
-Two words exist for making new headers. The easy one is
-`d:create`. This takes a string for the name and makes a
-new header with the class set to `class:data` and the XT
-field pointing to `here`.
-
-Example:
-
-```
-'Base d:create
-```
-
-The other is `d:add-header`. This takes a string, a pointer
-to the class handler, and a pointer for the XT field and
-builds a new header using these.
-
-Example:
-
-```
-'Base &class:data #10000 d:add-header
-```
-
-## Searching
-
-RETRO provides two words for searching the dictionary.
-
-`d:lookup` takes a string and tries to find it in the
-dictionary. It will return a pointer to the dictionary header
-or a value of zero if the word was not found.
-
-`d:lookup-xt` takes a pointer and will return the dictionary
-header that has this as the `d:xt` field, or zero if no match
-is found.
-
-## Iteration
-
-You can use the `d:for-each` combinator to iterate over all
-entries in the dictionary. For instance, to display the names
-of all words:
-
-```
-[ d:name s:put sp ] d:for-each
-```
-
-For each entry, this combinator will push a pointer to the
-entry to the stack and call the quotation.
-
-## Listing Words
-
-Most Forth systems provide WORDS for listing the names of all
-words in the dictionary. RETRO does as well, but this is named
-`d:words`.
-
-This isn't super useful as looking through several hundred
-names is annoying. RETRO also provides `d:words-with` to help
-in filtering the results.
-
-Example:
-
-```
-'class: d:words-with
-```
-
-
-# Working With Floating Point
-
-Some RETRO systems include support for floating point numbers.
-When present, this is built over the system `libm` using the
-C `double` type.
-
-Floating point values are typically 64 bit IEEE 754 double
-precision (1 bit for the sign, 11 bits for the exponent, and
-the remaining 52 bits for the value), i.e. 15 decimal digits
-of precision.
-
-## Prefix
-
-Floating point numbers start with a `.`
-
-Examples:
-
-   Token    Value
-    .1       1.0
-    .0.5     0.5
-    .-.4    -0.4
-    .1.3     1.3
-
-## Namespace
-
-Floating point words are in the `f:` namespace. There is also
-a related `e:` namespace for *encoded values*, which allows
-storing of floats in standard memory.
-
-## Operation
-
-Floating point values exist on a separate stack, and are bigger
-than the standard memory cells, so can not be directly stored
-and fetched from memory.
-
-The floating point system also provides an alternate stack that
-can be used to temporarily store values.
-
-The following words exist for arranging values on the floating
-point stack. These are direct analogs to the non-prefiexd words
-for dealing with the data stack.
-
-- `f:nip`
-- `f:over`
-- `f:depth`
-- `f:drop`
-- `f:drop-pair`
-- `f:dup`
-- `f:dup-pair`
-- `f:dump-stack`
-- `f:tuck`
-- `f:swap`
-- `f:rot`
-
-For the secondary floating point stack, the following words are
-provided:
-
-- `f:push`
-- `f:pop`
-- `f:adepth`
-- `f:dump-astack`
-
-## Constants
-
-    | Name     | Returns           |
-    | -------- | ----------------- |
-    | `f:E`    | Euler's number    |
-    | `f:-INF` | Negative infinity |
-    | `f:INF`  | Positive infinity |
-    | `f:NAN`  | Not a Number      |
-    | `f:PI`   | PI                |
-
-## Comparisons
-
-The basic set of comparators are the same as those for
-operating on integers. These are:
-
-- `f:-eq?`
-- `f:between?`
-- `f:eq?`
-- `f:gt?`
-- `f:lt?`
-- `f:negative?`
-- `f:positive?`
-- `f:case`
-
-There are also a few additions for comparing to special values
-like infinity and NaN.
-
-- `f:-inf?`
-- `f:inf?`
-- `f:nan?`
-
-## Basic Math
-
-- `f:*`
-- `f:+`
-- `f:-`
-- `f:/`
-- `f:abs`
-- `f:floor`
-- `f:inc`
-- `f:limit`
-- `f:max`
-- `f:min`
-- `f:negate`
-- `f:power`
-- `f:ceiling`
-- `f:dec`
-- `f:log`
-- `f:sqrt`
-- `f:square`
-- `f:round`
-- `f:sign`
-- `f:signed-sqrt`
-- `f:signed-square`
-
-## Geometry
-
-RETRO provides a small number of words for doing geometric
-related calculations.
-
-| Word     | Returns      |
-| -------- | ------------ |
-| `f:acos` | arc cosine   |
-| `f:asin` | arc sine     |
-| `f:atan` | arc tangent  |
-| `f:cos`  | cosine       |
-| `f:sin`  | sine         |
-| `f:tan`  | tangent      |
-
-## Storage and Retrieval
-
-By leveraging the encoded value functions, RETRO is able to
-allow storage of floating point values in memory. This does
-have a tradeoff in accuracy as the memory cells are considerably
-smaller than a full floating point size.
-
-You can use `f:fetch` to fetch a floating point value and
-`f:store` to store one.
-
-If you need more precision, try Kiyoshi Yoneda's FloatVar
-example (`example/FloatVar.forth`), which includes words to
-store and retrieve values using multiple cells.
-
-- `f:to-number`
-- `f:to-string`
-
-## I/O
-
-The floating point vocabulary has a single I/O word, `f:put`,
-for the display of floating point numbers.
-
-## Encoded Values
-
-RETRO provides a means of encoding and decoding floating point
-values into standard integer cells. This is based on the paper
-"Encoding floating point values to shorter integers" by Kiyoshi
-Yoneda and Charles Childers.
-
-- `f:E1`
-- `f:to-e`
-- `e:-INF`
-- `e:-inf?`
-- `e:INF`
-- `e:MAX`
-- `e:MIN`
-- `e:NAN`
-- `e:clip`
-- `e:inf?`
-- `e:max?`
-- `e:min?`
-- `e:n?`
-- `e:nan?`
-- `e:put`
-- `e:to-f`
-- `e:zero?`
-
-# Working With Numbers
-
-Numbers in RETRO are signed, 32 bit integers with a range of
--2,147,483,648 to 2,147,483,647.
-
-## Token Prefix
-
-All numbers start with a `#` prefix.
-
-## Namespace
-
-Most words operating on numbers are in the `n:` namespace.
-
-
-
-# Working With Pointers
-
-## Prefix
-
-Pointers are returned by the `&` prefix.
-
-## Examples
-
-```
-'Base var
-&Base fetch
-#10 &Base store
-
-#10 &n:inc call
-```
-
-## Notes
-
-The use of `&` to get a pointer to a data structure (with a
-word class of `class:data`) is not required. I like to use it
-anyway as it makes my intent a little clearer.
-
-Pointers are useful with combinators. Consider:
-
-```
-:abs dup n:negative? [ n:negate ] if ;
-```
-
-Since the target quote body is a single word, it is more
-efficient to use a pointer instead:
-
-```
-:abs dup n:negative? &n:negate if ;
-```
-
-The advantages are speed (saves a level of call/return by
-avoiding the quotation) and size (for the same reason).
-This may be less readable though, so consider the balance
-of performance to readability when using this approach.
-
-# Working With Strings
-
-Strings in RETRO are NULL terminated sequences of values
-representing characters. Being NULL terminated, they can't
-contain a NULL (ASCII 0).
-
-The character words in RETRO are built around ASCII, but
-strings can contain UTF8 encoded data if the host platform
-allows. Words like `s:length` will return the number of bytes,
-not the number of logical characters in this case.
-
-## Prefix
-
-Strings begin with a single `'`.
-
-```
-'Hello
-'This_is_a_string
-'This_is_a_much_longer_string_12345_67890_!!!
-```
-
-RETRO will replace spaces with underscores. If you need both
-spaces and underscores in a string, escape the underscores and
-use `s:format`:
-
-```
-'This_has_spaces_and_under\_scored_words. s:format
-```
-
-## Namespace
-
-Words operating on strings are in the `s:` namespace.
-
-## Lifetime
-
-At the interpreter, strings get allocated in a rotating buffer.
-This is used by the words operating on strings, so if you need
-to keep them around, use `s:keep` or `s:copy` to move them to
-more permanent storage.
-
-In a definition, the string is compiled inline and so is in
-permanent memory.
-
-You can manually manage the string lifetime by using `s:keep`
-to place it into permanent memory or `s:temp` to copy it to
-the rotating buffer.
-
-## Mutability
-
-Strings are mutable. If you need to ensure that a string is
-not altered, make a copy before operating on it or see the
-individual glossary entries for notes on words that may do
-this automatically.
-
-## Searching
-
-RETRO provides four words for searching within a string.
-
-`s:contains-char?` 
-`s:contains-string?`
-`s:index-of`
-`s:index-of-string`
-
-## Comparisons
-
-`s:eq?`
-`s:case`
-
-## Extraction
-
-To obtain a new string containing the first `n` characters from
-a source string, use `s:left`:
-
-```
-'Hello_World #5 s:left
-```
-
-To obtain a new string containing the last `n` characters from
-a source string, use `s:right`:
-
-```
-'Hello_World #5 s:right
-```
-
-If you need to extract data from the middle of the string, use
-`s:substr`. This takes a string, the offset of the first
-character, and the number of characters to extract.
-
-```
-'Hello_World #3 #5 s:substr
-```
-
-## Joining
-
-You can use `s:append` or `s:prepend` to merge two strings.
-
-```
-'First 'Second s:append
-'Second 'First s:prepend
-```
-
-## Tokenization
-
-`s:tokenize`
-`s:tokenize-on-string`
-`s:split`
-`s:split-on-string`
-
-## Conversions
-
-To convert the case of a string, RETRO provides `s:to-lower`
-and `s:to-upper`.
-
-`s:to-number` is provided to convert a string to an integer
-value. This has a few limitations:
-
-- only supports decimal
-- non-numeric characters will result in incorrect values
-
-## Cleanup
-
-RETRO provides a handful of words for cleaning up strings.
-
-`s:chop` will remove the last character from a string. This
-is done by replacing it with an ASCII:NULL.
-
-`s:trim` removes leading and trailing whitespace from a string.
-For more control, there is also `s:trim-left` and `s:trim-right`
-which let you trim just the leading or trailing end as desired.
-
-## Combinators
-
-`s:for-each`
-`s:filter`
-`s:map`
-
-## Other
-
-`s:evaluate`
-`s:copy`
-`s:reverse`
-`s:hash`
-`s:length`
-`s:replace`
-`s:format`
-`s:empty`
-
-## Controlling The Temporary Buffers
-
-As dicussed in the Lifetime subsection, temporary strings are
-allocated in a rotating buffer. The details of this can be
-altered by updating two variables.
-
-| Variable      | Holds                                    |
-| ------------- | ---------------------------------------- |
-| TempStrings   | The number of temporary strings          |
-| TempStringMax | The maximum length of a temporary string |
-
-For example, to increase the number of temporary strings to
-48:
-
-```
-#48 !TempStrings
-```
-
-The defaults are:
-
-| Variable      | Default |
-| ------------- | ------- |
-| TempStrings   | 32      |
-| TempStringMax | 512     |
-
-It's also important to note that altering these will affect
-the memory map for all temporary buffers. Do not use anything
-already in the buffers after updating these or you will risk
-data corruption and possible crashes.
-
-
-# Working With Assembly Language
-
-RETRO runs on a virtual machine called Nga. It provides a
-standard assembler for this called *Muri*.
-
-Muri is a simple, multipass model that's not fancy, but
-suffices for RETRO's needs.
-
-## Assembling A Standalone File
-
-A small example (*test.muri*)
-
-    ~~~
-    i liju....
-    r main
-    : c:put
-    i liiire..
-    i 0
-    : main
-    i lilica..
-    d 97
-    i liju....
-    r main
-    ~~~
-
-Assembling it:
-
-    retro-muri test.muri
-
-So breaking down: Muri extracts the assembly code blocks to
-assemble, then proceeds to do the assembly. Each source line
-starts with a directive, followed by a space, and then ending
-with a value.
-
-The directives are:
-
-    :    value is a label
-    i    value is an instruction bundle
-    d    value is a numeric value
-    r    value is a reference
-    s    value is a string to inline
-
-Instructions for Nga are provided as bundles. Each memory
-location can store up to four instructions. And each instruction
-gets a two character identifier.
-
-From the list of instructions:
-
-    0 nop   5 push  10 ret   15 fetch 20 div   25 zret
-    1 lit   6 pop   11 eq    16 store 21 and   26 halt
-    2 dup   7 jump  12 neq   17 add   22 or    27 ienum
-    3 drop  8 call  13 lt    18 sub   23 xor   28 iquery
-    4 swap  9 ccall 14 gt    19 mul   24 shift 29 iinvoke
-
-This reduces to:
-
-    0 ..    5 pu    10 re    15 fe    20 di    25 zr
-    1 li    6 po    11 eq    16 st    21 an    26 ha
-    2 du    7 ju    12 ne    17 ad    22 or    27 ie
-    3 dr    8 ca    13 lt    18 su    23 xo    28 iq
-    4 sw    9 cc    14 gt    19 mu    24 sh    29 ii
-
-Most are just the first two letters of the instruction name. I
-use `..` instead of `no` for `NOP`, and the first letter of
-each I/O instruction name. So a bundle may look like:
-
-    dumure..
-
-(This would correspond to `dup multiply return nop`).
-
-## Runtime Assembler
-
-RETRO also has a runtime variation of Muri that can be used
-when you need to generate more optimal code. So one can write:
-
-    :n:square dup * ;
-
-Or:
-
-    :n:square as{ 'dumure.. i }as ;
-
-The second one will be faster, as the entire definition is one
-bundle, which reduces memory reads and decoding by 2/3.
-
-Doing this is less readable, so I only recommend doing so after
-you have finalized working RETRO level code and determined the
-best places to optimize.
-
-The runtime assembler has the following directives:
-
-    i    value is an instruction bundle
-    d    value is a numeric value
-    r    value is a reference
-
-Additionally, in the runtime assembler, these are reversed:
-
-    'dudumu.. i
-
-Instead of:
-
-    i dudumu..
-
-# Checking The Version
-
-RETRO releases add and change things. You can use the `Version`
-variable to determine the version in use and react accordingly.
-
-```
-@Version #201906 eq? [ 'Needs_2019.6! s:put nl bye ] if
-```
-
-This can be also be used to conditionally load compatibility files:
-
-```
-(If_newer_than_2016.6,_load_aliases_for_renamed_words)
-@Version #201906 gt? [ 'Renamed_2019.6.forth include ] if
-```
-
-## Version Number Format
-
-The version is a six digit number encoding the year and month of
-the release. So:
-
-    201901  is  2019.1
-    201906  is  2019.6
-    201911  is  2019.11
-
-A `#100 /mod` will suffice to split these if needed.
-
-# Lexical Scope
-
-RETRO has a single dictionary, but does provide a means of using
-lexical scope to keep this dictionary clean.
-
-## Example
-
-```
-{{
-  'A var
-  :++A  &A v:inc ;
----reveal---
-  :B ++A ++A @A n:put nl ;
-}}
-```
-
-In this example, the lexical namespace is created with `{{`. A
-variable (`A`) and word (`++A`) are defined. Then a marker is
-set with `---reveal---`. Another word (`B`) is defined, and the
-lexical area is closed with `}}`.
-
-The headers between `{{` and `---reveal---` are then hidden from
-the dictionary, leaving only the headers between `---reveal---`
-and `}}` exposed.
-
-## Notes
-
-This only affects word visibility within the scoped area. As an
-example:
-
-```
-:a #1 ;
-
-{{
-  :a #2 ;
----reveal---
-  :b 'a s:evaluate n:put ;
-}}
-```
-
-In this, after `}}` closes the area, the `:a #2 ;` is hidden and
-the `s:evaluate` will find the `:a #1 ;` when `b` is run.
-
-# Internals
-
-The next few chapters dive into RETRO's architecture. If you
-seek to implement a port to a new platform or to extend the
-I/O functionality you'll find helpful information here.
 
 # Internals: Nga Virtual Machine
 
@@ -2264,6 +2647,42 @@ The image will typically be extended with words to use these.
 
 
 
+# Internals: I/O
+
+RETRO provides three words for interacting with I/O. These are:
+
+    io:enumerate    returns the number of attached devices
+    io:query        returns information about a device
+    io:invoke       invokes an interaction with a device
+
+As an example, with an implementation providing an output source,
+a block storage system, and keyboard:
+
+    io:enumerate    will return `3` since there are three
+                    i/o devices
+    #0 io:query     will return 0 0, since the first device
+                    is a screen (type 0) with a version of 0
+    #1 io:query     will return 1 3, since the second device is
+                    block storage (type 3), with a version of 1
+    #2 io:query     will return 0 1, since the last device is a
+                    keyboard (type 1), with a version of 0
+
+In this case, some interactions can be defined:
+
+    :c:put #0 io:invoke ;
+    :c:get #2 io:invoke ;
+
+Setup the stack, push the device ID, and then use `io:invoke`
+to invoke the interaction.
+
+A RETRO system requires one I/O device (a generic output for a
+single character). This must be the first device, and must have
+a device ID of 0.
+
+All other devices are optional and can be specified in any
+order.
+
+
 # Internals: The Retro Image
 
 The actual RETRO language is stored as a memory image for Nga.
@@ -2318,268 +2737,206 @@ Assuming an Nga built with 524287 cells of memory:
 The buffers at the end of memory will resize when specific
 variables related to them are altered.
 
-# Additional Tools
+# Using The Glossary
 
-In addition to the core `retro` binary, the `bin` directory
-will contain a few other tools.
+The Glossary is a valuable resource. It provides information
+on the RETRO words.
 
-## retro
+## Example Entry
 
-This is the main RETRO binary.
+    f:+
 
-## retro-describe
+      Data:  -
+      Addr:  -
+      Float: FF-F
 
-This is a program that looks up entries in the Glossary.
+    Add two floating point numbers, returning the result.
 
-At the command line, you can use it like:
+    Class: class:word | Namespace: f | Interface Layer: rre
 
-```
-retro-describe s:for-each
-```
+    Example #1:
 
-## retro-embedimage
+        .3.1 .22 f:+
 
-This is a program which generates a C file with the ngaImage
-contents. It's used when building `retro`.
+## Reading The Entry
 
-```
-retro-embedimage ngaImage
-```
+An entry starts with the word name.
 
-The output is written to stdout; redirect it as needed.
+This is followed by the stack effect for each stack. All RETRO
+systems have Data and Address stacks, some also include a
+floating point stack).
 
-## retro-extend
+The stack effect diagrams are followed by a short description
+of the word.
 
-This is a program which compiles code into the ngaImage.
-It's used when building `retro` and when you want to make a
-standalone image with custom additions.
-
-Example command line:
-
-```
-retro-extend ngaImage example/rot13.forth
-```
-
-Pass the image name as the first argument, and then file names
-as susequent ones. Do *not* use this for things relying on I/O
-apart from the basic console output as it doesn't emulate other
-devices. If you need to load in things that rely on using the
-optional I/O devices, see the **Advanced Builds** chapter.
-
-## retro-muri
-
-This is the assembler for Nga. It's used to build the initial
-RETRO kernel and can be used by other tools as well.
-
-## retro-tags
-
-TBD
-
-## retro-unu
-
-This is the literate source extraction tool for RETRO. It
-is used in building `retro`.
-
-Example usage:
-
-```
-retro-unu literate/RetroForth.md
-```
-
-Output is written to stdout; redirect as neeeded.
-
-# Advanced Builds
-
-## Reduced Memory
-
-RETRO can be built for reduced memory targets. This is primarily
-intendeded for use with embedded targets, but can be useful on
-large machines as well.
-
-To do this, `make` with `CFLAGS` set to `-DMEM1024K`, `-DMEM512K`,
-`-DMEM256K`, `-DMEM192K`, `-DMEM128K`' or `-DMEM96K`. These will
-target memory sizes as specified per the following table.
-
-|               |   1024kB  |  512kB  |  256kB  |  192kB  |  128kB  |  96kB  |
-| ------------- | --------- | ------- | ------- | ------- | ------- | ------ |
-| Total Bytes   | 1,048,579 | 524,288 | 262,144 | 196,608 | 131,072 | 98,304 |
-| Image         |   968,000 | 450,000 | 192,000 | 126,000 |  96,000 | 72,000 |
-| Data Stack    |       512 |     512 |     512 |     512 |     512 |    512 |
-| Address Stack |     1,024 |   1,024 |   1,024 |   1,024 |   1,024 |  1,024 |
-| Remaining     |    79,040 |  72,752 |  68,608 |  69,072 |  33,536 | 24,768 |
-
-The remaining memory is available for use by the VM.
-
-## Custom Image
-
-For users of BSD, Linux, macOS, you can customize the image at
-build time.
-
-In the top level directory is a `package` directory containing
-a file named `list`. You can add files to compile into your
-system by adding them to the `list` and rebuilding.
-
-Example:
-
-If you have wanted to include the NumbersWithoutPrefixes.forth
-example, add:
-
-    ~~~
-    'example/NumbersWithoutPrefixes.forth include
-    ~~~
-
-To the start of the `list` file and then run `make` again. The
-newly built `bin/retro` will now include your additions.
-
-# The Optional Retro Compiler
-
-In addition to the base system, users of RETRO on Unix hosts
-with ELF executables can build and use the `retro-compiler`
-to generate turnkey executables.
-
-## Requirements
-
-- Unix host
-- ELF executable support
-- objcpy in the $PATH
-
-## Building
-
-BSD users:
-
-   make bin/retro-compiler
-
-Linux users:
-
-   make -f Makefile.linux bin/retro-compiler
-
-## Installing
-
-Copy `bin/retro-compiler` to somewhere in your $PATH.
-
-## Using
-
-`retro-compiler` takes two arguments: the source file to
-compile and the name of the word to use as the main entry
-point.
-
-Example:
-
-Given a `hello.forth`:
-
-```
-~~~
-:hello 'Hello_World! s:put nl ;
-~~~
-```
-
-Use:
-
-```
-retro-compiler hello.forth hello
-```
-
-The compiler will generate an `a.out` file which you can
-then rename.
-
-## Known Limitations
-
-This does not provide the scripting support for command line
-arguments that the standard `retro` interface offers.
-
-A copy of `objcopy` needs to be in the path for compilation
-to work.
-
-The current working directory must be writable.
-
-This only supports hosts using ELF executables.
-
-The output file name is fixed to `a.out`.
-
-# Errors
-
-RETRO does only minimal error checking.
-
-## Non-Fatal
-
-A non-fatal error will be reported on *word not found* during
-interactive or compile time. Note that this only applies to
-calls: if you try to get a pointer to an undefined word, the
-returned pointer will be zero.
-
-## Fatal
-
-A number of conditions are known to cause fatal errors. The
-main ones are stack overflow, stack underflow, and division
-by zero.
-
-On these, RETRO will generally exit. For stack depth issues,
-the VM will attempt to display an error prior to exiting.
-
-In some cases, the VM may get stuck in an endless loop. If this
-occurs, try using CTRL+C to kill the process, or kill it using
-whatever means your host system provides.
-
-## Rationale
-
-Error checks are useful, but slow - especially on a minimal
-system like RETRO. The overhead of doing depth or other checks
-adds up quickly.
-
-As an example, adding a depth check to `drop` increases the
-time to use it 250,000 times in a loop from 0.16 seconds to
-1.69 seconds.
-
-
-# Security Concerns
-
-The standard RETRO is not a good choice for applications
-needing to be highly secure.
-
-## Runtime Checks
-
-The RETRO system performs only minimal checks. It will not
-load an image larger than the max set at build time. And
-stack over/underflow are checked for as code executes.
-
-The system does not attempt to validate anything else, it's
-quite easy to crash.
-
-## Isolation
-
-The VM itself and the core code is self contained. Nga does
-not make use of malloc/free, and uses only standard system
-libraries. It's possible for buffer overruns within the image
-(overwriting Nga code), but the RETRO image shouldn't leak
-into the C portions.
-
-I/O presents a bigger issue. Anything involving I/O, especially
-with the `unix:` words, may be a vector for attacks.
-
-## Future Direction
-
-I'm not planning to add anything to the *image* side as, for me,
-the performance hit due to added checks is bigger than the
-benefits.
-
-The story is different on the VM side. I've already begun taking
-steps to address some of the issues, using functions that check
-for overruns with strings and doing some minor testing for these
-conditions. I will be gradually addressing the various I/O
-related extensions, though it's unlikely to ever be fully guarded
-against attacks.
-
-## Rationale
-
-RETRO is, primarily, a personal system. I'm running code I wrote
-to solve problems I face. On the occasions where I run code sent
-to me by others, I read it carefully first and then run inside a
-sandboxed environment if I'm worried about anything in it.
-
-# Technical Notes and Reflections
-
-This is a collection of short papers providing some additional
-background and reflections on design decisions.
+After the description is a line providing some useful data. This
+includes the class handler, namespace prefix, and the interface
+layer that provides the word.
+
+Words in all systems will be listed as `all`. Some words (like
+the `pb:` words) are only on specific systems like iOS. These
+can be identified by looking at the interface layer field.
+
+At the end of the entry may be an example or two.
+
+## Access Online
+
+The latest Glossary can be browsed at http://forthworks.com:9999
+or gopher://forthworks.com:9999
+
+# Historical Papers and Notes
+
+## On the Naming of RETRO
+
+Taken from http://lists.tunes.org/archives/tunes-lll/1999-July/000121.html
+
+On Fri, Jul 30, 1999 at 07:43:54PM -0400, Paul Dufresne wrote:
+
+> My brother did found it funny that Retro is called like that.
+> For him retro means going back (generally in time) so this
+> does not looks like a name of a OS to come. So he'd like to
+> know from where the name came.
+
+Heheh, here's the story: When I started playing with OS stuff
+last year (not seriously), I was reading about some old things
+like FORTH and ITS, dating back to the 1960's and 70's.  The
+past few years in America, there's been a revival of disco
+music (along with bell bottoms, platform shoes, and all that
+crap) and they call it "retro".  Now, my OS was named by
+musicians.. I was telling a fellow musician about my ideas,
+how it would be cool to have a small OS that isn't bloated and
+unmanageable like Windows... go back to the 70's and resurrect
+a line of software that died out.  He goes "hmm.. sounds kinda
+retro.."
+
+I think it sounds kinda rebellious, which is a Good Thing now
+that everybody hates the M$ empire. :) It seems like other
+people are as sick of the future as I am.  Look at TUNES, the
+idea there isn't to make some great new invention, just take
+some decades-old ideas and combine them in one OS.  The first
+time I saw Knuth's "Art of Computer Programming" in the library
+I thought "god that looks old.. 1973!!! nevermind.."  Now it's
+my programming bible.  Find me something better published in
+the 90's.. if such a thing exists, it'll be like a needle in a
+haystack.  "Newer" doesn't necessarily mean "better".
+
+	New cars = flimsier
+	New farming methods = more devastating
+	New version of Netscape = more bloat, more bullshit
+
+One thing is better now: computer hardware.  Give me 70's
+software on 90's and 00's hardware :)
+
+- Tom Novelli <tcn@tunes.org>
+
+
+## The Design Philosophy of RETRO Native Forth
+
+Computer software is a technology in its infancy, a mere fifty years
+old.  The last 25 years in particular have seen an explosion in the
+software business.  However, software has seen little innovation while
+hardware technology has improved phenomenally (notwithstanding the advent
+of lousy slave-made parts).  Proven software techniques of forty years ago
+have yet to reach widespread use, in deference to the "latest and
+greatest"  proprietary solutions of dubious value.  Thanks to agressive
+marketing, we make huge investments in these dead-end technologies
+(through our businesses and governments, if not personally) and we end up
+with a reliance on a heap of complicated, error-prone, poorly understood
+junk software.
+
+Complexity will dominate the software industry for the foreseeable
+future.  The Retro philosophy is a simple alternative for those willing to
+make a clean break with legacy software.  A Retro system can communicate
+with other systems, but it won't run much legacy software, especially
+proprietary software without source code.  An emulation layer could be
+added, but doing so would defeat the purpose of a simple operating system.
+I think TCP/IP support is all the compatibility that's needed.
+
+At first Retro will appeal to computer hobbyists and electronic
+engineers.  Once the rough edges are smoothed out, it could catch on with
+ordinary folks who don't like waiting five minutes just to check their
+email (not to mention the long hours of setup and maintenance).  Game
+programmers who take their craft seriously may also be interested.
+Businesses might even see a use for it, if the managers decide it's more
+cost-effective to carefully design software for specific needs, rather
+than buying off-the-shelf crap and spending countless manhours working
+around the bugs.  Since it's not practical for businesses to make a clean
+break, my advice is to run Retro (and its ilk) on separate machines
+connected by a network.  Retro is efficient enough to run on older
+machines that would otherwise sit idle, being too slow for the latest
+Microsoft bloatware (or Linux, for that matter).
+
+I strive to avoid the extraneous.  That applies even to proven
+technologies, if I don't need them.  If my computer isn't set up for
+people to log in over the network, I don't want security features; they
+just get in the way.  If I'm only running programs I wrote, I should be
+able to run them with full access to the hardware; I don't need protection
+from viruses.  If I download something I don't trust, then I can run it in
+an isolated process, which is customary with Unix and kin.  But that's not
+core functionality.  All that's needed is the flexibility to add things
+like security, graphical interfaces, and distributed processing - if the
+need ever arises.
+
+In programming languagues, I was misled.  It's the Tower of Babel all
+over again.  The thousands of languages in existence all fall into a
+handful of archetypes: Assembler, LISP, FORTRAN and FORTH represent the
+earliest descendants of nearly all languages.  I hesitate to name a
+definitive "object-oriented" language, and here's why: Object-Oriented
+programming is just a technique, and any language will suffice, even
+Assembler.  The complexites of fancy languages like Ada and C++ are a
+departure from reality -- the reality of the actual physical machine.
+When it all boils down, even LISP, FORTRAN and FORTH are only extensions
+of the machine.
+
+I chose FORTH as the "native tongue" of Retro.  LISP, FORTRAN, and
+other languages can be efficiently implemented as extensions of FORTH, but
+the reverse isn't so efficient.  Theoretically all languages are
+equivalent, but when design time, compilation time, and complexity are
+accounted for, FORTH is most efficient.  FORTH also translates most
+directly to the hardware.  (In fact, FORTH has been implemented in
+hardware; these "stack machines" are extremely efficient.)  FORTH is also
+the easiest language to implement from scratch - a major concern when
+you're trying to make a clean break.  So with simplicity in mind, FORTH
+was the obvious choice.
+
+I'm perfectly happy working with text only, and I go to great lengths
+to avoid using the standard graphical environments, which have major
+problems: windows, pulldown menus, and mice.  Windows can't share the
+screen nicely; that idea is hopeless.  Pulldowns are tedious.  Mice get in
+the way of typing without reducing the need for it; all they give me is
+tendonitis.  Their main use is for drawing.
+
+Some of my favorite interfaces: Telix, Telegard BBS, Pine, Pico, Lynx,
+and ScreamTracker.  All "hotkey" interfaces where you press a key or two
+to perform an action.  Usually the important commands are listed at the
+bottom of the screen, or at least on a help screen.  The same principles
+apply to graphical interfaces: use the full screen, except for a status
+and menu area on one edge.  Resist the temptation to clutter up the
+screen.
+
+As for switching between programs, the Windows methods suck; the only
+thing worse is Unix job control (jobs, fg, and such).  The Linux method is
+tolerable: Alt-Arrows, Alt-F1, Alt-F2, etc.  Still, things could be
+better: F11 and F12 cycle back and forth through all open programs; Alt-F1
+assigns the currently selected program to F1, and likewise for the other
+function keys.  Programs just won't use function keys - Control and Alt
+combinations are less awkward and easier to remember, besides.  I'll also
+want a "last channel" key and a "task list" key; maybe I'll borrow those
+stupid Win95 keys.  The Pause key will do like it says - pause the current
+program - and Ctrl-Pause (Break) will kill it.
+
+One more thing: consistency.  I like programs to look different so I
+can tell them apart, but the keys should be the same as much as possible.
+Keys should be configured in one place, for all programs.  Finally,
+remember the most consistent interface, one of the few constants
+throughout the history of computing - the text screen and keyboard, and
+the teletypewriter before that.  Don't overlook it.
+
+More to come, maybe... :)
+
+"If it's on line, it's a work in progress."
+
+Tom Novelli, 3/4/2000
 
 ## Metacompilation and Assembly
 
@@ -2867,11 +3224,20 @@ Compiler & Interpreter
     prefix::    prefix:#    prefix:&    prefix:$
     interpret   d:lookup    err:notfound
 
+Assembler
+
+    i           d           r
+
 I *could* slightly reduce this. The $ prefix could be defined in
 higher level code, and I don't strictly *need* to expose the
 `fetch-next` and `store-next` here. But since the are already
 implemented as dependencies of the words in the kernel, it would
 be a bit wasteful to redefine them later in higher level code.
+
+A recent change was the addition of the assembler into the
+kernel. This allows the higher levels to use assembly as needed,
+which gives more flexibility and allows for more optimal code
+in the standard library.
 
 With these words the rest of the language can be built up. Note
 that the Rx kernel does not provide any I/O words. It's assumed
@@ -3048,157 +3414,48 @@ In the end, I'm happy with how RETRO 11 turned out. I made some
 mistakes in embracing too much complexity, but despite this it
 was a successful system for many years.
 
-# Historical Papers and Notes
+# Security Concerns
 
-## On the Naming of RETRO
+The standard RETRO is not a good choice for applications
+needing to be highly secure.
 
-Taken from http://lists.tunes.org/archives/tunes-lll/1999-July/000121.html
+## Runtime Checks
 
-On Fri, Jul 30, 1999 at 07:43:54PM -0400, Paul Dufresne wrote:
+The RETRO system performs only minimal checks. It will not
+load an image larger than the max set at build time. And
+stack over/underflow are checked for as code executes.
 
-> My brother did found it funny that Retro is called like that.
-> For him retro means going back (generally in time) so this
-> does not looks like a name of a OS to come. So he'd like to
-> know from where the name came.
+The system does not attempt to validate anything else, it's
+quite easy to crash.
 
-Heheh, here's the story: When I started playing with OS stuff
-last year (not seriously), I was reading about some old things
-like FORTH and ITS, dating back to the 1960's and 70's.  The
-past few years in America, there's been a revival of disco
-music (along with bell bottoms, platform shoes, and all that
-crap) and they call it "retro".  Now, my OS was named by
-musicians.. I was telling a fellow musician about my ideas,
-how it would be cool to have a small OS that isn't bloated and
-unmanageable like Windows... go back to the 70's and resurrect
-a line of software that died out.  He goes "hmm.. sounds kinda
-retro.."
+## Isolation
 
-I think it sounds kinda rebellious, which is a Good Thing now
-that everybody hates the M$ empire. :) It seems like other
-people are as sick of the future as I am.  Look at TUNES, the
-idea there isn't to make some great new invention, just take
-some decades-old ideas and combine them in one OS.  The first
-time I saw Knuth's "Art of Computer Programming" in the library
-I thought "god that looks old.. 1973!!! nevermind.."  Now it's
-my programming bible.  Find me something better published in
-the 90's.. if such a thing exists, it'll be like a needle in a
-haystack.  "Newer" doesn't necessarily mean "better".
+The VM itself and the core code is self contained. Nga does
+not make use of malloc/free, and uses only standard system
+libraries. It's possible for buffer overruns within the image
+(overwriting Nga code), but the RETRO image shouldn't leak
+into the C portions.
 
-	New cars = flimsier
-	New farming methods = more devastating
-	New version of Netscape = more bloat, more bullshit
+I/O presents a bigger issue. Anything involving I/O, especially
+with the `unix:` words, may be a vector for attacks.
 
-One thing is better now: computer hardware.  Give me 70's
-software on 90's and 00's hardware :)
+## Future Direction
 
-- Tom Novelli <tcn@tunes.org>
+I'm not planning to add anything to the *image* side as, for me,
+the performance hit due to added checks is bigger than the
+benefits.
 
+The story is different on the VM side. I've already begun taking
+steps to address some of the issues, using functions that check
+for overruns with strings and doing some minor testing for these
+conditions. I will be gradually addressing the various I/O
+related extensions, though it's unlikely to ever be fully guarded
+against attacks.
 
-## The Design Philosophy of RETRO Native Forth
+## Rationale
 
-Computer software is a technology in its infancy, a mere fifty years
-old.  The last 25 years in particular have seen an explosion in the
-software business.  However, software has seen little innovation while
-hardware technology has improved phenomenally (notwithstanding the advent
-of lousy slave-made parts).  Proven software techniques of forty years ago
-have yet to reach widespread use, in deference to the "latest and
-greatest"  proprietary solutions of dubious value.  Thanks to agressive
-marketing, we make huge investments in these dead-end technologies
-(through our businesses and governments, if not personally) and we end up
-with a reliance on a heap of complicated, error-prone, poorly understood
-junk software.
-
-Complexity will dominate the software industry for the foreseeable
-future.  The Retro philosophy is a simple alternative for those willing to
-make a clean break with legacy software.  A Retro system can communicate
-with other systems, but it won't run much legacy software, especially
-proprietary software without source code.  An emulation layer could be
-added, but doing so would defeat the purpose of a simple operating system.
-I think TCP/IP support is all the compatibility that's needed.
-
-At first Retro will appeal to computer hobbyists and electronic
-engineers.  Once the rough edges are smoothed out, it could catch on with
-ordinary folks who don't like waiting five minutes just to check their
-email (not to mention the long hours of setup and maintenance).  Game
-programmers who take their craft seriously may also be interested.
-Businesses might even see a use for it, if the managers decide it's more
-cost-effective to carefully design software for specific needs, rather
-than buying off-the-shelf crap and spending countless manhours working
-around the bugs.  Since it's not practical for businesses to make a clean
-break, my advice is to run Retro (and its ilk) on separate machines
-connected by a network.  Retro is efficient enough to run on older
-machines that would otherwise sit idle, being too slow for the latest
-Microsoft bloatware (or Linux, for that matter).
-
-I strive to avoid the extraneous.  That applies even to proven
-technologies, if I don't need them.  If my computer isn't set up for
-people to log in over the network, I don't want security features; they
-just get in the way.  If I'm only running programs I wrote, I should be
-able to run them with full access to the hardware; I don't need protection
-from viruses.  If I download something I don't trust, then I can run it in
-an isolated process, which is customary with Unix and kin.  But that's not
-core functionality.  All that's needed is the flexibility to add things
-like security, graphical interfaces, and distributed processing - if the
-need ever arises.
-
-In programming languagues, I was misled.  It's the Tower of Babel all
-over again.  The thousands of languages in existence all fall into a
-handful of archetypes: Assembler, LISP, FORTRAN and FORTH represent the
-earliest descendants of nearly all languages.  I hesitate to name a
-definitive "object-oriented" language, and here's why: Object-Oriented
-programming is just a technique, and any language will suffice, even
-Assembler.  The complexites of fancy languages like Ada and C++ are a
-departure from reality -- the reality of the actual physical machine.
-When it all boils down, even LISP, FORTRAN and FORTH are only extensions
-of the machine.
-
-I chose FORTH as the "native tongue" of Retro.  LISP, FORTRAN, and
-other languages can be efficiently implemented as extensions of FORTH, but
-the reverse isn't so efficient.  Theoretically all languages are
-equivalent, but when design time, compilation time, and complexity are
-accounted for, FORTH is most efficient.  FORTH also translates most
-directly to the hardware.  (In fact, FORTH has been implemented in
-hardware; these "stack machines" are extremely efficient.)  FORTH is also
-the easiest language to implement from scratch - a major concern when
-you're trying to make a clean break.  So with simplicity in mind, FORTH
-was the obvious choice.
-
-I'm perfectly happy working with text only, and I go to great lengths
-to avoid using the standard graphical environments, which have major
-problems: windows, pulldown menus, and mice.  Windows can't share the
-screen nicely; that idea is hopeless.  Pulldowns are tedious.  Mice get in
-the way of typing without reducing the need for it; all they give me is
-tendonitis.  Their main use is for drawing.
-
-Some of my favorite interfaces: Telix, Telegard BBS, Pine, Pico, Lynx,
-and ScreamTracker.  All "hotkey" interfaces where you press a key or two
-to perform an action.  Usually the important commands are listed at the
-bottom of the screen, or at least on a help screen.  The same principles
-apply to graphical interfaces: use the full screen, except for a status
-and menu area on one edge.  Resist the temptation to clutter up the
-screen.
-
-As for switching between programs, the Windows methods suck; the only
-thing worse is Unix job control (jobs, fg, and such).  The Linux method is
-tolerable: Alt-Arrows, Alt-F1, Alt-F2, etc.  Still, things could be
-better: F11 and F12 cycle back and forth through all open programs; Alt-F1
-assigns the currently selected program to F1, and likewise for the other
-function keys.  Programs just won't use function keys - Control and Alt
-combinations are less awkward and easier to remember, besides.  I'll also
-want a "last channel" key and a "task list" key; maybe I'll borrow those
-stupid Win95 keys.  The Pause key will do like it says - pause the current
-program - and Ctrl-Pause (Break) will kill it.
-
-One more thing: consistency.  I like programs to look different so I
-can tell them apart, but the keys should be the same as much as possible.
-Keys should be configured in one place, for all programs.  Finally,
-remember the most consistent interface, one of the few constants
-throughout the history of computing - the text screen and keyboard, and
-the teletypewriter before that.  Don't overlook it.
-
-More to come, maybe... :)
-
-"If it's on line, it's a work in progress."
-
-Tom Novelli, 3/4/2000
+RETRO is, primarily, a personal system. I'm running code I wrote
+to solve problems I face. On the occasions where I run code sent
+to me by others, I read it carefully first and then run inside a
+sandboxed environment if I'm worried about anything in it.
 

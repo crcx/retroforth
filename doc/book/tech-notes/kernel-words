@@ -1,0 +1,74 @@
+## On The Kernel Wordset
+
+In implementing the RETRO 12 kernel (called Rx) I had to decide
+on what functionality would be needed. It was important to me
+that this be kept clean and minimalistic, as I didn't want to
+spend a lot of time changing it as time progressed. It's far
+nicer to code at the higher level, where the RETRO language is
+functional, as opposed to writing more assembly code.
+
+So what made it in?
+
+Primitives
+
+These are words that map directly to Nga instructions.
+
+    dup      drop     swap   call   eq?   -eq?   lt?   gt?
+    fetch    store    +      -      *     /mod   and   or
+    xor      shift    push   pop    0;
+
+Memory
+
+    fetch-next    store-next    ,    s,
+
+Strings
+
+    s:to-number    s:eq?    s:length
+
+Flow Control
+
+    choose    if    -if    repeat    again
+
+Compiler & Interpreter
+
+    Compiler    Heap        ;       [    ]      Dictionary
+    d:link      d:class     d:xt    d:name      d:add-header
+    class:word  class:primitive     class:data  class:macro
+    prefix::    prefix:#    prefix:&    prefix:$
+    interpret   d:lookup    err:notfound
+
+Assembler
+
+    i           d           r
+
+I *could* slightly reduce this. The $ prefix could be defined in
+higher level code, and I don't strictly *need* to expose the
+`fetch-next` and `store-next` here. But since the are already
+implemented as dependencies of the words in the kernel, it would
+be a bit wasteful to redefine them later in higher level code.
+
+A recent change was the addition of the assembler into the
+kernel. This allows the higher levels to use assembly as needed,
+which gives more flexibility and allows for more optimal code
+in the standard library.
+
+With these words the rest of the language can be built up. Note
+that the Rx kernel does not provide any I/O words. It's assumed
+that the RETRO interfaces will add these as best suited for the
+systems they run on.
+
+There is another small bit. All images start with a few key
+pointers in fixed offsets of memory. These are:
+
+    | Offset | Contains                    |
+    | ------ | --------------------------- |
+    | 0      | lit call nop nop            |
+    | 1      | Pointer to main entry point |
+    | 2      | Dictionary                  |
+    | 3      | Heap                        |
+    | 4      | RETRO version identifier    |
+
+An interface can use the dictionary pointer and knowledge of the
+dictionary format for a specific RETRO version to identify the
+location of essential words like `interpret` and `err:notfound`
+when implementing the user facing interface.

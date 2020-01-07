@@ -77,7 +77,7 @@ when you need to generate more optimal code. So one can write:
 
 Or:
 
-    :n:square as{ 'dumure.. i }as ;
+    :n:square \dumure.. ;
 
 The second one will be faster, as the entire definition is one
 bundle, which reduces memory reads and decoding by 2/3.

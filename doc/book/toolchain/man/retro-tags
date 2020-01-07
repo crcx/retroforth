@@ -1,0 +1,19 @@
+RETRO-TAGS(1)		    General Commands Manual		 RETRO-TAGS(1)
+
+RETRO-TAGS
+     retro-tags - a modern, pragmatic forth development system
+
+SYNOPSIS
+     retro-tags
+
+DESCRIPTION
+     RETRO is a modern, pragmatic Forth drawing influences from many sources.
+     It's clean, elegant, tiny, and easy to grasp and adapt to various uses.
+
+     retro-tags is a tool for extracting code from fenced blocks in literate
+     sources and generating a tags file compatible with ctags.
+
+AUTHORS
+     Charles Childers <crc@forthworks.com>
+
+OpenBSD 6.4			  August 2019			   OpenBSD 6.4

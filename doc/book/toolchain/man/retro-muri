@@ -1,0 +1,23 @@
+RETRO-MURI(1)		    General Commands Manual		 RETRO-MURI(1)
+
+RETRO-MURI
+     retro-muri - a modern, pragmatic forth development system
+
+SYNOPSIS
+     retro-muri filename
+
+DESCRIPTION
+     RETRO is a modern, pragmatic Forth drawing influences from many sources.
+     It's clean, elegant, tiny, and easy to grasp and adapt to various uses.
+
+     retro-muri is an assembler for Nga, the virtual machine at the heart of
+     Retro. It is used to build the image file containing the actual Retro
+     language.
+
+     This will extract the code blocks in the specified file and generate an
+     image file named `ngaImage`.
+
+AUTHORS
+     Charles Childers <crc@forthworks.com>
+
+OpenBSD 6.4			 February 2019			   OpenBSD 6.4

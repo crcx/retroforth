@@ -1,0 +1,20 @@
+RETRO-DESCRIBE(1)	    General Commands Manual	     RETRO-DESCRIBE(1)
+
+RETRO-DESCRIBE
+     retro-describe - a modern, pragmatic forth development system
+
+SYNOPSIS
+     retro-describe wordname [additional wordnames]
+
+DESCRIPTION
+     RETRO is a modern, pragmatic Forth drawing influences from many sources.
+     It's clean, elegant, tiny, and easy to grasp and adapt to various uses.
+
+     retro-describe is a tool for looking up the description and stack
+     comments for words in the core language and extensions.  It will write
+     output to stdout.
+
+AUTHORS
+     Charles Childers <crc@forthworks.com>
+
+OpenBSD 6.4			   May 2019			   OpenBSD 6.4

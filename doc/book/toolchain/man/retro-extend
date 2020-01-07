@@ -1,0 +1,28 @@
+RETRO-EXTEND(1)		    General Commands Manual	       RETRO-EXTEND(1)
+
+RETRO-EXTEND
+     retro-extend - a modern, pragmatic forth development system
+
+SYNOPSIS
+     retro-extend image filename [filenames]
+
+DESCRIPTION
+     RETRO is a modern, pragmatic Forth drawing influences from many sources.
+     It's clean, elegant, tiny, and easy to grasp and adapt to various uses.
+
+     retro-extend is a tool to load additional code into an image file. It
+     takes the name of an image file and one or more source files to load into
+     the image. After completion the image file will be updated with the
+     changes.
+
+
+CAVETS
+     retro-extend only emulates the minimal console output device. If the
+     source files require additional I/O to be present, the extend process
+     will likely fail to work correctly.
+
+
+AUTHORS
+     Charles Childers <crc@forthworks.com>
+
+OpenBSD 6.4			 February 2019			   OpenBSD 6.4

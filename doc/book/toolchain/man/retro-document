@@ -1,0 +1,20 @@
+RETRO-DOCUMENT(1)	    General Commands Manual	     RETRO-DOCUMENT(1)
+
+RETRO-DOCUMENT
+     retro-document - a modern, pragmatic forth development system
+
+SYNOPSIS
+     retro-document filename
+
+DESCRIPTION
+     RETRO is a modern, pragmatic Forth drawing influences from many sources.
+     It's clean, elegant, tiny, and easy to grasp and adapt to various uses.
+
+     retro-document is a tool for generating a listing of the descriptions and
+     stack comments for all standard word used in a source file. It will write
+     output to stdout.
+
+AUTHORS
+     Charles Childers <crc@forthworks.com>
+
+OpenBSD 6.4			   May 2019			   OpenBSD 6.4

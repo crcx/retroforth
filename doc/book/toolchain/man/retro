@@ -1,0 +1,44 @@
+RETRO(1)		    General Commands Manual		      RETRO(1)
+
+RETRO
+     retro - a modern, pragmatic forth development system
+
+SYNOPSIS
+     retro [-h] [-i] [-t] [-f filename] [-u filename] [-r filename]
+	   [filename script-args]
+
+DESCRIPTION
+     RETRO is a modern, pragmatic Forth drawing influences from many sources.
+     It's clean, elegant, tiny, and easy to grasp and adapt to various uses.
+
+     retro is the main interface for interacting with Retro. It provides both
+     an interactive and a scripting  model.
+
+OPTIONS
+     -h	      Display a help screen.
+
+     -i	      Start Retro in interactive mode.
+
+     -s	      Start Retro in interactive mode and supress the startup message.
+
+     -t	      Run any test blocks in the loaded files.
+
+     -f filename
+	      Run any code blocks in the specified file.
+
+     -u filename
+	      Load and use the specified image file rather than the integral
+	      one.
+
+     -r filename
+	      Load and run the code in the specified image file rather than
+	      the integral one.
+
+     filename script-args
+	      Run code blocks in a single file. Pass script-args to the code
+	      being run.
+
+AUTHORS
+     Charles Childers <crc@forthworks.com>
+
+OpenBSD 6.4			 Setember 2019			   OpenBSD 6.4
