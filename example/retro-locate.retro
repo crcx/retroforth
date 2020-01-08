@@ -1,0 +1,6 @@
+#!/usr/bin/env retro
+
+~~~
+'Line var
+'tags [ &Heap [ ASCII:HT s:tokenize !Line @Line #0 a:fetch #0 sys:argv s:eq? [ @Line #2 a:fetch @Line #1 a:fetch s:put $: c:put s:put nl ] if ] v:preserve ] file:for-each-line
+~~~

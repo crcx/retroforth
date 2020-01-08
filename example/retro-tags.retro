@@ -6,6 +6,8 @@ rm -f tags
 touch tags
 find . -name '*.retro' -print0 | xargs -0 -n 1 retro $0 >>tags
 find . -name '*.forth' -print0 | xargs -0 -n 1 retro $0 >>tags
+cat tags | sort | uniq >tags2
+mv tags2 tags
 exit
 
 --------------------------------------------------------------

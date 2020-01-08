@@ -32,6 +32,7 @@ install: build install-data install-docs install-examples install-manpages
 	install -c -m 755 bin/retro-describe $(DESTDIR)$(PREFIX)/bin/retro-describe
 	install -c -m 755 bin/retro-document $(DESTDIR)$(PREFIX)/bin/retro-document
 	install -c -m 755 example/retro-tags.retro $(DESTDIR)$(PREFIX)/bin/retro-tags
+	install -c -m 755 example/retro-locate.retro $(DESTDIR)$(PREFIX)/bin/retro-locate
 
 install-strip: build install-data install-docs install-examples
 	install -m 755 -d -- $(DESTDIR)/bin
@@ -43,6 +44,7 @@ install-strip: build install-data install-docs install-examples
 	install -c -m 755 bin/retro-describe $(DESTDIR)$(PREFIX)/bin/retro-describe
 	install -c -m 755 bin/retro-document $(DESTDIR)$(PREFIX)/bin/retro-document
 	install -c -m 755 example/retro-tags.retro $(DESTDIR)$(PREFIX)/bin/retro-tags
+	install -c -m 755 example/retro-locate.retro $(DESTDIR)$(PREFIX)/bin/retro-locate
 
 install-data:
 	install -m 755 -d -- $(DESTDIR)$(DATADIR)
