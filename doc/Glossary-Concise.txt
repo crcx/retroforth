@@ -1307,7 +1307,7 @@ socket:accept            D: n-nn  A: -  F: -
 Begin accepting connections. Returns a new socket and an error code.
 
 socket:bind              D: sn-nn  A: -  F: -
-Bind a socket to a port. The port should be a string. Returns 0 if successful or -1 othewise and an error code.
+Bind a socket to a port. The port should be a string. Returns 0 if successful or -1 otherwise and an error code.
 
 socket:close             D: n-  A: -  F: -
 Close a socket.
@@ -1325,7 +1325,7 @@ socket:gethostbyname     D: as-  A: -  F: -
 Get the host IP in dotted notation. The host is specified by the string and the address is the start of the buffer for the dotted IP.
 
 socket:listen            D: nn-nn  A: -  F: -
-Prepare a socket for accepting incoming quotations. Takes a backlog count (n1) and a socket (n2). Returns a flag (0 success, -1 failed) and an error code.
+Prepare a socket for accepting incoming connections. Takes a backlog count (n1) and a socket (n2). Returns a flag (0 success, -1 failed) and an error code.
 
 socket:recv              D: ann-nn  A: -  F: -
 Receive data from a socket. This will read into memory starting at address *a*, up to *n1* bytes. *n2* is the socket. Returns the number of bytes read and an error code.

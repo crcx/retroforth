@@ -5156,7 +5156,7 @@ socket:bind
   Addr:  -
   Float: -
 
-Bind a socket to a port. The port should be a string. Returns 0 if successful or -1 othewise and an error code.
+Bind a socket to a port. The port should be a string. Returns 0 if successful or -1 otherwise and an error code.
 
 Class: class:word | Namespace: socket | Interface Layer: rre
 ------------------------------------------------------------------------
@@ -5222,7 +5222,7 @@ socket:listen
   Addr:  -
   Float: -
 
-Prepare a socket for accepting incoming quotations. Takes a backlog count (n1) and a socket (n2). Returns a flag (0 success, -1 failed) and an error code.
+Prepare a socket for accepting incoming connections. Takes a backlog count (n1) and a socket (n2). Returns a flag (0 success, -1 failed) and an error code.
 
 Class: class:word | Namespace: socket | Interface Layer: rre
 ------------------------------------------------------------------------
