@@ -99,3 +99,20 @@ Additionally, in the runtime assembler, these are reversed:
 Instead of:
 
     i dudumu..
+
+The runtime assembler also provides three prefixes for use in
+inlining machine code into a definition. These are:
+
+     \    Treat token as an assembly sequence
+     `    Treat token as a numeric value
+     ^    Treat token as a reference
+
+E.g., instead of doing something like:
+
+    :n:square as{ 'dumu.... i }as ;
+    :test as{ 'lilica.... i #22 d 'n:square r }as ;
+
+Just write:
+
+    :n:square \dumu.... ;
+    :test     \lilica.. `22 ^n:square ; 

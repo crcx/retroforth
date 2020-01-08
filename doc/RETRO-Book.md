@@ -1059,6 +1059,23 @@ Instead of:
 
     i dudumu..
 
+The runtime assembler also provides three prefixes for use in
+inlining machine code into a definition. These are:
+
+     \    Treat token as an assembly sequence
+     `    Treat token as a numeric value
+     ^    Treat token as a reference
+
+E.g., instead of doing something like:
+
+    :n:square as{ 'dumu.... i }as ;
+    :test as{ 'lilica.... i #22 d 'n:square r }as ;
+
+Just write:
+
+    :n:square \dumu.... ;
+    :test     \lilica.. `22 ^n:square ; 
+
 # Working With a Buffer
 
 RETRO provides words for operating on a linear memory area.
@@ -1944,8 +1961,7 @@ names.
 
 # Working With Numbers
 
-Numbers in RETRO are signed, 32 bit integers with a range of
--2,147,483,648 to 2,147,483,647.
+Numbers in RETRO are signed integers.
 
 ## Token Prefix
 
@@ -1955,7 +1971,76 @@ All numbers start with a `#` prefix.
 
 Most words operating on numbers are in the `n:` namespace.
 
+## Range of Values
 
+A default RETRO system with 32 bit cells provides a range of
+-2,147,483,648 to 2,147,483,647. For 64 bit systems, the range
+will be -9,223,372,036,854,775,807 to 9,223,372,036,854,775,806.
+
+You can check the range your VM and image support using:
+
+    n:MIN
+    n:MAX
+
+These will return the limits for your system.
+
+## Comparisons
+
+RETRO provides a number of comparison words for numeric values.
+
+The basic comparators are:
+
+    -eq?
+    eq?
+    lt?
+    lteq?
+    gt?
+    gteq?
+
+Additionally RETRO also provides:
+
+    n:-zero?
+    n:between?
+    n:even?
+    n:negative?
+    n:odd?
+    n:positive?
+    n:strictly-positive?
+    n:zero?
+
+## Basic Operations
+
+    +
+    -
+    *
+    /
+    mod
+    /mod
+    n:abs
+    n:dec
+    n:inc
+    n:limit
+    n:max
+    n:min
+    n:negate
+    n:pow
+    n:sqrt
+    n:square
+
+## Conversions
+
+You can convert a number to a string with `n:to-string` or
+to a floating point value with `n:to-float`.
+
+    #123 n:to-float  f:put
+
+    #123 n:to-string s:put
+
+## Display
+
+To display a number, use `n:put`.
+
+    #123 n:put
 
 # Working With Pointers
 
