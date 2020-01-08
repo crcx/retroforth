@@ -1,0 +1,67 @@
+# Sockets
+
+On Unix hosts, RETRO provides an optional set of words for using
+network sockets.
+
+## Create a Socket
+
+To create a new socket, just run:
+
+    socket:create
+
+This will return a socket handle.
+
+## Bind To A Port
+
+To bind to a port, pass the port number and socket handle
+to `socket:bind`. The port should be a string. This will return
+0 if successful, -1 if not successful, and an error code.
+
+    '9998 @Sock socket:bind
+
+## Configure To Allow Incoming Connections
+
+To prepare a socket for incoming connections use socket:listen. This
+will take a backlog count and a socket handle. It returns a flag
+(0 success, -1 failed) and an error code.
+
+    #3 @Sock socket:listen
+
+## Accept Connections
+
+To accept connections pass the socket handle to `socket:accept`.
+This returns a new socket for the connection and an error code.
+
+    @Sock socket:accept
+
+## Make A Connection
+
+To connect to a server using the socket:
+
+    'forth.works '70 socket:configure
+    @Sock socket:connect
+
+`socket:connect` will return a status code and an error code.
+
+## Writing To A Socket
+
+To write a string to a socket, use `socket:send`. This will
+take a string and a socket handle and will return the number
+of bytes sent and an error code.
+
+    'test @Sock socket:send
+
+## Reading From A Socket
+
+To read data from a socket pass an address, a maximum number of
+bytes, and the socket handle to `socket:recv`. This will return
+the number of bytes received and an error code. The bytes will
+be stored in memory starting at the specified address.
+
+    here #1024 @Sock socket:recv
+
+## Close a Socket
+
+To close a socket, pass the socket handle to `socket:close`.
+
+    @Socket socket:close
