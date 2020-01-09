@@ -73,6 +73,7 @@ install-manpages:
 	install -c -m 644 man/retro-muri.1 $(MANDIR)/retro-muri.1
 	install -c -m 644 man/retro-unu.1 $(MANDIR)/retro-unu.1
 	install -c -m 644 man/retro-tags.1 $(MANDIR)/retro-tags.1
+	install -c -m 644 man/retro-locate.1 $(MANDIR)/retro-locate.1
 
 test: bin/retro
 	./bin/retro tests/test-core.forth
