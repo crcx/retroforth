@@ -33,6 +33,7 @@ Welcome to the RETRO Handbook!
 0retro-document(1)	/book/toolchain/man/retro-document
 0retro-embedimage(1)	/book/toolchain/man/retro-embedimage
 0retro-extend(1)	/book/toolchain/man/retro-extend
+0retro-locate(1)	/book/toolchain/man/retro-locate
 0retro-muri(1)	/book/toolchain/man/retro-muri
 0retro-tags(1)	/book/toolchain/man/retro-tags
 0retro-unu(1)	/book/toolchain/man/retro-unu

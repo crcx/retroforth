@@ -15,46 +15,63 @@ it using separate file to make the actual editing process easier
 for me.
 
 ~~~
-{ 'Overview
-  'Obtaining-Retro
-  'Building-Unix
-  'Building-Windows
-  'Starting
-  'Basic-Interactions
-  'Syntax
-  'Quick-Tutorial
-  'Using-the-Glossary
-  'Programming-Techniques
-  'Programming-Techniques-Unu
-  'Programming-Techniques-Naming-Conventions
-  'Programming-Techniques-Stack-Diagrams
-  'Programming-Techniques-Word-Classes
-  'Programming-Techniques-Using-Combinators
-  'Programming-Techniques-Working-With
-  'The-Stacks
-  'Programming-Techniques-Working-With-Arrays
-  'Programming-Techniques-Working-With-Buffer
-  'Programming-Techniques-Working-With-Characters
-  'Programming-Techniques-Working-With-Dictionary
-  'Programming-Techniques-Working-With-Floating-Point
-  'Programming-Techniques-Working-With-Numbers
-  'Programming-Techniques-Working-With-Pointers
-  'Programming-Techniques-Working-With-Strings
-  'Programming-Techniques-Writing-Combinators
-  'Programming-Techniques-Working-With-Assembly
-  'Checking-The-Version
-  'Lexical-Scope
-  'Internals
-  'Internals-Nga
-  'Internals-Interface-Layers
-  'Internals-Retro-Image
-  'Additional-Tools
-  'Advanced-Builds
-  'Retro-Compiler
-  'Errors
-  'Security
-  'Tech-Notes
-  'Historical-Papers
+{
+  'general/introduction
+  'general/copyrights
+  'building/obtaining
+  'building/unix
+  'building/windows
+  'building/alternatives
+  'building/advanced
+  'general/starting
+  'general/basic-interactions
+  'general/retro-unu
+  'general/quick-tutorial
+  'general/syntax
+  'toolchain/info/additional-tools
+  'toolchain/info/retro-compiler
+  'toolchain/man/retro
+  'toolchain/man/retro-describe
+  'toolchain/man/retro-document
+  'toolchain/man/retro-embedimage
+  'toolchain/man/retro-extend
+  'toolchain/man/retro-locate
+  'toolchain/man/retro-muri
+  'toolchain/man/retro-tags
+  'techniques/naming-conventions
+  'techniques/return-stack
+  'techniques/stack-diagrams
+  'techniques/arrays
+  'techniques/assembly
+  'techniques/buffer
+  'techniques/characters
+  'techniques/dictionary
+  'techniques/floating-point
+  'techniques/files
+  'techniques/numbers
+  'techniques/pointers
+  'techniques/sockets
+  'techniques/strings
+  'techniques/using-combinators
+  'techniques/word-classes
+  'techniques/checking-the-version
+  'techniques/errors
+  'techniques/lexical-scope
+  'techniques/the-stacks
+  'internals/nga
+  'internals/interface-layers
+  'internals/io
+  'internals/image
+  'glossary/using
+  'tech-notes/historical-papers
+  'tech-notes/metacompilation
+  'tech-notes/self-hosting
+  'tech-notes/prefixes
+  'tech-notes/kernel-words
+  'tech-notes/ngaro-to-nga
+  'tech-notes/retro11-retrospective
+  'tech-notes/security
+  'tech-notes/code-it-yourself
 } 'TOC const
 ~~~
 
@@ -63,26 +80,14 @@ for me.
 'Out var
 
 :import        here swap BOOK-BASE s:prepend file:slurp ;
-:+nl           ASCII:LF @Out file:write ;
-:add-to-book   here [ @Out file:write ] s:for-each +nl ;
+:/n            ASCII:LF @Out file:write ;
+:add-to-book   here [ @Out file:write ] s:for-each /n ;
 :process-files [ import add-to-book $. c:put ] a:for-each nl ;
 :open          'doc/RETRO-Book.md file:open<for-writing> !Out ;
 :close         @Out file:close ;
 :assemble      open process-files close ;
 ~~~
 
-
 ~~~
-:open          'gophermap file:open<for-writing> !Out ;
-:close         @Out file:close ;
-:ENTRY         '0%s\t/book/%s\tforth.works\t70\n ;
-:process-files [ dup ENTRY s:format [ @Out file:write ] s:for-each ] a:for-each ;
-:gophermap     open process-files close ;
-~~~
-
-
-~~~
-:process       (dup assemble (gophermap ;
-
-TOC process
+TOC assemble
 ~~~
