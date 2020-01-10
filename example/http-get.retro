@@ -1,0 +1,106 @@
+Typically to deal with HTTP I just use curl(1), but it is possible to
+make HTTP requests using the sockets vocabulary. It's just a pain to
+do so as HTTP has a lot of annoyances.
+
+This example provides a way to make HTTP requests using only RETRO.
+
+First, some variables. I'll keep the socket handle in `Socket` and the
+number of bytes read in `Read`.
+
+~~~
+'Socket var
+'Read   var
+~~~
+
+Since HTTP allows for a large number of response headers with various
+sizes and ordering, skipping them can be annoying. I do care about one:
+the Content-Length: result.
+
+I'll track the number of sequential newlines in a variable named `Seq`,
+the value for Content-Length in `Length`, and then the current response
+line in `Line`.
+
+As a bonus annoyance, HTTP doesn't limit the size of any particular
+header line, so I need to allocate enough space to cover anything it
+throws at me. Per a stackoverflow posting at
+https://stackoverflow.com/questions/686217/maximum-on-http-header-values
+I'll need at least 8KiB, so:
+
+~~~
+'Length var
+'Seq    var
+'Line   var #8192 allot
+~~~
+
+Then skipping the headers is a matter of reading lines until two newlines
+are encountered.
+
+~~~
+:read-byte    here #1 @Socket socket:recv drop-pair here fetch ;
+:append       dup buffer:add ;
+:eol?         [ ASCII:LF eq? ] [ ASCII:CR eq? ] bi or ;
+:is-length?   &Line 'Content-Length:_ s:begins-with? ;
+:process      &Line s:trim #16 + s:to-number !Length ;
+:next         &Line buffer:set ;
+:yes          &Seq v:inc ;
+:no           #0 !Seq ;
+:check        [ yes is-length? [ process ] if next ] [ no ] choose ;
+:read-line    read-byte append eol? check ;
+:done?        @Seq #4 eq? ;
+:skip-headers [ &Line buffer:set [ read-line done? ] until ] buffer:preserve ;
+~~~
+
+Now on to making the actual request to the server. An HTTP GET request
+takes a minimal form like:
+
+  GET <file> HTTP/1.1
+  Host: domain
+
+So I begin by writing a word to parse a URL. It'll store pointers to the
+parts in the `Host` and `Request` variables. This is pretty easy. I
+increase the starting point by 7 to skip over the HTTP:// part and then
+split on the first / character to separate the domain and requested file.
+
+~~~
+'Host     var
+'Request  var
+
+:parse-url #7 + $/ s:split s:keep !Host s:keep !Request ;
+~~~
+
+Given that, making a request is simply:
+
+~~~
+:make-request
+  @Host @Request
+  'GET_%s_HTTP/1.1\r\nHost:_%s\r\n\r\n s:format @Socket socket:send drop-pair ;
+~~~
+
+Moving on to reading the body, this is just reading bytes and shoving
+them into a buffer. I use the `Read` variable to track the number of
+bytes read, stopping when this reaches the `Length` extracted from the
+headers.
+
+~~~
+:read-byte here #1 @Socket socket:recv drop-pair here fetch buffer:add ;
+:read-body [ &Read v:inc read-byte @Read @Length eq? ] until ;
+~~~
+
+And finally tieing this all together:
+
+~~~
+:http:get (as-n)
+  parse-url
+  #0 !Seq #0 !Read
+  socket:create !Socket @Host '80 socket:configure
+  @Socket socket:connect drop-pair
+  [ buffer:set make-request skip-headers read-body ] buffer:preserve @Read ;
+~~~
+
+And a test case:
+
+```
+'Body d:create #90000 allot
+&Body 'http://pestilenz.org/~ckeen/blog/posts/ciy-manifesto.html http:get
+&Body s:put
+```
