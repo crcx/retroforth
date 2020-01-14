@@ -8,7 +8,7 @@ to generate turnkey executables.
 
 - Unix host
 - ELF executable support
-- objcpy in the $PATH
+- `objcpy` in the $PATH
 
 ## Building
 
@@ -34,17 +34,13 @@ Example:
 
 Given a `hello.forth`:
 
-```
-~~~
-:hello 'Hello_World! s:put nl ;
-~~~
-```
+    ~~~
+    :hello 'Hello_World! s:put nl ;
+    ~~~
 
 Use:
 
-```
-retro-compiler hello.forth hello
-```
+    retro-compiler hello.forth hello
 
 The compiler will generate an `a.out` file which you can
 then rename.

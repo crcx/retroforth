@@ -490,14 +490,14 @@ license of any rights under applicable law.
 
 # Obtaining RETRO
 
-The RETRO source code can be obtained from http://forthworks.com/retro
-or gopher://forthworks.com/1/retro
-
 ## Stable Releases
 
 I periodically make stable releases. This will typically happen
 two to four times per year. These are good for those needing a
 solid base that doesn't change frequently.
+
+- http://forthworks.com/retro
+- http://forth.works
 
 ## Snapshots
 
@@ -519,12 +519,10 @@ URLs:
 I use a Fossil repository to manage development. To obtain a
 copy of the repository install Fossil and:
 
-```
-fossil clone http://forthworks.com:8000 retro.fossil
-mkdir retro
-cd retro
-fossil open /path/to/retro.fossil
-```
+    fossil clone http://forthworks.com:8000 retro.fossil
+    mkdir retro
+    cd retro
+    fossil open /path/to/retro.fossil
 
 See the Fossil documentation for details on using Fossil to
 keep your local copy of the repository current.
@@ -534,7 +532,7 @@ than the snapshots, but you may occasionally encounter bigger
 problems as some commits may be in a partially broken state.
 
 If you have problems, check the version of Fossil you are
-using. I am currently using Fossil 2.7, you may experience
+using. I am currently using Fossil 2.10, you may experience
 issues checking out or cloning if using older versions.
 
 # Building on BSD, Linux, macOS, and outher Inix Targets
@@ -590,7 +588,7 @@ extensions are not supported:
 
 This is currently more difficult than on a Unix host. If you have
 Windows 10 and WSL, it may be better to build under that (using
-the Linux instructions).
+the Unix instructions).
 
 ## Setup Build Environment
 
@@ -1119,7 +1117,7 @@ to generate turnkey executables.
 
 - Unix host
 - ELF executable support
-- objcpy in the $PATH
+- `objcpy` in the $PATH
 
 ## Building
 
@@ -1145,17 +1143,13 @@ Example:
 
 Given a `hello.forth`:
 
-```
-~~~
-:hello 'Hello_World! s:put nl ;
-~~~
-```
+    ~~~
+    :hello 'Hello_World! s:put nl ;
+    ~~~
 
 Use:
 
-```
-retro-compiler hello.forth hello
-```
+    retro-compiler hello.forth hello
 
 The compiler will generate an `a.out` file which you can
 then rename.
