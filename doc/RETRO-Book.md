@@ -2460,6 +2460,15 @@ one of these, use `0;`, `-if;` or `if;`.
     :test #100 repeat dup #50 eq? [ 'done! s:put nl ] if; n:dec again ;
     test
 
+You can also achieve this via recursion:
+
+    :test 0; dup n:put sp n:dec test ;
+    #100 test
+
+Be careful with recursion as the virtual machine will have a limited
+amount of space for the address stack and recursing too many times
+can cause a stack overflow.
+
 ## Counted Loops
 
 There are two combinators for counted loops. These are `times` and
@@ -2477,6 +2486,14 @@ The loop indexes can be accessed outside the loop body:
     :display I n:square n:put sp ;
     :squares [ display ] times<with-index> nl ;
     #100 squares
+
+## Tradeoffs
+
+The unconditional loop form is more efficient as it's just a
+simple jump operation. The `times` counted loops are a little
+slower, but can be cleaner and more readable in many cases. The
+`times<with-index>` form is significantly slower than the other
+two forms.
 
 # Working With Numbers
 
