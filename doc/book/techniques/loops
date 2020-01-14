@@ -27,6 +27,15 @@ Be careful with recursion as the virtual machine will have a limited
 amount of space for the address stack and recursing too many times
 can cause a stack overflow.
 
+## Conditional Loops
+
+There are two conditional looping combinators: `while` and `until`.
+Both take a quote and execute it, checking a returned flag to decide
+when to stop running.
+
+    #0 [ dup n:put sp n:inc dup #10 eq? ] until
+    #10 [ dup n:put sp n:dec dup n:-zero? ] while
+
 ## Counted Loops
 
 There are two combinators for counted loops. These are `times` and
