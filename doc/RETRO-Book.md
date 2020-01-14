@@ -2686,6 +2686,59 @@ To close a socket, pass the socket handle to `socket:close`.
 
     @Socket socket:close
 
+# Unix Scripting
+
+RETRO on Unix hosts is designed to play well with scripting. 
+
+## Shebang
+
+To run an entire program directly, start the file with the
+standard shebang and make the file executable:
+
+    #!/usr/bin/env retro
+
+This requires the `retro` binary to be in your path.
+
+## Arguments
+
+RETRO provides three words in the `sys:` namespace for accessing
+command line arguments.
+
+The number of arguments can be accessed via `sys:argc`. This
+will return a number with the arguments, other than the script
+name.
+
+    sys:argc  '%n_arguments_passed\n s:format s:put
+
+To retreive an argument' pass the argument number to `sys:argv`:
+
+    sys:argc [ I sys:argv s:put nl ] times<with-index>
+
+And to get the name of the script, use `sys:name`.
+
+    sys:name s:put
+
+## Mixing
+
+With use of the Unu literate format, it's possible to mix both
+shell and RETRO code into a single script. As an example, this
+is a bit of shell that runs itself via retro for each .retro
+file in the current directory tree:
+
+    #!/bin/sh
+
+    # shell part
+    find . -name '*.retro' -print0 | xargs -0 -n 1 retro $0
+    exit
+
+    # retro part
+
+    This will scan a source file and do something with it:
+
+    ~~~
+    ... do stuff ...
+    ~~~
+
 # Working With Strings
 
 Strings in RETRO are NULL terminated sequences of values

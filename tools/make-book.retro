@@ -52,6 +52,7 @@ for me.
   'techniques/numbers
   'techniques/pointers
   'techniques/sockets
+  'techniques/scripting
   'techniques/strings
   'techniques/using-combinators
   'techniques/word-classes
