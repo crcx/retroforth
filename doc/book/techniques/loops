@@ -1,0 +1,37 @@
+# Loops
+
+RETRO provides several words for creating loops.
+
+## Unconditional Loops
+
+An unconditional loop begins with `repeat` and ends with `again`.
+
+    :test repeat #1 n:put sp again ;
+    test
+
+Unconditional loops must be inside a definition or quote. To exit
+one of these, use `0;`, `-if;` or `if;`.
+
+    :test #100 repeat 0; dup n:put sp n:dec again ;
+    test
+
+    :test #100 repeat dup #50 eq? [ 'done! s:put nl ] if; n:dec again ;
+    test
+
+## Counted Loops
+
+There are two combinators for counted loops. These are `times` and
+`times<with-index>`.
+
+    #0 #10 [ dup n:put sp n:inc ] times nl
+    #10 [ I n:put sp ] times<with-index>
+
+The `times<with-index>` provides an index via the `I`, `J`, and
+`K` words. `I` will be the index of the current loop, with `J` and
+`K` being the indexes of the next two older loops.
+
+The loop indexes can be accessed outside the loop body:
+
+    :display I n:square n:put sp ;
+    :squares [ display ] times<with-index> nl ;
+    #100 squares

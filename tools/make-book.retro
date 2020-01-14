@@ -48,6 +48,7 @@ for me.
   'techniques/dictionary
   'techniques/floating-point
   'techniques/files
+  'techniques/loops
   'techniques/numbers
   'techniques/pointers
   'techniques/sockets
