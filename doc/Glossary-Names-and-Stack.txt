@@ -1,4 +1,3 @@
-"                        D: -s  A: -  F: -
 $                        D: -c  A: -  F: -
 '                        D: -s  A: -  F: -
 (                        D: -  A: -  F: -
@@ -101,7 +100,6 @@ a:to-string              D: a-s  A: -  F: -
 again                    D: -  A: -  F: -
 allot                    D: n-  A: -  F: -
 and                      D: nm-o  A: -  F: -
-as{                      D: -f  A: -  F: -
 banner                   D: -  A: -  F: -
 bi                       D: xqq-?  A: -  F: -
 bi*                      D: xyqq-?  A: -  F: -
@@ -358,7 +356,6 @@ pb:length                D: -n  A: -  F: -
 pb:set                   D: s-  A: -  F: -
 pop                      D: -n  A: n-  F: -
 prefix:!                 D: ns-  A: -  F: -
-prefix:"                 D: s-s  A: -  F: -
 prefix:#                 D: s-n  A: -  F: -
 prefix:$                 D: s-c  A: -  F: -
 prefix:&                 D: s-a  A: -  F: -
@@ -495,5 +492,4 @@ xor                      D: mn-o  A: -  F: -
 {                        D: -  A: -  F: -
 {{                       D: -  A: -  F: -
 }                        D: -a  A: -  F: -
-}as                      D: f-  A: -  F: -
 }}                       D: -  A: -  F: -

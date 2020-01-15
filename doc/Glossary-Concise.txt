@@ -1,6 +1,3 @@
-"                        D: -s  A: -  F: -
-Return an empty string. Deprecated.
-
 $                        D: -c  A: -  F: -
 Return ASCII:NUL (0).
 
@@ -306,9 +303,6 @@ Allocate the specified number of cells from the `Heap`.
 
 and                      D: nm-o  A: -  F: -
 Perform a bitwise AND operation between the two provided values.
-
-as{                      D: -f  A: -  F: -
-Begin an assembly section. Deprecated; will be removed in 2020.
 
 banner                   D: -  A: -  F: -
 Display a welcome message on startup.
@@ -1078,9 +1072,6 @@ Move a value from the return stack to the data stack.
 prefix:!                 D: ns-  A: -  F: -
 Store a value into a variable.
 
-prefix:"                 D: s-s  A: -  F: -
-Process token as a string.
-
 prefix:#                 D: s-n  A: -  F: -
 Process token as a number.
 
@@ -1488,9 +1479,6 @@ Begin a lexically scoped area.
 
 }                        D: -a  A: -  F: -
 Complete an array begun by `{`. Returns a pointer to the data.
-
-}as                      D: f-  A: -  F: -
-End an assembly section. Deprecated; will be removed in 2020.
 
 }}                       D: -  A: -  F: -
 End a lexically scoped area. This will hide any headers between `{{` and `---reveal---`, leaving only headers between `---reveal---` and the `}}` visible.

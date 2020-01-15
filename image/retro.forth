@@ -994,7 +994,6 @@ prefixes.
 ~~~
 :' |s:empty ; immediate
 :$ #0 class:data ; immediate
-:" |s:empty ; immediate
 ~~~
 
 ## ASCII Constants
@@ -1119,7 +1118,6 @@ TRUE 'RewriteUnderscores var<n>
   :handle &prefix:' call ;
 ---reveal---
   :prefix:' rewrite handle ; immediate
-  :prefix:" rewrite s:keep ; immediate
 }}
 ~~~
 

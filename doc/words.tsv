@@ -1,4 +1,3 @@
-"	-s	-	-	Return an empty string. Deprecated.			class:macro	{n/a}	{n/a}	global	all	
 $	-c	-	-	Return ASCII:NUL (0).			class:macro	{n/a}	{n/a}	global	all	
 '	-s	-	-	Return an empty string.			class:macro	{n/a}	{n/a}	global	all	
 (	-	-	-	Provide a visual indication of a code group.			class:macro	{n/a}	{n/a}	prefix	all	
@@ -101,7 +100,6 @@ a:to-string	a-s	-	-	Create a new string from the provided array. This string wil
 again	-	-	-	Close an unconditional loop. Branches back to the prior `repeat`.			class:macro	{n/a}	{n/a}	global	all	
 allot	n-	-	-	Allocate the specified number of cells from the `Heap`.			class:word	    'Buffer d:create  #100 allot	{n/a}	global	all	
 and	nm-o	-	-	Perform a bitwise AND operation between the two provided values.			class:primitive	{n/a}	{n/a}	global	all	
-as{	-f	-	-	Begin an assembly section. Deprecated; will be removed in 2020.			class:macro	{n/a}	{n/a}	global	all	
 banner	-	-	-	Display a welcome message on startup.			class:word	{n/a}	{n/a}	global	rre	{n/a}
 bi	xqq-?	-	-	Execute q1 against x, then execute q2 against a copy of x.			class:word	    #100 [ #10 * ] [ #10 - ] bi	{n/a}	global	all	
 bi*	xyqq-?	-	-	Execute q1 against x and q2 against y.			class:word	    #10 #20 [ #2 * ] [ #10 / ] bi*	{n/a}	global	all	
@@ -358,7 +356,6 @@ pb:length	-n	-	-	Return the length of the string on the pasteboard.			class:word
 pb:set	s-	-	-	Copy a string to the pasteboard.			class:word	{n/a}	{n/a}	pb	iOS	
 pop	-n	n-	-	Move a value from the return stack to the data stack.			class:macro	{n/a}	{n/a}	global	all	
 prefix:!	ns-	-	-	Store a value into a variable.	Store a value into the named variable.	Compile the code to store a value into a named variable.	class:macro	{n/a}	{n/a}	prefix	all	
-prefix:"	s-s	-	-	Process token as a string.	Keep string as permanent. If `RewriteUnderscores` is `TRUE`, replace all instances of _ with space.	Keep string as permanent. If `RewriteUnderscores` is `TRUE`, replace all instances of _ with space. Then compile the string into the current definition. Deprecated.	class:macro	{n/a}	{n/a}	prefix	all	
 prefix:#	s-n	-	-	Process token as a number.	Convert the string into a number and leave on the stack.	Convert the string into a number and compile into the current definition as a literal.	class:macro	{n/a}	{n/a}	prefix	all	
 prefix:$	s-c	-	-	Process token as an ASCII character.	Fetch first character from string. Leave on stack.	Fetch first character from the string. Compile into the current definition as  literal.	class:macro	{n/a}	{n/a}	prefix	all	
 prefix:&	s-a	-	-	Return a pointer to a named item.	Lookup name in dictionary, return contents of the xt field on the stack.	Lookup name in dictionary, compile code to push the contents of the xt field into the current definition.	class:macro	{n/a}	{n/a}	prefix	all	
@@ -495,5 +492,4 @@ xor	mn-o	-	-	Perform a bitwise XOR operation.			class:primitive	{n/a}	{n/a}	glob
 {	-	-	-	Begin an array. This is intended to make creating arrays a bit cleaner than using a quotation and `a:counted-results`.			class:word	{n/a}	{n/a}	global	all	
 {{	-	-	-	Begin a lexically scoped area.			class:word	{n/a}	{n/a}	global	all	
 }	-a	-	-	Complete an array begun by `{`. Returns a pointer to the data.			class:word	{n/a}	{n/a}	global	all	
-}as	f-	-	-	End an assembly section. Deprecated; will be removed in 2020.			class:macro	{n/a}	{n/a}	global	all	
 }}	-	-	-	End a lexically scoped area. This will hide any headers between `{{` and `---reveal---`, leaving only headers between `---reveal---` and the `}}` visible.			class:word	{n/a}	{n/a}	global	all	
