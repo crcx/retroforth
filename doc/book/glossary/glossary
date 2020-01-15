@@ -4720,7 +4720,7 @@ s:evaluate
 
   Data:  s-?
   Addr:  -
-  Float: -
+  Float: -?
 
 Evaluate string as if it was typed into the interpreter.
 

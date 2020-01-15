@@ -397,7 +397,7 @@ s:copy                   D: sa-  A: -  F: -
 s:empty                  D: -s  A: -  F: -
 s:ends-with?             D: ss-f  A: -  F: -
 s:eq?                    D: ss-f  A: -  F: -
-s:evaluate               D: s-?  A: -  F: -
+s:evaluate               D: s-?  A: -  F: -?
 s:filter                 D: sq-s  A: -  F: -
 s:for-each               D: sq-  A: -  F: -
 s:format                 D: ...s-s  A: -  F: -

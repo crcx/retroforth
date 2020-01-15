@@ -1195,7 +1195,7 @@ Return `TRUE` if s1 ends with s2 or `FALSE` otherwise.
 s:eq?                    D: ss-f  A: -  F: -
 Compare two strings for equality. Return `TRUE` if identical or `FALSE` if not.
 
-s:evaluate               D: s-?  A: -  F: -
+s:evaluate               D: s-?  A: -  F: -?
 Evaluate string as if it was typed into the interpreter.
 
 s:filter                 D: sq-s  A: -  F: -

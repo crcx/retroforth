@@ -1,22 +1,5 @@
 # RETRO 2020.01
 
-- rename package/list to package/list.forth
-- include signing keys for this and the next release
-- fix n:MIN and n:MAX queries on some of the interfaces
-- reduce default image size; max number of open files
-- updated html export for retro sources: averages 7.4% faster conversion, 26% smaller output across my test set
-- use a trick from https://getkiss.org/blog/20191004a to disable requests for a favicon in Atua-WWW
-- fix a bug in s:WHITESPACE and use it in c:whitespace?
-- reorganize source tree
-- add s:get-word
-- moved the assembler into rx.muri
-- add prefix:\
-- add prefix:^
-- deprecate as{
-- deprecate }as
-- deprecate prefix:"
-- deprecate "
-
 The 2020.1 release of RETRO brings many improvements.
 
 # Signed Releases
@@ -32,6 +15,9 @@ of trust across releases.
 The HTML export for the examples has been updated. It now averages
 a 7.4% decrease in conversion and a 26% decrease in exported file
 size.
+
+retro-locate(1) was added to search the `tags` file created by
+retro-tags(1).
 
 # Assembler
 
@@ -71,11 +57,10 @@ The use of assembly to fine tune select words has allowed both
 size reduction and performance improvements.
 
 A few words have been deprecated due to lack of use and will be
-removed in the 2020.04 release:
+removed in the 2020.4 release:
 
 - prefix:"
 - "
-
 
 # Nga
 
@@ -99,3 +84,23 @@ issues were found.
 I added an `s:get-word`, removed some deprecated words, and updated
 the memory limits to reduce overall memory usage under the default
 configuration.
+
+# Documentation
+
+The documentation has been updated, adding in new examples, removing
+material that is no longer relevant, and several new sections were
+added.
+
+# Examples
+
+New examples:
+
+- HTTP GET via sockets
+- HTTP POST via sockets
+- enum
+- minimize (from Kiyoshi)
+- fifo queue
+
+Updated:
+
+- Gott example (from Kiyoshi)
