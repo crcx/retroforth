@@ -1,0 +1,174 @@
+# Markdown to HTML
+
+RETRO's source files generally use a subset of Markdown for
+formatting. This is a small tool to convert this into HTML.
+
+## Features
+
+Recognizes:
+
+- lists
+- indented code blocks
+- paragraphs
+- headers
+- fenced code blocks
+- horizontal rules
+- *inline* _formatting_ elements
+
+## Limitations
+
+This only supports a limited subset of full Markdown. I am
+not adding support for the various linking formats, ordered
+lists, underlined headers, doubled asterisk, doubled
+underscores, multiple line/paragraph list entries, or images.
+
+The CSS used is extracted from the end of this file. I only
+do a tiny bit of styling by default; just enough to ensure
+that code blocks are easily identified.
+
+----
+
+## The Code
+
+Begin by locating and extracting the CSS.
+
+~~~
+'<style> s:put nl
+FALSE sys:name [ over [ '##_CSS s:eq? or ] -if; s:put nl ] file:for-each-line
+drop
+'</style> s:put nl
+~~~
+
+The first couple of words are a variation of `s:put` that
+generates HTML codes for specific characters. This ensures
+that code output displays correctly.
+
+~~~
+:c:put<code>
+  $< [ '&lt; s:put ] case
+  $> [ '&gt; s:put ] case
+  $& [ '&amp; s:put ] case
+  ASCII:SPACE [ '&nbsp; s:put ] case
+  c:put ;
+
+:s:put<code> [ c:put<code> ] s:for-each ;
+~~~
+
+For regular text, there are a couple of inline formatting things
+to deal with.
+
+~~~
+'Emphasis var
+'Strong var
+'Escape var
+'Code var
+
+:format
+  @Escape [ &Escape v:on ] if;
+  $` [ @Escape [ &Escape v:off $* c:put ] if;
+       @Code n:zero? [ '<tt_style='display:inline'> &Code v:on ]
+                     [ '</tt> &Code v:off ] choose s:put ] case
+  $* [ @Escape @Code or [ &Escape v:off $* c:put ] if;
+       @Strong n:zero? [ '<strong> &Strong v:on ]
+                       [ '</strong> &Strong v:off ] choose s:put ] case
+  $_ [ @Escape @Code or [ &Escape v:off $_ c:put ] if;
+       @Emphasis n:zero? [ '<em> &Emphasis v:on ]
+                         [ '</em> &Emphasis v:off ] choose s:put ] case
+  c:put ;
+
+:s:put<formatted> [ format ] s:for-each ;
+~~~
+
+Next, handling of code blocks.
+
+The fences need to start and end with `~~~` on a line by
+itself. (This will also handle test blocks using three
+bacticks as well)
+
+~~~
+'Block var
+:in-block? @Block ;
+:block?    dup [ '~~~ s:eq? ] [ '``` s:eq? ] bi or ;
+:toggle    drop @Block n:zero? !Block ;
+:format:block  '<tt> s:put s:put<code> '</tt> s:put nl ; 
+~~~
+
+After this, I define detection and formatting of headers. The
+headers should look like:
+
+    # Level 1
+    ## Level 2
+    ### Level 3
+
+~~~
+:header?
+  dup [ '# s:begins-with?   ]
+      [ '## s:begins-with?  ]
+      [ '### s:begins-with? ] tri or or ;
+
+:format:head
+  ASCII:SPACE s:split
+  '#   [ '<h1> s:put n:inc s:put '</h1> s:put nl ] s:case
+  '##  [ '<h2> s:put n:inc s:put '</h2> s:put nl ] s:case
+  '### [ '<h3> s:put n:inc s:put '</h3> s:put nl ] s:case
+  drop ;
+~~~
+
+Indented code blocks are lines indented by four spaces.
+
+~~~
+:code? dup '____ s:begins-with? ;
+:format:code '<tt> s:put #4 + s:put<code> '</tt> s:put nl ;
+~~~
+
+Horizonal rules consist of four or more - characters on
+a line. E.g.,
+
+    ----
+    --------
+
+~~~
+:rule? dup '---- s:begins-with? ;
+:format:rule drop '<hr> s:put nl ;
+~~~
+
+Lists start with a `-` or `*`, followed by a space, then
+the item text.
+
+~~~
+:list? dup [ '-_ s:begins-with? ] [ '*_ s:begins-with? ] bi or ;
+:format:list '<li> s:put #2 + s:put<formatted> '</li> s:put nl ;
+~~~
+
+Blank lines denote paragraph breaks.
+
+~~~
+:blank? dup s:length n:zero? ;
+~~~
+
+~~~
+:format
+  block? [ toggle ] if;
+  in-block? [ format:block ] if;
+  blank?  [ drop '<p> s:put nl ] if;
+  header? [ format:head ] if;
+  code?   [ format:code ] if;
+  list?   [ format:list ] if;
+  rule?   [ format:rule ] if;
+  s:put<formatted> nl ;
+
+#0 sys:argv [ format ] file:for-each-line
+~~~
+
+This concludes the Markdown (subset) in RETRO utility.
+
+## CSS
+
+    tt, pre {
+      background: #eee;
+      color: #111;
+      font-family: monospace;
+      white-space: pre;
+      display: block;
+      width: 100%;
+    }
