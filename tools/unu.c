@@ -2,7 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+
 #define KiB * 1024
+
 void read_line(FILE *file, char *line_buffer) {
   int ch, count;
   if (file == NULL || line_buffer == NULL)
@@ -19,16 +21,19 @@ void read_line(FILE *file, char *line_buffer) {
   }
   line_buffer[count] = '\0';
 }
+
 char source[16 KiB];
-int fenced(char *s)
+
+int fenced(char *s, int include_tests)
 {
   int a = strcmp(s, "```");
   int b = strcmp(s, "~~~");
-  if (a == 0) return 1;
+  if (a == 0 && include_tests == 1) return 1;
   if (b == 0) return 1;
               return 0;
 }
-void extract(char *fname) {
+
+void extract(char *fname, int include_tests) {
   char *buffer = (char *)source;
   char fence[4];
   FILE *fp;
@@ -41,7 +46,7 @@ void extract(char *fname) {
     read_line(fp, buffer);
     strncpy(fence, buffer, 3);
     fence[3] = '\0';
-    if (fenced(fence)) {
+    if (fenced(fence, include_tests)) {
       if (inBlock == 0)
         inBlock = 1;
       else
@@ -53,14 +58,21 @@ void extract(char *fname) {
   }
   fclose(fp);
 }
+
 int main(int argc, char **argv) {
   int i = 1;
+  int tests = 0;
   if (argc > 1) {
     while (i < argc) {
-      extract(argv[i++]);
+      if (strcmp(argv[i], "-t") == 0) {
+        tests = 1;
+        i++;
+      }
+      else
+        extract(argv[i++], tests);
     }
   }
   else
-    printf("unu\n(c) 2013-2019 charles childers\n\nTry:\n  %s filename\n", argv[0]);
+    printf("unu\n(c) 2013-2020 charles childers\n\nTry:\n  %s filename\n", argv[0]);
   return 0;
 }

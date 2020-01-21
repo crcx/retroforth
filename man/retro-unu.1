@@ -1,4 +1,4 @@
-.Dd January 2019
+.Dd January 2020
 .Dt RETRO-UNU 1
 .Os
 .Sh RETRO-UNU
@@ -6,6 +6,7 @@
 .Nd "a modern, pragmatic forth development system"
 .Sh SYNOPSIS
 .Nm
+.Op Fl t
 filename
 .Sh DESCRIPTION
 RETRO is a modern, pragmatic Forth drawing influences from many
@@ -15,5 +16,12 @@ to various uses.
 .Nm
 is a tool for extracting code from fenced blocks in literate
 sources. It will write output to stdout.
+.Sh OPTIONS
+.Bl -tag -width -indent
+.It Fl t
+Include any test blocks in the file.
+.It filename
+Extract code blocks from the specified file.
+.El
 .Sh AUTHORS
 .An Charles Childers Aq Mt crc@forthworks.com
