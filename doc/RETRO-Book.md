@@ -4490,3 +4490,14 @@ a CreativeCommonsAttribution-ShareAlike3.0UnportedLicense.
 Original text taken from
 http://pestilenz.org/~ckeen/blog/posts/ciy-manifesto.html
 
+# Deprecation Policy
+
+As RETRO evolves, some words will become obsolete and no longer
+be needed. In each release, these will be marked as deprecated
+in the glossary. Any deprecated words will be removed in the
+next quarterly release.
+
+E.g., if 2020.1 had deprecated words, these would be removed in
+the 2020.4 release. Any words made deprecated in between 2020.1
+and 2020.4 would be removed in the 2020.7 release.
+

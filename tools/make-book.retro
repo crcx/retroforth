@@ -74,6 +74,7 @@ for me.
   'tech-notes/retro11-retrospective
   'tech-notes/security
   'tech-notes/code-it-yourself
+  'general/deprecation
 } 'TOC const
 ~~~
 
