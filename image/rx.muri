@@ -1180,6 +1180,8 @@ i feju....
 d 0
 
 : interpret:prefix
+i ........
+i ........
 i lifezr..
 r prefix:handler
 i lifeliad
@@ -1205,6 +1207,9 @@ i liju....
 r choose
 
 : interpret
+i liju....
+r _interpret
+: _interpret
 i dulistli
 r input:source
 r prefix?
