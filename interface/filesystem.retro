@@ -21,11 +21,12 @@ These are pretty much direct wrappers for fopen(), fclose(), etc.
 
 First up, constants for the file modes.
 
-| # | Used For           |
-| - | ------------------ | 
-| R | Mode for READING   |
-| W | Mode for WRITING   |
-| A | Mode for APPENDING |
+| #  | Used For                     |
+| -- | ---------------------------- | 
+| R  | Mode for READING             |
+| W  | Mode for WRITING             |
+| A  | Mode for APPENDING           |
+| R+ | Mode for READING and WRITING |
 
 ~~~
 #0 'file:R  const
@@ -151,16 +152,16 @@ once for each line in a file. This makes some things trivial. E.g., a simple
 ~~~
 {{
   'FID var
-  'Size var
 ---reveal---
   :file:slurp (as-)
-    [ file:open<for-reading> !FID !Size
-      buffer:set
-      @Size [ @FID file:read buffer:add ] times
+    [ swap buffer:set file:open<for-reading> !FID
+      [ @FID file:read buffer:add ] times
       @FID file:close
     ] buffer:preserve ;
 }}
 ~~~
+
+`file:spew` writes a string to a file.
 
 ~~~
 :file:spew (ss-)
