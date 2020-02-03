@@ -259,6 +259,9 @@ Create a new array with the characters in the source string.
 a:index-of               D: an-n  A: -  F: -
 Return the location of the first instance of the specified value in the array.
 
+a:index-of-string        D: as-n  A: -  F: -
+Return the location of the first instance of the specified string in the array.
+
 a:left                   D: an-a  A: -  F: -
 Return a new array containing the first `n` values from the source array.
 

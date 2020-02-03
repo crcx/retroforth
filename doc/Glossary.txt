@@ -993,6 +993,17 @@ Return the location of the first instance of the specified value in the array.
 Class: class:word | Namespace: a | Interface Layer: all
 ------------------------------------------------------------------------
 
+a:index-of-string
+
+  Data:  as-n
+  Addr:  -
+  Float: -
+
+Return the location of the first instance of the specified string in the array.
+
+Class: class:word | Namespace: a | Interface Layer: all
+------------------------------------------------------------------------
+
 a:left
 
   Data:  an-a
