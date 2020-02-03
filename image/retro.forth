@@ -1413,11 +1413,16 @@ array.
   :prepare  swap #-1 !Location ;
   :next     @Location n:negative? [ &Location v:dec ] if ;
   :match?   over eq? [ @Location n:negative? ] [ FALSE ] choose ;
+  :match-str? over s:eq? [ @Location n:negative? ] [ FALSE ] choose ;
   :update   @Location n:abs n:dec !Location ;
 ---reveal---
   :a:index-of (an-n)
     prepare dup-pair a:contains? [ drop-pair #-1 ] -if;
     [ match? &update if next ] a:for-each
+    drop @Location ;
+  :a:index-of-string (as-n)
+    prepare dup-pair a:contains-string? [ drop-pair #-1 ] -if;
+    [ match-str? &update if next ] a:for-each
     drop @Location ;
 }}
 ~~~
