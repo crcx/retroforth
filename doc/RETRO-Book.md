@@ -1052,18 +1052,18 @@ This is a program that looks up entries in the Glossary.
 
 At the command line, you can use it like:
 
-```
-retro-describe s:for-each
-```
+    retro-describe s:for-each
+
+You can pass multiple word names to it:
+
+    retro-describe s:for-each nl d:words
 
 ## retro-embedimage
 
 This is a program which generates a C file with the ngaImage
 contents. It's used when building `retro`.
 
-```
-retro-embedimage ngaImage
-```
+    retro-embedimage ngaImage
 
 The output is written to stdout; redirect it as needed.
 
@@ -1075,9 +1075,7 @@ standalone image with custom additions.
 
 Example command line:
 
-```
-retro-extend ngaImage example/rot13.forth
-```
+    retro-extend ngaImage example/rot13.forth
 
 Pass the image name as the first argument, and then file names
 as susequent ones. Do *not* use this for things relying on I/O
@@ -1090,9 +1088,26 @@ optional I/O devices, see the **Advanced Builds** chapter.
 This is the assembler for Nga. It's used to build the initial
 RETRO kernel and can be used by other tools as well.
 
-## retro-tags
+    retro-muri rx.muri
 
-TBD
+## retro-tags and retro-locate
+
+These tools are intended to be used together. The first tool,
+`retro-tags`, will recursively scan the current directory for
+RETRO source files and extract the locations of words defined
+in them. These will be written to disk in a `tags` file, using
+the standard ctags format.
+
+`retro-locate` takes a word name, and returns the location(s)
+where it is defined. This requires a `tags` file to be present.
+
+Create the `tags` file:
+
+    retro-tags
+
+Locate a word:
+
+    retro-locate n:square
 
 ## retro-unu
 
@@ -1101,9 +1116,7 @@ is used in building `retro`.
 
 Example usage:
 
-```
-retro-unu literate/RetroForth.md
-```
+    retro-unu literate/RetroForth.md
 
 Output is written to stdout; redirect as neeeded.
 
