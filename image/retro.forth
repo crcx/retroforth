@@ -508,7 +508,7 @@ Some numeric comparisons.
 :n:positive?  (n-f)  #-1 gt? ;
 :n:strictly-positive?  (n-f)  #0 gt? ;
 :n:even?      (n-f)  #2 /mod drop n:zero? ;
-:n:odd?       (n-f)  #2 /mod drop n:-zero? ;
+:n:odd?       (n-f)  even? not ;
 ~~~
 
 The basic Rx kernel doesn't provide two useful forms which I'll
@@ -550,7 +550,7 @@ so they can be inlined. Here's the high level forms:
 :mod       (nq-r)  \didr.... ; primitive
 :n:pow     (bp-n)  #1 swap [ over * ] times nip ;
 :n:negate  (n-n)   #-1 * ;
-:n:square  (n-n)   dup * ;
+:n:square  (n-n)   \dumu.... ;
 :n:sqrt    (n-n)
   #1 [ repeat dup-pair / over - #2 / 0; + again ] call nip ;
 :n:min     (nn-n)  dup-pair lt? &drop &nip choose ;
@@ -573,14 +573,13 @@ handling of variables. With this, the above can become simply:
   &foo v:inc
 
 ~~~
-:v:inc-by  (na-)   [ fetch + ] sip store ;
-:v:dec-by  (na-)   [ fetch swap - ] sip store ;
+:v:inc-by  (na-)   [ \fead.... ] sip store ;
+:v:dec-by  (na-)   [ \feswsu.. ] sip store ;
 :v:inc     (n-n)   #1 swap v:inc-by ;
 :v:dec     (n-n)   #1 swap v:dec-by ;
-:v:limit   (alu-)
-  push push dup fetch pop pop n:limit swap store ;
-:v:on      (a-)    TRUE swap store ;
-:v:off     (a-)    FALSE swap store ;
+:v:limit   (alu-)  \pupudufe \popo.... n:limit \swst.... ;
+:v:on      (a-)    TRUE  \swst.... ;
+:v:off     (a-)    FALSE \swst.... ;
 :allot     (n-)    &Heap v:inc-by ;
 ~~~
 
