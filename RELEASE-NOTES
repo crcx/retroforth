@@ -10,5 +10,9 @@
 
 - future
 
-There is a patch that allows for underscores in word names. This
-may be removed from the default image in a future release.
+Prior RETRO images had a patch that allowed underscores to be
+used in word names. In this release, the patch is no longer
+part of the standard library, but is still included on Unix
+targets by default. This might affect some users, if you are
+building a custom image, load package/allow-underscores-in-names.forth
+if you need this.
