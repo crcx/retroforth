@@ -1,9 +1,12 @@
-Support for comments with embedded spaces; this is useful for quickly
-commenting out portions of lines or larger chunks of code during
-debugging.
+# C Style Comments
 
-This provides for C style /* ... */ comments. It works by patching
-`interpret` to make it ignore tokens until the token is */.
+This adds support for comments with embedded spaces. It is useful
+for quickly commenting out portions of lines or larger chunks of
+code during debugging.
+
+Specifically, this provides for C style /* ... */ comments. It
+works by patching `interpret` to make it ignore tokens until the
+token is `*/`.
 
 ~~~
 {{

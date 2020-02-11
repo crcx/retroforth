@@ -7,6 +7,7 @@ to the state it was in prior to the creation of the marker.
 :class:marker (a-)
   compiling? [ compile:lit &class:marker compile:call ]
              [ fetch-next !Dictionary fetch !Heap     ] choose ;
+
 :marker (s-) [ @Heap @Dictionary ] dip d:create , , &class:marker reclass ;
 ~~~
 
