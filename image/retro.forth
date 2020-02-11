@@ -498,7 +498,7 @@ The basic Rx kernel doesn't provide two useful forms which I'll
 provide here.
 
 ~~~
-:lteq?  (nn-f)  dup-pair eq? &lt? dip or ;
+:lteq?  (nn-f)  dup-pair \eqpultpo \or...... ;
 :gteq?  (nn-f)  swap lteq? ;
 ~~~
 
