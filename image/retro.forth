@@ -445,32 +445,6 @@ to:
   [ swap repeat 0; \lisupudu `1 \puca.... \popo.... again ] call drop ;
 ~~~
 
-`case` is a conditional combinator. It's actually pretty
-useful. What it does is compare a value on the stack to a
-specific value. If the values are identical, it discards the
-value and calls a quote before exiting the word. Otherwise
-it leaves the stack alone and allows execution to continue.
-
-Example:
-
-    :c:vowel?
-      $a [ TRUE ] case
-      $e [ TRUE ] case
-      $i [ TRUE ] case
-      $o [ TRUE ] case
-      $u [ TRUE ] case
-      drop FALSE ;
-
-~~~
-:case
-  [ over eq? ] dip swap
-  [ nip call #-1 ] [ drop #0 ] choose 0; pop drop drop ;
-
-:s:case
-  [ over s:eq? ] dip swap
-  [ nip call #-1 ] [ drop #0 ] choose 0; pop drop drop ;
-~~~
-
 ## A Shortcut
 
 ~~~
@@ -492,6 +466,32 @@ Forth, where non-zero values are true.
 ~~~
 :TRUE  (-n) #-1 ;
 :FALSE (-n)  #0 ;
+~~~
+
+`case` is a conditional combinator. It's actually pretty
+useful. What it does is compare a value on the stack to a
+specific value. If the values are identical, it discards the
+value and calls a quote before exiting the word. Otherwise
+it leaves the stack alone and allows execution to continue.
+
+Example:
+
+    :c:vowel?
+      $a [ TRUE ] case
+      $e [ TRUE ] case
+      $i [ TRUE ] case
+      $o [ TRUE ] case
+      $u [ TRUE ] case
+      drop FALSE ;
+
+~~~
+:case
+  [ over eq? ] dip swap
+  [ nip call TRUE ] [ drop FALSE ] choose 0; pop drop drop ;
+
+:s:case
+  [ over s:eq? ] dip swap
+  [ nip call TRUE ] [ drop FALSE ] choose 0; pop drop drop ;
 ~~~
 
 Some numeric comparisons.
