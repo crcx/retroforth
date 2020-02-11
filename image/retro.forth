@@ -1402,13 +1402,15 @@ from one location to another.
 I then define `a:append` and `a:prepend` to combine arrays.
 
 ~~~
-:a:prepend (aa-a)
-  here #0 , [      dup fetch [ &, a:for-each ] dip
-              swap dup fetch [ &, a:for-each ] dip + ] dip
-  &store sip ;
+{{
+  :copy  dup fetch [ &, a:for-each ] dip ;
+---reveal---
+  :a:prepend (aa-a)
+    here #0 , [ copy swap copy + ] dip &store sip ;
 
-:a:append (aa-a)
-  swap a:prepend ;
+  :a:append (aa-a)
+    swap a:prepend ;
+}}
 ~~~
 
 `a:chop` returns a new array containing all but the last value
