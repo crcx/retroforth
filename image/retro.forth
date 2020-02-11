@@ -1156,6 +1156,46 @@ returns an array containing pointers to each of them.
 }}
 ~~~
 
+`s:tokenize-on-string` is like `s:tokenize`, but for strings.
+
+~~~
+{{
+  'Needle d:create #128 allot
+  'Length var
+  'Tokens d:create #128 allot
+  'TP var
+  :save s:keep @TP &Tokens + n:inc store &TP v:inc ;
+  :next [ @Length + ] sip ;
+  :done s:length n:zero? ;
+---reveal---
+  :s:tokenize-on-string (ss-s)
+    #0 !TP
+    [ dup &Needle s:copy s:append ] [ s:length !Length ] bi
+    [ &Needle s:split-on-string save next done ] until
+    &Tokens @TP n:dec !Tokens ;
+}}
+~~~
+
+~~~
+{{
+  'Q var
+  :for-each (aq-)
+    &Q [ !Q fetch-next
+         [ fetch-next swap [ @Q call ] dip ] times drop
+       ] v:preserve ;
+  :substitute STRINGS #129 - ;
+  :extract  substitute s:copy ;
+  :tokenize s:tokenize-on-string s:empty ;
+  :combine  substitute s:append s:append ;
+  :merge    swap &combine for-each nip ;
+  :find-end dup s:length substitute s:length - over + ;
+  :clean    find-end #0 swap store ;
+---reveal---
+  :s:replace-all (sss-s)
+    &Heap [ extract tokenize merge clean s:temp ] v:preserve ;
+}}
+~~~
+
 Use `s:format` to construct a string from multiple items. This
 can be illustrated with:
 
@@ -1548,46 +1588,6 @@ different array.
 
 :a:ends-with? (aa-f)
   &Heap [ dup a:length &swap dip a:right a:eq? ] v:preserve ;
-~~~
-
-## Strings
-
-Returning to strings, leveraging the array words alongside them
-I can implement `s:replace-all` and `s:tokenize-on-string`.
-
-`s:tokenize-on-string` is like `s:tokenize`, but for strings.
-
-~~~
-{{
-  'Needle d:create #128 allot
-  'Length var
-  'Tokens d:create #128 allot
-  'TP var
-  :save s:keep @TP &Tokens a:store &TP v:inc ;
-  :next [ @Length + ] sip ;
-  :done s:length n:zero? ;
----reveal---
-  :s:tokenize-on-string (ss-s)
-    #0 !TP
-    [ dup &Needle s:copy s:append ] [ s:length !Length ] bi
-    [ &Needle s:split-on-string save next done ] until
-    &Tokens @TP n:dec !Tokens ;
-}}
-~~~
-
-~~~
-{{
-  :substitute STRINGS #129 - ;
-  :extract  substitute s:copy ;
-  :tokenize s:tokenize-on-string s:empty ;
-  :combine  substitute s:append s:append ;
-  :merge    swap &combine a:for-each nip ;
-  :find-end dup s:length substitute s:length - over + ;
-  :clean    find-end #0 swap store ;
----reveal---
-  :s:replace-all (sss-s)
-    &Heap [ extract tokenize merge clean s:temp ] v:preserve ;
-}}
 ~~~
 
 ## Evaluating Source
