@@ -494,22 +494,12 @@ Forth, where non-zero values are true.
 :FALSE (-n)  #0 ;
 ~~~
 
-The basic Rx kernel doesn't provide two useful forms which I'll
-provide here.
+Some numeric comparisons.
 
 ~~~
-:lteq?  (nn-f)  dup-pair \eqpultpo \or...... ;
-:gteq?  (nn-f)  swap lteq? ;
-~~~
-
-~~~
-:if;   (qf-)  over &if  dip         0; pop drop-pair ;
-:-if;  (qf-)  over &-if dip #-1 xor 0; pop drop-pair ;
-~~~
-
-And then some numeric comparators.
-
-~~~
+:not          (n-n)  #-1 xor ;
+:lteq?        (nn-f) dup-pair \eqpultpo \or...... ;
+:gteq?        (nn-f) swap lteq? ;
 :n:MAX        (-n)   #-5 fetch ;
 :n:MIN        (-n)   #-4 fetch ;
 :n:zero?      (n-f)  #0 eq? ;
@@ -519,6 +509,14 @@ And then some numeric comparators.
 :n:strictly-positive?  (n-f)  #0 gt? ;
 :n:even?      (n-f)  #2 /mod drop n:zero? ;
 :n:odd?       (n-f)  #2 /mod drop n:-zero? ;
+~~~
+
+The basic Rx kernel doesn't provide two useful forms which I'll
+provide here.
+
+~~~
+:if;   (qf-)  over &if  dip     0; pop drop-pair ;
+:-if;  (qf-)  over &-if dip not 0; pop drop-pair ;
 ~~~
 
 ## More Stack Shufflers.
@@ -550,7 +548,6 @@ so they can be inlined. Here's the high level forms:
 ~~~
 :/         (nq-d)  \diswdr.. ; primitive
 :mod       (nq-r)  \didr.... ; primitive
-:not       (n-n)   #-1 xor ;
 :n:pow     (bp-n)  #1 swap [ over * ] times nip ;
 :n:negate  (n-n)   #-1 * ;
 :n:square  (n-n)   dup * ;
