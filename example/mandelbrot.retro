@@ -30,7 +30,7 @@ Now the calculation of the Mandelbrot set value at a specified point is
 defined.
 
 ~~~
-:mb_value (x_y--v) 
+:mb:value (x_y--v) 
   #0  !x 
   #0  !y 
   #-1 !iter 
@@ -53,7 +53,7 @@ In order to display the mandelbrot set nicely, 10 different iteration
 levels are filled with their equivalent ASCII signs.
 
 ~~~
-:ascii_equiv (n--c)
+:ascii-equiv (n--c)
   #9 * @max-iter / 
   #0 [ #32 ] case
   #1 [ $. ] case
@@ -85,7 +85,7 @@ The following code checks for those key presses...
 ...and this word bundles all those together.
 
 ~~~
-:input_handle 
+:input:handle
   c:get
   zoom+? zoom-?
   up? down?
@@ -100,11 +100,11 @@ A quick function draws some information about key bindings and the
 current zoom level, as well as the current maximum number of iterations.
 
 ~~~
-:info_draw
-'+/-_to_zoom;_w/a/s/d_to_move s:put nl 
-'q/e_to_increase_decrease_resolution s:put nl 
-'zoom_level_ s:put @zoom n:put nl 
-'iterations_ s:put @max-iter n:put nl  
+:info:draw
+  '+/-_to_zoom;_w/a/s/d_to_move s:put nl 
+  'q/e_to_increase_decrease_resolution s:put nl 
+  'zoom_level_ s:put @zoom n:put nl 
+  'iterations_ s:put @max-iter n:put nl  
 ;
 ~~~
 
@@ -116,17 +116,16 @@ This results in a scaling factor of 438 for the width and 800 for the
 height.
 
 ~~~
-:mb_draw 
-#25 [ 
-  #80 [ 
-    I #438 * #25000 - @zoom / @posx + 
-    J #800 * #10000 - @zoom / @posy + 
-    mb_value 
-    ascii_equiv c:put 
-  ] times<with-index> 
-  nl 
-] times<with-index> 
-; 
+:mb:draw 
+  #25 [
+    #80 [ 
+      I #438 * #25000 - @zoom / @posx + 
+      J #800 * #10000 - @zoom / @posy + 
+      mb:value 
+      ascii-equiv c:put 
+    ] times<with-index> 
+    nl 
+  ] times<with-index>  ; 
 ~~~
 
 Before we start, the terminal is set to character-buffered. This makes
@@ -139,8 +138,8 @@ presses.
 'stty_cbreak unix:system
 
 [ 
-  mb_draw 
-  info_draw
-  input_handle
+  mb:draw 
+  info:draw
+  input:handle
 TRUE ] while 
 ~~~
