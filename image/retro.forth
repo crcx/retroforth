@@ -1456,8 +1456,8 @@ array.
   'Location var
   :prepare  swap #-1 !Location ;
   :next     @Location n:negative? [ &Location v:dec ] if ;
-  :match?   over eq? [ @Location n:negative? ] [ FALSE ] choose ;
-  :match-str? over s:eq? [ @Location n:negative? ] [ FALSE ] choose ;
+  :match?   over eq? dup [ drop @Location n:negative? ] if ;
+  :match-str? over s:eq? dup [ drop @Location n:negative? ] if ;
   :update   @Location n:abs n:dec !Location ;
 ---reveal---
   :a:index-of (an-n)
