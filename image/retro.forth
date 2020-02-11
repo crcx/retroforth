@@ -425,7 +425,7 @@ Execute quote until quote returns a non-zero flag. As with `while`
 the high level code:
 
   :until  (q-)
-    [ repeat dup dip swap #-1 xor 0; drop again ] call drop ;
+    [ repeat dup dip swap not 0; drop again ] call drop ;
 
 is manually translated to assembly and inlined for performance.
 
@@ -499,7 +499,7 @@ provide here.
 
 ~~~
 :lteq?  (nn-f)  dup-pair eq? &lt? dip or ;
-:gteq?  (nn-f)  dup-pair eq? &gt? dip or ;
+:gteq?  (nn-f)  swap lteq? ;
 ~~~
 
 ~~~

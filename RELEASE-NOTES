@@ -10,9 +10,18 @@
 
 - future
 
-Prior RETRO images had a patch that allowed underscores to be
-used in word names. In this release, the patch is no longer
-part of the standard library, but is still included on Unix
-targets by default. This might affect some users, if you are
-building a custom image, load package/allow-underscores-in-names.forth
-if you need this.
+  underscores in word namesv
+
+    Prior RETRO images had a patch that allowed underscores to be
+    used in word names. In this release, the patch is no longer
+    part of the standard library, but is still included on Unix
+    targets by default. This might affect some users, if you are
+    building a custom image, load package/allow-underscores-in-names.forth
+    if you need this.
+
+  modularity
+
+    Work towards allowing portions of the standard library to be
+    optional is ongoing. During this, the internal organization of
+    retro.forth is changing and some small parts may be duplicated
+    in an effort to allow for more flexibility in the long term.
