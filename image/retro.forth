@@ -1506,10 +1506,48 @@ and `a:middle`.
     here over , [ swap to-end over - swap &copy times drop ] dip ;
 
   :a:middle (afl-a)
-    'abc 'abcac reorder bounds? [ drop-pair drop #-1 ] if; drop-pair
+    &over dip swap over (abc-abcac
+    bounds? [ drop-pair drop #-1 ] if; drop-pair
     dup-pair swap - n:inc
     here over , [ nip [ + n:inc ] dip &copy times drop ] dip ;
 }}
+~~~
+
+~~~
+{{
+  'Flag var
+  :compare    \dufepusw \dufepoeq ;
+  :length     \dufere.. ;
+  :next       \liadswli `1 `1 \adre.... ;
+  :not-equal  \podrdrdr \lire...... `0 ;
+  :loop       repeat
+                \pulica.. ^next
+                \lica.... ^compare
+                \lifeanli ^Flag ^Flag \st......
+                \polisuzr `1
+              again ;
+---reveal---
+  :a:eq? (aa-f)
+    \lilist.. `-1 ^Flag
+    \lica.... ^compare
+    \lixolicc `-1 ^not-equal
+    \lica.... ^length
+    \lica.... ^loop
+    \drdrlife ^Flag ;
+  :a:-eq? (aa-f) a:eq? not ;
+}}
+~~~
+
+Building on these, I implement `a:begins-with?` and `a:ends-with?`
+to determine if an array starts or ends with the values in a
+different array.
+
+~~~
+:a:begins-with? (aa-f)
+  &Heap [ dup a:length &swap dip a:left a:eq? ] v:preserve ;
+
+:a:ends-with? (aa-f)
+  &Heap [ dup a:length &swap dip a:right a:eq? ] v:preserve ;
 ~~~
 
 ## Strings
@@ -1623,45 +1661,6 @@ And finally, tie it all together into the single exposed word
 
 ~~~
 }}
-~~~
-
-## Arrays, comparisons
-
-~~~
-{{
-  'Flag var
-  :compare    \dufepusw \dufepoeq ;
-  :length     \dufere.. ;
-  :next       \liadswli `1 `1 \adre.... ;
-  :not-equal  \podrdrdr \lire...... `0 ;
-  :loop       repeat
-                \pulica.. ^next
-                \lica.... ^compare
-                \lifeanli ^Flag ^Flag \st......
-                \polisuzr `1
-              again ;
----reveal---
-  :a:eq? (aa-f)
-    \lilist.. `-1 ^Flag
-    \lica.... ^compare
-    \lixolicc `-1 ^not-equal
-    \lica.... ^length
-    \lica.... ^loop
-    \drdrlife ^Flag ;
-  :a:-eq? (aa-f) a:eq? not ;
-}}
-~~~
-
-Building on these, I implement `a:begins-with?` and `a:ends-with?`
-to determine if an array starts or ends with the values in a
-different array.
-
-~~~
-:a:begins-with? (aa-f)
-  &Heap [ dup a:length &swap dip a:left a:eq? ] v:preserve ;
-
-:a:ends-with? (aa-f)
-  &Heap [ dup a:length &swap dip a:right a:eq? ] v:preserve ;
 ~~~
 
 ## Loops, continued
