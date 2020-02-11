@@ -7,3 +7,8 @@
 - examplse
 
   markdown.retro
+
+- future
+
+There is a patch that allows for underscores in word names. This
+may be removed from the default image in a future release.

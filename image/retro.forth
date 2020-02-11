@@ -1003,14 +1003,20 @@ many characters that aren't really intended to be printable.
 Retro has an `ASCII` namespace providing symbolic names for
 these.
 
+The first group of these is fairly common, the others are
+much less so.
+
 ~~~
-#0  'ASCII:NUL const    #1   'ASCII:SOH const
-#2  'ASCII:STX const    #3   'ASCII:ETX const
-#4  'ASCII:EOT const    #5   'ASCII:ENQ const
-#6  'ASCII:ACK const    #7   'ASCII:BEL const
+#0  'ASCII:NUL const
 #8  'ASCII:BS  const    #9   'ASCII:HT  const
 #10 'ASCII:LF  const    #11  'ASCII:VT  const
 #12 'ASCII:FF  const    #13  'ASCII:CR  const
+#32 'ASCII:SPACE const  #127 'ASCII:DEL const
+
+#1  'ASCII:SOH const
+#2  'ASCII:STX const    #3   'ASCII:ETX const
+#4  'ASCII:EOT const    #5   'ASCII:ENQ const
+#6  'ASCII:ACK const    #7   'ASCII:BEL const
 #14 'ASCII:SO  const    #15  'ASCII:SI  const
 #16 'ASCII:DLE const    #17  'ASCII:DC1 const
 #18 'ASCII:DC2 const    #19  'ASCII:DC3 const
@@ -1020,7 +1026,6 @@ these.
 #26 'ASCII:SUB const    #27  'ASCII:ESC const
 #28 'ASCII:FS  const    #29  'ASCII:GS  const
 #30 'ASCII:RS  const    #31  'ASCII:US  const
-#32 'ASCII:SPACE const  #127 'ASCII:DEL const
 ~~~
 
 These words operate on character values. Retro currently deals
