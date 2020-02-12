@@ -5,14 +5,14 @@ host operating system on Unix style systems.
 
 ~~~
 {{
-  'io:UnixSyscall var
+  'Unix var
   :identify
-    @io:UnixSyscall n:zero? [
+    @Unix n:zero? [
       #8 io:scan-for dup n:negative?
       [ drop 'IO_DEVICE_TYPE_0008_NOT_FOUND s:put nl ]
-      [ !io:UnixSyscall ] choose ] if ;
-  ---reveal---
-  :io:unix-syscall identify @io:UnixSyscall io:invoke ;
+      [ !Unix ] choose ] if ;
+---reveal---
+  :io:unix-syscall identify @Unix io:invoke ;
 }}
 ~~~
 
@@ -122,7 +122,6 @@ seconds.
   [ [ file:read-line s:temp over call ] sip ] times
   unix:pclose drop ;
 ~~~
-
 
 ~~~
 {{

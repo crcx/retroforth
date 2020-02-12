@@ -43,7 +43,7 @@ not `TRUE` it will add the character to the buffer.
 ~~~
 {{
   :gather (c-)
-    dup [ #8 eq? ] [ #127 eq? ] bi or &drop &buffer:add choose ;
+    dup [ ASCII:BS eq? ] [ ASCII:DEL eq? ] bi or &drop &buffer:add choose ;
   :cycle (q-qc)  repeat c:get dup-pair swap call not 0; drop gather again ;
 ---reveal---
   :parse-until (q-s)
@@ -83,7 +83,7 @@ words we can use.
 ~~~
 
 ~~~
-:clear #27 c:put '[2J s:put #27 c:put '[0;0H s:put ;
+:clear ASCII:ESC c:put '[2J s:put ASCII:ESC c:put '[0;0H s:put ;
 ~~~
 
 Hide the support words.
@@ -109,7 +109,7 @@ startup flags passed.
   (s-sf) :valid?     dup s:length n:strictly-positive? ;
   (c-c)  :check-eof  dup [ #-1 eq? ] [ ASCII:EOT eq? ] bi or &bye if ;
          :bs         buffer:get buffer:get drop-pair ;
-  (c-c)  :check-bs   dup [ #8 eq? ] [ #127 eq? ] bi or &bs if ;
+  (c-c)  :check-bs   dup [ ASCII:BS eq? ] [ ASCII:DEL eq? ] bi or &bs if ;
   (c-c)  :check      check-eof check-bs ;
   (-c)   :character  c:get dup buffer:add ;
   (q-)   :buffer     [ TIB buffer:set call buffer:start ] buffer:preserve ;

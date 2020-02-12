@@ -1003,7 +1003,7 @@ The first group of these is fairly common, the others are
 much less so.
 
 ~~~
-#0  'ASCII:NUL const
+#0  'ASCII:NUL const    #27  'ASCII:ESC const
 #8  'ASCII:BS  const    #9   'ASCII:HT  const
 #10 'ASCII:LF  const    #11  'ASCII:VT  const
 #12 'ASCII:FF  const    #13  'ASCII:CR  const
@@ -1019,7 +1019,7 @@ much less so.
 #20 'ASCII:DC4 const    #21  'ASCII:NAK const
 #22 'ASCII:SYN const    #23  'ASCII:ETB const
 #24 'ASCII:CAN const    #25  'ASCII:EM  const
-#26 'ASCII:SUB const    #27  'ASCII:ESC const
+#26 'ASCII:SUB const
 #28 'ASCII:FS  const    #29  'ASCII:GS  const
 #30 'ASCII:RS  const    #31  'ASCII:US  const
 ~~~
