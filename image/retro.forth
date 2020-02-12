@@ -600,7 +600,7 @@ a bit clearer.
 
 ~~~
 :v:preserve (aq-)
-  swap dup fetch [ &call dip ] dip swap store ;
+  \swdufe.. [ &call dip ] dip \swst.... ;
 ~~~
 
 If you need to update a stored variable there are two typical
@@ -638,7 +638,7 @@ to improve performance.
 ~~~
 :copy  (aan-)
   [ \puduliad `1 \swfepodu \liadpust `1 \po...... ] times
-  drop drop ;
+  drop-pair ;
 ~~~
 
 ## Lexical Scope
@@ -676,7 +676,7 @@ hidden), so use `v:preserve` if you need reentrancy.
   [ @ScopeList !Dictionary ]
   [ @ScopeList
     [ &Dictionary repeat
-        fetch dup fetch &ScopeList n:inc fetch -eq? 0; drop
+        \fedufe.. &ScopeList n:inc \fenezr.. drop
       again ] call store ] choose ;
 ~~~
 
