@@ -1387,7 +1387,7 @@ I then define `a:append` and `a:prepend` to combine arrays.
 
 ~~~
 :a:append (aa-a)
-  dup-pair [ fetch ] bi@ + here [ , [ &, a:for-each ] bi@ ] dip ;
+  dup-pair &fetch bi@ + here [ , [ &, a:for-each ] bi@ ] dip ;
 :a:prepend (aa-a)
   swap a:append ;
 ~~~
