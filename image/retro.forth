@@ -1107,10 +1107,9 @@ turn underscores into spaces.
 TRUE 'RewriteUnderscores var<n>
 
 {{
-  :sub (c-c) $_ [ ASCII:SPACE ] case ;
-  :rewrite (s-s)
-    @RewriteUnderscores [ &sub s:map ] if ;
-  :handle &prefix:' call ;
+  :sub     (c-c) $_ [ ASCII:SPACE ] case ;
+  :rewrite (s-s) @RewriteUnderscores [ &sub s:map ] if ;
+  :handle        &prefix:' call ;
 ---reveal---
   :prefix:' rewrite handle ; immediate
 }}
@@ -1161,12 +1160,12 @@ returns an array containing pointers to each of them.
   'TP var
   :save s:keep @TP &Tokens + n:inc store &TP v:inc ;
   :next [ @Len + ] sip ;
-  :done s:length n:zero? ;
+  :done? s:length n:zero? ;
 ---reveal---
   :s:tokenize-on-string (ss-s)
     #0 !TP
     [ dup &Needle s:copy s:append ] [ s:length !Len ] bi
-    [ &Needle s:split-on-string save next done ] until
+    [ &Needle s:split-on-string save next done? ] until
     &Tokens @TP n:dec !Tokens ;
 }}
 ~~~
@@ -1261,8 +1260,8 @@ into:
 ~~~
 {{
   'Values var #27 allot
-  :from s:length dup [ [ &Values + store ] sip n:dec ] times drop ;
-  :to dup s:length [ fetch-next $a -  n:inc &Values + fetch swap ] times drop ;
+  :from s:length dup [ [ &Values \adst.... ] sip n:dec ] times drop ;
+  :to dup s:length [ fetch-next $a -  n:inc &Values \adfesw.. ] times drop ;
 ---reveal---
   :reorder (...ss-?) &from dip to ;
 }}
@@ -1302,8 +1301,8 @@ entire dictionary in a very clean manner.
 
 ~~~
 :d:for-each (q-)
-  &Dictionary [ repeat fetch 0;
- dup-pair [ [ swap call ] dip ] dip again ] call drop ;
+  &Dictionary [ repeat \fezr....
+  dup-pair [ [ \swca.... ] dip ] dip again ] call drop ;
 ~~~
 
 Using `d:for-each`, I implement a means of looking up a
@@ -1311,7 +1310,7 @@ dictionary header by the `d:xt` field.
 
 ~~~
 :d:lookup-xt (a-d)
- #0 swap [ dup-pair d:xt fetch eq?
+ #0 swap [ dup-pair d:xt \feeq....
            [ swap &nip dip ] &drop choose ] d:for-each drop ;
 ~~~
 
