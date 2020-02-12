@@ -1090,14 +1090,12 @@ Convert a decimal (base 10) number to a string.
 
 ~~~
 {{
-  'Value var
-  :correct (c-c)
-    dup $0 lt? [ $0 over - #2 * + ] if ; 
+  :correct (c-c)  dup $0 lt? [ $0 over - #2 * + ] if ; 
 ---reveal---
   :n:to-string  (n-s)
-    [ here buffer:set dup !Value n:abs
+    [ here buffer:set dup n:abs
       [ #10 /mod swap $0 + correct buffer:add dup n:-zero? ] while drop
-      @Value n:negative? [ $- buffer:add ] if
+      n:negative? [ $- buffer:add ] if
       buffer:start s:reverse s:temp ] buffer:preserve ;
 }}
 ~~~
