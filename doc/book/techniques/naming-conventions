@@ -77,6 +77,8 @@ The common namespaces are:
 
 ## Tips
 
+### Don't Start Names With Prefix Characters
+
 Avoid using a prefix as the first character of a word name. RETRO
 will look for prefixes first, this will prevent direct use of
 the work in question.
@@ -86,6 +88,8 @@ To find a list of prefix characters, do:
 ```
 'prefix: d:words-with
 ```
+
+### Don't Use Underscores
 
 Underscores in strings are replaced by spaces. This is problematic,
 especially with variables. Consider:

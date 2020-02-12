@@ -1462,6 +1462,8 @@ The common namespaces are:
 
 ## Tips
 
+### Don't Start Names With Prefix Characters
+
 Avoid using a prefix as the first character of a word name. RETRO
 will look for prefixes first, this will prevent direct use of
 the work in question.
@@ -1471,6 +1473,8 @@ To find a list of prefix characters, do:
 ```
 'prefix: d:words-with
 ```
+
+### Don't Use Underscores
 
 Underscores in strings are replaced by spaces. This is problematic,
 especially with variables. Consider:
@@ -4446,6 +4450,56 @@ RETRO is, primarily, a personal system. I'm running code I wrote
 to solve problems I face. On the occasions where I run code sent
 to me by others, I read it carefully first and then run inside a
 sandboxed environment if I'm worried about anything in it.
+
+### On The Use Of Underscores In Word Names
+
+In brief: don't use underscores in word names.
+
+There is a good reason for this, and it has to do with how RETRO
+processes strings. By default, underscores in strings are replaced
+by spaces. This is problematic when dealing with words like `var`,
+`const`, and `d:create` which take word names as strings.
+
+Consider:
+
+    :hello_msg 'hello_user ;
+    'test_name var
+    #188 !test_name
+
+In the first case, the `:` prefix handles the token, so the
+underscore is not remapped to a space, creating a word name as
+`hello_msg`. But in the second, the `'` prefix remaps the
+underscore to a space, giving a variable name of `test name`.
+In the third line, the name lookup will fail as `test_name` is
+not defined, so the store will be done to an incorrect address.
+
+Because of this, it's best to avoid underscores in names.
+
+Having covered this, if you do need to use them for some reason,
+you can replace `d:add-header` with a version that remaps spaces
+back to underscores before creating the header. The following
+will allow for this.
+
+    ~~~
+    {{
+      :fields        @Dictionary , (link) , (xt) , (class) ;
+      :invalid-name? dup ASCII:SPACE s:contains-char? ;
+      :rewrite       [ ASCII:SPACE [ $_ ] case ] s:map ;
+      :entry         here &call dip !Dictionary ;
+      [ [ fields invalid-name? &rewrite if s, (name) ] entry ]
+    }}
+
+    #1793 &d:add-header store
+    &d:add-header n:inc store
+    ~~~
+
+Additional Note:
+
+Some version of RETRO have included the above patch. The last
+release that will include this by default is 2020.4 as it is
+not needed by the majority of users. If you want to keep it in
+your system, you will need to load it yourself or add it to
+your `package/list.forth` (for Unix users) before building.
 
 # The Code It Yourself Manifesto
 
