@@ -1172,11 +1172,9 @@ returns an array containing pointers to each of them.
 
 ~~~
 {{
-  'Q var
   :for-each (aq-)
-    &Q [ !Q fetch-next
-         [ fetch-next swap [ @Q call ] dip ] times drop
-       ] v:preserve ;
+    swap fetch-next &swap dip
+    [ push fetch-next \swpodupu \swpuca.. \popo.... ] times drop-pair ;
   :substitute STRINGS #129 - ;
   :extract  substitute s:copy ;
   :tokenize s:tokenize-on-string s:empty ;
