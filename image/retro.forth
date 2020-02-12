@@ -1037,8 +1037,7 @@ First are a bunch of words to help identify character values.
 :c:digit?       (c-f) $0 $9 n:between? ;
 :c:visible?     (c-f) #32 #126 n:between? ;
 :c:vowel?       (c-f) 'aeiouAEIOU swap s:contains-char? ;
-:c:consonant?   (c-f)
-  dup c:letter? [ c:vowel? not ] [ drop FALSE ] choose ;
+:c:consonant?   (c-f) dup c:letter? [ c:vowel? not ] [ drop FALSE ] choose ;
 :c:whitespace?  (c-f) s:WHITESPACE swap s:contains-char? ;
 ~~~
 
@@ -1061,10 +1060,8 @@ The next few words perform simple transformations.
 :c:to-upper     (c-c) dup c:lowercase? 0; drop ASCII:SPACE - ;
 :c:to-lower     (c-c) dup c:uppercase? 0; drop ASCII:SPACE + ;
 :c:to-string    (c-s) '. s:temp &store sip ;
-:c:toggle-case  (c-c)
-  dup c:lowercase? &c:to-upper &c:to-lower choose ;
-:c:to-number    (c-n)
-  dup c:digit? [ $0 - ] [ drop #0 ] choose ;
+:c:toggle-case  (c-c) dup c:lowercase? &c:to-upper &c:to-lower choose ;
+:c:to-number    (c-n) dup c:digit? [ $0 - ] [ drop #0 ] choose ;
 ~~~
 
 ## Back to Strings
@@ -1083,8 +1080,7 @@ both leading and trailing spaces.
 
 ~~~
 :s:trim-left (s-s)
-  s:temp [ fetch-next [ c:whitespace? ] [ n:-zero? ] bi and ] while
-  n:dec ;
+  s:temp [ fetch-next &c:whitespace? &n:-zero? bi and ] while n:dec ;
 :s:trim-right (s-s) s:temp s:reverse s:trim-left s:reverse ;
 :s:trim (s-s) s:trim-right s:trim-left ;
 ~~~
@@ -1162,16 +1158,16 @@ returns an array containing pointers to each of them.
 ~~~
 {{
   'Needle d:create #128 allot
-  'Length var
+  'Len var
   'Tokens d:create #128 allot
   'TP var
   :save s:keep @TP &Tokens + n:inc store &TP v:inc ;
-  :next [ @Length + ] sip ;
+  :next [ @Len + ] sip ;
   :done s:length n:zero? ;
 ---reveal---
   :s:tokenize-on-string (ss-s)
     #0 !TP
-    [ dup &Needle s:copy s:append ] [ s:length !Length ] bi
+    [ dup &Needle s:copy s:append ] [ s:length !Len ] bi
     [ &Needle s:split-on-string save next done ] until
     &Tokens @TP n:dec !Tokens ;
 }}
