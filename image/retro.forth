@@ -508,7 +508,7 @@ Some numeric comparisons.
 :n:positive?  (n-f)  #-1 gt? ;
 :n:strictly-positive?  (n-f)  #0 gt? ;
 :n:even?      (n-f)  #2 /mod drop n:zero? ;
-:n:odd?       (n-f)  even? not ;
+:n:odd?       (n-f)  n:even? not ;
 ~~~
 
 The basic Rx kernel doesn't provide two useful forms which I'll
@@ -1627,14 +1627,6 @@ remaining string.
     [ ASCII:SPACE eq? ] s:filter s:length ;
 ~~~
 
-The `next-token` word splits the remainimg string on SPACE and
-returns both parts.
-
-~~~
-  :next-token (s-ss)
-    ASCII:SPACE s:split ;
-~~~
-
 And then the `process-tokens` uses `next-token` and `interpret`
 to go through the string, processing each token in turn. Using
 the standard `interpret` word allows for proper handling of the
@@ -1643,7 +1635,7 @@ directly.
 
 ~~~
   :process-tokens (sn-)
-    [ next-token swap
+    [ (get_next_token ASCII:SPACE s:split ) swap
       [ dup s:length n:-zero?
             &interpret &drop choose ] dip n:inc
     ] times interpret ;
