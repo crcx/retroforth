@@ -960,7 +960,7 @@ pretty simple and works well for my needs. This was based
 on an implementation at http://www.cse.yorku.ca/~oz/hash.html
 
 ~~~
-:s:hash (s-n) #5381 swap [ swap #33 * + ] s:for-each ;
+:s:hash (s-n) #5381 swap [ \swlimuad `33 ] s:for-each ;
 ~~~
 
 Copy a string, including the terminator.
