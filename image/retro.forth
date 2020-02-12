@@ -1224,13 +1224,10 @@ The format language is simple:
     $0 [ ASCII:NUL buffer:add ] case
     buffer:add ;
 
-  :string (a-a)
-    repeat fetch-next 0; buffer:add again ;
-
   :type (aac-)
     $c [ swap buffer:add              ] case
-    $s [ swap string drop             ] case
-    $n [ swap n:to-string string drop ] case
+    $s [ swap &buffer:add s:for-each  ] case
+    $n [ swap n:to-string &buffer:add s:for-each ] case
     drop ;
 
   :handle (ac-a)
