@@ -1096,7 +1096,7 @@ Convert a decimal (base 10) number to a string.
     [ here buffer:set dup n:abs
       [ #10 /mod swap $0 + correct buffer:add dup n:-zero? ] while drop
       n:negative? [ $- buffer:add ] if
-      buffer:start s:reverse s:temp ] buffer:preserve ;
+      buffer:start s:reverse ] buffer:preserve ;
 }}
 ~~~
 
