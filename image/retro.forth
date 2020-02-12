@@ -1425,29 +1425,6 @@ a flag.
   #0 swap [ swap push over s:eq? pop or ] a:for-each nip ;
 ~~~
 
-`a:index-of` builds on these to return the offset of a value in the
-array.
-
-~~~
-{{
-  'Location var
-  :prepare  swap #-1 !Location ;
-  :next     @Location n:negative? [ &Location v:dec ] if ;
-  :match?   over eq? dup [ drop @Location n:negative? ] if ;
-  :match-str? over s:eq? dup [ drop @Location n:negative? ] if ;
-  :update   @Location n:abs n:dec !Location ;
----reveal---
-  :a:index-of (an-n)
-    prepare dup-pair a:contains? [ drop-pair #-1 ] -if;
-    [ match? &update if next ] a:for-each
-    drop @Location ;
-  :a:index-of-string (as-n)
-    prepare dup-pair a:contains-string? [ drop-pair #-1 ] -if;
-    [ match-str? &update if next ] a:for-each
-    drop @Location ;
-}}
-~~~
-
 I implemented `a:map` to apply a quotation to each item in
 an array and construct a new array from the returned values.
 
@@ -1495,6 +1472,22 @@ and return a new value.
 ~~~
 :a:reduce (pnp-n)
   &swap dip a:for-each ;
+~~~
+
+`a:index-of` builds on these to return the offset of a value in the
+array.
+
+~~~
+{{
+  :identify
+    #-1 swap #0
+   [ TRUE eq? [ over #-1 eq? [ nip dup ] if ] if n:inc ] a:reduce drop ;
+---reveal---
+  :a:index-of (an-n)
+    &Heap [ &eq? curry a:map identify ] v:preserve ;
+  :a:index-of-string (as-n)
+    &Heap [ &s:eq? curry a:map identify ] v:preserve ;
+}}
 ~~~
 
 When making an array, I often want the values in the original
