@@ -1015,16 +1015,16 @@ Use `(`. Making a new word? Use the `:` prefix.
 
 The major prefixes are:
 
-| Prefix | Used For                      |
-| ------ | ----------------------------- |
-| @      | Fetch from variable           |
-| !      | Store into variable           |
-| &      | Pointer to named item         |
-| #      | Numbers                       |
-| $      | ASCII characters              |
-| '      | Strings                       |
-| (      | Comments                      |
-| :      | Define a word                 |
+    | Prefix | Used For                      |
+    | ------ | ----------------------------- |
+    | @      | Fetch from variable           |
+    | !      | Store into variable           |
+    | &      | Pointer to named item         |
+    | #      | Numbers                       |
+    | $      | ASCII characters              |
+    | '      | Strings                       |
+    | (      | Comments                      |
+    | :      | Define a word                 |
 
 The individual prefixes will be covered in more detail in the
 later chapters on working with different data types.
@@ -1411,28 +1411,22 @@ related words.
 
 Word names are lowercase, with a dash (-) for compound names.
 
-```
-hello
-drop-pair
-s:for-each
-```
+    hello
+    drop-pair
+    s:for-each
 
 Variables use TitleCase, with no dash between compound names.
 
-```
-Base
-Heap
-StringBuffers
-```
+    Base
+    Heap
+    StringBuffers
 
 Constants are UPPERCASE, with a dash (-) for compound names.
 
-```
-TRUE
-FALSE
-f:PI
-MAX-STRING-LENGTH
-```
+    TRUE
+    FALSE
+    f:PI
+    MAX-STRING-LENGTH
 
 ## Namespaces
 
@@ -1441,24 +1435,23 @@ prefix string to the start of a name.
 
 The common namespaces are:
 
-| Prefix  | Contains                                               |
-| ------- | ------------------------------------------------------ |
-| a:      | Words operating on simple arrays                       |
-| ASCII:  | ASCII character constants for control characters       |
-| buffer: | Words for operating on a simple linear LIFO buffer     |
-| c:      | Words for operating on ASCII character data            |
-| class:  | Contains class handlers for words                      |
-| d:      | Words operating on the Dictionary                      |
-| err:    | Words for handling errors                              |
-| io:     | General I/O words                                      |
-| n:      | Words operating on numeric data                        |
-| prefix: | Contains prefix handlers                               |
-| s:      | Words operating on string data                         |
-| v:      | Words operating on variables                           |
-| file:   | File I/O words                                         |
-| f:      | Floating Point words                                   |
-| gopher: | Gopher protocol words                                  |
-| unix:   | Unix system call words                                 |
+    | Prefix  | Contains                                               |
+    | ------- | ------------------------------------------------------ |
+    | a:      | Words operating on simple arrays                       |
+    | ASCII:  | ASCII character constants for control characters       |
+    | buffer: | Words for operating on a simple linear LIFO buffer     |
+    | c:      | Words for operating on ASCII character data            |
+    | class:  | Contains class handlers for words                      |
+    | d:      | Words operating on the Dictionary                      |
+    | err:    | Words for handling errors                              |
+    | io:     | General I/O words                                      |
+    | n:      | Words operating on numeric data                        |
+    | prefix: | Contains prefix handlers                               |
+    | s:      | Words operating on string data                         |
+    | v:      | Words operating on variables                           |
+    | file:   | File I/O words                                         |
+    | f:      | Floating Point words                                   |
+    | unix:   | Unix system call words                                 |
 
 ## Tips
 
@@ -1470,9 +1463,7 @@ the work in question.
 
 To find a list of prefix characters, do:
 
-```
-'prefix: d:words-with
-```
+    'prefix: d:words-with
 
 ### Don't Use Underscores
 
@@ -1513,15 +1504,15 @@ RETRO uses a short notation, with one character per value
 taken or left. In general, the following symbols represent
 certain types of values.
 
-| Notation            | Represents              |
-| ------------------- | ----------------------- |
-| b, n, m, o, x, y, z | generic numeric values  |
-| s                   | string                  |
-| v                   | variable                |
-| p, a                | pointers                |
-| q                   | quotation               |
-| d                   | dictionary header       |
-| f                   | `TRUE` or `FALSE` flag. |
+    | Notation            | Represents              |
+    | ------------------- | ----------------------- |
+    | b, n, m, o, x, y, z | generic numeric values  |
+    | s                   | string                  |
+    | v                   | variable                |
+    | p, a                | pointers                |
+    | q                   | quotation               |
+    | d                   | dictionary header       |
+    | f                   | `TRUE` or `FALSE` flag. |
 
 In the case of something like `(xyz-m)`, RETRO expects z to be
 on the top of the stack, with y below it and x below the y
@@ -2774,19 +2765,15 @@ not the number of logical characters in this case.
 
 Strings begin with a single `'`.
 
-```
-'Hello
-'This_is_a_string
-'This_is_a_much_longer_string_12345_67890_!!!
-```
+    'Hello
+    'This_is_a_string
+    'This_is_a_much_longer_string_12345_67890_!!!
 
 RETRO will replace spaces with underscores. If you need both
 spaces and underscores in a string, escape the underscores and
 use `s:format`:
 
-```
-'This_has_spaces_and_under\_scored_words. s:format
-```
+    'This_has_spaces_and_under\_scored_words. s:format
 
 ## Namespace
 
@@ -2817,55 +2804,47 @@ this automatically.
 
 RETRO provides four words for searching within a string.
 
-`s:contains-char?` 
-`s:contains-string?`
-`s:index-of`
-`s:index-of-string`
+* `s:contains-char?` 
+* `s:contains-string?`
+* `s:index-of`
+* `s:index-of-string`
 
 ## Comparisons
 
-`s:eq?`
-`s:case`
+* `s:eq?`
+* `s:case`
 
 ## Extraction
 
 To obtain a new string containing the first `n` characters from
 a source string, use `s:left`:
 
-```
-'Hello_World #5 s:left
-```
+    'Hello_World #5 s:left
 
 To obtain a new string containing the last `n` characters from
 a source string, use `s:right`:
 
-```
-'Hello_World #5 s:right
-```
+    'Hello_World #5 s:right
 
 If you need to extract data from the middle of the string, use
 `s:substr`. This takes a string, the offset of the first
 character, and the number of characters to extract.
 
-```
-'Hello_World #3 #5 s:substr
-```
+    'Hello_World #3 #5 s:substr
 
 ## Joining
 
 You can use `s:append` or `s:prepend` to merge two strings.
 
-```
-'First 'Second s:append
-'Second 'First s:prepend
-```
+    'First 'Second s:append
+    'Second 'First s:prepend
 
 ## Tokenization
 
-`s:tokenize`
-`s:tokenize-on-string`
-`s:split`
-`s:split-on-string`
+* `s:tokenize`
+* `s:tokenize-on-string`
+* `s:split`
+* `s:split-on-string`
 
 ## Conversions
 
@@ -2891,20 +2870,20 @@ which let you trim just the leading or trailing end as desired.
 
 ## Combinators
 
-`s:for-each`
-`s:filter`
-`s:map`
+* `s:for-each`
+* `s:filter`
+* `s:map`
 
 ## Other
 
-`s:evaluate`
-`s:copy`
-`s:reverse`
-`s:hash`
-`s:length`
-`s:replace`
-`s:format`
-`s:empty`
+* `s:evaluate`
+* `s:copy`
+* `s:reverse`
+* `s:hash`
+* `s:length`
+* `s:replace`
+* `s:format`
+* `s:empty`
 
 ## Controlling The Temporary Buffers
 
@@ -2912,24 +2891,22 @@ As dicussed in the Lifetime subsection, temporary strings are
 allocated in a rotating buffer. The details of this can be
 altered by updating two variables.
 
-| Variable      | Holds                                    |
-| ------------- | ---------------------------------------- |
-| TempStrings   | The number of temporary strings          |
-| TempStringMax | The maximum length of a temporary string |
+    | Variable      | Holds                                    |
+    | ------------- | ---------------------------------------- |
+    | TempStrings   | The number of temporary strings          |
+    | TempStringMax | The maximum length of a temporary string |
 
 For example, to increase the number of temporary strings to
 48:
 
-```
-#48 !TempStrings
-```
+    #48 !TempStrings
 
 The defaults are:
 
-| Variable      | Default |
-| ------------- | ------- |
-| TempStrings   | 32      |
-| TempStringMax | 512     |
+    | Variable      | Default |
+    | ------------- | ------- |
+    | TempStrings   | 32      |
+    | TempStringMax | 512     |
 
 It's also important to note that altering these will affect
 the memory map for all temporary buffers. Do not use anything
@@ -3351,12 +3328,12 @@ the stack is a crucial part to making effective use of RETRO.
 
 Values can be placed on the stack directly.
 
-| Example        | Action                                   |
-| -------------- | ---------------------------------------- |
-| `#300123`      | Push the number `300123` to the stack    |
-| `$h`           | Push the ASCII code for `h` to the stack |
-| `'hello_world` | Push a pointer to a string to the stack  |
-| `&fetch`       | Push the address of `fetch` to the stack |
+    | Example        | Action                                   |
+    | -------------- | ---------------------------------------- |
+    | `#300123`      | Push the number `300123` to the stack    |
+    | `$h`           | Push the ASCII code for `h` to the stack |
+    | `'hello_world` | Push a pointer to a string to the stack  |
+    | `&fetch`       | Push the address of `fetch` to the stack |
 
 ### Reordering The Stack
 
@@ -3365,15 +3342,15 @@ on the stack.
 
 Some of the most common ones are:
 
-| Word    | Before   | After    |
-| ------- |--------- | -------- |
-| dup     | #1       | #1 #1    |
-| drop    | #1 #2    | #1       |
-| swap    | #1 #2    | #2 #1    |
-| over    | #1 #2    | #1 #2 #1 |
-| tuck    | #1 #2    | #2 #1 #2 |
-| nip     | #1 #2    | #2       |
-| rot     | #1 #2 #3 | #3 #1 #2 |
+    | Word    | Before   | After    |
+    | ------- |--------- | -------- |
+    | dup     | #1       | #1 #1    |
+    | drop    | #1 #2    | #1       |
+    | swap    | #1 #2    | #2 #1    |
+    | over    | #1 #2    | #1 #2 #1 |
+    | tuck    | #1 #2    | #2 #1 #2 |
+    | nip     | #1 #2    | #2       |
+    | rot     | #1 #2 #3 | #3 #1 #2 |
 
 You can use `push` and `pop` to move values to and from the
 address stack. Make sure you `pop` them back before the word
@@ -3385,29 +3362,21 @@ stack restructuring. This is slow but can be very useful.
 
 As an example, let's say we have four values:
 
-```
-#1 #2 #3 #4
-```
+    #1 #2 #3 #4
 
 And we want them to become:
 
-```
-#4 #3 #2 #1
-```
+    #4 #3 #2 #1
 
 Doing this with the basic shufflers is difficult. You could end
 up with something similar to:
 
-```
-swap rot push rot pop swap 
-```
+    swap rot push rot pop swap 
 
 But with `reorder`, you can just express the before and after
 states:
 
-```
-'abcd 'dcba reorder
-```
+    'abcd 'dcba reorder
 
 ### Resetting The Stack
 

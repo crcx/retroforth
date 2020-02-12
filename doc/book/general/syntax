@@ -63,16 +63,16 @@ Use `(`. Making a new word? Use the `:` prefix.
 
 The major prefixes are:
 
-| Prefix | Used For                      |
-| ------ | ----------------------------- |
-| @      | Fetch from variable           |
-| !      | Store into variable           |
-| &      | Pointer to named item         |
-| #      | Numbers                       |
-| $      | ASCII characters              |
-| '      | Strings                       |
-| (      | Comments                      |
-| :      | Define a word                 |
+    | Prefix | Used For                      |
+    | ------ | ----------------------------- |
+    | @      | Fetch from variable           |
+    | !      | Store into variable           |
+    | &      | Pointer to named item         |
+    | #      | Numbers                       |
+    | $      | ASCII characters              |
+    | '      | Strings                       |
+    | (      | Comments                      |
+    | :      | Define a word                 |
 
 The individual prefixes will be covered in more detail in the
 later chapters on working with different data types.

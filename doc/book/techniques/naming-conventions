@@ -26,28 +26,22 @@ related words.
 
 Word names are lowercase, with a dash (-) for compound names.
 
-```
-hello
-drop-pair
-s:for-each
-```
+    hello
+    drop-pair
+    s:for-each
 
 Variables use TitleCase, with no dash between compound names.
 
-```
-Base
-Heap
-StringBuffers
-```
+    Base
+    Heap
+    StringBuffers
 
 Constants are UPPERCASE, with a dash (-) for compound names.
 
-```
-TRUE
-FALSE
-f:PI
-MAX-STRING-LENGTH
-```
+    TRUE
+    FALSE
+    f:PI
+    MAX-STRING-LENGTH
 
 ## Namespaces
 
@@ -56,24 +50,23 @@ prefix string to the start of a name.
 
 The common namespaces are:
 
-| Prefix  | Contains                                               |
-| ------- | ------------------------------------------------------ |
-| a:      | Words operating on simple arrays                       |
-| ASCII:  | ASCII character constants for control characters       |
-| buffer: | Words for operating on a simple linear LIFO buffer     |
-| c:      | Words for operating on ASCII character data            |
-| class:  | Contains class handlers for words                      |
-| d:      | Words operating on the Dictionary                      |
-| err:    | Words for handling errors                              |
-| io:     | General I/O words                                      |
-| n:      | Words operating on numeric data                        |
-| prefix: | Contains prefix handlers                               |
-| s:      | Words operating on string data                         |
-| v:      | Words operating on variables                           |
-| file:   | File I/O words                                         |
-| f:      | Floating Point words                                   |
-| gopher: | Gopher protocol words                                  |
-| unix:   | Unix system call words                                 |
+    | Prefix  | Contains                                               |
+    | ------- | ------------------------------------------------------ |
+    | a:      | Words operating on simple arrays                       |
+    | ASCII:  | ASCII character constants for control characters       |
+    | buffer: | Words for operating on a simple linear LIFO buffer     |
+    | c:      | Words for operating on ASCII character data            |
+    | class:  | Contains class handlers for words                      |
+    | d:      | Words operating on the Dictionary                      |
+    | err:    | Words for handling errors                              |
+    | io:     | General I/O words                                      |
+    | n:      | Words operating on numeric data                        |
+    | prefix: | Contains prefix handlers                               |
+    | s:      | Words operating on string data                         |
+    | v:      | Words operating on variables                           |
+    | file:   | File I/O words                                         |
+    | f:      | Floating Point words                                   |
+    | unix:   | Unix system call words                                 |
 
 ## Tips
 
@@ -85,9 +78,7 @@ the work in question.
 
 To find a list of prefix characters, do:
 
-```
-'prefix: d:words-with
-```
+    'prefix: d:words-with
 
 ### Don't Use Underscores
 

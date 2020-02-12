@@ -18,12 +18,12 @@ the stack is a crucial part to making effective use of RETRO.
 
 Values can be placed on the stack directly.
 
-| Example        | Action                                   |
-| -------------- | ---------------------------------------- |
-| `#300123`      | Push the number `300123` to the stack    |
-| `$h`           | Push the ASCII code for `h` to the stack |
-| `'hello_world` | Push a pointer to a string to the stack  |
-| `&fetch`       | Push the address of `fetch` to the stack |
+    | Example        | Action                                   |
+    | -------------- | ---------------------------------------- |
+    | `#300123`      | Push the number `300123` to the stack    |
+    | `$h`           | Push the ASCII code for `h` to the stack |
+    | `'hello_world` | Push a pointer to a string to the stack  |
+    | `&fetch`       | Push the address of `fetch` to the stack |
 
 ### Reordering The Stack
 
@@ -32,15 +32,15 @@ on the stack.
 
 Some of the most common ones are:
 
-| Word    | Before   | After    |
-| ------- |--------- | -------- |
-| dup     | #1       | #1 #1    |
-| drop    | #1 #2    | #1       |
-| swap    | #1 #2    | #2 #1    |
-| over    | #1 #2    | #1 #2 #1 |
-| tuck    | #1 #2    | #2 #1 #2 |
-| nip     | #1 #2    | #2       |
-| rot     | #1 #2 #3 | #3 #1 #2 |
+    | Word    | Before   | After    |
+    | ------- |--------- | -------- |
+    | dup     | #1       | #1 #1    |
+    | drop    | #1 #2    | #1       |
+    | swap    | #1 #2    | #2 #1    |
+    | over    | #1 #2    | #1 #2 #1 |
+    | tuck    | #1 #2    | #2 #1 #2 |
+    | nip     | #1 #2    | #2       |
+    | rot     | #1 #2 #3 | #3 #1 #2 |
 
 You can use `push` and `pop` to move values to and from the
 address stack. Make sure you `pop` them back before the word
@@ -52,29 +52,21 @@ stack restructuring. This is slow but can be very useful.
 
 As an example, let's say we have four values:
 
-```
-#1 #2 #3 #4
-```
+    #1 #2 #3 #4
 
 And we want them to become:
 
-```
-#4 #3 #2 #1
-```
+    #4 #3 #2 #1
 
 Doing this with the basic shufflers is difficult. You could end
 up with something similar to:
 
-```
-swap rot push rot pop swap 
-```
+    swap rot push rot pop swap 
 
 But with `reorder`, you can just express the before and after
 states:
 
-```
-'abcd 'dcba reorder
-```
+    'abcd 'dcba reorder
 
 ### Resetting The Stack
 
