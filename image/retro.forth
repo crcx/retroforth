@@ -1354,14 +1354,9 @@ against each value in an array. This is leveraged to implement
 additional combinators.
 
 ~~~
-{{
-  'Q var
----reveal---
-  :a:for-each (aq-)
-    &Q [ !Q fetch-next
-         [ fetch-next swap [ @Q call ] dip ] times drop
-       ] v:preserve ;
-}}
+:a:for-each (aq-)
+  swap fetch-next &swap dip
+  [ push fetch-next \swpodupu \swpuca.. \popo.... ] times drop-pair ;
 ~~~
 
 With this I can easily define `a:dup` to make a copy of an
