@@ -888,7 +888,7 @@ a given substring is in a string.
   :s:index-of-string (ss-n)
     over [ [ setup
       [ &extract dip [ &n:inc dip ] dip here s:hash over eq? location ] times
-    ] buffer:preserve drop-pair drop ] dip - n:dec ;
+    ] buffer:preserve drop-pair drop ] dip - n:dec #-1 n:max ;
 }}
 ~~~
 
