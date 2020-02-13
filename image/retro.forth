@@ -1456,8 +1456,19 @@ and return a new value.
   &swap dip a:for-each ;
 ~~~
 
-`a:index-of` builds on these to return the offset of a value in the
-array.
+`a:index-of` and `a:index-of-string` build on these to return
+the offset of a value in the array, or -1 if the value wasn't
+found.
+
+Specifically:
+
+- use `curry` to create a comparator function
+- apply this to each item in the array using `a:map`
+- find the first TRUE value in the resulting array
+
+The `identify` part of this is a little complex due to me avoiding
+using a variable for the flag/offset value, but it's pretty clean
+overall.
 
 ~~~
 {{
@@ -1508,6 +1519,9 @@ and `a:middle`.
     here over , [ nip [ + n:inc ] dip &copy times drop ] dip ;
 }}
 ~~~
+
+For comparing arrays, use `a:eq?`. This is written in assembly
+to aid in performance and reduce size.
 
 ~~~
 {{
@@ -1618,6 +1632,9 @@ next word, `times<with-index>` adds this to RETRO. It also
 provides `I`, `J`, and `K` words to access the index of the
 current, and up to two outer loops as well.
 
+This supports up to 32 levels of nesting; increase the size
+of `Index` if you need more than this.
+
 ~~~
 {{
   'LP var
@@ -1709,7 +1726,7 @@ provide much more than I can do here.
 
 ~~~
 :reset      (...-) repeat depth 0; drop-pair again ;
-:dump-stack (-)  depth 0; drop push dump-stack pop dup n:put sp ;
+:dump-stack (-)  depth 0; \drpulica ^dump-stack \podulica ^n:put sp ;
 ~~~
 
 ~~~
