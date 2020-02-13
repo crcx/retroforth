@@ -1674,16 +1674,10 @@ original one.
 :io:enumerate (-n)   \ie...... ;
 :io:query     (n-mN) \iq...... ;
 :io:invoke    (n-)   \ii...... ;
-
-{{
-  'Slot var
----reveal---
-  :io:scan-for  (n-m)
-    #-1 !Slot
-    io:enumerate [ I io:query nip over eq?
-                   [ I !Slot ] if ] times<with-index>
-    drop @Slot ;
-}}
+:io:scan-for  (n-m)
+  #-1 swap
+  io:enumerate [ I io:query nip over eq?
+                 [ [ drop I ] dip ] if ] times<with-index> drop ;
 ~~~
 
 A Retro system is only required to provide a single I/O word to
