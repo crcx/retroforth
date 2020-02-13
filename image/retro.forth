@@ -859,41 +859,36 @@ given character is in a string.
 :s:contains-char? (sc-f) s:index-of #-1 -eq? ;
 ~~~
 
+Hash (using DJB2)
+
+I use the djb2 hash algorithm for computing hashes from
+strings. There are better hashes out there, but this is
+pretty simple and works well for my needs. This was based
+on an implementation at http://www.cse.yorku.ca/~oz/hash.html
+
+~~~
+:s:hash (s-n) #5381 swap [ \swlimuad `33 ] s:for-each ;
+~~~
+
 `s:contains-string?` returns a flag indicating whether or not
 a given substring is in a string.
 
 ~~~
 {{
-  'Src var
-  'Tar var
-  'Pad var
-  'I   var
-  'F   var
-  'At  var
-
-  :terminate (-)
-    #0 @Pad @Tar s:length + store ;
-
-  :extract (-)
-    @Src @I + @Pad @Tar s:length copy ;
-
-  :compare (-)
-    @Pad @Tar s:eq? @F or !F @F [ @I !At ] -if ;
-
-  :next (-)
-    &I v:inc ;
+  :extract  dup-pair here swap copy here over + #0 swap store ;
+  :mask     rot rot [ [ swap &or dip ] dip ] dip ;
+  :location rot rot [ [ swap [ over n:zero? and ] dip swap [ nip dup ] if ] dip ] dip ;
+  :setup    #0 rot rot &s:length &s:hash bi s:empty buffer:set [ over s:length ] dip swap ;
 ---reveal---
   :s:contains-string? (ss-f)
-    !Tar !Src s:empty !Pad #0 !I #0 !F
-    @Src s:length
-    [ extract terminate compare next ] times
-    @F ;
+    [ setup
+      [ &extract dip [ &n:inc dip ] dip here s:hash over eq? mask ] times
+    ] buffer:preserve drop-pair drop ;
 
-  :s:index-of-string (ss-a)
-    !Tar !Src s:empty !Pad #0 !I #0 !F #-1 !At
-    @Src s:length
-    [ extract terminate compare next ] times
-    @F [ @At ] [ #-1 ] choose ;
+  :s:index-of-string (ss-n)
+    over [ [ setup
+      [ &extract dip [ &n:inc dip ] dip here s:hash over eq? location ] times
+    ] buffer:preserve drop-pair drop ] dip - n:dec ;
 }}
 ~~~
 
@@ -950,17 +945,6 @@ a string starts or ends with a specific substring.
 
 :s:ends-with? (ss-f)
   dup s:length &swap dip s:right s:eq? ;
-~~~
-
-Hash (using DJB2)
-
-I use the djb2 hash algorithm for computing hashes from
-strings. There are better hashes out there, but this is
-pretty simple and works well for my needs. This was based
-on an implementation at http://www.cse.yorku.ca/~oz/hash.html
-
-~~~
-:s:hash (s-n) #5381 swap [ \swlimuad `33 ] s:for-each ;
 ~~~
 
 Copy a string, including the terminator.
