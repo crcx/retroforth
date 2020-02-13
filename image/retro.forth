@@ -34,6 +34,7 @@ The main namespaces are:
     | compile    | compiler functions |
     | d          | dictionary headers |
     | err        | error handlers     |
+    | io         | i/o functions      |
     | n          | numbers            |
     | s          | strings            |
     | v          | variables          |
@@ -85,6 +86,9 @@ The basic prefixes are:
     | $      | characters             |
     | @      | variable get           |
     | !      | variable set           |
+    | \      | inline assembly        |
+    | ^      | assembly references    |
+    | |      | compiler macros        |
 
 ### Naming and Style Conventions
 
@@ -235,8 +239,7 @@ It's traditional to have a word named `here` which returns the
 next free address in memory.
 
 ~~~
-:here  (-a)
-  &Heap fetch ;
+:here  (-a)  &Heap fetch ;
 ~~~
 
 ## Variables
@@ -299,7 +302,7 @@ And then the others are trivial.
 
 ~~~
 :var<n> (ns-) d:create , ;
-:var    (s-)  #0 swap var<n> ;
+:var    (s-)  \liswlica `0 ^var<n> ;
 :const  (ns-) d:create d:last d:xt store ;
 ~~~
 
