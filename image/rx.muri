@@ -1746,15 +1746,11 @@ r class:word
 s d
 : 0058
 r 0057
-r compiler:off
-r class:macro
-: 0059
-r 0058
 r muri:r
 r class:word
 s r
 : 9999
-r 0059
+r 0058
 r err:notfound
 r class:word
 s err:notfound
