@@ -121,19 +121,19 @@ And finally, run it.
 
 /* CSS Begins */
 
-* { background: #111; color: #44dd44; font-family: monospace; }
+* { background: #1d1f21; color: #b5bd68; font-family: monospace; }
 span { white-space: pre }
-.text { color: white; white-space: pre }
-.colon {  color: red; }
-.comment {  color: #888; }
-.str {  color: yellow; }
-.num { color: cyan; }
-.fnum { color: cyan; font-weight: bold; }
-.ptr { color: mediumorchid; }
-.fetch { color: orchid; }
-.store { color: orchid; }
-.char { color: brown; }
-.inst { color: tomato; }
+.text { color: #c5c8c6; white-space: pre }
+.colon {  color:  #cc6666; }
+.comment {  color: #969896; }
+.str {  color: #f0c674; }
+.num { color: #8abeb7; }
+.fnum { color: #8abeb7; font-weight: bold; }
+.ptr { color: #b294bb; font-weight: bold; }
+.fetch { color: #b294bb; }
+.store { color: #b294bb; }
+.char { color:  #81a2be; }
+.inst { color: #de935f; }
 .defer { color: #888; }
-.imm { color: orange; }
-.prim { color: greenyellow; }
+.imm { color: #de935f; }
+.prim { color: #b5bd68; font-weight: bold; }
