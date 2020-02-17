@@ -26,7 +26,7 @@
 
 - future
 
-  underscores in word namesv
+  underscores in word names
 
     Prior RETRO images had a patch that allowed underscores to be
     used in word names. In this release, the patch is no longer

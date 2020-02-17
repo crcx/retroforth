@@ -686,6 +686,7 @@ void file_open() {
   ---------------------------------------------------------------------*/
 
 void file_read() {
+  CELL c;
   CELL slot = stack_pop();
 #ifndef NOCHECKS
   if (slot <= 0 || slot > MAX_OPEN_FILES || OpenFileHandles[slot] == 0) {
@@ -693,7 +694,7 @@ void file_read() {
     exit(1);
   }
 #endif
-  CELL c = fgetc(OpenFileHandles[slot]);
+  c = fgetc(OpenFileHandles[slot]);
   stack_push(feof(OpenFileHandles[slot]) ? 0 : c);
 }
 
@@ -1456,13 +1457,14 @@ void socket_create() {
 }
 
 void socket_bind() {
+  int sock, port;
   memset(&hints, 0, sizeof hints);
   hints.ai_family = AF_UNSPEC;
   hints.ai_socktype = SOCK_STREAM;
   hints.ai_flags = AI_PASSIVE;
 
-  int sock = stack_pop();
-  int port = stack_pop();
+  sock = stack_pop();
+  port = stack_pop();
 
   getaddrinfo(NULL, string_extract(port), &hints, &res);
   stack_push((CELL) bind(SocketID[sock], res->ai_addr, res->ai_addrlen));
