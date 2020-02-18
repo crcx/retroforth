@@ -1,0 +1,46 @@
+# Local Variables
+
+RETRO does not provide local variables. Similar functionality
+can be achieved using globals along with the `v:preserve`
+combinator, but this can lead to ugly code.
+
+Consider:
+
+    'Counter var
+    :test (...n-v)
+      &Counter [ #0 !Counter
+                  [ + &Counter v:inc ] times @Counter / ] v:preserve ;
+    :run-tests
+      #0 !Counter
+      #1 #2 #3 #4 #3 test n:put nl &Counter v:inc
+      #10 #20 #30 #40 #3 test n:put nl &Counter v:inc
+      #11 #21 #31 #41 #3 test n:put nl &Counter v:inc
+      @Counter n:put sp '_tests_finished s:put nl ;
+
+    run-tests
+
+The code implemented here allows for wrapping the most recent
+word within a `v:preserve` clause, letting the above definition
+of `test` become:
+
+    :test (...n-v)
+      #0 !Counter [ + &Counter v:inc ] times @Counter / ;
+    &Counter make-local
+
+And if you need multiple variables to be localized:
+
+    :test ... ;
+    { &Array &Of &Variables } locals
+
+# The Code
+
+~~~
+:make-local (a-)
+  here [ compile:lit
+         d:last<xt> compile:lit
+         &v:preserve compile:call
+         compile:ret ] dip d:last d:xt store ;
+
+:locals (a-)  &make-local a:for-each ;
+~~~
+
