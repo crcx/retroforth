@@ -3473,7 +3473,7 @@ for return addresses.
 | 23     | xo   | bitwise xor        | xy-n       |   -           |
 | 24     | sh   | shift              | xy-n       |   -           |
 | 25     | zr   | zero return        |  n-?       |   -           |
-| 26     | en   | end                |   -        |   -           |
+| 26     | ha   | halt               |   -        |   -           |
 | 27     | ie   | i/o enumerate      |   -n       |   -           |
 | 28     | iq   | i/o query          |  n-xy      |   -           |
 | 29     | ii   | i/o invoke         | ...n-      |   -           |
@@ -3586,11 +3586,6 @@ The currently supported and reserved device identifiers are:
 
 This list may be revised in the future. The only guaranteed
 stable indentifier is 0000 for generic output.
-
-## Trivia
-
-There are 810,000 possible combinations of instructions. Only
-73 are used in the implementation of RETRO.
 
 # Internals: Interface Layers
 

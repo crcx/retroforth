@@ -55,7 +55,7 @@ the token type and use `span`.
   (tokens_with_prefixes)
   dup fetch
   $: [ 'colon     span ] case
-  $( [ 'comment   span ] case
+  $( [ 'note      span ] case
   $' [ 'str       span ] case
   $# [ 'num       span ] case
   $. [ 'fnum      span ] case
@@ -125,7 +125,7 @@ And finally, run it.
 span { white-space: pre }
 .text { color: #c5c8c6; white-space: pre }
 .colon {  color:  #cc6666; }
-.comment {  color: #969896; }
+.note {  color: #969896; }
 .str {  color: #f0c674; }
 .num { color: #8abeb7; }
 .fnum { color: #8abeb7; font-weight: bold; }
