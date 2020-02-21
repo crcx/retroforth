@@ -46,35 +46,35 @@ The formatting must follow the following limits:
     # Title
     ## Subtitle
     ### Level 3 Title
-
+    
     Paragraph. *Bold*, _italics_, `inline code`.
-
+    
     Another paragraph.
-
+    
     - list element
     - list element
       - nested list element
       - nested list element
     - list element
-
+    
     ~~~
     :retro code ;
     ~~~
-
+    
     ```
     tests
     ```
-
+    
     Sample code or output with four leading spaces is
     note colorized.
-
+    
         this will be code, but not run through the
         colorizer.
-
+    
     More paragraph text.
-
+    
     ----
-
+    
     Above is a horizontal separator.
 
 ----
@@ -350,6 +350,9 @@ reset
 This concludes the Markdown (subset) in RETRO utility. All that's
 left is the CSS.
 
+For the colors, I'm mostly using the _Tomorrow Night_ colors as
+listed at https://github.com/chriskempson/tomorrow-theme
+
 ## CSS
 
     * {
@@ -383,17 +386,17 @@ left is the CSS.
     }
     
     span { white-space: pre; background: #1d1f21; }
-    .text { color: #c5c8c6; white-space: pre }
-    .colon {  color:  #cc6666; }
-    .note {  color: #969896; }
-    .str {  color: #f0c674; }
-    .num { color: #8abeb7; }
-    .fnum { color: #8abeb7; font-weight: bold; }
-    .ptr { color: #b294bb; font-weight: bold; }
+    .text  { color: #c5c8c6; white-space: pre }
+    .colon { color: #cc6666; }
+    .note  { color: #969896; }
+    .str   { color: #f0c674; }
+    .num   { color: #8abeb7; }
+    .fnum  { color: #8abeb7; font-weight: bold; }
+    .ptr   { color: #b294bb; font-weight: bold; }
     .fetch { color: #b294bb; }
     .store { color: #b294bb; }
-    .char { color:  #81a2be; }
-    .inst { color: #de935f; }
-    .defer { color: #888; }
-    .imm { color: #de935f; }
-    .prim { color: #b5bd68; font-weight: bold; }
+    .char  { color: #81a2be; }
+    .inst  { color: #de935f; }
+    .defer { color: #888888; }
+    .imm   { color: #de935f; }
+    .prim  { color: #b5bd68; font-weight: bold; }
