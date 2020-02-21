@@ -58,7 +58,7 @@ The formatting must follow the following limits:
     - list element
     
     ~~~
-    :retro code ;
+    :retro (code ;
     ~~~
     
     ```
