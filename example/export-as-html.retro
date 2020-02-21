@@ -133,7 +133,6 @@ to deal with.
 'Code var
 
 :format
-  @Escape [ &Escape v:on ] if;
   $` [ @Escape [ &Escape v:off $* c:put ] if;
        @Code n:zero? [ '<tt_style='display:inline'> &Code v:on ]
                      [ '</tt> &Code v:off ] choose s:put ] case
@@ -143,6 +142,7 @@ to deal with.
   $_ [ @Escape @Code or [ &Escape v:off $_ c:put ] if;
        @Emphasis n:zero? [ '<em> &Emphasis v:on ]
                          [ '</em> &Emphasis v:off ] choose s:put ] case
+  $\ [ &Escape v:on ] case
   c:put ;
 
 :s:put<formatted> [ format ] s:for-each ;
