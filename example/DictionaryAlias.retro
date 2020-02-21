@@ -1,6 +1,6 @@
 The easiest way to make an alias is by
 
-:s2 s1 ;
+    :s2 s1 ;
 
 which adds a layer of `call`.
 `d:alias` eliminates this overhead.

@@ -88,6 +88,6 @@ FILE-PATH 'gophermap s:append file:W file:open !FID
 :glossary source? &drop -if;
    FILE-PATH over
   'retro-document_%s_>%s%s.glossary s:format unix:system $. c:put ;
+~~~
 
 [ dir? &drop &glossary choose ] unix:for-each-file nl
-~~~

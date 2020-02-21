@@ -13,14 +13,12 @@ functional enough to be useful to me.
 To use:
 
 - replace all instances of HTTP-DOMAIN with the server URL.
-  (e.g., http://server.tld:port)
 - setup inetd to run this
 - visit http://server.tld:port/gopher-url
 
-  e.g., for floodgap:
+E.g., for floodgap:
 
   http://server.tld:port/gopher.floodgap.com/1/
-
 
 ~~~
 { 'Server 'Port 'Selector 'Response 'Size } [ var ] a:for-each
@@ -70,11 +68,18 @@ so I can remove the need for something other than RETRO.
     [ dup file:read 0; buffer:add ] times unix:pclose
     buffer:start s:length ] buffer:preserve ;
 
+:http-prefix? (-f)
+  &Requested 'http:// s:begins-with? ;
+
 :request (-)
-  &Requested 'http:// s:begins-with? [ &Requested #7 + ] [ &Requested n:inc ] choose
+  http-prefix? [ &Requested #7 + ] [ &Requested n:inc ] choose
   'gopher:// s:prepend
   &Buffer FREE net:fetch &Buffer !Response !Size ;
 ~~~
+
+Parsing the URL to the various internal variables is a matter
+of splitting the string, saving the pieces, and storing the
+pointers in the variables.
 
 ~~~
 :parse-url (s-)
@@ -100,10 +105,17 @@ so I can remove the need for something other than RETRO.
 :server      @Line #2 a:fetch ;
 :selector    @Line #1 a:fetch ;
 :description @Line #0 a:fetch ;
+~~~
 
+The `indicate` word displays a short string of three characters
+that provide a hint to the user about the content being linked.
+
+~~~
 :indicate
-  $0 [ 'TXT_ s:put selector port server '<a_href="HTTP-DOMAIN/%s:%s/0%s">%s</a> s:format s:put ] case
-  $1 [ 'DIR_ s:put selector port server '<a_href="HTTP-DOMAIN/%s:%s/1%s">%s</a> s:format s:put ] case
+  $0 [ 'TXT_ s:put selector port server
+       '<a_href="HTTP-DOMAIN/%s:%s/0%s">%s</a> s:format s:put ] case
+  $1 [ 'DIR_ s:put selector port server
+       '<a_href="HTTP-DOMAIN/%s:%s/1%s">%s</a> s:format s:put ] case
   $2 [ 'CSO_ s:put s:put ] case
   $3 [ 'ERR_ s:put s:put ] case
   $4 [ 'BHX_ s:put s:put ] case
@@ -112,17 +124,33 @@ so I can remove the need for something other than RETRO.
   $7 [ 'FND_ s:put s:put ] case
   $8 [ 'TEL_ s:put s:put ] case
   $9 [ 'BIN_ s:put s:put ] case
-  $h [ 'HTM_ s:put selector #4 + '<a_href="%s">%s</a> s:format s:put ] case
+  $h [ 'HTM_ s:put selector #4 +
+       '<a_href="%s">%s</a> s:format s:put ] case
   $I [ 'IMG_ s:put s:put ] case
   $g [ 'GIF_ s:put s:put ] case
   $i [ '____ s:put s:put ] case
   drop 'UNK_ s:put description s:put drop ;
+~~~
 
-:tt '<tt_style='white-space:_pre'> s:put call '</tt><br> s:put nl ;
+~~~
+:tt
+  '<tt_style='white-space:_pre'> s:put
+  call
+  '</tt><br> s:put nl ;
+
+:fields (s-a)
+  ASCII:HT s:tokenize dup !Line ;
+
+:menu-entry
+  [ @Line #0 a:fetch type indicate ] tt ;
+
+:plain-text
+   @Line [ '<tt> s:put s:put '</tt> s:put ] a:for-each nl ;
+
 :line
   dup ASCII:HT s:contains-char?
-    [ ASCII:HT s:tokenize !Line @Line a:length #3 gteq? [ [ @Line #0 a:fetch type indicate ] tt ]
-                                                        [ @Line [ '<tt> s:put s:put '</tt> s:put ] a:for-each  nl ] choose ] if;
+  [ fields  a:length #3 gteq? [ [ menu-entry ]
+                                [ plain-text ] choose ] if;
   [ s:putm ] tt ;
 
 :css
@@ -131,15 +159,26 @@ so I can remove the need for something other than RETRO.
   'a_{_color:_orange;_} s:put nl
   '</style> s:put nl ;
 
+:process:line
+  &Buffer ASCII:CR s:tokenize
+  [ s:trim line ] a:for-each ;
+
 :process
-  &Buffer ASCII:HT s:contains-char? [ &Buffer ASCII:CR s:tokenize [ s:trim line ] a:for-each ] if;
+  &Buffer ASCII:HT s:contains-char? [ process:line ] if;
   '<xmp> s:put &Buffer s:put '</xmp> s:put ;
 
 :eol ASCII:CR c:put ASCII:LF c:put ;
-:headers 'HTTP/1.1_200_OK s:put eol 'Content-Type:_text/html s:put eol eol ;
+:headers 'HTTP/1.1_200_OK s:put eol
+         'Content-Type:_text/html s:put eol eol ;
+
 :7080 read request headers css process ;
 
 7080
 ~~~
 
+If you want to log the requests, this optional bit stores the
+latest request in a file.
+
+```
 &Requested '/home/crc/retro/proxy.log file:spew
+```

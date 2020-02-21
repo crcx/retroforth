@@ -26,7 +26,7 @@ the discrete moment at which this happens is sometimes called a tick.
 Each generation is a pure function of the preceding one. The rules
 continue to be applied repeatedly to create further generations.
 
-Taken from https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life
+Taken from `https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life`
 
 # The Code
 

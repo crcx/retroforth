@@ -149,22 +149,24 @@ two integers occupying two 32-bit cells.
 Two different ways are implemented:
 
 - `w1` uses fixed point encoding.
+
    Splits a floating point number into the integer and the fraction
    parts to store them in two cells.
    This is faster with a narrower dynamic range.
+
 - `w2` uses sqrt-encoding described in doc/SqrtEncoding.pdf .
    This is slower with a relatively wider dynamic range,
    but likely not as wide as the original floating point.
 
-Since Retro's cells are 32-bit,
-it is more convenient to handle floating point numbers
-encoded into single cells than into pairs of cells.
-For instance, consider using the `a:` words for vectors.
+Since Retro's cells are 32-bit, it is more convenient to handle
+floating point numbers encoded into single cells than into pairs
+of cells. For instance, consider using the `a:` words for vectors.
 Hence in many cases the words found by doing
 
   'e: d:words-with
 
 are suitable.
+
 However, sometimes a higher precision is desired at a higher cost.
 
 These are the same as `f:+encode` and `f:-encode` except that they come
