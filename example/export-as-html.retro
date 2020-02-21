@@ -135,12 +135,11 @@ block is a matter of:
 ~~~
 {{
   'Block var
+  :begin   '<div_class='codeblock'><tt>~~~</tt> ;
+  :end     '<tt>~~~</tt></div> ;
 ---reveal---
   :in-code-block? (-f)   @Block ;
   :code-block?    (s-sf) dup '~~~ s:eq? ;
-
-  :begin   '<div_class='codeblock'><tt>~~~</tt> ;
-  :end     '<tt>~~~</tt></div> ;
   :toggle-code (n-)
     drop @Block n:zero? dup &begin &end choose s:put !Block ;
 }}
@@ -152,12 +151,11 @@ delimiters.
 ~~~
 {{
   'Block var
+  :begin   '<div_class='codeblock'><tt>```</tt> ;
+  :end     '<tt>```</tt></div> ;
 ---reveal---
   :in-test-block? (-f)   @Block ;
   :test-block?    (s-sf) dup '``` s:eq? ;
-
-  :begin   '<div_class='codeblock'><tt>```</tt> ;
-  :end     '<tt>```</tt></div> ;
   :toggle-test (n-)
     drop @Block n:zero? dup &begin &end choose s:put !Block ;
 }}
@@ -297,10 +295,10 @@ output.
 ~~~
 :format
   s:keep
-  in-code-block? [ format:code ] if;
-  in-test-block? [ format:code ] if;
   code-block?    [ toggle-code ] if;
+  in-code-block? [ format:code ] if;
   test-block?    [ toggle-test ] if;
+  in-test-block? [ format:code ] if;
   blank?         [ drop '<p> s:put nl ] if;
   header?        [ format:head ] if;
   inline-code?   [ format:inline-code ] if;
