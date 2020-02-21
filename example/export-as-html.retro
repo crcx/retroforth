@@ -218,9 +218,9 @@ headers should look like:
 
 ~~~
 :header?
-  dup [ '# s:begins-with?   ]
-      [ '## s:begins-with?  ]
-      [ '### s:begins-with? ] tri or or ;
+  dup [ '#_ s:begins-with?   ]
+      [ '##_ s:begins-with?  ]
+      [ '###_ s:begins-with? ] tri or or ;
 
 :format:head
   ASCII:SPACE s:split
