@@ -41,6 +41,42 @@ not adding support for the various linking formats, ordered
 lists, underlined headers, doubled asterisk, doubled
 underscores, multiple line/paragraph list entries, or images.
 
+The formatting must follow the following limits:
+
+    # Title
+    ## Subtitle
+    ### Level 3 Title
+
+    Paragraph. *Bold*, _italics_, `inline code`.
+
+    Another paragraph.
+
+    - list element
+    - list element
+      - nested list element
+      - nested list element
+    - list element
+
+    ~~~
+    :retro code ;
+    ~~~
+
+    ```
+    tests
+    ```
+
+    Sample code or output with four leading spaces is
+    note colorized.
+
+        this will be code, but not run through the
+        colorizer.
+
+    More paragraph text.
+
+    ----
+
+    Above is a horizontal separator.
+
 ----
 
 ## The Code
