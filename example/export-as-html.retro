@@ -77,6 +77,10 @@ The formatting must follow the following limits:
     
     Above is a horizontal separator.
 
+This is not very intelligent. If you have text like `3 * 4`,
+it'll happily treat the \* as the start of a bold sequence.
+Use a leading backslash to avoid this.
+
 ----
 
 ## The Code

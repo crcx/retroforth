@@ -843,16 +843,30 @@ a key part of building the other high-level string operations.
 Building on `s:for-each`, I am able to implement `s:index-of`, which
 finds the first instance of a character in a string.
 
+In higher level code:
+
+    :s:index-of (sc-n)
+      swap
+      [ repeat
+          fetch-next 0; swap
+          [ over -eq? ] dip
+          swap 0; drop
+        again
+      ]
+      [ - n:dec nip ]
+      [ s:length over eq? ] tri
+      [ drop #-1 ] if ;
+
 ~~~
 :s:index-of (sc-n)
-  swap [ repeat
-           fetch-next 0; swap
-           [ over -eq? ] dip
-           swap 0; drop
-         again
-       ] sip
-  [ - n:dec nip ] sip
-  s:length over eq? [ drop #-1 ] if ;
+  swap
+  [ repeat
+      \duliadsw `1 \fezr.... \swpupudu
+      \poswnepo \swzr.... drop
+    again ]
+  [ - n:dec nip ]
+  [ s:length over eq? ] tri
+  [ drop #-1 ] if ;
 ~~~
 
 `s:contains-char?` returns a flag indicating whether or not a
