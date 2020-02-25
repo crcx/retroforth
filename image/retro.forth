@@ -829,13 +829,21 @@ handle conversion of _ into spaces.
 `s:for-each` executes a quote once for each cell in string. It is
 a key part of building the other high-level string operations.
 
+    :s:for-each (sq-)
+      [ repeat
+          over fetch 0; drop
+          dup-pair
+          [ [ &fetch dip call ] dip ] dip
+          &n:inc dip
+        again
+      ] call drop-pair ;
+
 ~~~
 :s:for-each (sq-)
   [ repeat
-      over fetch 0; drop
-      dup-pair
-      [ [ &fetch dip call ] dip ] dip
-      &n:inc dip
+      \puduposw \fezr.... drop
+      \puduposw \puduposw
+      \pupupufe \poca.... \poliadpo `1
     again
   ] call drop-pair ;
 ~~~
