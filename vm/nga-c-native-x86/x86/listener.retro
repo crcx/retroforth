@@ -9,7 +9,7 @@
   :check-bs (c-c)
     dup [ #8 eq? ] [ #127 eq? ] bi or [ buffer:get buffer:get drop-pair ] if ;
 ---reveal---
-  :c:get (-c) hook as{ 'liii.... i #1 d }as dup c:put ;
+  :c:get (-c) hook \liii.... `1 dup c:put ;
 
   :s:get-word (-s) [ #1025 buffer:set
                 [ c:get dup buffer:add check-bs eol? ] until

@@ -6,47 +6,82 @@ sector to/from a dedicated `ata:Sector` buffer. No checks
 are made to validate the sector number. Using these (esp.
 `ata:write`) is likely to cause data loss.
 
+# Settings
+
+~~~
+#10000 'ata:Delay var<n>
+~~~
+
 # Constants
 
 ~~~
 0x20 'ata:READ const
 0x30 'ata:WRITE const
+0xE7 'ata:FLUSH-CACHE const
 
 0x1F0 'ata:PRIMARY const
+0x1F0 'ata:DATA const
+0x1F1 'ata:ERROR const
+0x1F1 'ata:FEATURES const
+0x1F2 'ata:SECTOR-COUNT const
+0x1F3 'ata:SECTOR-NUMBER const
+0x1F4 'ata:CYLINDER-LOW const
+0x1F5 'ata:CYLINDER-HIGH const
+0x1F6 'ata:DRIVE const
+0x1F6 'ata:HEAD const
+0x1F7 'ata:STATUS  const
+0x1F7 'ata:COMMAND const
+
+0x3F6 'ata:PRIMARY-DCR-AS const
 ~~~
 
 # Common
 
 ~~~
 :ata:clear-bsy (-)
-  [ 0x1F7 pio:in-byte 0x80 and n:zero? ] until ;
+  [ ata:COMMAND pio:in-byte 0x80 and n:zero? ] until ;
 
 :ata:set-sector (n-)
-  0xE0 0x1F6 pio:out-byte
-  0x00 0x1F1 pio:out-byte
-  0x01 0x1F2 pio:out-byte
-  dup  0x1F3 pio:out-byte
-  dup #8 shift 0x1F4 pio:out-byte
-     #16 shift 0x1F5 pio:out-byte ;
+  0xE0 ata:HEAD pio:out-byte
+  0x00 ata:FEATURES pio:out-byte
+  0x01 ata:SECTOR-COUNT pio:out-byte
+  dup  ata:SECTOR-NUMBER pio:out-byte
+  dup #8 shift ata:CYLINDER-LOW pio:out-byte
+     #16 shift ata:CYLINDER-HIGH pio:out-byte ;
 ~~~
 
 # Reading a Sector
 
 ~~~
+:mask 0xFF and ;
+:delay @ata:Delay [ ] times ;
+
+:ata:read-word
+  ata:PRIMARY pio:in-word ;
+
+:store-word
+  [ mask over store n:inc ] sip #8 shift over store n:inc ;
+
 :ata:read (an-)
   ata:set-sector
-  ata:READ 0x1F7 pio:out-byte
-  #10000 [ ] times
-  #256 [ ata:PRIMARY pio:in-word [ 0xFF and over store n:inc ] sip #8 shift over store n:inc ] times drop ;
+  ata:READ ata:COMMAND pio:out-byte
+  delay
+  #256 [ ata:read-word store-word ] times drop ;
 ~~~
 
 # Writing a Sector
 
 ~~~
+:ata:write-word
+  ata:PRIMARY pio:out-word ;
+
+:fetch-word
+  fetch-next [ fetch-next #-8 shift ] dip + ;
+
 :ata:write (an-)
   ata:set-sector
-  ata:WRITE 0x1F7 pio:out-byte
-  #10000 [ ] times
-  #256 [ fetch-next [ fetch-next #-8 shift ] dip + ata:PRIMARY pio:out-word ] times drop
-  0xE7 (cache_flush) 0x1F7 pio:out-byte ata:clear-bsy ;
+  ata:WRITE ata:COMMAND pio:out-byte
+  delay
+  #256 [ fetch-word ata:write-word ] times drop
+  ata:FLUSH-CACHE ata:COMMAND pio:out-byte ata:clear-bsy ;
 ~~~
