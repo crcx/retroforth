@@ -1,5 +1,7 @@
 # ATA (Hard Disk) Driver
 
+This implements a basic PIO mode ATA driver.
+
 The code here works (at least under qemu), but is *very*
 dangerous to use. It will allow you to read or write a
 sector to/from a dedicated `ata:Sector` buffer. No checks
@@ -15,22 +17,24 @@ are made to validate the sector number. Using these (esp.
 # Constants
 
 ~~~
-0x20 'ata:READ const
-0x30 'ata:WRITE const
+0x20 'ata:READ        const
+0x30 'ata:WRITE       const
 0xE7 'ata:FLUSH-CACHE const
 
-0x1F0 'ata:PRIMARY const
-0x1F0 'ata:DATA const
-0x1F1 'ata:ERROR const
-0x1F1 'ata:FEATURES const
-0x1F2 'ata:SECTOR-COUNT const
-0x1F3 'ata:SECTOR-NUMBER const
-0x1F4 'ata:CYLINDER-LOW const
-0x1F5 'ata:CYLINDER-HIGH const
-0x1F6 'ata:DRIVE const
-0x1F6 'ata:HEAD const
-0x1F7 'ata:STATUS  const
-0x1F7 'ata:COMMAND const
+(port (name                    (access_modes
+(---- (----------------------- (------------
+0x1F0 'ata:PRIMARY       const
+0x1F0 'ata:DATA          const (rw
+0x1F1 'ata:ERROR         const (r
+0x1F1 'ata:FEATURES      const (w
+0x1F2 'ata:SECTOR-COUNT  const (rw
+0x1F3 'ata:SECTOR-NUMBER const (rw
+0x1F4 'ata:CYLINDER-LOW  const (rw
+0x1F5 'ata:CYLINDER-HIGH const (rw
+0x1F6 'ata:DRIVE         const (rw
+0x1F6 'ata:HEAD          const (rw
+0x1F7 'ata:STATUS        const (r
+0x1F7 'ata:COMMAND       const (w
 
 0x3F6 'ata:PRIMARY-DCR-AS const
 ~~~

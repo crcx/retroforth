@@ -297,7 +297,7 @@ void io_image_query() {
   ---------------------------------------------------------------------*/
 
 void rre_execute(CELL cell, int silent) {
-  CELL a, b, token;
+  CELL a, b, i, token;
   CELL opcode;
   silence_input = silent;
   rp = 1;
@@ -317,6 +317,14 @@ void rre_execute(CELL cell, int silent) {
     } else {
       printf("\nERROR (nga/rre_execute): Invalid instruction!\n");
       printf("At %lld, opcode %lld\n", (long long)ip, (long long)opcode);
+      printf("Instructions: ");
+      a = opcode;
+      for (i = 0; i < 4; i++) {
+        b = a & 0xFF;
+        printf("%d ", b);
+        a = a >> 8;
+      }
+      printf("\n");
       exit(1);
     }
 #ifndef NOCHECKS
