@@ -900,11 +900,12 @@ a given substring is in a string.
 
 ~~~
 {{
-  :extract  dup-pair here swap copy here over + #0 swap store ;
-  :check    &extract dip [ &n:inc dip ] dip here s:hash over eq? ;
+  'Str var
+  :extract  dup-pair @Str swap copy @str over + #0 swap store ;
+  :check    &extract dip [ &n:inc dip ] dip @Str s:hash over eq? ;
   :mask     rot rot [ [ swap &or dip ] dip ] dip ;
   :location rot rot [ [ swap [ over n:zero? and ] dip swap [ nip dup ] if ] dip ] dip ;
-  :setup    #0 rot rot &s:length &s:hash bi s:empty buffer:set [ over s:length ] dip swap ;
+  :setup    s:empty !Str #0 rot rot &s:length &s:hash bi s:empty buffer:set [ over s:length ] dip swap ;
 ---reveal---
   :s:contains-string? (ss-f)
     [ setup [ check mask ] times ] buffer:preserve drop-pair drop ;
