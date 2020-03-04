@@ -556,8 +556,8 @@ so they can be inlined. Here's the high level forms:
 :n:square  (n-n)   \dumu.... ;
 :n:sqrt    (n-n)
   #1 [ repeat dup-pair / over - #2 / 0; + again ] call nip ;
-:n:min     (nn-n)  dup-pair lt? &drop &nip choose ;
-:n:max     (nn-n)  dup-pair gt? &drop &nip choose ;
+:n:min     (nn-n)  dup-pair lt? [ drop ] [ nip ] choose ;
+:n:max     (nn-n)  dup-pair gt? [ drop ] [ nip ] choose ;
 :n:abs     (n-n)   dup n:negative? &n:negate if ;
 :n:limit   (nlu-n) swap push n:min pop n:max ;
 :n:inc     (n-n)   #1 + ;
@@ -912,7 +912,7 @@ a given substring is in a string.
 
   :s:index-of-string (ss-n)
     over [ [ setup [ check location ] times ] buffer:preserve
-           drop-pair drop ] dip - n:dec #-1 n:max ;
+           drop-pair drop ] dip - #2 - #-1 n:max ;
 }}
 ~~~
 
@@ -1132,7 +1132,7 @@ located.
   dup-pair s:index-of nip dup-pair s:left &+ dip ;
 
 :s:split-on-string (ss-ss)
-  dup-pair s:index-of-string nip dup-pair s:left &+ dip ;
+  dup-pair s:index-of-string n:inc nip dup-pair s:left &+ dip ;
 
 :s:replace (sss-s)
   over s:length here store
