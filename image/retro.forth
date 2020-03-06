@@ -900,16 +900,41 @@ a given substring is in a string.
 
 ~~~
 {{
+  'Src var
+  'Tar var
+  'Pad var
+  'I   var
+  'F   var
+  'At  var
+
+  :terminate (-)
+    #0 @Pad @Tar s:length + store ;
+
+  :extract (-)
+    @Src @I + @Pad @Tar s:length copy ;
+
+  :compare (-)
+    @Pad @Tar s:eq? @F or !F @F [ @I !At ] -if ;
+
+  :next (-)
+    &I v:inc ;
+---reveal---
+  :s:contains-string? (ss-f)
+    !Tar !Src s:empty !Pad #0 !I #0 !F
+    @Src s:length
+    [ extract terminate compare next ] times
+    @F ;
+}}
+~~~
+
+~~~
+{{
   'Str var
   :extract  dup-pair @Str swap copy @str over + #0 swap store ;
   :check    &extract dip [ &n:inc dip ] dip @Str s:hash over eq? ;
-  :mask     rot rot [ [ swap &or dip ] dip ] dip ;
   :location rot rot [ [ swap [ over n:zero? and ] dip swap [ nip dup ] if ] dip ] dip ;
   :setup    s:empty !Str #0 rot rot &s:length &s:hash bi s:empty buffer:set [ over s:length ] dip swap ;
 ---reveal---
-  :s:contains-string? (ss-f)
-    [ setup [ check mask ] times ] buffer:preserve drop-pair drop ;
-
   :s:index-of-string (ss-n)
     over [ [ setup [ check location ] times ] buffer:preserve
            drop-pair drop ] dip - #2 - #-1 n:max ;
