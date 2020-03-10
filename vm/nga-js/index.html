@@ -1,4 +1,5 @@
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 
 <head>
   <title>RETRO FORTH</title>
@@ -11,14 +12,16 @@
   <div class='left'>
     <textarea id='input' onchange='saveproject()'>
     </textarea>
-    <iframe src='http://forth.works:9999'></iframe>
+<!--    <iframe src='http://forth.works:9999'></iframe>
+-->
   </div>
   <div class='right'>
-    <div style='border-bottom: 1px solid #FDF6E3; color: #657B83; background: #FDF6E3;'>
+    <div style='padding: 5px; background: #b0b0b0; position: fixed; z-index: 999; width: 100%;'>
       <button onclick='cls()'>Clear</button>
       <button onclick='go()'>Go</button>
     </div>
     <div>
+      <br><br>
       <canvas id="canvas" width="300" height="300"></canvas>
 <xmp id='console'>
 </xmp>
