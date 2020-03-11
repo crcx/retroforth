@@ -284,7 +284,7 @@ instructions[vm.II] = function() {
   var chosen = data.pop();
   if (chosen == 0) {
     var s = String.fromCharCode(data.pop());
-    document.getElementById('console').innerHTML += s;
+    document.getElementById('console').value += s;
   } else if (chosen == 1) {
     draw(data.pop())
   }
@@ -432,7 +432,7 @@ function evaluate(s) {
 }
 
 function cls() {
-  document.getElementById('console').innerHTML = "";
+  document.getElementById('console').value = "";
   const context = canvas.getContext('2d');
   context.clearRect(0, 0, canvas.width, canvas.height);
 }
@@ -461,7 +461,7 @@ function go() {
   loadInitialImage();
   notfound = d_xt_for("err:notfound");
   interpret = d_xt_for("interpret");
-  document.getElementById("console").innerHTML = "";
+  document.getElementById("console").value = "";
   src = document.getElementById("input").value;
   tokens = unu(src).match(/\S+/g);
   var i = tokens.length;
@@ -477,7 +477,7 @@ function go() {
     s = s + data.data[j] + " ";
     j++;
   }
-  document.getElementById("console").innerHTML += "\n" + s;
+  document.getElementById("console").value += "\n" + s;
   if (framebuffer === 0) {
     var canvas = document.getElementById('canvas');
     canvas.style.display = "none";

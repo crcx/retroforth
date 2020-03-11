@@ -1,0 +1,467 @@
+~~~
+'Total var
+'WordsTested var
+'Flag var
+'Tests var
+'InTestState var
+
+:pad s:length #32 swap - #0 n:max &sp times ;
+:Testing (s-)
+  dup 'Test:__ s:put s:put pad #-1 !Flag #0 !Tests  &WordsTested v:inc reset ;
+
+:passed (-)
+  '->_ s:put @Tests n:put '_tests_passed s:put nl ;
+
+:exit-on-fail (-)
+  @Flag [ '->_FAILED. s:put nl bye ] -if ; 
+
+:match (n-)
+  eq? @InTestState and !InTestState ;
+
+:try (qq-)
+  #-1 !InTestState
+  [ call ] dip call
+  depth n:-zero? [ @Flag and !Flag ] if
+  @Flag @InTestState and !Flag
+  exit-on-fail &Tests v:inc &Total v:inc ;
+
+:summary (-)
+  @WordsTested n:put '_words_tested s:put nl
+  @Total n:put '_tests_passed s:put nl ;
+~~~
+
+~~~
+'dup Testing
+  [ #1 dup ] [ #1 match #1 match ] try
+  [ #4 #3 dup ] [ #3 match #3 match #4 match ] try
+passed
+~~~
+
+~~~
+'drop Testing
+  [ #1 #2 drop ] [ #1 eq? ] try
+  [ #1 #2 #3 drop ] [ #2 match #1 match ] try
+  [ #1 #2 drop drop ] [ #1 eq? ] try
+passed
+~~~
+
+~~~
+'swap Testing
+  [ #1 #2 #3 swap ] [ #2 match #3 match #1 match ] try
+passed
+~~~
+
+~~~
+'call Testing
+  [ #1 [ ] call #2 ] [ #2 match #1 match ] try
+  [ #1 [ #3 ] call #2 ] [ #2 match #3 match #1 match ] try
+passed
+~~~
+
+~~~
+'eq? Testing
+  [ #1 #2 eq? ] [ FALSE match ] try
+  [ #1 #1 eq? ] [ TRUE match ] try
+  [ #2 #2 eq? ] [ TRUE match ] try
+  [ #2 #1 eq? ] [ FALSE match ] try
+passed
+~~~
+
+~~~
+'-eq? Testing
+  [ #1 #2 -eq? ] [ TRUE match ] try
+  [ #1 #1 -eq? ] [ FALSE match ] try
+  [ #2 #2 -eq? ] [ FALSE match ] try
+  [ #2 #1 -eq? ] [ TRUE match ] try
+passed
+~~~
+
+~~~
+'lt? Testing
+  [ #1 #2 lt? ] [ TRUE match ] try
+  [ #3 #2 lt? ] [ FALSE match ] try
+  [ #2 #2 lt? ] [ FALSE match ] try
+passed
+~~~
+
+~~~
+'gt? Testing
+  [ #1 #2 gt? ] [ FALSE match ] try
+  [ #3 #2 gt? ] [ TRUE match ] try
+  [ #2 #2 gt? ] [ FALSE match ] try
+passed
+~~~
+
+~~~
+'fetch Testing
+  'A var
+  [ #100 &A store ] [ &A fetch #100 eq? ] try
+  [ #200 &A store ] [ &A fetch #200 eq? ] try
+  [ #300 &A store ] [ &A fetch #300 eq? ] try
+passed
+~~~
+
+~~~
+'store Testing
+  'A var
+  [ #100 &A store ] [ &A fetch #100 eq? ] try
+  [ #200 &A store ] [ &A fetch #200 eq? ] try
+  [ #300 &A store ] [ &A fetch #300 eq? ] try
+passed
+~~~
+
+~~~
+'+ Testing
+  [ #1 #2 +  ] [ #3 eq? ] try
+  [ #4 #-2 + ] [ #2 eq? ] try
+  [ #0 #1 +  ] [ #1 eq? ] try
+passed
+~~~
+
+~~~
+'- Testing
+  [ #2 #1 -        ] [ #1 eq? ] try
+  [ #2 #4 #3 - -   ] [ #1 eq? ] try
+  [ #1 #2 #1 #9 -  ] [ #-8 match #2 match #1 match ] try
+passed
+~~~
+
+~~~
+'* Testing
+  [  #1  #2 *       ] [ #2 eq?   ] try
+  [  #2  #3 *       ] [ #6 eq?   ] try
+  [ #-1 #10 *       ] [ #-10 eq? ] try
+  [ #-1  #2 * #-1 * ] [ #2 eq?   ] try
+passed
+~~~
+
+
+~~~
+'/mod Testing
+  [ #5   #2 /mod ] [ #2 match #1 match ] try
+  [ #-5  #2 /mod ] [ #-2 match #-1 match ] try
+  [ #-5 #-2 /mod ] [ #2 match #-1 match ] try
+  [ #5  #-2 /mod ] [ #-2 match #1 match ] try
+passed
+~~~
+
+~~~
+'and Testing
+  [ #-1 #-1 and ] [ #-1 match ] try
+  [  #0 #-1 and ] [ #0 match ] try
+  [ #-1  #0 and ] [ #0 match ] try
+  [  #0  #0 and ] [ #0 match ] try
+passed
+~~~
+
+~~~
+'or Testing
+  [ #-1 #-1 or ] [ #-1 match ] try
+  [  #0 #-1 or ] [ #-1 match ] try
+  [ #-1  #0 or ] [ #-1 match ] try
+  [  #0  #0 or ] [ #0 match ] try
+passed
+~~~
+
+~~~
+'xor Testing
+  [ #-1 #-1 xor ] [ #0 match ] try
+  [  #0 #-1 xor ] [ #-1 match ] try
+  [ #-1  #0 xor ] [ #-1 match ] try
+  [  #0  #0 xor ] [ #0 match ] try
+passed
+~~~
+
+~~~
+'shift Testing
+  [ #455 #-3 shift ] [ #3640 match ] try
+  [ #3640 #3 shift ] [ #455  match ] try
+passed
+~~~
+
+~~~
+'push Testing
+  [ #1 dup push #2 pop ] [ #1 match #2 match #1 match ] try
+passed
+~~~
+
+~~~
+'pop Testing
+  [ #1 dup push #2 pop ] [ #1 match #2 match #1 match ] try
+passed
+~~~
+
+~~~
+'0; Testing
+  [ #1 0; #2 0; ] [ #2 eq? swap #1 eq? and ] try
+  [ #1 0; #0 0; #2 0; ] [ #1 eq? ] try
+passed
+~~~
+
+~~~
+'fetch-next Testing
+  'A d:create #1 , #2 , #3 ,
+  [ &A fetch-next ] [ #1 match &A #1 + match ] try
+  [ &A fetch-next drop fetch-next ] [ #2 match &A #2 + match ] try
+passed
+~~~
+
+~~~
+'store-next Testing
+  'A d:create #1 , #2 , #3 ,
+  #9 #10 #11 &A store-next store-next store-next drop
+  [ &A fetch-next ] [ #11 match &A #1 + match ] try
+  [ &A fetch-next drop fetch-next ] [ #10 match &A #2 + match ] try
+passed
+~~~
+
+~~~
+'s:to-number Testing
+  [ '123  s:to-number ] [ #123  match ] try
+  [ '-123 s:to-number ] [ #-123 match ] try
+passed
+~~~
+
+
+~~~
+'s:eq? Testing
+  [ 'egg 'egg s:eq? ] [ #-1 match ] try 
+  [ 'egg 'shell s:eq? ] [ #0 match ] try 
+passed
+~~~
+
+~~~
+'s:length Testing
+  [ 'abc s:length ] [ #3 match ] try
+  [ 'abcdef s:length ] [ #6 match ] try
+passed
+~~~
+
+~~~
+'choose Testing
+  [ TRUE  [ #1 ] [ #0 ] choose ] [ #1 match ] try
+  [ FALSE [ #1 ] [ #0 ] choose ] [ #0 match ] try
+passed
+~~~
+
+
+~~~
+'if Testing
+  [ #0 TRUE  [ #1 ] if ] [ #1 match #0 match ] try
+  [ #0 FALSE [ #1 ] if ] [ #0 match ] try
+passed
+~~~
+
+
+~~~
+'-if Testing
+  [ #0 TRUE  [ #1 ] -if ] [ #0 match ] try
+  [ #0 FALSE [ #1 ] -if ] [ #1 match #0 match ] try
+passed
+~~~
+
+~~~
+'prefix:( Testing
+passed
+~~~
+
+~~~
+'Compiler Testing
+passed
+~~~
+
+
+~~~
+'Heap Testing
+passed
+~~~
+
+~~~
+', Testing
+  [ here #0 , here swap - ] [  #1 eq? ] try
+  [ here #12 , fetch      ] [ #12 eq? ] try
+  here #1 , #2 , #3 ,
+  [ fetch-next swap fetch-next swap fetch ]
+  [ #3 eq? swap #2 eq? and swap #1 eq? and ] try
+passed
+~~~
+
+~~~
+'s, Testing
+  [ here 'hello s, ] [ fetch-next $h match
+                       fetch-next $e match
+                       fetch-next $l match
+                       fetch-next $l match
+                       fetch-next $o match
+                       drop ] try
+passed
+~~~
+
+~~~
+'; Testing
+  [ here &; call here swap - ] [ #1 eq? ] try
+  [ here &; call fetch ] [ #10 eq? ] try
+passed
+~~~
+
+~~~
+'[ Testing
+  [ [ ] fetch ] [ #10 match ] try
+  [ [ ] #2 - fetch ] [ #1793 match ] try
+passed
+~~~
+
+~~~
+'] Testing
+  [ [ ] fetch ] [ #10 match ] try
+  [ [ ] #2 - fetch ] [ #1793 match ] try
+passed
+~~~
+
+~~~
+'Dictionary Testing
+  [ Dictionary ] [ #2 match ] try
+passed
+~~~
+
+~~~
+'d:link Testing
+  [ #0 d:link ] [ #0 match ] try
+passed
+~~~
+
+
+~~~
+'d:xt Testing
+  [ #0 d:xt ] [ #1 match ] try
+passed
+~~~
+
+~~~
+'d:class Testing
+  [ #0 d:class ] [ #2 match ] try
+passed
+~~~
+
+~~~
+'d:name Testing
+  [ #0 d:name ] [ #3 match ] try
+passed
+~~~
+
+~~~
+'class:word Testing
+passed
+~~~
+
+~~~
+'class:macro Testing
+passed
+~~~
+
+~~~
+'class:data Testing
+passed
+~~~
+
+~~~
+'d:add-header Testing
+passed
+~~~
+
+
+~~~
+'prefix:# Testing
+  [ #1 ] [ #1 match ] try
+  [ #2 ] [ #2 match ] try
+  [ #-1234 ] [ #-1234 match ] try
+passed
+~~~
+
+~~~
+'prefix:: Testing
+  :test #1 #2 ;
+  [ test ] [ #2 match #1 match ] try
+passed
+~~~
+
+~~~
+'prefix:& Testing
+  [ &Version ] [ #4 match ] try
+passed
+~~~
+
+~~~
+'prefix:$ Testing
+passed
+~~~
+
+~~~
+'repeat Testing
+  [ #3 repeat dup n:dec 0; again ] [ #1 match #2 match #3 match ] try
+passed
+~~~
+
+~~~
+'again Testing
+  [ #3 repeat dup n:dec 0; again ] [ #1 match #2 match #3 match ] try
+passed
+~~~
+
+~~~
+'interpret Testing
+passed
+~~~
+
+~~~
+'d:lookup Testing
+passed
+~~~
+
+
+~~~
+'class:primitive Testing
+passed
+~~~
+
+~~~
+'Version Testing
+  [ Version ] [ #4 match ] try
+  [ &Version ] [ #4 match ] try
+passed
+~~~
+
+~~~
+'i Testing
+  [ here '........ i ] [ fetch #0 match ] try
+  [ here 'li...... i ] [ fetch #1 match ] try
+  [ here 'ha...... i ] [ fetch #26 match ] try
+passed
+~~~
+
+~~~
+'d Testing
+  [ here #1 d ] [ fetch #1 match ] try
+  [ here #2 d ] [ fetch #2 match ] try
+  [ here #3 d ] [ fetch #3 match ] try
+passed
+~~~
+
+~~~
+'r Testing
+  [ here 'swap r ] [ fetch &swap match ] try
+  [ here 'drop r ] [ fetch &drop match ] try
+  [ here 'prefix:: r ] [ fetch &prefix:: match ] try
+passed
+~~~
+
+
+~~~
+'err:notfound Testing
+passed
+~~~
+
+~~~
+summary
+~~~
+
