@@ -262,17 +262,21 @@ passed
 
 ~~~
 'prefix:( Testing
+  [ #1 (#2 #3 ] [ #3 match #1 match ] try
 passed
 ~~~
 
 ~~~
 'Compiler Testing
+  [ @Compiler ] [ #0 match ] try
+  [ 'Compiler d:lookup d:class fetch ] [ &class:data match ] try
 passed
 ~~~
 
 
 ~~~
 'Heap Testing
+  [ Heap ] [ #3 match ] try
 passed
 ~~~
 
@@ -321,6 +325,7 @@ passed
 ~~~
 'Dictionary Testing
   [ Dictionary ] [ #2 match ] try
+  [ 'Dictionary d:lookup d:class fetch ] [ &class:data match ] try
 passed
 ~~~
 
@@ -393,6 +398,7 @@ passed
 
 ~~~
 'prefix:$ Testing
+  [ #1 $c #3 ] [ #3 match #99 match #1 match ] try
 passed
 ~~~
 
@@ -410,11 +416,15 @@ passed
 
 ~~~
 'interpret Testing
+  [ '#1 interpret ] [ #1 match ] try
+  [ #1 'n:inc interpret ] [ #2 match ] try
+  [ #1 #2 'swap interpret ] [ #1 match #2 match ] try
 passed
 ~~~
 
 ~~~
 'd:lookup Testing
+  [ 'Compiler d:lookup d:class fetch ] [ &class:data match ] try
 passed
 ~~~
 
