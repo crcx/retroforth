@@ -1,0 +1,27 @@
+This is a four column version of `d:words`. It's pretty straightforward.
+
+The code first scans through the dictionary to find the longest name. Shorter
+names will be padded to make sure all columns line up. It then displays each
+name, updating a column counter and adding newlines when needed.
+
+~~~
+{{
+  #3 'Columns var<n>
+  'PadTo var
+  :determine-padding
+    #0 [ d:name s:length n:max ] d:for-each !PadTo ;
+  :print-name
+    d:name [ s:put ] [ s:length @PadTo swap - &sp times ] bi sp sp ;
+  :wrap? @Columns n:zero? dup [ #4 !Columns ] if &Columns v:dec ;
+---reveal---
+  :d:words-4
+    determine-padding [ print-name wrap? &nl if ] d:for-each ;
+}}
+~~~
+
+Test it.
+
+```
+d:words-4
+```
+
