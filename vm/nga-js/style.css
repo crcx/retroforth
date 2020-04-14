@@ -20,6 +20,7 @@
 
  body {
    background: #b0b0b0;
+   background: #121212;
    color: #222;
    font-size: 14pt;
    font-family: monospace;
@@ -35,8 +36,7 @@
    overflow-x: hidden;
    height: 99.5%;
    background: #b0b0b0;
-   box-shadow:  3px 3px 6px #969696, 
-               -3px -3px 6px #cacaca;
+   background: #121212;
    width: 49.7%;
  }
  textarea,
@@ -49,8 +49,8 @@
  	/* For Firefox */
  	-webkit-box-sizing: border-box;
  	/* For Safari */
- 	background: #b0b0b0;
- 	color: #222;
+ 	background: #121212;
+ 	color: #aaa;
  	font-size: 14pt;
  	border: 1px;
  	direction: ltr;
@@ -59,9 +59,7 @@ margin-top: 2.5%;
 height: 95%;
 width: 95%;
 border-radius: 11px;
-background: #b0b0b0;
-box-shadow: inset 3px 3px 6px #969696, 
-            inset -3px -3px 6px #cacaca;
+border: 1px solid #aaa;
  }
  iframe {
  	height: 30%;
@@ -70,22 +68,8 @@ box-shadow: inset 3px 3px 6px #969696,
  	color: #222;
  	font-size: 14pt;
         border: 15px;
-border-radius: 11px;
-background: #b0b0b0;
-box-shadow:  3px 3px 6px #969696, 
-             -3px -3px 6px #cacaca;
- }
- xmp {
- 	margin-left: 0.5em;
-padding: 5px;
-margin-left: 2.5%;
-margin-top: 2.5%;
-height: 95%;
-width: 95%;
-border-radius: 11px;
-background: #b0b0b0;
-box-shadow: inset 3px 3px 6px #969696, 
-            inset -3px -3px 6px #cacaca;
+        border-radius: 11px;
+        background: #b0b0b0;
  }
  canvas {
 	width:100%;
