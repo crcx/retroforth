@@ -7,6 +7,7 @@ using the `BOOK-BASE` constant.
 
 ~~~
 'doc/book/  'BOOK-BASE s:const
+'chapters/  'OUT-BASE s:const
 ~~~
 
 The chapters are specified it the `TOC`, a named array. These are
@@ -66,7 +67,6 @@ for me.
   'internals/interface-layers
   'internals/io
   'internals/image
-  'glossary/using
   'tech-notes/historical-papers
   'tech-notes/metacompilation
   'tech-notes/self-hosting
@@ -78,6 +78,8 @@ for me.
   'tech-notes/underscores-in-names
   'tech-notes/code-it-yourself
   'general/deprecation
+  'glossary/using
+  'glossary/glossary
 } 'TOC const
 ~~~
 
@@ -85,10 +87,10 @@ for me.
 ~~~
 'Out var
 
-:import        here swap BOOK-BASE s:prepend file:slurp ;
+:import        BOOK-BASE over OUT-BASE '>%s%s.html_retro_example/export-as-html.retro_%s%s s:format unix:system ;
 :/n            ASCII:LF @Out file:write ;
-:add-to-book   here [ @Out file:write ] s:for-each /n ;
-:process-files [ import add-to-book $. c:put ] a:for-each nl ;
+:add-to-book   here [ @Out file:write ] s:for-each ;
+:process-files [ import $. c:put ] a:for-each nl ;
 :open          'doc/RETRO-Book.md file:open<for-writing> !Out ;
 :close         @Out file:close ;
 :assemble      open process-files close ;

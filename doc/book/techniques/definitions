@@ -1,0 +1,10 @@
+# Defining Words
+
+Words are named functions. To start a word, preceed it's name
+with a colon. Follow this by the definition, and end with a
+semicolon.
+
+E.g.,
+
+    :do-nothing ;
+    :square dup * ;

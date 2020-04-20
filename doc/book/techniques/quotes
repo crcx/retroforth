@@ -1,0 +1,86 @@
+# Quotations
+
+Quotes are anonymous functions. RETRO uses these as the basis for
+executable flow control and combinatorial logic.
+
+## Using Quotations
+
+To make a quotation, surround the code with square brackets. E.g.,
+
+    #1 #2 eq? [ 'No_match s:put nl ] -if
+
+Quotes can be nested:
+
+    [ #3 [ #4 ] dip ] call
+
+After creation, a pointer to the quotation is left on the stack
+(or is compiled into the current definition).
+
+## Combinators
+
+Words operating on quotations are called combinators; these are
+discussed in *Using Combinators*.
+
+## Implementation
+
+A quotation is compiled as:
+
+    ... code before quotation ...
+    i liju....                    (if_compiling_only)
+    d address after quotation     (if_compiling_only)
+    ... code for quotation
+    i re......                    (this_is_where_the_quote_ends)
+    i li......
+    d address of code for quotation
+    ... code after quotation ....
+
+## Other Notes
+
+Quotations are used heavily in RETRO. They give the source a
+feel that's different from traditional Forth, and allow for
+a more consistent syntax.
+
+For instance, in a traditional Forth, you might have some
+conditionals:
+
+    IF ... THEN
+    IF ... ELSE ... THEN
+    IF ... EXIT THEN
+
+RETRO uses conditional combinators for these:
+
+    [ ... ] if
+    [ ... ] [ ... ] choose
+    [ ... ] if;
+
+Or loops:
+
+    FOR ... NEXT
+
+Is replaced by:
+
+    [ ... ] times
+
+This can also extend to stack flow. Sequences like:
+
+    >R ... >R
+    DUP >R ... >R
+
+Become:
+
+    [ ... ] dip
+    [ ... ] sip
+
+And forms like:
+
+    1 2 3 * swap 3 * swap
+
+Can be replaced with a combinator like:
+
+    #1 #2 [ #3 * ] bi@
+
+While there is a different set of words to learn, I find that
+overall there's less noise from low level stack shuffling words
+ande the added consistency with regards to overall syntax has
+been nice as I was never fond of the multiple forms that existed
+in traditional Forth.
