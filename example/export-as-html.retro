@@ -260,13 +260,15 @@ headers should look like:
 :header?
   dup [ '#_ s:begins-with?   ]
       [ '##_ s:begins-with?  ]
-      [ '###_ s:begins-with? ] tri or or ;
+      [ '###_ s:begins-with? ] tri or or
+  over '####_ s:begins-with? or ;
 
 :format:head
   ASCII:SPACE s:split
   '#   [ '<h1> s:put n:inc s:put '</h1> s:put nl ] s:case
   '##  [ '<h2> s:put n:inc s:put '</h2> s:put nl ] s:case
   '### [ '<h3> s:put n:inc s:put '</h3> s:put nl ] s:case
+  '#### [ '<h4> s:put n:inc s:put '</h4> s:put nl ] s:case
   drop ;
 ~~~
 

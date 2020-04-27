@@ -1,3 +1,4 @@
+VERSION ?= 2020.4
 PREFIX ?= /usr/local
 DATADIR ?= $(PREFIX)/share/RETRO12
 DOCSDIR ?= $(PREFIX)/share/doc/RETRO12
@@ -155,3 +156,13 @@ bin/retro-compiler: bin/retro-extend vm/nga-c/retro-compiler.c vm/nga-c/retro-ru
 	objcopy --add-section .ngaImage=runtime.image --set-section-flags .ngaImage=noload,readonly bin/retro-compiler
 	objcopy --add-section .runtime=retro-runtime --set-section-flags .runtime=noload,readonly bin/retro-compiler
 	rm runtime.image retro-runtime
+
+release: clean build glossary
+	fossil tarball tip R12.tar.gz
+	mkdir release
+	cd release && tar xzvf ../R12.tar.gz
+	cd release && mv * RETRO12-$(VERSION)
+	cd release && tar cf RETRO12-$(VERSION).tar RETRO12-$(VERSION)
+	cd release && gzip RETRO12-$(VERSION).tar
+	mv release/RETRO12-$(VERSION).tar.gz .
+	rm -rf release
