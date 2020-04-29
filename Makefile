@@ -1,4 +1,5 @@
 VERSION ?= 2020.4
+KEYPAIR ?= 2020-04
 PREFIX ?= /usr/local
 DATADIR ?= $(PREFIX)/share/RETRO12
 DOCSDIR ?= $(PREFIX)/share/doc/RETRO12
@@ -166,3 +167,6 @@ release: clean build glossary
 	cd release && gzip RETRO12-$(VERSION).tar
 	mv release/RETRO12-$(VERSION).tar.gz .
 	rm -rf release
+	signify -S -s /home/crc/keys/$(KEYPAIR).sec -m RETRO12-$(VERSION).tar.gz
+	signify -V -p security/$(KEYPAIR).pub -m RETRO12-$(VERSION).tar.gz
+
