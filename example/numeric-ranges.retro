@@ -1,0 +1,31 @@
+This implements some words to return a range of numbers on the stack.
+It's probably best to capture these values in an array.
+
+First is a word to return values from a lower to upper limit, incrementing
+upwards. The returned values are inclusive of the limits.
+
+~~~
+:range<inc> (lh-a)
+  over - n:inc [ I over + swap ] times<with-index> drop ;
+~~~
+
+Next is a word to return values from an upper to lower limit, decrementing
+upwards. The returned values are inclusive of the limits.
+
+~~~
+:range<dec> (hl-a)
+  over &- dip swap n:inc [ I over swap - swap ] times<with-index> drop ;
+~~~
+
+The last word takes the limits and calls the appropriate word.
+
+~~~
+:range (nn-a)
+  dup-pair gt? [ range<dec> ] [ range<inc> ] choose ;
+~~~
+
+As a simple test case:
+
+```
+{ #1 #5 range } [ n:put sp ] a:for-each
+```

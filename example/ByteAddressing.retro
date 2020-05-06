@@ -17,25 +17,24 @@ updated for RETRO12 by Charles Childers.
 
 ## Functions
 
-+-------------------+--------+----------------------------+
-| Function          | Stack  | Used For                   |
-+===================+========+============================+
-| b:to-byte-address | a-a    | Return the byte address of |
-|                   |        | the first byte in a cell   |
-+-------------------+--------+----------------------------+
-| b:unpack          | c-bbbb | Given a byte-packed cell   |
-|                   |        | on the stack, return the   |
-|                   |        | bytes it contains          |
-+-------------------+--------+----------------------------+
-| b:pack            | bbbb-c | Pack four byes into a cell,|
-|                   |        | return the cell on the     |
-|                   |        | stack                      |
-+-------------------+--------+----------------------------+
-| b:fetch           | a-b    | Fetch a byte               |
-+-------------------+--------+----------------------------+
-| b:store           | ba-    | Store a byte into memory   |
-+-------------------+--------+----------------------------+
-
+    +-------------------+--------+----------------------------+
+    | Function          | Stack  | Used For                   |
+    +===================+========+============================+
+    | b:to-byte-address | a-a    | Return the byte address of |
+    |                   |        | the first byte in a cell   |
+    +-------------------+--------+----------------------------+
+    | b:unpack          | c-bbbb | Given a byte-packed cell   |
+    |                   |        | on the stack, return the   |
+    |                   |        | bytes it contains          |
+    +-------------------+--------+----------------------------+
+    | b:pack            | bbbb-c | Pack four byes into a cell,|
+    |                   |        | return the cell on the     |
+    |                   |        | stack                      |
+    +-------------------+--------+----------------------------+
+    | b:fetch           | a-b    | Fetch a byte               |
+    +-------------------+--------+----------------------------+
+    | b:store           | ba-    | Store a byte into memory   |
+    +-------------------+--------+----------------------------+
 
 ## Code & Commentary
 
