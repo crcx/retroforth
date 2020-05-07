@@ -1,0 +1,24 @@
+# Forth-style comments
+
+End-of-Comment `Eo(` is a char, `)` by default.
+If inconvenient, use some other char like
+
+  $| !Eo( -( blah foo|
+
+Then `Eo(` is reverted to `)` .
+
+~~~
+'Eo( var (end-of-comment_char
+{{
+  :parse  (-s) [ @Eo( eq? ] parse-until ;
+  :revert (-) $) !Eo( ;
+   revert
+---reveal---
+  :-( (c-) parse drop     revert ; immediate
+  :+( (c-) parse s:put nl revert ; immediate
+}}
+~~~
+
+```
+#0 -( #1 #2 ) $| !Eo( +( #3 #4 | #5 -( #6 #7 ) #8
+```
