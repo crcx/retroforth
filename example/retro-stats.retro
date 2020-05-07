@@ -1,0 +1,119 @@
+This is a quick little thing to generate some statistics
+from the RETRO image and VM, along with some introspection
+to identify prefix handlers and word classes.
+
+# Memory Use
+
+First, memory. This is easy due to the defined constants
+and queries provided by RETRO.
+
+~~~
+nl 'Memory: s:put nl nl
+
+  EOM '__Total_memory:_%n\n s:format s:put
+  FREE '__Free_memory:__%n\n s:format s:put
+  here '__Used_memory:__%n\n s:format s:put
+~~~
+
+# Dictionary
+
+Next, some statistics on the dictionary. The header sizing
+would need to be adjusted if you add or remove fields from
+them.
+
+The header contains fields for:
+
+  link to prior
+  address
+  pointer to class handler
+  null terminated string with the name
+
+So the size is 4 cells (the three fields and null terminator)
+plus the length of the name.
+
+~~~
+nl 'Dictionary: s:put nl nl
+
+  #0 [ d:name s:length #4 + + ] d:for-each
+  '__Headers_consume_%n\n s:format s:put
+
+  #0 [ d:name s:length + n:inc ] d:for-each
+  '__Names_consume_%n\n s:format s:put
+~~~
+
+Determine the number of words in the dictionary.
+
+~~~
+  #0 [ drop n:inc ] d:for-each
+  '__%n_names_defined\n s:format s:put
+~~~
+
+Determine the average length of a word name.
+
+~~~
+  #0 [ d:name s:length + ] d:for-each
+  #0 [ drop n:inc ] d:for-each
+  / '__Average_name_length:_%n\n s:format s:put
+~~~
+
+And without the prefixes...
+
+~~~
+  #0 #0 [ d:name dup $: s:index-of n:inc + s:length + [ n:inc ] dip ] d:for-each swap /
+  '__Average_name_without_namespace:_%n\n s:format s:put
+~~~
+
+Longest name are...
+
+~~~
+  #0 [ d:name s:length n:max ] d:for-each
+  '__Longest_names_are_%n_characters\n s:format s:put
+~~~
+
+# Identify Classes
+
+Word classes are conventionally named as:
+
+    class:<name>
+
+This prints the names of words matching them. It also demonstrates
+constructing an array of the names, which can be adapted for other
+purposes.
+
+~~~
+nl 'Classes: s:put nl nl
+
+:identify-classes (-a)
+  here #0 ,
+  [ d:name dup 'class: s:contains-string?
+    &, &drop choose ] d:for-each
+  here over - n:dec over store ;
+
+sp sp identify-classes [ s:put sp ] a:for-each nl
+~~~
+
+# Identify Prefixes
+
+Prefixes are named as:
+
+    prefix:<character>
+
+Unlike classes, this is not merely a convention, but an actual
+requirement.
+
+The process for obtaining an array of them and printing it is
+the same as with the class handlers.
+
+~~~
+nl 'Prefixes: s:put nl nl
+
+:identify-prefixes (-a)
+  here #0 ,
+  [ d:name dup 'prefix: s:contains-string?
+    &, &drop choose ] d:for-each
+  here over - n:dec over store ;
+
+sp sp identify-prefixes [ s:put sp ] a:for-each nl
+
+nl
+~~~
