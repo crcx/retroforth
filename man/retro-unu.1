@@ -1,9 +1,9 @@
-.Dd January 2020
+.Dd June 2020
 .Dt RETRO-UNU 1
 .Os
 .Sh RETRO-UNU
 .Nm retro-unu
-.Nd "a modern, pragmatic forth development system"
+.Nd "literate programming tool for use with retro"
 .Sh SYNOPSIS
 .Nm
 .Op Fl t
@@ -14,8 +14,11 @@ sources. It's clean, elegant, tiny, and easy to grasp and adapt
 to various uses.
 
 .Nm
-is a tool for extracting code from fenced blocks in literate
-sources. It will write output to stdout.
+is a tool for extracting code from literate sources. It will
+write output to stdout.
+
+A code block starts with ~~~ on a line by itself and ends with
+a second ~~~. Test blocks start and end with ```.
 .Sh OPTIONS
 .Bl -tag -width -indent
 .It Fl t
@@ -25,3 +28,4 @@ Extract code blocks from the specified file.
 .El
 .Sh AUTHORS
 .An Charles Childers Aq Mt crc@forthworks.com
+
