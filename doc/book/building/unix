@@ -2,8 +2,7 @@
 
 RETRO is well supported on BSD (tested on FreeBSD, NetBSD,
 OpenBSD), Linux, and macOS systems. It should build on any
-of these
-without issue.
+of these without issue.
 
 ## Requirements
 
@@ -34,6 +33,15 @@ In the `bin/` directory:
     retro-extend
     retro-embedimage
     retro-describe
+
+## Platform Specific Notes
+
+### Haiku
+
+To build on Haiku, you need to link with the *network* library.
+E.g.:
+
+    make LDFLAGS=-lnetwork
 
 ## Issues
 
