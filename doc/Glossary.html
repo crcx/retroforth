@@ -429,21 +429,21 @@
 <b>Addr:</b> -<br>
 <b>Float:</b> -</p>
 </div>
-<p>Access the loop index for the current loop. (For loops made using `times&lt;with-index&gt;`)</p>
+<p>Access the loop index for the current loop. (For loops made using `indexed-times`)</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>global</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
 <h2>J</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> -n<br>
 <b>Addr:</b> -<br>
 <b>Float:</b> -</p>
 </div>
-<p>Access the parent loop index for the current loop. (For loops made using `times&lt;with-index&gt;`)</p>
+<p>Access the parent loop index for the current loop. (For loops made using `indexed-times`)</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>global</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
 <h2>K</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> -n<br>
 <b>Addr:</b> -<br>
 <b>Float:</b> -</p>
 </div>
-<p>Access the grandparent loop index for the current loop. (For loops made using `times&lt;with-index&gt;`)</p>
+<p>Access the grandparent loop index for the current loop. (For loops made using `indexed-times`)</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>global</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
 <h2>NoEcho</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> -a<br>
@@ -1284,26 +1284,47 @@
 </div>
 <p>Return the most recent dictionary header.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>d</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
-<h2>d:last&lt;class&gt;</h2>
+<h2>d:last.class</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> -a<br>
 <b>Addr:</b> -<br>
 <b>Float:</b> -</p>
 </div>
 <p>Return a pointer to the class field of the most recent dictionary header.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>d</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
-<h2>d:last&lt;name&gt;</h2>
+<h2>d:last.name</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> -s<br>
 <b>Addr:</b> -<br>
 <b>Float:</b> -</p>
 </div>
 <p>Return a pointer to the name field of the most recent dictionary header.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>d</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
-<h2>d:last&lt;xt&gt;</h2>
+<h2>d:last.xt</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> -a<br>
 <b>Addr:</b> -<br>
 <b>Float:</b> -</p>
 </div>
 <p>Return a pointer to the xt field of the most recent dictionary header.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>d</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
+<h2>d:last&lt;class&gt;</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> -a<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Return a pointer to the class field of the most recent dictionary header. Deprecated. Use `d:last.class` instead.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>d</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
+<h2>d:last&lt;name&gt;</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> -s<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Return a pointer to the name field of the most recent dictionary header. Deprecated. Use `d:last.name` instead.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>d</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
+<h2>d:last&lt;xt&gt;</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> -a<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Return a pointer to the xt field of the most recent dictionary header. Deprecated. Use `d:last.xt` instead.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>d</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
 <h2>d:link</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> d-a<br>
@@ -2306,6 +2327,13 @@
 </div>
 <p>Run the code in the specified file. </p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>global</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><hr/>
+<h2>indexed-times</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> nq-<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Run a quote the specified number of times, tracking the loop index in `I`. This is less efficient than `times`, so if the index is not needed, this should be avoided.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>global</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
 <h2>interpret</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> s-<br>
 <b>Addr:</b> -<br>
@@ -3484,7 +3512,7 @@
 <b>Addr:</b> -<br>
 <b>Float:</b> -</p>
 </div>
-<p>Run a quote the specified number of times, tracking the loop index in `I`. This is less efficient than `times`, so if the index is not needed, this should be avoided.</p>
+<p>Run a quote the specified number of times, tracking the loop index in `I`. This is less efficient than `times`, so if the index is not needed, this should be avoided. Deprecated. Use `indexed-` instead.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>global</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
 <h2>tri</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> xqqq-?<br>
@@ -3769,12 +3797,24 @@
 <xmp style='background:#222'>    'Base var</xmp>
 </p>
 <hr/>
-<h2>var&lt;n&gt;</h2>
+<h2>var-n</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> ns-<br>
 <b>Addr:</b> -<br>
 <b>Float:</b> -</p>
 </div>
 <p>Create a variable with the specified initial value.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>global</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><p><b>Example:</b> <br>
+<br>
+<xmp style='background:#222'>    #10 'Base var<n>
+</xmp>
+</p>
+<hr/>
+<h2>var&lt;n&gt;</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> ns-<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Create a variable with the specified initial value. Deprecated. Use `var-n` instead.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>global</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><p><b>Example:</b> <br>
 <br>
 <xmp style='background:#222'>    #10 'Base var<n>

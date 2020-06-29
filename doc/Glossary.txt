@@ -664,7 +664,7 @@ I
   Addr:  -
   Float: -
 
-Access the loop index for the current loop. (For loops made using `times<with-index>`)
+Access the loop index for the current loop. (For loops made using `indexed-times`)
 
 Class: class:word | Namespace: global | Interface Layer: all
 ------------------------------------------------------------------------
@@ -675,7 +675,7 @@ J
   Addr:  -
   Float: -
 
-Access the parent loop index for the current loop. (For loops made using `times<with-index>`)
+Access the parent loop index for the current loop. (For loops made using `indexed-times`)
 
 Class: class:word | Namespace: global | Interface Layer: all
 ------------------------------------------------------------------------
@@ -686,7 +686,7 @@ K
   Addr:  -
   Float: -
 
-Access the grandparent loop index for the current loop. (For loops made using `times<with-index>`)
+Access the grandparent loop index for the current loop. (For loops made using `indexed-times`)
 
 Class: class:word | Namespace: global | Interface Layer: all
 ------------------------------------------------------------------------
@@ -1988,7 +1988,7 @@ Return the most recent dictionary header.
 Class: class:word | Namespace: d | Interface Layer: all
 ------------------------------------------------------------------------
 
-d:last<class>
+d:last.class
 
   Data:  -a
   Addr:  -
@@ -1999,7 +1999,7 @@ Return a pointer to the class field of the most recent dictionary header.
 Class: class:word | Namespace: d | Interface Layer: all
 ------------------------------------------------------------------------
 
-d:last<name>
+d:last.name
 
   Data:  -s
   Addr:  -
@@ -2010,13 +2010,46 @@ Return a pointer to the name field of the most recent dictionary header.
 Class: class:word | Namespace: d | Interface Layer: all
 ------------------------------------------------------------------------
 
-d:last<xt>
+d:last.xt
 
   Data:  -a
   Addr:  -
   Float: -
 
 Return a pointer to the xt field of the most recent dictionary header.
+
+Class: class:word | Namespace: d | Interface Layer: all
+------------------------------------------------------------------------
+
+d:last<class>
+
+  Data:  -a
+  Addr:  -
+  Float: -
+
+Return a pointer to the class field of the most recent dictionary header. Deprecated. Use `d:last.class` instead.
+
+Class: class:word | Namespace: d | Interface Layer: all
+------------------------------------------------------------------------
+
+d:last<name>
+
+  Data:  -s
+  Addr:  -
+  Float: -
+
+Return a pointer to the name field of the most recent dictionary header. Deprecated. Use `d:last.name` instead.
+
+Class: class:word | Namespace: d | Interface Layer: all
+------------------------------------------------------------------------
+
+d:last<xt>
+
+  Data:  -a
+  Addr:  -
+  Float: -
+
+Return a pointer to the xt field of the most recent dictionary header. Deprecated. Use `d:last.xt` instead.
 
 Class: class:word | Namespace: d | Interface Layer: all
 ------------------------------------------------------------------------
@@ -3568,6 +3601,17 @@ include
 Run the code in the specified file. 
 
 Class: class:word | Namespace: global | Interface Layer: rre
+------------------------------------------------------------------------
+
+indexed-times
+
+  Data:  nq-
+  Addr:  -
+  Float: -
+
+Run a quote the specified number of times, tracking the loop index in `I`. This is less efficient than `times`, so if the index is not needed, this should be avoided.
+
+Class: class:word | Namespace: global | Interface Layer: all
 ------------------------------------------------------------------------
 
 interpret
@@ -5343,7 +5387,7 @@ times<with-index>
   Addr:  -
   Float: -
 
-Run a quote the specified number of times, tracking the loop index in `I`. This is less efficient than `times`, so if the index is not needed, this should be avoided.
+Run a quote the specified number of times, tracking the loop index in `I`. This is less efficient than `times`, so if the index is not needed, this should be avoided. Deprecated. Use `indexed-` instead.
 
 Class: class:word | Namespace: global | Interface Layer: all
 ------------------------------------------------------------------------
@@ -5782,13 +5826,30 @@ Example #1:
 
 ------------------------------------------------------------------------
 
-var<n>
+var-n
 
   Data:  ns-
   Addr:  -
   Float: -
 
 Create a variable with the specified initial value.
+
+Class: class:word | Namespace: global | Interface Layer: all
+
+Example #1:
+
+    #10 'Base var<n>
+
+
+------------------------------------------------------------------------
+
+var<n>
+
+  Data:  ns-
+  Addr:  -
+  Float: -
+
+Create a variable with the specified initial value. Deprecated. Use `var-n` instead.
 
 Class: class:word | Namespace: global | Interface Layer: all
 

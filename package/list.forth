@@ -11,6 +11,10 @@ also use any Retro code directly.
 'dict-words-listing.forth include
 ~~~
 
+~~~
+'compat.forth include
+~~~
+
 'allow-underscores-in-names.forth include
 
 Save the image with anything loaded here added in. The

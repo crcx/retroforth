@@ -55,9 +55,9 @@ EOM	-a	-	-	Constant. Returns the last addressable memory address.			class:word	{
 FALSE	-n	-	-	Returns `0`, the value used to indicate a FALSE result.			class:word	{n/a}	{n/a}	global	all	
 FREE	-n	-	-	Returns the number of cells available to your application. This is the amount of memory, less the already consumed portion and buffers mapped for RETRO's internal use.			class:word	{n/a}	{n/a}	global	all	
 Heap	-a	-	-	Variable. Holds the address of the next available cell.			class:data	{n/a}	{n/a}	global	all	
-I	-n	-	-	Access the loop index for the current loop. (For loops made using `times<with-index>`)			class:word	{n/a}	{n/a}	global	all	
-J	-n	-	-	Access the parent loop index for the current loop. (For loops made using `times<with-index>`)			class:word	{n/a}	{n/a}	global	all	
-K	-n	-	-	Access the grandparent loop index for the current loop. (For loops made using `times<with-index>`)			class:word	{n/a}	{n/a}	global	all	
+I	-n	-	-	Access the loop index for the current loop. (For loops made using `indexed-times`)			class:word	{n/a}	{n/a}	global	all	
+J	-n	-	-	Access the parent loop index for the current loop. (For loops made using `indexed-times`)			class:word	{n/a}	{n/a}	global	all	
+K	-n	-	-	Access the grandparent loop index for the current loop. (For loops made using `indexed-times`)			class:word	{n/a}	{n/a}	global	all	
 NoEcho	-a	-	-	Variable. If TRUE, allow display of the "ok" prompt and startup banner.			class:word	{n/a}	{n/a}	global	rre	
 RewriteUnderscores	-a	-	-	Variable. When set to `TRUE`, RETRO will replace underscores in strings with spaces. When `FALSE`, RETRO does not.			class:data	{n/a}	{n/a}	global	all	
 STRINGS	-a	-	-	Return the address of the start of the temporary string pool. This can be altered by changing the values of `TempStrings` and `TempStringMax`.			class:word	{n/a}	{n/a}	global	all	
@@ -171,9 +171,12 @@ d:class	d-a	-	-	Given a dictionary header, return the class field.			class:word	
 d:create	s-	-	-	Create a new dictionary header named the specified string. The new header will point to `here` and have a class of `class:data`.			class:word	{n/a}	{n/a}	d	all	
 d:for-each	q-	-	-	Execute the specified quote once for each header in the dictionary. Before running the quote, this also pushes a pointer to the header onto the stack.			class:word	{n/a}	{n/a}	d	all	
 d:last	-d	-	-	Return the most recent dictionary header.			class:word	{n/a}	{n/a}	d	all	
-d:last<class>	-a	-	-	Return a pointer to the class field of the most recent dictionary header.			class:word	{n/a}	{n/a}	d	all	
-d:last<name>	-s	-	-	Return a pointer to the name field of the most recent dictionary header.			class:word	{n/a}	{n/a}	d	all	
-d:last<xt>	-a	-	-	Return a pointer to the xt field of the most recent dictionary header.			class:word	{n/a}	{n/a}	d	all	
+d:last.class	-a	-	-	Return a pointer to the class field of the most recent dictionary header.			class:word	{n/a}	{n/a}	d	all	
+d:last.name	-s	-	-	Return a pointer to the name field of the most recent dictionary header.			class:word	{n/a}	{n/a}	d	all	
+d:last.xt	-a	-	-	Return a pointer to the xt field of the most recent dictionary header.			class:word	{n/a}	{n/a}	d	all	
+d:last<class>	-a	-	-	Return a pointer to the class field of the most recent dictionary header. Deprecated. Use `d:last.class` instead.			class:word	{n/a}	{n/a}	d	all	
+d:last<name>	-s	-	-	Return a pointer to the name field of the most recent dictionary header. Deprecated. Use `d:last.name` instead.			class:word	{n/a}	{n/a}	d	all	
+d:last<xt>	-a	-	-	Return a pointer to the xt field of the most recent dictionary header. Deprecated. Use `d:last.xt` instead.			class:word	{n/a}	{n/a}	d	all	
 d:link	d-a	-	-	Given a dictionary header, return the link field.			class:word	{n/a}	{n/a}	d	all	
 d:lookup	s-d	-	-	Lookup the specified name in the dictionary and return a pointer to its dictionary header. This returns zero if the word is not found.			class:word	{n/a}	{n/a}	d	all	
 d:lookup-xt	a-d	-	-	Lookup the specified address in the dictionary and return a pointer to its dictionary header. This returns zero if the word is not found.			class:word	{n/a}	{n/a}	d	all	
@@ -307,6 +310,7 @@ if;	fq-	-	-	Execute the quotation if the flag is `TRUE`. If true, also exit the 
 image:save	s-	-	-	Save the current system to a new image file.			class:word	{n/a}	{n/a}	image	rre	
 immediate	-	-	-	Change the class of the most recently defined word to `class:macro`.			class:word	{n/a}	{n/a}	global	all	
 include	s-	-	-	Run the code in the specified file. 			class:word	{n/a}	{n/a}	global	rre	
+indexed-times	nq-	-	-	Run a quote the specified number of times, tracking the loop index in `I`. This is less efficient than `times`, so if the index is not needed, this should be avoided.			class:word	{n/a}	{n/a}	global	all	
 interpret	s-	-	-	Interpret a single input token.			class:word	    '#100 interpret\n    'words interpret	{n/a}	global	all	
 io:clock-operation	...n-	-	-	Trigger a clock operation. This is not intended to be used directly.			class:word	{n/a}	{n/a}	io	rre	
 io:enumerate	-n	-	-	Return the number of I/O devices.			class:word	{n/a}	{n/a}	io	all	
@@ -450,7 +454,7 @@ sys:argv	n-s	-	-	Given an argument number, return the argument as a string.			cl
 sys:name	-s	-	-	Return the filename of the program being run.			class:word	{n/a}	{n/a}	sys	rre	
 tab	-	-	-	Display a tab (`ASCII:HT`)			class:word	{n/a}	{n/a}	global	all	
 times	nq-	-	-	Run the specified quote the specified number of times.			class:word	    #12 [ $- c:put ] times	{n/a}	global	all	
-times<with-index>	nq-	-	-	Run a quote the specified number of times, tracking the loop index in `I`. This is less efficient than `times`, so if the index is not needed, this should be avoided.			class:word	{n/a}	{n/a}	global	all	
+times<with-index>	nq-	-	-	Run a quote the specified number of times, tracking the loop index in `I`. This is less efficient than `times`, so if the index is not needed, this should be avoided. Deprecated. Use `indexed-` instead.			class:word	{n/a}	{n/a}	global	all	
 tri	xqqq-?	-	-	Apply q1 against x, then q2 against a copy of x, and finally q3 against another copy of x.			class:word	{n/a}	{n/a}	global	all	
 tri*	xyzqqq-?	-	-	Apply q1 against x, q2 against y, and q3 against z.			class:word	{n/a}	{n/a}	global	all	
 tri@	xyzq-?	-	-	Apply q against x, then against y, and finally against z.			class:word	{n/a}	{n/a}	global	all	
@@ -487,7 +491,8 @@ v:on	a-	-	-	Set a variable to -1.			class:word	{n/a}	{n/a}	v	all
 v:preserve	aq-	-	-	Make a copy of the value at the address, then run the quote. Once the quote completes, restore the address to the specified value.			class:word	{n/a}	{n/a}	v	all	
 v:update	aq-	-	-	Fetch a value from the specified address, then run the quotation with this value on the stack. Afterwards, store the returned value at the original address.			class:word	{n/a}	{n/a}	v	all	
 var	s-	-	-	Create a variable. The variable is initialized to 0.			class:word	    'Base var	{n/a}	global	all	
-var<n>	ns-	-	-	Create a variable with the specified initial value.			class:word	    #10 'Base var<n>\n	{n/a}	global	all	
+var-n	ns-	-	-	Create a variable with the specified initial value.			class:word	    #10 'Base var<n>\n	{n/a}	global	all	
+var<n>	ns-	-	-	Create a variable with the specified initial value. Deprecated. Use `var-n` instead.			class:word	    #10 'Base var<n>\n	{n/a}	global	all	
 while	q-	-	-	Execute quote repeatedly while the quote returns a `TRUE` value. The quote should return a flag of either `TRUE` or `FALSE`, though `while` will treat any non-zero value as `TRUE`.			class:word	    #10 [ dup n:put nl n:dec dup n:-zero? ] while	{n/a}	global	all	
 xor	mn-o	-	-	Perform a bitwise XOR operation.			class:primitive	{n/a}	{n/a}	global	all	
 {	-	-	-	Begin an array. This is intended to make creating arrays a bit cleaner than using a quotation and `a:counted-results`.			class:word	{n/a}	{n/a}	global	all	

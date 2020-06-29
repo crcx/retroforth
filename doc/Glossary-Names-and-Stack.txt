@@ -171,6 +171,9 @@ d:class                  D: d-a  A: -  F: -
 d:create                 D: s-  A: -  F: -
 d:for-each               D: q-  A: -  F: -
 d:last                   D: -d  A: -  F: -
+d:last.class             D: -a  A: -  F: -
+d:last.name              D: -s  A: -  F: -
+d:last.xt                D: -a  A: -  F: -
 d:last<class>            D: -a  A: -  F: -
 d:last<name>             D: -s  A: -  F: -
 d:last<xt>               D: -a  A: -  F: -
@@ -307,6 +310,7 @@ if;                      D: fq-  A: -  F: -
 image:save               D: s-  A: -  F: -
 immediate                D: -  A: -  F: -
 include                  D: s-  A: -  F: -
+indexed-times            D: nq-  A: -  F: -
 interpret                D: s-  A: -  F: -
 io:clock-operation       D: ...n-  A: -  F: -
 io:enumerate             D: -n  A: -  F: -
@@ -487,6 +491,7 @@ v:on                     D: a-  A: -  F: -
 v:preserve               D: aq-  A: -  F: -
 v:update                 D: aq-  A: -  F: -
 var                      D: s-  A: -  F: -
+var-n                    D: ns-  A: -  F: -
 var<n>                   D: ns-  A: -  F: -
 while                    D: q-  A: -  F: -
 xor                      D: mn-o  A: -  F: -

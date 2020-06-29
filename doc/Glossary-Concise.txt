@@ -170,13 +170,13 @@ Heap                     D: -a  A: -  F: -
 Variable. Holds the address of the next available cell.
 
 I                        D: -n  A: -  F: -
-Access the loop index for the current loop. (For loops made using `times<with-index>`)
+Access the loop index for the current loop. (For loops made using `indexed-times`)
 
 J                        D: -n  A: -  F: -
-Access the parent loop index for the current loop. (For loops made using `times<with-index>`)
+Access the parent loop index for the current loop. (For loops made using `indexed-times`)
 
 K                        D: -n  A: -  F: -
-Access the grandparent loop index for the current loop. (For loops made using `times<with-index>`)
+Access the grandparent loop index for the current loop. (For loops made using `indexed-times`)
 
 NoEcho                   D: -a  A: -  F: -
 Variable. If TRUE, allow display of the "ok" prompt and startup banner.
@@ -517,14 +517,23 @@ Execute the specified quote once for each header in the dictionary. Before runni
 d:last                   D: -d  A: -  F: -
 Return the most recent dictionary header.
 
-d:last<class>            D: -a  A: -  F: -
+d:last.class             D: -a  A: -  F: -
 Return a pointer to the class field of the most recent dictionary header.
 
-d:last<name>             D: -s  A: -  F: -
+d:last.name              D: -s  A: -  F: -
 Return a pointer to the name field of the most recent dictionary header.
 
-d:last<xt>               D: -a  A: -  F: -
+d:last.xt                D: -a  A: -  F: -
 Return a pointer to the xt field of the most recent dictionary header.
+
+d:last<class>            D: -a  A: -  F: -
+Return a pointer to the class field of the most recent dictionary header. Deprecated. Use `d:last.class` instead.
+
+d:last<name>             D: -s  A: -  F: -
+Return a pointer to the name field of the most recent dictionary header. Deprecated. Use `d:last.name` instead.
+
+d:last<xt>               D: -a  A: -  F: -
+Return a pointer to the xt field of the most recent dictionary header. Deprecated. Use `d:last.xt` instead.
 
 d:link                   D: d-a  A: -  F: -
 Given a dictionary header, return the link field.
@@ -924,6 +933,9 @@ Change the class of the most recently defined word to `class:macro`.
 
 include                  D: s-  A: -  F: -
 Run the code in the specified file. 
+
+indexed-times            D: nq-  A: -  F: -
+Run a quote the specified number of times, tracking the loop index in `I`. This is less efficient than `times`, so if the index is not needed, this should be avoided.
 
 interpret                D: s-  A: -  F: -
 Interpret a single input token.
@@ -1355,7 +1367,7 @@ times                    D: nq-  A: -  F: -
 Run the specified quote the specified number of times.
 
 times<with-index>        D: nq-  A: -  F: -
-Run a quote the specified number of times, tracking the loop index in `I`. This is less efficient than `times`, so if the index is not needed, this should be avoided.
+Run a quote the specified number of times, tracking the loop index in `I`. This is less efficient than `times`, so if the index is not needed, this should be avoided. Deprecated. Use `indexed-` instead.
 
 tri                      D: xqqq-?  A: -  F: -
 Apply q1 against x, then q2 against a copy of x, and finally q3 against another copy of x.
@@ -1465,8 +1477,11 @@ Fetch a value from the specified address, then run the quotation with this value
 var                      D: s-  A: -  F: -
 Create a variable. The variable is initialized to 0.
 
-var<n>                   D: ns-  A: -  F: -
+var-n                    D: ns-  A: -  F: -
 Create a variable with the specified initial value.
+
+var<n>                   D: ns-  A: -  F: -
+Create a variable with the specified initial value. Deprecated. Use `var-n` instead.
 
 while                    D: q-  A: -  F: -
 Execute quote repeatedly while the quote returns a `TRUE` value. The quote should return a flag of either `TRUE` or `FALSE`, though `while` will treat any non-zero value as `TRUE`.

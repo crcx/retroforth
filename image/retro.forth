@@ -162,9 +162,9 @@ return the values in specific fields of the header.
 
 ~~~
 :d:last        (-d) &Dictionary fetch ;
-:d:last<xt>    (-a) d:last d:xt fetch ;
-:d:last<class> (-a) d:last d:class fetch ;
-:d:last<name>  (-s) d:last d:name ;
+:d:last.xt     (-a) d:last d:xt fetch ;
+:d:last.class  (-a) d:last d:class fetch ;
+:d:last.name   (-s) d:last d:name ;
 ~~~
 
 ## Changing A Word's Class Handler
@@ -283,7 +283,7 @@ allow creation of variables and constants.
     | To create a                  | Use a form like    |
     | ---------------------------- | ------------------ |
     | Variable                     | `'Base var`        |
-    | Variable, with initial value | `#10 'Base var<n>` |
+    | Variable, with initial value | `#10 'Base var-n`  |
     | Constant                     | `#-1 'TRUE const`  |
 
 The lower level kernel provides `d:add-header` to make a new
@@ -301,8 +301,8 @@ build other data structures without invoking the `:` compiler.
 And then the others are trivial.
 
 ~~~
-:var<n> (ns-) d:create , ;
-:var    (s-)  \liswlica `0 ^var<n> ;
+:var-n  (ns-) d:create , ;
+:var    (s-)  \liswlica `0 ^var-n ;
 :const  (ns-) d:create d:last d:xt store ;
 ~~~
 
@@ -609,17 +609,17 @@ a bit clearer.
 If you need to update a stored variable there are two typical
 forms:
 
-    #1 'Next var<n>
+    #1 'Next var-n
     @Next #10 * !Next
 
 Or:
 
-    #1 'Next var<n>
+    #1 'Next var-n
     &Next [ fetch #10 * ] sip store
 
 `v:update` replaces this with:
 
-    #1 'Next var<n>
+    #1 'Next var-n
     &Next [ #10 * ] v:update
 
 It takes care of preserving the variable address, fetching the
@@ -1137,7 +1137,7 @@ Now replace the old prefix:' with this one that can optionally
 turn underscores into spaces.
 
 ~~~
-TRUE 'RewriteUnderscores var<n>
+TRUE 'RewriteUnderscores var-n
 
 {{
   :sub     (c-c) $_ [ ASCII:SPACE ] case ;
@@ -1312,7 +1312,7 @@ In a traditional Forth this is similar in spirit to DOES>.
 :curry (vp-p)
   here [ swap compile:lit compile:jump ] dip ;
 :does  (q-)
-  d:last<xt> swap curry d:last d:xt store &class:word reclass ;
+  d:last.xt swap curry d:last d:xt store &class:word reclass ;
 ~~~
 
 `d:for-each` is a combinator which runs a quote once for each
@@ -1679,7 +1679,7 @@ And finally, tie it all together into the single exposed word
 ## Loops, continued
 
 Sometimes it's useful to be able to access a loop index. The
-next word, `times<with-index>` adds this to RETRO. It also
+next word, `indexed-times` adds this to RETRO. It also
 provides `I`, `J`, and `K` words to access the index of the
 current, and up to two outer loops as well.
 
@@ -1697,7 +1697,7 @@ of `Index` if you need more than this.
   :I (-n) @LP &Index + fetch ;
   :J (-n) @LP &Index + n:dec fetch ;
   :K (-n) @LP &Index + #2 - fetch ;
-  :times<with-index>
+  :indexed-times
     prep swap
       [ repeat 0; \lisupudu `1 \puca.... \popo.... next again ] call
     drop done ;
@@ -1743,7 +1743,7 @@ original one.
 :io:scan-for  (n-m)
   #-1 swap
   io:enumerate [ I io:query nip over eq?
-                 [ [ drop I ] dip ] if ] times<with-index> drop ;
+                 [ [ drop I ] dip ] if ] indexed-times drop ;
 ~~~
 
 A Retro system is only required to provide a single I/O word to
