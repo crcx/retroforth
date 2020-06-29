@@ -3,8 +3,8 @@ This uses the new `socket:` words to download a file via Gopher.
 Open a file to store the data and a socket.
 
 ~~~
-'Output.txt file:open<for-writing> 'File var<n>
-socket:create dup n:put nl 'Sock var<n>
+'Output.txt file:open-for-writing 'File var-n
+socket:create dup n:put nl 'Sock var-n
 ~~~
 
 Connect to the server.

@@ -108,6 +108,15 @@ Given a file name, return `TRUE` if it exists or `FALSE` otherwise.
 
 :file:open<for-writing> (s-n)
   file:W file:open ;
+
+:file:open-for-reading (s-nn)
+  file:R file:open dup file:size swap ;
+
+:file:open-for-append (s-nn)
+  file:A file:open dup file:size swap ;
+
+:file:open-for-writing (s-n)
+  file:W file:open ;
 ~~~
 
 With that out of the way, we can begin building higher level functionality.
@@ -140,7 +149,7 @@ once for each line in a file. This makes some things trivial. E.g., a simple
 
   :file:for-each-line (sq-)
     [ !Action
-      file:open<for-reading> !FID !Size
+      file:open-for-reading !FID !Size
       [ @FID file:read-line @Action call -eof? ] while
       @FID file:close
     ] preserve ;
@@ -154,7 +163,7 @@ once for each line in a file. This makes some things trivial. E.g., a simple
   'FID var
 ---reveal---
   :file:slurp (as-)
-    [ swap buffer:set file:open<for-reading> !FID
+    [ swap buffer:set file:open-for-reading !FID
       [ @FID file:read buffer:add ] times
       @FID file:close
     ] buffer:preserve ;
@@ -165,5 +174,5 @@ once for each line in a file. This makes some things trivial. E.g., a simple
 
 ~~~
 :file:spew (ss-)
-  file:open<for-writing> swap [ over file:write ] s:for-each file:close ;
+  file:open-for-writing swap [ over file:write ] s:for-each file:close ;
 ~~~

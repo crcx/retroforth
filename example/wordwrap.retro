@@ -2,14 +2,14 @@ This implements a variation of `s:put` which wraps text based
 on a maximum width set by the user.
 
 ~~~
-#80 'WrapAt var<n>
+#80 'WrapAt var-n
 
 {{
   'Displayed var
   :wrap? dup @Displayed + @WrapAt gt? ;
   :display [ nl !Displayed ] [ &Displayed v:inc-by ] choose s:put sp ;
 ---reveal---
-  :s:put<wrapped> (s-)
+  :s:put-wrapped (s-)
     #0 !WrapAt
     &Heap [ ASCII:SPACE s:tokenize [ dup s:length wrap? display ] a:for-each ] v:preserve ;
 }}

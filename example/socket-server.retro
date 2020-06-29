@@ -1,7 +1,7 @@
 Get a socket.
 
 ~~~
-socket:create 'Sock var<n>
+socket:create 'Sock var-n
 ~~~
 
 Bind to port 9998.

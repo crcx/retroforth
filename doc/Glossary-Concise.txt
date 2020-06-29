@@ -868,14 +868,23 @@ Given a file name, open it and run the quote once for each line in the file.
 file:open                D: sm-h  A: -  F: -
 Open a named file (s) with the given mode (m). Returns a handle identifying the file.
 
-file:open<for-append>    D: s-nn  A: -  F: -
+file:open-for-append     D: s-nn  A: -  F: -
 Open a file for reading & writing. Returns the size (NOS) and a file ID (TOS)
 
-file:open<for-reading>   D: s-nn  A: -  F: -
+file:open-for-reading    D: s-nn  A: -  F: -
 Open a file for reading. Returns the size (NOS) and a file ID (TOS)
 
-file:open<for-writing>   D: s-n  A: -  F: -
+file:open-for-writing    D: s-n  A: -  F: -
 Open a file for writing. Returns the file ID
+
+file:open<for-append>    D: s-nn  A: -  F: -
+Open a file for reading & writing. Returns the size (NOS) and a file ID (TOS). Deprecated.
+
+file:open<for-reading>   D: s-nn  A: -  F: -
+Open a file for reading. Returns the size (NOS) and a file ID (TOS). Deprecated.
+
+file:open<for-writing>   D: s-n  A: -  F: -
+Open a file for writing. Returns the file ID. Deprecated.
 
 file:read                D: h-c  A: -  F: -
 Given a file handle, read and return the next character in it.

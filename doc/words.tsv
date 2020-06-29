@@ -288,9 +288,12 @@ file:exists?	s-f	-	-	Given a file name, return `TRUE` if it exists or `FALSE` if
 file:flush	h-	-	-	Given a file handle, flush any pending writes to disk.			class:word	{n/a}	{n/a}	file	rre	
 file:for-each-line	sq-	-	-	Given a file name, open it and run the quote once for each line in the file.			class:word	{n/a}	{n/a}	file	rre	
 file:open	sm-h	-	-	Open a named file (s) with the given mode (m). Returns a handle identifying the file.			class:word	  '/etc/motd file:R file:open	{n/a}	file	rre	
-file:open<for-append>	s-nn	-	-	Open a file for reading & writing. Returns the size (NOS) and a file ID (TOS)			class:word	{n/a}	{n/a}	file	rre	
-file:open<for-reading>	s-nn	-	-	Open a file for reading. Returns the size (NOS) and a file ID (TOS)			class:word	{n/a}	{n/a}	file	rre	
-file:open<for-writing>	s-n	-	-	Open a file for writing. Returns the file ID			class:word	{n/a}	{n/a}	file	rre	
+file:open-for-append	s-nn	-	-	Open a file for reading & writing. Returns the size (NOS) and a file ID (TOS)			class:word	{n/a}	{n/a}	file	rre	
+file:open-for-reading	s-nn	-	-	Open a file for reading. Returns the size (NOS) and a file ID (TOS)			class:word	{n/a}	{n/a}	file	rre	
+file:open-for-writing	s-n	-	-	Open a file for writing. Returns the file ID			class:word	{n/a}	{n/a}	file	rre	
+file:open<for-append>	s-nn	-	-	Open a file for reading & writing. Returns the size (NOS) and a file ID (TOS). Deprecated.			class:word	{n/a}	{n/a}	file	rre	
+file:open<for-reading>	s-nn	-	-	Open a file for reading. Returns the size (NOS) and a file ID (TOS). Deprecated.			class:word	{n/a}	{n/a}	file	rre	
+file:open<for-writing>	s-n	-	-	Open a file for writing. Returns the file ID. Deprecated.			class:word	{n/a}	{n/a}	file	rre	
 file:read	h-c	-	-	Given a file handle, read and return the next character in it.			class:word	{n/a}	{n/a}	file	rre	
 file:read-line	f-s	-	-	Given a file handle, read a line and return a pointer to it.			class:word	{n/a}	{n/a}	file	rre	
 file:seek	nh-	-	-	Move the current offset into a file to the specified one.			class:word	{n/a}	{n/a}	file	rre	
@@ -491,8 +494,8 @@ v:on	a-	-	-	Set a variable to -1.			class:word	{n/a}	{n/a}	v	all
 v:preserve	aq-	-	-	Make a copy of the value at the address, then run the quote. Once the quote completes, restore the address to the specified value.			class:word	{n/a}	{n/a}	v	all	
 v:update	aq-	-	-	Fetch a value from the specified address, then run the quotation with this value on the stack. Afterwards, store the returned value at the original address.			class:word	{n/a}	{n/a}	v	all	
 var	s-	-	-	Create a variable. The variable is initialized to 0.			class:word	    'Base var	{n/a}	global	all	
-var-n	ns-	-	-	Create a variable with the specified initial value.			class:word	    #10 'Base var<n>\n	{n/a}	global	all	
-var<n>	ns-	-	-	Create a variable with the specified initial value. Deprecated. Use `var-n` instead.			class:word	    #10 'Base var<n>\n	{n/a}	global	all	
+var-n	ns-	-	-	Create a variable with the specified initial value.			class:word	    #10 'Base var-n\n	{n/a}	global	all	
+var<n>	ns-	-	-	Create a variable with the specified initial value. Deprecated. Use `var-n` instead.			class:word	    #10 'Base var-n\n	{n/a}	global	all	
 while	q-	-	-	Execute quote repeatedly while the quote returns a `TRUE` value. The quote should return a flag of either `TRUE` or `FALSE`, though `while` will treat any non-zero value as `TRUE`.			class:word	    #10 [ dup n:put nl n:dec dup n:-zero? ] while	{n/a}	global	all	
 xor	mn-o	-	-	Perform a bitwise XOR operation.			class:primitive	{n/a}	{n/a}	global	all	
 {	-	-	-	Begin an array. This is intended to make creating arrays a bit cleaner than using a quotation and `a:counted-results`.			class:word	{n/a}	{n/a}	global	all	

@@ -6,7 +6,7 @@ name, updating a column counter and adding newlines when needed.
 
 ~~~
 {{
-  #3 'Columns var<n>
+  #3 'Columns var-n
   'PadTo var
   :determine-padding
     #0 [ d:name s:length n:max ] d:for-each !PadTo ;

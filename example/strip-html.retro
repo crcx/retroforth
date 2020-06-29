@@ -8,7 +8,7 @@ may serve as a starting point for something more useful later on.
 'Tag d:create #1025 allot
 'In-Tag var
 
-#0 sys:argv file:open<for-reading> swap
+#0 sys:argv file:open-for-reading swap
   [ dup file:read
     $< [ &Tag buffer:set &In-Tag v:on  ] case
     $> [ &Tag 'head   [ here buffer:set ] s:case
