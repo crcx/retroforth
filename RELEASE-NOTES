@@ -1,1 +1,18 @@
 # RETRO 2020.7
+
+## Renamings
+
+    Old                      New
+    ======================   =====================
+    file:open<for-writing>   file:open-for-writing
+    file:open<for-append>    file:open-for-append
+    file:open<for-reading>   file:open-for-reading
+    times<with-index>        indexed-times
+    var<n>                   var-n
+    d:last<name>             d:last.name
+    d:last<class>            d:last.class
+    d:last<xt>               d:last.xt
+
+## Nga
+
+- add a Swift implementation
