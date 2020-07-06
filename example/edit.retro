@@ -49,7 +49,7 @@ a few variables and constants.
 Get the name of the file to edit.
 
 ~~~
-#0 sys:argv s:keep 'SourceFile var<n>
+#0 sys:argv s:keep 'SourceFile var-n
 ~~~
 
 

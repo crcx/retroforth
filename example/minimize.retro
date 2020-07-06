@@ -19,7 +19,7 @@ First, words defined elsewhere.
     [ d:lookup ] dip d:another-name ; 'alias d:aka
 }}
 
-'var<n> 'var! (n-)  alias
+'var-n  'var! (n-)  alias
 'lt?    'n:<?       alias
 'lteq?  'n:=<?      alias
 :v:put (a-) fetch n:put ;

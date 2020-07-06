@@ -54,8 +54,8 @@ progresses. I will fill in the value for `interpret` later.
 
 ~~~
 #1025 &Image + 'TIB const
-#367 't:interpret var<n>
-#339 't:notfound var<n>
+#367 't:interpret var-n
+#339 't:notfound var-n
 ~~~
 
 I next define helpers to move values to/from the host data

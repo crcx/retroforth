@@ -5,7 +5,7 @@ I begin by creating a variable for the current base and words to
 set this to specific values quickly.
 
 ~~~
-#10 'Base var<n>
+#10 'Base var-n
 
 :decimal #10 !Base ;
 :binary  #2  !Base ;
@@ -42,7 +42,7 @@ here is:
   :convert    (c-)  &DIGITS swap s:index-of @Number @Base * + !Number ;
   :check-sign (s-s) dup fetch $- eq? [ #-1 !Mod n:inc ] [ #1 !Mod ] choose ;
 ---reveal---
-  :s:to-number<with-base> (s-n)
+  :s:to-number-with-base (s-n)
     #0 !Number check-sign [ convert ] s:for-each @Number @Mod * ;
 }}
 ~~~
@@ -64,13 +64,13 @@ Going the other way, back to a string, follows a similar process.
   :n->digit   (n-c)  &DIGITS + fetch ;
   :convert    (n-)   [ @Base /mod swap n->digit buffer:add dup n:zero? ] until drop ;
 ---reveal---
-  :n:to-string<with-base> (n-s)
+  :n:to-string-with-base (n-s)
     [ &String buffer:set dup n:abs convert check-sign ] buffer:preserve
     &String s:reverse ;
 }}
 ~~~
 
-The `n:to-string<with-base>` returns a representation of binary numbers, but
+The `n:to-string-with-base` returns a representation of binary numbers, but
 not the actual bitwise representation. The next word takes care of this.
 
 ~~~

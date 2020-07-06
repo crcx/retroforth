@@ -20,7 +20,7 @@ Here is an example:
     (comparison  &gt? &lt?-or-gt? set-hook       )
     (begin_with  #-1 !Index n:MIN !Value dup a:length ) ;
   :min-or-max (a-nn) [ dup I@ dup @Value lt?-or-gt?
-    [ !Value I !Index ] [ drop ] choose ] times<with-index>
+    [ !Value I !Index ] [ drop ] choose ] indexed-times
     (a-nn drop @Index @Value ) ;
 ---reveal---
  :a:min (a-iv) pre.min min-or-max ;

@@ -5,23 +5,23 @@ First is a word to return values from a lower to upper limit, incrementing
 upwards. The returned values are inclusive of the limits.
 
 ~~~
-:range<inc> (lh-a)
-  over - n:inc [ I over + swap ] times<with-index> drop ;
+:range-inc (lh-a)
+  over - n:inc [ I over + swap ] indexed-times drop ;
 ~~~
 
 Next is a word to return values from an upper to lower limit, decrementing
 upwards. The returned values are inclusive of the limits.
 
 ~~~
-:range<dec> (hl-a)
-  over &- dip swap n:inc [ I over swap - swap ] times<with-index> drop ;
+:range-dec (hl-a)
+  over &- dip swap n:inc [ I over swap - swap ] indexed-times drop ;
 ~~~
 
 The last word takes the limits and calls the appropriate word.
 
 ~~~
 :range (nn-a)
-  dup-pair gt? [ range<dec> ] [ range<inc> ] choose ;
+  dup-pair gt? [ range-dec ] [ range-inc ] choose ;
 ~~~
 
 As a simple test case:

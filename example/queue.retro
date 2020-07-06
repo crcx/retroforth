@@ -73,7 +73,7 @@ constraints)
     [ !R ] [ q:free ] [ q:length ] tri
     '\nin_que:_%n,_free:_%n s:format s:put
     @R q:length n:strictly-positive?
-    [ @R q:size [ display indicators ] times<with-index> ]
+    [ @R q:size [ display indicators ] indexed-times ]
     [ 'queue_is_empty s:put nl ] choose ;
 }}
 ~~~

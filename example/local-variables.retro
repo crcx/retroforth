@@ -37,7 +37,7 @@ And if you need multiple variables to be localized:
 ~~~
 :make-local (a-)
   here [ compile:lit
-         d:last<xt> compile:lit
+         d:last.xt compile:lit
          &v:preserve compile:call
          compile:ret ] dip d:last d:xt store ;
 

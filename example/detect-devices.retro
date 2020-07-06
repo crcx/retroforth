@@ -17,6 +17,6 @@ description of each.
   'unknown:_ s:put n:put nl ;
 
 'Detecting_devices... s:put nl
-io:enumerate [ $# c:put I dup n:put io:query nip tab id ] times<with-index>
+io:enumerate [ $# c:put I dup n:put io:query nip tab id ] indexed-times
 'Complete. s:put nl
 ~~~

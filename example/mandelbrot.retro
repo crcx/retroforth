@@ -11,11 +11,11 @@ The initial maximum number of iterations is set to 128.
 'y var  
 'iter var 
 
-#128 'max-iter var<n>
+#128 'max-iter var-n
 
-#1 'zoom var<n>
-#0 'posx var<n>
-#0 'posy var<n>
+#1 'zoom var-n
+#0 'posx var-n
+#0 'posy var-n
 ~~~
 
 We are using fixed-point numbers with a scaling factor of 10'000.
@@ -123,9 +123,9 @@ height.
       J #800 * #10000 - @zoom / @posy + 
       mb:value 
       ascii-equiv c:put 
-    ] times<with-index> 
+    ] indexed-times
     nl 
-  ] times<with-index>  ; 
+  ] indexed-times  ; 
 ~~~
 
 Before we start, the terminal is set to character-buffered. This makes

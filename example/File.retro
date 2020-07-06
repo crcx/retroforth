@@ -37,7 +37,7 @@ Works imperfectly, but useful.
     @Word d:link search dup n:zero?
     [ drop SOURCE/RETRO ] [ d:name ] choose !FileName ;
   :count-lines   (-)   #1 !Line 
-    (open @FileName file:open<for-reading> !FileID !Size )
+    (open @FileName file:open-for-reading !FileID !Size )
     [ @FileID file:read-line word-name s:contains-string? 
       dup [ &Line v:inc ] -if not (-eof? @FileID file:tell @Size lt? ) and ] 
     while (close @FileID file:close ) ;

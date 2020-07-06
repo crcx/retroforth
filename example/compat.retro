@@ -52,7 +52,7 @@ with tradition as well as the minimal requirements of ANS.
 :BEGIN |repeat ; immediate
 :AGAIN |again ; immediate
 :FOR   |[ ; immediate
-:NEXT  |] |times<with-index> ; immediate
+:NEXT  |] |indexed-times ; immediate
 :DO    |[ |[ |[ ; immediate
 :LOOP  |] |dip |] |dip |n:inc |dup-pair |gt? |] |while |drop-pair ; immediate
 :+LOOP |] |dip |] |dip |swap |push |+ |pop |swap |dup-pair |gt? |] |while |drop-pair ; immediate

@@ -100,13 +100,13 @@ Space is also reserved for the *next generation*.
     dup-pair get #1 eq? &alive &dead choose ;
   :set   (nrc-)  &Next + [ #20 * ] dip + store ;
   :cols (r-)
-    #20 [ I over swap new-state rot rot set ] times<with-index> drop ;
+    #20 [ I over swap new-state rot rot set ] indexed-times drop ;
   :output (n-) n:-zero? [ $o ] [ $. ] choose c:put sp ;
 ---reveal---
   :display (-)
     nl &World #20 [ #20 [ fetch-next output ] times nl ] times drop ;
   :gen (-)
-    #20 [ I cols ] times<with-index> &Next &World #20 #20 * copy ;
+    #20 [ I cols ] indexed-times &Next &World #20 #20 * copy ;
 }}
 
 {{

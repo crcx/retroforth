@@ -16,8 +16,8 @@ set of aliases or extensions to make things more readable. E.g.,
 
 Rather than:
 
-    #1 ll:node<n> #2 ll:node<n> ll:append #3 ll:node<n>
-    ll:append #4 ll:node<n> ll:append
+    #1 ll:node-n #2 ll:node-n ll:append #3 ll:node-n
+    ll:append #4 ll:node-n ll:append
 
 It's easy to write wrappers that allow for things like:
 
@@ -34,14 +34,14 @@ So:
 
     ll:head     (a-a)  return the address of the head field for a node
     ll:next     (a-a)  return the address of the next field for a node
-    ll:node<n>  (n-a)  create a new node with a head of n and a next of 0
+    ll:node-n  (n-a)  create a new node with a head of n and a next of 0
     ll:node     (-a)   create a new node with both fields set to 0
 
 ~~~ 
 :ll:head ;
 :ll:next n:inc ;
 
-:ll:node<n> here swap , #0 , ;
+:ll:node-n here swap , #0 , ;
 :ll:node    here   #0 , #0 , ;
 ~~~
 
@@ -60,8 +60,8 @@ to the end of the list.
 I have a `for-each` combinator to handle performing an action on
 each node in a list. As an example:
 
-    :<  ll:node<n> ;
-    :>  ll:node<n> ll:append ;
+    :<  ll:node-n ;
+    :>  ll:node-n ll:append ;
 
     #1 < #2 > #3 > #5 > #1 > #2 > #3 >
     [ ll:head fetch n:put sp ] ll:for-each
@@ -94,7 +94,7 @@ The docstring for this is:
 Tests
 
 ```
-:< ll:node<n> ;
-:>   ll:node<n> ll:append ;
+:< ll:node-n ;
+:>   ll:node-n ll:append ;
 #1 < #2 > #3 > #5 > #1 > #2 > #3 > [ ll:head fetch n:put sp ] ll:for-each
 ```

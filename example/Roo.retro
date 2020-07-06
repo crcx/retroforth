@@ -97,7 +97,7 @@ So with two modes I only need one variable to track which mode is
 active, and a single word to switch back and forth between them.
 
 ~~~
-$C 'Mode var<n>
+$C 'Mode var-n
 :toggle-mode (-)  @Mode $C eq? [ $I ] [ $C ] choose !Mode ;
 ~~~
 
@@ -188,12 +188,12 @@ string. It then tries to find this in the dictionary.
                [ 'roo:i:_ ] choose [ #6 + store ] sip d:lookup ;
 ~~~
 
-With that, I can implement another helper: `call<dt>`, which will take
+With that, I can implement another helper: `call-dt`, which will take
 the dictionary token returned by `handler-for` and call the xt for the
 word.
 
 ~~~
-:call<dt>  (d-)  d:xt fetch call ;
+:call-dt  (d-)  d:xt fetch call ;
 ~~~
 
 The final piece is the top level key handler. This has the following
@@ -208,9 +208,9 @@ jobs:
 ~~~
 :handle-key (c-)
   dup handler-for
-  @Mode $I -eq? [ nip 0; call<dt> ]
+  @Mode $I -eq? [ nip 0; call-dt ]
                 [ dup n:zero? [ drop insert-character ]
-                              [ nip call<dt>          ] choose ] choose ;
+                              [ nip call-dt           ] choose ] choose ;
 ~~~
 
 Having finished this, it's trivial to define the majority of the basic

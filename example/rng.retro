@@ -29,7 +29,7 @@ XOR/rotate/shift/rotate PNRG (See http://xoshiro.di.unimi.it/)
       \popopopo \popopopo ;
   :jump? (nm-) [ JUMP + fetch ] dip #1 swap n:negate shift and ;
   :inner (n-n)
-    #32 [ dup I jump? [ [ xor-er ] dip ] if next ] times<with-index> ;
+    #32 [ dup I jump? [ [ xor-er ] dip ] if next ] indexed-times ;
     
 ---reveal---
   :random:xoroshiro128** (-n)
@@ -37,7 +37,7 @@ XOR/rotate/shift/rotate PNRG (See http://xoshiro.di.unimi.it/)
     
   :random:xoroshiro128**:jump (-)
     #0 &s3 #0 &s2 #0 &s1 #0 &s0
-    #4 [ I inner drop ] times<with-index>
+    #4 [ I inner drop ] indexed-times
     \stststst ;
     
   :random:xoroshiro128**:set-seed (n-)
