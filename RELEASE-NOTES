@@ -1,6 +1,11 @@
 # RETRO 2020.7
 
+This is a small release.
+
 ## Renamings
+
+I'm no longer using <> in word names. As such, the following are
+renamed.
 
     Old                      New
     ======================   =====================
@@ -13,6 +18,25 @@
     d:last<class>            d:last.class
     d:last<xt>               d:last.xt
 
+The old names are still included by default as part of a compatibility
+layer. This will be removed in the 2020.10 release and nightly snapshots
+starting in August.
+
 ## Nga
 
 - add a Swift implementation
+
+This will be the basis for the next iOS and macOS App Store versions.
+In 2020.7 it's still very new and lacks most I/O devices, but this will
+be addressed over the next few months.
+
+## Documentation
+
+- Added build instructions for Haiku R1/Beta 2
+- Updated the man page for `retro-unu` to cover code and test blocks
+- Updated the general `retro` man page to note that RETRO runs in
+  interactive mode by default
+
+## Examples
+
+- Several new examples were added
