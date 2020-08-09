@@ -67,10 +67,10 @@ opcodes (`1,1,17,1`) or a string with the abbreviations
 :name-for (n-cc)
   #30 n:min #2 * &INST + fetch-next swap fetch swap ;
 
-:display:bundle<raw> (n-)
+:display:bundle-raw (n-)
   unpack '%n,%n,%n,%n s:format s:put ;
 
-:display:bundle<named> (n-)
+:display:bundle-named (n-)
   unpack #4 [ name-for c:put c:put ] times ;
 ~~~
 
@@ -96,7 +96,7 @@ I then wrap `name-for` with a simple check that increments
 `LitCount` as needed.
 
 ~~~
-:name-for<counting-li> (n-cc)
+:name-for(counting-li) (n-cc)
   dup #1 eq? [ &LitCount v:inc ] if name-for ;
 ~~~
 
@@ -119,7 +119,7 @@ a separate handler.
 
 ~~~
 :render-inst (n-)
-  $' c:put unpack #4 [ name-for<counting-li> c:put c:put ] times sp $i c:put ;
+  $' c:put unpack #4 [ name-for(counting-li) c:put c:put ] times sp $i c:put ;
 
 :render-data (n-)
   $# c:put n:to-string s:put sp $d c:put ;
@@ -327,7 +327,7 @@ single stepper. (This also updates a `Steps` counter)
   :named-word?  @IP d:lookup-xt n:-zero? ;
   :show-name    0; drop @IP d:lookup-xt d:name s:put nl ;
   :instruction  [IP] [ unpack ] sip ;
-  :names        #4 [ name-for<counting-li> c:put c:put ] times ;
+  :names        #4 [ name-for(counting-li) c:put c:put ] times ;
   :format       '%n,%n,%n,%n s:format ;
   :pad          s:length #16 swap - #0 n:max [ sp ] times ;
   :opcodes      format dup s:put pad ;

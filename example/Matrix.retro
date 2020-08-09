@@ -7,7 +7,7 @@ couple rushedly written tests.
 {{
   :prepare (nms--knms) push dup-pair * rot rot pop ;
   :create (nms--) d:create dup-pair * #2 + allot ;
-  :initialise (nm--) d:last<xt> store-next store-next ;
+  :initialise (nm--) d:last.xt store-next store-next ;
   :fill (na--a)  [ store-next ] times ;
 ---reveal---
   :matrix (nms--a) create initialise ;

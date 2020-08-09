@@ -2,7 +2,7 @@ This is a quick and dirty way to find prime numbers in a set.
 
 ~~~
 {{
-  #2 'NextPrime var<n>
+  #2 'NextPrime var-n
   :extract (s-s)
     [ @NextPrime dup-pair eq?
       [ drop-pair TRUE ]
