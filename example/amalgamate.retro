@@ -14,6 +14,14 @@ Output will be written to stdout.
 
 ## Code
 
+Include compilation instructions.
+
+~~~
+'/*_Build_with_`cc_-lm_-O2_retro-unix.c_-o_retro`_*/ s:put nl nl
+~~~
+
+Then extract and generate the single file source.
+
 ~~~
 {{
   :image:inline
