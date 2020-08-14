@@ -174,9 +174,6 @@ d:last                   D: -d  A: -  F: -
 d:last.class             D: -a  A: -  F: -
 d:last.name              D: -s  A: -  F: -
 d:last.xt                D: -a  A: -  F: -
-d:last<class>            D: -a  A: -  F: -
-d:last<name>             D: -s  A: -  F: -
-d:last<xt>               D: -a  A: -  F: -
 d:link                   D: d-a  A: -  F: -
 d:lookup                 D: s-d  A: -  F: -
 d:lookup-xt              D: a-d  A: -  F: -
@@ -291,9 +288,6 @@ file:open                D: sm-h  A: -  F: -
 file:open-for-append     D: s-nn  A: -  F: -
 file:open-for-reading    D: s-nn  A: -  F: -
 file:open-for-writing    D: s-n  A: -  F: -
-file:open<for-append>    D: s-nn  A: -  F: -
-file:open<for-reading>   D: s-nn  A: -  F: -
-file:open<for-writing>   D: s-n  A: -  F: -
 file:read                D: h-c  A: -  F: -
 file:read-line           D: f-s  A: -  F: -
 file:seek                D: nh-  A: -  F: -
@@ -457,7 +451,6 @@ sys:argv                 D: n-s  A: -  F: -
 sys:name                 D: -s  A: -  F: -
 tab                      D: -  A: -  F: -
 times                    D: nq-  A: -  F: -
-times<with-index>        D: nq-  A: -  F: -
 tri                      D: xqqq-?  A: -  F: -
 tri*                     D: xyzqqq-?  A: -  F: -
 tri@                     D: xyzq-?  A: -  F: -
@@ -495,7 +488,6 @@ v:preserve               D: aq-  A: -  F: -
 v:update                 D: aq-  A: -  F: -
 var                      D: s-  A: -  F: -
 var-n                    D: ns-  A: -  F: -
-var<n>                   D: ns-  A: -  F: -
 while                    D: q-  A: -  F: -
 xor                      D: mn-o  A: -  F: -
 {                        D: -  A: -  F: -

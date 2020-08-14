@@ -2021,39 +2021,6 @@ Return a pointer to the xt field of the most recent dictionary header.
 Class: class:word | Namespace: d | Interface Layer: all
 ------------------------------------------------------------------------
 
-d:last<class>
-
-  Data:  -a
-  Addr:  -
-  Float: -
-
-Return a pointer to the class field of the most recent dictionary header. Deprecated. Use `d:last.class` instead.
-
-Class: class:word | Namespace: d | Interface Layer: all
-------------------------------------------------------------------------
-
-d:last<name>
-
-  Data:  -s
-  Addr:  -
-  Float: -
-
-Return a pointer to the name field of the most recent dictionary header. Deprecated. Use `d:last.name` instead.
-
-Class: class:word | Namespace: d | Interface Layer: all
-------------------------------------------------------------------------
-
-d:last<xt>
-
-  Data:  -a
-  Addr:  -
-  Float: -
-
-Return a pointer to the xt field of the most recent dictionary header. Deprecated. Use `d:last.xt` instead.
-
-Class: class:word | Namespace: d | Interface Layer: all
-------------------------------------------------------------------------
-
 d:link
 
   Data:  d-a
@@ -3379,39 +3346,6 @@ file:open-for-writing
   Float: -
 
 Open a file for writing. Returns the file ID
-
-Class: class:word | Namespace: file | Interface Layer: rre
-------------------------------------------------------------------------
-
-file:open<for-append>
-
-  Data:  s-nn
-  Addr:  -
-  Float: -
-
-Open a file for reading & writing. Returns the size (NOS) and a file ID (TOS). Deprecated.
-
-Class: class:word | Namespace: file | Interface Layer: rre
-------------------------------------------------------------------------
-
-file:open<for-reading>
-
-  Data:  s-nn
-  Addr:  -
-  Float: -
-
-Open a file for reading. Returns the size (NOS) and a file ID (TOS). Deprecated.
-
-Class: class:word | Namespace: file | Interface Layer: rre
-------------------------------------------------------------------------
-
-file:open<for-writing>
-
-  Data:  s-n
-  Addr:  -
-  Float: -
-
-Open a file for writing. Returns the file ID. Deprecated.
 
 Class: class:word | Namespace: file | Interface Layer: rre
 ------------------------------------------------------------------------
@@ -5414,17 +5348,6 @@ Example #1:
 
 ------------------------------------------------------------------------
 
-times<with-index>
-
-  Data:  nq-
-  Addr:  -
-  Float: -
-
-Run a quote the specified number of times, tracking the loop index in `I`. This is less efficient than `times`, so if the index is not needed, this should be avoided. Deprecated. Use `indexed-` instead.
-
-Class: class:word | Namespace: global | Interface Layer: all
-------------------------------------------------------------------------
-
 tri
 
   Data:  xqqq-?
@@ -5866,23 +5789,6 @@ var-n
   Float: -
 
 Create a variable with the specified initial value.
-
-Class: class:word | Namespace: global | Interface Layer: all
-
-Example #1:
-
-    #10 'Base var-n
-
-
-------------------------------------------------------------------------
-
-var<n>
-
-  Data:  ns-
-  Addr:  -
-  Float: -
-
-Create a variable with the specified initial value. Deprecated. Use `var-n` instead.
 
 Class: class:word | Namespace: global | Interface Layer: all
 
