@@ -713,7 +713,7 @@ And then the actual top level server.
 
   :handle-gopher
     &Selector ASCII:SPACE s:tokenize #1 a:th fetch
-    s:chop s:keep dup s:put !Target gopher:display ;
+    s:chop s:keep !Target gopher:display ;
 
 ---reveal---
 
