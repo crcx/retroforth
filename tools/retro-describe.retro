@@ -160,7 +160,7 @@ This checks the command line arguments and calls the proper words to
 handle each case.
 
 ~~~
-sys:argc [ I sys:argv find-and-display-entry ] times<with-index>
+sys:argc [ I sys:argv find-and-display-entry ] indexed-times
 ~~~
 
 # Glossary Data
