@@ -5,7 +5,7 @@
   includes a number of I/O interfaces, extensive commentary, and has
   been refined by over a decade of use and development.
 
-  Copyright (c) 2008 - 2019, Charles Childers
+  Copyright (c) 2008 - 2020, Charles Childers
 
   Portions are based on Ngaro, which was additionally copyrighted by
   the following:
@@ -671,8 +671,8 @@ void file_open() {
   CELL slot, mode, name;
   char *request;
   slot = files_get_handle();
-  mode = data[sp]; sp--;
-  name = data[sp]; sp--;
+  mode = stack_pop();
+  name = stack_pop();
   request = string_extract(name);
   if (slot > 0) {
     if (mode == 0)  OpenFileHandles[slot] = fopen(request, "rb");
@@ -819,7 +819,7 @@ void file_get_size() {
 
 void file_delete() {
   char *request;
-  CELL name = data[sp]; sp--;
+  CELL name = stack_pop();
   request = string_extract(name);
   unlink(request);
 }
@@ -1186,8 +1186,8 @@ void unix_open_pipe() {
 }
 
 void unix_close_pipe() {
-  pclose(OpenFileHandles[data[sp]]);
-  OpenFileHandles[data[sp]] = 0;
+  pclose(OpenFileHandles[TOS]);
+  OpenFileHandles[TOS] = 0;
   sp--;
 }
 
