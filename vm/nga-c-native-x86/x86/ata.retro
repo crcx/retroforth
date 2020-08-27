@@ -11,7 +11,7 @@ are made to validate the sector number. Using these (esp.
 # Settings
 
 ~~~
-#10000 'ata:Delay var<n>
+#10000 'ata:Delay var-n
 ~~~
 
 # Constants

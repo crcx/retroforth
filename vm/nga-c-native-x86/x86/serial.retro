@@ -9,7 +9,7 @@ Then do `serial:init` and read/write as necessary.
 #760  'serial:COM2 const
 #1000 'serial:COM3 const
 #744  'serial:COM4 const
-serial:COM1 'serial:Port var<n>
+serial:COM1 'serial:Port var-n
 
 :serial:received? @serial:Port #5 + pio:in-byte #1  and n:-zero? ;
 :serial:empty?    @serial:Port #5 + pio:in-byte #32 and n:-zero? ;
