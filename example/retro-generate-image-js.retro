@@ -75,7 +75,7 @@ the cells, then the needed footer.
 ~~~
 'var_ngaImage_=_[ s:put nl
 
-&Image #3 + fetch  [ fetch-next n:put $, c:put EOL? ] times
+&Image dup #3 + fetch [ fetch-next n:put $, c:put EOL? ] times nl drop
 
 ']; s:put nl
 ~~~
