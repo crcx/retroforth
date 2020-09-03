@@ -106,9 +106,6 @@ bin/retro-embedimage: tools/embedimage.c
 bin/retro-extend: tools/extend.c
 	$(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o bin/retro-extend  tools/extend.c
 
-bin/retro-injectimage-js: tools/injectimage-js.c
-	$(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o bin/retro-injectimage-js  tools/injectimage-js.c
-
 bin/retro-muri: tools/muri.c
 	$(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o bin/retro-muri tools/muri.c
 
@@ -170,3 +167,5 @@ release: clean build glossary
 	signify -S -s /home/crc/keys/$(KEYPAIR).sec -m RETRO12-$(VERSION).tar.gz
 	signify -V -p security/$(KEYPAIR).pub -m RETRO12-$(VERSION).tar.gz
 
+image-js: bin/retro
+	./bin/retro example/retro-generate-image-js.retro >vm/nga-js/image.js
