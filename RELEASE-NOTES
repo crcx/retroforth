@@ -1,42 +1,13 @@
-# RETRO 2020.7
+# RETRO 2020.10
 
-This is a small release.
+Tooling
 
-## Renamings
+- added a `make image-js` target to generate the image.js
+- fixed a bug in the glossary that caused names to appear twice
+  (reported by Kiyoshi)
+- fixed a bug in retro-describe due to use of a deprecated word
 
-I'm no longer using <> in word names. As such, the following are
-renamed.
+Standard Library
 
-    Old                      New
-    ======================   =====================
-    file:open<for-writing>   file:open-for-writing
-    file:open<for-append>    file:open-for-append
-    file:open<for-reading>   file:open-for-reading
-    times<with-index>        indexed-times
-    var<n>                   var-n
-    d:last<name>             d:last.name
-    d:last<class>            d:last.class
-    d:last<xt>               d:last.xt
+- remove deprecated words
 
-The old names are still included by default as part of a compatibility
-layer. This will be removed in the 2020.10 release and nightly snapshots
-starting in August.
-
-## Nga
-
-- add a Swift implementation
-
-This will be the basis for the next iOS and macOS App Store versions.
-In 2020.7 it's still very new and lacks most I/O devices, but this will
-be addressed over the next few months.
-
-## Documentation
-
-- Added build instructions for Haiku R1/Beta 2
-- Updated the man page for `retro-unu` to cover code and test blocks
-- Updated the general `retro` man page to note that RETRO runs in
-  interactive mode by default
-
-## Examples
-
-- Several new examples were added
