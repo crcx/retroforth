@@ -24,9 +24,17 @@
 #define CELL_MAX LLONG_MAX - 1
 #endif
 
-#define IMAGE_SIZE   524288
-#define ADDRESSES    2048
-#define STACK_DEPTH  512
+#ifndef IMAGE_SIZE
+#define IMAGE_SIZE   524288       /* Amount of RAM, in cells           */
+#endif
+
+#ifndef ADDRESSES
+#define ADDRESSES    256          /* Depth of address stack            */
+#endif
+
+#ifndef STACK_DEPTH
+#define STACK_DEPTH  256          /* Depth of data stack               */
+#endif
 
 #define NUM_DEVICES  1
 

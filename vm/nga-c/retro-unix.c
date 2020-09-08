@@ -48,9 +48,17 @@
 #define CELL_MAX LLONG_MAX - 1
 #endif
 
+#ifndef IMAGE_SIZE
 #define IMAGE_SIZE   524288       /* Amount of RAM, in cells           */
+#endif
+
+#ifndef ADDRESSES
 #define ADDRESSES    256          /* Depth of address stack            */
+#endif
+
+#ifndef STACK_DEPTH
 #define STACK_DEPTH  256          /* Depth of data stack               */
+#endif
 
 #define TIB            1025       /* Location of TIB                   */
 
@@ -321,7 +329,7 @@ void rre_execute(CELL cell, int silent) {
       a = opcode;
       for (i = 0; i < 4; i++) {
         b = a & 0xFF;
-        printf("%d ", b);
+        printf("%lldd ", (long long)b);
         a = a >> 8;
       }
       printf("\n");

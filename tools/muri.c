@@ -20,7 +20,10 @@
 #define KiB * 1024
 #define MAX_NAMES 1024
 #define STRING_LEN 64
+
+#ifndef IMAGE_SIZE
 #define IMAGE_SIZE 128 KiB
+#endif
 
 char Labels[MAX_NAMES][STRING_LEN];
 CELL Pointers[MAX_NAMES];

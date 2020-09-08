@@ -36,6 +36,19 @@ In the `bin/` directory:
 
 ## Platform Specific Notes
 
+In addition to the 64-bit build, it is possible to override the
+image size, address stack depth, and data stack depth by defining
+the appropriate elements.
+
+E.g., for a 64-bit build with:
+
+    4,000,000 cells of memory
+    4,000     item limit on data stack
+    500       item limit on address stack
+
+Run `make OPTIONS="-DBIT64 -DIMAGE_SIZE=4000000 -DSTACK_DEPTH=4000 -DADDRESSES=500"`
+
+
 ### Haiku
 
 To build on Haiku, you need to link with the *network* library.
