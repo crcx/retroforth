@@ -25,9 +25,9 @@ This can be useful, so I'm doing something similar here.
 'book { 'title 'author 'subject 'book-id } defstruct
 
 book 'A const
-"The_Hobbit     &A title!
-"J.R.R._Tolkien &A author!
-"Fantasy        &A subject!
+'The_Hobbit     s:keep &A title!
+'J.R.R._Tolkien s:keep &A author!
+'Fantasy        s:keep &A subject!
 
 :info (a-)
   [ subject@ ] [ author@ ] [ title@ ] tri

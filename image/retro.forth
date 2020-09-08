@@ -1540,7 +1540,7 @@ I'm defining a new `a:make` which wraps these.
 
 ~~~
 :a:make (q-a)
-  a:counted-results a:reverse ;
+  a:counted-results dup dup &Heap [ a:reverse ] v:preserve swap a:copy ;
 
 :{ (-)  |[ |depth |[ ; immediate
 :} (-a) |] |dip |depth |swap |- |n:dec |] |a:make ; immediate
