@@ -75,10 +75,12 @@ words we can use.
       [ drop 'IO_DEVICE_TYPE_0009_NOT_FOUND s:put nl ]
       [ !Scripting ] choose ] if ;
 ---reveal---
-  :sys:argc (-n)               identify #0 @Scripting io:invoke ;
-  :sys:argv (n-s) s:empty swap identify #1 @Scripting io:invoke ;
-  :include  (s-)               identify #2 @Scripting io:invoke ;
-  :sys:name (-s)       s:empty identify #3 @Scripting io:invoke ;
+  :sys:argc (-n)                identify #0 @Scripting io:invoke ;
+  :sys:argv (n-s)  s:empty swap identify #1 @Scripting io:invoke ;
+  :include  (s-)                identify #2 @Scripting io:invoke ;
+  :sys:name (-s)        s:empty identify #3 @Scripting io:invoke ;
+  :sys:current-file (-s) s:empty identify #4 @Scripting io:invoke ;
+  :sys:current-line (-n)         identify #5 @Scripting io:invoke ;
 }}
 ~~~
 

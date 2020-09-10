@@ -251,15 +251,25 @@ void scripting_name() {
   stack_push(string_inject(sys_argv[1], stack_pop()));
 }
 
+/* addeded in scripting i/o device, revision 1 */
+void scripting_source() {
+  stack_push(string_inject("tbd", stack_pop()));
+}
+void scripting_line() {
+  stack_push(0);
+}
+
 Handler ScriptingActions[] = {
   scripting_arg_count,
   scripting_arg,
   scripting_include,
-  scripting_name
+  scripting_name,
+  scripting_source,
+  scripting_line
 };
 
 void io_scripting_query() {
-  stack_push(0);
+  stack_push(1);
   stack_push(9);
 }
 
