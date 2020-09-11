@@ -235,6 +235,7 @@ void io_keyboard_query() {
   ---------------------------------------------------------------------*/
 
 CELL currentLine;
+CELL ignoreToEOL;
 
 void scripting_arg() {
   CELL a, b;
@@ -264,13 +265,18 @@ void scripting_line() {
   stack_push(currentLine);
 }
 
+void scripting_ignore_to_eol() {
+  ignoreToEOL = -1;
+}
+
 Handler ScriptingActions[] = {
   scripting_arg_count,
   scripting_arg,
   scripting_include,
   scripting_name,
   scripting_source,
-  scripting_line
+  scripting_line,
+  scripting_ignore_to_eol
 };
 
 void io_scripting_query() {
@@ -507,13 +513,15 @@ void include_file(char *fname, int run_tests) {
 
   while (!feof(fp)) {              /* Loop through the file            */
 
+    ignoreToEOL = 0;
+
     offset = ftell(fp);
     read_line(fp, line);
     fseek(fp, offset, SEEK_SET);
 
     tokens = count_tokens(line);
 
-    while (tokens > 0) {
+    while (tokens > 0 && ignoreToEOL == 0) {
       tokens--;
       read_token(fp, source, 0);
       strncpy(fence, source, 3);     /* Copy the first three characters  */
@@ -534,6 +542,8 @@ void include_file(char *fname, int run_tests) {
         }
       }
     }
+    if (ignoreToEOL == -1)
+      read_line(fp, line);
     at++;
   }
 
@@ -617,6 +627,7 @@ int main(int argc, char **argv) {
   sys_argc = argc;                        /* Point the global argc and */
   sys_argv = argv;                        /* argv to the actual ones   */
   bsd_strlcpy(scripting_sources[0], "/dev/stdin", 8192);
+  ignoreToEOL = 0;
 
   if (argc >= 2 && argv[1][0] != '-') {
     update_rx();

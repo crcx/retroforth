@@ -450,6 +450,7 @@ sys:argc                 D: -n  A: -  F: -
 sys:argv                 D: n-s  A: -  F: -
 sys:current-file         D: -s  A: -  F: -
 sys:current-line         D: -n  A: -  F: -
+sys:ignore-to-eol        D: -  A: -  F: -
 sys:name                 D: -s  A: -  F: -
 tab                      D: -  A: -  F: -
 times                    D: nq-  A: -  F: -

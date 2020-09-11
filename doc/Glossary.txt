@@ -5332,6 +5332,17 @@ Return the current line number of the file being processed by the current `inclu
 Class: class:word | Namespace: sys | Interface Layer: rre
 ------------------------------------------------------------------------
 
+sys:ignore-to-eol
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Discard remaining tokens on the current line being evaluated. This only works when including a file, not at the interpreter.
+
+Class: class:word | Namespace: sys | Interface Layer: rre
+------------------------------------------------------------------------
+
 sys:name
 
   Data:  -s

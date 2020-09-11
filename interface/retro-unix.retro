@@ -80,7 +80,8 @@ words we can use.
   :include  (s-)                identify #2 @Scripting io:invoke ;
   :sys:name (-s)        s:empty identify #3 @Scripting io:invoke ;
   :sys:current-file (-s) s:empty identify #4 @Scripting io:invoke ;
-  :sys:current-line (-n)         identify #5 @Scripting io:invoke ;
+  :sys:current-line (-n)        identify #5 @Scripting io:invoke ;
+  :sys:ignore-to-eol (-)        identify #6 @Scripting io:invoke ;
 }}
 ~~~
 

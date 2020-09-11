@@ -450,6 +450,7 @@ sys:argc	-n	-	-	Return the number of arguments passed to the program.			class:wo
 sys:argv	n-s	-	-	Given an argument number, return the argument as a string.			class:word	{n/a}	{n/a}	sys	rre	
 sys:current-file	-s	-	-	Return the filename of the file being processed by the current `include`, or `/dev/stdin` if the input source is the terminal.			class:word	{n/a}	{n/a}	sys	rre	
 sys:current-line	-n	-	-	Return the current line number of the file being processed by the current `include`, or `0` if the input source is the terminal.			class:word	{n/a}	{n/a}	sys	rre	
+sys:ignore-to-eol	-	-	-	Discard remaining tokens on the current line being evaluated. This only works when including a file, not at the interpreter.			class:word	{n/a}	{n/a}	sys	rre	
 sys:name	-s	-	-	Return the filename of the program being run.			class:word	{n/a}	{n/a}	sys	rre	
 tab	-	-	-	Display a tab (`ASCII:HT`)			class:word	{n/a}	{n/a}	global	all	
 times	nq-	-	-	Run the specified quote the specified number of times.			class:word	    #12 [ $- c:put ] times	{n/a}	global	all	
