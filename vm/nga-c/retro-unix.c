@@ -21,6 +21,7 @@
   C Headers
   ---------------------------------------------------------------------*/
 
+#include <ctype.h> 
 #include <errno.h>
 #include <math.h>
 #include <signal.h>
@@ -232,6 +233,8 @@ void io_keyboard_query() {
   Scripting Support
   ---------------------------------------------------------------------*/
 
+CELL currentLine;
+
 void scripting_arg() {
   CELL a, b;
   a = stack_pop();
@@ -255,8 +258,9 @@ void scripting_name() {
 void scripting_source() {
   stack_push(string_inject("tbd", stack_pop()));
 }
+
 void scripting_line() {
-  stack_push(0);
+  stack_push(currentLine);
 }
 
 Handler ScriptingActions[] = {
@@ -462,32 +466,70 @@ int fenced(char *s)
   And now for the actual `include_file()` function.
   ---------------------------------------------------------------------*/
 
+void read_line(FILE *file, char *token_buffer) {
+  int ch = getc(file);
+  int count = 0;
+  while ((ch != 10) && (ch != 13) && (ch != EOF) && (ch != 0)) {
+    token_buffer[count++] = ch;
+    ch = getc(file);
+  }
+  token_buffer[count] = '\0';
+}
+
+int count_tokens(char *line) {
+  char ch = line[0];
+  int count = 1;
+  while (*line++) {
+    ch = line[0];
+    if (isspace(ch))
+      count++;
+  }
+  return count;
+}
+
 void include_file(char *fname, int run_tests) {
   int inBlock = 0;                 /* Tracks status of in/out of block */
-  char source[64 * 1024];          /* Line buffer [about 64K]          */
+  char source[64 * 1024];          /* Token buffer [about 64K]         */
+  char line[64 * 1024];            /* Line buffer [about 64K]          */
   char fence[4];                   /* Used with `fenced()`             */
 
+  long offset = 0;
+  CELL at = 0;
+  int tokens = 0;
   FILE *fp;                        /* Open the file. If not found,     */
   fp = fopen(fname, "r");          /* exit.                            */
   if (fp == NULL)
     return;
   while (!feof(fp)) {              /* Loop through the file            */
-    read_token(fp, source, 0);
-    strncpy(fence, source, 3);     /* Copy the first three characters  */
-    fence[3] = '\0';               /* into `fence` to see if we are in */
-    if (fenced(fence) > 0) {       /* a code block.                    */
-      if (fenced(fence) == 2 && run_tests == 0) {
+
+    offset = ftell(fp);
+    read_line(fp, line);
+    fseek(fp, offset, SEEK_SET);
+
+    tokens = count_tokens(line);
+
+    while (tokens > 0) {
+      tokens--;
+      read_token(fp, source, 0);
+      strncpy(fence, source, 3);     /* Copy the first three characters  */
+      fence[3] = '\0';               /* into `fence` to see if we are in */
+      if (fenced(fence) > 0) {       /* a code block.                    */
+        if (fenced(fence) == 2 && run_tests == 0) {
+        } else {
+          if (inBlock == 0)
+            inBlock = 1;
+          else
+            inBlock = 0;
+        }
       } else {
-        if (inBlock == 0)
-          inBlock = 1;
-        else
-          inBlock = 0;
-      }
-    } else {
-      if (inBlock == 1) {
-        rre_evaluate(source, -1);
+        if (inBlock == 1) {
+          currentLine = at;
+          rre_evaluate(source, -1);
+          currentLine = at;
+        }
       }
     }
+    at++;
   }
 
   fclose(fp);
@@ -563,6 +605,7 @@ int main(int argc, char **argv) {
 
   initialize();                           /* Initialize Nga & image    */
 
+  currentLine = 0;                        /* Current Line # for script */
   sys_argc = argc;                        /* Point the global argc and */
   sys_argv = argv;                        /* argv to the actual ones   */
 
