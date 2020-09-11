@@ -729,6 +729,9 @@ moving `d:create` into Rx and using it in place of `d:add-header`.
 
 ~~~
 : d:add-header
+i liju....
+r _add-header
+: _add-header
 i lifepuli
 r Heap
 r Dictionary

@@ -11,3 +11,8 @@ Standard Library
 
 - remove deprecated words
 
+Unix
+
+- added `sys:current-file` to return the filename being processed
+- added `sys:current-line` to return the current line number being
+  processed
