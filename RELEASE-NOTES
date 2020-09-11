@@ -16,3 +16,7 @@ Unix
 - added `sys:current-file` to return the filename being processed
 - added `sys:current-line` to return the current line number being
   processed
+- added `sys:ignore-to-eol` to support commenting out lines when
+  processing files
+- added `//` to comment out lines (works with files and at the
+  listener)

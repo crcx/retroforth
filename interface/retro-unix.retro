@@ -105,10 +105,15 @@ startup flags passed.
 :bye #0 unix:exit ;
 
 {{
+  'EOT var
+  FALSE 'Ignoring var-n
+  (-f)   :ignoring?  @Ignoring ;
   (-nn)  :version    @Version #100 /mod ;
-  (c-f)  :done?      [ ASCII:CR eq? ]
+  (c-f)  :done?      dup !EOT
+                     [ ASCII:CR eq? ]
                      [ ASCII:LF eq? ]
                      [ ASCII:SPACE eq? ] tri or or ;
+  (c-f)  :eol?       @EOT [ ASCII:CR eq? ] [ ASCII:LF eq? ] bi or ;
   (s-sf) :valid?     dup s:length n:strictly-positive? ;
   (c-c)  :check-eof  dup [ #-1 eq? ] [ ASCII:EOT eq? ] bi or &bye if ;
          :bs         buffer:get buffer:get drop-pair ;
@@ -118,8 +123,10 @@ startup flags passed.
   (q-)   :buffer     [ TIB buffer:set call buffer:start ] buffer:preserve ;
   (-s)   :read-token [ [ character check done? ] until ] buffer s:chop ;
   (-sf)  :input      read-token valid? ;
-  (sf-)  :process    &interpret &drop choose ;
+  (sf-)  :process    ignoring? [ drop-pair eol? [ &Ignoring v:off ] if ] if;
+                     &interpret &drop choose ;
 ---reveal---
+  ://    sys:ignore-to-eol &Ignoring v:on ; immediate
   :banner  version 'RETRO_12_(%n.%n)\n s:format s:put
            EOM here - here EOM '%n_Max,_%n_Used,_%n_Free\n s:format s:put ;
   :listen  @NoEcho [ banner ] -if repeat input process again ;
