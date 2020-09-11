@@ -6,6 +6,7 @@ Tooling
 - fixed a bug in the glossary that caused names to appear twice
   (reported by Kiyoshi)
 - fixed a bug in retro-describe due to use of a deprecated word
+- allow setting the image size, stack sizes when building
 
 Standard Library
 
