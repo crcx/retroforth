@@ -186,7 +186,8 @@ char string_data[8192];
 char **sys_argv;
 int sys_argc;
 int silence_input;
-
+char scripting_sources[64][8192];
+int current_source;
 
 /*=====================================================================*/
 
@@ -256,7 +257,7 @@ void scripting_name() {
 
 /* addeded in scripting i/o device, revision 1 */
 void scripting_source() {
-  stack_push(string_inject("tbd", stack_pop()));
+  stack_push(string_inject(scripting_sources[current_source], stack_pop()));
 }
 
 void scripting_line() {
@@ -500,6 +501,10 @@ void include_file(char *fname, int run_tests) {
   fp = fopen(fname, "r");          /* exit.                            */
   if (fp == NULL)
     return;
+
+  current_source++;
+  bsd_strlcpy(scripting_sources[current_source], fname, 8192);
+
   while (!feof(fp)) {              /* Loop through the file            */
 
     offset = ftell(fp);
@@ -532,6 +537,7 @@ void include_file(char *fname, int run_tests) {
     at++;
   }
 
+  current_source--;
   fclose(fp);
 }
 
@@ -605,9 +611,12 @@ int main(int argc, char **argv) {
 
   initialize();                           /* Initialize Nga & image    */
 
+  /* Setup variables related to the scripting device */
   currentLine = 0;                        /* Current Line # for script */
+  current_source = 0;                     /* Current file being run    */
   sys_argc = argc;                        /* Point the global argc and */
   sys_argv = argv;                        /* argv to the actual ones   */
+  bsd_strlcpy(scripting_sources[0], "/dev/stdin", 8192);
 
   if (argc >= 2 && argv[1][0] != '-') {
     update_rx();
