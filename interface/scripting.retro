@@ -1,0 +1,58 @@
+# Scripting Support
+
+This is the scripting interface words for use with retro-unix
+or other interfaces providing device type 9 support.
+
+The initial words were provided in a `sys:` namespace. In 2020.10
+this is changing to `script:`, with the old names being deprecated.
+
+## Rev. 0
+
+The initial version of this I/O device provides support for some
+basic interactions.
+
+- obtaining the name of the script
+- obtaining the number of arguments passed
+- obtaining the arguments passed
+- "including" a file (which has RETRO process the file as inuput)
+
+## Rev. 1
+
+In 2020.10, the device was extended to add support for new additional
+introspection and control of the `include` process.
+
+- obtaining the current file name
+- obtaining the current line number
+- direct RETRO to ignore the rest of the current line
+- direct RETRO to ignore any remaining lines in the file
+
+# The Code
+
+~~~
+{{
+  'Scripting var
+  :identify
+    @Scripting n:zero? [
+      #9 io:scan-for dup n:negative?
+      [ drop 'IO_DEVICE_TYPE_0009_NOT_FOUND s:put nl ]
+      [ !Scripting ] choose ] if ;
+---reveal---
+  :script:arguments (-n)            identify #0 @Scripting io:invoke ;
+  :script:get-argument (n-s)  s:empty swap identify #1 @Scripting io:invoke ;
+  :include  (s-)                    identify #2 @Scripting io:invoke ;
+  :script:name (-s)         s:empty identify #3 @Scripting io:invoke ;
+
+  :script:current-file (-s) s:empty identify #4 @Scripting io:invoke ;
+  :script:current-line (-n)         identify #5 @Scripting io:invoke ;
+  :script:ignore-to-eol (-)         identify #6 @Scripting io:invoke ;
+  :script:abort-include (-)         identify #7 @Scripting io:invoke ;
+}}
+~~~
+
+# Deprecated Names
+
+~~~
+:sys:argc script:arguments ;
+:sys:argv script:get-argument ;
+:sys:name script:name ;
+~~~
