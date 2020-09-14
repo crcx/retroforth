@@ -22,7 +22,7 @@ First, gather the command line arguments. If no word name
 was passed, just exit.
 
 ~~~
-sys:argc n:zero? [ #0 unix:exit ] if
+script:arguments n:zero? [ #0 unix:exit ] if
 ~~~
 
 ~~~
@@ -150,7 +150,7 @@ the description.
   :find-and-display-entry
     #0 !LineNumber
     s:keep !Target
-    sys:name [ &Heap [ s:keep !SourceLine entry? 0; drop matched? [ display-result ] if ] v:preserve ] file:for-each-line nl ;
+    script:name [ &Heap [ s:keep !SourceLine entry? 0; drop matched? [ display-result ] if ] v:preserve ] file:for-each-line nl ;
 }}
 ~~~
 
@@ -160,7 +160,7 @@ This checks the command line arguments and calls the proper words to
 handle each case.
 
 ~~~
-sys:argc [ I sys:argv find-and-display-entry ] indexed-times
+script:arguments [ I script:get-argument find-and-display-entry ] indexed-times
 ~~~
 
 # Glossary Data

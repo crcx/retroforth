@@ -11,7 +11,7 @@ file name and renders the uuencoded data to standard output.
 First, determine the size of the file.
 
 ~~~
-#0 sys:argv file:R file:open
+#0 script:get-argument file:R file:open
 &file:size &file:close bi 'SIZE const
 ~~~
 
@@ -20,7 +20,7 @@ into memory.
 
 ~~~
 'Data d:create  SIZE allot
-&Data #0 sys:argv file:slurp
+&Data #0 script:get-argument file:slurp
 ~~~
 
 
@@ -33,7 +33,7 @@ A uuencoded file starts with a header line of the form:
 I am hard coding the mode as 0644.
 
 ~~~
-:header (-) #0 sys:argv 'begin_0644_%s1\n s:format s:put ;
+:header (-) #0 script:get-argument 'begin_0644_%s1\n s:format s:put ;
 ~~~
 
 

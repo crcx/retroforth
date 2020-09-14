@@ -430,6 +430,13 @@ s:tokenize-on-string     D: ss-a  A: -  F: -
 s:trim                   D: s-s  A: -  F: -
 s:trim-left              D: s-s  A: -  F: -
 s:trim-right             D: s-s  A: -  F: -
+script:abort-include     D: -  A: -  F: -
+script:arguments         D: -n  A: -  F: -
+script:current-file      D: -s  A: -  F: -
+script:current-line      D: -n  A: -  F: -
+script:get-argument      D: n-s  A: -  F: -
+script:ignore-to-eof     D: -  A: -  F: -
+script:name              D: -s  A: -  F: -
 set-hook                 D: aa-  A: -  F: -
 shift                    D: mn-o  A: -  F: -
 sip                      D: nq-n  A: -  F: -
@@ -447,12 +454,8 @@ sp                       D: -  A: -  F: -
 store                    D: na-  A: -  F: -
 store-next               D: na-a  A: -  F: -
 swap                     D: nm-mn  A: -  F: -
-sys:abort-include        D: -  A: -  F: -
 sys:argc                 D: -n  A: -  F: -
 sys:argv                 D: n-s  A: -  F: -
-sys:current-file         D: -s  A: -  F: -
-sys:current-line         D: -n  A: -  F: -
-sys:ignore-to-eof        D: -  A: -  F: -
 sys:name                 D: -s  A: -  F: -
 tab                      D: -  A: -  F: -
 times                    D: nq-  A: -  F: -

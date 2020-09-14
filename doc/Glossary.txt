@@ -5093,6 +5093,83 @@ Example #1:
 
 ------------------------------------------------------------------------
 
+script:abort-include
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Discard remaining tokens on the current line being evaluated. This only works when including a file, not at the interpreter.
+
+Class: class:word | Namespace: sys | Interface Layer: rre
+------------------------------------------------------------------------
+
+script:arguments
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Return the number of arguments passed to the program.
+
+Class: class:word | Namespace: sys | Interface Layer: rre
+------------------------------------------------------------------------
+
+script:current-file
+
+  Data:  -s
+  Addr:  -
+  Float: -
+
+Return the filename of the file being processed by the current `include`, or `/dev/stdin` if the input source is the terminal.
+
+Class: class:word | Namespace: sys | Interface Layer: rre
+------------------------------------------------------------------------
+
+script:current-line
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Return the current line number of the file being processed by the current `include`, or `0` if the input source is the terminal.
+
+Class: class:word | Namespace: sys | Interface Layer: rre
+------------------------------------------------------------------------
+
+script:get-argument
+
+  Data:  n-s
+  Addr:  -
+  Float: -
+
+Given an argument number, return the argument as a string.
+
+Class: class:word | Namespace: sys | Interface Layer: rre
+------------------------------------------------------------------------
+
+script:ignore-to-eof
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Discard remaining lines in the file currently being evaluated. This only works when including a file, not at the interpreter.
+
+Class: class:word | Namespace: sys | Interface Layer: rre
+------------------------------------------------------------------------
+
+script:name
+
+  Data:  -s
+  Addr:  -
+  Float: -
+
+Return the filename of the program being run.
+
+Class: class:word | Namespace: sys | Interface Layer: rre
+------------------------------------------------------------------------
+
 set-hook
 
   Data:  aa-
@@ -5299,24 +5376,13 @@ Exchange the position of the top two items on the stack
 Class: class:primitive | Namespace: global | Interface Layer: all
 ------------------------------------------------------------------------
 
-sys:abort-include
-
-  Data:  -
-  Addr:  -
-  Float: -
-
-Discard remaining tokens on the current line being evaluated. This only works when including a file, not at the interpreter.
-
-Class: class:word | Namespace: sys | Interface Layer: rre
-------------------------------------------------------------------------
-
 sys:argc
 
   Data:  -n
   Addr:  -
   Float: -
 
-Return the number of arguments passed to the program.
+Return the number of arguments passed to the program. Deprecated. Use script:arguments
 
 Class: class:word | Namespace: sys | Interface Layer: rre
 ------------------------------------------------------------------------
@@ -5327,40 +5393,7 @@ sys:argv
   Addr:  -
   Float: -
 
-Given an argument number, return the argument as a string.
-
-Class: class:word | Namespace: sys | Interface Layer: rre
-------------------------------------------------------------------------
-
-sys:current-file
-
-  Data:  -s
-  Addr:  -
-  Float: -
-
-Return the filename of the file being processed by the current `include`, or `/dev/stdin` if the input source is the terminal.
-
-Class: class:word | Namespace: sys | Interface Layer: rre
-------------------------------------------------------------------------
-
-sys:current-line
-
-  Data:  -n
-  Addr:  -
-  Float: -
-
-Return the current line number of the file being processed by the current `include`, or `0` if the input source is the terminal.
-
-Class: class:word | Namespace: sys | Interface Layer: rre
-------------------------------------------------------------------------
-
-sys:ignore-to-eof
-
-  Data:  -
-  Addr:  -
-  Float: -
-
-Discard remaining lines in the file currently being evaluated. This only works when including a file, not at the interpreter.
+Given an argument number, return the argument as a string. Deprecated. Use script:get-argument instead.
 
 Class: class:word | Namespace: sys | Interface Layer: rre
 ------------------------------------------------------------------------
@@ -5371,7 +5404,7 @@ sys:name
   Addr:  -
   Float: -
 
-Return the filename of the program being run.
+Return the filename of the program being run. Deprecated. Use script:name instead.
 
 Class: class:word | Namespace: sys | Interface Layer: rre
 ------------------------------------------------------------------------

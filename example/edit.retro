@@ -40,7 +40,7 @@ Since this runs as a standalone application I use a quick check
 to exit if no arguments were passed.
 
 ~~~
-sys:argc n:zero? [ 'No_file_specified! s:put nl #0 unix:exit ] if
+script:arguments n:zero? [ 'No_file_specified! s:put nl #0 unix:exit ] if
 ~~~
 
 If I get here, a filename was provided. So I start by creating
@@ -49,7 +49,7 @@ a few variables and constants.
 Get the name of the file to edit.
 
 ~~~
-#0 sys:argv s:keep 'SourceFile var-n
+#0 script:get-argument s:keep 'SourceFile var-n
 ~~~
 
 
@@ -79,7 +79,7 @@ by the filename. I handle the file creation here.
 
 ~~~
 @SourceFile 'new s:eq?
-  [ #1 sys:argv s:keep !SourceFile
+  [ #1 script:get-argument s:keep !SourceFile
     @SourceFile file:A file:open file:close ] if
 ~~~
 

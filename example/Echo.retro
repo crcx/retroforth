@@ -3,7 +3,7 @@
 This is a simple `echo` style example.
 
 ~~~
-#0 sys:argc
+#0 script:get-argument
 ~~~
 
 Then a simple loop:
@@ -14,7 +14,7 @@ Then a simple loop:
 - increment the argument number
 
 ~~~
-[ dup sys:argv s:put sp n:inc ] times
+[ dup script:get-argument s:put sp n:inc ] times
 ~~~
 
 And at the end, discard the argument number and inject a

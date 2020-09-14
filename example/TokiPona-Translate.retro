@@ -159,5 +159,5 @@ A couple of resources:
 :original dup s:put nl tab ;
 :tokens   ASCII:SPACE s:tokenize ;
 :convert  [ translate s:put sp ] a:for-each nl ;
-#0 sys:argv [ s:to-lower clean original tokens convert ] unu
+#0 script:get-argument [ s:to-lower clean original tokens convert ] unu
 ~~~

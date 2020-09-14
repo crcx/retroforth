@@ -60,7 +60,7 @@ will strip the actual root path off, allowing the selectors
 to work as expected.
 
 ~~~
-#0 sys:argv s:length 'SKIP const
+#0 script:get-argument s:length 'SKIP const
 ~~~
 
 So with these defined, I define a couple of constants using

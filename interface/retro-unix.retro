@@ -59,33 +59,6 @@ a quote which looks for an end of line character.
 :s:get-word (-s) &c:whitespace? parse-until ;
 ~~~
 
-
-## Scripting: Command Line Arguments
-
-RRE also provides access to the command line arguments passed
-to a script. The next few words map the scripting device to
-words we can use.
-
-~~~
-{{
-  'Scripting var
-  :identify
-    @Scripting n:zero? [
-      #9 io:scan-for dup n:negative?
-      [ drop 'IO_DEVICE_TYPE_0009_NOT_FOUND s:put nl ]
-      [ !Scripting ] choose ] if ;
----reveal---
-  :sys:argc (-n)                identify #0 @Scripting io:invoke ;
-  :sys:argv (n-s)  s:empty swap identify #1 @Scripting io:invoke ;
-  :include  (s-)                identify #2 @Scripting io:invoke ;
-  :sys:name (-s)        s:empty identify #3 @Scripting io:invoke ;
-  :sys:current-file (-s) s:empty identify #4 @Scripting io:invoke ;
-  :sys:current-line (-n)        identify #5 @Scripting io:invoke ;
-  :sys:ignore-to-eol (-)        identify #6 @Scripting io:invoke ;
-  :sys:abort-include (-)        identify #7 @Scripting io:invoke ;
-}}
-~~~
-
 ~~~
 :clear ASCII:ESC c:put '[2J s:put ASCII:ESC c:put '[0;0H s:put ;
 ~~~
@@ -127,7 +100,7 @@ startup flags passed.
   (sf-)  :process    ignoring? [ drop-pair eol? [ &Ignoring v:off ] if ] if;
                      &interpret &drop choose ;
 ---reveal---
-  ://    sys:ignore-to-eol &Ignoring v:on ; immediate
+  ://    script:ignore-to-eol &Ignoring v:on ; immediate
   :banner  version 'RETRO_12_(%n.%n)\n s:format s:put
            EOM here - here EOM '%n_Max,_%n_Used,_%n_Free\n s:format s:put ;
   :listen  @NoEcho [ banner ] -if repeat input process again ;

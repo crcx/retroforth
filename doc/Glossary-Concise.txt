@@ -1294,6 +1294,27 @@ Trim leading whitespace from a string.
 s:trim-right             D: s-s  A: -  F: -
 Trim trailing whitespace from a string.
 
+script:abort-include     D: -  A: -  F: -
+Discard remaining tokens on the current line being evaluated. This only works when including a file, not at the interpreter.
+
+script:arguments         D: -n  A: -  F: -
+Return the number of arguments passed to the program.
+
+script:current-file      D: -s  A: -  F: -
+Return the filename of the file being processed by the current `include`, or `/dev/stdin` if the input source is the terminal.
+
+script:current-line      D: -n  A: -  F: -
+Return the current line number of the file being processed by the current `include`, or `0` if the input source is the terminal.
+
+script:get-argument      D: n-s  A: -  F: -
+Given an argument number, return the argument as a string.
+
+script:ignore-to-eof     D: -  A: -  F: -
+Discard remaining lines in the file currently being evaluated. This only works when including a file, not at the interpreter.
+
+script:name              D: -s  A: -  F: -
+Return the filename of the program being run.
+
 set-hook                 D: aa-  A: -  F: -
 Patch the hook point in a2 to point to a1.
 
@@ -1345,26 +1366,14 @@ Store a value into the specified address and return the next address.
 swap                     D: nm-mn  A: -  F: -
 Exchange the position of the top two items on the stack
 
-sys:abort-include        D: -  A: -  F: -
-Discard remaining tokens on the current line being evaluated. This only works when including a file, not at the interpreter.
-
 sys:argc                 D: -n  A: -  F: -
-Return the number of arguments passed to the program.
+Return the number of arguments passed to the program. Deprecated. Use script:arguments
 
 sys:argv                 D: n-s  A: -  F: -
-Given an argument number, return the argument as a string.
-
-sys:current-file         D: -s  A: -  F: -
-Return the filename of the file being processed by the current `include`, or `/dev/stdin` if the input source is the terminal.
-
-sys:current-line         D: -n  A: -  F: -
-Return the current line number of the file being processed by the current `include`, or `0` if the input source is the terminal.
-
-sys:ignore-to-eof        D: -  A: -  F: -
-Discard remaining lines in the file currently being evaluated. This only works when including a file, not at the interpreter.
+Given an argument number, return the argument as a string. Deprecated. Use script:get-argument instead.
 
 sys:name                 D: -s  A: -  F: -
-Return the filename of the program being run.
+Return the filename of the program being run. Deprecated. Use script:name instead.
 
 tab                      D: -  A: -  F: -
 Display a tab (`ASCII:HT`)

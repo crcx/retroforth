@@ -34,7 +34,7 @@ Begin by locating and extracting the CSS.
 
 ~~~
 '<style> s:put nl
-FALSE sys:name [ over [ '##_CSS s:eq? or ] -if; s:put nl ] file:for-each-line
+FALSE script:name [ over [ '##_CSS s:eq? or ] -if; s:put nl ] file:for-each-line
 drop
 '</style> s:put nl
 ~~~
@@ -157,7 +157,7 @@ Blank lines denote paragraph breaks.
   rule?   [ format:rule ] if;
   s:put<formatted> nl ;
 
-#0 sys:argv [ format ] file:for-each-line
+#0 script:get-argument [ format ] file:for-each-line
 ~~~
 
 This concludes the Markdown (subset) in RETRO utility.

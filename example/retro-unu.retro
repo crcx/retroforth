@@ -31,7 +31,7 @@ commentary up to date, and has lead to better commented code.
          ] file:for-each-line drop ;
 }}
 
-#0 sys:argv [ s:put nl ] unu
+#0 script:get-argument [ s:put nl ] unu
 ~~~
 
 ## Commentary

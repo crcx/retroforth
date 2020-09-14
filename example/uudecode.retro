@@ -63,7 +63,7 @@ data and decode it.
 Finally, load the file and iterate over each line.
 
 ~~~
-#0 sys:argv
+#0 script:get-argument
 [ s:keep
   discard-header discard-empty discard-end
   fetch-next #32 - dup #45 eq?

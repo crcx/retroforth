@@ -236,7 +236,7 @@ top level word called returns.
 :valid?  (s-sf) dup s:length n:-zero? ;
 :progress       $. c:put ;
 
-#0 sys:argv
+#0 script:get-argument
   [ [ ASCII:SPACE s:tokenize
       [ valid? [ to-TIB process ] &drop choose ] a:for-each
       progress

@@ -104,7 +104,7 @@ are compiled as dummy values, to be resolved later.
 ~~~
 'Pass_1:_ s:put
 #0 !AP
-#0 sys:argv
+#0 script:get-argument
   [ dup s:length n:zero? [ drop #0 ] if 0;
     fetch-next &n:inc dip
     $i [ i here n:dec fetch I, ] case
@@ -125,7 +125,7 @@ get resolved and filled in. This allows for forward references.
 ~~~
 'Pass_2:_ s:put
 #0 !AP
-#0 sys:argv
+#0 script:get-argument
   [ dup s:length n:zero? [ drop #0 ] if 0;
     fetch-next &n:inc dip
     $i [ drop &AP v:inc ] case

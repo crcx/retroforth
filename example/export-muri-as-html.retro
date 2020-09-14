@@ -88,8 +88,8 @@ Output is written to stdout.
 'CSS var
 :embed-css
   '<style> s:put nl
-  sys:name [ dup '/*_CSS_Begins_*/ s:eq? [ &CSS v:on ] if
-             @CSS [ s:put nl ] [ drop ] choose ] file:for-each-line
+  script:name [ dup '/*_CSS_Begins_*/ s:eq? [ &CSS v:on ] if
+               @CSS [ s:put nl ] [ drop ] choose ] file:for-each-line
   '</style> s:put nl ;
 
 :header
@@ -113,7 +113,7 @@ Output is written to stdout.
 And finally, run it.
 
 ~~~
-#0 sys:argv generate
+#0 script:get-argument generate
 ~~~
 
 # CSS

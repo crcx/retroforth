@@ -1,5 +1,5 @@
 #!/usr/bin/env retro
 
 ~~~
-#0 sys:argv [ s:put nl ] file:for-each-line
+#0 script:get-argument [ s:put nl ] file:for-each-line
 ~~~

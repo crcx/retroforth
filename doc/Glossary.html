@@ -3319,6 +3319,55 @@
 <xmp style='background:#222'>    '__hello__ s:trim-right</xmp>
 </p>
 <hr/>
+<h2>script:abort-include</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> -<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Discard remaining tokens on the current line being evaluated. This only works when including a file, not at the interpreter.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>sys</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><hr/>
+<h2>script:arguments</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> -n<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Return the number of arguments passed to the program.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>sys</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><hr/>
+<h2>script:current-file</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> -s<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Return the filename of the file being processed by the current `include`, or `/dev/stdin` if the input source is the terminal.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>sys</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><hr/>
+<h2>script:current-line</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> -n<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Return the current line number of the file being processed by the current `include`, or `0` if the input source is the terminal.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>sys</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><hr/>
+<h2>script:get-argument</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> n-s<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Given an argument number, return the argument as a string.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>sys</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><hr/>
+<h2>script:ignore-to-eof</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> -<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Discard remaining lines in the file currently being evaluated. This only works when including a file, not at the interpreter.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>sys</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><hr/>
+<h2>script:name</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> -s<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Return the filename of the program being run.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>sys</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><hr/>
 <h2>set-hook</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> aa-<br>
 <b>Addr:</b> -<br>
@@ -3454,54 +3503,26 @@
 </div>
 <p>Exchange the position of the top two items on the stack</p>
 <table><tr><td><b>Class:</b> </td><td>class:primitive</td></tr><tr><td><b>Namespace:</b> </td><td>global</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
-<h2>sys:abort-include</h2>
-<div style='margin-left: 1em;'><p><b>Data:</b> -<br>
-<b>Addr:</b> -<br>
-<b>Float:</b> -</p>
-</div>
-<p>Discard remaining tokens on the current line being evaluated. This only works when including a file, not at the interpreter.</p>
-<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>sys</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><hr/>
 <h2>sys:argc</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> -n<br>
 <b>Addr:</b> -<br>
 <b>Float:</b> -</p>
 </div>
-<p>Return the number of arguments passed to the program.</p>
+<p>Return the number of arguments passed to the program. Deprecated. Use script:arguments</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>sys</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><hr/>
 <h2>sys:argv</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> n-s<br>
 <b>Addr:</b> -<br>
 <b>Float:</b> -</p>
 </div>
-<p>Given an argument number, return the argument as a string.</p>
-<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>sys</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><hr/>
-<h2>sys:current-file</h2>
-<div style='margin-left: 1em;'><p><b>Data:</b> -s<br>
-<b>Addr:</b> -<br>
-<b>Float:</b> -</p>
-</div>
-<p>Return the filename of the file being processed by the current `include`, or `/dev/stdin` if the input source is the terminal.</p>
-<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>sys</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><hr/>
-<h2>sys:current-line</h2>
-<div style='margin-left: 1em;'><p><b>Data:</b> -n<br>
-<b>Addr:</b> -<br>
-<b>Float:</b> -</p>
-</div>
-<p>Return the current line number of the file being processed by the current `include`, or `0` if the input source is the terminal.</p>
-<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>sys</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><hr/>
-<h2>sys:ignore-to-eof</h2>
-<div style='margin-left: 1em;'><p><b>Data:</b> -<br>
-<b>Addr:</b> -<br>
-<b>Float:</b> -</p>
-</div>
-<p>Discard remaining lines in the file currently being evaluated. This only works when including a file, not at the interpreter.</p>
+<p>Given an argument number, return the argument as a string. Deprecated. Use script:get-argument instead.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>sys</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><hr/>
 <h2>sys:name</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> -s<br>
 <b>Addr:</b> -<br>
 <b>Float:</b> -</p>
 </div>
-<p>Return the filename of the program being run.</p>
+<p>Return the filename of the program being run. Deprecated. Use script:name instead.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>sys</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><hr/>
 <h2>tab</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> -<br>

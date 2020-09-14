@@ -1,6 +1,6 @@
 # Display Word Information Upon Definition
 
-This uses the `sys:current-file` and `sys:current-line` words from
+This uses the `script:current-file` and `script:current-line` words from
 the Unix implementation of RETRO to display some information about
 a word's location as the words are defined.
 
@@ -9,8 +9,8 @@ populate a runtime database of location information.
 
 ~~~
 [ (Display_the_word_name)  'abc 'abca reorder s:put tab
-  (and_the_current_line_#) sys:current-line n:put tab
-  (and_the_current_file)   sys:current-file s:put nl
+  (and_the_current_line_#) script:current-line n:put tab
+  (and_the_current_file)   script:current-file s:put nl
   (call_the_original_d:add-header)  &d:add-header #2 + call ]
 
 &d:add-header set-hook

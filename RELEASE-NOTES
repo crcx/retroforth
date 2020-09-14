@@ -14,10 +14,16 @@ Standard Library
 
 Unix
 
-- added `sys:current-file` to return the filename being processed
-- added `sys:current-line` to return the current line number being
+- added `script:current-file` to return the filename being processed
+- added `script:current-line` to return the current line number being
   processed
-- added `sys:ignore-to-eol` to support commenting out lines when
+- added `script:ignore-to-eol` to support commenting out lines when
   processing files
+- added `script:abort-include` to support canceling rest of current
+  file being processed
 - added `//` to comment out lines (works with files and at the
   listener)
+- deprecated words
+  - sys:name (now script:name)
+  - sys:argc (now script:arguments)
+  - sys:argv (now script:get-argument)

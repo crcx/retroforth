@@ -13,7 +13,7 @@ I first check to make sure at least one was passed. If
 not, just exit.
 
 ~~~
-sys:argc n:zero? [ #0 unix:exit ] if
+script:arguments n:zero? [ #0 unix:exit ] if
 ~~~
 
 To identify missing words, I need to be able to restrict the
@@ -30,8 +30,8 @@ I use a loop to store arguments into an array named `Args`.
 
 ~~~
 'Args d:create #32 allot
-#0 sys:argc
-  [ dup sys:argv s:keep over &Args + store n:inc ] times
+#0 script:arguments
+  [ dup script:get-argument s:keep over &Args + store n:inc ] times
   drop
 ~~~
 

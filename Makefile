@@ -112,9 +112,9 @@ bin/retro-muri: tools/muri.c
 bin/retro-repl: vm/nga-c/repl.c vm/nga-c/image.c
 	cd vm/nga-c && $(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o ../../bin/retro-repl repl.c
 
-bin/retro: ngaImage bin/retro-embedimage bin/retro-extend vm/nga-c/retro-image.c vm/nga-c/retro-unix.c interface/filesystem.retro interface/floatingpoint.retro interface/unix.retro interface/rng.retro interface/sockets.retro interface/retro-unix.retro interface/clock.retro
+bin/retro: ngaImage bin/retro-embedimage bin/retro-extend vm/nga-c/retro-image.c vm/nga-c/retro-unix.c interface/filesystem.retro interface/floatingpoint.retro interface/unix.retro interface/rng.retro interface/sockets.retro interface/scripting.retro interface/retro-unix.retro interface/clock.retro
 	cp ngaImage rre.image
-	./bin/retro-extend rre.image interface/filesystem.retro interface/floatingpoint.retro interface/unix.retro interface/rng.retro interface/sockets.retro interface/retro-unix.retro interface/clock.retro 
+	./bin/retro-extend rre.image interface/filesystem.retro interface/floatingpoint.retro interface/unix.retro interface/rng.retro interface/sockets.retro interface/scripting.retro interface/retro-unix.retro interface/clock.retro 
 	./bin/retro-embedimage rre.image >vm/nga-c/retro-image.c
 	cd vm/nga-c && $(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o ../../bin/retro retro-unix.c $(LIBM)
 	cd package && ../bin/retro -f list.forth

@@ -98,7 +98,7 @@ Locate and embed the CSS from the end of this file.
 
 ~~~
 '<style> s:put nl
-FALSE sys:name
+FALSE script:name
   [ over [ '##_CSS s:eq? or ] -if; s:put nl ] file:for-each-line
 drop
 '</style> s:put nl
@@ -349,7 +349,7 @@ output.
   rule?          [ format:rule ] if;
   s:put<formatted> nl ;
 
-#0 sys:argv [ &Heap &format v:preserve ] file:for-each-line
+#0 script:get-argument [ &Heap &format v:preserve ] file:for-each-line
 reset
 ~~~
 

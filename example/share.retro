@@ -6,7 +6,7 @@ or via other channels.
 First, get the MD5 of the source. Start by construting a pipe:
 
 ~~~
-#0 sys:argv 'md5_%s s:format file:R unix:popen 'FID const
+#0 script:get-argument 'md5_%s s:format file:R unix:popen 'FID const
 ~~~
 
 Then read in until past the prolog (MD5 filename = ...):
@@ -35,7 +35,7 @@ MD5 'gopher://forth.works/0/share/%s  s:format 'GOPH s:const
 Then copy the source file to the destination directory.
 
 ~~~
-here #0 sys:argv file:slurp here DEST file:spew
+here #0 script:get-argument file:slurp here DEST file:spew
 ~~~
 
 And finally display the URL's.
