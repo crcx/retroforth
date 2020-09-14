@@ -1345,6 +1345,9 @@ Store a value into the specified address and return the next address.
 swap                     D: nm-mn  A: -  F: -
 Exchange the position of the top two items on the stack
 
+sys:abort-include        D: -  A: -  F: -
+Discard remaining tokens on the current line being evaluated. This only works when including a file, not at the interpreter.
+
 sys:argc                 D: -n  A: -  F: -
 Return the number of arguments passed to the program.
 
@@ -1357,8 +1360,8 @@ Return the filename of the file being processed by the current `include`, or `/d
 sys:current-line         D: -n  A: -  F: -
 Return the current line number of the file being processed by the current `include`, or `0` if the input source is the terminal.
 
-sys:ignore-to-eol        D: -  A: -  F: -
-Discard remaining tokens on the current line being evaluated. This only works when including a file, not at the interpreter.
+sys:ignore-to-eof        D: -  A: -  F: -
+Discard remaining lines in the file currently being evaluated. This only works when including a file, not at the interpreter.
 
 sys:name                 D: -s  A: -  F: -
 Return the filename of the program being run.

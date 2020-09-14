@@ -3454,6 +3454,13 @@
 </div>
 <p>Exchange the position of the top two items on the stack</p>
 <table><tr><td><b>Class:</b> </td><td>class:primitive</td></tr><tr><td><b>Namespace:</b> </td><td>global</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
+<h2>sys:abort-include</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> -<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Discard remaining tokens on the current line being evaluated. This only works when including a file, not at the interpreter.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>sys</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><hr/>
 <h2>sys:argc</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> -n<br>
 <b>Addr:</b> -<br>
@@ -3482,12 +3489,12 @@
 </div>
 <p>Return the current line number of the file being processed by the current `include`, or `0` if the input source is the terminal.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>sys</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><hr/>
-<h2>sys:ignore-to-eol</h2>
+<h2>sys:ignore-to-eof</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> -<br>
 <b>Addr:</b> -<br>
 <b>Float:</b> -</p>
 </div>
-<p>Discard remaining tokens on the current line being evaluated. This only works when including a file, not at the interpreter.</p>
+<p>Discard remaining lines in the file currently being evaluated. This only works when including a file, not at the interpreter.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>sys</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><hr/>
 <h2>sys:name</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> -s<br>

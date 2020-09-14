@@ -447,11 +447,12 @@ sp	-	-	-	Display a space (`ASCII:SPACE`)			class:word	    :spaces (n-)  [ sp ] t
 store	na-	-	-	Store a value into the specified address.			class:primitive	    'Base var\n    #10 &Base store	{n/a}	global	all	
 store-next	na-a	-	-	Store a value into the specified address and return the next address.			class:word	{n/a}	{n/a}	global	all	
 swap	nm-mn	-	-	Exchange the position of the top two items on the stack			class:primitive	{n/a}	{n/a}	global	all	
+sys:abort-include	-	-	-	Discard remaining tokens on the current line being evaluated. This only works when including a file, not at the interpreter.			class:word	{n/a}	{n/a}	sys	rre	
 sys:argc	-n	-	-	Return the number of arguments passed to the program.			class:word	{n/a}	{n/a}	sys	rre	
 sys:argv	n-s	-	-	Given an argument number, return the argument as a string.			class:word	{n/a}	{n/a}	sys	rre	
 sys:current-file	-s	-	-	Return the filename of the file being processed by the current `include`, or `/dev/stdin` if the input source is the terminal.			class:word	{n/a}	{n/a}	sys	rre	
 sys:current-line	-n	-	-	Return the current line number of the file being processed by the current `include`, or `0` if the input source is the terminal.			class:word	{n/a}	{n/a}	sys	rre	
-sys:ignore-to-eol	-	-	-	Discard remaining tokens on the current line being evaluated. This only works when including a file, not at the interpreter.			class:word	{n/a}	{n/a}	sys	rre	
+sys:ignore-to-eof	-	-	-	Discard remaining lines in the file currently being evaluated. This only works when including a file, not at the interpreter.			class:word	{n/a}	{n/a}	sys	rre	
 sys:name	-s	-	-	Return the filename of the program being run.			class:word	{n/a}	{n/a}	sys	rre	
 tab	-	-	-	Display a tab (`ASCII:HT`)			class:word	{n/a}	{n/a}	global	all	
 times	nq-	-	-	Run the specified quote the specified number of times.			class:word	    #12 [ $- c:put ] times	{n/a}	global	all	

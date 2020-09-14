@@ -5299,6 +5299,17 @@ Exchange the position of the top two items on the stack
 Class: class:primitive | Namespace: global | Interface Layer: all
 ------------------------------------------------------------------------
 
+sys:abort-include
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Discard remaining tokens on the current line being evaluated. This only works when including a file, not at the interpreter.
+
+Class: class:word | Namespace: sys | Interface Layer: rre
+------------------------------------------------------------------------
+
 sys:argc
 
   Data:  -n
@@ -5343,13 +5354,13 @@ Return the current line number of the file being processed by the current `inclu
 Class: class:word | Namespace: sys | Interface Layer: rre
 ------------------------------------------------------------------------
 
-sys:ignore-to-eol
+sys:ignore-to-eof
 
   Data:  -
   Addr:  -
   Float: -
 
-Discard remaining tokens on the current line being evaluated. This only works when including a file, not at the interpreter.
+Discard remaining lines in the file currently being evaluated. This only works when including a file, not at the interpreter.
 
 Class: class:word | Namespace: sys | Interface Layer: rre
 ------------------------------------------------------------------------

@@ -236,6 +236,7 @@ void io_keyboard_query() {
 
 CELL currentLine;
 CELL ignoreToEOL;
+CELL ignoreToEOF;
 
 void scripting_arg() {
   CELL a, b;
@@ -269,6 +270,10 @@ void scripting_ignore_to_eol() {
   ignoreToEOL = -1;
 }
 
+void scripting_ignore_to_eof() {
+  ignoreToEOF = -1;
+}
+
 Handler ScriptingActions[] = {
   scripting_arg_count,
   scripting_arg,
@@ -276,7 +281,8 @@ Handler ScriptingActions[] = {
   scripting_name,
   scripting_source,
   scripting_line,
-  scripting_ignore_to_eol
+  scripting_ignore_to_eol,
+  scripting_ignore_to_eof
 };
 
 void io_scripting_query() {
@@ -511,7 +517,9 @@ void include_file(char *fname, int run_tests) {
   current_source++;
   bsd_strlcpy(scripting_sources[current_source], fname, 8192);
 
-  while (!feof(fp)) {              /* Loop through the file            */
+  ignoreToEOF = 0;
+
+  while (!feof(fp) && (ignoreToEOF == 0)) { /* Loop through the file   */
 
     ignoreToEOL = 0;
 
@@ -548,6 +556,7 @@ void include_file(char *fname, int run_tests) {
   }
 
   current_source--;
+  ignoreToEOF = 0;
   fclose(fp);
 }
 
@@ -628,6 +637,7 @@ int main(int argc, char **argv) {
   sys_argv = argv;                        /* argv to the actual ones   */
   bsd_strlcpy(scripting_sources[0], "/dev/stdin", 8192);
   ignoreToEOL = 0;
+  ignoreToEOF = 0;
 
   if (argc >= 2 && argv[1][0] != '-') {
     update_rx();
