@@ -1,0 +1,107 @@
+This tool is intended to be used to create an epub version of the
+standard documentation.
+
+An epub is just a .zip file containing a bunch of XHTML files and
+a few files containing metadata.
+
+Our structure will look like:
+
+    Book Root Directory
+      |-- META-INF directory
+      |         `-- container.xml
+      |-- mimetype
+      |-- content.opf
+      |-- toc.ncx
+      |-- stylesheet.css
+      |-- cover.xhtml
+      |-- toc.xhtml
+      |-- chapterAA.xhtml
+      |-- ...
+      `-- chapterZZ.xhtml
+
+
+Begin by defining some helper functions for writing to a
+file.
+
+~~~
+'FID var
+:file:s:put [ @FID file:write ] s:for-each ;
+:file:nl    ASCII:CR @FID file:write ;
+:unix:mkdir 'mkdir_-p_%s s:format unix:system ;
+~~~
+
+Create the directories needed.
+
+~~~
+'epub unix:mkdir
+'epub/META-INF unix:mkdir
+~~~
+
+Then create the `mimetype` file. This is supposed to be written
+without a trailing newline.
+
+~~~
+'application/epub+zip 'epub/mimetype file:spew
+~~~
+
+Then create `META-INF/container.xml`.
+
+~~~
+'epub/META-INF/container.xml file:open-for-writing !FID
+
+  '<?xml_version="1.0"?> file:s:put file:nl
+  '<container_version="1.0"_ file:s:put
+  'xmlns="urn:oasis:names:tc:opendocument:xmlns:container"> file:s:put file:nl
+  '<rootfiles> file:s:put file:nl
+  '<rootfile_full-path="content.opf"_ file:s:put
+  'media-type="application/oebps-package+xml"/> file:s:put file:nl
+  '</rootfiles> file:s:put file:nl
+  '</container> file:s:put file:nl
+
+@FID file:close
+~~~
+
+Create `content.opf`. This will need to lest all of the files
+that are used in the book.
+
+Todo:
+
+- verify the required fields and metadata
+- write this to a file
+
+  <?xml version="1.0" encoding="utf-8" standalone="yes"?>
+  <package xmlns="http://www.idpf.org/2007/opf" unique-identifier="BookID" version="2.0">
+    <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:opf="http://www.idpf.org/2007/opf">
+      <dc:title>RETRO Forth : User Manual</dc:title>
+      <dc:identifier id="BookID" opf:scheme="CustomID">...bookid...</dc:identifier>
+    </metadata>
+
+    <manifest>
+      <item href="chap01.xhtml" id="chap01_page" media-type="application/xhtml+xml"/>
+    </manifest>
+
+    <spine toc="ncx">
+      <itemref idref="chap01_page" linear="yes"/>
+    </spine>
+
+    <guide>
+    </guide>
+
+  </package>
+
+Assemble the pieces
+
+~~~
+'epub unix:chdir
+'.. unix:chdir
+~~~
+
+zip -0Xq /tmp/book.epub mimetype
+zip -Xr9Dq /tmp/book.epub *
+
+Cleanup is the final step. Remove the temporary epub directory
+
+~~~
+'rm_-rf_epub unix:system
+~~~
+
