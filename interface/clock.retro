@@ -12,20 +12,20 @@ system clock.
       [ drop 'IO_DEVICE_TYPE_0005_NOT_FOUND s:put nl ]
       [ !Clock ] choose ] if ;
 ---reveal---
-  :io:clock-operation identify @Clock io:invoke ;
+  :clock:operation identify @Clock io:invoke ;
 }}
 
-:clock:timestamp  (-n) #0 io:clock-operation ;
-:clock:day        (-n) #1 io:clock-operation ;
-:clock:month      (-n) #2 io:clock-operation ;
-:clock:year       (-n) #3 io:clock-operation ;
-:clock:hour       (-n) #4 io:clock-operation ;
-:clock:minute     (-n) #5 io:clock-operation ;
-:clock:second     (-n) #6 io:clock-operation ;
-:clock:utc:day    (-n) #7 io:clock-operation ;
-:clock:utc:month  (-n) #8 io:clock-operation ;
-:clock:utc:year   (-n) #9 io:clock-operation ;
-:clock:utc:hour   (-n) #10 io:clock-operation ;
-:clock:utc:minute (-n) #11 io:clock-operation ;
-:clock:utc:second (-n) #12 io:clock-operation ;
+:clock:timestamp  (-n) #0 clock:operation ;
+:clock:day        (-n) #1 clock:operation ;
+:clock:month      (-n) #2 clock:operation ;
+:clock:year       (-n) #3 clock:operation ;
+:clock:hour       (-n) #4 clock:operation ;
+:clock:minute     (-n) #5 clock:operation ;
+:clock:second     (-n) #6 clock:operation ;
+:clock:utc:day    (-n) #7 clock:operation ;
+:clock:utc:month  (-n) #8 clock:operation ;
+:clock:utc:year   (-n) #9 clock:operation ;
+:clock:utc:hour   (-n) #10 clock:operation ;
+:clock:utc:minute (-n) #11 clock:operation ;
+:clock:utc:second (-n) #12 clock:operation ;
 ~~~

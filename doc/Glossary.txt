@@ -1746,6 +1746,17 @@ Return the current month. This will be in the range of 1-12, inclusive.
 Class: class:word | Namespace: clock | Interface Layer: iOS, rre
 ------------------------------------------------------------------------
 
+clock:operation
+
+  Data:  ...n-
+  Addr:  -
+  Float: -
+
+Trigger a clock operation. This is not intended to be used directly.
+
+Class: class:word | Namespace: io | Interface Layer: rre
+------------------------------------------------------------------------
+
 clock:second
 
   Data:  -n
@@ -3618,17 +3629,6 @@ Example #1:
     '#100 interpret
     'words interpret
 
-------------------------------------------------------------------------
-
-io:clock-operation
-
-  Data:  ...n-
-  Addr:  -
-  Float: -
-
-Trigger a clock operation. This is not intended to be used directly.
-
-Class: class:word | Namespace: io | Interface Layer: rre
 ------------------------------------------------------------------------
 
 io:enumerate

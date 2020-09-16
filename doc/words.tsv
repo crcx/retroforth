@@ -149,6 +149,7 @@ clock:day	-n	-	-	Return the current day.			class:word	{n/a}	{n/a}	clock	iOS, rre
 clock:hour	-n	-	-	Return the current hour. This will be in the range of 0-23, inclusive.			class:word	{n/a}	{n/a}	clock	iOS, rre	
 clock:minute	-n	-	-	Return the current minute. This will be in the range of 0-59, inclusive.			class:word	{n/a}	{n/a}	clock	iOS, rre	
 clock:month	-n	-	-	Return the current month. This will be in the range of 1-12, inclusive.			class:word	{n/a}	{n/a}	clock	iOS, rre	
+clock:operation	...n-	-	-	Trigger a clock operation. This is not intended to be used directly.			class:word	{n/a}	{n/a}	io	rre	
 clock:second	-n	-	-	Return the current second. This will be in the range of 0-59, inclusive.			class:word	{n/a}	{n/a}	clock	iOS, rre	
 clock:timestamp	-n	-	-	Return a host specific timestamp. In the standard system, this is a 32-bit Unix timestamp, but this is not required.			class:word	{n/a}	{n/a}	clock	rre	
 clock:utc:day	-n	-	-	Return the current day in UTC.			class:word	{n/a}	{n/a}	clock	iOS, rre	
@@ -311,7 +312,6 @@ immediate	-	-	-	Change the class of the most recently defined word to `class:mac
 include	s-	-	-	Run the code in the specified file. 			class:word	{n/a}	{n/a}	global	rre	
 indexed-times	nq-	-	-	Run a quote the specified number of times, tracking the loop index in `I`. This is less efficient than `times`, so if the index is not needed, this should be avoided.			class:word	{n/a}	{n/a}	global	all	
 interpret	s-	-	-	Interpret a single input token.			class:word	    '#100 interpret\n    'words interpret	{n/a}	global	all	
-io:clock-operation	...n-	-	-	Trigger a clock operation. This is not intended to be used directly.			class:word	{n/a}	{n/a}	io	rre	
 io:enumerate	-n	-	-	Return the number of I/O devices.			class:word	{n/a}	{n/a}	io	all	
 io:float-operation	...n-	-	-	Trigger a floating point operation. This is not intended to be used directly.			class:word	{n/a}	{n/a}	io	rre	
 io:invoke	n-	-	-	Invoke an interaction with an I/O device.			class:word	{n/a}	{n/a}	io	all	

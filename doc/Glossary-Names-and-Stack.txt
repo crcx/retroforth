@@ -149,6 +149,7 @@ clock:day                D: -n  A: -  F: -
 clock:hour               D: -n  A: -  F: -
 clock:minute             D: -n  A: -  F: -
 clock:month              D: -n  A: -  F: -
+clock:operation          D: ...n-  A: -  F: -
 clock:second             D: -n  A: -  F: -
 clock:timestamp          D: -n  A: -  F: -
 clock:utc:day            D: -n  A: -  F: -
@@ -311,7 +312,6 @@ immediate                D: -  A: -  F: -
 include                  D: s-  A: -  F: -
 indexed-times            D: nq-  A: -  F: -
 interpret                D: s-  A: -  F: -
-io:clock-operation       D: ...n-  A: -  F: -
 io:enumerate             D: -n  A: -  F: -
 io:float-operation       D: ...n-  A: -  F: -
 io:invoke                D: n-  A: -  F: -

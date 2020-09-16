@@ -28,6 +28,7 @@ Unix
   - sys:argc (now script:arguments)
   - sys:argv (now script:get-argument)
 - renamed
+  - io:clock-operation (now clock:operation)
   - io:file-operation (now file:operation)
   - io:socket-operation (now socket:operation)
 
