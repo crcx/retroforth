@@ -1,5 +1,12 @@
 # File I/O
 
+The file device (device type 4) adds support for generic file I/O
+that is similar to the C standard library on Unix. On a Unix host
+these are very thin wrappers over fopen(), fclose(), etc. For non
+Unix hosts, implementing these may take much more work, and it may
+be preferable to design a file I/O device that models the host
+expectations.
+
 ~~~
 {{
   'Files var
@@ -9,15 +16,9 @@
       [ drop 'IO_DEVICE_TYPE_0004_NOT_FOUND s:put nl ]
       [ !Files ] choose ] if ;
   ---reveal---
-  :io:file-operation identify @Files io:invoke ;
+  :file:operation identify @Files io:invoke ;
 }}
 ~~~
-
-This implements words for interfacing with the POSIX file I/O words if
-you are using an interface supporting them. All of these are in the
-`file:` namespace.
-
-These are pretty much direct wrappers for fopen(), fclose(), etc.
 
 First up, constants for the file modes.
 
@@ -35,59 +36,59 @@ First up, constants for the file modes.
 #3 'file:R+ const
 ~~~
 
-For opening a file, provide the file name and mode. This will return a
-number identifying the file handle.
+For opening a file, provide the file name and mode. This will return
+a number identifying the file handle.
 
 ~~~
-:file:open  (sm-h) #0 io:file-operation ;
+:file:open  (sm-h) #0 file:operation ;
 ~~~
 
 Given a file handle, close the file.
 
 ~~~
-:file:close (h-) #1 io:file-operation ;
+:file:close (h-) #1 file:operation ;
 ~~~
 
 Given a file handle, read a character.
 
 ~~~
-:file:read  (h-c) #2 io:file-operation ;
+:file:read  (h-c) #2 file:operation ;
 ~~~
 
 Write a character to an open file.
 
 ~~~
-:file:write (ch-) #3 io:file-operation ;
+:file:write (ch-) #3 file:operation ;
 ~~~
 
 Return the current pointer within a file.
 
 ~~~
-:file:tell  (h-n) #4 io:file-operation ;
+:file:tell  (h-n) #4 file:operation ;
 ~~~
 
 Move the file pointer to the specified location.
 
 ~~~
-:file:seek  (nh-) #5 io:file-operation ;
+:file:seek  (nh-) #5 file:operation ;
 ~~~
 
 Return the size of the opened file.
 
 ~~~
-:file:size  (h-n) #6 io:file-operation ;
+:file:size  (h-n) #6 file:operation ;
 ~~~
 
 Given a file name, delete the file.
 
 ~~~
-:file:delete (s-) #7 io:file-operation ;
+:file:delete (s-) #7 file:operation ;
 ~~~
 
 Flush pending writes to disk.
 
 ~~~
-:file:flush (f-) #8 io:file-operation ;
+:file:flush (f-) #8 file:operation ;
 ~~~
 
 Given a file name, return `TRUE` if it exists or `FALSE` otherwise.
@@ -98,6 +99,7 @@ Given a file name, return `TRUE` if it exists or `FALSE` otherwise.
   [ file:close TRUE ]
   [ drop FALSE      ] choose ;
 ~~~
+
 
 ~~~
 :file:open<for-reading> (s-nn)

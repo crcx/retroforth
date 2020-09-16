@@ -871,6 +871,9 @@ Open a file for reading. Returns the size (NOS) and a file ID (TOS)
 file:open-for-writing    D: s-n  A: -  F: -
 Open a file for writing. Returns the file ID
 
+file:operation           D: ...n-  A: -  F: -
+Trigger a file I/O operation. This is not intended to be used directly.
+
 file:read                D: h-c  A: -  F: -
 Given a file handle, read and return the next character in it.
 
@@ -939,9 +942,6 @@ Trigger a clock operation. This is not intended to be used directly.
 
 io:enumerate             D: -n  A: -  F: -
 Return the number of I/O devices.
-
-io:file-operation        D: ...n-  A: -  F: -
-Trigger a file I/O operation. This is not intended to be used directly.
 
 io:float-operation       D: ...n-  A: -  F: -
 Trigger a floating point operation. This is not intended to be used directly.

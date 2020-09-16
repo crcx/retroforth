@@ -27,3 +27,5 @@ Unix
   - sys:name (now script:name)
   - sys:argc (now script:arguments)
   - sys:argv (now script:get-argument)
+- renamed
+  - io:file-operation (now file:operation)

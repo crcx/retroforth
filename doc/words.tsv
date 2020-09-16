@@ -289,6 +289,7 @@ file:open	sm-h	-	-	Open a named file (s) with the given mode (m). Returns a hand
 file:open-for-append	s-nn	-	-	Open a file for reading & writing. Returns the size (NOS) and a file ID (TOS)			class:word	{n/a}	{n/a}	file	rre	
 file:open-for-reading	s-nn	-	-	Open a file for reading. Returns the size (NOS) and a file ID (TOS)			class:word	{n/a}	{n/a}	file	rre	
 file:open-for-writing	s-n	-	-	Open a file for writing. Returns the file ID			class:word	{n/a}	{n/a}	file	rre	
+file:operation	...n-	-	-	Trigger a file I/O operation. This is not intended to be used directly.			class:word	{n/a}	{n/a}	file	rre	
 file:read	h-c	-	-	Given a file handle, read and return the next character in it.			class:word	{n/a}	{n/a}	file	rre	
 file:read-line	f-s	-	-	Given a file handle, read a line and return a pointer to it.			class:word	{n/a}	{n/a}	file	rre	
 file:seek	nh-	-	-	Move the current offset into a file to the specified one.			class:word	{n/a}	{n/a}	file	rre	
@@ -312,7 +313,6 @@ indexed-times	nq-	-	-	Run a quote the specified number of times, tracking the lo
 interpret	s-	-	-	Interpret a single input token.			class:word	    '#100 interpret\n    'words interpret	{n/a}	global	all	
 io:clock-operation	...n-	-	-	Trigger a clock operation. This is not intended to be used directly.			class:word	{n/a}	{n/a}	io	rre	
 io:enumerate	-n	-	-	Return the number of I/O devices.			class:word	{n/a}	{n/a}	io	all	
-io:file-operation	...n-	-	-	Trigger a file I/O operation. This is not intended to be used directly.			class:word	{n/a}	{n/a}	io	rre	
 io:float-operation	...n-	-	-	Trigger a floating point operation. This is not intended to be used directly.			class:word	{n/a}	{n/a}	io	rre	
 io:invoke	n-	-	-	Invoke an interaction with an I/O device.			class:word	{n/a}	{n/a}	io	all	
 io:query	n-mN	-	-	Ask an I/O device to identify itself. Returns a version (m) and device ID (N).			class:word	{n/a}	{n/a}	io	all	

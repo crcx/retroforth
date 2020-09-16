@@ -289,6 +289,7 @@ file:open                D: sm-h  A: -  F: -
 file:open-for-append     D: s-nn  A: -  F: -
 file:open-for-reading    D: s-nn  A: -  F: -
 file:open-for-writing    D: s-n  A: -  F: -
+file:operation           D: ...n-  A: -  F: -
 file:read                D: h-c  A: -  F: -
 file:read-line           D: f-s  A: -  F: -
 file:seek                D: nh-  A: -  F: -
@@ -312,7 +313,6 @@ indexed-times            D: nq-  A: -  F: -
 interpret                D: s-  A: -  F: -
 io:clock-operation       D: ...n-  A: -  F: -
 io:enumerate             D: -n  A: -  F: -
-io:file-operation        D: ...n-  A: -  F: -
 io:float-operation       D: ...n-  A: -  F: -
 io:invoke                D: n-  A: -  F: -
 io:query                 D: n-mN  A: -  F: -
