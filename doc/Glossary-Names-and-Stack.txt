@@ -299,6 +299,7 @@ file:slurp               D: as-  A: -  F: -
 file:spew                D: ss-  A: -  F: -
 file:tell                D: h-n  A: -  F: -
 file:write               D: ch-  A: -  F: -
+float:operation          D: ...n-  A: -  F: -
 gopher:get               D: asns-n  A: -  F: -
 gt?                      D: nn-f  A: -  F: -
 gteq?                    D: nn-f  A: -  F: -
@@ -313,7 +314,6 @@ include                  D: s-  A: -  F: -
 indexed-times            D: nq-  A: -  F: -
 interpret                D: s-  A: -  F: -
 io:enumerate             D: -n  A: -  F: -
-io:float-operation       D: ...n-  A: -  F: -
 io:invoke                D: n-  A: -  F: -
 io:query                 D: n-mN  A: -  F: -
 io:rng-operation         D: -n  A: -  F: -

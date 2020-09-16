@@ -149,7 +149,7 @@ clock:day	-n	-	-	Return the current day.			class:word	{n/a}	{n/a}	clock	iOS, rre
 clock:hour	-n	-	-	Return the current hour. This will be in the range of 0-23, inclusive.			class:word	{n/a}	{n/a}	clock	iOS, rre	
 clock:minute	-n	-	-	Return the current minute. This will be in the range of 0-59, inclusive.			class:word	{n/a}	{n/a}	clock	iOS, rre	
 clock:month	-n	-	-	Return the current month. This will be in the range of 1-12, inclusive.			class:word	{n/a}	{n/a}	clock	iOS, rre	
-clock:operation	...n-	-	-	Trigger a clock operation. This is not intended to be used directly.			class:word	{n/a}	{n/a}	io	rre	
+clock:operation	...n-	-	-	Trigger a clock operation. This is not intended to be used directly.			class:word	{n/a}	{n/a}	clock	rre	
 clock:second	-n	-	-	Return the current second. This will be in the range of 0-59, inclusive.			class:word	{n/a}	{n/a}	clock	iOS, rre	
 clock:timestamp	-n	-	-	Return a host specific timestamp. In the standard system, this is a 32-bit Unix timestamp, but this is not required.			class:word	{n/a}	{n/a}	clock	rre	
 clock:utc:day	-n	-	-	Return the current day in UTC.			class:word	{n/a}	{n/a}	clock	iOS, rre	
@@ -299,6 +299,7 @@ file:slurp	as-	-	-	Given an address and a file name, read the file contents into
 file:spew	ss-	-	-	Given a string (s1) and a file name (s2), write the string into the file, replacing any existing cotent.			class:word	{n/a}	{n/a}	file	rre	
 file:tell	h-n	-	-	Given a file handle, return the current offset in the file.			class:word	{n/a}	{n/a}	file	rre	
 file:write	ch-	-	-	Write a character to the file represented by the handle.			class:word	{n/a}	{n/a}	file	rre	
+float:operation	...n-	-	-	Trigger a floating point operation. This is not intended to be used directly.			class:word	{n/a}	{n/a}	float	rre	
 gopher:get	asns-n	-	-	Takes an address, a server, a port, and a selector. Fetch the resource and store it at address. Return the number of bytes received.			class:word	    here 'forthworks.com #70 '/ gopher:get\n    here s:put	{n/a}	gopher	ios	
 gt?	nn-f	-	-	Compare n1 and n2. Return `TRUE` if n1 is greater than n2, or `FALSE` otherwise.			class:primitive	{n/a}	{n/a}	global	all	
 gteq?	nn-f	-	-	Compare n1 and n2. Return `TRUE` if n1 is greater than or equal to n2, or `FALSE` otherwise.			class:word	{n/a}	{n/a}	global	all	
@@ -313,7 +314,6 @@ include	s-	-	-	Run the code in the specified file. 			class:word	{n/a}	{n/a}	glo
 indexed-times	nq-	-	-	Run a quote the specified number of times, tracking the loop index in `I`. This is less efficient than `times`, so if the index is not needed, this should be avoided.			class:word	{n/a}	{n/a}	global	all	
 interpret	s-	-	-	Interpret a single input token.			class:word	    '#100 interpret\n    'words interpret	{n/a}	global	all	
 io:enumerate	-n	-	-	Return the number of I/O devices.			class:word	{n/a}	{n/a}	io	all	
-io:float-operation	...n-	-	-	Trigger a floating point operation. This is not intended to be used directly.			class:word	{n/a}	{n/a}	io	rre	
 io:invoke	n-	-	-	Invoke an interaction with an I/O device.			class:word	{n/a}	{n/a}	io	all	
 io:query	n-mN	-	-	Ask an I/O device to identify itself. Returns a version (m) and device ID (N).			class:word	{n/a}	{n/a}	io	all	
 io:rng-operation	-n	-	-	Trigger a rng operation. This is not intended to be used directly.			class:word	{n/a}	{n/a}	io	rre	

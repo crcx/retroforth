@@ -1754,7 +1754,7 @@ clock:operation
 
 Trigger a clock operation. This is not intended to be used directly.
 
-Class: class:word | Namespace: io | Interface Layer: rre
+Class: class:word | Namespace: clock | Interface Layer: rre
 ------------------------------------------------------------------------
 
 clock:second
@@ -3471,6 +3471,17 @@ Write a character to the file represented by the handle.
 Class: class:word | Namespace: file | Interface Layer: rre
 ------------------------------------------------------------------------
 
+float:operation
+
+  Data:  ...n-
+  Addr:  -
+  Float: -
+
+Trigger a floating point operation. This is not intended to be used directly.
+
+Class: class:word | Namespace: float | Interface Layer: rre
+------------------------------------------------------------------------
+
 gopher:get
 
   Data:  asns-n
@@ -3640,17 +3651,6 @@ io:enumerate
 Return the number of I/O devices.
 
 Class: class:word | Namespace: io | Interface Layer: all
-------------------------------------------------------------------------
-
-io:float-operation
-
-  Data:  ...n-
-  Addr:  -
-  Float: -
-
-Trigger a floating point operation. This is not intended to be used directly.
-
-Class: class:word | Namespace: io | Interface Layer: rre
 ------------------------------------------------------------------------
 
 io:invoke

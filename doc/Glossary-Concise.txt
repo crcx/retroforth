@@ -901,6 +901,9 @@ Given a file handle, return the current offset in the file.
 file:write               D: ch-  A: -  F: -
 Write a character to the file represented by the handle.
 
+float:operation          D: ...n-  A: -  F: -
+Trigger a floating point operation. This is not intended to be used directly.
+
 gopher:get               D: asns-n  A: -  F: -
 Takes an address, a server, a port, and a selector. Fetch the resource and store it at address. Return the number of bytes received.
 
@@ -942,9 +945,6 @@ Interpret a single input token.
 
 io:enumerate             D: -n  A: -  F: -
 Return the number of I/O devices.
-
-io:float-operation       D: ...n-  A: -  F: -
-Trigger a floating point operation. This is not intended to be used directly.
 
 io:invoke                D: n-  A: -  F: -
 Invoke an interaction with an I/O device.
