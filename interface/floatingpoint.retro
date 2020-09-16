@@ -1,5 +1,11 @@
 # Floating Point
 
+On Unix hosts, the floating point stack provides a set of
+words building on the C `double` data type. In most cases,
+this will be a 64-bit, IEEE 754 double precision floating
+point format.
+
+
 ~~~
 {{
   'FPU var
@@ -13,7 +19,9 @@
 }}
 ~~~
 
-# Floating Point
+The initial set of words build directly over the core
+floating point device functionality, which on a Unix host
+maps closely to C and `libm`.
 
 ~~~
 :n:to-float  (n-_f:-n)   #0 float:operation ;
@@ -46,20 +54,36 @@
 :f:push  (f:f-)     #27 float:operation ;
 :f:pop   (f:-f)     #28 float:operation ;
 :f:adepth  (-n)     #29 float:operation ;
-:f:square (f:n-m)   f:dup f:* ;
+~~~
+
+Above this, additional functions are defined. First are words
+to aid in structuring the floating point stack.
+
+~~~
 :f:over  (f:ab-aba) f:push f:dup f:pop f:swap ;
 :f:tuck  (f:ab-bab) f:dup f:push f:swap f:pop ;
 :f:nip   (f:ab-b)   f:swap f:drop ;
 :f:drop-pair (f:ab-) f:drop f:drop ;
 :f:dup-pair (f:ab-abab) f:over f:over ;
 :f:rot  (f:abc-bca)  f:push f:swap f:pop f:swap ;
+~~~
+
+Then a word to allow creation of floating point values via a
+`.` prefix.
+
+~~~
+:prefix:. (s-__f:-a)
+  compiling? &s:keep &s:temp choose &s:to-float class:word ; immediate
+~~~
+
+~~~
+:f:square (f:n-m)   f:dup f:* ;
 :f:positive? (-f__f:a-) #0 n:to-float f:gt? ;
 :f:negative? (-f__f:a-) #0 n:to-float f:lt? ;
 :f:negate (f:a-b)  #-1 n:to-float f:* ;
 :f:abs    (f:a-b)  f:dup f:negative? &f:negate if ;
-:prefix:. (s-__f:-a)
-  compiling? &s:keep &s:temp choose &s:to-float class:word ; immediate
 :f:put  (f:a-) f:to-string s:put ;
+
 :f:PI   (f:-F) .3.141592 ;
 :f:E    (f:-F) .2.718281 ;
 :f:NAN  (f:-n) .0 .0 f:/ ;
