@@ -9,22 +9,78 @@ that it is fairly low level.
 {{
   'Sockets var
   :identify
-    @Sockets n:zero? [
-      #7 io:scan-for dup n:negative?
-      [ drop 'IO_DEVICE_TYPE_0004_NOT_FOUND s:put nl ]
-      [ !Sockets ] choose ] if ;
+     @Sockets n:zero? 0; drop
+     #7 io:scan-for dup n:negative?
+     [ drop 'IO_DEVICE_TYPE_0004_NOT_FOUND s:put nl ]
+     [ !Sockets ] choose ;
   ---reveal---
   :socket:operation identify @Sockets io:invoke ;
 }}
+~~~
 
+`socket:gethostbyname` gets the host IP in dottode notation. Provide
+an address to hold the dotted notation and a string containing the
+host name.
+
+~~~
 :socket:gethostbyname (as-)    #0 socket:operation ;
+~~~
+
+`socket:create` creates a new socket. It does not take any
+parameters, and returns the socket id.
+
+~~~
 :socket:create        (-n)     #1 socket:operation ;
+~~~
+
+`socket:bind` binds a socket to a port. The socket should be
+provided as the socket id, and the port number should be a
+string. This will return 0 if successful, -1 if not successful,
+and a host specific error code.
+
+~~~
 :socket:bind          (sn-n)   #2 socket:operation ;
+~~~
+
+~~~
 :socket:listen        (nn-nn)  #3 socket:operation ;
+~~~
+
+~~~
 :socket:accept        (n-nn)   #4 socket:operation ;
+~~~
+
+~~~
 :socket:connect       (n-nn)   #5 socket:operation ;
+~~~
+
+`socket:connect` sends a string to a socket. This will return
+the number of characters sent and an error code. It takes a
+string and a socket id.
+
+~~~
 :socket:send          (sn-nn)  #6 socket:operation ;
+~~~
+
+`socket:recv` is a wrapper over recv(2). It takes an address,
+a maxmimum number of bytes to read, and a socket id. It returns
+the number of bytes received and an error code.
+
+~~~
 :socket:recv          (ann-nn) #8 socket:operation ;
+~~~
+
+`socket:close` is a wrapper over close(2). It takes a socket id
+and closes the socket.
+
+~~~
 :socket:close         (n-)     #10 socket:operation ;
+~~~
+
+`socket:configure` is used before `socket:bind` to set some
+internal state. Takes the host name and port, both as strings.
+Does not return anything.
+ 
+~~~
 :socket:configure     (ss-)    #11 socket:operation ;
 ~~~
