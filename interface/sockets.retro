@@ -42,19 +42,29 @@ and a host specific error code.
 :socket:bind          (sn-n)   #2 socket:operation ;
 ~~~
 
+`socket:listen` prepares a socket for accepting incoming
+connections. Takes a backlog count and a socket id. Returns
+a flag (0 success, -1 failed) and an error code.
+
 ~~~
 :socket:listen        (nn-nn)  #3 socket:operation ;
 ~~~
+
+`socket:accept` begins accepting connections on the provided
+socket id. Returns a new socket id and an error code.
 
 ~~~
 :socket:accept        (n-nn)   #4 socket:operation ;
 ~~~
 
+`socket:connect` connects to a server. Provide a socket id,
+this will return a status flag and an error code.
+
 ~~~
 :socket:connect       (n-nn)   #5 socket:operation ;
 ~~~
 
-`socket:connect` sends a string to a socket. This will return
+`socket:send` sends a string to a socket. This will return
 the number of characters sent and an error code. It takes a
 string and a socket id.
 
