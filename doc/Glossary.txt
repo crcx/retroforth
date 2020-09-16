@@ -3697,17 +3697,6 @@ Scan the I/O devices for a device with a specified ID. Returns the device number
 Class: class:word | Namespace: io | Interface Layer: all
 ------------------------------------------------------------------------
 
-io:socket-operation
-
-  Data:  ...n-
-  Addr:  -
-  Float: -
-
-Trigger a socket operation. This is not intended to be used directly.
-
-Class: class:word | Namespace: io | Interface Layer: rre
-------------------------------------------------------------------------
-
 io:unix-syscall
 
   Data:  ...n-
@@ -5294,6 +5283,17 @@ socket:listen
   Float: -
 
 Prepare a socket for accepting incoming connections. Takes a backlog count (n1) and a socket (n2). Returns a flag (0 success, -1 failed) and an error code.
+
+Class: class:word | Namespace: socket | Interface Layer: rre
+------------------------------------------------------------------------
+
+socket:operation
+
+  Data:  ...n-
+  Addr:  -
+  Float: -
+
+Trigger a socket operation. This is not intended to be used directly.
 
 Class: class:word | Namespace: socket | Interface Layer: rre
 ------------------------------------------------------------------------

@@ -958,9 +958,6 @@ Trigger a rng operation. This is not intended to be used directly.
 io:scan-for              D: n-m  A: -  F: -
 Scan the I/O devices for a device with a specified ID. Returns the device number, or -1 if not found.
 
-io:socket-operation      D: ...n-  A: -  F: -
-Trigger a socket operation. This is not intended to be used directly.
-
 io:unix-syscall          D: ...n-  A: -  F: -
 Trigger a Unix system call. This is not intended to be used directly.
 
@@ -1347,6 +1344,9 @@ Get the host IP in dotted notation. The host is specified by the string and the 
 
 socket:listen            D: nn-nn  A: -  F: -
 Prepare a socket for accepting incoming connections. Takes a backlog count (n1) and a socket (n2). Returns a flag (0 success, -1 failed) and an error code.
+
+socket:operation         D: ...n-  A: -  F: -
+Trigger a socket operation. This is not intended to be used directly.
 
 socket:recv              D: ann-nn  A: -  F: -
 Receive data from a socket. This will read into memory starting at address *a*, up to *n1* bytes. *n2* is the socket. Returns the number of bytes read and an error code.

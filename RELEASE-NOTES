@@ -29,3 +29,5 @@ Unix
   - sys:argv (now script:get-argument)
 - renamed
   - io:file-operation (now file:operation)
+  - io:socket-operation (now socket:operation)
+

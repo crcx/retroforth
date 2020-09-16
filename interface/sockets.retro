@@ -1,7 +1,9 @@
-This implements the Forth part of the socket I/O interface.
+# Sockets
 
-The sockets interface is low level, and very close to the
-underlying BSD sockets model.
+This implements the Forth part of the socket I/O interface.
+As with the file I/O device, the socket words are a thin
+wrapper over the standard Unix socket functions. This means
+that it is fairly low level.
 
 ~~~
 {{
@@ -12,17 +14,17 @@ underlying BSD sockets model.
       [ drop 'IO_DEVICE_TYPE_0004_NOT_FOUND s:put nl ]
       [ !Sockets ] choose ] if ;
   ---reveal---
-  :io:socket-operation identify @Sockets io:invoke ;
+  :socket:operation identify @Sockets io:invoke ;
 }}
 
-:socket:gethostbyname (as-)    #0 io:socket-operation ;
-:socket:create        (-n)     #1 io:socket-operation ;
-:socket:bind          (sn-n)   #2 io:socket-operation ;
-:socket:listen        (nn-nn)  #3 io:socket-operation ;
-:socket:accept        (n-nn)   #4 io:socket-operation ;
-:socket:connect       (n-nn)   #5 io:socket-operation ;
-:socket:send          (sn-nn)  #6 io:socket-operation ;
-:socket:recv          (ann-nn) #8 io:socket-operation ;
-:socket:close         (n-)     #10 io:socket-operation ;
-:socket:configure     (ss-)    #11 io:socket-operation ;
+:socket:gethostbyname (as-)    #0 socket:operation ;
+:socket:create        (-n)     #1 socket:operation ;
+:socket:bind          (sn-n)   #2 socket:operation ;
+:socket:listen        (nn-nn)  #3 socket:operation ;
+:socket:accept        (n-nn)   #4 socket:operation ;
+:socket:connect       (n-nn)   #5 socket:operation ;
+:socket:send          (sn-nn)  #6 socket:operation ;
+:socket:recv          (ann-nn) #8 socket:operation ;
+:socket:close         (n-)     #10 socket:operation ;
+:socket:configure     (ss-)    #11 socket:operation ;
 ~~~

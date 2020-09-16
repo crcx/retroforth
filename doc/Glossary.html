@@ -2388,13 +2388,6 @@
 </div>
 <p>Scan the I/O devices for a device with a specified ID. Returns the device number, or -1 if not found.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>io</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
-<h2>io:socket-operation</h2>
-<div style='margin-left: 1em;'><p><b>Data:</b> ...n-<br>
-<b>Addr:</b> -<br>
-<b>Float:</b> -</p>
-</div>
-<p>Trigger a socket operation. This is not intended to be used directly.</p>
-<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>io</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><hr/>
 <h2>io:unix-syscall</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> ...n-<br>
 <b>Addr:</b> -<br>
@@ -3450,6 +3443,13 @@
 <b>Float:</b> -</p>
 </div>
 <p>Prepare a socket for accepting incoming connections. Takes a backlog count (n1) and a socket (n2). Returns a flag (0 success, -1 failed) and an error code.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>socket</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><hr/>
+<h2>socket:operation</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> ...n-<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Trigger a socket operation. This is not intended to be used directly.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>socket</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><hr/>
 <h2>socket:recv</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> ann-nn<br>

@@ -318,7 +318,6 @@ io:invoke                D: n-  A: -  F: -
 io:query                 D: n-mN  A: -  F: -
 io:rng-operation         D: -n  A: -  F: -
 io:scan-for              D: n-m  A: -  F: -
-io:socket-operation      D: ...n-  A: -  F: -
 io:unix-syscall          D: ...n-  A: -  F: -
 listen                   D: -  A: -  F: -
 lt?                      D: nn-f  A: -  F: -
@@ -448,6 +447,7 @@ socket:connect           D: n-nn  A: -  F: -
 socket:create            D: -n  A: -  F: -
 socket:gethostbyname     D: as-  A: -  F: -
 socket:listen            D: nn-nn  A: -  F: -
+socket:operation         D: ...n-  A: -  F: -
 socket:recv              D: ann-nn  A: -  F: -
 socket:send              D: sn-nn  A: -  F: -
 sp                       D: -  A: -  F: -
