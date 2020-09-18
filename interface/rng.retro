@@ -1,4 +1,8 @@
-## Random Number Generator
+# Random Number Generator
+
+I/O device type 10 is a random number generator. I do this as
+part of the VM I/O extensions to allow implementors to use the
+best approach on their host system.
 
 ~~~
 {{
@@ -8,7 +12,7 @@
       #10 io:scan-for dup n:negative?
       [ drop 'IO_DEVICE_TYPE_0010_NOT_FOUND s:put nl ]
       [ !io ] choose ] if ;
-  ---reveal---
+---reveal---
   :io:rng-operation identify @io io:invoke ;
 }}
 
