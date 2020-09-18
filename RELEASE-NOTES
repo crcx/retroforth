@@ -33,3 +33,7 @@ Unix
   - io:float-operation (now float:operation)
   - io:socket-operation (now socket:operation)
 
+Python
+
+- fixed a bug in the stack depth reporting (thanks to Scott McCallum for
+  noticing this)
