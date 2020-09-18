@@ -1,46 +1,56 @@
 # Contributing
 
-RETRO is an open-source project, but I am opinionated, and as I am
-developing this primarily for my use, I may be picky when it comes
-to adding changes to the core language.
+RETRO is an open-source project, but I am opinionated and may be
+picky when accepting changes to the core language.
 
-I use Fossil to manage the RETRO source, but I do not accept pushes
-to this directly. Patches or updated files can be emailed to
-crc@forthworks.com. I will review and merge them manually.
+## Repositories
 
-## Interfaces
+### Fossil
 
-When making changes, I'm most open to extensions as part of the RRE
-interface. (interfaces/rre.c, interfaces/rre.forth).
+I use fossil to manage the RETRO source.
 
-New interfaces are welcome. If they require more than 1-2 files, or
-specific build systems (apart from BSD compatible `make` or `bin/sh`
-scripts), please keep them in a separate subdirectory.
+URL: http://forthworks.com:8000
 
-I'm not planning to accept new I/O or extensions to the basic REPL
-(interfaces/repl.c) as this serves as a template for starting new
-interfaces or implementations.
+### Git
 
-Changes or additions to the provided words must be documented in the
-glossary (words.tsv).
+I also provide a git mirror of the fossil repository.
 
-## Kernel
+URL: https://git.sr.ht/~crc_/retroforth
 
-The kernel (literate/Rx.md) is basically done. I'm still making small
-changes in terms of tuning size/performance, but will not merge any
-alterations to this apart from bug fixes currently.
+## Mailing Lists
 
-## Standard Library
+There are three mailing lists.
 
-I may accept additions to the standard library. Words requiring any
-I/O other than `putc` will not be accepted in the standard library.
+- https://lists.sr.ht/~crc_/retroforth-announce
+- https://lists.sr.ht/~crc_/retroforth-discuss
+- https://lists.sr.ht/~crc_/retroforth-devel
 
-Changes to the words must be documented in the glossary (words.tsv).
+## Bug Reports
 
-## Examples
+You can email bug reports directly to me, report them in the #retro
+IRC channel, or submit them to the online bug tracker at
+https://sr.ht/~crc_/retroforth/trackers
 
-I'm quite willing to add new examples or changes / improvements to
-existing ones.
+## General Structure
+
+There is a VM (implementations are in `vm`) named Nga. This implements
+a MISC style processor and system specific I/O extensions.
+
+The VM runs an image (implemented primarily in `image`, from `rx.muri`
+and `retro.forth`) that provides the actual language and a standard
+library of words.
+
+System specific I/O extensions are provided and can be found in the
+`interface` directory. These include things related to the actual
+user interfaces, as well as wrappers to the I/O devices implemented
+in the VM.
+
+Examples can be found in the `example` directory. These are converted
+to HTML with syntax highlighting and are published at http://forth.works
+
+Documentation can be found in the `doc` directory. The Glossary is
+managed via a CSV formatted database (`doc/words.csv`) which is edited
+by `tools/glossary.retro`.
 
 ## Legal
 
@@ -49,11 +59,12 @@ standard library) must be public domain or under the ISC license
 (see LICENSE.md). Please add the appropriate copyright notices to
 the LICENSE and/or source files.
 
-New examples or tools can be under similar licenses. Include the
-copyright and license text in the sources.
+New examples or tools can be under similar liberal licenses. Include
+the copyright and license text in the sources.
 
 I will not accept contributions under the GPL, LGPL, AGPL, or other
-licenses that are too long to reasonably embed in a source file.
+licenses that are too long to reasonably embed in the header of a
+source file.
 
 ## Building
 
