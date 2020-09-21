@@ -19,7 +19,7 @@ toolchain: dirs bin/retro-embedimage bin/retro-extend bin/retro-muri bin/retro-u
 
 dirs:
 	mkdir -p bin
-	cp tools/document.sh bin/retro-document
+	cp tools/retro-document.sh bin/retro-document
 
 clean:
 	rm -f bin/*
@@ -104,10 +104,10 @@ bin/retro-embedimage: tools/embedimage.c
 	$(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o $@ tools/embedimage.c
 
 bin/retro-extend: tools/extend.c
-	$(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o bin/retro-extend  tools/extend.c
+	$(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o $@  tools/extend.c
 
-bin/retro-muri: tools/muri.c
-	$(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o bin/retro-muri tools/muri.c
+bin/retro-muri: tools/retro-muri.c
+	$(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o $@ tools/retro-muri.c
 
 bin/retro-repl: vm/nga-c/repl.c vm/nga-c/image.c
 	cd vm/nga-c && $(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o ../../bin/retro-repl repl.c
@@ -122,8 +122,8 @@ bin/retro: ngaImage bin/retro-embedimage bin/retro-extend vm/nga-c/retro-image.c
 	rm rre.image
 	cd vm/nga-c && $(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o ../../bin/retro retro-unix.c $(LIBM)
 
-bin/retro-unu: tools/unu.c
-	$(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o bin/retro-unu tools/unu.c
+bin/retro-unu: tools/retro-unu.c
+	$(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o $@ tools/retro-unu.c
 
 sorted: doc/words.tsv
 	LC_ALL=C sort -o sorted.tsv doc/words.tsv
