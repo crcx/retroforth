@@ -114,7 +114,7 @@ bin/retro-repl: vm/nga-c/repl.c vm/nga-c/image.c
 
 bin/retro: ngaImage bin/retro-embedimage bin/retro-extend vm/nga-c/retro-image.c vm/nga-c/retro-unix.c interface/filesystem.retro interface/floatingpoint.retro interface/unix.retro interface/rng.retro interface/sockets.retro interface/scripting.retro interface/retro-unix.retro interface/clock.retro
 	cp ngaImage rre.image
-	./bin/retro-extend rre.image interface/filesystem.retro interface/floatingpoint.retro interface/unix.retro interface/rng.retro interface/sockets.retro interface/scripting.retro interface/retro-unix.retro interface/clock.retro 
+	./bin/retro-extend rre.image interface/scripting.retro interface/filesystem.retro interface/floatingpoint.retro interface/unix.retro interface/rng.retro interface/sockets.retro interface/scripting.retro interface/retro-unix.retro interface/clock.retro 
 	./bin/retro-embedimage rre.image >vm/nga-c/retro-image.c
 	cd vm/nga-c && $(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o ../../bin/retro retro-unix.c $(LIBM)
 	cd package && ../bin/retro -f list.forth
@@ -148,7 +148,7 @@ vm/nga-c/image.c: bin/retro-embedimage bin/retro-extend bin/retro-muri image/ret
 
 bin/retro-compiler: bin/retro-extend vm/nga-c/retro-compiler.c vm/nga-c/retro-runtime.c
 	cp ngaImage runtime.image
-	./bin/retro-extend runtime.image interface/filesystem.retro interface/floatingpoint.retro interface/unix.retro interface/rng.retro interface/retro-unix.retro interface/clock.retro
+	./bin/retro-extend runtime.image interface/scripting.retro interface/filesystem.retro interface/floatingpoint.retro interface/unix.retro interface/rng.retro interface/retro-unix.retro interface/clock.retro
 	cd vm/nga-c && $(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o ../../retro-runtime retro-runtime.c $(LIBM)
 	cd vm/nga-c && $(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o ../../bin/retro-compiler retro-compiler.c
 	objcopy --add-section .ngaImage=runtime.image --set-section-flags .ngaImage=noload,readonly bin/retro-compiler

@@ -12,13 +12,7 @@ to generate turnkey executables.
 
 ## Building
 
-BSD users:
-
    make bin/retro-compiler
-
-Linux users:
-
-   make -f Makefile.linux bin/retro-compiler
 
 ## Installing
 
