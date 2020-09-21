@@ -101,7 +101,7 @@ bin/retro-describe: tools/retro-describe.retro doc/words.tsv
 	chmod +x bin/retro-describe
 
 bin/retro-embedimage: tools/embedimage.c
-	$(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o bin/retro-embedimage  tools/embedimage.c
+	$(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o $@ tools/embedimage.c
 
 bin/retro-extend: tools/extend.c
 	$(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o bin/retro-extend  tools/extend.c
