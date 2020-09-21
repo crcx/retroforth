@@ -198,9 +198,10 @@ def i_xo():
 def i_sh():
     global ip, memory, stack, address
     t = stack.pop()
-    stack[-1] <<= t
-    t = stack.pop()
-    stack[-1] >>= t
+    if t < 0:
+        stack[-1] <<= (t * -1)
+    else:
+        stack[-1] >>= t
 
 def i_zr():
     global ip, memory, stack, address
