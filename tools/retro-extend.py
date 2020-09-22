@@ -7,6 +7,11 @@
 #
 # Copyright (c) 2010 - 2020, Charles Childers
 # Optimizations and process() rewrite by Greg Copeland
+#
+# Usage:
+#
+#     retro-extend.py image filename [filenames]
+
 
 import os, sys, math, time, struct
 from struct import pack, unpack
@@ -384,22 +389,21 @@ def process(line):
             execute(Interpreter)
 
 
-def run():
-    import sys
-
-    f = sys.argv[1]
-    in_block = False
-    with open(f, "r") as source:
-        for line in source.readlines():
-            if line.rstrip() == "~~~":
-                in_block = not in_block
-            elif in_block:
-                process(line.strip())
-                Lines += 1
+def process_files():
+    for f in sys.argv[2:]:
+        print(f)
+        in_block = False
+        with open(f, "r") as source:
+            for line in source.readlines():
+                if line.rstrip() == "~~~":
+                    in_block = not in_block
+                elif in_block:
+                    process(line.strip())
 
 
 def save_image():
-    with open("ngaImage", "wb") as file:
+    print("Writing {0} cells to {1}".format(memory[3], sys.argv[1]))
+    with open(sys.argv[1], "wb") as file:
         j = 0
         while j < memory[3]:
             file.write(struct.pack("i", memory[j]))
@@ -409,5 +413,5 @@ def save_image():
 if __name__ == "__main__":
     load_image()
     Interpreter = memory[findEntry("interpret") + 1]
-    run()
+    process_files()
     save_image()

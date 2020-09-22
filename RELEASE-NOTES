@@ -7,7 +7,7 @@ Tooling
   (reported by Kiyoshi)
 - fixed a bug in retro-describe due to use of a deprecated word
 - allow setting the image size, stack sizes when building
-- add a minimal implementation of Unu in Python (tools/unu.py)
+- add Python implementations of retro-unu, retro-muri, retro-extend
 
 Standard Library
 
@@ -40,3 +40,9 @@ Python
   noticing this)
 - fixed the `sh` instruction (which was totally broken prior to this, thanks
   to Scott for reporting this)
+
+Documentation
+
+- removed reference to old Makefile that no longer exists
+- updates word namings for deprecated words that have been removed
+
