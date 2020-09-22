@@ -1,5 +1,17 @@
 #!/usr/bin/env python3
 
+# retro-unu is a tool for extracting code from literate sources. It
+# will write output to stdout.
+#
+# A code block starts with ~~~ on a line by itself and ends with a
+# second ~~~.
+#
+# Copyright (c)2020, Charles Childers
+#
+# Usage:
+#
+#    retro-unu.py filename
+
 import sys
 
 if __name__ == "__main__":
