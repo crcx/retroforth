@@ -1,34 +1,34 @@
 #!/usr/bin/env python3
 
+# retro-muri is an assembler for Nga, the virtual machine at the heart of
+# Retro. It is used to build the image file containing the actual Retro
+# language.
+#
+# This will extract the code blocks in the specified file and generate an
+# image file named `ngaImage`.
+#
+# Copyright (c) 2020, Charles Childers
+#
+# Usage:
+#
+#    retro.muri.py filename
+
 import sys, struct
+
+# labels stores the label names as a dictionary, with the key being
+# the label name and the value being the location in memory.
+#
+# image stores the assembled opcodes and data.
 
 labels = dict()
 image = []
 
-# the first pass identifies the labels and fills in a dictionary
-# that will be used in the second pass
-
-
-def pass1():
-    global labels
-    i = 0
-    f = sys.argv[1]
-    in_block = False
-    with open(f, "r") as source:
-        for line in source.readlines():
-            if line.rstrip() == "~~~":
-                in_block = not in_block
-            elif in_block:
-                if line[0] == "i":
-                    i += 1
-                if line[0] == "d":
-                    i += 1
-                if line[0] == "r":
-                    i += 1
-                if line[0] == "s":
-                    i += len(line[2:].rstrip()) + 1
-                if line[0] == ":":
-                    labels[line[2:].rstrip()] = i
+# assemble() takes a string representation of an opcode bundle,
+# finds the individual opcodes, packs them into a cell-sized value,
+# and returns this value.
+#
+# Each instruction bundle has four two character instruction names,
+# with `..` used to represent a non-operation instruction.
 
 
 def assemble(inst):
@@ -72,6 +72,36 @@ def assemble(inst):
     return o
 
 
+# muri performs two passes. The first identifies the labels
+# and populates the `labels` dictionary
+
+
+def pass1():
+    global labels
+    i = 0
+    f = sys.argv[1]
+    in_block = False
+    with open(f, "r") as source:
+        for line in source.readlines():
+            if line.rstrip() == "~~~":
+                in_block = not in_block
+            elif in_block:
+                if line[0] == "i":
+                    i += 1
+                if line[0] == "d":
+                    i += 1
+                if line[0] == "r":
+                    i += 1
+                if line[0] == "s":
+                    i += len(line[2:].rstrip()) + 1
+                if line[0] == ":":
+                    labels[line[2:].rstrip()] = i
+
+
+# The second pass actually assembles the instructions and fills
+# the `image` array with the opcodes and data provided.
+
+
 def pass2():
     global image
     i = 0
@@ -99,6 +129,9 @@ def pass2():
                         i += 1
                     image[i] = 0
                     i += 1
+
+
+# save() handles writing the image to a file
 
 
 def save(filename):
