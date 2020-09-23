@@ -87,7 +87,7 @@ for me.
 ~~~
 'Out var
 
-:import        BOOK-BASE over OUT-BASE '>%s%s.html_retro_example/export-as-html.retro_%s%s s:format unix:system ;
+:import        BOOK-BASE over OUT-BASE '>%s%s.html_retro_example/export-as-xhtml.retro_%s%s s:format unix:system ;
 :/n            ASCII:LF @Out file:write ;
 :add-to-book   here [ @Out file:write ] s:for-each ;
 :process-files [ import $. c:put ] a:for-each nl ;

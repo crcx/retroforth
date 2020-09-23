@@ -1,0 +1,410 @@
+#! /usr/bin/env retro
+
+# RETRO Source to HTML
+
+RETRO programs are written using a literate format called
+Unu which allows mixing of code and commentary in a somewhat
+literate format.
+
+Code (and optionally tests) is extracted from fenced blocks,
+and commentary normally uses a subset of Markdown.
+
+This tool processes both parts, generating formatted HTML
+documents that look nice, and also provides syntax highlighting
+for the test and code blocks.
+
+## Features
+
+For Markdown:
+
+- lists
+- indented code blocks
+- paragraphs
+- headers
+- fenced code and test blocks
+- horizontal rules
+- *inline* _formatting_ elements
+
+For RETRO:
+
+- syntax highlighting of most elements
+- uses introspection to identify primitives
+
+For both:
+
+- easily customizable via CSS at the end of this file
+
+## Limitations
+
+This only supports a limited subset of full Markdown. I am
+not adding support for the various linking formats, ordered
+lists, underlined headers, doubled asterisk, doubled
+underscores, multiple line/paragraph list entries, or images.
+
+The formatting must follow the following limits:
+
+    # Title
+    ## Subtitle
+    ### Level 3 Title
+    
+    Paragraph. *Bold*, _italics_, `inline code`.
+    
+    Another paragraph.
+    
+    - list element
+    - list element
+      - nested list element
+      - nested list element
+    - list element
+    
+    ~~~
+    :retro (code ;
+    ~~~
+    
+    ```
+    tests
+    ```
+    
+    Sample code or output with four leading spaces is
+    note colorized.
+    
+        this will be code, but not run through the
+        colorizer.
+    
+    More paragraph text.
+    
+    ----
+    
+    Above is a horizontal separator.
+
+This is not very intelligent. If you have text like `3 * 4`,
+it'll happily treat the \* as the start of a bold sequence.
+Use a leading backslash to avoid this.
+
+----
+
+## The Code
+
+### Headers and CSS Injection
+
+HTML is pretty verbose and wants a bunch of boilerplate to
+work nicely, so I start with some header stuff.
+
+~~~
+'<!DOCTYPE_html_PUBLIC_"-//W3C//DTD_XHTML_1.0_Strict//EN" s:put sp
+'"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> s:put nl
+'<html_xmlns="http://www.w3.org/1999/xhtml"><head> s:put nl
+~~~
+
+Locate and embed the CSS from the end of this file.
+
+~~~
+'<style_type="text/css"> s:put nl
+FALSE script:name
+  [ over [ '##_CSS s:eq? or ] -if; s:put nl ] file:for-each-line
+drop
+'</style> s:put nl
+~~~
+
+Finish the header boilerplate text and switch to the body.
+
+~~~
+'</head><body> s:put nl
+~~~
+
+### Support Code
+
+The first couple of words are a variation of `s:put` that
+generates HTML codes for specific characters. This ensures
+that code output displays correctly.
+
+~~~
+:c:put<code>
+  $< [ '&lt; s:put ] case
+  $> [ '&gt; s:put ] case
+  $& [ '&amp; s:put ] case
+  ASCII:SPACE [ '&nbsp; s:put ] case
+  c:put ;
+
+:s:put<code> [ c:put<code> ] s:for-each ;
+~~~
+
+For regular text, there are a couple of inline formatting things
+to deal with.
+
+~~~
+'Emphasis var
+'Strong var
+'Escape var
+'Code var
+
+:format
+  $` [ @Escape [ &Escape v:off $* c:put ] if;
+       @Code n:zero? [ '<tt_style='display:inline'> &Code v:on ]
+                     [ '</tt> &Code v:off ] choose s:put ] case
+  $* [ @Escape @Code or [ &Escape v:off $* c:put ] if;
+       @Strong n:zero? [ '<strong> &Strong v:on ]
+                       [ '</strong> &Strong v:off ] choose s:put ] case
+  $_ [ @Escape @Code or [ &Escape v:off $_ c:put ] if;
+       @Emphasis n:zero? [ '<em> &Emphasis v:on ]
+                         [ '</em> &Emphasis v:off ] choose s:put ] case
+  $\ [ &Escape v:on ] case
+  c:put ;
+
+:s:put<formatted> [ format ] s:for-each ;
+~~~
+
+### Markdown Elements
+
+*Code and Test Blocks*
+
+The biggest element is the code and test blocks.
+
+These will be generated in an enclosure that looks like:
+
+    <div class='codeblock'><tt>
+    ... code ...
+    </tt></div>
+
+The actual words in the code will be in `<span>` elements.
+
+The fences need to start and end with `~~~` or three backticks
+on a line by itself.
+
+So, identifying and generating an HTML container for a code
+block is a matter of:
+
+~~~
+{{
+  'Block var
+  :begin   '<div_class='codeblock'><tt>~~~</tt> ;
+  :end     '<tt>~~~</tt></div> ;
+---reveal---
+  :in-code-block? (-f)   @Block ;
+  :code-block?    (s-sf) dup '~~~ s:eq? ;
+  :toggle-code (n-)
+    drop @Block n:zero? dup &begin &end choose s:put !Block ;
+}}
+~~~
+
+And test blocks are basically the same, except for the
+delimiters.
+
+~~~
+{{
+  'Block var
+  :begin   '<div_class='codeblock'><tt>```</tt> ;
+  :end     '<tt>```</tt></div> ;
+---reveal---
+  :in-test-block? (-f)   @Block ;
+  :test-block?    (s-sf) dup '``` s:eq? ;
+  :toggle-test (n-)
+    drop @Block n:zero? dup &begin &end choose s:put !Block ;
+}}
+~~~
+
+On to generating the actual HTML for the syntax highlighted
+source. This is driven by the prefix, then by word class via
+a little quick introspection.
+
+~~~
+{{
+  :span (s-)
+    '<span_class=' s:put s:put ''> s:put s:put<code> '</span>_ s:put ;
+---reveal---
+  :format-code (s-)
+    (ignore_empty_tokens)
+    dup s:length n:zero? [ '&nbsp; s:put drop ] if;
+ 
+    (tokens_with_prefixes)
+    dup fetch
+    $: [ 'colon     span ] case
+    $( [ 'note      span ] case
+    $' [ 'str       span ] case
+    $# [ 'num       span ] case
+    $. [ 'fnum      span ] case
+    $& [ 'ptr       span ] case
+    $$ [ 'char      span ] case
+    $` [ 'inst      span ] case
+    $\ [ 'inst      span ] case
+    $| [ 'defer     span ] case
+    $@ [ 'fetch     span ] case
+    $! [ 'store     span ] case
+ 
+    (immediate_and_primitives)
+    drop dup
+    d:lookup d:class fetch
+    &class:macro     [ 'imm  span ] case
+    &class:primitive [ 'prim span ] case
+    drop
+ 
+    (normal_words)
+    s:put<code> sp ;
+
+  :colorize
+     ASCII:SPACE s:tokenize &format-code a:for-each ;
+
+  :format:code
+    '<tt> s:put colorize '</tt> s:put nl ;
+}}
+~~~
+
+*Headers*
+
+After this, I define detection and formatting of headers. The
+headers should look like:
+
+    # Level 1
+    ## Level 2
+    ### Level 3
+
+~~~
+:header?
+  dup [ '#_ s:begins-with?   ]
+      [ '##_ s:begins-with?  ]
+      [ '###_ s:begins-with? ] tri or or
+  over '####_ s:begins-with? or ;
+
+:format:head
+  ASCII:SPACE s:split
+  '#   [ '<h1> s:put n:inc s:put '</h1> s:put nl ] s:case
+  '##  [ '<h2> s:put n:inc s:put '</h2> s:put nl ] s:case
+  '### [ '<h3> s:put n:inc s:put '</h3> s:put nl ] s:case
+  '#### [ '<h4> s:put n:inc s:put '</h4> s:put nl ] s:case
+  drop ;
+~~~
+
+*Indented Code Blocks*
+
+Indented code blocks are lines indented by four spaces.
+These are *not* syntax highlighted as they are ignored by
+Unu.
+
+~~~
+:inline-code? dup '____ s:begins-with? ;
+:format:inline-code
+  '<tt_class='indentedcode'> s:put
+  #4 + s:put<code>
+  '</tt> s:put nl ;
+~~~
+
+*Horizontal Rules*
+
+Horizonal rules consist of four or more - characters on
+a line. E.g.,
+
+    ----
+    --------
+
+This also accepts sequences of `-+-+` which were used in
+some older RETRO source files.
+
+~~~
+:rule?
+  dup [ '---- s:begins-with? ] [ '-+-+ s:begins-with? ] bi or ;
+:format:rule drop '<hr> s:put nl ;
+~~~
+
+*Lists*
+
+Lists start with a `-` or `*`, followed by a space, then
+the item text. Additionally, this allows for nested lists starting
+with two spaces before the list marker.
+
+~~~
+:list?
+  dup [ '-_ s:begins-with? ] [ '*_ s:begins-with? ] bi or ;
+:format:list '&bull;_ s:put #2 + s:put<formatted> '<br> s:put nl ;
+
+:indented-list?
+  dup [ '__-_ s:begins-with? ] [ '__*_ s:begins-with? ] bi or ;
+:format:indented-list
+  '<span_class='indentedlist'>&bull; s:put
+  #3 + s:put<formatted> '</span><br> s:put nl ;
+~~~
+
+*Paragraphs*
+
+Blank lines denote paragraph breaks.
+
+~~~
+:blank? dup s:length n:zero? ;
+~~~
+
+*The Formatter*
+
+This ties together the various words above, generating the
+output.
+
+~~~
+:format
+  s:keep
+  code-block?    [ toggle-code ] if;
+  in-code-block? [ format:code ] if;
+  test-block?    [ toggle-test ] if;
+  in-test-block? [ format:code ] if;
+  blank?         [ drop '<p> s:put nl ] if;
+  header?        [ format:head ] if;
+  inline-code?   [ format:inline-code ] if;
+  list?          [ format:list ] if; 
+  indented-list? [ format:indented-list ] if;
+  rule?          [ format:rule ] if;
+  s:put<formatted> nl ;
+
+#0 script:get-argument [ &Heap &format v:preserve ] file:for-each-line
+reset
+~~~
+
+This concludes the Markdown (subset) in RETRO utility. All that's
+left is the CSS.
+
+For the colors, I'm mostly using the _Tomorrow Night_ colors as
+listed at https://github.com/chriskempson/tomorrow-theme
+
+## CSS
+
+    * {
+      color: #cccccc;
+      background: #2d2d2d;
+      max-width: 700px;
+    }
+    
+    tt, pre {
+      background: #1d1f21; color: #b5bd68; font-family: monospace; 
+      white-space: pre;
+      display: block;
+      width: 100%;
+    }
+    
+    .indentedcode {
+      margin-left: 2em;
+      margin-right: 2em;
+    }
+    
+    .codeblock {
+      background: #1d1f21; color: #b5bd68; font-family: monospace; 
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      padding: 7px;
+    }
+    
+    .indentedlist {
+      margin-left: 2em;
+      color: #cccccc;
+      background: #2d2d2d;
+    }
+    
+    span { white-space: pre; background: #1d1f21; }
+    .text  { color: #c5c8c6; white-space: pre }
+    .colon { color: #cc6666; }
+    .note  { color: #969896; }
+    .str   { color: #f0c674; }
+    .num   { color: #8abeb7; }
+    .fnum  { color: #8abeb7; font-weight: bold; }
+    .ptr   { color: #b294bb; font-weight: bold; }
+    .fetch { color: #b294bb; }
+    .store { color: #b294bb; }
+    .char  { color: #81a2be; }
+    .inst  { color: #de935f; }
+    .defer { color: #888888; }
+    .imm   { color: #de935f; }
+    .prim  { color: #b5bd68; font-weight: bold; }
