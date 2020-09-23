@@ -91,9 +91,11 @@ HTML is pretty verbose and wants a bunch of boilerplate to
 work nicely, so I start with some header stuff.
 
 ~~~
+'<?xml_version="1.0"_encoding="utf-8"?> s:put nl
 '<!DOCTYPE_html_PUBLIC_"-//W3C//DTD_XHTML_1.0_Strict//EN" s:put sp
 '"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> s:put nl
 '<html_xmlns="http://www.w3.org/1999/xhtml"><head> s:put nl
+'<title>.</title> s:put nl
 ~~~
 
 Locate and embed the CSS from the end of this file.
@@ -110,6 +112,7 @@ Finish the header boilerplate text and switch to the body.
 
 ~~~
 '</head><body> s:put nl
+'<p> s:put
 ~~~
 
 ### Support Code
@@ -267,10 +270,10 @@ headers should look like:
 
 :format:head
   ASCII:SPACE s:split
-  '#   [ '<h1> s:put n:inc s:put '</h1> s:put nl ] s:case
-  '##  [ '<h2> s:put n:inc s:put '</h2> s:put nl ] s:case
-  '### [ '<h3> s:put n:inc s:put '</h3> s:put nl ] s:case
-  '#### [ '<h4> s:put n:inc s:put '</h4> s:put nl ] s:case
+  '#   [ '<span_class="h1"> s:put n:inc s:put '</span> s:put nl ] s:case
+  '##  [ '<span_class="h2"> s:put n:inc s:put '</span> s:put nl ] s:case
+  '### [ '<span_class="h3"> s:put n:inc s:put '</span> s:put nl ] s:case
+  '#### [ '<span_class="h4"> s:put n:inc s:put '</span> s:put nl ] s:case
   drop ;
 ~~~
 
@@ -302,7 +305,7 @@ some older RETRO source files.
 ~~~
 :rule?
   dup [ '---- s:begins-with? ] [ '-+-+ s:begins-with? ] bi or ;
-:format:rule drop '<hr> s:put nl ;
+:format:rule drop '<hr/> s:put nl ;
 ~~~
 
 *Lists*
@@ -314,13 +317,13 @@ with two spaces before the list marker.
 ~~~
 :list?
   dup [ '-_ s:begins-with? ] [ '*_ s:begins-with? ] bi or ;
-:format:list '&bull;_ s:put #2 + s:put<formatted> '<br> s:put nl ;
+:format:list '&bull;_ s:put #2 + s:put<formatted> '<br/> s:put nl ;
 
 :indented-list?
   dup [ '__-_ s:begins-with? ] [ '__*_ s:begins-with? ] bi or ;
 :format:indented-list
   '<span_class='indentedlist'>&bull; s:put
-  #3 + s:put<formatted> '</span><br> s:put nl ;
+  #3 + s:put<formatted> '</span><br/> s:put nl ;
 ~~~
 
 *Paragraphs*
@@ -329,6 +332,7 @@ Blank lines denote paragraph breaks.
 
 ~~~
 :blank? dup s:length n:zero? ;
+'InParagraph var
 ~~~
 
 *The Formatter*
@@ -343,7 +347,7 @@ output.
   in-code-block? [ format:code ] if;
   test-block?    [ toggle-test ] if;
   in-test-block? [ format:code ] if;
-  blank?         [ drop '<p> s:put nl ] if;
+  blank?         [ drop '<br/><br/> s:put nl ] if;
   header?        [ format:head ] if;
   inline-code?   [ format:inline-code ] if;
   list?          [ format:list ] if; 
@@ -353,6 +357,8 @@ output.
 
 #0 script:get-argument [ &Heap &format v:preserve ] file:for-each-line
 reset
+'</p> s:put nl
+'</body></html> s:put nl
 ~~~
 
 This concludes the Markdown (subset) in RETRO utility. All that's
@@ -408,3 +414,9 @@ listed at https://github.com/chriskempson/tomorrow-theme
     .defer { color: #888888; }
     .imm   { color: #de935f; }
     .prim  { color: #b5bd68; font-weight: bold; }
+
+    .h1, .h2, .h3, .h4 { white-space: normal; background: #2d2d2d; }
+    .h1 { font-size: 125%; }
+    .h2 { font-size: 120%; }
+    .h3 { font-size: 115%; }
+    .h4 { font-size: 110%; }
