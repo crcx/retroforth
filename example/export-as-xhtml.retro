@@ -143,8 +143,8 @@ to deal with.
 
 :format
   $` [ @Escape [ &Escape v:off $* c:put ] if;
-       @Code n:zero? [ '<tt_style='display:inline'> &Code v:on ]
-                     [ '</tt> &Code v:off ] choose s:put ] case
+       @Code n:zero? [ '<span_class="tt"> &Code v:on ]
+                     [ '</span> &Code v:off ] choose s:put ] case
   $* [ @Escape @Code or [ &Escape v:off $* c:put ] if;
        @Strong n:zero? [ '<strong> &Strong v:on ]
                        [ '</strong> &Strong v:off ] choose s:put ] case
@@ -152,7 +152,7 @@ to deal with.
        @Emphasis n:zero? [ '<em> &Emphasis v:on ]
                          [ '</em> &Emphasis v:off ] choose s:put ] case
   $\ [ &Escape v:on ] case
-  c:put ;
+  c:put<code> ;
 
 :s:put<formatted> [ format ] s:for-each ;
 ~~~
@@ -180,8 +180,8 @@ block is a matter of:
 ~~~
 {{
   'Block var
-  :begin   '<div_class='codeblock'><tt>~~~</tt> ;
-  :end     '<tt>~~~</tt></div> ;
+  :begin   '<span_class='codeblock'><span_class="tt">~~~</span><br/> ;
+  :end     '<span_class="tt">~~~</span></span> ;
 ---reveal---
   :in-code-block? (-f)   @Block ;
   :code-block?    (s-sf) dup '~~~ s:eq? ;
@@ -196,8 +196,8 @@ delimiters.
 ~~~
 {{
   'Block var
-  :begin   '<div_class='codeblock'><tt>```</tt> ;
-  :end     '<tt>```</tt></div> ;
+  :begin   '<span_class='codeblock'><span_class="tt">```</span><br/> ;
+  :end     '<span_class="tt">```</span></span> ;
 ---reveal---
   :in-test-block? (-f)   @Block ;
   :test-block?    (s-sf) dup '``` s:eq? ;
@@ -248,7 +248,7 @@ a little quick introspection.
      ASCII:SPACE s:tokenize &format-code a:for-each ;
 
   :format:code
-    '<tt> s:put colorize '</tt> s:put nl ;
+    '<span_class="tt"> s:put colorize '</span><br/> s:put nl ;
 }}
 ~~~
 
@@ -391,6 +391,7 @@ listed at https://github.com/chriskempson/tomorrow-theme
       background: #1d1f21; color: #b5bd68; font-family: monospace; 
       box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
       padding: 7px;
+      display: block;
     }
     
     .indentedlist {
@@ -413,7 +414,9 @@ listed at https://github.com/chriskempson/tomorrow-theme
     .inst  { color: #de935f; }
     .defer { color: #888888; }
     .imm   { color: #de935f; }
-    .prim  { color: #b5bd68; font-weight: bold; }
+    .prim  { color: #b5bd68; font-weight: bold; }o
+
+    .tt    { white-space: pre; font-family: monospace; }
 
     .h1, .h2, .h3, .h4 { white-space: normal; background: #2d2d2d; }
     .h1 { font-size: 125%; }
