@@ -26,6 +26,8 @@ Begin by defining some helper functions for writing to a
 file.
 
 ~~~
+'tools/book-chapters.retro include
+
 'FID var
 :file:s:put [ @FID file:write ] s:for-each ;
 :file:nl    ASCII:CR @FID file:write ;
@@ -69,31 +71,40 @@ Then create `META-INF/container.xml`.
 Create `content.opf`. This will need to lest all of the files
 that are used in the book.
 
-Todo:
+Manifest:
 
-- verify the required fields and metadata
-- write this to a file
+'____<item_href="chap01.xhtml"_id="chap01_page"_media-type="application/xhtml+xml"/> file:s:put file:nl
 
-  <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-  <package xmlns="http://www.idpf.org/2007/opf" unique-identifier="BookID" version="2.0">
-    <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:opf="http://www.idpf.org/2007/opf">
-      <dc:title>RETRO Forth : User Manual</dc:title>
-      <dc:identifier id="BookID" opf:scheme="CustomID">...bookid...</dc:identifier>
-    </metadata>
+Spine:
 
-    <manifest>
-      <item href="chap01.xhtml" id="chap01_page" media-type="application/xhtml+xml"/>
-    </manifest>
+'____<itemref_idref="chap01_page"_linear="yes"/> file:s:put file:nl
 
-    <spine toc="ncx">
-      <itemref idref="chap01_page" linear="yes"/>
-    </spine>
+~~~
+'STEP:_Generate_`content.opf` s:put nl
+'epub/content.opf file:open-for-writing !FID
 
-    <guide>
-    </guide>
+'<?xml_version="1.0"_encoding="utf-8"_standalone="yes"?> file:s:put file:nl
+'<package_xmlns="http://www.idpf.org/2007/opf"_unique-identifier="BookID"_version="2.0"> file:s:put file:nl
+'__<metadata_xmlns:dc="http://purl.org/dc/elements/1.1/"_xmlns:opf="http://www.idpf.org/2007/opf"> file:s:put file:nl
+'____<dc:title>RETRO_Forth_:_User_Manual</dc:title> file:s:put file:nl
+'____<dc:identifier_id="BookID"_opf:scheme="CustomID">...bookid...</dc:identifier> file:s:put file:nl
+'__</metadata> file:s:put file:nl
 
-  </package>
+'__<manifest> file:s:put file:nl
+#0 TOC [ over swap '____<item_href="chapters/%s.html"_id="CHAPTEr%n"_media-type="application/xhtml+xml"/> s:format file:s:put file:nl n:inc ] a:for-each
+drop
+'__</manifest> file:s:put file:nl
 
+'__<spine_toc="ncx"> file:s:put file:nl
+(spine)
+'__</spine> file:s:put file:nl
+
+'__<guide> file:s:put file:nl
+'__</guide> file:s:put file:nl
+
+'</package> file:s:put file:nl
+@FID file:close
+~~~
 
 # Generate the Chapters
 
@@ -102,16 +113,25 @@ Todo:
 'retro_tools/book-chapters-to-xhtml.retro unix:system
 ~~~
 
-Assemble the pieces
+# Assemble the pieces
 
 ~~~
 'STEP:_Relocate_files s:put nl
 'epub unix:chdir
+'cp_-r_../chapters_. unix:system
+~~~
+
+# Zip Everything
+
+~~~
+'STEP:_Create_epub s:put nl
+'zip_-0Xq_../book.epub_mimetype unix:system
+'zip_-Xr9Dq_../book.epub_content.opf unix:system
+'zip_-Xr9Dq_../book.epub_chapters unix:system
 '.. unix:chdir
 ~~~
 
-zip -0Xq /tmp/book.epub mimetype
-zip -Xr9Dq /tmp/book.epub *
+# Clean Up
 
 Cleanup is the final step. Remove the temporary epub directory
 
