@@ -1,3 +1,5 @@
+#!/usr/bin/env retro
+
 This tool is intended to be used to create an epub version of the
 standard documentation.
 
@@ -33,6 +35,7 @@ file.
 Create the directories needed.
 
 ~~~
+'STEP:_Create_directories s:put nl
 'epub unix:mkdir
 'epub/META-INF unix:mkdir
 ~~~
@@ -41,12 +44,14 @@ Then create the `mimetype` file. This is supposed to be written
 without a trailing newline.
 
 ~~~
+'STEP:_Generate_`mimetype` s:put nl
 'application/epub+zip 'epub/mimetype file:spew
 ~~~
 
 Then create `META-INF/container.xml`.
 
 ~~~
+'STEP:_Generate_`container.xml` s:put nl
 'epub/META-INF/container.xml file:open-for-writing !FID
 
   '<?xml_version="1.0"?> file:s:put file:nl
@@ -89,9 +94,18 @@ Todo:
 
   </package>
 
+
+# Generate the Chapters
+
+~~~
+'STEP:_Convert_chapters_to_XHTML s:put nl
+'retro_tools/book-chapters-to-xhtml.retro unix:system
+~~~
+
 Assemble the pieces
 
 ~~~
+'STEP:_Relocate_files s:put nl
 'epub unix:chdir
 '.. unix:chdir
 ~~~
@@ -102,5 +116,6 @@ zip -Xr9Dq /tmp/book.epub *
 Cleanup is the final step. Remove the temporary epub directory
 
 ~~~
+'STEP:_Cleanup s:put nl
 'rm_-rf_epub unix:system
 ~~~
