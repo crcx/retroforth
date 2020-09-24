@@ -17,9 +17,7 @@ Our structure will look like:
       |-- stylesheet.css
       |-- cover.xhtml
       |-- toc.xhtml
-      |-- chapterAA.xhtml
-      |-- ...
-      `-- chapterZZ.xhtml
+      |-- chapters/...
 
 
 Begin by defining some helper functions for writing to a
@@ -91,12 +89,12 @@ Spine:
 '__</metadata> file:s:put file:nl
 
 '__<manifest> file:s:put file:nl
-#0 TOC [ over swap '____<item_href="chapters/%s.html"_id="CHAPTEr%n"_media-type="application/xhtml+xml"/> s:format file:s:put file:nl n:inc ] a:for-each
+#0 TOC [ over swap '____<item_href="chapters/%s.html"_id="CHAP%n"_media-type="application/xhtml+xml"/> s:format file:s:put file:nl n:inc ] a:for-each
 drop
 '__</manifest> file:s:put file:nl
 
 '__<spine_toc="ncx"> file:s:put file:nl
-(spine)
+#0 TOC [ drop dup '____<itemref_idref="CHAP%n"_linear="yes"/> s:format file:s:put file:nl n:inc ] a:for-each drop
 '__</spine> file:s:put file:nl
 
 '__<guide> file:s:put file:nl
