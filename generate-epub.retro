@@ -94,7 +94,8 @@ Spine:
 '<package_xmlns="http://www.idpf.org/2007/opf"_unique-identifier="BookID"_version="2.0"> file:s:put file:nl
 '__<metadata_xmlns:dc="http://purl.org/dc/elements/1.1/"_xmlns:opf="http://www.idpf.org/2007/opf"> file:s:put file:nl
 '____<dc:title>RETRO_Forth_:_User_Manual</dc:title> file:s:put file:nl
-'____<dc:identifier_id="BookID"_opf:scheme="CustomID">...bookid...</dc:identifier> file:s:put file:nl
+'____<dc:identifier_id="BookID"_opf:scheme="CustomID">works.forth.retro-manual</dc:identifier> file:s:put file:nl
+'____<dc:language>en</dc:language> file:s:put file:nl
 '__</metadata> file:s:put file:nl
 
 '__<manifest> file:s:put file:nl
@@ -105,10 +106,12 @@ drop
 '__<spine_toc="ncx"> file:s:put file:nl
 #0 TOC [ drop dup '____<itemref_idref="CHAP%n"_linear="yes"/> s:format file:s:put file:nl n:inc ] a:for-each drop
 '__</spine> file:s:put file:nl
+~~~
 
 '__<guide> file:s:put file:nl
 '__</guide> file:s:put file:nl
 
+~~~
 '</package> file:s:put file:nl
 @FID file:close
 ~~~
@@ -145,5 +148,6 @@ Cleanup is the final step. Remove the temporary epub directory
 
 ~~~
 'STEP:_Cleanup s:put nl
+'cp_-r_chapters_~/atua unix:system
 'rm_-rf_epub_chapters unix:system
 ~~~

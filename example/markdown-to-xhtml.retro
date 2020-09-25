@@ -152,6 +152,7 @@ to deal with.
        @Emphasis n:zero? [ '<em> &Emphasis v:on ]
                          [ '</em> &Emphasis v:off ] choose s:put ] case
   $\ [ &Escape v:on ] case
+  ASCII:SPACE [ sp ] case
   c:put<code> ;
 
 :s:put<formatted> [ format ] s:for-each ;
@@ -305,7 +306,7 @@ some older RETRO source files.
 ~~~
 :rule?
   dup [ '---- s:begins-with? ] [ '-+-+ s:begins-with? ] bi or ;
-:format:rule drop '<hr/> s:put nl ;
+:format:rule drop '<span_class="hr"></span> s:put nl ;
 ~~~
 
 *Lists*
@@ -423,3 +424,4 @@ listed at https://github.com/chriskempson/tomorrow-theme
     .h2 { font-size: 120%; }
     .h3 { font-size: 115%; }
     .h4 { font-size: 110%; }
+    .hr { display: block; height: 2px; background: #000000; }

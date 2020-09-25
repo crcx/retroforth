@@ -39,7 +39,7 @@ As an example,
 This illustrates the format. Only code in the fenced blocks
 (between \~~~ pairs) get extracted and run.
 
-(Note: this only applies to *source files*; fences are not used
+(Note: this only applies to source files; fences are not used
 when entering code interactively).
 
 ## On The Name
