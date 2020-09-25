@@ -36,8 +36,17 @@ Create the directories needed.
 
 ~~~
 'STEP:_Create_directories s:put nl
-'epub unix:mkdir
-'epub/META-INF unix:mkdir
+{ 'chapters
+  'chapters/building
+  'chapters/general
+  'chapters/internals
+  'chapters/tech-notes
+  'chapters/techniques
+  'chapters/toolchain
+  'chapters/toolchain/info
+  'chapters/toolchain/man
+  'epub
+  'epub/META-INF } [ dup tab s:put nl unix:mkdir ] a:for-each
 ~~~
 
 Then create the `mimetype` file. This is supposed to be written
@@ -123,9 +132,10 @@ drop
 
 ~~~
 'STEP:_Create_epub s:put nl
-'zip_-0Xq_../book.epub_mimetype unix:system
-'zip_-Xr9Dq_../book.epub_content.opf unix:system
-'zip_-Xr9Dq_../book.epub_chapters unix:system
+'zip_-0Xqv_../book.epub_mimetype unix:system
+'zip_-Xr9Dqv_../book.epub_content.opf unix:system
+'zip_-Xr9Dqv_../book.epub_META-INF unix:system
+'zip_-Xr9Dqv_../book.epub_chapters unix:system
 '.. unix:chdir
 ~~~
 
@@ -135,5 +145,5 @@ Cleanup is the final step. Remove the temporary epub directory
 
 ~~~
 'STEP:_Cleanup s:put nl
-'rm_-rf_epub unix:system
+'rm_-rf_epub_chapters unix:system
 ~~~

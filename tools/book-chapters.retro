@@ -63,7 +63,5 @@ This contains the list of files for the chapters in the book.
   'tech-notes/underscores-in-names
   'tech-notes/code-it-yourself
   'general/deprecation
-  'glossary/using
-  'glossary/glossary
 } 'TOC const
 ~~~
