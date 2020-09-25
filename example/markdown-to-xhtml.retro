@@ -92,8 +92,8 @@ work nicely, so I start with some header stuff.
 
 ~~~
 '<?xml_version="1.0"_encoding="utf-8"?> s:put nl
-'<!DOCTYPE_html_PUBLIC_"-//W3C//DTD_XHTML_1.0_Strict//EN" s:put sp
-'"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> s:put nl
+'<!DOCTYPE_html_PUBLIC_"-//W3C//DTD_XHTML_1.1//EN" s:put sp
+'"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd"> s:put nl
 '<html_xmlns="http://www.w3.org/1999/xhtml"><head> s:put nl
 '<title>.</title> s:put nl
 ~~~
