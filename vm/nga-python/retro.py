@@ -2,6 +2,7 @@
 
 # Nga: a Virtual Machine
 # Copyright (c) 2010 - 2019, Charles Childers
+# Floating Point I/O by Arland Childers, (c) 2020
 # Optimizations and process() rewrite by Greg Copeland
 # -----------------------------------------------------
 
@@ -44,24 +45,27 @@ class FloatStack(object):
         self.data.append(math.floor(self.data.pop()))
 
     def eq(self):
-        self.data.append(0 - (self.data.pop() == self.data.pop()))
+        return 0 - (self.data.pop() == self.data.pop())
 
     def neq(self):
-        self.data.append(0 - (self.data.pop() != self.data.pop()))
+        return 0 - (self.data.pop() != self.data.pop())
 
     def gt(self):
         a, b = self.data.pop(), self.data.pop()
-        self.data.append(0 - (b > a))
+        return 0 - (b > a)
 
     def lt(self):
         a, b = self.data.pop(), self.data.pop()
-        self.data.append(0 - (b < a))
+        return 0 - (b < a)
 
     def depth(self):
         return len(self.data)
 
     def drop(self):
         self.data.pop()
+
+    def pop(self):
+        return self.data.pop()
 
     def swap(self):
         a, b = self.data.pop(), self.data.pop()
@@ -95,6 +99,10 @@ class FloatStack(object):
 
     def atan(self):
         self.data.append(math.atan(self.data.pop()))
+
+
+floats = FloatStack()
+afloats = FloatStack()
 
 
 def rxDivMod(a, b):
@@ -334,17 +342,17 @@ def i_ha():
 
 
 def i_ie():
-    stack.push(2)
+    stack.append(2)
 
 
 def i_iq():
     device = stack.pop()
     if device == 0:  # generic output
-        stack.push(0)
-        stack.push(0)
+        stack.append(0)
+        stack.append(0)
     if device == 1:  # floating point
-        stack.push(1)
-        stack.push(2)
+        stack.append(1)
+        stack.append(2)
 
 
 def i_ii():
@@ -352,67 +360,68 @@ def i_ii():
     if device == 0:  # generic output
         rxDisplayCharacter()
     if device == 1:  # floating point
-        action = stack_pop()
+        action = stack.pop()
+        print(floats.data, action)
         if action == 0:  # number to float
-            pass
+            floats.push(float(stack.pop()))
         if action == 1:  # string to float
-            pass
+            floats.push(float(extractString(stack.pop())))
         if action == 2:  # float to number
-            pass
+            stack.append(int(floats.pop()))
         if action == 3:  # float to string
-            pass
+            injectString(str(floats.pop()), stack.pop())
         if action == 4:  # add
-            pass
+            floats.add()
         if action == 5:  # sub
-            pass
+            floats.sub()
         if action == 6:  # mul
-            pass
+            floats.mul()
         if action == 7:  # div
-            pass
+            floats.div()
         if action == 8:  # floor
-            pass
+            floats.floor()
         if action == 9:  # ceil
-            pass
+            floats.ceiling()
         if action == 10:  # sqrt
-            pass
+            floats.sqrt()
         if action == 11:  # eq
-            pass
+            stack.append(floats.eq())
         if action == 12:  # -eq
-            pass
+            stack.append(floats.neq())
         if action == 13:  # lt
-            pass
+            stack.append(floats.lt())
         if action == 14:  # gt
-            pass
+            stack.append(floats.gt())
         if action == 15:  # depth
-            pass
+            stack.append(floats.depth())
         if action == 16:  # dup
-            pass
+            floats.dup()
         if action == 17:  # drop
-            pass
+            floats.drop()
         if action == 18:  # swap
-            pass
+            floats.swap()
         if action == 19:  # log
-            pass
+            floats.log()
         if action == 20:  # pow
-            pass
+            floats.pow()
         if action == 21:  # sin
-            pass
+            floats.sin()
         if action == 22:  # cos
-            pass
+            floats.cos()
         if action == 23:  # tan
-            pass
+            floats.tan()
         if action == 24:  # asin
-            pass
+            floats.asin()
         if action == 25:  # atan
-            pass
+            floats.atan()
         if action == 26:  # acos
-            pass
+            floats.acos()
         if action == 27:  # to alt.
-            pass
+            afloats.push(floats.pop())
         if action == 28:  # from alt.
-            pass
+            floats.push(afloats.pop())
         if action == 29:  # alt. depth
-            pass
+            stack.append(afloats.depth())
 
 
 instructions = [
