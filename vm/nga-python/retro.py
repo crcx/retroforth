@@ -14,6 +14,89 @@ address = []
 memory = []
 
 
+class FloatStack(object):
+    def __init__(self, *d):
+        self.data = list(d)
+
+    def __getitem__(self, id):
+        return self.data[id]
+
+    def __call__(self):
+        return self.data
+
+    def add(self):
+        self.data.append(self.data.pop() + self.data.pop())
+
+    def sub(self):
+        self.data.append(0 - (self.data.pop() - self.data.pop()))
+
+    def mul(self):
+        self.data.append(self.data.pop() * self.data.pop())
+
+    def div(self):
+        a, b = self.data.pop(), self.data.pop()
+        self.data.append(b / a)
+
+    def ceiling(self):
+        self.data.append(math.ceil(self.data.pop()))
+
+    def floor(self):
+        self.data.append(math.floor(self.data.pop()))
+
+    def eq(self):
+        self.data.append(0 - (self.data.pop() == self.data.pop()))
+
+    def neq(self):
+        self.data.append(0 - (self.data.pop() != self.data.pop()))
+
+    def gt(self):
+        a, b = self.data.pop(), self.data.pop()
+        self.data.append(0 - (b > a))
+
+    def lt(self):
+        a, b = self.data.pop(), self.data.pop()
+        self.data.append(0 - (b < a))
+
+    def depth(self):
+        return len(self.data)
+
+    def drop(self):
+        self.data.pop()
+
+    def swap(self):
+        a, b = self.data.pop(), self.data.pop()
+        self.data += [a, b]
+
+    def push(self, n):
+        self.data.append(n)
+
+    def log(self):
+        a, b = self.data.pop(), self.data.pop()
+        self.data.append(math.log(b, a))
+
+    def power(self):
+        a, b = self.data.pop(), self.data.pop()
+        self.data.append(math.pow(a, b))
+
+    def sin(self):
+        self.data.append(math.sin(self.data.pop()))
+
+    def cos(self):
+        self.data.append(math.cos(self.data.pop()))
+
+    def tan(self):
+        self.data.append(math.tan(self.data.pop()))
+
+    def asin(self):
+        self.data.append(math.asin(self.data.pop()))
+
+    def acos(self):
+        self.data.append(math.acos(self.data.pop()))
+
+    def atan(self):
+        self.data.append(math.atan(self.data.pop()))
+
+
 def rxDivMod(a, b):
     x = abs(a)
     y = abs(b)
@@ -251,18 +334,85 @@ def i_ha():
 
 
 def i_ie():
-    stack.push(1)
+    stack.push(2)
 
 
 def i_iq():
-    stack.pop()
-    stack.push(0)
-    stack.push(0)
+    device = stack.pop()
+    if device == 0:  # generic output
+        stack.push(0)
+        stack.push(0)
+    if device == 1:  # floating point
+        stack.push(1)
+        stack.push(2)
 
 
 def i_ii():
-    stack.pop()
-    rxDisplayCharacter()
+    device = stack.pop()
+    if device == 0:  # generic output
+        rxDisplayCharacter()
+    if device == 1:  # floating point
+        action = stack_pop()
+        if action == 0:  # number to float
+            pass
+        if action == 1:  # string to float
+            pass
+        if action == 2:  # float to number
+            pass
+        if action == 3:  # float to string
+            pass
+        if action == 4:  # add
+            pass
+        if action == 5:  # sub
+            pass
+        if action == 6:  # mul
+            pass
+        if action == 7:  # div
+            pass
+        if action == 8:  # floor
+            pass
+        if action == 9:  # ceil
+            pass
+        if action == 10:  # sqrt
+            pass
+        if action == 11:  # eq
+            pass
+        if action == 12:  # -eq
+            pass
+        if action == 13:  # lt
+            pass
+        if action == 14:  # gt
+            pass
+        if action == 15:  # depth
+            pass
+        if action == 16:  # dup
+            pass
+        if action == 17:  # drop
+            pass
+        if action == 18:  # swap
+            pass
+        if action == 19:  # log
+            pass
+        if action == 20:  # pow
+            pass
+        if action == 21:  # sin
+            pass
+        if action == 22:  # cos
+            pass
+        if action == 23:  # tan
+            pass
+        if action == 24:  # asin
+            pass
+        if action == 25:  # atan
+            pass
+        if action == 26:  # acos
+            pass
+        if action == 27:  # to alt.
+            pass
+        if action == 28:  # from alt.
+            pass
+        if action == 29:  # alt. depth
+            pass
 
 
 instructions = [
