@@ -120,6 +120,7 @@ that are used in the book.
 '____<dc:title>RETRO_Forth_:_User_Manual</dc:title> file:s:put file:nl
 '____<dc:identifier_id="BookID"_opf:scheme="CustomID">works.forth.retro-manual</dc:identifier> file:s:put file:nl
 '____<dc:language>en</dc:language> file:s:put file:nl
+'____<dc:creator_opf:role="aut">Charles_Childers</dc:creator> file:s:put file:nl
 '__</metadata> file:s:put file:nl
 
 '__<manifest> file:s:put file:nl
