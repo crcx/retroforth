@@ -365,61 +365,40 @@ reset
 This concludes the Markdown (subset) in RETRO utility. All that's
 left is the CSS.
 
-For the colors, I'm mostly using the _Tomorrow Night_ colors as
-listed at https://github.com/chriskempson/tomorrow-theme
-
 ## CSS
 
-    * {
-      color: #cccccc;
-      background: #2d2d2d;
-      max-width: 700px;
-    }
-    
-    tt, pre {
-      background: #1d1f21; color: #b5bd68; font-family: monospace; 
-      white-space: pre;
-      display: block;
-      width: 100%;
-    }
-    
-    .indentedcode {
-      margin-left: 2em;
-      margin-right: 2em;
-    }
-    
+    * { color: #000; background: #fff; max-width: 700px; }
+    tt, pre { background: #dedede; color: #111; font-family: monospace;
+             white-space: pre; display: block; width: 100%; }
+    .indentedcode { margin-left: 2em; margin-right: 2em; }
     .codeblock {
-      background: #1d1f21; color: #b5bd68; font-family: monospace; 
+      background: #dedede; color: #111; font-family: monospace;
       box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
       padding: 7px;
       display: block;
     }
-    
-    .indentedlist {
-      margin-left: 2em;
-      color: #cccccc;
-      background: #2d2d2d;
-    }
-    
-    span { white-space: pre; background: #1d1f21; }
-    .text  { color: #c5c8c6; white-space: pre }
-    .colon { color: #cc6666; }
-    .note  { color: #969896; }
-    .str   { color: #f0c674; }
-    .num   { color: #8abeb7; }
-    .fnum  { color: #8abeb7; font-weight: bold; }
-    .ptr   { color: #b294bb; font-weight: bold; }
-    .fetch { color: #b294bb; }
-    .store { color: #b294bb; }
-    .char  { color: #81a2be; }
-    .inst  { color: #de935f; }
-    .defer { color: #888888; }
-    .imm   { color: #de935f; }
-    .prim  { color: #b5bd68; font-weight: bold; }o
 
-    .tt    { white-space: pre; font-family: monospace; }
+    .indentedlist { margin-left: 2em; color: #000; }
 
-    .h1, .h2, .h3, .h4 { white-space: normal; background: #2d2d2d; }
+    span { white-space: pre; }
+    .text  { color: #000; white-space: pre; background: #dedede; }
+    .colon { color: #000; background: #dedede; }
+    .note  { color: #000; background: #dedede; }
+    .str   { color: #000; text-decoration: underline; background: #dedede; }
+    .num   { color: #000; background: #dedede; font-weight: bold; font-style: italic; }
+    .fnum  { color: #000; font-weight: bold; background: #dedede; }
+    .ptr   { color: #000; font-weight: bold; background: #dedede; }
+    .fetch { color: #000; font-style: italic; background: #dedede; }
+    .store { color: #000; font-style: italic; background: #dedede; }
+    .char  { color: #000; background: #dedede; }
+    .inst  { color: #000; background: #dedede; }
+    .defer { color: #000; background: #dedede; }
+    .imm   { color: #000; font-weight: bold; background: #dedede; }
+    .prim  { color: #000; font-weight: bolder; background: #dedede; }
+
+    .tt    { white-space: pre; font-family: monospace; background: #dedede; }
+
+    .h1, .h2, .h3, .h4 { white-space: normal; }
     .h1 { font-size: 125%; }
     .h2 { font-size: 120%; }
     .h3 { font-size: 115%; }
