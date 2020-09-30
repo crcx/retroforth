@@ -168,6 +168,17 @@ Divide `n` by `m` and return the integer part of the quotient.
 Class: class:word | Namespace: global | Interface Layer: all
 ------------------------------------------------------------------------
 
+//
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Ignore any tokens remaining on the current line. Works with files and the interactive "listener".
+
+Class: class:word | Namespace: global | Interface Layer: rre
+------------------------------------------------------------------------
+
 /mod
 
   Data:  nm-rq
@@ -664,7 +675,7 @@ I
   Addr:  -
   Float: -
 
-Access the loop index for the current loop. (For loops made using `times<with-index>`)
+Access the loop index for the current loop. (For loops made using `indexed-times`)
 
 Class: class:word | Namespace: global | Interface Layer: all
 ------------------------------------------------------------------------
@@ -675,7 +686,7 @@ J
   Addr:  -
   Float: -
 
-Access the parent loop index for the current loop. (For loops made using `times<with-index>`)
+Access the parent loop index for the current loop. (For loops made using `indexed-times`)
 
 Class: class:word | Namespace: global | Interface Layer: all
 ------------------------------------------------------------------------
@@ -686,7 +697,7 @@ K
   Addr:  -
   Float: -
 
-Access the grandparent loop index for the current loop. (For loops made using `times<with-index>`)
+Access the grandparent loop index for the current loop. (For loops made using `indexed-times`)
 
 Class: class:word | Namespace: global | Interface Layer: all
 ------------------------------------------------------------------------
@@ -1735,6 +1746,17 @@ Return the current month. This will be in the range of 1-12, inclusive.
 Class: class:word | Namespace: clock | Interface Layer: iOS, rre
 ------------------------------------------------------------------------
 
+clock:operation
+
+  Data:  ...n-
+  Addr:  -
+  Float: -
+
+Trigger a clock operation. This is not intended to be used directly.
+
+Class: class:word | Namespace: clock | Interface Layer: rre
+------------------------------------------------------------------------
+
 clock:second
 
   Data:  -n
@@ -1988,7 +2010,7 @@ Return the most recent dictionary header.
 Class: class:word | Namespace: d | Interface Layer: all
 ------------------------------------------------------------------------
 
-d:last<class>
+d:last.class
 
   Data:  -a
   Addr:  -
@@ -1999,7 +2021,7 @@ Return a pointer to the class field of the most recent dictionary header.
 Class: class:word | Namespace: d | Interface Layer: all
 ------------------------------------------------------------------------
 
-d:last<name>
+d:last.name
 
   Data:  -s
   Addr:  -
@@ -2010,7 +2032,7 @@ Return a pointer to the name field of the most recent dictionary header.
 Class: class:word | Namespace: d | Interface Layer: all
 ------------------------------------------------------------------------
 
-d:last<xt>
+d:last.xt
 
   Data:  -a
   Addr:  -
@@ -3317,7 +3339,7 @@ Example #1:
 
 ------------------------------------------------------------------------
 
-file:open<for-append>
+file:open-for-append
 
   Data:  s-nn
   Addr:  -
@@ -3328,7 +3350,7 @@ Open a file for reading & writing. Returns the size (NOS) and a file ID (TOS)
 Class: class:word | Namespace: file | Interface Layer: rre
 ------------------------------------------------------------------------
 
-file:open<for-reading>
+file:open-for-reading
 
   Data:  s-nn
   Addr:  -
@@ -3339,13 +3361,24 @@ Open a file for reading. Returns the size (NOS) and a file ID (TOS)
 Class: class:word | Namespace: file | Interface Layer: rre
 ------------------------------------------------------------------------
 
-file:open<for-writing>
+file:open-for-writing
 
   Data:  s-n
   Addr:  -
   Float: -
 
 Open a file for writing. Returns the file ID
+
+Class: class:word | Namespace: file | Interface Layer: rre
+------------------------------------------------------------------------
+
+file:operation
+
+  Data:  ...n-
+  Addr:  -
+  Float: -
+
+Trigger a file I/O operation. This is not intended to be used directly.
 
 Class: class:word | Namespace: file | Interface Layer: rre
 ------------------------------------------------------------------------
@@ -3436,6 +3469,17 @@ file:write
 Write a character to the file represented by the handle.
 
 Class: class:word | Namespace: file | Interface Layer: rre
+------------------------------------------------------------------------
+
+float:operation
+
+  Data:  ...n-
+  Addr:  -
+  Float: -
+
+Trigger a floating point operation. This is not intended to be used directly.
+
+Class: class:word | Namespace: float | Interface Layer: rre
 ------------------------------------------------------------------------
 
 gopher:get
@@ -3570,6 +3614,17 @@ Run the code in the specified file.
 Class: class:word | Namespace: global | Interface Layer: rre
 ------------------------------------------------------------------------
 
+indexed-times
+
+  Data:  nq-
+  Addr:  -
+  Float: -
+
+Run a quote the specified number of times, tracking the loop index in `I`. This is less efficient than `times`, so if the index is not needed, this should be avoided.
+
+Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
 interpret
 
   Data:  s-
@@ -3587,17 +3642,6 @@ Example #1:
 
 ------------------------------------------------------------------------
 
-io:clock-operation
-
-  Data:  ...n-
-  Addr:  -
-  Float: -
-
-Trigger a clock operation. This is not intended to be used directly.
-
-Class: class:word | Namespace: io | Interface Layer: rre
-------------------------------------------------------------------------
-
 io:enumerate
 
   Data:  -n
@@ -3607,28 +3651,6 @@ io:enumerate
 Return the number of I/O devices.
 
 Class: class:word | Namespace: io | Interface Layer: all
-------------------------------------------------------------------------
-
-io:file-operation
-
-  Data:  ...n-
-  Addr:  -
-  Float: -
-
-Trigger a file I/O operation. This is not intended to be used directly.
-
-Class: class:word | Namespace: io | Interface Layer: rre
-------------------------------------------------------------------------
-
-io:float-operation
-
-  Data:  ...n-
-  Addr:  -
-  Float: -
-
-Trigger a floating point operation. This is not intended to be used directly.
-
-Class: class:word | Namespace: io | Interface Layer: rre
 ------------------------------------------------------------------------
 
 io:invoke
@@ -3673,17 +3695,6 @@ io:scan-for
 Scan the I/O devices for a device with a specified ID. Returns the device number, or -1 if not found.
 
 Class: class:word | Namespace: io | Interface Layer: all
-------------------------------------------------------------------------
-
-io:socket-operation
-
-  Data:  ...n-
-  Addr:  -
-  Float: -
-
-Trigger a socket operation. This is not intended to be used directly.
-
-Class: class:word | Namespace: io | Interface Layer: rre
 ------------------------------------------------------------------------
 
 io:unix-syscall
@@ -5071,6 +5082,83 @@ Example #1:
 
 ------------------------------------------------------------------------
 
+script:abort-include
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Discard remaining tokens on the current line being evaluated. This only works when including a file, not at the interpreter.
+
+Class: class:word | Namespace: sys | Interface Layer: rre
+------------------------------------------------------------------------
+
+script:arguments
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Return the number of arguments passed to the program.
+
+Class: class:word | Namespace: sys | Interface Layer: rre
+------------------------------------------------------------------------
+
+script:current-file
+
+  Data:  -s
+  Addr:  -
+  Float: -
+
+Return the filename of the file being processed by the current `include`, or `/dev/stdin` if the input source is the terminal.
+
+Class: class:word | Namespace: sys | Interface Layer: rre
+------------------------------------------------------------------------
+
+script:current-line
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Return the current line number of the file being processed by the current `include`, or `0` if the input source is the terminal. Line numbering starts at 1.
+
+Class: class:word | Namespace: sys | Interface Layer: rre
+------------------------------------------------------------------------
+
+script:get-argument
+
+  Data:  n-s
+  Addr:  -
+  Float: -
+
+Given an argument number, return the argument as a string.
+
+Class: class:word | Namespace: sys | Interface Layer: rre
+------------------------------------------------------------------------
+
+script:ignore-to-eof
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Discard remaining lines in the file currently being evaluated. This only works when including a file, not at the interpreter.
+
+Class: class:word | Namespace: sys | Interface Layer: rre
+------------------------------------------------------------------------
+
+script:name
+
+  Data:  -s
+  Addr:  -
+  Float: -
+
+Return the filename of the program being run.
+
+Class: class:word | Namespace: sys | Interface Layer: rre
+------------------------------------------------------------------------
+
 set-hook
 
   Data:  aa-
@@ -5199,6 +5287,17 @@ Prepare a socket for accepting incoming connections. Takes a backlog count (n1) 
 Class: class:word | Namespace: socket | Interface Layer: rre
 ------------------------------------------------------------------------
 
+socket:operation
+
+  Data:  ...n-
+  Addr:  -
+  Float: -
+
+Trigger a socket operation. This is not intended to be used directly.
+
+Class: class:word | Namespace: socket | Interface Layer: rre
+------------------------------------------------------------------------
+
 socket:recv
 
   Data:  ann-nn
@@ -5283,7 +5382,7 @@ sys:argc
   Addr:  -
   Float: -
 
-Return the number of arguments passed to the program.
+Return the number of arguments passed to the program. Deprecated. Use script:arguments
 
 Class: class:word | Namespace: sys | Interface Layer: rre
 ------------------------------------------------------------------------
@@ -5294,7 +5393,7 @@ sys:argv
   Addr:  -
   Float: -
 
-Given an argument number, return the argument as a string.
+Given an argument number, return the argument as a string. Deprecated. Use script:get-argument instead.
 
 Class: class:word | Namespace: sys | Interface Layer: rre
 ------------------------------------------------------------------------
@@ -5305,7 +5404,7 @@ sys:name
   Addr:  -
   Float: -
 
-Return the filename of the program being run.
+Return the filename of the program being run. Deprecated. Use script:name instead.
 
 Class: class:word | Namespace: sys | Interface Layer: rre
 ------------------------------------------------------------------------
@@ -5335,17 +5434,6 @@ Example #1:
 
     #12 [ $- c:put ] times
 
-------------------------------------------------------------------------
-
-times<with-index>
-
-  Data:  nq-
-  Addr:  -
-  Float: -
-
-Run a quote the specified number of times, tracking the loop index in `I`. This is less efficient than `times`, so if the index is not needed, this should be avoided.
-
-Class: class:word | Namespace: global | Interface Layer: all
 ------------------------------------------------------------------------
 
 tri
@@ -5782,7 +5870,7 @@ Example #1:
 
 ------------------------------------------------------------------------
 
-var<n>
+var-n
 
   Data:  ns-
   Addr:  -
@@ -5794,7 +5882,7 @@ Class: class:word | Namespace: global | Interface Layer: all
 
 Example #1:
 
-    #10 'Base var<n>
+    #10 'Base var-n
 
 
 ------------------------------------------------------------------------

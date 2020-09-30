@@ -39,9 +39,9 @@ field.
 RETRO provides several words for operating on the most recent
 header.
 
-`d:last` returns a pointer to the latest header. `d:last<xt>`
+`d:last` returns a pointer to the latest header. `d:last.xt`
 will give the contents of the `d:xt` field for the latest
-header. There are also `d:last<class>` and `d:last<name>`.
+header. There are also `d:last.class` and `d:last.name`.
 
 ## Adding Headers
 

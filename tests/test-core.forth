@@ -993,21 +993,21 @@ passed
 -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
 
 ~~~
-'d:last<class> Testing
+'d:last.class Testing
 passed
 ~~~
 
 -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
 
 ~~~
-'d:last<name> Testing
+'d:last.name Testing
 passed
 ~~~
 
 -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
 
 ~~~
-'d:last<xt> Testing
+'d:last.xt Testing
 passed
 ~~~
 
@@ -2103,9 +2103,9 @@ passed
 -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
 
 ~~~
-'var<n> Testing
-  #30 'A var<n>
-  #40 'B var<n>
+'var-n Testing
+  #30 'A var-n
+  #40 'B var-n
   [ ] [ &A fetch #30 eq? ] try
   [ ] [ &B fetch #40 eq? ] try
   [ #10 &A store ] [ &A fetch #10 eq? ] try
@@ -2120,7 +2120,7 @@ passed
 
 ~~~
 'v:dec Testing
-  #199 'A var<n>
+  #199 'A var-n
   [ &A v:dec ] [ &A fetch #198 eq? ] try
   [ &A v:dec ] [ &A fetch #197 eq? ] try
   [ &A v:dec ] [ &A fetch #196 eq? ] try
@@ -2131,7 +2131,7 @@ passed
 
 ~~~
 'v:dec-by Testing
-  #199 'A var<n>
+  #199 'A var-n
   [ #2 &A v:dec-by ] [ &A fetch #197 eq? ] try
   [ #3 &A v:dec-by ] [ &A fetch #194 eq? ] try
   [ #5 &A v:dec-by ] [ &A fetch #189 eq? ] try
