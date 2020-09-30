@@ -89,7 +89,7 @@ Then create `META-INF/container.xml`.
   '<navMap>
 } [ file:s:put file:nl ] a:for-each
 
-#0 TOC [ over dup dup '____<navPoint_id="CHAP%n"_playOrder="%n"><navLabel><text>Chapter_%n</text></navLabel><content_src="chapters/%s.html"/></navPoint> s:format file:s:put file:nl n:inc ] a:for-each drop
+#0 TOC [ #1 a:fetch over dup dup '____<navPoint_id="CHAP%n"_playOrder="%n"><navLabel><text>Chapter_%n</text></navLabel><content_src="chapters/%s.html"/></navPoint> s:format file:s:put file:nl n:inc ] a:for-each drop
 
 { '</navMap>
   '</ncx>
@@ -125,7 +125,7 @@ that are used in the book.
 
 '__<manifest> file:s:put file:nl
 '____<item_id="ncx"_href="TOC.ncx"_media-type="application/x-dtbncx+xml"/> file:s:put file:nl
-#0 TOC [ over swap '____<item_href="chapters/%s.html"_id="CHAP%n"_media-type="application/xhtml+xml"/> s:format file:s:put file:nl n:inc ] a:for-each
+#0 TOC [ #1 a:fetch over swap '____<item_href="chapters/%s.html"_id="CHAP%n"_media-type="application/xhtml+xml"/> s:format file:s:put file:nl n:inc ] a:for-each
 drop
 '__</manifest> file:s:put file:nl
 

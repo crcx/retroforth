@@ -1,67 +1,66 @@
 This contains the list of files for the chapters in the book.
 
 ~~~
-{
-  'general/introduction
-  'general/copyrights
-  'building/obtaining
-  'building/unix
-  'building/windows
-  'building/alternatives
-  'building/advanced
-  'general/starting
-  'general/basic-interactions
-  'general/retro-unu
-  'general/quick-tutorial
-  'general/syntax
-  'toolchain/info/additional-tools
-  'toolchain/info/retro-compiler
-  'toolchain/man/retro
-  'toolchain/man/retro-describe
-  'toolchain/man/retro-document
-  'toolchain/man/retro-embedimage
-  'toolchain/man/retro-extend
-  'toolchain/man/retro-locate
-  'toolchain/man/retro-muri
-  'toolchain/man/retro-tags
-  'techniques/naming-conventions
-  'techniques/return-stack
-  'techniques/stack-diagrams
-  'techniques/arrays
-  'techniques/assembly
-  'techniques/buffer
-  'techniques/characters
-  'techniques/definitions
-  'techniques/dictionary
-  'techniques/floating-point
-  'techniques/files
-  'techniques/loops
-  'techniques/numbers
-  'techniques/pointers
-  'techniques/quotes
-  'techniques/sockets
-  'techniques/scripting
-  'techniques/strings
-  'techniques/using-combinators
-  'techniques/word-classes
-  'techniques/checking-the-version
-  'techniques/errors
-  'techniques/lexical-scope
-  'techniques/the-stacks
-  'internals/nga
-  'internals/interface-layers
-  'internals/io
-  'internals/image
-  'tech-notes/historical-papers
-  'tech-notes/metacompilation
-  'tech-notes/self-hosting
-  'tech-notes/prefixes
-  'tech-notes/kernel-words
-  'tech-notes/ngaro-to-nga
-  'tech-notes/retro11-retrospective
-  'tech-notes/security
-  'tech-notes/underscores-in-names
-  'tech-notes/code-it-yourself
-  'general/deprecation
+{ { 'Introduction                   'general/introduction }
+  { 'Copyrights                     'general/copyrights }
+  { 'Obtaining_RETRO                'building/obtaining }
+  { 'Building_on_Unix               'building/unix }
+  { 'Building_on_Windows            'building/windows }
+  { 'Building_Alternative_Implementations   'building/alternatives }
+  { 'Advanced_and_Custom_Builds     'building/advanced }
+  { 'Starting_RETRO                 'general/starting }
+  { 'Basic_User_Interactions        'general/basic-interactions }
+  { 'Literate_Source_With_Unu       'general/retro-unu }
+  { 'A_Quick_Tutorial               'general/quick-tutorial }
+  { 'Syntax                         'general/syntax }
+  { 'Toolchain:_Additional_Tools    'toolchain/info/additional-tools }
+  { 'Toolchain:_retro-compiler      'toolchain/info/retro-compiler }
+  { 'Manpage:_retro(1)              'toolchain/man/retro }
+  { 'Manpage:_retro-describe(1)     'toolchain/man/retro-describe }
+  { 'Manpage:_retro-document(1)     'toolchain/man/retro-document }
+  { 'Manpage:_retro-embedimage(1)   'toolchain/man/retro-embedimage }
+  { 'Manpage:_retro-extend(1)       'toolchain/man/retro-extend }
+  { 'Manpage:_retro-locate(1)       'toolchain/man/retro-locate }
+  { 'Manpage:_retro-muri(1)         'toolchain/man/retro-muri }
+  { 'Manpage:_retro-tags(1)         'toolchain/man/retro-tags }
+  { 'Naming_Conventions             'techniques/naming-conventions }
+  { 'The_Return_Stack               'techniques/return-stack }
+  { 'Stack_Diagrams                 'techniques/stack-diagrams }
+  { 'Arrays                         'techniques/arrays }
+  { 'Assembly                       'techniques/assembly }
+  { 'Buffer                         'techniques/buffer }
+  { 'Characters                     'techniques/characters }
+  { 'Defining_Words                 'techniques/definitions }
+  { 'The_Dictionary                 'techniques/dictionary }
+  { 'Floating_Point                 'techniques/floating-point }
+  { 'Working_With_Files             'techniques/files }
+  { 'Loops                          'techniques/loops }
+  { 'Numbers                        'techniques/numbers }
+  { 'Pointers                       'techniques/pointers }
+  { 'Quotes                         'techniques/quotes }
+  { 'Sockets                        'techniques/sockets }
+  { 'Scripting                      'techniques/scripting }
+  { 'Strings                        'techniques/strings }
+  { 'Using_Combinators              'techniques/using-combinators }
+  { 'Word_Classes                   'techniques/word-classes }
+  { 'Checking_the_Version           'techniques/checking-the-version }
+  { 'Errors                         'techniques/errors }
+  { 'Lexical_Scope                  'techniques/lexical-scope }
+  { 'The_Stacks                     'techniques/the-stacks }
+  { 'Naa                            'internals/nga }
+  { 'Interface_Layers               'internals/interface-layers }
+  { 'I/O                            'internals/io }
+  { 'Image                          'internals/image }
+  { 'Historical_Papers              'tech-notes/historical-papers }
+  { 'Metacompiling                  'tech-notes/metacompilation }
+  { 'Self-Hosting                   'tech-notes/self-hosting }
+  { 'Prefixes                       'tech-notes/prefixes }
+  { 'Kernel_Words                   'tech-notes/kernel-words }
+  { 'Ngaro_to_Nga                   'tech-notes/ngaro-to-nga }
+  { 'RETRO11_Retrospective          'tech-notes/retro11-retrospective }
+  { 'Security                       'tech-notes/security }
+  { 'Underscores_in_Names           'tech-notes/underscores-in-names }
+  { 'Code_It_Yourself_Manifesto     'tech-notes/code-it-yourself }
+  { 'Deprecation_Policy             'general/deprecation }
 } 'TOC const
 ~~~
