@@ -177,7 +177,7 @@ It should be pretty straightforward though.
   :status     block# sp pos '_::_ s:put dump-stack ;
   :format     '_|_ s:put call '_| s:put nl ;
   :line       [ #64 [ fetch-next c:put ] times ] format ;
-  :code       &Block #16 [ line ] times<with-index> drop ;
+  :code       &Block #16 [ line ] indexed-times drop ;
   :format     '_|_ s:put call '_| s:put nl ;
   :tob        &TOB #4 [ line ] times drop ;
 ---reveal---

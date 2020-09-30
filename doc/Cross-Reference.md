@@ -16,7 +16,7 @@ and traditional Forth.
 | Conditionals #2        | `NOT IF 1 THEN`         | `[ #1 ] -if`                  |
 | Conditionals #3        | `IF 1 ELSE 2 THEN`      | `[ #1 ] [ #2 ] choose`        |
 | Counted Loops          | `10 0 DO LOOP`          | `#10 [ ] times`               |
-| Counted Loops w/Index  | `10 0 DO I LOOP`        | `#10 [ I ] times<with-index>` |
+| Counted Loops w/Index  | `10 0 DO I LOOP`        | `#10 [ I ] indexed-times`     |
 | Unconditional Loops    | `BEGIN AGAIN`           | `repeat again`                |
 | Return Stack           | `10 >R ... R>`          | `#10 push ... pop`            |
 

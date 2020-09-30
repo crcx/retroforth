@@ -11,7 +11,8 @@ It's intentionally kept minimal, handling only text files and directories. The i
 There is also a `Results` variable which will point to the data set being displayed.
 
 ~~~
-#34 'WrapPoint var<n>
+#34 'WrapPoint var-n
+
 'Results var
 'TARGET d:create #1024 #64 * allot
 ~~~

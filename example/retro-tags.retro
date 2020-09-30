@@ -85,7 +85,7 @@ Then variables.
 
 ~~~
 :variable?
-  dup 'var s:ends-with? over 'var<n> s:ends-with? or ;
+  dup 'var s:ends-with? over 'var-n s:ends-with? or ;
 
 :output-name
   ASCII:SPACE s:tokenize dup a:length #2 - a:fetch n:inc s:put ;

@@ -39,19 +39,19 @@ when to stop running.
 ## Counted Loops
 
 There are two combinators for counted loops. These are `times` and
-`times<with-index>`.
+`indexed-times`.
 
     #0 #10 [ dup n:put sp n:inc ] times nl
-    #10 [ I n:put sp ] times<with-index>
+    #10 [ I n:put sp ] indexed-times
 
-The `times<with-index>` provides an index via the `I`, `J`, and
+The `indexed-times` provides an index via the `I`, `J`, and
 `K` words. `I` will be the index of the current loop, with `J` and
 `K` being the indexes of the next two older loops.
 
 The loop indexes can be accessed outside the loop body:
 
     :display I n:square n:put sp ;
-    :squares [ display ] times<with-index> nl ;
+    :squares [ display ] indexed-times nl ;
     #100 squares
 
 ## Tradeoffs
@@ -59,5 +59,5 @@ The loop indexes can be accessed outside the loop body:
 The unconditional loop form is more efficient as it's just a
 simple jump operation. The `times` counted loops are a little
 slower, but can be cleaner and more readable in many cases. The
-`times<with-index>` form is significantly slower than the other
+`indexed-times` form is significantly slower than the other
 two forms.

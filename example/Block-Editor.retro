@@ -184,7 +184,7 @@ It should be pretty straightforward though.
               | pos | 'Stack:_ s:put dump-stack ;
   :format     | call | nl ;
   :line       [ #64 [ fetch-next c:put ] times ] format ;
-  :code       &Block #16 [ line ] times<with-index> drop ;
+  :code       &Block #16 [ line ] indexed-times drop ;
   :tob        &TOB #4 [ line ] times drop ;
 ---reveal---
   :block:display (-) hook
@@ -366,7 +366,7 @@ These are helpful to quickly navigate through a block.
 ## Code Sharing
 
 ~~~
-TRUE 'UseSprunge var<n>
+TRUE 'UseSprunge var-n
 
 {{
   '/home/crc/public      'PASTEBIN-PATH s:const
@@ -376,8 +376,8 @@ TRUE 'UseSprunge var<n>
   :c:put<file> @FID file:write ;
   :line#       I dup #10 lt? &sp if n:put ':_ s:put ;
   :line        line# #64 [ fetch-next c:put ] times nl ;
-  :generate    &Block #16 [ line ] times<with-index> drop ;
-  :export        TEMPFILE file:open<for-writing> !FID
+  :generate    &Block #16 [ line ] indexed-times drop ;
+  :export        TEMPFILE file:open-for-writing !FID
                  &c:put<file> &c:put set-hook generate
                  &c:put unhook @FID file:close ;
   'MD5 var

@@ -121,12 +121,12 @@ to the stack.
 #1 #10 [ dup n:put sp n:inc ] times drop
 ```
 
-There is also a `times<with-index>` variation that provides
+There is also a `indexed-times` variation that provides
 access to the loop index (via `I`) and parent loop indexes
 (via `J` and `K`).
 
 ```
-#10 [ I n:put sp ] times<with-index>
+#10 [ I n:put sp ] indexed-times
 ```
 
 ## Data Flow
