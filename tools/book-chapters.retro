@@ -47,7 +47,7 @@ This contains the list of files for the chapters in the book.
   { 'Errors                         'techniques/errors }
   { 'Lexical_Scope                  'techniques/lexical-scope }
   { 'The_Stacks                     'techniques/the-stacks }
-  { 'Naa                            'internals/nga }
+  { 'The_Nga_Virtual_Machine        'internals/nga }
   { 'Interface_Layers               'internals/interface-layers }
   { 'I/O                            'internals/io }
   { 'Image                          'internals/image }
