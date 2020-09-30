@@ -5121,7 +5121,7 @@ script:current-line
   Addr:  -
   Float: -
 
-Return the current line number of the file being processed by the current `include`, or `0` if the input source is the terminal.
+Return the current line number of the file being processed by the current `include`, or `0` if the input source is the terminal. Line numbering starts at 1.
 
 Class: class:word | Namespace: sys | Interface Layer: rre
 ------------------------------------------------------------------------

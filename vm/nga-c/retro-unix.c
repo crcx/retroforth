@@ -263,7 +263,7 @@ void scripting_source() {
 }
 
 void scripting_line() {
-  stack_push(currentLine);
+  stack_push(currentLine + 1);
 }
 
 void scripting_ignore_to_eol() {
