@@ -129,13 +129,13 @@ that is added to Nga.
   &Blocks #1024 BLOCKS * [ #32 over store n:inc ] times drop ;
 
 :block:write (-)
-  &Blocks BLOCK-FILE file:open<for-writing>
+  &Blocks BLOCK-FILE file:open-for-writing
   BLOCKS #1024 * [ over fetch over file:write &n:inc dip ] times
   file:close drop ;
 
 :block:read (-)
   BLOCK-FILE file:exists? [ block:write ] -if
-  &Blocks BLOCK-FILE file:open<for-reading> swap
+  &Blocks BLOCK-FILE file:open-for-reading swap
   [ dup-pair file:read swap store &n:inc dip ] times
   file:close drop ;
 ~~~

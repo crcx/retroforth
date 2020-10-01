@@ -30,22 +30,22 @@ Additionally, RETRO provides a few other forms for opening files.
 
 To open a file for reading:
 
-    '/etc/motd file:open<for-reading>
+    '/etc/motd file:open-for-reading
 
 This will return the size of the file (as NOS) and the file handle
 (as TOS).
 
 To open a file for writing:
 
-    '/tmp/test file:open<for-writing>
+    '/tmp/test file:open-for-writing
 
 This returns the file handle.
 
 To open a file for append operations:
 
-    '/tmp/test file:open<for-append>
+    '/tmp/test file:open-for-append
 
-As with `file:open<for-reading>`, this returns both the size of
+As with `file:open-for-reading`, this returns both the size of
 the file and the file handle.
 
 ## Closing A File
