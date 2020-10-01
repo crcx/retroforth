@@ -16,7 +16,6 @@ Our structure will look like:
       |-- toc.ncx
       |-- chapters/...
 
-
 Begin by defining some helper functions for writing to a
 file.
 
@@ -101,12 +100,6 @@ Then create `META-INF/container.xml`.
 ~~~
 
 
-    <navPoint id="hello" playOrder="1">
-        <navLabel><text>cover</text></navLabel>
-        <content src="1_hello.xhtml" />
-    </navPoint>
-
-
 # Create the CONTENT.OPF
 
 Create `content.opf`. This will need to lest all of the files
@@ -149,7 +142,7 @@ drop
 
 ~~~
 'Convert_chapters_to_XHTML s:put nl
-'retro_tools/book-chapters-to-xhtml.retro unix:system
+'retro_tools/epub/chapters-to-xhtml.retro unix:system
 ~~~
 
 # Assemble the pieces
@@ -178,6 +171,5 @@ Cleanup is the final step. Remove the temporary epub directory
 
 ~~~
 'Cleanup s:put nl
-'cp_-r_chapters_~/atua unix:system
 'rm_-rf_epub_chapters unix:system
 ~~~
