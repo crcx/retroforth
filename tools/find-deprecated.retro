@@ -1,0 +1,56 @@
+#!/usr/bin/env retro
+
+This is a small tool to find use of deprecated words in the
+Retro source tree.
+
+It's pretty much just a wrapper over a Unix shell pipeline,
+but pulls the word names from an array of strings defined in
+Retro, so it's easy for me to add new entries as the language
+evolves.
+
+First, files/patterns to exclude.
+
+~~~
+{ 'Glossary-Concise.txt
+  'Glossary-Names-and-Stack.txt
+  'Glossary.html
+  'Glossary.txt
+  'words.tsv
+  'glossary/glossary
+  'bin/retro-describe
+  'compat.retro
+  'compat.forth
+  'README
+  'RELEASE-NOTES
+} s:empty swap [ swap '%s_|_grep_-v_%s s:format ] a:for-each
+'EXCLUSIONS s:const
+~~~
+
+Then the deprecated words.
+
+~~~
+{ (2020.7)
+  'd:last<class>
+  'd:last<name>
+  'd:last<xt>
+  'file:open<for-append>
+  'file:open<for-reading>
+  'file:open<for-writing>
+  'times<with-index>
+  'var<n>
+
+  (2020.10)
+  'sys:name
+  'sys:argc
+  'sys:argv
+} s:empty swap [ swap '%s_"%s" s:format ] a:for-each
+'DEPRECATED s:const
+~~~
+
+Construct the actual shell pipeline and run it.
+
+~~~
+EXCLUSIONS DEPRECATED 'for_name_in_%s;_do_find_._|_xargs_grep_-s_$name_|_grep_-v_find-deprecated.retro_%s_;_done
+s:format unix:system
+~~~
+
