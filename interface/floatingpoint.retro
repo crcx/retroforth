@@ -159,30 +159,33 @@ is the essence of the method.
 
 ~~~
 :f:E1 (-|f:-n)_e-unit_in_float  hook .1.e5 ; (decimal_digits_to_shift_left
-:f:-shift        (|f:n-n)_shift_left                          f:E1       f:* ;
-:f:+shift        (|f:n-n)_shift_right                         f:E1       f:/ ;
-:f:signed-sqrt   (|f:n-n) f:dup f:sign           f:abs f:sqrt n:to-float f:* ;
-:f:+encode       (|f:n-n) f:signed-sqrt f:-shift                             ;
-:f:-encode       (|f:n-n) f:dup f:sign  f:+shift f:dup f:*    n:to-float f:* ;
-:f:signed-square (|f:n-n) f:dup f:sign           f:dup f:*    n:to-float f:* ;
+:f:signed-sqrt   (|f:n-n) f:dup f:sign  f:abs f:sqrt n:to-float f:* ;
+:f:signed-square (|f:n-n) f:dup f:sign  f:dup f:*    n:to-float f:* ;
 ~~~
 
 Deal with special cases.
 
 ~~~
-:f:to-e (-e|f:n-)
-  f:dup f:nan?  [ f:drop e:NAN  ] if;
-  f:dup f:inf?  [ f:drop e:INF  ] if;
-  f:dup f:-inf? [ f:drop e:-INF ] if;
-  f:+encode f:round f:to-number e:clip      (e
-  e:MIN         [ f:drop        ] case
-  e:MAX         [ f:drop        ] case ;
+{{
+  :f:-shift      (|f:n-n)_shift_left  f:E1 f:* ;
+  :f:+shift      (|f:n-n)_shift_right f:E1 f:/ ;
+  :f:+encode     (|f:n-n) f:signed-sqrt f:-shift ;
+:f:-encode       (|f:n-n) f:dup f:sign  f:+shift f:dup f:*  n:to-float f:* ;
+---reveal---
+  :f:to-e (-e|f:n-)
+    f:dup f:nan?  [ f:drop e:NAN  ] if;
+    f:dup f:inf?  [ f:drop e:INF  ] if;
+    f:dup f:-inf? [ f:drop e:-INF ] if;
+    f:+encode f:round f:to-number e:clip      (e
+    e:MIN         [ f:drop        ] case
+    e:MAX         [ f:drop        ] case ;
 
-:e:to-f (e-|f:-n)
-  e:NAN  [ f:NAN  ] case
-  e:INF  [ f:INF  ] case
-  e:-INF [ f:-INF ] case
-  n:to-float f:-encode ;
+  :e:to-f (e-|f:-n)
+    e:NAN  [ f:NAN  ] case
+    e:INF  [ f:INF  ] case
+    e:-INF [ f:-INF ] case
+    n:to-float f:-encode ;
+}}
 ~~~
 
 ~~~
