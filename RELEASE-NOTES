@@ -9,6 +9,7 @@ Tooling
 - allow setting the image size, stack sizes when building
 - add Python implementations of retro-unu, retro-muri, retro-extend
 - add support for generating an epub from the documentation
+- add a tool to locate files using deprecated words
 
 Standard Library
 

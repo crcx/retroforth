@@ -25,7 +25,7 @@ for me.
 :import        here swap BOOK-BASE s:prepend file:slurp ;
 :/n            ASCII:LF @Out file:write ;
 :add-to-book   here [ @Out file:write ] s:for-each /n ;
-:process-files [ import add-to-book $. c:put ] a:for-each nl ;
+:process-files [ #1 a:fetch import add-to-book $. c:put ] a:for-each nl ;
 :open          'doc/RETRO-Book.md file:open-for-writing !Out ;
 :close         @Out file:close ;
 :assemble      open process-files close ;
