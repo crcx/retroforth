@@ -11,6 +11,10 @@ also use any Retro code directly.
 'dict-words-listing.forth include
 ~~~
 
+~~~
+'compat.retro include
+~~~
+
 Save the image with anything loaded here added in. The
 `retro` binary will be rebuilt using the extended image.
 

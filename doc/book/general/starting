@@ -49,8 +49,8 @@ retro filename
 ```
 
 You can follow the filename with any arguments that it may need.
-These will be accessible to the program via the `sys:argc` and
-`sys:argv` words.
+These will be accessible to the program via the `script:arguments`
+and `script:get-argument` words.
 
 Source files must be written in Unu format.
 

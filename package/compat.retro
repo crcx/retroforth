@@ -1,0 +1,10 @@
+# Deprecated Names
+
+To be removed in 2021.1:
+
+~~~
+:sys:argc script:arguments ;
+:sys:argv script:get-argument ;
+:sys:name script:name ;
+~~~
+

@@ -48,11 +48,3 @@ introspection and control of the `include` process.
   :script:abort-include (-)         identify #7 @Scripting io:invoke ;
 }}
 ~~~
-
-# Deprecated Names
-
-~~~
-:sys:argc script:arguments ;
-:sys:argv script:get-argument ;
-:sys:name script:name ;
-~~~
