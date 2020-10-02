@@ -3567,38 +3567,39 @@ for return addresses.
 
 ## Instruction Table
 
-| Opcode | Muri | Full Name          | Data Stack | Address Stack |
-| ------ | ---- | ------------------ | ---------- | ------------- |
-|  0     | ..   | nop                |   -        |   -           |
-|  1     | li   | lit                |   -n       |   -           |
-|  2     | du   | dup                |  n-nn      |   -           |
-|  3     | dr   | drop               |  n-        |   -           |
-|  4     | sw   | swap               | xy-yx      |   -           |
-|  5     | pu   | push               |  n-        |   -n          |
-|  6     | po   | pop                |   -n       |  n-           |
-|  7     | ju   | jump               |  a-        |   -           |
-|  8     | ca   | call               |  a-        |   -A          |
-|  9     | cc   | conditional call   | af-        |   -A          |
-| 10     | re   | return             |   -        |  A-           |
-| 11     | eq   | equality           | xy-f       |   -           |
-| 12     | ne   | inequality         | xy-f       |   -           |
-| 13     | lt   | less than          | xy-f       |   -           |
-| 14     | gt   | greater than       | xy-f       |   -           |
-| 15     | fe   | fetch              |  a-n       |   -           |
-| 16     | st   | store              | na-        |   -           |
-| 17     | ad   | addition           | xy-n       |   -           |
-| 18     | su   | subtraction        | xy-n       |   -           |
-| 19     | mu   | multiplication     | xy-n       |   -           |
-| 20     | di   | divide & remainder | xy-rq      |   -           |
-| 21     | an   | bitwise and        | xy-n       |   -           |
-| 22     | or   | bitwise or         | xy-n       |   -           |
-| 23     | xo   | bitwise xor        | xy-n       |   -           |
-| 24     | sh   | shift              | xy-n       |   -           |
-| 25     | zr   | zero return        |  n-?       |   -           |
-| 26     | ha   | halt               |   -        |   -           |
-| 27     | ie   | i/o enumerate      |   -n       |   -           |
-| 28     | iq   | i/o query          |  n-xy      |   -           |
-| 29     | ii   | i/o invoke         | ...n-      |   -           |
+                                         |     Stacks      |
+    | Opcode | Muri | Full Name          | Data  | Address |
+    | ------ | ---- | ------------------ | ----- | ------- |
+    |  0     | ..   | nop                |   -   |   -     |
+    |  1     | li   | lit                |   -n  |   -     |
+    |  2     | du   | dup                |  n-nn |   -     |
+    |  3     | dr   | drop               |  n-   |   -     |
+    |  4     | sw   | swap               | xy-yx |   -     |
+    |  5     | pu   | push               |  n-   |   -n    |
+    |  6     | po   | pop                |   -n  |  n-     |
+    |  7     | ju   | jump               |  a-   |   -     |
+    |  8     | ca   | call               |  a-   |   -A    |
+    |  9     | cc   | conditional call   | af-   |   -A    |
+    | 10     | re   | return             |   -   |  A-     |
+    | 11     | eq   | equality           | xy-f  |   -     |
+    | 12     | ne   | inequality         | xy-f  |   -     |
+    | 13     | lt   | less than          | xy-f  |   -     |
+    | 14     | gt   | greater than       | xy-f  |   -     |
+    | 15     | fe   | fetch              |  a-n  |   -     |
+    | 16     | st   | store              | na-   |   -     |
+    | 17     | ad   | addition           | xy-n  |   -     |
+    | 18     | su   | subtraction        | xy-n  |   -     |
+    | 19     | mu   | multiplication     | xy-n  |   -     |
+    | 20     | di   | divide & remainder | xy-rq |   -     |
+    | 21     | an   | bitwise and        | xy-n  |   -     |
+    | 22     | or   | bitwise or         | xy-n  |   -     |
+    | 23     | xo   | bitwise xor        | xy-n  |   -     |
+    | 24     | sh   | shift              | xy-n  |   -     |
+    | 25     | zr   | zero return        |  n-?  |   -     |
+    | 26     | ha   | halt               |   -   |   -     |
+    | 27     | ie   | i/o enumerate      |   -n  |   -     |
+    | 28     | iq   | i/o query          |  n-xy |   -     |
+    | 29     | ii   | i/o invoke         | ...n- |   -     |
 
 ## Encoding
 
@@ -3643,13 +3644,13 @@ The `fe` instruction allows queries of some data related to
 the Nga VM state. These are returned by reading from negative
 addresses:
 
-| Address | Returns                |
-| ------- | ---------------------- |
-| -1      | Data stack depth       |
-| -2      | Address stack depth    |
-| -3      | Maximum Image Size     |
-| -4      | Minimum Integer Value  |
-| -5      | Maximum Integer Value  |
+    | Address | Returns                |
+    | ------- | ---------------------- |
+    | -1      | Data stack depth       |
+    | -2      | Address stack depth    |
+    | -3      | Maximum Image Size     |
+    | -4      | Minimum Integer Value  |
+    | -5      | Maximum Integer Value  |
 
 ## I/O Devices
 
@@ -3692,19 +3693,19 @@ All other devices are optional and can be specified in any order.
 
 The currently supported and reserved device identifiers are:
 
-| ID   | Device Type      | Notes                      |
-| ---- | ---------------- | -------------------------- |
-| 0000 | Generic Output   | Always present as device 0 |
-| 0001 | Keyboard         |                            |
-| 0002 | Floating Point   |                            |
-| 0003 | Block Storage    | Raw, 1024 cell blocks      |
-| 0004 | Filesystem       | Unix-style Files           |
-| 0005 | Network: Gopher  | Make gopher requests       |
-| 0006 | Network: HTTP    | Make HTTP requests         |
-| 0007 | Network: Sockets |                            |
-| 0008 | Syscalls: Unix   |                            |
-| 0009 | Scripting Hooks  |                            |
-| 0010 | Random Number    |                            |
+    | ID   | Device Type      | Notes                      |
+    | ---- | ---------------- | -------------------------- |
+    | 0000 | Generic Output   | Always present as device 0 |
+    | 0001 | Keyboard         |                            |
+    | 0002 | Floating Point   |                            |
+    | 0003 | Block Storage    | Raw, 1024 cell blocks      |
+    | 0004 | Filesystem       | Unix-style Files           |
+    | 0005 | Network: Gopher  | Make gopher requests       |
+    | 0006 | Network: HTTP    | Make HTTP requests         |
+    | 0007 | Network: Sockets |                            |
+    | 0008 | Syscalls: Unix   |                            |
+    | 0009 | Scripting Hooks  |                            |
+    | 0010 | Random Number    |                            |
 
 This list may be revised in the future. The only guaranteed
 stable indentifier is 0000 for generic output.
