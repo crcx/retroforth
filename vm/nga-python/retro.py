@@ -104,6 +104,90 @@ class FloatStack(object):
 floats = FloatStack()
 afloats = FloatStack()
 
+files = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+
+
+def file_open():
+    global files
+    slot = 0
+    i = 1
+    while i < 8:
+        if files[i] == 0:
+            slot = i
+        i += 1
+    mode = stack.pop()
+    name = extractString(stack.pop())
+    if slot > 0:
+        if mode == 0:
+            if os.path.exists(name):
+                files[slot] = open(name, "r")
+            else:
+                slot = 0
+        elif mode == 1:
+            files[slot] = open(name, "w")
+        elif mode == 2:
+            files[slot] = open(name, "a")
+        elif mode == 3:
+            if os.path.exists(name):
+                files[slot] = open(name, "r+")
+            else:
+                slot = 0
+    return slot
+
+
+def file_read():
+    global stack
+    slot = stack.pop()
+    return ord(files[slot].read(1))
+
+
+def file_write():
+    global stack
+    slot = stack.pop()
+    files[slot].write(chr(stack.pop()))
+    return 1
+
+
+def file_close():
+    global files, stack
+    slot = stack.pop()
+    files[slot].close()
+    files[slot] = 0
+    return 0
+
+
+def file_pos():
+    global stack
+    slot = stack.pop()
+    return files[slot].tell()
+
+
+def file_seek():
+    global stack
+    slot = stack.pop()
+    pos = stack.pop()
+    return files[slot].seek(pos, 0)
+
+
+def file_size():
+    global stack
+    slot = stack.pop()
+    at = files[slot].tell()
+    files[slot].seek(0, 2)  # SEEK_END
+    end = files[slot].tell()
+    files[slot].seek(at, 0)  # SEEK_SET
+    return end
+
+
+def file_delete():
+    global stack
+    name = extractString(stack.pop())
+    i = 0
+    if os.path.exists(name):
+        os.remove(name)
+        i = 1
+    return i
+
 
 def rxDivMod(a, b):
     x = abs(a)
@@ -342,7 +426,7 @@ def i_ha():
 
 
 def i_ie():
-    stack.append(2)
+    stack.append(3)
 
 
 def i_iq():
@@ -353,19 +437,23 @@ def i_iq():
     if device == 1:  # floating point
         stack.append(1)
         stack.append(2)
+    if device == 2:  # files
+        stack.append(0)
+        stack.append(4)
 
 
 def i_ii():
+    global stack, memory, floats, files
     device = stack.pop()
     if device == 0:  # generic output
         rxDisplayCharacter()
     if device == 1:  # floating point
         action = stack.pop()
-        print(floats.data, action)
         if action == 0:  # number to float
             floats.push(float(stack.pop()))
         if action == 1:  # string to float
-            floats.push(float(extractString(stack.pop())))
+            s = stack.pop()
+            floats.push(float(extractString(s)))
         if action == 2:  # float to number
             stack.append(int(floats.pop()))
         if action == 3:  # float to string
@@ -422,6 +510,26 @@ def i_ii():
             floats.push(afloats.pop())
         if action == 29:  # alt. depth
             stack.append(afloats.depth())
+    if device == 2:  # files
+        action = stack.pop()
+        if action == 0:
+            stack.append(file_open())
+        if action == 1:
+            file_close()
+        if action == 2:
+            stack.append(file_read())
+        if action == 3:
+            file_write()
+        if action == 4:
+            stack.append(file_pos())
+        if action == 5:
+            file_seek()
+        if action == 6:
+            stack.append(file_size())
+        if action == 7:
+            file_delete()
+        if action == 8:  # flush
+            pass
 
 
 instructions = [
@@ -492,11 +600,10 @@ def injectString(s, to):
     memory[i] = 0
 
 
-def execute(word, output="console"):
+def execute(word, notfound, output="console"):
     global ip, memory, stack, address
     ip = word
     address.append(0)
-    notfound = memory[findEntry("err:notfound") + 1]
     while ip < 100000 and len(address) > 0:
         if ip == notfound:
             print("ERROR: word not found!")
@@ -534,6 +641,8 @@ def load_image():
 def run():
     Done = False
     Interpreter = memory[findEntry("interpret") + 1]
+    notfound = memory[findEntry("err:notfound") + 1]
+
     while not Done:
         Line = input("\nOk> ")
         if Line == "bye":
@@ -542,7 +651,7 @@ def run():
             for Token in Line.split(" "):
                 injectString(Token, 1025)
                 stack.append(1025)
-                execute(Interpreter)
+                execute(Interpreter, notfound)
 
 
 if __name__ == "__main__":

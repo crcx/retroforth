@@ -43,6 +43,7 @@ Python
 - fixed the `sh` instruction (which was totally broken prior to this, thanks
   to Scott for reporting this)
 - retro.py now supports the floating point i/o device
+- added support for file i/o device
 
 Documentation
 
