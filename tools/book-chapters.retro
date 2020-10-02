@@ -2,7 +2,6 @@ This contains the list of files for the chapters in the book.
 
 ~~~
 { { 'Introduction                   'general/introduction }
-  { 'Copyrights                     'general/copyrights }
   { 'Obtaining_RETRO                'building/obtaining }
   { 'Building_on_Unix               'building/unix }
   { 'Building_on_Windows            'building/windows }
@@ -62,5 +61,6 @@ This contains the list of files for the chapters in the book.
   { 'Underscores_in_Names           'tech-notes/underscores-in-names }
   { 'Code_It_Yourself_Manifesto     'tech-notes/code-it-yourself }
   { 'Deprecation_Policy             'general/deprecation }
+  { 'Copyrights                     'general/copyrights }
 } 'TOC const
 ~~~
