@@ -3,8 +3,7 @@
 ## Stable Releases
 
 I periodically make stable releases. This will typically happen
-two to four times per year. These are good for those needing a
-solid base that doesn't change frequently.
+quarterly.
 
 - http://forthworks.com/retro
 - http://forth.works
@@ -14,17 +13,13 @@ solid base that doesn't change frequently.
 A lot of development happens between releases. I make snapshots
 of my working source tree nightly (and often more often).
 
-This is what I personally recommend for most users. It reflects
-my latest system and is normally reliable as it's used daily in
-production.
-
 The latest snapshot can be downloaded from the following stable
 URLs:
 
 * http://forthworks.com/retro/r/latest.tar.gz
 * gopher://forthworks.com/9/retro/r/latest.tar.gz
 
-## Repository
+## Fossil Repository
 
 I use a Fossil repository to manage development. To obtain a
 copy of the repository install Fossil and:
@@ -44,3 +39,17 @@ problems as some commits may be in a partially broken state.
 If you have problems, check the version of Fossil you are
 using. I am currently using Fossil 2.10, you may experience
 issues checking out or cloning if using older versions.
+
+## git Repository
+
+There is now a read-only mirror of the fossil repository
+provided via git. This is hosted on sr.ht.
+
+    git clone https://git.sr.ht/~crc_/retroforth
+
+## Notes
+
+I personally recommend using either a recent snapshot or a
+build from one of the repositories. This will reflect the
+latest system as I use it, and are normally reliable as I
+run them daily for my production systems.
