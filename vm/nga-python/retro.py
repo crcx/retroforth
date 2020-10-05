@@ -6,7 +6,7 @@
 # Optimizations and process() rewrite by Greg Copeland
 # -----------------------------------------------------
 
-import os, sys, math, time, struct
+import os, sys, math, time, struct, random, datetime
 from struct import pack, unpack
 
 ip = 0
@@ -15,15 +15,44 @@ address = []
 memory = []
 
 
-class FloatStack(object):
+class clock:
+    def __getitem__(self, id):
+        now = datetime.datetime.now()
+        ids = {
+            "time": time.time,
+            "year": now.year,
+            "month": now.month,
+            "day": now.day,
+            "hour": now.hour,
+            "minute": now.minute,
+            "second": now.second,
+            # No time_utc?w
+            "year_utc": now.utcnow().year,
+            "month_utc": now.utcnow().month,
+            "day_utc": now.utcnow().day,
+            "hour_utc": now.utcnow().hour,
+            "minute_utc": now.utcnow().minute,
+            "second_utc": now.utcnow().second,
+        }
+        return ids[id]
+
+
+clock = clock()
+
+class rng:
+    def __call__(self, seed=None, new_seed=True):
+        return random.randint(-2147483647, 2147483646)
+
+
+rng = rng()
+
+
+class float_stack(object):
     def __init__(self, *d):
         self.data = list(d)
 
     def __getitem__(self, id):
         return self.data[id]
-
-    def __call__(self):
-        return self.data
 
     def add(self):
         self.data.append(self.data.pop() + self.data.pop())
@@ -38,7 +67,7 @@ class FloatStack(object):
         a, b = self.data.pop(), self.data.pop()
         self.data.append(b / a)
 
-    def ceiling(self):
+    def ceil(self):
         self.data.append(math.ceil(self.data.pop()))
 
     def floor(self):
@@ -101,8 +130,8 @@ class FloatStack(object):
         self.data.append(math.atan(self.data.pop()))
 
 
-floats = FloatStack()
-afloats = FloatStack()
+floats = float_stack()
+afloats = float_stack()
 
 files = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
@@ -116,7 +145,7 @@ def file_open():
             slot = i
         i += 1
     mode = stack.pop()
-    name = extractString(stack.pop())
+    name = extract_string(stack.pop())
     if slot > 0:
         if mode == 0:
             if os.path.exists(name):
@@ -181,7 +210,7 @@ def file_size():
 
 def file_delete():
     global stack
-    name = extractString(stack.pop())
+    name = extract_string(stack.pop())
     i = 0
     if os.path.exists(name):
         os.remove(name)
@@ -189,7 +218,7 @@ def file_delete():
     return i
 
 
-def rxDivMod(a, b):
+def div_mod(a, b):
     x = abs(a)
     y = abs(b)
     q, r = divmod(x, y)
@@ -203,22 +232,22 @@ def rxDivMod(a, b):
     return q, r
 
 
-def findEntry(named):
+def find_entry(named):
     header = memory[2]
     Done = False
     while header != 0 and not Done:
-        if named == extractString(header + 3):
+        if named == extract_string(header + 3):
             Done = True
         else:
             header = memory[header]
     return header
 
 
-def rxGetInput():
+def get_input():
     return ord(sys.stdin.read(1))
 
 
-def rxDisplayCharacter():
+def display_character():
     global stack
     if stack[-1] > 0 and stack[-1] < 128:
         if stack[-1] == 8:
@@ -381,7 +410,7 @@ def i_di():
     global ip, memory, stack, address
     a = stack[-1]
     b = stack[-2]
-    stack[-1], stack[-2] = rxDivMod(b, a)
+    stack[-1], stack[-2] = div_mod(b, a)
     stack[-1] = unpack("=l", pack("=L", stack[-1] & 0xFFFFFFFF))[0]
     stack[-2] = unpack("=l", pack("=L", stack[-2] & 0xFFFFFFFF))[0]
 
@@ -426,7 +455,7 @@ def i_ha():
 
 
 def i_ie():
-    stack.append(3)
+    stack.append(5)
 
 
 def i_iq():
@@ -440,96 +469,87 @@ def i_iq():
     if device == 2:  # files
         stack.append(0)
         stack.append(4)
+    if device == 3:  # rng
+        stack.append(0)
+        stack.append(10)
+    if device == 4:  # time
+        stack.append(0)
+        stack.append(5)
+
+
+float_instr = {
+    0: lambda: floats.push(float(stack.pop())),  # number to float
+    1: lambda: floats.push(float(extract_string(stack.pop()))),  # string to float
+    2: lambda: stack.append(int(floats.pop())),  # float to number
+    3: lambda: inject_string(str(floats.pop()), stack.pop()),  # float to string
+    4: lambda: floats.add(),  # add
+    5: lambda: floats.sub(),  # sub
+    6: lambda: floats.mul(),  # mul
+    7: lambda: floats.div(),  # div
+    8: lambda: floats.floor(),  # floor
+    9: lambda: floats.ceil(),  # ceil
+    10: lambda: floats.sqrt(),  # sqrt
+    11: lambda: stack.append(floats.eq()),  # eq
+    12: lambda: stack.append(floats.neq()),  # -eq
+    13: lambda: stack.append(floats.lt()),  # lt
+    14: lambda: stack.append(floats.gt()),  # gt
+    15: lambda: stack.append(floats.depth()),  # depth
+    16: lambda: floats.dup(),  # dup
+    17: lambda: floats.drop(),  # drop
+    18: lambda: floats.swap(),  # swap
+    19: lambda: floats.log(),  # log
+    20: lambda: floats.pow(),  # pow
+    21: lambda: floats.sin(),  # sin
+    22: lambda: floats.cos(),  # cos
+    23: lambda: floats.tan(),  # tan
+    24: lambda: floats.asin(),  # asin
+    25: lambda: floats.atan(),  # atan
+    26: lambda: floats.acos(),  # acos
+    27: lambda: afloats.push(floats.pop()),  # to alt
+    28: lambda: floats.push(afloats.pop()),  # from alt
+    29: lambda: stack.append(afloats.depth()),  # alt. depth
+}
+files_instr = {
+    0: lambda: stack.append(file_open()),
+    1: lambda: file_close(),
+    2: lambda: stack.append(file_read()),
+    3: lambda: file_write(),
+    4: lambda: stack.append(file_pos()),
+    5: lambda: file_seek(),
+    6: lambda: stack.append(file_size()),
+    7: lambda: file_delete(),
+    8: lambda: 1 + 1,
+}
+
+rng_instr = {0: lambda: stack.append(rng())}
+
+clock_instr = {
+    0: lambda: stack.append(int(time.time())),
+    1: lambda: stack.append(datetime.date.today().day),
+    2: lambda: stack.append(datetime.date.today().month),
+    3: lambda: stack.append(datetime.date.today().year),
+    4: lambda: stack.append(datetime.datetime.now().hour),
+    5: lambda: stack.append(datetime.datetime.now().minute),
+    6: lambda: stack.append(clock["second"]),
+}
 
 
 def i_ii():
     global stack, memory, floats, files
     device = stack.pop()
     if device == 0:  # generic output
-        rxDisplayCharacter()
+        display_character()
     if device == 1:  # floating point
         action = stack.pop()
-        if action == 0:  # number to float
-            floats.push(float(stack.pop()))
-        if action == 1:  # string to float
-            s = stack.pop()
-            floats.push(float(extractString(s)))
-        if action == 2:  # float to number
-            stack.append(int(floats.pop()))
-        if action == 3:  # float to string
-            injectString(str(floats.pop()), stack.pop())
-        if action == 4:  # add
-            floats.add()
-        if action == 5:  # sub
-            floats.sub()
-        if action == 6:  # mul
-            floats.mul()
-        if action == 7:  # div
-            floats.div()
-        if action == 8:  # floor
-            floats.floor()
-        if action == 9:  # ceil
-            floats.ceiling()
-        if action == 10:  # sqrt
-            floats.sqrt()
-        if action == 11:  # eq
-            stack.append(floats.eq())
-        if action == 12:  # -eq
-            stack.append(floats.neq())
-        if action == 13:  # lt
-            stack.append(floats.lt())
-        if action == 14:  # gt
-            stack.append(floats.gt())
-        if action == 15:  # depth
-            stack.append(floats.depth())
-        if action == 16:  # dup
-            floats.dup()
-        if action == 17:  # drop
-            floats.drop()
-        if action == 18:  # swap
-            floats.swap()
-        if action == 19:  # log
-            floats.log()
-        if action == 20:  # pow
-            floats.pow()
-        if action == 21:  # sin
-            floats.sin()
-        if action == 22:  # cos
-            floats.cos()
-        if action == 23:  # tan
-            floats.tan()
-        if action == 24:  # asin
-            floats.asin()
-        if action == 25:  # atan
-            floats.atan()
-        if action == 26:  # acos
-            floats.acos()
-        if action == 27:  # to alt.
-            afloats.push(floats.pop())
-        if action == 28:  # from alt.
-            floats.push(afloats.pop())
-        if action == 29:  # alt. depth
-            stack.append(afloats.depth())
+        float_instr[int(action)]()
     if device == 2:  # files
         action = stack.pop()
-        if action == 0:
-            stack.append(file_open())
-        if action == 1:
-            file_close()
-        if action == 2:
-            stack.append(file_read())
-        if action == 3:
-            file_write()
-        if action == 4:
-            stack.append(file_pos())
-        if action == 5:
-            file_seek()
-        if action == 6:
-            stack.append(file_size())
-        if action == 7:
-            file_delete()
-        if action == 8:  # flush
-            pass
+        files_instr[int(action)]()
+    if device == 3:  # rng
+        rng_instr[0]()
+    if device == 4:  # clock
+        action = stack.pop()
+        clock_instr[int(action)]()
 
 
 instructions = [
@@ -566,7 +586,7 @@ instructions = [
 ]
 
 
-def validateOpcode(opcode):
+def validate_opcode(opcode):
     I0 = opcode & 0xFF
     I1 = (opcode >> 8) & 0xFF
     I2 = (opcode >> 16) & 0xFF
@@ -582,7 +602,7 @@ def validateOpcode(opcode):
         return False
 
 
-def extractString(at):
+def extract_string(at):
     i = at
     s = ""
     while memory[i] != 0:
@@ -591,7 +611,7 @@ def extractString(at):
     return s
 
 
-def injectString(s, to):
+def inject_string(s, to):
     global memory
     i = to
     for c in s:
@@ -608,7 +628,7 @@ def execute(word, notfound, output="console"):
         if ip == notfound:
             print("ERROR: word not found!")
         opcode = memory[ip]
-        if validateOpcode(opcode):
+        if validate_opcode(opcode):
             I0 = opcode & 0xFF
             I1 = (opcode >> 8) & 0xFF
             I2 = (opcode >> 16) & 0xFF
@@ -639,21 +659,67 @@ def load_image():
 
 
 def run():
-    Done = False
-    Interpreter = memory[findEntry("interpret") + 1]
-    notfound = memory[findEntry("err:notfound") + 1]
-
-    while not Done:
-        Line = input("\nOk> ")
-        if Line == "bye":
-            Done = True
+    done = False
+    while not done:
+        line = input("\nOk> ")
+        if line == "bye":
+            done = True
         else:
-            for Token in Line.split(" "):
-                injectString(Token, 1025)
+            for token in line.split(" "):
+                inject_string(token, 1025)
                 stack.append(1025)
-                execute(Interpreter, notfound)
+                execute(interpreter, not_found)
+
+
+def run_file(file):  # untested, but should work.
+    in_block = False
+    with open(file, "r") as source:
+        for line in source.readlines():
+            if line.rstrip() == "~~~":
+                in_block = not in_block
+            elif in_block:
+                for token in line.strip().split(" "):
+                    if token != "":
+                        inject_string(token, 1025)
+                        stack.append(1025)
+                        execute(interpreter, not_found)
+
+
+def update_image():
+    import requests
+    import shutil
+
+    data = requests.get("http://forth.works/ngaImage", stream=True)
+    with open("ngaImage", "wb") as f:
+        data.raw.decode_content = True
+        shutil.copyfileobj(data.raw, f)
+
+
+def interactive_startup():
+    cmd = input("Would you like to download the latest image?\n (y/n)\t")
+    if cmd.lower().strip() == "y":
+        update_image()
+    load_image()
+    cmd = input("Would you like to run a file?\n (y/n)\t")
+    if cmd.lower().strip() == "n":
+        run()
+    else:
+        cmd = input("Enter the name of the file you wish to run\t")
+        if os.path.exists(cmd):
+            run_file(cmd)
+        else:
+            print(" Error: File not found. ")
 
 
 if __name__ == "__main__":
     load_image()
-    run()
+    interpreter = memory[find_entry("interpret") + 1]
+    not_found = memory[find_entry("err:notfound") + 1]
+    if len(sys.argv) > 1:
+        for source in sys.argv[1:]:
+            if os.path.exists(source):
+                run_file(source)
+            else:
+                print("File '{0}' not found".format(source))
+    else:
+        run()
