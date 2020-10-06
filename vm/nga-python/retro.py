@@ -39,6 +39,7 @@ class clock:
 
 clock = clock()
 
+
 class rng:
     def __call__(self, seed=None, new_seed=True):
         return random.randint(-2147483647, 2147483646)
@@ -525,12 +526,18 @@ rng_instr = {0: lambda: stack.append(rng())}
 
 clock_instr = {
     0: lambda: stack.append(int(time.time())),
-    1: lambda: stack.append(datetime.date.today().day),
-    2: lambda: stack.append(datetime.date.today().month),
-    3: lambda: stack.append(datetime.date.today().year),
-    4: lambda: stack.append(datetime.datetime.now().hour),
-    5: lambda: stack.append(datetime.datetime.now().minute),
+    1: lambda: stack.append(clock["day"]),
+    2: lambda: stack.append(clock["month"]),
+    3: lambda: stack.append(clock["year"]),
+    4: lambda: stack.append(clock["hour"]),
+    5: lambda: stack.append(clock["minute"]),
     6: lambda: stack.append(clock["second"]),
+    7: lambda: stack.append(clock["day_utc"]),
+    8: lambda: stack.append(clock["month_utc"]),
+    9: lambda: stack.append(clock["year_utc"]),
+    10: lambda: stack.append(clock["hour_utc"]),
+    11: lambda: stack.append(clock["minute_utc"]),
+    12: lambda: stack.append(clock["second_utc"]),
 }
 
 
