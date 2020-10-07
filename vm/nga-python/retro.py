@@ -456,7 +456,7 @@ def i_ha():
 
 
 def i_ie():
-    stack.append(5)
+    stack.append(6)
 
 
 def i_iq():
@@ -476,6 +476,9 @@ def i_iq():
     if device == 4:  # time
         stack.append(0)
         stack.append(5)
+    if device == 5:  # scripting
+        stack.append(0)
+        stack.append(9)
 
 
 float_instr = {
@@ -557,6 +560,14 @@ def i_ii():
     if device == 4:  # clock
         action = stack.pop()
         clock_instr[int(action)]()
+    if device == 5:  # scripting
+        action = stack.pop()
+        if action == 0:
+            stack.append(len(sys.argv) - 2)
+        if action == 1:
+            a = stack.pop()
+            b = stack.pop()
+            stack.append(inject_string(sys.argv[a + 2], b))
 
 
 instructions = [
@@ -625,6 +636,7 @@ def inject_string(s, to):
         memory[i] = ord(c)
         i = i + 1
     memory[i] = 0
+    return to
 
 
 def execute(word, notfound, output="console"):
@@ -678,7 +690,11 @@ def run():
                 execute(interpreter, not_found)
 
 
-def run_file(file):  # untested, but should work.
+def run_file(file):
+    if not os.path.exists(file):
+        print("File '{0}' not found".format(file))
+        return
+
     in_block = False
     with open(file, "r") as source:
         for line in source.readlines():
@@ -722,11 +738,27 @@ if __name__ == "__main__":
     load_image()
     interpreter = memory[find_entry("interpret") + 1]
     not_found = memory[find_entry("err:notfound") + 1]
-    if len(sys.argv) > 1:
-        for source in sys.argv[1:]:
-            if os.path.exists(source):
-                run_file(source)
-            else:
-                print("File '{0}' not found".format(source))
-    else:
+
+    if len(sys.argv) == 1:
         run()
+
+    if len(sys.argv) == 2:
+        run_file(sys.argv[1])
+
+    sources = []
+
+    if len(sys.argv) > 2:
+        i = 1
+        e = len(sys.argv)
+        while i < e:
+            param = sys.argv[i]
+            if param == "-f":
+                i += 1
+                sources.append(sys.argv[i])
+            i += 1
+
+    if len(sys.argv) > 2 and sys.argv[1][0] != "-":
+        run_file(sys.argv[1])
+    else:
+        for source in sources:
+            run_file(source)
