@@ -3,7 +3,7 @@
 This is a simple `echo` style example.
 
 ~~~
-#0 script:get-argument
+#0 script:arguments
 ~~~
 
 Then a simple loop:
