@@ -26,7 +26,7 @@ class clock:
             "hour": now.hour,
             "minute": now.minute,
             "second": now.second,
-            # No time_utc?w
+            # No time_utc?
             "year_utc": now.utcnow().year,
             "month_utc": now.utcnow().month,
             "day_utc": now.utcnow().day,
@@ -568,6 +568,11 @@ def i_ii():
             a = stack.pop()
             b = stack.pop()
             stack.append(inject_string(sys.argv[a + 2], b))
+        if action == 2:
+            run_file(extract_string(stack.pop()))
+        if action == 3:
+            b = stack.pop()
+            stack.append(inject_string(sys.argv[0], b))
 
 
 instructions = [
@@ -621,11 +626,10 @@ def validate_opcode(opcode):
 
 
 def extract_string(at):
-    i = at
     s = ""
-    while memory[i] != 0:
-        s = s + chr(memory[i])
-        i = i + 1
+    while memory[at] != 0:
+        s = s + chr(memory[at])
+        at = at + 1
     return s
 
 
@@ -642,8 +646,9 @@ def inject_string(s, to):
 def execute(word, notfound, output="console"):
     global ip, memory, stack, address
     ip = word
-    address.append(0)
-    while ip < 100000 and len(address) > 0:
+    if len(address) == 0:
+        address.append(0)
+    while ip < 100000:
         if ip == notfound:
             print("ERROR: word not found!")
         opcode = memory[ip]
@@ -661,7 +666,9 @@ def execute(word, notfound, output="console"):
             if I3 != 0:
                 instructions[I3]()
         else:
-            print("Invalid Bytecode", opcode, ip)
+            print("Invalid Bytecode: ", opcode, "at", ip)
+            ip = 2000000
+        if len(address) == 0:
             ip = 2000000
         ip = ip + 1
     return
