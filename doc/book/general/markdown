@@ -1,0 +1,111 @@
+# RETRO's Markdown Syntax
+
+I use a variation of Markdown for writing documentation and
+when commenting code written in RETRO. The syntax is
+described below.
+
+## Basic Syntax
+
+### Headings
+
+Headings start with one or more number (`#`) signs. The
+number of number signs should correspond to the heading
+level.
+
+    # Heading 1
+    ## Heading 2
+    ### Heading 3
+    #### Heading 4
+
+My Markdown does not support the alternate underline
+format for headings.
+
+### Paragraphs & Line Breaks
+
+To create paragraphs, use a blank line to separate one or
+more lines of text.
+
+Do not add spaces or tabs at the start of a paragraph as
+this may cause the Markdown tools to interpret the line
+improperly.
+
+Line breaks are entered at the end of each line.
+
+### Emphasis
+
+#### Bold
+
+To make text bold, surround it with asterisks.
+
+    The *bold* word.
+
+#### Italic
+
+To make text italic, surround it with front slashes.
+
+    The /italic words/.
+
+#### Underline
+
+To underline text, surround it with underscores.
+
+    Underline _some text_.
+
+### Horizontal Rules
+
+Horizontal rules can be inserted by starting a line with a
+sequence of four or more dashes (`-`) or four or more alternating
+dash and plus (`-+-+`) characters.
+
+    ----
+
+## Lists
+
+Lists start with a `-` or `*`, followed by a space, then the item
+text. Additionally, nested lists starting with two spaces before
+the list marker can be used.
+
+    - this is a list item
+    - so is this
+
+      - this will be indented
+      - likewise
+
+    - back to the standard level
+
+## Code
+
+### Code Blocks
+
+Code blocks start and end with ~~~ on a line by themselves.
+
+    Sum the values.
+
+    ~~~
+    { #10 #20 #13 #4 #22 } #0 [ + ] a:reduce
+    ~~~
+
+You can also denote code by starting the line with four spaces.
+
+        This line will be treated as code.
+
+### Test Blocks
+
+Unit testing blocks start and end with ``` on a line by
+themselves.
+
+    ```
+    { #10 #20 #13 #4 #22 } #0 [ + ] a:reduce
+    ```
+
+### Inline Code
+
+To mark a sequence as inline code, surround it with backticks.
+
+    For instance, look at the value in `Compiler` to see if
+    the colon compiler is active.
+
+## Escaping
+
+You can preceed a character with a backslash (\\) to have it
+not be processed as a Markdown element.

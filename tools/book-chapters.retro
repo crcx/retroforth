@@ -10,6 +10,7 @@ This contains the list of files for the chapters in the book.
   { 'Starting_RETRO                 'general/starting }
   { 'Basic_User_Interactions        'general/basic-interactions }
   { 'Literate_Source_With_Unu       'general/retro-unu }
+  { 'Markdown                       'general/markdown }
   { 'A_Quick_Tutorial               'general/quick-tutorial }
   { 'Syntax                         'general/syntax }
   { 'Toolchain:_Additional_Tools    'toolchain/info/additional-tools }
