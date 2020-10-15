@@ -18,6 +18,8 @@ so you can now build RETRO without needing a C compiler.
   (thanks to Scott McCallum for reporting this)
 - fixed the `sh` instruction (which was totally broken prior to
   this, thanks to Scott for reporting this)
+- `retro-describe` no longer uses the `-J` parameter when invoking
+  `xargs` which should let it work on non-BSD systems.
 
 ## Build Improvements
 

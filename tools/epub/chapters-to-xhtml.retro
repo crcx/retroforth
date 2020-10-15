@@ -23,13 +23,8 @@ for me.
 ~~~
 'Out var
 
-:import        BOOK-BASE over OUT-BASE '>%s%s.html_retro_example/markdown-to-xhtml.retro_%s%s s:format unix:system ;
-:/n            ASCII:LF @Out file:write ;
-:add-to-book   here [ @Out file:write ] s:for-each ;
-:process-files [ #1 a:fetch import $. c:put ] a:for-each nl ;
-:open          'doc/RETRO-Book.md file:open-for-writing !Out ;
-:close         @Out file:close ;
-:assemble      open process-files close ;
+:import    BOOK-BASE over OUT-BASE '>%s%s.html_retro_example/markdown-to-xhtml.retro_%s%s s:format unix:system ;
+:assemble  [ #1 a:fetch import $. c:put ] a:for-each nl ;
 ~~~
 
 ~~~
