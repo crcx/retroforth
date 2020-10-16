@@ -17,12 +17,20 @@ optional: build bin/retro-repl
 
 toolchain: dirs bin/retro-embedimage bin/retro-extend bin/retro-muri bin/retro-unu
 
+image: vm/nga-c/image.c
+
+repl: bin/retro-repl
+
 dirs:
 	mkdir -p bin
 	cp tools/retro-document.sh bin/retro-document
 
 clean:
 	rm -f bin/*
+
+
+
+# installation targets
 
 install: build install-data install-docs install-examples install-manpages
 	install -m 755 -d -- $(DESTDIR)$(PREFIX)/bin
@@ -77,24 +85,9 @@ install-manpages:
 	install -c -m 644 man/retro-tags.1 $(MANDIR)/retro-tags.1
 	install -c -m 644 man/retro-locate.1 $(MANDIR)/retro-locate.1
 
-test: bin/retro
-	./bin/retro tests/test-core.forth
 
-# Targets for development/interactive usage
 
-glossary: doc/Glossary.txt doc/Glossary.html doc/Glossary-Concise.txt doc/Glossary-Names-and-Stack.txt doc/words.tsv
-
-image: vm/nga-c/image.c
-
-repl: bin/retro-repl
-
-retro-describe: bin/retro-describe
-
-# File targets.
-
-ngaImage: image/rx.muri image/retro.forth bin/retro-muri bin/retro-extend
-	./bin/retro-muri image/rx.muri
-	./bin/retro-extend ngaImage image/retro.forth
+# toolchain targets
 
 bin/retro-describe: tools/retro-describe.retro doc/words.tsv
 	cat tools/retro-describe.retro doc/words.tsv >bin/retro-describe
@@ -109,8 +102,27 @@ bin/retro-extend: tools/retro-extend.c
 bin/retro-muri: tools/retro-muri.c
 	$(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o $@ tools/retro-muri.c
 
+bin/retro-unu: tools/retro-unu.c
+	$(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o $@ tools/retro-unu.c
+
+
+
+# basic image target
+
+ngaImage: image/rx.muri image/retro.forth bin/retro-muri bin/retro-extend
+	./bin/retro-muri image/rx.muri
+	./bin/retro-extend ngaImage image/retro.forth
+
+
+
+# minimal system
+
 bin/retro-repl: vm/nga-c/repl.c vm/nga-c/image.c
 	cd vm/nga-c && $(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o ../../bin/retro-repl repl.c
+
+
+
+# retro on unix
 
 bin/retro: ngaImage bin/retro-embedimage bin/retro-extend vm/nga-c/retro-image.c vm/nga-c/retro-unix.c interface/filesystem.retro interface/floatingpoint.retro interface/unix.retro interface/rng.retro interface/sockets.retro interface/scripting.retro interface/retro-unix.retro interface/clock.retro
 	cp ngaImage rre.image
@@ -122,8 +134,32 @@ bin/retro: ngaImage bin/retro-embedimage bin/retro-extend vm/nga-c/retro-image.c
 	rm rre.image
 	cd vm/nga-c && $(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o ../../bin/retro retro-unix.c $(LIBM)
 
-bin/retro-unu: tools/retro-unu.c
-	$(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o $@ tools/retro-unu.c
+vm/nga-c/image.c: bin/retro-embedimage bin/retro-extend bin/retro-muri image/retro.forth image/rx.muri
+	./bin/retro-muri image/rx.muri
+	./bin/retro-extend ngaImage image/retro.forth
+	./bin/retro-embedimage ngaImage > vm/nga-c/image.c
+
+
+
+# optional targets
+
+bin/retro-compiler: bin/retro-extend vm/nga-c/retro-compiler.c vm/nga-c/retro-runtime.c
+	cp ngaImage runtime.image
+	./bin/retro-extend runtime.image interface/scripting.retro interface/filesystem.retro interface/floatingpoint.retro interface/unix.retro interface/rng.retro interface/retro-unix.retro interface/clock.retro
+	cd vm/nga-c && $(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o ../../retro-runtime retro-runtime.c $(LIBM)
+	cd vm/nga-c && $(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o ../../bin/retro-compiler retro-compiler.c
+	objcopy --add-section .ngaImage=runtime.image --set-section-flags .ngaImage=noload,readonly bin/retro-compiler
+	objcopy --add-section .runtime=retro-runtime --set-section-flags .runtime=noload,readonly bin/retro-compiler
+	rm runtime.image retro-runtime
+
+image-js: bin/retro
+	./bin/retro example/retro-generate-image-js.retro >vm/nga-js/image.js
+
+
+
+# documentation targets
+
+glossary: doc/Glossary.txt doc/Glossary.html doc/Glossary-Concise.txt doc/Glossary-Names-and-Stack.txt doc/words.tsv
 
 sorted: doc/words.tsv
 	LC_ALL=C sort -o sorted.tsv doc/words.tsv
@@ -141,19 +177,9 @@ doc/Glossary-Concise.txt: bin/retro sorted
 doc/Glossary-Names-and-Stack.txt: bin/retro sorted
 	./bin/retro tools/glossary.retro export concise-stack >doc/Glossary-Names-and-Stack.txt
 
-vm/nga-c/image.c: bin/retro-embedimage bin/retro-extend bin/retro-muri image/retro.forth image/rx.muri
-	./bin/retro-muri image/rx.muri
-	./bin/retro-extend ngaImage image/retro.forth
-	./bin/retro-embedimage ngaImage > vm/nga-c/image.c
 
-bin/retro-compiler: bin/retro-extend vm/nga-c/retro-compiler.c vm/nga-c/retro-runtime.c
-	cp ngaImage runtime.image
-	./bin/retro-extend runtime.image interface/scripting.retro interface/filesystem.retro interface/floatingpoint.retro interface/unix.retro interface/rng.retro interface/retro-unix.retro interface/clock.retro
-	cd vm/nga-c && $(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o ../../retro-runtime retro-runtime.c $(LIBM)
-	cd vm/nga-c && $(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o ../../bin/retro-compiler retro-compiler.c
-	objcopy --add-section .ngaImage=runtime.image --set-section-flags .ngaImage=noload,readonly bin/retro-compiler
-	objcopy --add-section .runtime=retro-runtime --set-section-flags .runtime=noload,readonly bin/retro-compiler
-	rm runtime.image retro-runtime
+
+# other targets
 
 release: clean build glossary
 	fossil tarball tip R12.tar.gz
@@ -167,5 +193,6 @@ release: clean build glossary
 	signify -S -s /home/crc/keys/$(KEYPAIR).sec -m RETRO12-$(VERSION).tar.gz
 	signify -V -p security/$(KEYPAIR).pub -m RETRO12-$(VERSION).tar.gz
 
-image-js: bin/retro
-	./bin/retro example/retro-generate-image-js.retro >vm/nga-js/image.js
+test: bin/retro
+	./bin/retro tests/test-core.forth
+
