@@ -130,8 +130,9 @@ CELL lookup(char *name) {
   CELL n = np;
   while (n > 0) {
     n--;
-    if (strcmp(Labels[n], name) == 0)
+    if (strcmp(Labels[n], name) == 0) {
       slice = Pointers[n];
+    }
   }
   return slice;
 }
@@ -158,8 +159,8 @@ CELL opcode_for(char *s) {
   int16_t* s16 = (int16_t *)s;
   int16_t* op16 = (int16_t *)opcodeList;
   int i = 0;
-  for(i = 0; i <= 30; i++){
-    if(s16[0] == op16[i]){
+  for (i = 0; i <= 30; i++) {
+    if (s16[0] == op16[i]) {
       return i;
     }
   }
