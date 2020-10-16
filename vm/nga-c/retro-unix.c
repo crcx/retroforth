@@ -88,6 +88,13 @@ CELL memory[IMAGE_SIZE + 1];      /* The memory for the image          */
 
 
 /*---------------------------------------------------------------------
+  Markers for code & test blocks
+  ---------------------------------------------------------------------*/
+
+char code_start[33], code_end[33], test_start[33], test_end[33];
+
+
+/*---------------------------------------------------------------------
   Function Prototypes
   ---------------------------------------------------------------------*/
 
@@ -475,6 +482,21 @@ int fenced(char *s)
 }
 
 
+/* Check to see if a line is a fence boundary.
+   This will check code blocks in all cases, and test blocks
+   if tests_enabled is set to a non-zero value. */
+
+int fence_boundary(char *buffer, int tests_enabled) {
+  int flag = 1;
+  if (strcmp(buffer, code_start) == 0) { flag = -1; }
+  if (strcmp(buffer, code_end) == 0)   { flag = -1; }
+  if (tests_enabled == 0) { return flag; }
+  if (strcmp(buffer, test_start) == 0) { flag = -1; }
+  if (strcmp(buffer, test_end) == 0)   { flag = -1; }
+  return flag;
+}
+
+
 /*---------------------------------------------------------------------
   And now for the actual `include_file()` function.
   ---------------------------------------------------------------------*/
@@ -504,7 +526,7 @@ void include_file(char *fname, int run_tests) {
   int inBlock = 0;                 /* Tracks status of in/out of block */
   char source[64 * 1024];          /* Token buffer [about 64K]         */
   char line[64 * 1024];            /* Line buffer [about 64K]          */
-  char fence[4];                   /* Used with `fenced()`             */
+  char fence[33];                  /* Used with `fence_boundary()`     */
 
   long offset = 0;
   CELL at = 0;
@@ -532,16 +554,12 @@ void include_file(char *fname, int run_tests) {
     while (tokens > 0 && ignoreToEOL == 0) {
       tokens--;
       read_token(fp, source, 0);
-      strncpy(fence, source, 3);     /* Copy the first three characters  */
-      fence[3] = '\0';               /* into `fence` to see if we are in */
-      if (fenced(fence) > 0) {       /* a code block.                    */
-        if (fenced(fence) == 2 && run_tests == 0) {
-        } else {
-          if (inBlock == 0)
-            inBlock = 1;
-          else
-            inBlock = 0;
-        }
+      bsd_strlcpy(fence, source, 32); /* Copy the first three characters  */
+      if (fence_boundary(fence, run_tests) == -1) {
+        if (inBlock == 0)
+          inBlock = 1;
+        else
+          inBlock = 0;
       } else {
         if (inBlock == 1) {
           currentLine = at;
@@ -630,6 +648,11 @@ int main(int argc, char **argv) {
 
   initialize();                           /* Initialize Nga & image    */
 
+  strcpy(code_start, "~~~");
+  strcpy(code_end,   "~~~");
+  strcpy(test_start, "```");
+  strcpy(test_end,   "```");
+
   /* Setup variables related to the scripting device */
   currentLine = 0;                        /* Current Line # for script */
   current_source = 0;                     /* Current file being run    */
@@ -683,6 +706,18 @@ int main(int argc, char **argv) {
     } else if (strcmp(argv[i], "-t") == 0) {
       modes[FLAG_RUN_TESTS] = 1;
       run_tests = 1;
+    } else  if (arg_is(argv[i], "--code-start") || arg_is(argv[i], "-cs")) {
+      i++;
+      strcpy(code_start, argv[i]);
+    } else if (arg_is(argv[i], "--code-end") || arg_is(argv[i], "-ce")) {
+      i++;
+      strcpy(code_end, argv[i]);
+    } else if (arg_is(argv[i], "--test-start") || arg_is(argv[i], "-ts")) {
+      i++;
+      strcpy(test_start, argv[i]);
+    } else if (arg_is(argv[i], "--test-end") || arg_is(argv[i], "-te")) {
+      i++;
+      strcpy(test_end, argv[i]);
     }
   }
 
