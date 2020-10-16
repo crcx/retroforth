@@ -16,9 +16,10 @@
 #include <stdint.h>
 #include <string.h>
 
+typedef void (*Handler)(char *);
+
 char code_start[33], code_end[33], test_start[33], test_end[33];
 
-typedef void (*Handler)(char *);
 
 void read_line(FILE *file, char *line_buffer) {
   int ch = getc(file);
@@ -31,6 +32,11 @@ void read_line(FILE *file, char *line_buffer) {
   line_buffer[count] = '\0';
 }
 
+
+/* Check to see if a line is a fence boundary.
+   This will check code blocks in all cases, and test blocks
+   if tests_enabled is set to a non-zero value. */
+
 int fence_boundary(char *buffer, int tests_enabled) {
   int flag = 1;
   if (strcmp(buffer, code_start) == 0) { flag = -1; }
@@ -40,6 +46,14 @@ int fence_boundary(char *buffer, int tests_enabled) {
   if (strcmp(buffer, test_end) == 0)   { flag = -1; }
   return flag;
 }
+
+
+/* The actual guts of this are handled here. Pass in
+   a file name, a flag to indicate if you want to also
+   extract tests, and a Handler function pointer. The
+   Handler will be called once for each line in a block,
+   with the line being passed as a character array
+   pointer. */
 
 void unu(char *fname, int tests_enabled, Handler handler) {
   int inBlock = 0;
@@ -67,13 +81,19 @@ void unu(char *fname, int tests_enabled, Handler handler) {
   fclose(fp);
 }
 
+
+/* The default behavior for Unu is to display the line */
+
 void display(char *buffer) {
   printf("%s\n", buffer);
 }
 
+
+/* Just a readabilty aid for the command line processing */
 int arg_is(char *arg, char *value) {
   return (strcmp(arg, value) == 0);
 }
+
 
 int main(int argc, char **argv) {
   int tests = 0;
