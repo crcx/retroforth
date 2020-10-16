@@ -5,6 +5,9 @@
   This is a quick interface layer that loads and runs a
   source file, then saves a new image file. It's used to
   merge the `retro.forth` into the base `rx` image.
+
+  In addition to the above, this tracks some statistics on
+  stack usage.
   ---------------------------------------------------------- */
 
 #include <stdio.h>
@@ -13,6 +16,27 @@
 #include <unistd.h>
 #include <string.h>
 #include <limits.h>
+
+
+/* To aid in readability */
+
+#define TOS  data[sp]
+#define NOS  data[sp-1]
+#define TORS address[rp]
+
+
+/* This assumes some knowledge of the ngaImage format for the
+   Retro language. If things change there, these will need to
+   be adjusted to match. */
+
+#define TIB            1025
+#define D_OFFSET_LINK     0
+#define D_OFFSET_XT       1
+#define D_OFFSET_CLASS    2
+#define D_OFFSET_NAME     3
+
+
+/* These settings can be overridden at compile time. */
 
 #ifndef BIT64
 #define CELL int32_t
@@ -25,41 +49,27 @@
 #endif
 
 #ifndef IMAGE_SIZE
-#define IMAGE_SIZE   524288       /* Amount of RAM, in cells           */
+#define IMAGE_SIZE   524288       /* Amount of RAM, in cells */
 #endif
 
 #ifndef ADDRESSES
-#define ADDRESSES    256          /* Depth of address stack            */
+#define ADDRESSES    256          /* Depth of address stack */
 #endif
 
 #ifndef STACK_DEPTH
-#define STACK_DEPTH  256          /* Depth of data stack               */
+#define STACK_DEPTH  256          /* Depth of data stack */
 #endif
 
-#define NUM_DEVICES  1
+
+/* Begin the actual code */
 
 typedef void (*Handler)(void);
-
-Handler IO_deviceHandlers[NUM_DEVICES + 1];
-Handler IO_queryHandlers[NUM_DEVICES + 1];
-
-enum vm_opcode {
-  VM_NOP,     VM_LIT,    VM_DUP,   VM_DROP,    VM_SWAP,
-  VM_PUSH,    VM_POP,    VM_JUMP,  VM_CALL,    VM_CCALL,
-  VM_RETURN,  VM_EQ,     VM_NEQ,   VM_LT,      VM_GT,
-  VM_FETCH,   VM_STORE,  VM_ADD,   VM_SUB,     VM_MUL,
-  VM_DIVMOD,  VM_AND,    VM_OR,    VM_XOR,     VM_SHIFT,
-  VM_ZRET,    VM_END,    VM_IE,    VM_IQ,      VM_II
-};
-#define NUM_OPS VM_II + 1
 
 CELL sp, rp, ip;
 CELL data[STACK_DEPTH];
 CELL address[ADDRESSES];
 CELL memory[IMAGE_SIZE + 1];
-#define TOS  data[sp]
-#define NOS  data[sp-1]
-#define TORS address[rp]
+
 
 CELL ngaLoadImage(char *imageFile);
 void ngaPrepare();
@@ -69,15 +79,6 @@ int ngaValidatePackedOpcodes(CELL opcode);
 
 CELL max_sp, max_rsp;
 
-/* This assumes some knowledge of the ngaImage format for the
-   Retro language. If things change there, these will need to
-   be adjusted to match. */
-
-#define TIB            1025
-#define D_OFFSET_LINK     0
-#define D_OFFSET_XT       1
-#define D_OFFSET_CLASS    2
-#define D_OFFSET_NAME     3
 
 CELL Dictionary, Heap, Compiler;
 CELL notfound, interpret;
@@ -98,16 +99,6 @@ void execute(CELL cell);
 void evaluate(char *s);
 int not_eol(int ch);
 void read_token(FILE *file, char *token_buffer, int echo, int max);
-
-void generic_output() {
-  putc(stack_pop(), stdout);
-  fflush(stdout);
-}
-
-void generic_output_query() {
-  stack_push(0);
-  stack_push(0);
-}
 
 void dump_stack() {
   CELL i;
@@ -153,15 +144,12 @@ int include_file(char *fname) {
 int main(int argc, char **argv) {
   int tokens, i;
   FILE *fp;
-  IO_deviceHandlers[0] = generic_output;
-  IO_queryHandlers[0] = generic_output_query;
   ngaPrepare();
   max_sp = 0;
   max_rsp = 0;
   ngaLoadImage(argv[1]);
   update_rx();
   printf("Initial Image Size: %lld\n", (long long)Heap);
-  dump_stack();
   for (i = 2; i < argc; i++) {
     tokens = include_file(argv[i]);
     printf("   + %lld tokens from %s\n", (long long)tokens, argv[i]);
@@ -175,6 +163,10 @@ int main(int argc, char **argv) {
   }
   fwrite(&memory, sizeof(CELL), memory[3] + 1, fp);
   fclose(fp);
+  if (sp != 0) {
+    printf("Stack not empty!\n");
+    dump_stack();
+  }
   return 0;
 }
 
@@ -371,7 +363,7 @@ CELL ngaLoadImage(char *imageFile) {
 void ngaPrepare() {
   ip = sp = rp = 0;
   for (ip = 0; ip < IMAGE_SIZE; ip++)
-    memory[ip] = VM_NOP;
+    memory[ip] = 0;  /* 0 is the opcode for "no", a no-operation instruction */
   for (ip = 0; ip < STACK_DEPTH; ip++)
     data[ip] = 0;
   for (ip = 0; ip < ADDRESSES; ip++)
@@ -382,9 +374,8 @@ void inst_nop() {
 }
 
 void inst_lit() {
-  sp++;
   ip++;
-  TOS = memory[ip];
+  stack_push(memory[ip]);
 }
 
 void inst_dup() {
@@ -407,13 +398,11 @@ void inst_swap() {
 
 void inst_push() {
   rp++;
-  TORS = TOS;
-  inst_drop();
+  TORS = stack_pop();
 }
 
 void inst_pop() {
-  sp++;
-  TOS = TORS;
+  stack_push(TORS);
   rp--;
 }
 
@@ -430,13 +419,13 @@ void inst_call() {
 }
 
 void inst_ccall() {
-  CELL a, b;
-  a = TOS; inst_drop();  /* False */
-  b = TOS; inst_drop();  /* Flag  */
-  if (b != 0) {
+  CELL quote, flag;
+  quote = stack_pop();
+  flag = stack_pop();
+  if (flag != 0) {
     rp++;
     TORS = ip;
-    ip = a - 1;
+    ip = quote - 1;
   }
 }
 
@@ -551,23 +540,21 @@ void inst_end() {
 }
 
 void inst_ie() {
-  sp++;
-  TOS = NUM_DEVICES;
+  /* retro-extend only provides one i/o device */
+  stack_push(1);
 }
 
 void inst_iq() {
-  CELL Device = TOS;
-  inst_drop();
-  IO_queryHandlers[Device]();
+  stack_push(0);
+  stack_push(0);
 }
 
 void inst_ii() {
-  CELL Device = TOS;
-  inst_drop();
-  IO_deviceHandlers[Device]();
+  putc(stack_pop(), stdout);
+  fflush(stdout);
 }
 
-Handler instructions[NUM_OPS] = {
+Handler instructions[] = {
   inst_nop, inst_lit, inst_dup, inst_drop, inst_swap, inst_push, inst_pop,
   inst_jump, inst_call, inst_ccall, inst_return, inst_eq, inst_neq, inst_lt,
   inst_gt, inst_fetch, inst_store, inst_add, inst_sub, inst_mul, inst_divmod,
