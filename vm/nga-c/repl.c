@@ -1,6 +1,6 @@
 /* RETRO ------------------------------------------------------
   A personal, minimalistic forth
-  Copyright (c) 2016 - 2019 Charles Childers
+  Copyright (c) 2016 - 2020 Charles Childers
 
   This is the `repl`, a basic interactive interface for RETRO.
   It is intended to be simple and very minimalistic, providing
@@ -50,16 +50,9 @@
 #define CELL_MAX LLONG_MAX - 1
 #endif
 
-#define IMAGE_SIZE   242000       /* Amount of RAM. 968kB by default.  */
-#define ADDRESSES    256          /* Depth of address stack            */
-#define STACK_DEPTH  128          /* Depth of data stack               */
-
-#define NUM_DEVICES  1
-
-typedef void (*Handler)(void);
-
-Handler IO_deviceHandlers[NUM_DEVICES + 1];
-Handler IO_queryHandlers[NUM_DEVICES + 1];
+#define IMAGE_SIZE   247808       /* Amount of RAM. 968kB by default. */
+#define ADDRESSES    256          /* Depth of address stack           */
+#define STACK_DEPTH  128          /* Depth of data stack              */
 
 CELL sp, rp, ip;                  /* Data, address, instruction pointers */
 CELL data[STACK_DEPTH];           /* The data stack                    */
@@ -69,6 +62,8 @@ CELL memory[IMAGE_SIZE + 1];      /* The memory for the image          */
 #define TOS  data[sp]             /* Shortcut for top item on stack    */
 #define NOS  data[sp-1]           /* Shortcut for second item on stack */
 #define TORS address[rp]          /* Shortcut for top item on address stack */
+
+typedef void (*Handler)(void);
 
 
 /*---------------------------------------------------------------------
@@ -290,8 +285,6 @@ void update_rx() {
   ---------------------------------------------------------------------*/
 
 void generic_output() {
-  putc(stack_pop(), stdout);
-  fflush(stdout);
 }
 
 void generic_output_query() {
@@ -388,11 +381,9 @@ void read_token(FILE *file, char *token_buffer, int echo) {
 int main(int argc, char **argv) {
   char input[1024];
   ngaPrepare();
-  IO_deviceHandlers[0] = generic_output;
-  IO_queryHandlers[0] = generic_output_query;
   ngaLoadImage("ngaImage");
   update_rx();
-  retro_puts("RETRO Listener (c) 2016-2019, Charles Childers\n\n");
+  retro_puts("RETRO Listener (c) 2016-2020, Charles Childers\n\n");
   while(1) {
     Dictionary = memory[2];
     read_token(stdin, input, 0);
@@ -412,22 +403,6 @@ int main(int argc, char **argv) {
    Copyright (c) 2010,        Jay Skeer
    Copyright (c) 2011,        Kenneth Keating
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-
-enum vm_opcode {
-  VM_NOP,  VM_LIT,    VM_DUP,   VM_DROP,    VM_SWAP,   VM_PUSH,  VM_POP,
-  VM_JUMP, VM_CALL,   VM_CCALL, VM_RETURN,  VM_EQ,     VM_NEQ,   VM_LT,
-  VM_GT,   VM_FETCH,  VM_STORE, VM_ADD,     VM_SUB,    VM_MUL,   VM_DIVMOD,
-  VM_AND,  VM_OR,     VM_XOR,   VM_SHIFT,   VM_ZRET,   VM_HALT,  VM_IE,
-  VM_IQ,   VM_II
-};
-#define NUM_OPS VM_II + 1
-
-#ifndef NUM_DEVICES
-#define NUM_DEVICES 0
-#endif
-
-//Handler IO_deviceHandlers[NUM_DEVICES + 1];
-//Handler IO_queryHandlers[NUM_DEVICES + 1];
 
 CELL ngaLoadImage(char *imageFile) {
   FILE *fp;
@@ -459,7 +434,7 @@ CELL ngaLoadImage(char *imageFile) {
 void ngaPrepare() {
   ip = sp = rp = 0;
   for (ip = 0; ip < IMAGE_SIZE; ip++)
-    memory[ip] = VM_NOP;
+    memory[ip] = 0;
   for (ip = 0; ip < STACK_DEPTH; ip++)
     data[ip] = 0;
   for (ip = 0; ip < ADDRESSES; ip++)
@@ -470,9 +445,8 @@ void inst_nop() {
 }
 
 void inst_lit() {
-  sp++;
   ip++;
-  TOS = memory[ip];
+  stack_push(memory[ip]);
 }
 
 void inst_dup() {
@@ -639,23 +613,22 @@ void inst_halt() {
 }
 
 void inst_ie() {
-  sp++;
-  TOS = NUM_DEVICES;
+  stack_push(1);
 }
 
 void inst_iq() {
-  CELL Device = TOS;
   inst_drop();
-  IO_queryHandlers[Device]();
+  stack_push(0);
+  stack_push(0);
 }
 
 void inst_ii() {
-  CELL Device = TOS;
   inst_drop();
-  IO_deviceHandlers[Device]();
+  putc(stack_pop(), stdout);
+  fflush(stdout);
 }
 
-Handler instructions[NUM_OPS] = {
+Handler instructions[] = {
   inst_nop, inst_lit, inst_dup, inst_drop, inst_swap, inst_push, inst_pop,
   inst_jump, inst_call, inst_ccall, inst_return, inst_eq, inst_neq, inst_lt,
   inst_gt, inst_fetch, inst_store, inst_add, inst_sub, inst_mul, inst_divmod,
