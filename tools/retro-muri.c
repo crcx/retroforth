@@ -1,12 +1,11 @@
-/* retro-muri.c
+/* RETRO ------------------------------------------------------
+  A personal, minimalistic forth
+  Copyright (c) 2017 - 2019 Charles Childers
+  Copyright (c)      2019 Luke Parrish
 
-   Copyright (c) 2017-2020 Charles Childers
-   Copyright (c)      2019 Luke Parrish
-
-   This is the standard assembler for Nga. It's primarily used
-   to build the RETRO kernel (rx.muri).
-*/
-
+  This is the standard assembler for Nga. It's primarily used
+  to build the RETRO kernel (rx.muri).
+  ---------------------------------------------------------- */
 
 #include <stdio.h>
 #include <stdlib.h>

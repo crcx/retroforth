@@ -1,9 +1,11 @@
-/*  This loads an image file and generates a C formatted
-    output. It's used to create the `image.c` that gets
-    linked into `rre`.
+/* RETRO ------------------------------------------------------
+  A personal, minimalistic forth
+  Copyright (c) 2016 - 2019 Charles Childers
 
-    Copyright (c) 2016-2019 Charles Childers
-*/
+  This loads an image file and generates a C formatted output
+  suitable for being linked into the virtual machine. It's
+  used to create the `image.c` that gets linked into `retro`.
+  ---------------------------------------------------------- */
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -44,7 +46,10 @@ CELL ngaLoadImage(char *imageFile) {
 }
 
 void output_header(int size) {
-  printf("#include <stdint.h>\n#ifndef CELL\n#define CELL int32_t\n#endif\n");
+  printf("#include <stdint.h>\n");
+  printf("#ifndef CELL\n");
+  printf("#define CELL int32_t\n");
+  printf("#endif\n");
   printf("CELL ngaImageCells = %lld;\n", (long long)size);
   printf("CELL ngaImage[] = { ");
 }

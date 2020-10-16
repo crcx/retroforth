@@ -1,15 +1,14 @@
-/* retro-unu.c
+/* RETRO ------------------------------------------------------
+  A personal, minimalistic forth
+  Copyright (c) 2017 - 2020 Charles Childers
 
-   This is a tool to extract code blocks from a RETRO-flavored
-   Markdown source file.
+  This is retro-unu, a tool to extract code blocks from a
+  RETRO-flavored Markdown source file.
 
-   Code blocks start and end with ~~~ and test blocks start
-   and end with ```, though this does support setting them
-   from the command line.
-
-   Copyright (c) 2017-2020 Charles Childers
-*/
-
+  Code blocks start and end with ~~~ and test blocks start
+  and end with ```, though this does support setting them
+  from the command line.
+  ---------------------------------------------------------- */
 
 #include <stdio.h>
 #include <stdlib.h>
