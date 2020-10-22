@@ -24,12 +24,12 @@ Then extract and generate the single file source.
 
 ~~~
 {{
-  :image:inline
-    'vm/nga-c/retro-image.c [ s:put nl ] file:for-each-line ;
+  :include-file
+    #10 + s:chop 'vm/nga-c/ s:prepend here swap file:slurp here s:put ; 
 
   :source:line
-    dup '#include_"retro-image.c" s:eq?
-    [ drop image:inline ] [ s:put nl ] choose ;
+    dup '#include_" s:begins-with?
+    [ include-file ] [ s:put nl ] choose ;
 
 ---reveal---
 
