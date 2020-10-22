@@ -29,7 +29,6 @@ clean:
 	rm -f bin/*
 
 
-
 # installation targets
 
 install: build install-data install-docs install-examples install-manpages
@@ -124,7 +123,7 @@ bin/retro-repl: vm/nga-c/repl.c vm/nga-c/image.c
 
 # retro on unix
 
-bin/retro: ngaImage bin/retro-embedimage bin/retro-extend vm/nga-c/retro-image.c vm/nga-c/retro-unix.c interface/filesystem.retro interface/floatingpoint.retro interface/unix.retro interface/rng.retro interface/sockets.retro interface/scripting.retro interface/retro-unix.retro interface/clock.retro
+bin/retro: ngaImage bin/retro-embedimage bin/retro-extend vm/nga-c/retro-image.c vm/nga-c/retro-unix.c interface/filesystem.retro interface/floatingpoint.retro interface/unix.retro interface/rng.retro interface/sockets.retro interface/scripting.retro interface/retro-unix.retro interface/clock.retro vm/nga-c/bsd-strl.c vm/nga-c/config.h vm/nga-c/dev-clock.c vm/nga-c/dev-files.c vm/nga-c/dev-floatingpoint.c vm/nga-c/dev-image.c vm/nga-c/dev-rng.c vm/nga-c/dev-sockets.c vm/nga-c/dev-unix.c vm/nga-c/prototypes.h
 	cp ngaImage rre.image
 	./bin/retro-extend rre.image interface/scripting.retro interface/filesystem.retro interface/floatingpoint.retro interface/unix.retro interface/rng.retro interface/sockets.retro interface/scripting.retro interface/retro-unix.retro interface/clock.retro 
 	./bin/retro-embedimage rre.image >vm/nga-c/retro-image.c

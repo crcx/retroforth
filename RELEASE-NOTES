@@ -5,3 +5,7 @@
 - retro-unu now supports user defined code and test block delimiters
 - retro-muri now uses the updated retro-unu core
 - retro-muri now has separate passes for each step of the assembly process
+
+## retro on unix
+
+- split out devices into separate files to allow better reuse across the toolchain
