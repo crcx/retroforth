@@ -10,8 +10,9 @@
   Due to the way this works, it requires a Unix-like OS
   and the `objcopy` binary in the path.
 
-  Copyright (c) 2016 - 2019, Charles Childers
+  Copyright (c) 2016 - 2020, Charles Childers
 */
+
 
 #include <stdio.h>
 #include <stdint.h>
@@ -21,19 +22,11 @@
 #include <sys/stat.h>
 #include <limits.h>
 
-#ifndef BIT64
-#define CELL int32_t
-#define CELL_MIN INT_MIN + 1
-#define CELL_MAX INT_MAX - 1
-#else
-#define CELL int64_t
-#define CELL_MIN LLONG_MIN + 1
-#define CELL_MAX LLONG_MAX - 1
+#include "config.h"
+#ifdef NUM_DEVICES
+#undef NUM_DEVICES
+#define NUM_DEVICES  1
 #endif
-
-#define IMAGE_SIZE   524288 * 8
-#define ADDRESSES    2048
-#define STACK_DEPTH  512
 
 CELL sp, rp, ip;
 CELL data[STACK_DEPTH];
@@ -43,7 +36,6 @@ CELL memory[IMAGE_SIZE + 1];
 #define NOS  data[sp-1]
 #define TORS address[rp]
 
-#define NUM_DEVICES  1
 
 typedef void (*Handler)(void);
 
@@ -55,6 +47,15 @@ void ngaPrepare();
 void ngaProcessOpcode(CELL opcode);
 void ngaProcessPackedOpcodes(int opcode);
 int ngaValidatePackedOpcodes(CELL opcode);
+
+CELL stack_pop();
+void stack_push(CELL value);
+int string_inject(char *str, int buffer);
+char *string_extract(int at);
+CELL d_xt_for(char *Name, CELL Dictionary);
+void execute(int cell);
+void evaluate(char *s);
+void read_token(FILE *file, char *token_buffer, int echo);
 
 /* This assumes some knowledge of the ngaImage format for the
    Retro language. If things change there, these will need to
@@ -68,24 +69,6 @@ int ngaValidatePackedOpcodes(CELL opcode);
 
 extern CELL Dictionary, Heap, Compiler;
 extern CELL notfound;
-
-CELL stack_pop();
-void stack_push(CELL value);
-int string_inject(char *str, int buffer);
-char *string_extract(int at);
-int d_link(CELL dt);
-int d_xt(CELL dt);
-int d_class(CELL dt);
-int d_name(CELL dt);
-int d_lookup(CELL Dictionary, char *name);
-CELL d_xt_for(char *Name, CELL Dictionary);
-CELL d_class_for(char *Name, CELL Dictionary);
-void update_rx();
-void execute(int cell);
-void evaluate(char *s);
-int not_eol(int ch);
-void read_token(FILE *file, char *token_buffer, int echo);
-char *read_token_str(char *s, char *token_buffer, int echo);
 
 void generic_output() {
   putc(stack_pop(), stdout);
@@ -357,15 +340,6 @@ void read_token(FILE *file, char *token_buffer, int echo) {
    Copyright (c) 2011,        Kenneth Keating
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
-enum vm_opcode {
-  VM_NOP,  VM_LIT,    VM_DUP,   VM_DROP,    VM_SWAP,   VM_PUSH,  VM_POP,
-  VM_JUMP, VM_CALL,   VM_CCALL, VM_RETURN,  VM_EQ,     VM_NEQ,   VM_LT,
-  VM_GT,   VM_FETCH,  VM_STORE, VM_ADD,     VM_SUB,    VM_MUL,   VM_DIVMOD,
-  VM_AND,  VM_OR,     VM_XOR,   VM_SHIFT,   VM_ZRET,   VM_HALT,  VM_IE,
-  VM_IQ,   VM_II
-};
-#define NUM_OPS VM_II + 1
-
 #ifndef NUM_DEVICES
 #define NUM_DEVICES 0
 #endif
@@ -390,7 +364,7 @@ CELL ngaLoadImage(char *imageFile) {
 void ngaPrepare() {
   ip = sp = rp = 0;
   for (ip = 0; ip < IMAGE_SIZE; ip++)
-    memory[ip] = VM_NOP;
+    memory[ip] = 0; /* NOP */
   for (ip = 0; ip < STACK_DEPTH; ip++)
     data[ip] = 0;
   for (ip = 0; ip < ADDRESSES; ip++)
@@ -586,7 +560,7 @@ void inst_ii() {
   IO_deviceHandlers[Device]();
 }
 
-Handler instructions[NUM_OPS] = {
+Handler instructions[] = {
   inst_nop, inst_lit, inst_dup, inst_drop, inst_swap, inst_push, inst_pop,
   inst_jump, inst_call, inst_ccall, inst_return, inst_eq, inst_neq, inst_lt,
   inst_gt, inst_fetch, inst_store, inst_add, inst_sub, inst_mul, inst_divmod,
