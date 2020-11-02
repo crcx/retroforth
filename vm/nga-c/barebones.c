@@ -1,6 +1,18 @@
 /* RETRO ------------------------------------------------------
   A personal, minimalistic forth
-  Copyright (c) 2016 - 2019 Charles Childers
+  Copyright (c) 2016 - 2020 Charles Childers
+
+  This is a minimalist implementation of an interactive
+  RETRO system with an embedded image and the listerner loop
+  being written in RETRO.
+
+  Building:
+
+    cp ngaImage barebones.image
+    retro-extend barebones.image interface/barebones.retro
+    retro-embedimage barebones.image >vm/nga-c/barebones_image.c
+    cd vm/nga-c
+    make barebones
   ---------------------------------------------------------- */
 
 #include <stdio.h>
@@ -8,15 +20,9 @@
 #include <stdlib.h>
 #include <limits.h>
 
-#ifndef BIT64
 #define CELL int32_t
 #define CELL_MIN INT_MIN + 1
 #define CELL_MAX INT_MAX - 1
-#else
-#define CELL int64_t
-#define CELL_MIN LLONG_MIN + 1
-#define CELL_MAX LLONG_MAX - 1
-#endif
 
 #define IMAGE_SIZE   242000       /* Amount of RAM. 968kB by default.  */
 #define ADDRESSES    256          /* Depth of address stack            */
@@ -43,11 +49,11 @@ Handler IO_queryHandlers[NUM_DEVICES + 1];
 CELL stack_pop();
 void stack_push(CELL value);
 void execute(CELL cell);
-CELL ngaLoadImage();
-void ngaPrepare();
-void ngaProcessOpcode(CELL opcode);
-void ngaProcessPackedOpcodes(CELL opcode);
-int ngaValidatePackedOpcodes(CELL opcode);
+CELL load_image();
+void prepare_vm();
+void process_opcode(CELL opcode);
+void process_opcode_bundle(CELL opcode);
+int validate_opcode_bundle(CELL opcode);
 
 CELL stack_pop() {
   sp--;
@@ -85,8 +91,8 @@ void execute(CELL cell) {
   ip = cell;
   while (ip < IMAGE_SIZE) {
     opcode = memory[ip];
-    if (ngaValidatePackedOpcodes(opcode) != 0) {
-      ngaProcessPackedOpcodes(opcode);
+    if (validate_opcode_bundle(opcode) != 0) {
+      process_opcode_bundle(opcode);
     } else {
       printf("Invalid instruction!\n");
       exit(1);
@@ -102,35 +108,26 @@ int main(int argc, char **argv) {
   IO_deviceHandlers[1] = generic_input;
   IO_queryHandlers[0] = generic_output_query;
   IO_queryHandlers[1] = generic_input_query;
-  ngaPrepare();
-  ngaLoadImage();
+  prepare_vm();
+  load_image();
   execute(0);
   exit(0);
 }
 
 
 /* Nga ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   Copyright (c) 2008 - 2019, Charles Childers
+   Copyright (c) 2008 - 2020, Charles Childers
    Copyright (c) 2009 - 2010, Luke Parrish
    Copyright (c) 2010,        Marc Simpson
    Copyright (c) 2010,        Jay Skeer
    Copyright (c) 2011,        Kenneth Keating
    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
-enum vm_opcode {
-  VM_NOP,  VM_LIT,    VM_DUP,   VM_DROP,    VM_SWAP,   VM_PUSH,  VM_POP,
-  VM_JUMP, VM_CALL,   VM_CCALL, VM_RETURN,  VM_EQ,     VM_NEQ,   VM_LT,
-  VM_GT,   VM_FETCH,  VM_STORE, VM_ADD,     VM_SUB,    VM_MUL,   VM_DIVMOD,
-  VM_AND,  VM_OR,     VM_XOR,   VM_SHIFT,   VM_ZRET,   VM_HALT,  VM_IE,
-  VM_IQ,   VM_II
-};
-#define NUM_OPS VM_II + 1
-
 #ifndef NUM_DEVICES
 #define NUM_DEVICES 0
 #endif
 
-CELL ngaLoadImage(char *imageFile) {
+CELL load_image(char *imageFile) {
   FILE *fp;
   CELL imageSize;
   long fileLen;
@@ -152,71 +149,71 @@ CELL ngaLoadImage(char *imageFile) {
   return imageSize;
 }
 
-void ngaPrepare() {
+void prepare_vm() {
   ip = sp = rp = 0;
   for (ip = 0; ip < IMAGE_SIZE; ip++)
-    memory[ip] = VM_NOP;
+    memory[ip] = 0; /* NO - nop instruction */
   for (ip = 0; ip < STACK_DEPTH; ip++)
     data[ip] = 0;
   for (ip = 0; ip < ADDRESSES; ip++)
     address[ip] = 0;
 }
 
-void inst_nop() {
+void inst_no() {
 }
 
-void inst_lit() {
+void inst_li() {
   sp++;
   ip++;
   TOS = memory[ip];
 }
 
-void inst_dup() {
+void inst_du() {
   sp++;
   data[sp] = NOS;
 }
 
-void inst_drop() {
+void inst_dr() {
   data[sp] = 0;
    if (--sp < 0)
      ip = IMAGE_SIZE;
 }
 
-void inst_swap() {
+void inst_sw() {
   CELL a;
   a = TOS;
   TOS = NOS;
   NOS = a;
 }
 
-void inst_push() {
+void inst_pu() {
   rp++;
   TORS = TOS;
-  inst_drop();
+  inst_dr();
 }
 
-void inst_pop() {
+void inst_po() {
   sp++;
   TOS = TORS;
   rp--;
 }
 
-void inst_jump() {
+void inst_ju() {
   ip = TOS - 1;
-  inst_drop();
+  inst_dr();
 }
 
-void inst_call() {
+void inst_ca() {
   rp++;
   TORS = ip;
   ip = TOS - 1;
-  inst_drop();
+  inst_dr();
 }
 
-void inst_ccall() {
+void inst_cc() {
   CELL a, b;
-  a = TOS; inst_drop();  /* False */
-  b = TOS; inst_drop();  /* Flag  */
+  a = TOS; inst_dr();  /* Target */
+  b = TOS; inst_dr();  /* Flag   */
   if (b != 0) {
     rp++;
     TORS = ip;
@@ -224,32 +221,32 @@ void inst_ccall() {
   }
 }
 
-void inst_return() {
+void inst_re() {
   ip = TORS;
   rp--;
 }
 
 void inst_eq() {
   NOS = (NOS == TOS) ? -1 : 0;
-  inst_drop();
+  inst_dr();
 }
 
-void inst_neq() {
+void inst_ne() {
   NOS = (NOS != TOS) ? -1 : 0;
-  inst_drop();
+  inst_dr();
 }
 
 void inst_lt() {
   NOS = (NOS < TOS) ? -1 : 0;
-  inst_drop();
+  inst_dr();
 }
 
 void inst_gt() {
   NOS = (NOS > TOS) ? -1 : 0;
-  inst_drop();
+  inst_dr();
 }
 
-void inst_fetch() {
+void inst_fe() {
   switch (TOS) {
     case -1: TOS = sp - 1; break;
     case -2: TOS = rp; break;
@@ -260,32 +257,32 @@ void inst_fetch() {
   }
 }
 
-void inst_store() {
+void inst_st() {
   if (TOS <= IMAGE_SIZE && TOS >= 0) {
     memory[TOS] = NOS;
-    inst_drop();
-    inst_drop();
+    inst_dr();
+    inst_dr();
   } else {
     ip = IMAGE_SIZE;
   }
 }
 
-void inst_add() {
+void inst_ad() {
   NOS += TOS;
-  inst_drop();
+  inst_dr();
 }
 
-void inst_sub() {
+void inst_su() {
   NOS -= TOS;
-  inst_drop();
+  inst_dr();
 }
 
-void inst_mul() {
+void inst_mu() {
   NOS *= TOS;
-  inst_drop();
+  inst_dr();
 }
 
-void inst_divmod() {
+void inst_di() {
   CELL a, b;
   a = TOS;
   b = NOS;
@@ -293,22 +290,22 @@ void inst_divmod() {
   NOS = b % a;
 }
 
-void inst_and() {
+void inst_an() {
   NOS = TOS & NOS;
-  inst_drop();
+  inst_dr();
 }
 
 void inst_or() {
   NOS = TOS | NOS;
-  inst_drop();
+  inst_dr();
 }
 
-void inst_xor() {
+void inst_xo() {
   NOS = TOS ^ NOS;
-  inst_drop();
+  inst_dr();
 }
 
-void inst_shift() {
+void inst_sh() {
   CELL y = TOS;
   CELL x = NOS;
   if (TOS < 0)
@@ -319,18 +316,18 @@ void inst_shift() {
     else
       NOS = x >> y;
   }
-  inst_drop();
+  inst_dr();
 }
 
-void inst_zret() {
+void inst_zr() {
   if (TOS == 0) {
-    inst_drop();
+    inst_dr();
     ip = TORS;
     rp--;
   }
 }
 
-void inst_halt() {
+void inst_ha() {
   ip = IMAGE_SIZE;
 }
 
@@ -341,30 +338,30 @@ void inst_ie() {
 
 void inst_iq() {
   CELL Device = TOS;
-  inst_drop();
+  inst_dr();
   IO_queryHandlers[Device]();
 }
 
 void inst_ii() {
   CELL Device = TOS;
-  inst_drop();
+  inst_dr();
   IO_deviceHandlers[Device]();
 }
 
-Handler instructions[NUM_OPS] = {
-  inst_nop, inst_lit, inst_dup, inst_drop, inst_swap, inst_push, inst_pop,
-  inst_jump, inst_call, inst_ccall, inst_return, inst_eq, inst_neq, inst_lt,
-  inst_gt, inst_fetch, inst_store, inst_add, inst_sub, inst_mul, inst_divmod,
-  inst_and, inst_or, inst_xor, inst_shift, inst_zret, inst_halt, inst_ie,
+Handler instructions[] = {
+  inst_no, inst_li, inst_du, inst_dr, inst_sw, inst_pu, inst_po,
+  inst_ju, inst_ca, inst_cc, inst_re, inst_eq, inst_ne, inst_lt,
+  inst_gt, inst_fe, inst_st, inst_ad, inst_su, inst_mu, inst_di,
+  inst_an, inst_or, inst_xo, inst_sh, inst_zr, inst_ha, inst_ie,
   inst_iq, inst_ii
 };
 
-void ngaProcessOpcode(CELL opcode) {
+void process_opcode(CELL opcode) {
   if (opcode != 0)
     instructions[opcode]();
 }
 
-int ngaValidatePackedOpcodes(CELL opcode) {
+int validate_opcode_bundle(CELL opcode) {
   CELL raw = opcode;
   CELL current;
   int valid = -1;
@@ -378,11 +375,11 @@ int ngaValidatePackedOpcodes(CELL opcode) {
   return valid;
 }
 
-void ngaProcessPackedOpcodes(CELL opcode) {
+void process_opcode_bundle(CELL opcode) {
   CELL raw = opcode;
   int i;
   for (i = 0; i < 4; i++) {
-    ngaProcessOpcode(raw & 0xFF);
+    process_opcode(raw & 0xFF);
     raw = raw >> 8;
   }
 }
