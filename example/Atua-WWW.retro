@@ -64,7 +64,7 @@ it checks for. This suffices for a Gopher server though.
 
 ~~~
 :eol? (c-f)
-  [ ASCII:CR eq? ] [ ASCII:LF eq? ] [ ASCII:SPACE eq? ] tri or or ;
+  [ [ ASCII:CR eq? ] [ ASCII:LF eq? ] [ ASCII:SPACE eq? ] tri or or ] [ $? eq? ] bi or ;
 :s:get (a-)
   buffer:set
   [ c:get dup buffer:add eol? not ] while ;
@@ -270,6 +270,7 @@ The `gopher:icon` displays an indicator for menu items.
 ~~~
 :gopher:get-selector (-)
   &Selector s:get &Selector s:get ;
+
 (Rewrite_This:_It's_too_big)
 :gopher:file-for-request (-s)
   &Mode v:off
