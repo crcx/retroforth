@@ -1,0 +1,69 @@
+This demonstrates using pipes and curl to send an SMS using the zipwhip api.
+
+A thin wrapper over the generic Unix pipe facility.
+
+~~~
+:pipe>  (s-s)  file:R unix:popen [ file:read-line ] [ unix:pclose ] bi ;
+:>pipe> (ss-s) swap 'echo_"%s"_|_%s s:format dup s:put nl pipe> ;
+:>pipe  (ss-)  >pipe> drop ;
+~~~
+
+Construct a `curl` command.
+
+~~~
+'URL    d:create #128 allot
+'Params d:create #2048 allot
+'Flags  d:create #2048 allot
+'Data   d:create #8192 allot
+'Headers d:create #4096 allot
+
+:target: ;
+:params: &Params buffer:set ;
+:flags:  &Flags  buffer:set ;
+:data:   &Data   buffer:set ;
+:header: &Headers buffer:set ;
+:set-url &URL s:copy ;
+:flag    [ buffer:add ] s:for-each ASCII:SPACE buffer:add ;
+:param   swap '-d_%s=%s s:format flag ;
+:header  '--header_'%s' s:format flag ;
+:urlencode swap '--data-urlencode_'%s=%s' s:format flag ;
+
+:generate-request
+  &Data &Headers &Params &URL &Flags 'curl_-s_%s_%s_%s_%s_%s s:format ;
+~~~
+
+Authenticate, get session token.
+
+~~~
+target:
+  'https://api.zipwhip.com/user/login  set-url
+params:
+  'username '"username"                param
+  'password '"password"                param
+flags:
+  '-X                                  flag
+  'POST                                flag
+generate-request pipe>
+
+'"response":" s:split-on-string drop #12 + s:chop s:chop s:keep 'SESSION s:const
+~~~
+
+Send a message using the session token.
+
+~~~
+target:
+  'https://api.zipwhip.com/message/send set-url
+header:
+  'Content-Type:_application/x-www-form-urlencoded header
+data:
+  'username '"username"                param
+  'password '"password"                param
+  'body     'Greetings!                urlencode
+  'session  SESSION                    urlencode
+  'contact  'phonenumber               urlencode
+flags:
+  '--location                          flag
+  '--request                           flag
+  'POST                                flag
+generate-request s:format pipe> drop
+~~~
