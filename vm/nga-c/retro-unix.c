@@ -115,7 +115,7 @@ int sys_argc;
 int silence_input;
 char scripting_sources[64][8192];
 int current_source;
-
+int perform_abort;
 
 /*---------------------------------------------------------------------
   Embed The Image and Devices
@@ -213,6 +213,28 @@ void scripting_ignore_to_eof() {
   ignoreToEOF = -1;
 }
 
+void scripting_abort() {
+  scripting_ignore_to_eol();
+  scripting_ignore_to_eof();
+  perform_abort = -1;
+}
+
+void carry_out_abort() {
+  ip = IMAGE_SIZE + 1;
+  rp = 0;
+  sp = 0;
+  fsp = 0;
+  afsp = 0;
+
+  if (current_source > 0) {
+    scripting_abort();
+    return;
+  }
+
+  perform_abort = 0;
+  current_source = 0;
+}
+
 Handler ScriptingActions[] = {
   scripting_arg_count,
   scripting_arg,
@@ -221,11 +243,12 @@ Handler ScriptingActions[] = {
   scripting_source,
   scripting_line,
   scripting_ignore_to_eol,
-  scripting_ignore_to_eof
+  scripting_ignore_to_eof,
+  scripting_abort
 };
 
 void io_scripting_query() {
-  stack_push(1);
+  stack_push(2);
   stack_push(9);
 }
 
@@ -253,43 +276,47 @@ void execute(CELL cell, int silent) {
   ip = cell;
   token = TIB;
   while (ip < IMAGE_SIZE) {
-    if (ip == NotFound) {
-      printf("\nERROR: Word Not Found: ");
-      printf("`%s`\n\n", string_extract(token));
-    }
-    if (ip == interpret) {
-      token = TOS;
-    }
-    opcode = memory[ip];
-    if (validate_opcode_bundle(opcode) != 0) {
-      process_opcode_bundle(opcode);
-    } else {
-      printf("\nERROR (nga/execute): Invalid instruction!\n");
-      printf("At %lld, opcode %lld\n", (long long)ip, (long long)opcode);
-      printf("Instructions: ");
-      a = opcode;
-      for (i = 0; i < 4; i++) {
-        b = a & 0xFF;
-        printf("%lldd ", (long long)b);
-        a = a >> 8;
+    if (perform_abort == 0) {
+      if (ip == NotFound) {
+        printf("\nERROR: Word Not Found: ");
+        printf("`%s`\n\n", string_extract(token));
       }
-      printf("\n");
-      exit(1);
-    }
+      if (ip == interpret) {
+        token = TOS;
+      }
+      opcode = memory[ip];
+      if (validate_opcode_bundle(opcode) != 0) {
+        process_opcode_bundle(opcode);
+      } else {
+        printf("\nERROR (nga/execute): Invalid instruction!\n");
+        printf("At %lld, opcode %lld\n", (long long)ip, (long long)opcode);
+        printf("Instructions: ");
+        a = opcode;
+        for (i = 0; i < 4; i++) {
+          b = a & 0xFF;
+          printf("%lldd ", (long long)b);
+          a = a >> 8;
+        }
+        printf("\n");
+        exit(1);
+      }
 #ifndef NOCHECKS
-    if (sp < 0 || sp > STACK_DEPTH) {
-      printf("\nERROR (nga/execute): Stack Limits Exceeded!\n");
-      printf("At %lld, opcode %lld. sp = %lld\n", (long long)ip, (long long)opcode, (long long)sp);
-      exit(1);
-    }
-    if (rp < 0 || rp > ADDRESSES) {
-      printf("\nERROR (nga/execute): Address Stack Limits Exceeded!\n");
-      printf("At %lld, opcode %lld. rp = %lld\n", (long long)ip, (long long)opcode, (long long)rp);
-    }
+      if (sp < 0 || sp > STACK_DEPTH) {
+        printf("\nERROR (nga/execute): Stack Limits Exceeded!\n");
+        printf("At %lld, opcode %lld. sp = %lld\n", (long long)ip, (long long)opcode, (long long)sp);
+        exit(1);
+      }
+      if (rp < 0 || rp > ADDRESSES) {
+        printf("\nERROR (nga/execute): Address Stack Limits Exceeded!\n");
+        printf("At %lld, opcode %lld. rp = %lld\n", (long long)ip, (long long)opcode, (long long)rp);
+      }
 #endif
-    ip++;
-    if (rp == 0)
-      ip = IMAGE_SIZE;
+      ip++;
+      if (rp == 0)
+        ip = IMAGE_SIZE;
+    } else {
+      carry_out_abort();
+    }
   }
 }
 
@@ -484,6 +511,9 @@ void include_file(char *fname, int run_tests) {
   current_source--;
   ignoreToEOF = 0;
   fclose(fp);
+  if (perform_abort == -1) {
+    carry_out_abort();
+  }
 }
 
 
@@ -564,6 +594,7 @@ int main(int argc, char **argv) {
   /* Setup variables related to the scripting device */
   currentLine = 0;                        /* Current Line # for script */
   current_source = 0;                     /* Current file being run    */
+  perform_abort = 0;                      /* Carry out abort procedure */
   sys_argc = argc;                        /* Point the global argc and */
   sys_argv = argv;                        /* argv to the actual ones   */
   bsd_strlcpy(scripting_sources[0], "/dev/stdin", 8192);

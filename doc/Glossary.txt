@@ -1152,6 +1152,17 @@ Create a new string from the provided array. This string will be stored in the t
 Class: class:word | Namespace: a | Interface Layer: all
 ------------------------------------------------------------------------
 
+abort
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Abort execution.
+
+Class: class:macro | Namespace: global | Interface Layer: rre
+------------------------------------------------------------------------
+
 again
 
   Data:  -
@@ -5144,6 +5155,17 @@ script:ignore-to-eof
   Float: -
 
 Discard remaining lines in the file currently being evaluated. This only works when including a file, not at the interpreter.
+
+Class: class:word | Namespace: sys | Interface Layer: rre
+------------------------------------------------------------------------
+
+script:ignore-to-eol
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Discard remaining tokens in the current line. This only works when including a file, not at the interpreter.
 
 Class: class:word | Namespace: sys | Interface Layer: rre
 ------------------------------------------------------------------------

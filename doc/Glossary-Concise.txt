@@ -301,6 +301,9 @@ Return the actual address of the `n`th item in the array.
 a:to-string              D: a-s  A: -  F: -
 Create a new string from the provided array. This string will be stored in the temporal string buffers.
 
+abort                    D: -  A: -  F: -
+Abort execution.
+
 again                    D: -  A: -  F: -
 Close an unconditional loop. Branches back to the prior `repeat`.
 
@@ -1308,6 +1311,9 @@ Given an argument number, return the argument as a string.
 
 script:ignore-to-eof     D: -  A: -  F: -
 Discard remaining lines in the file currently being evaluated. This only works when including a file, not at the interpreter.
+
+script:ignore-to-eol     D: -  A: -  F: -
+Discard remaining tokens in the current line. This only works when including a file, not at the interpreter.
 
 script:name              D: -s  A: -  F: -
 Return the filename of the program being run.

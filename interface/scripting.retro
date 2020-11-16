@@ -26,6 +26,10 @@ introspection and control of the `include` process.
 - direct RETRO to ignore the rest of the current line
 - direct RETRO to ignore any remaining lines in the file
 
+## Rev. 2
+
+Adds support for `abort`.
+
 # The Code
 
 ~~~
@@ -46,5 +50,7 @@ introspection and control of the `include` process.
   :script:current-line (-n)         identify #5 @Scripting io:invoke ;
   :script:ignore-to-eol (-)         identify #6 @Scripting io:invoke ;
   :script:abort-include (-)         identify #7 @Scripting io:invoke ;
+
+  :abort (-) &Compiler v:off identify #8 @Scripting io:invoke ;
 }}
 ~~~

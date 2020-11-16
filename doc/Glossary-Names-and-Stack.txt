@@ -99,6 +99,7 @@ a:right                  D: an-a  A: -  F: -
 a:store                  D: vna-  A: -  F: -
 a:th                     D: an-b  A: -  F: -
 a:to-string              D: a-s  A: -  F: -
+abort                    D: -  A: -  F: -
 again                    D: -  A: -  F: -
 allot                    D: n-  A: -  F: -
 and                      D: nm-o  A: -  F: -
@@ -435,6 +436,7 @@ script:current-file      D: -s  A: -  F: -
 script:current-line      D: -n  A: -  F: -
 script:get-argument      D: n-s  A: -  F: -
 script:ignore-to-eof     D: -  A: -  F: -
+script:ignore-to-eol     D: -  A: -  F: -
 script:name              D: -s  A: -  F: -
 set-hook                 D: aa-  A: -  F: -
 shift                    D: mn-o  A: -  F: -
