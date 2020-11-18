@@ -11,9 +11,13 @@ class Memory():
             self.memory[i] = cell
             i = i + 1
         f.close()
+        self.length = size
     
     def store(self, value, address):
         self.memory[address] = value
     
     def fetch(self, address):
         return self.memory[address]
+    
+    def size(self):
+        return self.length

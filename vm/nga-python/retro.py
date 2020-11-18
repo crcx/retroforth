@@ -258,7 +258,7 @@ def i_fe():
     elif target == -2:
         stack.push(len(address))
     elif target == -3:
-        stack.push(len(memory))
+        stack.push(memory.size())
     elif target == -4:
         stack.push(2147483648)
     elif target == -5:
@@ -647,4 +647,3 @@ if __name__ == "__main__":
     else:
         for source in sources:
             run_file(source)
-
