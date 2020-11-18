@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 # Nga: a Virtual Machine
-# Copyright (c) 2010 - 2019, Charles Childers
+# Copyright (c) 2010 - 2020, Charles Childers
 # Floating Point I/O by Arland Childers, (c) 2020
 # Optimizations and process() rewrite by Greg Copeland
 # -----------------------------------------------------
@@ -9,130 +9,23 @@
 import os, sys, math, time, struct, random, datetime
 from struct import pack, unpack
 
+from ClockDevice import Clock
+from RNGDevice import RNG
+
+from FloatStack import FloatStack
+from IntegerStack import IntegerStack
+from Memory import Memory
+
 ip = 0
-stack = [] * 128
+stack = IntegerStack()
 address = []
 memory = []
 
+clock = Clock()
+rng = RNG()
 
-class clock:
-    def __getitem__(self, id):
-        now = datetime.datetime.now()
-        ids = {
-            "time": time.time,
-            "year": now.year,
-            "month": now.month,
-            "day": now.day,
-            "hour": now.hour,
-            "minute": now.minute,
-            "second": now.second,
-            # No time_utc?
-            "year_utc": now.utcnow().year,
-            "month_utc": now.utcnow().month,
-            "day_utc": now.utcnow().day,
-            "hour_utc": now.utcnow().hour,
-            "minute_utc": now.utcnow().minute,
-            "second_utc": now.utcnow().second,
-        }
-        return ids[id]
-
-
-clock = clock()
-
-
-class rng:
-    def __call__(self, seed=None, new_seed=True):
-        return random.randint(-2147483647, 2147483646)
-
-
-rng = rng()
-
-
-class float_stack(object):
-    def __init__(self, *d):
-        self.data = list(d)
-
-    def __getitem__(self, id):
-        return self.data[id]
-
-    def add(self):
-        self.data.append(self.data.pop() + self.data.pop())
-
-    def sub(self):
-        self.data.append(0 - (self.data.pop() - self.data.pop()))
-
-    def mul(self):
-        self.data.append(self.data.pop() * self.data.pop())
-
-    def div(self):
-        a, b = self.data.pop(), self.data.pop()
-        self.data.append(b / a)
-
-    def ceil(self):
-        self.data.append(math.ceil(self.data.pop()))
-
-    def floor(self):
-        self.data.append(math.floor(self.data.pop()))
-
-    def eq(self):
-        return 0 - (self.data.pop() == self.data.pop())
-
-    def neq(self):
-        return 0 - (self.data.pop() != self.data.pop())
-
-    def gt(self):
-        a, b = self.data.pop(), self.data.pop()
-        return 0 - (b > a)
-
-    def lt(self):
-        a, b = self.data.pop(), self.data.pop()
-        return 0 - (b < a)
-
-    def depth(self):
-        return len(self.data)
-
-    def drop(self):
-        self.data.pop()
-
-    def pop(self):
-        return self.data.pop()
-
-    def swap(self):
-        a, b = self.data.pop(), self.data.pop()
-        self.data += [a, b]
-
-    def push(self, n):
-        self.data.append(n)
-
-    def log(self):
-        a, b = self.data.pop(), self.data.pop()
-        self.data.append(math.log(b, a))
-
-    def power(self):
-        a, b = self.data.pop(), self.data.pop()
-        self.data.append(math.pow(a, b))
-
-    def sin(self):
-        self.data.append(math.sin(self.data.pop()))
-
-    def cos(self):
-        self.data.append(math.cos(self.data.pop()))
-
-    def tan(self):
-        self.data.append(math.tan(self.data.pop()))
-
-    def asin(self):
-        self.data.append(math.asin(self.data.pop()))
-
-    def acos(self):
-        self.data.append(math.acos(self.data.pop()))
-
-    def atan(self):
-        self.data.append(math.atan(self.data.pop()))
-
-
-floats = float_stack()
-afloats = float_stack()
+floats = FloatStack()
+afloats = FloatStack()
 
 files = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
@@ -250,8 +143,8 @@ def get_input():
 
 def display_character():
     global stack
-    if stack[-1] > 0 and stack[-1] < 128:
-        if stack[-1] == 8:
+    if stack.tos() > 0 and stack.tos() < 128:
+        if stack.tos() == 8:
             sys.stdout.write(chr(stack.pop()))
             sys.stdout.write(chr(32))
             sys.stdout.write(chr(8))
@@ -274,20 +167,14 @@ def i_li():
 
 
 def i_du():
-    global ip, memory, stack, address
-    stack.append(stack[-1])
-
+    stack.dup()
 
 def i_dr():
-    global ip, memory, stack, address
-    stack.pop()
+    stack.drop()
 
 
 def i_sw():
-    global ip, memory, stack, address
-    a = stack[-2]
-    stack[-2] = stack[-1]
-    stack[-1] = a
+     stack.swap()
 
 
 def i_pu():
@@ -297,7 +184,7 @@ def i_pu():
 
 def i_po():
     global ip, memory, stack, address
-    stack.append(address.pop())
+    stack.push(address.pop())
 
 
 def i_ju():
@@ -365,19 +252,19 @@ def i_gt():
 
 
 def i_fe():
-    global ip, memory, stack, address
-    if stack[-1] == -1:
-        stack[-1] = len(stack) - 1
-    elif stack[-1] == -2:
-        stack[-1] = len(address)
-    elif stack[-1] == -3:
-        stack[-1] = len(memory)
-    elif stack[-1] == -4:
-        stack[-1] = -2147483648
-    elif stack[-1] == -5:
-        stack[-1] = 2147483647
+    target = stack.pop()
+    if target == -1:
+        stack.push(stack.depth())
+    elif target == -2:
+        stack.push(len(address))
+    elif target == -3:
+        stack.push(len(memory))
+    elif target == -4:
+        stack.push(2147483648)
+    elif target == -5:
+        stack.push(2147483647)
     else:
-        stack[-1] = memory[stack[-1]]
+        stack.push(memory[target])
 
 
 def i_st():
@@ -387,65 +274,68 @@ def i_st():
 
 
 def i_ad():
-    global ip, memory, stack, address
     t = stack.pop()
-    stack[-1] += t
-    stack[-1] = unpack("=l", pack("=L", stack[-1] & 0xFFFFFFFF))[0]
+    v = stack.pop()
+    stack.push(unpack("=l", pack("=L", (t + v) & 0xFFFFFFFF))[0])
 
 
 def i_su():
-    global ip, memory, stack, address
     t = stack.pop()
-    stack[-1] -= t
-    stack[-1] = unpack("=l", pack("=L", stack[-1] & 0xFFFFFFFF))[0]
+    v = stack.pop()
+    stack.push(unpack("=l", pack("=L", (v - t) & 0xFFFFFFFF))[0])
 
 
 def i_mu():
-    global ip, memory, stack, address
     t = stack.pop()
-    stack[-1] *= t
-    stack[-1] = unpack("=l", pack("=L", stack[-1] & 0xFFFFFFFF))[0]
+    v = stack.pop()
+    stack.push(unpack("=l", pack("=L", (v * t) & 0xFFFFFFFF))[0])
 
 
 def i_di():
-    global ip, memory, stack, address
-    a = stack[-1]
-    b = stack[-2]
-    stack[-1], stack[-2] = div_mod(b, a)
-    stack[-1] = unpack("=l", pack("=L", stack[-1] & 0xFFFFFFFF))[0]
-    stack[-2] = unpack("=l", pack("=L", stack[-2] & 0xFFFFFFFF))[0]
+    t = stack.pop()
+    v = stack.pop()
+    b, a = div_mod(v, t)
+    stack.push(unpack("=l", pack("=L", a & 0xFFFFFFFF))[0])
+    stack.push(unpack("=l", pack("=L", b & 0xFFFFFFFF))[0])
 
 
 def i_an():
     global ip, memory, stack, address
     t = stack.pop()
-    stack[-1] &= t
+    m = stack.pop()
+    stack.push(m &= t)
 
 
 def i_or():
     global ip, memory, stack, address
     t = stack.pop()
-    stack[-1] |= t
+    m = stack.pop()
+    stack.push(m |= t)
 
 
 def i_xo():
     global ip, memory, stack, address
     t = stack.pop()
-    stack[-1] ^= t
+    m = stack.pop()
+    stack.push(m ^= t)
 
 
 def i_sh():
     global ip, memory, stack, address
     t = stack.pop()
+    v = stack.pop()
+    
     if t < 0:
-        stack[-1] <<= t * -1
+        v <<= t * -1
     else:
-        stack[-1] >>= t
+        v >>= t
+        
+    stack.push(v)
 
 
 def i_zr():
     global ip, memory, stack, address
-    if stack[-1] == 0:
+    if stack.tos() == 0:
         stack.pop()
         ip = address.pop()
 
@@ -769,3 +659,4 @@ if __name__ == "__main__":
     else:
         for source in sources:
             run_file(source)
+
