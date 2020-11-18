@@ -28,4 +28,3 @@ class IntegerStack():
         self.stack[-2] = self.stack[-1]
         self.stack[-1] = a
 
-

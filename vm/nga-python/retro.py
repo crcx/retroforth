@@ -19,7 +19,7 @@ from Memory import Memory
 ip = 0
 stack = IntegerStack()
 address = []
-memory = []
+memory = Memory("ngaImage", 1000000)
 
 clock = Clock()
 rng = RNG()
@@ -127,13 +127,13 @@ def div_mod(a, b):
 
 
 def find_entry(named):
-    header = memory[2]
+    header = memory.fetch(2)
     Done = False
     while header != 0 and not Done:
         if named == extract_string(header + 3):
             Done = True
         else:
-            header = memory[header]
+            header = memory.fetch(header)
     return header
 
 
@@ -163,7 +163,7 @@ def i_no():
 def i_li():
     global ip, memory, stack, address
     ip += 1
-    stack.append(memory[ip])
+    stack.push(memory.fetch(ip))
 
 
 def i_du():
@@ -216,9 +216,9 @@ def i_eq():
     a = stack.pop()
     b = stack.pop()
     if b == a:
-        stack.append(-1)
+        stack.push(-1)
     else:
-        stack.append(0)
+        stack.push(0)
 
 
 def i_ne():
@@ -226,9 +226,9 @@ def i_ne():
     a = stack.pop()
     b = stack.pop()
     if b != a:
-        stack.append(-1)
+        stack.push(-1)
     else:
-        stack.append(0)
+        stack.push(0)
 
 
 def i_lt():
@@ -236,9 +236,9 @@ def i_lt():
     a = stack.pop()
     b = stack.pop()
     if b < a:
-        stack.append(-1)
+        stack.push(-1)
     else:
-        stack.append(0)
+        stack.push(0)
 
 
 def i_gt():
@@ -246,9 +246,9 @@ def i_gt():
     a = stack.pop()
     b = stack.pop()
     if b > a:
-        stack.append(-1)
+        stack.push(-1)
     else:
-        stack.append(0)
+        stack.push(0)
 
 
 def i_fe():
@@ -264,13 +264,13 @@ def i_fe():
     elif target == -5:
         stack.push(2147483647)
     else:
-        stack.push(memory[target])
+        stack.push(memory.fetch(target))
 
 
 def i_st():
     global ip, memory, stack, address
     mi = stack.pop()
-    memory[mi] = stack.pop()
+    memory.store(stack.pop(), mi)
 
 
 def i_ad():
@@ -346,35 +346,35 @@ def i_ha():
 
 
 def i_ie():
-    stack.append(6)
+    stack.push(6)
 
 
 def i_iq():
     device = stack.pop()
     if device == 0:  # generic output
-        stack.append(0)
-        stack.append(0)
+        stack.push(0)
+        stack.push(0)
     if device == 1:  # floating point
-        stack.append(1)
-        stack.append(2)
+        stack.push(1)
+        stack.push(2)
     if device == 2:  # files
-        stack.append(0)
-        stack.append(4)
+        stack.push(0)
+        stack.push(4)
     if device == 3:  # rng
-        stack.append(0)
-        stack.append(10)
+        stack.push(0)
+        stack.push(10)
     if device == 4:  # time
-        stack.append(0)
-        stack.append(5)
+        stack.push(0)
+        stack.push(5)
     if device == 5:  # scripting
-        stack.append(0)
-        stack.append(9)
+        stack.push(0)
+        stack.push(9)
 
 
 float_instr = {
     0: lambda: floats.push(float(stack.pop())),  # number to float
     1: lambda: floats.push(float(extract_string(stack.pop()))),  # string to float
-    2: lambda: stack.append(int(floats.pop())),  # float to number
+    2: lambda: stack.push(int(floats.pop())),  # float to number
     3: lambda: inject_string(str(floats.pop()), stack.pop()),  # float to string
     4: lambda: floats.add(),  # add
     5: lambda: floats.sub(),  # sub
@@ -383,11 +383,11 @@ float_instr = {
     8: lambda: floats.floor(),  # floor
     9: lambda: floats.ceil(),  # ceil
     10: lambda: floats.sqrt(),  # sqrt
-    11: lambda: stack.append(floats.eq()),  # eq
-    12: lambda: stack.append(floats.neq()),  # -eq
-    13: lambda: stack.append(floats.lt()),  # lt
-    14: lambda: stack.append(floats.gt()),  # gt
-    15: lambda: stack.append(floats.depth()),  # depth
+    11: lambda: stack.push(floats.eq()),  # eq
+    12: lambda: stack.push(floats.neq()),  # -eq
+    13: lambda: stack.push(floats.lt()),  # lt
+    14: lambda: stack.push(floats.gt()),  # gt
+    15: lambda: stack.push(floats.depth()),  # depth
     16: lambda: floats.dup(),  # dup
     17: lambda: floats.drop(),  # drop
     18: lambda: floats.swap(),  # swap
@@ -401,36 +401,36 @@ float_instr = {
     26: lambda: floats.acos(),  # acos
     27: lambda: afloats.push(floats.pop()),  # to alt
     28: lambda: floats.push(afloats.pop()),  # from alt
-    29: lambda: stack.append(afloats.depth()),  # alt. depth
+    29: lambda: stack.push(afloats.depth()),  # alt. depth
 }
 files_instr = {
-    0: lambda: stack.append(file_open()),
+    0: lambda: stack.push(file_open()),
     1: lambda: file_close(),
-    2: lambda: stack.append(file_read()),
+    2: lambda: stack.push(file_read()),
     3: lambda: file_write(),
-    4: lambda: stack.append(file_pos()),
+    4: lambda: stack.push(file_pos()),
     5: lambda: file_seek(),
-    6: lambda: stack.append(file_size()),
+    6: lambda: stack.push(file_size()),
     7: lambda: file_delete(),
     8: lambda: 1 + 1,
 }
 
-rng_instr = {0: lambda: stack.append(rng())}
+rng_instr = {0: lambda: stack.push(rng())}
 
 clock_instr = {
-    0: lambda: stack.append(int(time.time())),
-    1: lambda: stack.append(clock["day"]),
-    2: lambda: stack.append(clock["month"]),
-    3: lambda: stack.append(clock["year"]),
-    4: lambda: stack.append(clock["hour"]),
-    5: lambda: stack.append(clock["minute"]),
-    6: lambda: stack.append(clock["second"]),
-    7: lambda: stack.append(clock["day_utc"]),
-    8: lambda: stack.append(clock["month_utc"]),
-    9: lambda: stack.append(clock["year_utc"]),
-    10: lambda: stack.append(clock["hour_utc"]),
-    11: lambda: stack.append(clock["minute_utc"]),
-    12: lambda: stack.append(clock["second_utc"]),
+    0: lambda: stack.push(int(time.time())),
+    1: lambda: stack.push(clock["day"]),
+    2: lambda: stack.push(clock["month"]),
+    3: lambda: stack.push(clock["year"]),
+    4: lambda: stack.push(clock["hour"]),
+    5: lambda: stack.push(clock["minute"]),
+    6: lambda: stack.push(clock["second"]),
+    7: lambda: stack.push(clock["day_utc"]),
+    8: lambda: stack.push(clock["month_utc"]),
+    9: lambda: stack.push(clock["year_utc"]),
+    10: lambda: stack.push(clock["hour_utc"]),
+    11: lambda: stack.push(clock["minute_utc"]),
+    12: lambda: stack.push(clock["second_utc"]),
 }
 
 
@@ -453,16 +453,16 @@ def i_ii():
     if device == 5:  # scripting
         action = stack.pop()
         if action == 0:
-            stack.append(len(sys.argv) - 2)
+            stack.push(len(sys.argv) - 2)
         if action == 1:
             a = stack.pop()
             b = stack.pop()
-            stack.append(inject_string(sys.argv[a + 2], b))
+            stack.push(inject_string(sys.argv[a + 2], b))
         if action == 2:
             run_file(extract_string(stack.pop()))
         if action == 3:
             b = stack.pop()
-            stack.append(inject_string(sys.argv[0], b))
+            stack.push(inject_string(sys.argv[0], b))
 
 
 instructions = [
@@ -517,8 +517,8 @@ def validate_opcode(opcode):
 
 def extract_string(at):
     s = ""
-    while memory[at] != 0:
-        s = s + chr(memory[at])
+    while memory.fetch(at) != 0:
+        s = s + chr(memory.fetch(at))
         at = at + 1
     return s
 
@@ -527,9 +527,9 @@ def inject_string(s, to):
     global memory
     i = to
     for c in s:
-        memory[i] = ord(c)
+        memory.store(ord(c), i)
         i = i + 1
-    memory[i] = 0
+    memory.store(0, i)
     return to
 
 
@@ -541,7 +541,7 @@ def execute(word, notfound, output="console"):
     while ip < 100000:
         if ip == notfound:
             print("ERROR: word not found!")
-        opcode = memory[ip]
+        opcode = memory.fetch(ip)
         if validate_opcode(opcode):
             I0 = opcode & 0xFF
             I1 = (opcode >> 8) & 0xFF
@@ -564,16 +564,6 @@ def execute(word, notfound, output="console"):
     return
 
 
-def load_image():
-    global memory
-    cells = int(os.path.getsize("ngaImage") / 4)
-    f = open("ngaImage", "rb")
-    memory = list(struct.unpack(cells * "i", f.read()))
-    f.close()
-    remaining = 1000000 - cells
-    memory.extend([0] * remaining)
-
-
 def run():
     done = False
     while not done:
@@ -583,7 +573,7 @@ def run():
         else:
             for token in line.split(" "):
                 inject_string(token, 1025)
-                stack.append(1025)
+                stack.push(1025)
                 execute(interpreter, not_found)
 
 
@@ -601,7 +591,7 @@ def run_file(file):
                 for token in line.strip().split(" "):
                     if token != "":
                         inject_string(token, 1025)
-                        stack.append(1025)
+                        stack.push(1025)
                         execute(interpreter, not_found)
 
 
@@ -619,7 +609,6 @@ def interactive_startup():
     cmd = input("Would you like to download the latest image?\n (y/n)\t")
     if cmd.lower().strip() == "y":
         update_image()
-    load_image()
     cmd = input("Would you like to run a file?\n (y/n)\t")
     if cmd.lower().strip() == "n":
         run()
@@ -632,9 +621,8 @@ def interactive_startup():
 
 
 if __name__ == "__main__":
-    load_image()
-    interpreter = memory[find_entry("interpret") + 1]
-    not_found = memory[find_entry("err:notfound") + 1]
+    interpreter = memory.fetch(find_entry("interpret") + 1)
+    not_found = memory.fetch(find_entry("err:notfound") + 1)
 
     if len(sys.argv) == 1:
         run()
