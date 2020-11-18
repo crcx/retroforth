@@ -303,21 +303,21 @@ def i_an():
     global ip, memory, stack, address
     t = stack.pop()
     m = stack.pop()
-    stack.push(m &= t)
+    stack.push(m & t)
 
 
 def i_or():
     global ip, memory, stack, address
     t = stack.pop()
     m = stack.pop()
-    stack.push(m |= t)
+    stack.push(m | t)
 
 
 def i_xo():
     global ip, memory, stack, address
     t = stack.pop()
     m = stack.pop()
-    stack.push(m ^= t)
+    stack.push(m ^ t)
 
 
 def i_sh():
