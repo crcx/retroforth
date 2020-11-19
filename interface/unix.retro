@@ -7,10 +7,10 @@ host operating system on Unix style systems.
 {{
   'Unix var
   :identify
-    @Unix n:zero? [
+    @Unix n:zero? 0; drop
       #8 io:scan-for dup n:negative?
       [ drop 'IO_DEVICE_TYPE_0008_NOT_FOUND s:put nl ]
-      [ !Unix ] choose ] if ;
+      [ !Unix ] choose ;
 ---reveal---
   :io:unix-syscall identify @Unix io:invoke ;
 }}

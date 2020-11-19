@@ -24,10 +24,10 @@ via `c:get`.
 {{
   'Keyboard var
   :identify
-    @Keyboard n:zero? [
+    @Keyboard n:zero? 0; drop
       #1 io:scan-for dup n:negative?
       [ drop 'IO_DEVICE_TYPE_0001_NOT_FOUND s:put nl ]
-      [ !Keyboard ] choose ] if ;
+      [ !Keyboard ] choose ;
 ---reveal---
   :c:get (-c) identify @Keyboard io:invoke ;
 }}

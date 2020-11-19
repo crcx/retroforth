@@ -8,10 +8,10 @@ best approach on their host system.
 {{
   'io var
   :identify
-    @io n:zero? [
+    @io n:zero? 0; drop
       #10 io:scan-for dup n:negative?
       [ drop 'IO_DEVICE_TYPE_0010_NOT_FOUND s:put nl ]
-      [ !io ] choose ] if ;
+      [ !io ] choose ;
 ---reveal---
   :io:rng-operation identify @io io:invoke ;
 }}

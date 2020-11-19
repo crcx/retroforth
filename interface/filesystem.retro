@@ -11,10 +11,10 @@ expectations.
 {{
   'Files var
   :identify
-    @Files n:zero? [
+    @Files n:zero? 0; drop
       #4 io:scan-for dup n:negative?
       [ drop 'IO_DEVICE_TYPE_0004_NOT_FOUND s:put nl ]
-      [ !Files ] choose ] if ;
+      [ !Files ] choose ;
   ---reveal---
   :file:operation identify @Files io:invoke ;
 }}

@@ -7,10 +7,10 @@ system clock.
 {{
   'Clock var
   :identify
-    @Clock n:zero? [
+    @Clock n:zero? 0; drop
       #5 io:scan-for dup n:negative?
       [ drop 'IO_DEVICE_TYPE_0005_NOT_FOUND s:put nl ]
-      [ !Clock ] choose ] if ;
+      [ !Clock ] choose ;
 ---reveal---
   :clock:operation identify @Clock io:invoke ;
 }}

@@ -17,10 +17,10 @@ Returns:
 {{
   'Gopher var
   :identify
-    @Gopher n:zero? [
+    @Gopher n:zero? 0; drop
       #5 io:scan-for dup n:negative?
       [ drop 'IO_DEVICE_TYPE_0005_NOT_FOUND s:put nl ]
-      [ !Gopher ] choose ] if ;
+      [ !Gopher ] choose ;
 ---reveal---
   :gopher:get identify #0 @Gopher io:invoke ;
 }}

@@ -10,10 +10,10 @@ point format.
 {{
   'FPU var
   :identify
-    @FPU n:zero? [
+    @FPU n:zero? 0; drop
       #2 io:scan-for dup n:negative?
       [ drop 'IO_DEVICE_TYPE_0002_NOT_FOUND s:put nl ]
-      [ !FPU ] choose ] if ;
+      [ !FPU ] choose ;
   ---reveal---
   :float:operation identify @FPU io:invoke ;
 }}
