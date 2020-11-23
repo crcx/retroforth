@@ -1444,6 +1444,9 @@ Terminates a process. Takes a process and a signal to send.
 unix:pclose              D: n-  A: -  F: -
 Close a pipe.
 
+unix:pipe                D: s-  A: -  F: -
+Takes a string with a Unix command line and run it in a pipe, returning a new string with the first line of the output from the pipe.
+
 unix:popen               D: sn-n  A: -  F: -
 Open a pipe. Takes a command to run, and a file mode (`file:R` or `file:W`; `file:R+` may work on some systems). Returns a file ID usable with words in the `file:` namespace.
 

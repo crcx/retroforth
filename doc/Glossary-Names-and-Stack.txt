@@ -480,6 +480,7 @@ unix:getenv              D: sa-  A: -  F: -
 unix:getpid              D: -n  A: -  F: -
 unix:kill                D: nn-  A: -  F: -
 unix:pclose              D: n-  A: -  F: -
+unix:pipe                D: s-  A: -  F: -
 unix:popen               D: sn-n  A: -  F: -
 unix:putenv              D: s-  A: -  F: -
 unix:sleep               D: n-  A: -  F: -

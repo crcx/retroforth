@@ -480,6 +480,7 @@ unix:getenv	sa-	-	-	Get an environment variable. Provide the name and an address
 unix:getpid	-n	-	-	Return the PID of the current process.			class:word	{n/a}	{n/a}	unix	rre	
 unix:kill	nn-	-	-	Terminates a process. Takes a process and a signal to send.			class:word	{n/a}	{n/a}	unix	rre	
 unix:pclose	n-	-	-	Close a pipe.			class:word	{n/a}	{n/a}	unix	rre	
+unix:pipe	s-	-	-	Takes a string with a Unix command line and run it in a pipe, returning a new string with the first line of the output from the pipe.			class:word	  'ls_-l unix:pipe s:put nl	{n/a}	unix	rre	
 unix:popen	sn-n	-	-	Open a pipe. Takes a command to run, and a file mode (`file:R` or `file:W`; `file:R+` may work on some systems). Returns a file ID usable with words in the `file:` namespace.			class:word	{n/a}	{n/a}	unix	rre	
 unix:putenv	s-	-	-	Takes a string in the form `name=value` and sets an environment variable named `name` to `value`.			class:word	  'EDITOR=vi unix:putenv	{n/a}	unix	rre	
 unix:sleep	n-	-	-	Sleep for the specified number of seconds.			class:word	{n/a}	{n/a}	unix	rre	

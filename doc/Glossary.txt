@@ -5685,6 +5685,22 @@ Close a pipe.
 Class: class:word | Namespace: unix | Interface Layer: rre
 ------------------------------------------------------------------------
 
+unix:pipe
+
+  Data:  s-
+  Addr:  -
+  Float: -
+
+Takes a string with a Unix command line and run it in a pipe, returning a new string with the first line of the output from the pipe.
+
+Class: class:word | Namespace: unix | Interface Layer: rre
+
+Example #1:
+
+  'ls_-l unix:pipe s:put nl
+
+------------------------------------------------------------------------
+
 unix:popen
 
   Data:  sn-n
