@@ -1234,6 +1234,7 @@ The format language is simple:
     | \\ | Replace with a single \                   |
     | \  | Replace with an underscore (_)            |
     | \0 | Replace with NUL                          |
+    | \^ | Replace with ESC                          |
     | %c | Replace with a character on the stack     |
     | %s | Replace with a string on the stack        |
     | %n | Replace with the next number on the stack |
@@ -1246,6 +1247,7 @@ The format language is simple:
     $n [ ASCII:LF  buffer:add ] case
     $t [ ASCII:HT  buffer:add ] case
     $0 [ ASCII:NUL buffer:add ] case
+    $^ [ ASCII:ESC buffer:add ] case
     buffer:add ;
 
   :type (aac-)
