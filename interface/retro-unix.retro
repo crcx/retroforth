@@ -1,7 +1,7 @@
-# RRE Listener and Extensions
+# RETRO on Unix - Listener and Extensions
 
 In this file I am implementing the interactive listener that
-RRE will run when started with `-i`, `-i,c`, or `-i,fs`.
+RETRO will run when started with `-i`, `-i,c`, or `-i,fs`.
 
 The basic image has a space allocated for input at the end of
 the kernel. This is at address 1024 (the kernel space is fixed
@@ -42,9 +42,9 @@ not `TRUE` it will add the character to the buffer.
 
 ~~~
 {{
-  :gather (c-)
-    dup [ ASCII:BS eq? ] [ ASCII:DEL eq? ] bi or &drop &buffer:add choose ;
-  :cycle (q-qc)  repeat c:get dup-pair swap call not 0; drop gather again ;
+  (c-cf) :edit?  dup [ ASCII:BS eq? ] [ ASCII:DEL eq? ] bi or ;
+  (c-)   :gather edit? &drop &buffer:add choose ;
+  (q-qc) :cycle  repeat c:get dup-pair swap call not 0; drop gather again ;
 ---reveal---
   :parse-until (q-s)
     [ s:empty buffer:set cycle drop-pair buffer:start ] buffer:preserve ;
@@ -60,7 +60,7 @@ a quote which looks for an end of line character.
 ~~~
 
 ~~~
-:clear ASCII:ESC c:put '[2J s:put ASCII:ESC c:put '[0;0H s:put ;
+:clear '\^[2J\^[0;0H s:format s:put ;
 ~~~
 
 Hide the support words.
