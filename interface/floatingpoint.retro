@@ -14,7 +14,7 @@ point format.
       #2 io:scan-for dup n:negative?
       [ drop 'IO_DEVICE_TYPE_0002_NOT_FOUND s:put nl ]
       [ !FPU ] choose ;
-  ---reveal---
+---reveal---
   :float:operation identify @FPU io:invoke ;
 }}
 ~~~
@@ -177,19 +177,19 @@ Deal with special cases.
     f:dup f:inf?  [ f:drop e:INF  ] if;
     f:dup f:-inf? [ f:drop e:-INF ] if;
     f:+encode f:round f:to-number e:clip      (e
-    e:MIN         [ f:drop        ] case
-    e:MAX         [ f:drop        ] case ;
+    e:MIN         &f:drop           case
+    e:MAX         &f:drop           case ;
 
   :e:to-f (e-|f:-n)
-    e:NAN  [ f:NAN  ] case
-    e:INF  [ f:INF  ] case
-    e:-INF [ f:-INF ] case
+    e:NAN  &f:NAN  case
+    e:INF  &f:INF  case
+    e:-INF &f:-INF case
     n:to-float f:-encode ;
 }}
 ~~~
 
 ~~~
-:f:store (a-|f:n-)     [ f:to-e ] dip store ;
+:f:store (a-|f:n-) &f:to-e dip store ;
 :f:fetch (a-|f:-n) fetch e:to-f ;
 ~~~
 
