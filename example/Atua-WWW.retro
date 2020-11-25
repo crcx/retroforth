@@ -1,29 +1,19 @@
 #!/usr/bin/env retro
 
-# Atua-WWW: A Gopher Server for the Web
+# Atua-WWW: Serving Gopher to Web Browsers
 
-Atua is a gopher server written in Retro. This is a variation which
-talks to HTTP clients instead of Gopher clients. It's intended to
-allow those without a Gopher client to access my Gopherspace.
+Atua is a Gopher server written in Retro. I've used it for a few
+years, but most people don't use Gopher clients these days. This
+is a variation of Atua that translates the Gopher directories to
+HTML and speaks enough HTTP to serve files to the bloated
+browsers in use today.
 
-This will get run as an inetd service, which keeps things simple as it
-prevents needing to handle socket I/O directly.
+This will get run as an inetd service, which keeps things simple
+as it prevents needing to handle socket I/O directly.
 
-# Features
-
-Atua is a minimal server targetting the the basic Gopher0 protocol. It
-supports a minimal gophermap format for indexes and transfer of static
-content.
-
-Atua-WWW translates the Gophermap into HTML with minimal formatting.
-
--+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-
-# Script Prelude
-
-Atua-WWW uses Retro's *rre* interface layer. Designed to run a single
-program then exit, this makes using Retro as a scripting language
-possible.
+Atua-WWW uses Retro's *retro-unix* interface layer. Designed to
+run a single program then exit, this makes using Retro very
+useful on Unix (or Linux, Haiku, or other POSIX-ish systems).
 
 # Configuration
 
@@ -32,61 +22,53 @@ Atua needs to know:
 - the path to the files to serve
 - the name of the index file
 - The maximum length of a selector
-- The maximum file size
 
 ~~~
 '/home/crc/atua 'PATH          s:const
 '/gophermap     'DEFAULT-INDEX s:const
-#1024  'MAX-SELECTOR-LENGTH const
-#65535 #8 * 'MAX-FILE-SIZE const
+#1024           'MAX-SELECTOR-LENGTH const
 ~~~
 
 # I/O Words
 
-Retro only supports basic output by default. The RRE interface that
-Atua uses adds support for files and stdin, so we map these to words
-and provide some other helpers.
+Retro only supports basic output by default. The RRE interface
+that Atua uses adds support for files and stdin, so we map these
+to words and provide some other helpers.
 
-*Console Output*
+## Console Output
 
-The Gopher protocol uses tabs and cr/lf for signficant things. To aid
-in this, I define output words for tabs and end of line.
+The Gopher protocol uses tabs and cr/lf for signficant things.
+To aid in this, I define output words for tabs and end of line.
 
 ~~~
 :eol  (-)  ASCII:CR c:put ASCII:LF c:put ;
 ~~~
 
-*Console Input*
+## Console Input
 
-Input lines end with a cr, lf, or tab. The `eol?` checks for this.
-The `s:get` word could easily be made more generic in terms of what
-it checks for. This suffices for a Gopher server though.
+Input lines end with a cr, lf, or tab. The `eol?` checks for
+this. The `s:get` word could easily be made more generic in
+terms of what it checks for. This suffices for a Gopher server
+though.
 
 ~~~
 :eol? (c-f)
-  [ [ ASCII:CR eq? ] [ ASCII:LF eq? ] [ ASCII:SPACE eq? ] tri or or ] [ $? eq? ] bi or ;
+  [ [ ASCII:CR eq? ]
+    [ ASCII:LF eq? ]
+    [ ASCII:SPACE eq? ] tri or or ]
+  [ $? eq? ] bi or ;
+
 :s:get (a-)
   buffer:set
   [ c:get dup buffer:add eol? not ] while ;
 ~~~
 
-# An HTML Namespace
-
-~~~
-:html:tt  (q-)  '<tt> s:put call '</tt> s:put ;
-:html:br  (-)   '<br> s:put ;
-~~~
-
-# Gopher Namespace
-
-Atua uses a `gopher:` namespace to group the server related words.
-
 ~~~
 {{
 ~~~
 
-First up are buffers for the selector string and the file buffer. The
-variables and buffers are kept private.
+First up are buffers for the selector string and the file buffer.
+The variables and buffers are kept private.
 
 ~~~
 'Selector d:create
@@ -131,38 +113,6 @@ These are just simple accessor words to aid in overall readability.
 :get-mime-type (s-s)
   [ $. s:index-of ] sip +
   (textual_files)
-    '.01    [ 'text/plain               ] s:case
-    '.02    [ 'text/plain               ] s:case
-    '.03    [ 'text/plain               ] s:case
-    '.04    [ 'text/plain               ] s:case
-    '.05    [ 'text/plain               ] s:case
-    '.06    [ 'text/plain               ] s:case
-    '.07    [ 'text/plain               ] s:case
-    '.08    [ 'text/plain               ] s:case
-    '.09    [ 'text/plain               ] s:case
-    '.10    [ 'text/plain               ] s:case
-    '.11    [ 'text/plain               ] s:case
-    '.12    [ 'text/plain               ] s:case
-    '.13    [ 'text/plain               ] s:case
-    '.14    [ 'text/plain               ] s:case
-    '.15    [ 'text/plain               ] s:case
-    '.16    [ 'text/plain               ] s:case
-    '.17    [ 'text/plain               ] s:case
-    '.18    [ 'text/plain               ] s:case
-    '.19    [ 'text/plain               ] s:case
-    '.20    [ 'text/plain               ] s:case
-    '.21    [ 'text/plain               ] s:case
-    '.22    [ 'text/plain               ] s:case
-    '.23    [ 'text/plain               ] s:case
-    '.24    [ 'text/plain               ] s:case
-    '.25    [ 'text/plain               ] s:case
-    '.26    [ 'text/plain               ] s:case
-    '.27    [ 'text/plain               ] s:case
-    '.28    [ 'text/plain               ] s:case
-    '.29    [ 'text/plain               ] s:case
-    '.30    [ 'text/plain               ] s:case
-    '.31    [ 'text/plain               ] s:case
-    '.txt   [ 'text/plain               ] s:case
     '.md    [ 'text/markdown            ] s:case
     '.htm   [ 'text/html                ] s:case
     '.html  [ 'text/html                ] s:case
@@ -170,10 +120,6 @@ These are just simple accessor words to aid in overall readability.
     '.muri.html  [ 'text/html           ] s:case
     '.forth.html [ 'text/html           ] s:case
     '.css   [ 'text/css                 ] s:case
-    '.c     [ 'text/plain               ] s:case
-    '.h     [ 'text/plain               ] s:case
-    '.forth [ 'text/plain               ] s:case
-    '.retro [ 'text/plain               ] s:case
   (image_files)
     '.png   [ 'image/png                ] s:case
     '.jpg   [ 'image/jpeg               ] s:case
@@ -193,6 +139,7 @@ These are just simple accessor words to aid in overall readability.
 ~~~
 :with-path (-s)
   PATH &Selector s:chop s:append ;
+
 :construct-filenames (-)
   with-path s:keep !Requested-File
   with-path '/gophermap s:append s:keep !Requested-Index
@@ -242,28 +189,28 @@ the index footer.
 
 ~~~
 :gopher:i (s-)
-  [ s:put ] html:tt html:br eol ;
+  s:put eol ;
 ~~~
 
 The `gopher:icon` displays an indicator for menu items.
 
 ~~~
 :gopher:icon
-  $0 [ '&nbsp;TXT&nbsp;&nbsp; s:put ] case
+  $0 [ '_TXT__ s:put ] case
   $1 [ '[DIR]_ s:put ] case
-  $2 [ '&nbsp;CSO&nbsp;&nbsp; s:put ] case
-  $3 [ '&nbsp;ERR&nbsp;&nbsp; s:put ] case
-  $4 [ '&nbsp;BIN&nbsp;&nbsp; s:put ] case
-  $5 [ '&nbsp;BIN&nbsp;&nbsp; s:put ] case
-  $6 [ '&nbsp;UUE&nbsp;&nbsp; s:put ] case
+  $2 [ '_CSO__ s:put ] case
+  $3 [ '_ERR__ s:put ] case
+  $4 [ '_BIN__ s:put ] case
+  $5 [ '_BIN__ s:put ] case
+  $6 [ '_UUE__ s:put ] case
   $7 [ '[FND]_ s:put ] case
-  $8 [ '&nbsp;TEL&nbsp;&nbsp; s:put ] case
-  $9 [ '&nbsp;BIN&nbsp;&nbsp; s:put ] case
-  $I [ '&nbsp;IMG&nbsp;&nbsp; s:put ] case
-  $S [ '&nbsp;AUD&nbsp;&nbsp; s:put ] case
-  $g [ '&nbsp;GIF&nbsp;&nbsp; s:put ] case
-  $h [ '&nbsp;HTM&nbsp;&nbsp; s:put ] case
-  drop '&nbsp;???&nbsp;&nbsp; s:put
+  $8 [ '_TEL__ s:put ] case
+  $9 [ '_BIN__ s:put ] case
+  $I [ '_IMG__ s:put ] case
+  $S [ '_AUD__ s:put ] case
+  $g [ '_GIF__ s:put ] case
+  $h [ '_HTM__ s:put ] case
+  drop '_???__ s:put
 ;
 ~~~
 
@@ -302,25 +249,27 @@ The `gopher:icon` displays an indicator for menu items.
   [ ASCII:HT [ #0 ] case ] s:map
   dup s:length over + n:inc
   pop [ #4 + ] if
-  '<a_href="%s">%s</a><br> s:format s:put ;
+  '<a_href="%s">%s</a> s:format s:put ;
 
 :gopher:generate-index (f-)
   'Content-type:_text/html s:put eol eol
   '<!DOCTYPE_HTML_PUBLIC_"-//W3C//DTD_HTML_4.01//EN" s:put sp
   '"http://www.w3.org/TR/html4/strict.dtd"> s:put eol
-  '<html><head><meta_http-equiv="Content-Type"_content="text/html;_charset=utf-8"> s:put
-  '<link_href=data:,_rel=icon> s:put
-  '<style_type="text/css">tt_{_white-space:_pre;_} s:put
-  '_*_{_color:_#bbb;_background:_#090909;_font-size:_large;_}_a_{_color:_#FF6600;_} s:put
-  '</style><title>forthworks.com</title></head><body><p> s:put eol eol
+  { '<html><head>
+    '<meta_http-equiv="Content-Type"_content="text/html;_charset=utf-8">
+    '<link_href=data:,_rel=icon>
+    '<style_type="text/css">p_{_font-family:_monospace;_white-space:_pre;_}
+    '_*_{_color:_#bbb;_background:_#090909;_font-size:_large;_}
+    'a_{_color:_#FF6600;_}
+    '</style><title>forthworks.com</title></head>
+  } [ s:put eol ] a:for-each
+  '<body><p> s:put
   file:R file:open !FID
   @FID file:size !Size
   [ buffer gopher:s:get
-    buffer tab? [ [ link ] html:tt eol ] [ gopher:i ] choose
+    buffer tab? [ link eol ] [ gopher:i ] choose
     @FID file:tell @Size lt? ] while
   @FID file:close
-  [ #70 [ $_ c:put ] times ] html:tt html:br eol
-  'forthworks.com:80_/_atua-www_/_running_on_retro gopher:i
   '</p></body></html> s:put
 ;
 ~~~
