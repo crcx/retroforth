@@ -103,7 +103,7 @@ seconds.
 
 ~~~
 (s-s)  :unix:pipe
-         file:R unix:popen [ file:read-line ] [ unix:pclose ] bi ;
+         file:R unix:popen &file:read-line &unix:pclose bi ;
 ~~~
 
 ~~~
@@ -130,6 +130,6 @@ seconds.
   :finish unix:pclose buffer:size ;
 ---reveal---
   :unix:slurp-pipe (as-n)
-    [ start [ read ] until finish ] buffer:preserve ;
+    [ start &read until finish ] buffer:preserve ;
 }}
 ~~~

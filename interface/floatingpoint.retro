@@ -170,7 +170,7 @@ Deal with special cases.
   :f:-shift      (|f:n-n)_shift_left  f:E1 f:* ;
   :f:+shift      (|f:n-n)_shift_right f:E1 f:/ ;
   :f:+encode     (|f:n-n) f:signed-sqrt f:-shift ;
-:f:-encode       (|f:n-n) f:dup f:sign  f:+shift f:dup f:*  n:to-float f:* ;
+  :f:-encode     (|f:n-n) f:dup f:sign  f:+shift f:dup f:*  n:to-float f:* ;
 ---reveal---
   :f:to-e (-e|f:n-)
     f:dup f:nan?  [ f:drop e:NAN  ] if;
