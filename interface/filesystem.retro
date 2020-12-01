@@ -15,7 +15,7 @@ expectations.
       #4 io:scan-for dup n:negative?
       [ drop 'IO_DEVICE_TYPE_0004_NOT_FOUND s:put nl ]
       [ !Files ] choose ;
-  ---reveal---
+---reveal---
   :file:operation identify @Files io:invoke ;
 }}
 ~~~
