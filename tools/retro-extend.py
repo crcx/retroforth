@@ -22,6 +22,11 @@ address = []
 memory = []
 Interpreter = 0
 
+notfound = 0
+s_eq = 0
+d_addheader = 0
+d_lookup = 0
+Dictionary = dict()
 
 def rxDivMod(a, b):
     x = abs(a)
@@ -38,10 +43,14 @@ def rxDivMod(a, b):
 
 
 def findEntry(named):
+    if named in Dictionary:
+      return Dictionary[named]
+
     header = memory[2]
     Done = False
     while header != 0 and not Done:
         if named == extractString(header + 3):
+            Dictionary[named] = header
             Done = True
         else:
             header = memory[header]
@@ -346,34 +355,45 @@ def execute(word, output="console"):
     global ip, memory, stack, address
     ip = word
     address.append(0)
-    notfound = memory[findEntry("err:notfound") + 1]
-    while ip < 100000 and len(address) > 0:
-        if ip == notfound:
-            print("ERROR: word not found!:", extractString(1024))
+    while ip < 1000000 and len(address) > 0:
         opcode = memory[ip]
-        if validateOpcode(opcode):
-            I0 = opcode & 0xFF
-            I1 = (opcode >> 8) & 0xFF
-            I2 = (opcode >> 16) & 0xFF
-            I3 = (opcode >> 24) & 0xFF
-            if I0 != 0:
-                instructions[I0]()
-            if I1 != 0:
-                instructions[I1]()
-            if I2 != 0:
-                instructions[I2]()
-            if I3 != 0:
-                instructions[I3]()
+        if ip == s_eq:
+            a = extractString(stack.pop())
+            b = extractString(stack.pop())
+            if a == b:
+                stack.append(-1)
+            else:
+                stack.append(0)
+            ip = address.pop()
+        elif ip == d_lookup:
+            a = extractString(stack.pop())
+            header = findEntry(a)
+            stack.append(header)
+            ip = address.pop()
         else:
-            print("Invalid Bytecode", opcode, ip)
-            ip = 2000000
+          if validateOpcode(opcode):
+              I0 = opcode & 0xFF
+              I1 = (opcode >> 8) & 0xFF
+              I2 = (opcode >> 16) & 0xFF
+              I3 = (opcode >> 24) & 0xFF
+              if I0 != 0:
+                  instructions[I0]()
+              if I1 != 0:
+                  instructions[I1]()
+              if I2 != 0:
+                  instructions[I2]()
+              if I3 != 0:
+                  instructions[I3]()
+          else:
+              print("Invalid Bytecode", opcode, ip)
+              ip = 2000000
         ip = ip + 1
     return
 
 
 def load_image():
     global memory
-    cells = int(os.path.getsize("ngaImage") / 4)
+    cells = int(os.path.getsize(sys.argv[1]) / 4)
     f = open("ngaImage", "rb")
     memory = list(struct.unpack(cells * "i", f.read()))
     f.close()
@@ -382,11 +402,10 @@ def load_image():
 
 
 def process(line):
-    for Token in line.split(" "):
-        if Token != "":
-            injectString(Token, 1024)
-            stack.append(1024)
-            execute(Interpreter)
+    for Token in line.split():
+      injectString(Token, 1024)
+      stack.append(1024)
+      execute(Interpreter)
 
 
 def process_files():
@@ -409,9 +428,20 @@ def save_image():
             file.write(struct.pack("i", memory[j]))
             j = j + 1
 
-
 if __name__ == "__main__":
     load_image()
+
+    header = memory[2]
+    Done = False
+    while header != 0:
+        named = extractString(header + 3)
+        Dictionary[named] = header
+        header = memory[header]
+
     Interpreter = memory[findEntry("interpret") + 1]
+    notfound = memory[findEntry("err:notfound") + 1]
+    s_eq = memory[findEntry("s:eq?") + 1]
+    d_addheader = memory[findEntry("d:add-header") + 1]
+    d_lookup = memory[findEntry("d:lookup") + 1]
     process_files()
     save_image()
