@@ -369,7 +369,7 @@ class Retro:
             if action == 1:
                 a = self.stack.pop()
                 b = self.stack.pop()
-                self.stack.push(inject_string(sys.argv[a + 2], b))
+                self.stack.push(self.inject_string(sys.argv[a + 2], b))
             if action == 2:
                 run_file(self.extract_string(self.stack.pop()))
             if action == 3:
@@ -454,9 +454,9 @@ class Retro:
                     in_block = not in_block
                 elif in_block:
                     for token in line.strip().split():
-                        inject_string(token, 1024)
-                        stack.push(1024)
-                        execute(interpreter, not_found)
+                        self.inject_string(token, 1024)
+                        self.stack.push(1024)
+                        self.execute(self.interpreter, self.not_found)
 
     def update_image(self):
         import requests
@@ -470,4 +470,26 @@ class Retro:
 
 if __name__ == "__main__":
     retro = Retro()
-    retro.run()
+    if len(sys.argv) == 1:
+        retro.run()
+
+    if len(sys.argv) == 2:
+        retro.run_file(sys.argv[1])
+
+    sources = []
+
+    if len(sys.argv) > 2:
+        i = 1
+        e = len(sys.argv)
+        while i < e:
+            param = sys.argv[i]
+            if param == "-f":
+                i += 1
+                sources.append(sys.argv[i])
+            i += 1
+
+    if len(sys.argv) > 2 and sys.argv[1][0] != "-":
+        retro.run_file(sys.argv[1])
+    else:
+        for source in sources:
+            retro.run_file(source)
