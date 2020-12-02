@@ -18,4 +18,3 @@ class Clock:
             "second_utc": now.utcnow().second,
         }
         return ids[id]
-
