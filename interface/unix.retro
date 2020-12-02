@@ -117,10 +117,11 @@ seconds.
 ~~~
 
 ~~~
-(q-)   :unix:for-each-file
-         'ls_-1_-p unix:pipe
+(q-)   :unix:for-each-file (q-)
+         'ls_-1_-p file:R unix:popen
          unix:count-files-in-cwd
-       [ [ file:read-line s:temp over call ] sip ] times ;
+         [ [ file:read-line s:temp over call ] sip ] times
+         unix:pclose drop ;
 ~~~
 
 ~~~
