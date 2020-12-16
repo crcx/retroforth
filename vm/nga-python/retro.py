@@ -43,6 +43,7 @@ class Retro:
         self.floats = FloatStack()
         self.afloats = FloatStack()
         self.Dictionary = dict()
+        self.populate_dictionary()
         self.Cached = dict()
         self.Cached['interpreter'] = self.memory.fetch(self.find_entry("interpret") + 1)
         self.Cached['not_found'] = self.memory.fetch(self.find_entry("err:notfound") + 1)
@@ -94,11 +95,22 @@ class Retro:
             q *= -1
         return q, r
 
+    def populate_dictionary(self):
+        header = self.memory.fetch(2)
+        while header != 0:
+            named = self.extract_string(header + 3)
+            self.Dictionary[named] = header
+            header = self.memory.fetch(header)
+
     def find_entry(self, named):
+        if named in self.Dictionary:
+            return self.Dictionary[named]
+
         header = self.memory.fetch(2)
         Done = False
         while header != 0 and not Done:
             if named == self.extract_string(header + 3):
+                self.Dictionary[named] = header
                 Done = True
             else:
                 header = self.memory.fetch(header)
