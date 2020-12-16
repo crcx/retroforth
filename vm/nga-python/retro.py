@@ -345,12 +345,22 @@ class Retro:
         29: lambda: stack.push(afloats.depth()),  # alt. depth
     }
 
+    def file_open_params(self):
+        mode = self.stack.pop()
+        name = self.extract_string(self.stack.pop())
+        return name, mode
+
+    def file_write_params(self):
+        slot = self.stack.pop()
+        char = self.stack.pop()
+        return slot, char
+
     def setup_devices(self):
         self.files_instr = {
-            0: lambda: self.stack.push(self.files.open()),
+            0: lambda: self.stack.push(self.files.open(self.file_open_params())),
             1: lambda: self.files.close(self.stack.pop()),
             2: lambda: self.stack.push(self.files.read(self.stack.pop())),
-            3: lambda: self.files.write(),
+            3: lambda: self.files.write(self.file_write_params()),
             4: lambda: self.stack.push(self.files.pos(self.stack.pop())),
             5: lambda: self.files.seek(),
             6: lambda: self.stack.push(self.files.size(self.stack.pop())),
