@@ -51,6 +51,7 @@ class Retro:
         self.Cached["interpreter"] = self.map_in("interpret")
         self.Cached["not_found"] = self.map_in("err:notfound")
         self.Cached["s:eq?"] = self.map_in("s:eq?")
+        self.Cached["s:to-number"] = self.map_in("s:to-number")
         self.Cached["d:lookup"] = self.map_in("d:lookup")
 
         self.instructions = [
@@ -438,6 +439,10 @@ class Retro:
                 header = self.find_entry(name)
                 self.stack.push(header)
                 self.memory.store(header, self.Cached["d:lookup"] - 20) # "which"
+                self.ip = self.address.pop()
+            elif self.ip == self.Cached["s:to-number"]:
+                n = self.extract_string(self.stack.pop())
+                self.stack.push(int(n))
                 self.ip = self.address.pop()
             else:
                 if self.ip == notfound:
