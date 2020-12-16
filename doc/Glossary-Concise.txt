@@ -539,7 +539,7 @@ d:link                   D: d-a  A: -  F: -
 Given a dictionary header, return the link field.
 
 d:lookup                 D: s-d  A: -  F: -
-Lookup the specified name in the dictionary and return a pointer to its dictionary header. This returns zero if the word is not found.
+Lookup the specified name in the dictionary and return a pointer to its dictionary header. This returns zero if the word is not found. This also sets an internal variable ('which' in rx.muri) to the header address.
 
 d:lookup-xt              D: a-d  A: -  F: -
 Lookup the specified address in the dictionary and return a pointer to its dictionary header. This returns zero if the word is not found.

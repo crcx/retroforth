@@ -178,7 +178,7 @@ d:last.class	-a	-	-	Return a pointer to the class field of the most recent dicti
 d:last.name	-s	-	-	Return a pointer to the name field of the most recent dictionary header.			class:word	{n/a}	{n/a}	d	all	
 d:last.xt	-a	-	-	Return a pointer to the xt field of the most recent dictionary header.			class:word	{n/a}	{n/a}	d	all	
 d:link	d-a	-	-	Given a dictionary header, return the link field.			class:word	{n/a}	{n/a}	d	all	
-d:lookup	s-d	-	-	Lookup the specified name in the dictionary and return a pointer to its dictionary header. This returns zero if the word is not found.			class:word	{n/a}	{n/a}	d	all	
+d:lookup	s-d	-	-	Lookup the specified name in the dictionary and return a pointer to its dictionary header. This returns zero if the word is not found. This also sets an internal variable ('which' in rx.muri) to the header address.			class:word	{n/a}	{n/a}	d	all	
 d:lookup-xt	a-d	-	-	Lookup the specified address in the dictionary and return a pointer to its dictionary header. This returns zero if the word is not found.			class:word	{n/a}	{n/a}	d	all	
 d:name	d-s	-	-	Given a dictionary header, return the name field.			class:word	{n/a}	{n/a}	d	all	
 d:words	-	-	-	Display a list of all named items in the `Dictionary`.			class:word	{n/a}	{n/a}	d	rre	
