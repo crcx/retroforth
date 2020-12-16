@@ -42,8 +42,12 @@ class Retro:
         self.files = FileSystem()
         self.floats = FloatStack()
         self.afloats = FloatStack()
-        self.interpreter = self.memory.fetch(self.find_entry("interpret") + 1)
-        self.not_found = self.memory.fetch(self.find_entry("err:notfound") + 1)
+        self.Dictionary = dict()
+        self.Cached = dict()
+        self.Cached['interpreter'] = self.memory.fetch(self.find_entry("interpret") + 1)
+        self.Cached['not_found'] = self.memory.fetch(self.find_entry("err:notfound") + 1)
+        self.Cached['s:eq?'] = self.memory.fetch(self.find_entry("s:eq?") + 1)
+
         self.instructions = [
             self.i_nop,
             self.i_lit,
@@ -440,7 +444,7 @@ class Retro:
                 for token in line.split():
                     self.inject_string(token, 1024)
                     self.stack.push(1024)
-                    self.execute(self.interpreter, self.not_found)
+                    self.execute(self.Cached['interpreter'], self.Cached['not_found'])
 
     def run_file(self, file):
         if not os.path.exists(file):
@@ -456,7 +460,7 @@ class Retro:
                     for token in line.strip().split():
                         self.inject_string(token, 1024)
                         self.stack.push(1024)
-                        self.execute(self.interpreter, self.not_found)
+                        self.execute(self.Cached['interpreter'], self.Cached['not_found'])
 
     def update_image(self):
         import requests
