@@ -32,6 +32,9 @@ files = FileSystem()
 
 
 class Retro:
+    def map_in(self, name):
+      return self.memory.fetch(self.find_entry(name) + 1)
+
     def __init__(self):
         self.ip = 0
         self.stack = IntegerStack()
@@ -45,9 +48,10 @@ class Retro:
         self.Dictionary = dict()
         self.populate_dictionary()
         self.Cached = dict()
-        self.Cached['interpreter'] = self.memory.fetch(self.find_entry("interpret") + 1)
-        self.Cached['not_found'] = self.memory.fetch(self.find_entry("err:notfound") + 1)
-        self.Cached['s:eq?'] = self.memory.fetch(self.find_entry("s:eq?") + 1)
+        self.Cached["interpreter"] = self.map_in("interpret")
+        self.Cached["not_found"] = self.map_in("err:notfound")
+        self.Cached["s:eq?"] = self.map_in("s:eq?")
+        self.Cached["d:lookup"] = self.map_in("d:lookup")
 
         self.instructions = [
             self.i_nop,
@@ -420,27 +424,42 @@ class Retro:
         self.ip = word
         if self.address.depth() == 0:
             self.address.push(0)
-        while self.ip < 100000:
-            if self.ip == notfound:
-                print("ERROR: word not found!")
-            opcode = self.memory.fetch(self.ip)
-            I0 = opcode & 0xFF
-            I1 = (opcode >> 8) & 0xFF
-            I2 = (opcode >> 16) & 0xFF
-            I3 = (opcode >> 24) & 0xFF
-            if self.validate_opcode(I0, I1, I2, I3):
-                # print("Bytecode: ", I0, I1, I2, I3, "at", self.ip)
-                if I0 != 0:
-                    self.instructions[I0]()
-                if I1 != 0:
-                    self.instructions[I1]()
-                if I2 != 0:
-                    self.instructions[I2]()
-                if I3 != 0:
-                    self.instructions[I3]()
+        while self.ip < 1000000:
+            if self.ip == self.Cached["s:eq?"]:
+                a = self.extract_string(self.stack.pop())
+                b = self.extract_string(self.stack.pop())
+                if a == b:
+                    self.stack.push(-1)
+                else:
+                    self.stack.push(0)
+                self.ip = self.address.pop()
+            elif self.ip == self.Cached["d:lookup"]:
+                name = self.extract_string(self.stack.pop())
+                header = self.find_entry(name)
+                self.stack.push(header)
+                self.memory.store(header, self.Cached["d:lookup"] - 20) # "which"
+                self.ip = self.address.pop()
             else:
-                print("Invalid Bytecode: ", opcode, "at", self.ip)
-                self.ip = 2000000
+                if self.ip == notfound:
+                    print("ERROR: word not found!")
+                opcode = self.memory.fetch(self.ip)
+                I0 = opcode & 0xFF
+                I1 = (opcode >> 8) & 0xFF
+                I2 = (opcode >> 16) & 0xFF
+                I3 = (opcode >> 24) & 0xFF
+                if self.validate_opcode(I0, I1, I2, I3):
+                    # print("Bytecode: ", I0, I1, I2, I3, "at", self.ip)
+                    if I0 != 0:
+                        self.instructions[I0]()
+                    if I1 != 0:
+                        self.instructions[I1]()
+                    if I2 != 0:
+                        self.instructions[I2]()
+                    if I3 != 0:
+                        self.instructions[I3]()
+                else:
+                    print("Invalid Bytecode: ", opcode, "at", self.ip)
+                    self.ip = 2000000
             if self.address.depth() == 0:
                 self.ip = 2000000
             self.ip = self.ip + 1
@@ -456,7 +475,7 @@ class Retro:
                 for token in line.split():
                     self.inject_string(token, 1024)
                     self.stack.push(1024)
-                    self.execute(self.Cached['interpreter'], self.Cached['not_found'])
+                    self.execute(self.Cached["interpreter"], self.Cached["not_found"])
 
     def run_file(self, file):
         if not os.path.exists(file):
@@ -472,7 +491,9 @@ class Retro:
                     for token in line.strip().split():
                         self.inject_string(token, 1024)
                         self.stack.push(1024)
-                        self.execute(self.Cached['interpreter'], self.Cached['not_found'])
+                        self.execute(
+                            self.Cached["interpreter"], self.Cached["not_found"]
+                        )
 
     def update_image(self):
         import requests
