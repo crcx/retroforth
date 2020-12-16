@@ -98,7 +98,9 @@ work nicely, so I start with some header stuff.
 '<title>.</title> s:put nl
 ~~~
 
-Locate and embed the CSS from the end of this file.
+Locate and embed the CSS from the end of this file. The CSS
+will be at the end of the file, starting with the line reading
+"\#\# CSS".
 
 ~~~
 '<style_type="text/css"> s:put nl
@@ -108,7 +110,7 @@ drop
 '</style> s:put nl
 ~~~
 
-Finish the header boilerplate text and switch to the body.
+Finish the header boilerplate and switch to the body.
 
 ~~~
 '</head><body> s:put nl
@@ -135,12 +137,21 @@ that code output displays correctly.
 For regular text, there are a couple of inline formatting things
 to deal with.
 
+These are:
+
+* emphasis
+* strong (bold)
+* escaped characters
+* code
+
 ~~~
 'Emphasis var
 'Strong var
 'Escape var
 'Code var
+~~~
 
+~~~
 :format
   $` [ @Escape [ &Escape v:off $* c:put ] if;
        @Code n:zero? [ '<span_class="tt"> &Code v:on ]
