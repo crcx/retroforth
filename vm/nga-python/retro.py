@@ -4,7 +4,25 @@
 # Copyright (c) 2010 - 2020, Charles Childers
 # Floating Point I/O by Arland Childers, (c) 2020
 # Optimizations and process() rewrite by Greg Copeland
-# -----------------------------------------------------
+# -------------------------------------------------------------
+# This implementation of the VM differs from the reference
+# model in a number of important ways.
+#
+# To aid in performance, it does the following:
+# - caching the Retro dictionary in a Python dict()
+# - replaces some Retro words with implementations in Python
+#   - s:eq?
+#   - s:length
+#   - s:to-number
+#   - d:lookup
+#
+# Each major component is managed as a separate class. We have
+# a class for each I/O device, for each stack, and for the
+# memory pool. The main VM is also in a separate class.
+#
+# It's intended that an amalgamation tool will be developed to
+# combine the separate files into a single one for deployment.
+# -------------------------------------------------------------
 
 import os, sys, math, time, struct, random, datetime
 from struct import pack, unpack
@@ -16,20 +34,6 @@ from FileSystemDevice import FileSystem
 from FloatStack import FloatStack
 from IntegerStack import IntegerStack
 from Memory import Memory
-
-
-ip = 0
-stack = IntegerStack()
-address = []
-memory = Memory("ngaImage", 1000000)
-
-clock = Clock()
-rng = RNG()
-
-floats = FloatStack()
-afloats = FloatStack()
-files = FileSystem()
-
 
 class Retro:
     def map_in(self, name):
@@ -45,8 +49,7 @@ class Retro:
         self.files = FileSystem()
         self.floats = FloatStack()
         self.afloats = FloatStack()
-        self.Dictionary = dict()
-        self.populate_dictionary()
+        self.Dictionary = self.populate_dictionary()
         self.Cached = dict()
         self.Cached["interpreter"] = self.map_in("interpret")
         self.Cached["not_found"] = self.map_in("err:notfound")
@@ -54,7 +57,7 @@ class Retro:
         self.Cached["s:to-number"] = self.map_in("s:to-number")
         self.Cached["s:length"] = self.map_in("s:length")
         self.Cached["d:lookup"] = self.map_in("d:lookup")
-
+        self.setup_devices()
         self.instructions = [
             self.i_nop,
             self.i_lit,
@@ -102,11 +105,13 @@ class Retro:
         return q, r
 
     def populate_dictionary(self):
+        Dictionary = dict()
         header = self.memory.fetch(2)
         while header != 0:
             named = self.extract_string(header + 3)
-            self.Dictionary[named] = header
+            Dictionary[named] = header
             header = self.memory.fetch(header)
+        return Dictionary
 
     def find_entry(self, named):
         if named in self.Dictionary:
@@ -339,17 +344,19 @@ class Retro:
         28: lambda: floats.push(afloats.pop()),  # from alt
         29: lambda: stack.push(afloats.depth()),  # alt. depth
     }
-    files_instr = {
-        0: lambda: stack.push(file_open()),
-        1: lambda: file_close(),
-        2: lambda: stack.push(file_read()),
-        3: lambda: file_write(),
-        4: lambda: stack.push(file_pos()),
-        5: lambda: file_seek(),
-        6: lambda: stack.push(file_size()),
-        7: lambda: file_delete(),
-        8: lambda: 1 + 1,
-    }
+
+    def setup_devices(self):
+        self.files_instr = {
+            0: lambda: self.stack.push(self.files.open()),
+            1: lambda: self.files.close(self.stack.pop()),
+            2: lambda: self.stack.push(self.files.read(self.stack.pop())),
+            3: lambda: self.files.write(),
+            4: lambda: self.stack.push(self.files.pos(self.stack.pop())),
+            5: lambda: self.files.seek(),
+            6: lambda: self.stack.push(self.files.size(self.stack.pop())),
+            7: lambda: self.files.delete(self.extract_string(self.stack.pop())),
+            8: lambda: 1 + 1,
+        }
 
     rng_instr = {0: lambda: stack.push(rng())}
 
@@ -378,7 +385,7 @@ class Retro:
             float_instr[int(action)]()
         if device == 2:  # files
             action = self.stack.pop()
-            files_instr[int(action)]()
+            self.files_instr[int(action)]()
         if device == 3:  # rng
             rng_instr[0]()
         if device == 4:  # clock
