@@ -45,36 +45,36 @@ class Retro:
         self.interpreter = self.memory.fetch(self.find_entry("interpret") + 1)
         self.not_found = self.memory.fetch(self.find_entry("err:notfound") + 1)
         self.instructions = [
-            self.i_no,
-            self.i_li,
-            self.i_du,
-            self.i_dr,
-            self.i_sw,
-            self.i_pu,
-            self.i_po,
-            self.i_ju,
-            self.i_ca,
-            self.i_cc,
-            self.i_re,
+            self.i_nop,
+            self.i_lit,
+            self.i_dup,
+            self.i_drop,
+            self.i_swap,
+            self.i_push,
+            self.i_pop,
+            self.i_jump,
+            self.i_call,
+            self.i_ccall,
+            self.i_return,
             self.i_eq,
-            self.i_ne,
+            self.i_neq,
             self.i_lt,
             self.i_gt,
-            self.i_fe,
-            self.i_st,
-            self.i_ad,
-            self.i_su,
-            self.i_mu,
-            self.i_di,
-            self.i_an,
+            self.i_fetch,
+            self.i_store,
+            self.i_add,
+            self.i_subtract,
+            self.i_multiply,
+            self.i_divmod,
+            self.i_and,
             self.i_or,
-            self.i_xo,
-            self.i_sh,
-            self.i_zr,
-            self.i_ha,
-            self.i_ie,
-            self.i_iq,
-            self.i_ii,
+            self.i_xor,
+            self.i_shift,
+            self.i_zreturn,
+            self.i_halt,
+            self.i_ienumerate,
+            self.i_iquery,
+            self.i_iinvoke,
         ]
 
     def div_mod(self, a, b):
@@ -116,42 +116,42 @@ class Retro:
             self.stack.pop()
         sys.stdout.flush()
 
-    def i_no(self):
+    def i_nop(self):
         pass
 
-    def i_li(self):
+    def i_lit(self):
         self.ip += 1
         self.stack.push(self.memory.fetch(self.ip))
 
-    def i_du(self):
+    def i_dup(self):
         self.stack.dup()
 
-    def i_dr(self):
+    def i_drop(self):
         self.stack.drop()
 
-    def i_sw(self):
+    def i_swap(self):
         self.stack.swap()
 
-    def i_pu(self):
+    def i_push(self):
         self.address.push(self.stack.pop())
 
-    def i_po(self):
+    def i_pop(self):
         self.stack.push(self.address.pop())
 
-    def i_ju(self):
+    def i_jump(self):
         self.ip = self.stack.pop() - 1
 
-    def i_ca(self):
+    def i_call(self):
         self.address.push(self.ip)
         self.ip = self.stack.pop() - 1
 
-    def i_cc(self):
+    def i_ccall(self):
         target = self.stack.pop()
         if self.stack.pop() != 0:
             self.address.push(self.ip)
             self.ip = target - 1
 
-    def i_re(self):
+    def i_return(self):
         self.ip = self.address.pop()
 
     def i_eq(self):
@@ -162,7 +162,7 @@ class Retro:
         else:
             self.stack.push(0)
 
-    def i_ne(self):
+    def i_neq(self):
         a = self.stack.pop()
         b = self.stack.pop()
         if b != a:
@@ -186,7 +186,7 @@ class Retro:
         else:
             self.stack.push(0)
 
-    def i_fe(self):
+    def i_fetch(self):
         target = self.stack.pop()
         if target == -1:
             self.stack.push(self.stack.depth())
@@ -201,33 +201,33 @@ class Retro:
         else:
             self.stack.push(self.memory.fetch(target))
 
-    def i_st(self):
+    def i_store(self):
         mi = self.stack.pop()
         self.memory.store(self.stack.pop(), mi)
 
-    def i_ad(self):
+    def i_add(self):
         t = self.stack.pop()
         v = self.stack.pop()
         self.stack.push(unpack("=l", pack("=L", (t + v) & 0xFFFFFFFF))[0])
 
-    def i_su(self):
+    def i_subtract(self):
         t = self.stack.pop()
         v = self.stack.pop()
         self.stack.push(unpack("=l", pack("=L", (v - t) & 0xFFFFFFFF))[0])
 
-    def i_mu(self):
+    def i_multiply(self):
         t = self.stack.pop()
         v = self.stack.pop()
         self.stack.push(unpack("=l", pack("=L", (v * t) & 0xFFFFFFFF))[0])
 
-    def i_di(self):
+    def i_divmod(self):
         t = self.stack.pop()
         v = self.stack.pop()
         b, a = self.div_mod(v, t)
         self.stack.push(unpack("=l", pack("=L", a & 0xFFFFFFFF))[0])
         self.stack.push(unpack("=l", pack("=L", b & 0xFFFFFFFF))[0])
 
-    def i_an(self):
+    def i_and(self):
         t = self.stack.pop()
         m = self.stack.pop()
         self.stack.push(m & t)
@@ -237,12 +237,12 @@ class Retro:
         m = self.stack.pop()
         self.stack.push(m | t)
 
-    def i_xo(self):
+    def i_xor(self):
         t = self.stack.pop()
         m = self.stack.pop()
         self.stack.push(m ^ t)
 
-    def i_sh(self):
+    def i_shift(self):
         t = self.stack.pop()
         v = self.stack.pop()
 
@@ -253,18 +253,18 @@ class Retro:
 
         self.stack.push(v)
 
-    def i_zr(self):
+    def i_zreturn(self):
         if self.stack.tos() == 0:
             self.stack.pop()
             self.ip = self.address.pop()
 
-    def i_ha(self):
+    def i_halt(self):
         self.ip = 9000000
 
-    def i_ie(self):
+    def i_ienumerate(self):
         self.stack.push(6)
 
-    def i_iq(self):
+    def i_iquery(self):
         device = self.stack.pop()
         if device == 0:  # generic output
             self.stack.push(0)
@@ -347,7 +347,7 @@ class Retro:
         12: lambda: stack.push(clock["second_utc"]),
     }
 
-    def i_ii(self):
+    def i_iinvoke(self):
         device = self.stack.pop()
         if device == 0:  # generic output
             self.display_character()
