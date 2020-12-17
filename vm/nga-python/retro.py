@@ -245,7 +245,7 @@ class Retro:
     def i_subtract(self):
         t = self.stack.pop()
         v = self.stack.pop()
-        self.stack.push(stuct.unpack("=l", struct.pack("=L", (v - t) & 0xFFFFFFFF))[0])
+        self.stack.push(struct.unpack("=l", struct.pack("=L", (v - t) & 0xFFFFFFFF))[0])
 
     def i_multiply(self):
         t = self.stack.pop()
