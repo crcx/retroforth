@@ -50,13 +50,8 @@ class Retro:
         self.floats = FloatStack()
         self.afloats = FloatStack()
         self.Dictionary = self.populate_dictionary()
-        self.Cached = dict()
-        self.Cached["interpreter"] = self.map_in("interpret")
-        self.Cached["not_found"] = self.map_in("err:notfound")
-        self.Cached["s:eq?"] = self.map_in("s:eq?")
-        self.Cached["s:to-number"] = self.map_in("s:to-number")
-        self.Cached["s:length"] = self.map_in("s:length")
-        self.Cached["d:lookup"] = self.map_in("d:lookup")
+        self.Cached = self.cache_words()
+
         self.setup_devices()
         self.instructions = [
             self.i_nop,
@@ -103,6 +98,17 @@ class Retro:
             r *= -1
             q *= -1
         return q, r
+
+    def cache_words(self):
+        Cached = dict()
+        Cached["interpreter"] = self.map_in("interpret")
+        Cached["not_found"] = self.map_in("err:notfound")
+        Cached["s:eq?"] = self.map_in("s:eq?")
+        Cached["s:to-number"] = self.map_in("s:to-number")
+        Cached["s:length"] = self.map_in("s:length")
+        Cached["d:lookup"] = self.map_in("d:lookup")
+        Cached["d:add-header"] = self.map_in("d:add-header")
+        return Cached
 
     def populate_dictionary(self):
         Dictionary = dict()
@@ -469,6 +475,8 @@ class Retro:
             else:
                 if self.ip == notfound:
                     print("ERROR: word not found!")
+                if self.ip == self.Cached["d:add-header"]:
+                    self.Dictionary[self.extract_string(self.stack.stack[-3])] = self.memory[3]
                 opcode = self.memory[self.ip]
                 I0 = opcode & 0xFF
                 I1 = (opcode >> 8) & 0xFF
