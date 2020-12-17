@@ -37,7 +37,7 @@ from Memory import Memory
 
 class Retro:
     def map_in(self, name):
-      return self.memory.fetch(self.find_entry(name) + 1)
+      return self.memory[self.find_entry(name) + 1]
 
     def __init__(self):
         self.ip = 0
@@ -106,25 +106,25 @@ class Retro:
 
     def populate_dictionary(self):
         Dictionary = dict()
-        header = self.memory.fetch(2)
+        header = self.memory[2]
         while header != 0:
             named = self.extract_string(header + 3)
             Dictionary[named] = header
-            header = self.memory.fetch(header)
+            header = self.memory[header]
         return Dictionary
 
     def find_entry(self, named):
         if named in self.Dictionary:
             return self.Dictionary[named]
 
-        header = self.memory.fetch(2)
+        header = self.memory[2]
         Done = False
         while header != 0 and not Done:
             if named == self.extract_string(header + 3):
                 self.Dictionary[named] = header
                 Done = True
             else:
-                header = self.memory.fetch(header)
+                header = self.memory[header]
         return header
 
     def get_input(self):
@@ -148,7 +148,7 @@ class Retro:
 
     def i_lit(self):
         self.ip += 1
-        self.stack.push(self.memory.fetch(self.ip))
+        self.stack.push(self.memory[self.ip])
 
     def i_dup(self):
         self.stack.dup()
@@ -226,11 +226,11 @@ class Retro:
         elif target == -5:
             self.stack.push(2147483647)
         else:
-            self.stack.push(self.memory.fetch(target))
+            self.stack.push(self.memory[target])
 
     def i_store(self):
         mi = self.stack.pop()
-        self.memory.store(self.stack.pop(), mi)
+        self.memory[mi] = self.stack.pop()
 
     def i_add(self):
         t = self.stack.pop()
@@ -428,16 +428,16 @@ class Retro:
 
     def extract_string(self, at):
         s = ""
-        while self.memory.fetch(at) != 0:
-            s = s + chr(self.memory.fetch(at))
+        while self.memory[at] != 0:
+            s = s + chr(self.memory[at])
             at = at + 1
         return s
 
     def inject_string(self, s, to):
         for c in s:
-            self.memory.store(ord(c), to)
+            self.memory[to] = ord(c)
             to = to + 1
-        self.memory.store(0, to)
+        self.memory[to] = 0
 
     def execute(self, word, notfound):
         self.ip = word
@@ -456,7 +456,7 @@ class Retro:
                 name = self.extract_string(self.stack.pop())
                 header = self.find_entry(name)
                 self.stack.push(header)
-                self.memory.store(header, self.Cached["d:lookup"] - 20) # "which"
+                self.memory[self.Cached["d:lookup"] - 20] = header # "which"
                 self.ip = self.address.pop()
             elif self.ip == self.Cached["s:to-number"]:
                 n = self.extract_string(self.stack.pop())
@@ -469,7 +469,7 @@ class Retro:
             else:
                 if self.ip == notfound:
                     print("ERROR: word not found!")
-                opcode = self.memory.fetch(self.ip)
+                opcode = self.memory[self.ip]
                 I0 = opcode & 0xFF
                 I1 = (opcode >> 8) & 0xFF
                 I2 = (opcode >> 16) & 0xFF
