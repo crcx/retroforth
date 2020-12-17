@@ -1,11 +1,12 @@
 ## On The Kernel Wordset
 
-In implementing the RETRO 12 kernel (called Rx) I had to decide
-on what functionality would be needed. It was important to me
-that this be kept clean and minimalistic, as I didn't want to
-spend a lot of time changing it as time progressed. It's far
-nicer to code at the higher level, where the RETRO language is
-functional, as opposed to writing more assembly code.
+In implementing the RETRO 12 kernel (called RETRO Core, and
+defined in `image/rx.muri`) I had to decide on what functionality
+would be needed. It was important to me that this be kept clean
+and minimalistic, as I didn't want to spend a lot of time
+changing it as time progressed. It's far nicer to code at the
+higher level, where the RETRO language is fully functional, as
+opposed to writing more assembly code.
 
 So what made it in?
 
@@ -53,7 +54,7 @@ which gives more flexibility and allows for more optimal code
 in the standard library.
 
 With these words the rest of the language can be built up. Note
-that the Rx kernel does not provide any I/O words. It's assumed
+that the RETRO kernel does not provide any I/O words. It's assumed
 that the RETRO interfaces will add these as best suited for the
 systems they run on.
 

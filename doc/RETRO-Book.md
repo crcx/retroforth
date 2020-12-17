@@ -401,7 +401,7 @@ retro -i
 
 You should see something similar to this:
 
-    RETRO 12 (rx-2019.6)
+    RETRO 12 (2019.6)
     8388608 MAX, TIB @ 1025, Heap @ 9374
 
 At this point you are at the *listener*, which reads and
@@ -3447,7 +3447,7 @@ Assuming an Nga built with 524287 cells of memory:
 
     | RANGE           | CONTAINS                     |
     | --------------- | ---------------------------- |
-    | 0 - 1024        | rx kernel                    |
+    | 0 - 1024        | RETRO Core kernel            |
     | 1025 - 1535     | token input buffer           |
     | 1536 +          | start of heap space          |
     | ............... | free memory for your use     |
@@ -3861,12 +3861,13 @@ in many ways.
 
 ## On The Kernel Wordset
 
-In implementing the RETRO 12 kernel (called Rx) I had to decide
-on what functionality would be needed. It was important to me
-that this be kept clean and minimalistic, as I didn't want to
-spend a lot of time changing it as time progressed. It's far
-nicer to code at the higher level, where the RETRO language is
-functional, as opposed to writing more assembly code.
+In implementing the RETRO 12 kernel (called RETRO Core, and
+defined in `image/rx.muri`) I had to decide on what functionality
+would be needed. It was important to me that this be kept clean
+and minimalistic, as I didn't want to spend a lot of time
+changing it as time progressed. It's far nicer to code at the
+higher level, where the RETRO language is fully functional, as
+opposed to writing more assembly code.
 
 So what made it in?
 
@@ -3914,7 +3915,7 @@ which gives more flexibility and allows for more optimal code
 in the standard library.
 
 With these words the rest of the language can be built up. Note
-that the Rx kernel does not provide any I/O words. It's assumed
+that the RETRO kernel does not provide any I/O words. It's assumed
 that the RETRO interfaces will add these as best suited for the
 systems they run on.
 

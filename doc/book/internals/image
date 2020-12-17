@@ -41,7 +41,7 @@ Assuming an Nga built with 524287 cells of memory:
 
     | RANGE           | CONTAINS                     |
     | --------------- | ---------------------------- |
-    | 0 - 1024        | rx kernel                    |
+    | 0 - 1024        | RETRO Core kernel            |
     | 1025 - 1535     | token input buffer           |
     | 1536 +          | start of heap space          |
     | ............... | free memory for your use     |

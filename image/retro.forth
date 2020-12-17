@@ -2,17 +2,17 @@
 
 ## Background
 
-Retro is a dialect of Forth. It builds on the barebones Rx
+RETRO is a dialect of Forth. It builds on the barebones Rx
 core, expanding it into a flexible and useful language.
 
 Over the years the language implementation has varied
-substantially. Retro began in 1998 as a 16-bit assembly
+substantially. RETRO began in 1998 as a 16-bit assembly
 implementation for x86 hardware, evolved into a 32-bit
 system with cmForth and ColorForth influences, and
 eventually started supporting mainstream OSes. Later it
 was rewritten for a small, portable virtual machine.
 
-This is the twelfth generation of Retro. It targets a virtual
+This is the twelfth generation of RETRO. It targets a virtual
 machine (called Nga) and runs on a wide variety of host
 systems.
 
@@ -49,8 +49,8 @@ across namespaces. E.g.,
 
 ### Prefixes
 
-Prefixes are an integral part of Retro. These are single symbol
-modifiers added to the start of a word which control how Retro
+Prefixes are an integral part of RETRO. These are single symbol
+modifiers added to the start of a word which control how RETRO
 processes the word.
 
 The interpreter model is covered in *Rx.md*, but basically:
@@ -110,7 +110,7 @@ memory, so the specific addresses will vary.
 
     | RANGE           | CONTAINS                     |
     | --------------- | ---------------------------- |
-    | 0 - 1024        | rx kernel                    |
+    | 0 - 1024        | RETRO Core kernel            |
     | 1025 - 1535     | token input buffer           |
     | 1536 +          | start of heap space          |
     | ............... | free memory for your use     |
@@ -316,7 +316,7 @@ with no extra runtime code.
 
 ## Stack Shufflers
 
-The core Rx language provides a few basic stack shuffling
+The core RETRO language provides a few basic stack shuffling
 words: `push`, `pop`, `drop`, `swap`, and `dup`. There are
 quite a few more that are useful. Some of these are provided
 here.
@@ -343,11 +343,11 @@ And the low level forms:
 
 ## Combinators
 
-Retro makes use of anonymous functions called *quotations* for
+RETRO makes use of anonymous functions called *quotations* for
 much of the execution flow and stack control. The words that
 operate on these quotations are called *combinators*.
 
-Combinators are a major part of using Retro. They help in
+Combinators are a major part of using RETRO. They help in
 reducing the use of lower level shuffling and allow for a
 greater overall consistency in the syntax. I also find them
 to help in reducing visual noise.
@@ -514,8 +514,8 @@ Some numeric comparisons.
 :n:odd?       (n-f)  n:even? not ;
 ~~~
 
-The basic Rx kernel doesn't provide two useful forms which I'll
-provide here.
+The basic RETRO kernel doesn't provide two useful forms
+which I'll provide here.
 
 ~~~
 :if;   (qf-)  over &if  dip     0; pop drop-pair ;
@@ -538,8 +538,8 @@ And low level, for inlining:
 
 ## Numeric Operations
 
-The core Rx language provides addition, subtraction,
-multiplication, and a combined division/remainder. Retro
+The core RETRO language provides addition, subtraction,
+multiplication, and a combined division/remainder. RETRO
 expands on this.
 
 I implement the division and remainder as low level words
@@ -648,7 +648,7 @@ to improve performance.
 
 Now for something tricky: a system for lexical scoping.
 
-The dictionary is a simple linked list. Retro allows for some
+The dictionary is a simple linked list. RETRO allows for some
 control over what is visible using the `{{`, `---reveal---`,
 and `}}` words.
 
@@ -685,7 +685,7 @@ hidden), so use `v:preserve` if you need reentrancy.
 
 ## Linear Buffers
 
-A buffer is a linear memory buffer. Retro provides a `buffer:`
+A buffer is a linear memory buffer. RETRO provides a `buffer:`
 namespace for working with them.
 
 This is something I've used for years. It's simple, but makes
@@ -731,7 +731,7 @@ Traditional Forth systems have a messy mix of strings. You have
 counted strings, address/length pairs, and sometimes other
 forms.
 
-Retro uses zero terminated strings. Counted strings are better
+RETRO uses zero terminated strings. Counted strings are better
 in many ways, but I've used these for years and they are a
 workable approach. (Though caution in needed to avoid buffer
 overflow).
@@ -1029,7 +1029,7 @@ prefixes.
 
 Not all characters can be obtained via the $ prefix. ASCII has
 many characters that aren't really intended to be printable.
-Retro has an `ASCII` namespace providing symbolic names for
+RETRO has an `ASCII` namespace providing symbolic names for
 these.
 
 The first group of these is fairly common, the others are
@@ -1057,7 +1057,7 @@ much less so.
 #30 'ASCII:RS  const    #31  'ASCII:US  const
 ~~~
 
-These words operate on character values. Retro currently deals
+These words operate on character values. RETRO currently deals
 with ASCII, though cells are 32 bits in length, so Unicode
 values can be stored.
 
@@ -1349,7 +1349,7 @@ dictionary header by the `d:xt` field.
 
 ## Arrays
 
-Retro provides words for statically sized arrays. They are
+RETRO provides words for statically sized arrays. They are
 represented in memory as:
 
     count
@@ -1748,7 +1748,7 @@ original one.
                  [ [ drop I ] dip ] if ] indexed-times drop ;
 ~~~
 
-A Retro system is only required to provide a single I/O word to
+A RETRO system is only required to provide a single I/O word to
 the user: a word to push a single character to the output log.
 This is always mapped to device 0, and is exposed as `c:put`.
 

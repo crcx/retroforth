@@ -8,7 +8,7 @@ retro -i
 
 You should see something similar to this:
 
-    RETRO 12 (rx-2019.6)
+    RETRO 12 (2019.6)
     8388608 MAX, TIB @ 1025, Heap @ 9374
 
 At this point you are at the *listener*, which reads and

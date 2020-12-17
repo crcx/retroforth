@@ -1,13 +1,9 @@
-    ____  _   _
-    || \\ \\ //
-    ||_//  )x(
-    || \\ // \\ 2021.1
-    a minimalist forth for nga
+# RETRO Core 2021.1
 
-*Rx* (*retro experimental*) is a minimal Forth implementation
-for the Nga virtual machine. Like Nga this is intended to be
-used within a larger supporting framework adding I/O and other
-desired functionality.
+RETRO Core is  a minimal Forth implementation for the Nga
+virtual machine. Like Nga this is intended to be used within
+a larger supporting framework adding I/O and other desired
+functionality.
 
 ## General Notes on the Source
 
@@ -126,7 +122,7 @@ With this, it's time to allocate some data elements. These are
 always kept in known locations after the initial jump to ensure
 that they can be easily identified and interfaced with external
 tools. This is important as Nga allows for a variety of I/O
-models to be implemented and I don't want to tie Rx into any
+models to be implemented and I don't want to tie this into any
 one specific model.
 
 Here's the initial memory map:
@@ -153,14 +149,14 @@ d 202101
 Both of these are pointers. `Dictionary` points to the most
 recent dictionary entry. (See the *Dictionary* section at the
 end of this file.) `Heap` points to the next free address.
-This is hard coded to an address beyond the end of the Rx
+This is hard coded to an address beyond the end of the RETRO
 kernel. I adjust this as needed if the kernel grows or shinks
 significantly. See the *Interpreter & Compiler* section for
 more on this.
 
 ## Nga Instruction Set
 
-As mentioned earlier, Nga provides 30 instructions. Rx begins
+As mentioned earlier, Nga provides 30 instructions. RETRO begins
 the actual coding by assigning most of these to a separate
 function. These are not intended for direct use; the compiler
 will fetch the opcode values to use from these functions when
@@ -272,7 +268,7 @@ i re......
 ~~~
 
 Though Nga allows for multiple instructions to be packed into a
-single memory location (called a *cell*), Rx only packs a few
+single memory location (called a *cell*), RETRO only packs a few
 specific combinations.
 
 Since calls and jumps take a value from the stack, a typical
@@ -336,7 +332,7 @@ i stpore..
 
 ## Conditionals
 
-The Rx kernel provides three conditional forms:
+The RETRO kernel provides three conditional forms:
 
     flag true-pointer false-pointer choose
     flag true-pointer   if
@@ -392,7 +388,7 @@ i re......
 The kernel needs two basic string operations for dictionary
 searches: obtaining the length and comparing for equality.
 
-Strings in Rx are zero terminated. This is a bit less elegant
+Strings in RETRO are zero terminated. This is a bit less elegant
 than counted strings, but the implementation is quick and easy.
 
 First up, string length. The process here is trivial:
@@ -561,12 +557,12 @@ r Compiler
 
 ### Word Classes
 
-Rx is built over the concept of *word classes*. Word classes
+RETRO is built over the concept of *word classes*. Word classes
 are a way to group related words, based on their compilation
 and execution behaviors. A *class handler* function is defined
 to handle an execution token passed to it on the stack.
 
-Rx provides several  classes with differing behaviors:
+RETRO provides several classes with differing behaviors:
 
 `class:data` provides for dealing with data structures.
 
@@ -652,7 +648,7 @@ compilation.
 
 ### Dictionary
 
-Rx has a single dictionary consisting of a linked list of
+RETRO has a single dictionary consisting of a linked list of
 headers. The current form of a header is shown in the chart
 below.
 
@@ -688,14 +684,14 @@ Each entry starts with a pointer to the prior entry (with a
 pointer to zero marking the first entry in the dictionary), a
 pointer to the start of the function, a pointer to the class
 handler, and a null terminated string indicating the name
-exposed to the Rx interpreter.
+exposed to the RETRO interpreter.
 
-Rx stores the pointer to the most recent entry in a variable
+RETRO stores the pointer to the most recent entry in a variable
 called `Dictionary`. For simplicity, I just assign the last
 entry an arbitrary label of 9999. This is set at the start of
 the source. (See *In the Beginning...*)
 
-Rx provides accessor functions for each field. Since the number
+RETRO provides accessor functions for each field. Since the number
 of fields (or their ordering) may change over time, using these 
 reduces the number of places where field offsets are hard coded.
 
@@ -717,12 +713,13 @@ d 3
 ~~~
 
 A traditional Forth has `create` to make a new dictionary entry
-pointing to the next free location in `Heap`. Rx has `d:add-header` 
-which serves as a slightly more flexible base. You provide a
-string for the name, a pointer to the class handler, and a
-pointer to the start of the function. Rx does the rest.
+pointing to the next free location in `Heap`. RETRO has
+`d:add-header`  which serves as a slightly more flexible base.
+You provide a string for the name, a pointer to the class
+handler, and a pointer to the start of the function. RETRO does
+the rest.
 
-In actual practice, I never use this outside of Rx. New words
+In actual practice, I never use this outside of RETRO. New words
 are made using the `:` prefix, or `d:create` (once defined in
 the standard library). At some point I may simplify this by
 moving `d:create` into Rx and using it in place of `d:add-header`.
@@ -747,7 +744,7 @@ i polistre
 r Dictionary
 ~~~
 
-Rx doesn't provide a traditional create as it's designed to
+RETRO doesn't provide a traditional create as it's designed to
 avoid assuming a normal input stream and prefers to take its
 data from the stack.
 
@@ -811,7 +808,7 @@ approach is very simple:
 * When done, take the accumulator value and the modifier and
   multiply them to get the final result
 
-Rx only supports decimal numbers. If you want more bases, it's
+RETRO only supports decimal numbers. If you want more bases, it's
 pretty easy to add them later, but it's not needed in the base
 kernel.
 
@@ -852,9 +849,9 @@ An input token has a form like:
 
     <prefix-char>string
 
-Rx will check the first character to see if it matches a known 
-prefix. If it does, it will pass the string (sans prefix) to
-the prefix handler. If not, it will attempt to find the token
+RETRO will check the first character to see if it matches a
+known prefix. If it does, it will pass the string (sans prefix)
+to the prefix handler. If not, it will attempt to find the token
 in the dictionary.
 
 Prefixes are handled by functions with specific naming
@@ -865,7 +862,7 @@ conventions. A prefix name should be:
 Where <prefix-char> is the character for the prefix. These are
 compiler macros (using the `class:macro` class) and watch the
 `Compiler` to decide how to deal with the token. To find a
-prefix, Rx stores the prefix character into a string named
+prefix, RETRO stores the prefix character into a string named
 `prefixed`. It then searches for this string in the dictionary.
 If found, it sets an internal variable (`prefix:handler`) to
 the dictionary entry for the handler function. If not found,
@@ -932,10 +929,10 @@ d 0
 i nere....
 ~~~
 
-Rx makes extensive use of prefixes for implementing major parts
-of the language, including  parsing numbers (prefix with `#`), 
-obtaining pointers (prefix with `&`), and defining functions
-(using the `:` prefix).
+RETRO makes extensive use of prefixes for implementing major
+parts of the language, including  parsing numbers (prefix with
+`#`), obtaining pointers (prefix with `&`), and defining
+functions (using the `:` prefix).
 
 | prefix | used for          | example |
 | ------ | ----------------- | ------- |
@@ -1031,9 +1028,9 @@ r class:data
 
 ### Quotations
 
-Quotations are anonymous, nestable blocks of code. Rx uses them
-for control structures and some aspects of data flow. A quote
-takes a form like:
+Quotations are anonymous, nestable blocks of code. RETRO uses
+them for control structures and some aspects of data flow. A
+quote takes a form like:
 
     [ #1 #2 ]
     #12 [ square #144 eq? [ #123 ] [ #456 ] choose ] call
@@ -1083,9 +1080,9 @@ i drdrre..
 
 ## Lightweight Control Structures
 
-Rx provides a couple of functions for simple flow control apart
-from using quotations. These are `repeat`, `again`, and `0;`.
-An example of using them:
+RETRO provides a couple of functions for simple flow control
+apart from using quotations. These are `repeat`, `again`, and
+`0;`. An example of using them:
 
     :s:length
       dup [ repeat fetch-next 0; drop again ] call
@@ -1149,7 +1146,7 @@ First, the handler for dealing with words that are not found.
 This is defined here as a jump to the handler for the Nga *NOP*
 instruction. It is intended that this be hooked into and changed.
 
-As an example, in Rx code, assuming an I/O interface with some
+As an example, in RETRO code, assuming an I/O interface with some
 support for strings and output:
 
     [ $? c:put sp 'word_not_found s:put ]
@@ -1823,7 +1820,7 @@ s err:notfound
 
 ## Legalities
 
-Rx is Copyright (c) 2016-2020, Charles Childers
+RETRO Core is Copyright (c) 2016-2020, Charles Childers
 
 Permission to use, copy, modify, and/or distribute this software
 for any purpose with or without fee is hereby granted, provided
