@@ -476,7 +476,7 @@ class Retro:
                 if self.ip == notfound:
                     print("ERROR: word not found!")
                 if self.ip == self.Cached["d:add-header"]:
-                    self.Dictionary[self.extract_string(self.stack.stack[-3])] = self.memory[3]
+                    self.Dictionary[self.extract_string(self.stack[-3])] = self.memory[3]
                 opcode = self.memory[self.ip]
                 I0 = opcode & 0xFF
                 I1 = (opcode >> 8) & 0xFF
