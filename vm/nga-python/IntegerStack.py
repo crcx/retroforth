@@ -1,29 +1,24 @@
-class IntegerStack:
+class IntegerStack(list):
     def __init__(self):
-        self.stack = [] * 128
+        stack = [] * 128
+        self.extend(stack)
 
     def depth(self):
-        return len(self.stack)
+        return len(self)
 
     def tos(self):
-        return self.stack[-1]
+        return self[-1]
 
     def push(self, v):
-        self.stack.append(v)
-
-    def append(self, v):
-        self.stack.append(v)
-
-    def pop(self):
-        return self.stack.pop()
+        self.append(v)
 
     def dup(self):
-        self.stack.append(self.stack[-1])
+        self.append(self[-1])
 
     def drop(self):
-        self.stack.pop()
+        self.pop()
 
     def swap(self):
-        a = self.stack[-2]
-        self.stack[-2] = self.stack[-1]
-        self.stack[-1] = a
+        a = self[-2]
+        self[-2] = self[-1]
+        self[-1] = a
