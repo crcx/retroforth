@@ -1,0 +1,31 @@
+# Amalgamate
+
+The standard RETRO system is built using the Nga VM[1] and an
+image file. The Python implementation consists of several files,
+but it's nice to have a single file copy for easier deployment.
+This tool combines the pieces into a single source file.
+
+Output will be written to stdout.
+
+## Code
+
+Extract and generate the single file source.
+
+~~~
+{{
+  :include-file
+    ASCII:SPACE s:tokenize #1 a:fetch
+    'vm/nga-python/ s:prepend '.py s:append here swap file:slurp here s:put ; 
+
+  :source:line
+    dup 'from_ s:begins-with?
+    [ include-file ] [ s:put nl ] choose ;
+
+---reveal---
+
+  :amalgamate
+    'vm/nga-python/retro.py [ source:line ] file:for-each-line ;
+}}
+
+amalgamate
+~~~
