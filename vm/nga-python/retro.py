@@ -114,7 +114,8 @@ class Retro:
         header = self.memory[2]
         while header != 0:
             named = self.extract_string(header + 3)
-            Dictionary[named] = header
+            if not named in Dictionary:
+                Dictionary[named] = header
             header = self.memory[header]
         return Dictionary
 
