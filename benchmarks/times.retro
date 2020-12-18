@@ -1,0 +1,5 @@
+~~~
+'1,000,000_iterations_of_empty_loops s:put nl
+#100 [ #100 [ #100 [ ] times ] times ] times
+~~~
+

@@ -1,0 +1,5 @@
+~~~
+'Push_and_discard_a_value_1,000,000_times s:put nl
+#1000 [ #1000 [ #1 drop ] times ] times
+~~~
+
