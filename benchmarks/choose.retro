@@ -1,0 +1,6 @@
+~~~
+'1,000,000_iterations_of_choose s:put nl
+#1000 [ #500 [ FALSE [ ] [ ] choose ] times ] times
+#1000 [ #500 [ TRUE [ ] [ ] choose ] times ] times
+~~~
+
