@@ -1,5 +1,7 @@
 class Clock:
     def __getitem__(self, id):
+        import datetime
+        import time
         now = datetime.datetime.now()
         ids = {
             "time": time.time,

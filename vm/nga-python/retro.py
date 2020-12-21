@@ -375,23 +375,23 @@ class Retro:
             8: lambda: 1 + 1,
         }
 
-    rng_instr = {0: lambda: stack.push(rng())}
+        self.rng_instr = {0: lambda: self.stack.push(self.rng())}
 
-    clock_instr = {
-        0: lambda: stack.push(int(time.time())),
-        1: lambda: stack.push(clock["day"]),
-        2: lambda: stack.push(clock["month"]),
-        3: lambda: stack.push(clock["year"]),
-        4: lambda: stack.push(clock["hour"]),
-        5: lambda: stack.push(clock["minute"]),
-        6: lambda: stack.push(clock["second"]),
-        7: lambda: stack.push(clock["day_utc"]),
-        8: lambda: stack.push(clock["month_utc"]),
-        9: lambda: stack.push(clock["year_utc"]),
-        10: lambda: stack.push(clock["hour_utc"]),
-        11: lambda: stack.push(clock["minute_utc"]),
-        12: lambda: stack.push(clock["second_utc"]),
-    }
+        self.clock_instr = {
+            0: lambda: self.stack.push(int(time.time())),
+            1: lambda: self.stack.push(self.clock["day"]),
+            2: lambda: self.stack.push(self.clock["month"]),
+            3: lambda: self.stack.push(self.clock["year"]),
+            4: lambda: self.stack.push(self.clock["hour"]),
+            5: lambda: self.stack.push(self.clock["minute"]),
+            6: lambda: self.stack.push(self.clock["second"]),
+            7: lambda: self.stack.push(self.clock["day_utc"]),
+            8: lambda: self.stack.push(self.clock["month_utc"]),
+            9: lambda: self.stack.push(self.clock["year_utc"]),
+            10: lambda: self.stack.push(self.clock["hour_utc"]),
+            11: lambda: self.stack.push(self.clock["minute_utc"]),
+            12: lambda: self.stack.push(self.clock["second_utc"]),
+        }
 
     def i_iinvoke(self):
         device = self.stack.pop()
@@ -404,10 +404,10 @@ class Retro:
             action = self.stack.pop()
             self.files_instr[int(action)]()
         if device == 3:  # rng
-            rng_instr[0]()
+            self.rng_instr[0]()
         if device == 4:  # clock
             action = self.stack.pop()
-            clock_instr[int(action)]()
+            self.clock_instr[int(action)]()
         if device == 5:  # scripting
             action = self.stack.pop()
             if action == 0:
