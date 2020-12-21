@@ -359,10 +359,16 @@ d 0
 : choice:false
 d 0
 
+: normalize
+i linere..
+d 0
+
 : choose
 i listlist
 r choice:false
 r choice:true
+i lica....
+r normalize
 i liadfeca
 r choice:false
 i re......
