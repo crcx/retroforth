@@ -85,6 +85,40 @@ class Retro:
             self.i_iinvoke,
         ]
 
+        self.float_instr = {
+            0: lambda: self.floats.push(float(self.stack.pop())),  # number to float
+            1: lambda: self.floats.push(float(self.extract_string(self.stack.pop()))),  # string to float
+            2: lambda: self.stack.push(int(self.floats.pop())),  # float to number
+            3: lambda: self.inject_string(str(self.floats.pop()), self.stack.pop()),  # float to string
+            4: lambda: self.floats.add(),  # add
+            5: lambda: self.floats.sub(),  # sub
+            6: lambda: self.floats.mul(),  # mul
+            7: lambda: self.floats.div(),  # div
+            8: lambda: self.floats.floor(),  # floor
+            9: lambda: self.floats.ceil(),  # ceil
+            10: lambda: self.floats.sqrt(),  # sqrt
+            11: lambda: self.stack.push(self.floats.eq()),  # eq
+            12: lambda: self.stack.push(self.floats.neq()),  # -eq
+            13: lambda: self.stack.push(self.floats.lt()),  # lt
+            14: lambda: self.stack.push(self.floats.gt()),  # gt
+            15: lambda: self.stack.push(self.floats.depth()),  # depth
+            16: lambda: self.floats.dup(),  # dup
+            17: lambda: self.floats.drop(),  # drop
+            18: lambda: self.floats.swap(),  # swap
+            19: lambda: self.floats.log(),  # log
+            20: lambda: self.floats.pow(),  # pow
+            21: lambda: self.floats.sin(),  # sin
+            22: lambda: self.floats.cos(),  # cos
+            23: lambda: self.floats.tan(),  # tan
+            24: lambda: self.floats.asin(),  # asin
+            25: lambda: self.floats.atan(),  # atan
+            26: lambda: self.floats.acos(),  # acos
+            27: lambda: self.afloats.push(self.floats.pop()),  # to alt
+            28: lambda: self.floats.push(self.afloats.pop()),  # from alt
+            29: lambda: self.stack.push(self.afloats.depth()),  # alt. depth
+        }
+
+
     def div_mod(self, a, b):
         x = abs(a)
         y = abs(b)
@@ -318,39 +352,6 @@ class Retro:
             self.stack.push(0)
             self.stack.push(9)
 
-    float_instr = {
-        0: lambda: floats.push(float(stack.pop())),  # number to float
-        1: lambda: floats.push(float(extract_string(stack.pop()))),  # string to float
-        2: lambda: stack.push(int(floats.pop())),  # float to number
-        3: lambda: inject_string(str(floats.pop()), stack.pop()),  # float to string
-        4: lambda: floats.add(),  # add
-        5: lambda: floats.sub(),  # sub
-        6: lambda: floats.mul(),  # mul
-        7: lambda: floats.div(),  # div
-        8: lambda: floats.floor(),  # floor
-        9: lambda: floats.ceil(),  # ceil
-        10: lambda: floats.sqrt(),  # sqrt
-        11: lambda: stack.push(floats.eq()),  # eq
-        12: lambda: stack.push(floats.neq()),  # -eq
-        13: lambda: stack.push(floats.lt()),  # lt
-        14: lambda: stack.push(floats.gt()),  # gt
-        15: lambda: stack.push(floats.depth()),  # depth
-        16: lambda: floats.dup(),  # dup
-        17: lambda: floats.drop(),  # drop
-        18: lambda: floats.swap(),  # swap
-        19: lambda: floats.log(),  # log
-        20: lambda: floats.pow(),  # pow
-        21: lambda: floats.sin(),  # sin
-        22: lambda: floats.cos(),  # cos
-        23: lambda: floats.tan(),  # tan
-        24: lambda: floats.asin(),  # asin
-        25: lambda: floats.atan(),  # atan
-        26: lambda: floats.acos(),  # acos
-        27: lambda: afloats.push(floats.pop()),  # to alt
-        28: lambda: floats.push(afloats.pop()),  # from alt
-        29: lambda: stack.push(afloats.depth()),  # alt. depth
-    }
-
     def file_open_params(self):
         mode = self.stack.pop()
         name = self.extract_string(self.stack.pop())
@@ -398,7 +399,7 @@ class Retro:
             self.display_character()
         if device == 1:  # floating point
             action = self.stack.pop()
-            float_instr[int(action)]()
+            self.float_instr[int(action)]()
         if device == 2:  # files
             action = self.stack.pop()
             self.files_instr[int(action)]()
