@@ -108,8 +108,8 @@ bin/retro-unu: tools/retro-unu.c
 
 # basic image target
 
-ngaImage: image/rx.muri image/retro.forth bin/retro-muri bin/retro-extend
-	./bin/retro-muri image/rx.muri
+ngaImage: image/retro.muri image/retro.forth bin/retro-muri bin/retro-extend
+	./bin/retro-muri image/retro.muri
 	./bin/retro-extend ngaImage image/retro.forth
 
 

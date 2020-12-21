@@ -760,7 +760,7 @@ optional I/O devices, see the **Advanced Builds** chapter.
 This is the assembler for Nga. It's used to build the initial
 RETRO kernel and can be used by other tools as well.
 
-    retro-muri rx.muri
+    retro-muri retro.muri
 
 ## retro-tags and retro-locate
 
@@ -3862,7 +3862,7 @@ in many ways.
 ## On The Kernel Wordset
 
 In implementing the RETRO 12 kernel (called RETRO Core, and
-defined in `image/rx.muri`) I had to decide on what functionality
+defined in `image/retro.muri`) I had to decide on what functionality
 would be needed. It was important to me that this be kept clean
 and minimalistic, as I didn't want to spend a lot of time
 changing it as time progressed. It's far nicer to code at the

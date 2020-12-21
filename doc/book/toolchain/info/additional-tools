@@ -49,7 +49,7 @@ optional I/O devices, see the **Advanced Builds** chapter.
 This is the assembler for Nga. It's used to build the initial
 RETRO kernel and can be used by other tools as well.
 
-    retro-muri rx.muri
+    retro-muri retro.muri
 
 ## retro-tags and retro-locate
 
