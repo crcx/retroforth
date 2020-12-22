@@ -275,24 +275,24 @@ class Retro:
     def i_add(self):
         t = self.stack.pop()
         v = self.stack.pop()
-        self.stack.push(struct.unpack("=l", struct.pack("=L", (t + v) & 0xFFFFFFFF))[0])
+        self.stack.push(t + v)
 
     def i_subtract(self):
         t = self.stack.pop()
         v = self.stack.pop()
-        self.stack.push(struct.unpack("=l", struct.pack("=L", (v - t) & 0xFFFFFFFF))[0])
+        self.stack.push(v - t)
 
     def i_multiply(self):
         t = self.stack.pop()
         v = self.stack.pop()
-        self.stack.push(struct.unpack("=l", struct.pack("=L", (v * t) & 0xFFFFFFFF))[0])
+        self.stack.push(v * t)
 
     def i_divmod(self):
         t = self.stack.pop()
         v = self.stack.pop()
         b, a = self.div_mod(v, t)
-        self.stack.push(struct.unpack("=l", struct.pack("=L", a & 0xFFFFFFFF))[0])
-        self.stack.push(struct.unpack("=l", struct.pack("=L", b & 0xFFFFFFFF))[0])
+        self.stack.push(a)
+        self.stack.push(b)
 
     def i_and(self):
         t = self.stack.pop()
