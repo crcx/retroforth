@@ -462,9 +462,8 @@ to:
 Taking a break from combinators for a bit, I turn to some words
 for comparing things. First, constants for TRUE and FALSE.
 
-Due to the way the conditional execution works, only these
-values can be used. This is different than in a traditional
-Forth, where non-zero values are true.
+I define `TRUE` as -1 and `FALSE` as zero, but any non-zero
+value will be treated as TRUE by the conditional words.
 
 ~~~
 :TRUE  (-n) #-1 ;
