@@ -253,6 +253,22 @@ class Retro:
         else:
             self.stack.push(0)
 
+    # The fetch instruction also handles certain
+    # introspection queries.
+    #
+    # Of note is the min and max values for a cell.
+    # In most VM implementations, this is limited
+    # to 32 bit or 64 bit ranges, but Python allows
+    # an unlimited range.
+    #
+    # I report as if the cells are capped at 128 bits
+    # but you can safely ignore this if running on
+    # the Python VM. (This does have an impact on
+    # floating point values, if using the `e:` words
+    # for converting them to/from an encoded format in
+    # standard cells, but should not affect anything
+    # else in the standard system)
+
     def i_fetch(self):
         target = self.stack.pop()
         if target >= 0:
@@ -266,12 +282,11 @@ class Retro:
         elif target == -3:
             self.stack.push(self.memory.size())
         elif target == -4:
-            self.stack.push(2147483648)
+            self.stack.push(-170141183460469231731687303715884105728)
         elif target == -5:
-            self.stack.push(2147483647)
+            self.stack.push(170141183460469231731687303715884105727)
         else:
             self.stack.push(0)
-
 
     def i_store(self):
         mi = self.stack.pop()
