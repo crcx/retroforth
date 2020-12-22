@@ -255,6 +255,10 @@ class Retro:
 
     def i_fetch(self):
         target = self.stack.pop()
+        if target >= 0:
+            self.stack.push(self.memory[target])
+            return
+
         if target == -1:
             self.stack.push(self.stack.depth())
         elif target == -2:
@@ -266,7 +270,8 @@ class Retro:
         elif target == -5:
             self.stack.push(2147483647)
         else:
-            self.stack.push(self.memory[target])
+            self.stack.push(0)
+
 
     def i_store(self):
         mi = self.stack.pop()
