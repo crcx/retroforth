@@ -286,7 +286,7 @@ class Retro:
         elif target == -5:
             self.stack.push(170141183460469231731687303715884105727)
         else:
-            self.stack.push(0)
+            raise IndexError
 
     def i_store(self):
         mi = self.stack.pop()
