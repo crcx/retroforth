@@ -34,9 +34,10 @@ from FloatStack import FloatStack
 from IntegerStack import IntegerStack
 from Memory import Memory
 
+
 class Retro:
     def map_in(self, name):
-      return self.memory[self.find_entry(name) + 1]
+        return self.memory[self.find_entry(name) + 1]
 
     def __init__(self):
         self.ip = 0
@@ -84,40 +85,6 @@ class Retro:
             self.i_iquery,
             self.i_iinvoke,
         ]
-
-        self.float_instr = {
-            0: lambda: self.floats.push(float(self.stack.pop())),  # number to float
-            1: lambda: self.floats.push(float(self.extract_string(self.stack.pop()))),  # string to float
-            2: lambda: self.stack.push(int(self.floats.pop())),  # float to number
-            3: lambda: self.inject_string(str(self.floats.pop()), self.stack.pop()),  # float to string
-            4: lambda: self.floats.add(),  # add
-            5: lambda: self.floats.sub(),  # sub
-            6: lambda: self.floats.mul(),  # mul
-            7: lambda: self.floats.div(),  # div
-            8: lambda: self.floats.floor(),  # floor
-            9: lambda: self.floats.ceil(),  # ceil
-            10: lambda: self.floats.sqrt(),  # sqrt
-            11: lambda: self.stack.push(self.floats.eq()),  # eq
-            12: lambda: self.stack.push(self.floats.neq()),  # -eq
-            13: lambda: self.stack.push(self.floats.lt()),  # lt
-            14: lambda: self.stack.push(self.floats.gt()),  # gt
-            15: lambda: self.stack.push(self.floats.depth()),  # depth
-            16: lambda: self.floats.dup(),  # dup
-            17: lambda: self.floats.drop(),  # drop
-            18: lambda: self.floats.swap(),  # swap
-            19: lambda: self.floats.log(),  # log
-            20: lambda: self.floats.pow(),  # pow
-            21: lambda: self.floats.sin(),  # sin
-            22: lambda: self.floats.cos(),  # cos
-            23: lambda: self.floats.tan(),  # tan
-            24: lambda: self.floats.asin(),  # asin
-            25: lambda: self.floats.atan(),  # atan
-            26: lambda: self.floats.acos(),  # acos
-            27: lambda: self.afloats.push(self.floats.pop()),  # to alt
-            28: lambda: self.floats.push(self.afloats.pop()),  # from alt
-            29: lambda: self.stack.push(self.afloats.depth()),  # alt. depth
-        }
-
 
     def div_mod(self, a, b):
         x = abs(a)
@@ -413,6 +380,43 @@ class Retro:
             12: lambda: self.stack.push(self.clock["second_utc"]),
         }
 
+        self.float_instr = {
+            0: lambda: self.floats.push(float(self.stack.pop())),  # number to float
+            1: lambda: self.floats.push(
+                float(self.extract_string(self.stack.pop()))
+            ),  # string to float
+            2: lambda: self.stack.push(int(self.floats.pop())),  # float to number
+            3: lambda: self.inject_string(
+                str(self.floats.pop()), self.stack.pop()
+            ),  # float to string
+            4: lambda: self.floats.add(),  # add
+            5: lambda: self.floats.sub(),  # sub
+            6: lambda: self.floats.mul(),  # mul
+            7: lambda: self.floats.div(),  # div
+            8: lambda: self.floats.floor(),  # floor
+            9: lambda: self.floats.ceil(),  # ceil
+            10: lambda: self.floats.sqrt(),  # sqrt
+            11: lambda: self.stack.push(self.floats.eq()),  # eq
+            12: lambda: self.stack.push(self.floats.neq()),  # -eq
+            13: lambda: self.stack.push(self.floats.lt()),  # lt
+            14: lambda: self.stack.push(self.floats.gt()),  # gt
+            15: lambda: self.stack.push(self.floats.depth()),  # depth
+            16: lambda: self.floats.dup(),  # dup
+            17: lambda: self.floats.drop(),  # drop
+            18: lambda: self.floats.swap(),  # swap
+            19: lambda: self.floats.log(),  # log
+            20: lambda: self.floats.pow(),  # pow
+            21: lambda: self.floats.sin(),  # sin
+            22: lambda: self.floats.cos(),  # cos
+            23: lambda: self.floats.tan(),  # tan
+            24: lambda: self.floats.asin(),  # asin
+            25: lambda: self.floats.atan(),  # atan
+            26: lambda: self.floats.acos(),  # acos
+            27: lambda: self.afloats.push(self.floats.pop()),  # to alt
+            28: lambda: self.floats.push(self.afloats.pop()),  # from alt
+            29: lambda: self.stack.push(self.afloats.depth()),  # alt. depth
+        }
+
     def i_iinvoke(self):
         device = self.stack.pop()
         if device == 0:  # generic output
@@ -483,7 +487,7 @@ class Retro:
                 name = self.extract_string(self.stack.pop())
                 header = self.find_entry(name)
                 self.stack.push(header)
-                self.memory[self.Cached["d:lookup"] - 20] = header # "which"
+                self.memory[self.Cached["d:lookup"] - 20] = header  # "which"
                 self.ip = self.address.pop()
             elif self.ip == self.Cached["s:to-number"]:
                 n = self.extract_string(self.stack.pop())
@@ -497,7 +501,9 @@ class Retro:
                 if self.ip == notfound:
                     print("ERROR: word not found!")
                 if self.ip == self.Cached["d:add-header"]:
-                    self.Dictionary[self.extract_string(self.stack[-3])] = self.memory[3]
+                    self.Dictionary[self.extract_string(self.stack[-3])] = self.memory[
+                        3
+                    ]
                 opcode = self.memory[self.ip]
                 I0 = opcode & 0xFF
                 I1 = (opcode >> 8) & 0xFF
