@@ -359,18 +359,14 @@ d 0
 : choice:false
 d 0
 
-: normalize
-i linere..
-d 0
-
 : choose
 i listlist
 r choice:false
 r choice:true
-i lica....
-r normalize
-i liadfeca
+i lineliad
+d 0
 r choice:false
+i feca..
 i re......
 ~~~
 
