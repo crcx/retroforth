@@ -236,12 +236,7 @@ class Retro:
     # standard cells, but should not affect anything
     # else in the standard system)
 
-    def i_fetch(self):
-        target = self.stack.pop()
-        if target >= 0:
-            self.stack.push(self.memory[target])
-            return
-
+    def i_fetch_query(self, target):
         if target == -1:
             self.stack.push(self.stack.depth())
         elif target == -2:
@@ -254,6 +249,13 @@ class Retro:
             self.stack.push(170141183460469231731687303715884105727)
         else:
             raise IndexError
+
+    def i_fetch(self):
+        target = self.stack.pop()
+        if target >= 0:
+            self.stack.push(self.memory[target])
+        else:
+            self.i_fetch_query(target)
 
     def i_store(self):
         mi = self.stack.pop()
