@@ -17,11 +17,11 @@ from struct import pack, unpack
 
 if __name__ == "__main__":
     cells = int(os.path.getsize(sys.argv[1]) / 4)
-    f = open("ngaImage", "rb")
+    f = open(sys.argv[1], "rb")
     memory = list(struct.unpack(cells * "i", f.read()))
     f.close()
     count = 0
-    print('Image = [')
+    print('InitialImage = [')
     for cell in memory:
         print(cell, end=', ')
         count = count + 1

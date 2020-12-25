@@ -33,7 +33,7 @@ from FileSystemDevice import FileSystem
 from FloatStack import FloatStack
 from IntegerStack import IntegerStack
 from Memory import Memory
-
+from InitialImage import InitialImage
 
 class Retro:
     def map_in(self, name):
@@ -43,7 +43,7 @@ class Retro:
         self.ip = 0
         self.stack = IntegerStack()
         self.address = IntegerStack()
-        self.memory = Memory("ngaImage", 1000000)
+        self.memory = Memory("ngaImage", InitialImage, 1000000)
         self.clock = Clock()
         self.rng = RNG()
         self.files = FileSystem()
