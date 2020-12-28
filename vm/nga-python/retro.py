@@ -383,58 +383,55 @@ class Retro:
         }
 
         self.float_instr = {
-            0: lambda: self.floats.push(float(self.stack.pop())),  # number to float
-            1: lambda: self.floats.push(
-                float(self.extract_string(self.stack.pop()))
-            ),  # string to float
-            2: lambda: self.stack.push(int(self.floats.pop())),  # float to number
-            3: lambda: self.inject_string(
-                str(self.floats.pop()), self.stack.pop()
-            ),  # float to string
-            4: lambda: self.floats.add(),  # add
-            5: lambda: self.floats.sub(),  # sub
-            6: lambda: self.floats.mul(),  # mul
-            7: lambda: self.floats.div(),  # div
-            8: lambda: self.floats.floor(),  # floor
-            9: lambda: self.floats.ceil(),  # ceil
-            10: lambda: self.floats.sqrt(),  # sqrt
-            11: lambda: self.stack.push(self.floats.eq()),  # eq
-            12: lambda: self.stack.push(self.floats.neq()),  # -eq
-            13: lambda: self.stack.push(self.floats.lt()),  # lt
-            14: lambda: self.stack.push(self.floats.gt()),  # gt
-            15: lambda: self.stack.push(self.floats.depth()),  # depth
-            16: lambda: self.floats.dup(),  # dup
-            17: lambda: self.floats.drop(),  # drop
-            18: lambda: self.floats.swap(),  # swap
-            19: lambda: self.floats.log(),  # log
-            20: lambda: self.floats.pow(),  # pow
-            21: lambda: self.floats.sin(),  # sin
-            22: lambda: self.floats.cos(),  # cos
-            23: lambda: self.floats.tan(),  # tan
-            24: lambda: self.floats.asin(),  # asin
-            25: lambda: self.floats.atan(),  # atan
-            26: lambda: self.floats.acos(),  # acos
-            27: lambda: self.afloats.push(self.floats.pop()),  # to alt
-            28: lambda: self.floats.push(self.afloats.pop()),  # from alt
-            29: lambda: self.stack.push(self.afloats.depth()),  # alt. depth
+            0: lambda: self.floats.push(float(self.stack.pop())),
+            1: lambda: self.floats.push(float(self.extract_string(self.stack.pop()))),
+            2: lambda: self.stack.push(int(self.floats.pop())),
+            3: lambda: self.inject_string(str(self.floats.pop()), self.stack.pop()),
+            4: lambda: self.floats.add(),
+            5: lambda: self.floats.sub(),
+            6: lambda: self.floats.mul(),
+            7: lambda: self.floats.div(),
+            8: lambda: self.floats.floor(),
+            9: lambda: self.floats.ceil(),
+            10: lambda: self.floats.sqrt(),
+            11: lambda: self.stack.push(self.floats.eq()),
+            12: lambda: self.stack.push(self.floats.neq()),
+            13: lambda: self.stack.push(self.floats.lt()),
+            14: lambda: self.stack.push(self.floats.gt()),
+            15: lambda: self.stack.push(self.floats.depth()),
+            16: lambda: self.floats.dup(),
+            17: lambda: self.floats.drop(),
+            18: lambda: self.floats.swap(),
+            19: lambda: self.floats.log(),
+            20: lambda: self.floats.pow(),
+            21: lambda: self.floats.sin(),
+            22: lambda: self.floats.cos(),
+            23: lambda: self.floats.tan(),
+            24: lambda: self.floats.asin(),
+            25: lambda: self.floats.atan(),
+            26: lambda: self.floats.acos(),
+            27: lambda: self.afloats.push(self.floats.pop()),
+            28: lambda: self.floats.push(self.afloats.pop()),
+            29: lambda: self.stack.push(self.afloats.depth()),
         }
 
     def i_iinvoke(self):
         device = self.stack.pop()
-        if device == 0:  # generic output
+#        print('dev:', device)
+        if device == 0:
             self.display_character()
-        if device == 1:  # floating point
+        if device == 1:
             action = self.stack.pop()
             self.float_instr[int(action)]()
-        if device == 2:  # files
+        if device == 2:
             action = self.stack.pop()
             self.files_instr[int(action)]()
-        if device == 3:  # rng
+        if device == 3:
             self.rng_instr[0]()
-        if device == 4:  # clock
+        if device == 4:
             action = self.stack.pop()
             self.clock_instr[int(action)]()
-        if device == 5:  # scripting
+        if device == 5:
             action = self.stack.pop()
             if action == 0:
                 self.stack.push(len(sys.argv) - 2)
