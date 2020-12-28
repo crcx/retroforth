@@ -563,7 +563,7 @@ class Retro:
         import requests
         import shutil
 
-        data = requests.get("http://forth.works/ngaImage", stream=True)
+        data = requests.get("https://forthworks.com/retro/ngaImage", stream=True)
         with open("ngaImage", "wb") as f:
             data.raw.decode_content = True
             shutil.copyfileobj(data.raw, f)
