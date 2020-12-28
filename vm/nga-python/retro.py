@@ -579,6 +579,8 @@ if __name__ == "__main__":
 
     sources = []
 
+    interactive = False
+
     if len(sys.argv) > 2:
         i = 1
         e = len(sys.argv)
@@ -587,6 +589,11 @@ if __name__ == "__main__":
             if param == "-f":
                 i += 1
                 sources.append(sys.argv[i])
+            elif param == "-u":
+                i += 1
+                retro.memory.load_image(sys.argv[i])
+            elif param == "-i":
+                interactive = True
             i += 1
 
     if len(sys.argv) > 2 and sys.argv[1][0] != "-":
@@ -594,3 +601,6 @@ if __name__ == "__main__":
     else:
         for source in sources:
             retro.run_file(source)
+
+    if interactive:
+        retro.run()

@@ -20,5 +20,14 @@ class Memory(list):
                 self[i] = cell
                 i = i + 1
 
+    def load_image(self, name):
+        cells = int(os.path.getsize(name) / 4)
+        f = open(name, "rb")
+        i = 0
+        for cell in list(struct.unpack(cells * "i", f.read())):
+            self[i] = cell
+            i = i + 1
+        f.close()
+
     def size(self):
         return len(self)
