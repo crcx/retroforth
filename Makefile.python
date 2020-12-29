@@ -2,6 +2,6 @@ PYTHON ?= python3
 
 default:
 	cp ngaImage pythonImage
-	retro-extend pythonImage interface/clock.retro interface/filesystem.retro interface/floatingpoint.retro interface/rng.retro	
+	retro-extend pythonImage interface/clock.retro interface/filesystem.retro interface/floatingpoint.retro interface/rng.retro package/dict-words-listing.forth
 	$(PYTHON) tools/retro-embedimage.py pythonImage >vm/nga-python/InitialImage.py
 	rm -f pythonImage
