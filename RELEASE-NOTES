@@ -1,17 +1,67 @@
-# RETRO 2021.1
+# RetroForth 2021.1 Release Notes
+
+## Core Language
+
+* `choose` (and other conditionals) now treat non-zero as `TRUE` and
+  zero as `FALSE` instead of requiring a flag of -1 for `TRUE`
+* add \^ (ASCII ESC) to escape sequences in `s:format`
+
+## I/O
+
+* improvements to some of the pipe related words in the `unix:`
+  namespace
+* reduced code size for each device handler slightly
+* added `abort` to Retro on Unix
+
+----
 
 ## Toolchain
 
-- retro-unu now supports user defined code and test block delimiters
-- retro-muri now uses the updated retro-unu core
-- retro-muri now has separate passes for each step of the assembly process
+### Makefile
 
-## retro on unix
+* Small adjustments to reduce build time
 
-- split out devices into separate files to allow better reuse across the toolchain
+### C
 
-## retro on python
+* retro-unu
 
-## examples
+  - now supports user defined code and test block delimiters (C)
 
-- 
+* retro-muri
+
+  - supports changes from retro-unu
+  - now has separate passes for each step of the assembly process
+
+### Python
+
+* retro-amalgamate.py added to generate a single file Python source
+* faster retro-extend.py
+
+----
+
+## VM
+
+### nga-c
+
+* reduced redundancy across the various implementations in C
+
+### nga-python
+
+* now written using classes
+* no longer limited to 32 or 64 bit cells
+* uses Python functions to shadow some Retro words for better
+  performance
+* caches the Retro dictionary to improve lookup performance
+* embeds image as a Python source
+* now supports `-f`, `-i`, and `-u` command line parameters
+* improved error handling for invalid addresses
+
+----
+
+## Examples
+
+* added "2020 Advent of Code", days 1-5
+* added palindromic numbers detection (SVFIG challenge)
+* added bindings over curl
+* refactoring & general cleanups in Atua-WWW
+* Atua-WWW now ignores ?... appended to URLs
