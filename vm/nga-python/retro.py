@@ -35,6 +35,7 @@ from IntegerStack import IntegerStack
 from Memory import Memory
 from InitialImage import InitialImage
 
+
 class Retro:
     def map_in(self, name):
         return self.memory[self.find_entry(name) + 1]
@@ -417,7 +418,7 @@ class Retro:
 
     def i_iinvoke(self):
         device = self.stack.pop()
-#        print('dev:', device)
+        #        print('dev:', device)
         if device == 0:
             self.display_character()
         if device == 1:
