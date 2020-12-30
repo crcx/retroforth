@@ -258,8 +258,6 @@ void pass5(char *buffer) {
 
 
 int main(int argc, char **argv) {
-  int tests = 0;
-  int i = 1;
   strcpy(code_start, "~~~");
   strcpy(code_end,   "~~~");
   strcpy(test_start, "```");
