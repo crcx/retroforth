@@ -1,0 +1,7 @@
+#!/usr/bin/env retro
+
+~~~
+'~~~ s:put nl
+[ ''extensions/%s_include\n s:format s:put ] unix:for-each-file
+'~~~ s:put nl
+~~~

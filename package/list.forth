@@ -15,6 +15,10 @@ also use any Retro code directly.
 'compat.retro include
 ~~~
 
+~~~
+'load-extensions.retro include
+~~~
+
 Save the image with anything loaded here added in. The
 `retro` binary will be rebuilt using the extended image.
 

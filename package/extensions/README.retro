@@ -1,0 +1,7 @@
+Put extensions into this directory. When rebuilding via:
+
+    make clean; make
+
+Any extensions here will be placed in a file named
+`package/load-extensions.retro` for compilation into the
+embedded image.
