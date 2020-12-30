@@ -31,6 +31,7 @@
 
   - supports changes from retro-unu
   - now has separate passes for each step of the assembly process
+  - removed some unused variables
 
 ### Python
 
@@ -44,6 +45,7 @@
 ### nga-c
 
 * reduced redundancy across the various implementations in C
+* removed an unused function
 
 ### nga-python
 

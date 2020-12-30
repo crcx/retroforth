@@ -407,16 +407,6 @@ void dump_stack() {
   function.
   ---------------------------------------------------------------------*/
 
-int fenced(char *s)
-{
-  int a = strcmp(s, "```");
-  int b = strcmp(s, "~~~");
-  if (a == 0) return 2;
-  if (b == 0) return 1;
-              return 0;
-}
-
-
 /* Check to see if a line is a fence boundary.
    This will check code blocks in all cases, and test blocks
    if tests_enabled is set to a non-zero value. */
