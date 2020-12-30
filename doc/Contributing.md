@@ -15,7 +15,8 @@ URL: http://forthworks.com:8000
 
 I also provide a git mirror of the fossil repository.
 
-URL: https://git.sr.ht/~crc_/retroforth
+* Sourcehut: https://git.sr.ht/~crc_/retroforth
+* Github: https://github.com/crcx/retroforth.git
 
 ## Mailing Lists
 
@@ -36,9 +37,9 @@ https://sr.ht/~crc_/retroforth/trackers
 There is a VM (implementations are in `vm`) named Nga. This implements
 a MISC style processor and system specific I/O extensions.
 
-The VM runs an image (implemented primarily in `image`, from `rx.muri`
-and `retro.forth`) that provides the actual language and a standard
-library of words.
+The VM runs an image (implemented primarily in `image`, from
+`retro.muri` and `retro.forth`) that provides the actual language
+and a standard library of words.
 
 System specific I/O extensions are provided and can be found in the
 `interface` directory. These include things related to the actual
