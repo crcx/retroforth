@@ -1372,15 +1372,6 @@ Store a value into the specified address and return the next address.
 swap                     D: nm-mn  A: -  F: -
 Exchange the position of the top two items on the stack
 
-sys:argc                 D: -n  A: -  F: -
-Return the number of arguments passed to the program. Deprecated. Use script:arguments
-
-sys:argv                 D: n-s  A: -  F: -
-Given an argument number, return the argument as a string. Deprecated. Use script:get-argument instead.
-
-sys:name                 D: -s  A: -  F: -
-Return the filename of the program being run. Deprecated. Use script:name instead.
-
 tab                      D: -  A: -  F: -
 Display a tab (`ASCII:HT`)
 

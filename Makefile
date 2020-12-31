@@ -123,14 +123,16 @@ bin/retro-repl: vm/nga-c/repl.c vm/nga-c/image.c
 
 # retro on unix
 
+update-extensions: bin/retro
+	cd package/extensions && ../../bin/retro -f ../../tools/generate-extensions-list.retro >../load-extensions.retro
+
 vm/nga-c/retro-image.c: ngaImage bin/retro-embedimage bin/retro-extend interface/filesystem.retro interface/floatingpoint.retro interface/unix.retro interface/rng.retro interface/sockets.retro interface/scripting.retro interface/retro-unix.retro interface/clock.retro
 	cp ngaImage rre.image
 	./bin/retro-extend rre.image interface/scripting.retro interface/filesystem.retro interface/floatingpoint.retro interface/unix.retro interface/rng.retro interface/sockets.retro interface/scripting.retro interface/retro-unix.retro interface/clock.retro 
 	./bin/retro-embedimage rre.image >vm/nga-c/retro-image.c
 
-bin/retro: vm/nga-c/retro-image.c vm/nga-c/retro-unix.c vm/nga-c/bsd-strl.c vm/nga-c/config.h vm/nga-c/dev-clock.c vm/nga-c/dev-files.c vm/nga-c/dev-floatingpoint.c vm/nga-c/dev-image.c vm/nga-c/dev-rng.c vm/nga-c/dev-sockets.c vm/nga-c/dev-unix.c vm/nga-c/prototypes.h
+bin/retro: vm/nga-c/retro-image.c vm/nga-c/retro-unix.c vm/nga-c/bsd-strl.c vm/nga-c/config.h vm/nga-c/dev-clock.c vm/nga-c/dev-files.c vm/nga-c/dev-floatingpoint.c vm/nga-c/dev-image.c vm/nga-c/dev-rng.c vm/nga-c/dev-sockets.c vm/nga-c/dev-unix.c vm/nga-c/prototypes.h package/list.forth package/load-extensions.retro
 	cd vm/nga-c && $(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o ../../bin/retro retro-unix.c $(LIBM)
-	cd package/extensions && ../../bin/retro -f ../../tools/generate-extensions-list.retro >../load-extensions.retro
 	cd package && ../bin/retro -f list.forth
 	./bin/retro-embedimage rre.image >vm/nga-c/retro-image.c
 	rm rre.image

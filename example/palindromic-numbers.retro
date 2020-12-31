@@ -14,7 +14,7 @@ Well this is really easy. I begin by creating an array of potential values.
 
 ~~~
 #100000 [ I n:inc , ] 
-'Potentials d:create over , times<with-index>
+'Potentials d:create over , indexed-times
 ~~~
 
 Then a simple `palindrome?` word to convert the number to a string and return a flag indicating if it's a palindrome.
@@ -49,6 +49,6 @@ In my tests, this isn't memory efficient, as I'm keeping both the list of potent
     :value I n:inc dup ;
     :process [ n:put nl ] &drop choose ;
 
-    #100000 [ value palindrome? process ] times<with-index>
+    #100000 [ value palindrome? process ] indexed-times
 
 This only uses 74 memory locations.

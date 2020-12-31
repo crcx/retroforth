@@ -5398,39 +5398,6 @@ Exchange the position of the top two items on the stack
 Class: class:primitive | Namespace: global | Interface Layer: all
 ------------------------------------------------------------------------
 
-sys:argc
-
-  Data:  -n
-  Addr:  -
-  Float: -
-
-Return the number of arguments passed to the program. Deprecated. Use script:arguments
-
-Class: class:word | Namespace: sys | Interface Layer: rre
-------------------------------------------------------------------------
-
-sys:argv
-
-  Data:  n-s
-  Addr:  -
-  Float: -
-
-Given an argument number, return the argument as a string. Deprecated. Use script:get-argument instead.
-
-Class: class:word | Namespace: sys | Interface Layer: rre
-------------------------------------------------------------------------
-
-sys:name
-
-  Data:  -s
-  Addr:  -
-  Float: -
-
-Return the filename of the program being run. Deprecated. Use script:name instead.
-
-Class: class:word | Namespace: sys | Interface Layer: rre
-------------------------------------------------------------------------
-
 tab
 
   Data:  -

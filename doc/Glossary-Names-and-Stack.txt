@@ -456,9 +456,6 @@ sp                       D: -  A: -  F: -
 store                    D: na-  A: -  F: -
 store-next               D: na-a  A: -  F: -
 swap                     D: nm-mn  A: -  F: -
-sys:argc                 D: -n  A: -  F: -
-sys:argv                 D: n-s  A: -  F: -
-sys:name                 D: -s  A: -  F: -
 tab                      D: -  A: -  F: -
 times                    D: nq-  A: -  F: -
 tri                      D: xqqq-?  A: -  F: -
