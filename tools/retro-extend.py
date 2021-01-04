@@ -5,7 +5,7 @@
 # into the image. After completion the image file will be updated with
 # the changes.
 #
-# Copyright (c) 2010 - 2020, Charles Childers
+# Copyright (c) 2010 - 2021, Charles Childers
 # Optimizations and process() rewrite by Greg Copeland
 #
 # Usage:
@@ -403,8 +403,8 @@ def load_image():
 
 def process(line):
     for Token in line.split():
-      injectString(Token, 1024)
-      stack.append(1024)
+      injectString(Token, 1025)
+      stack.append(1025)
       execute(Interpreter)
 
 
@@ -424,8 +424,8 @@ def save_image():
     print("Writing {0} cells to {1}".format(memory[3], sys.argv[1]))
     with open(sys.argv[1], "wb") as file:
         j = 0
-        while j < memory[3]:
-            file.write(struct.pack("i", memory[j]))
+        while j <= memory[3]:
+            file.write(struct.pack("<i", memory[j]))
             j = j + 1
 
 if __name__ == "__main__":
