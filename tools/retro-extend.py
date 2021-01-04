@@ -394,9 +394,9 @@ def execute(word, output="console"):
 def load_image():
     global memory
     cells = int(os.path.getsize(sys.argv[1]) / 4)
-    f = open("ngaImage", "rb")
-    memory = list(struct.unpack(cells * "i", f.read()))
-    f.close()
+    with open(sys.argv[1], "rb") as f:
+        data = f.read()
+        memory = list(struct.unpack(cells * "i", data))
     remaining = 1000000 - cells
     memory.extend([0] * remaining)
 
