@@ -39,7 +39,7 @@ Example command line:
     retro-extend ngaImage example/rot13.forth
 
 Pass the image name as the first argument, and then file names
-as susequent ones. Do *not* use this for things relying on I/O
+as subsequent ones. Do *not* use this for things relying on I/O
 apart from the basic console output as it doesn't emulate other
 devices. If you need to load in things that rely on using the
 optional I/O devices, see the **Advanced Builds** chapter.

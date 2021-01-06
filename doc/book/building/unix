@@ -1,4 +1,4 @@
-# Building on BSD, Linux, macOS, and outher Unix Targets
+# Building on BSD, Linux, macOS, and other Unix Targets
 
 RETRO is well supported on BSD (tested on FreeBSD, NetBSD,
 OpenBSD), Linux, and macOS systems. It should build on any
