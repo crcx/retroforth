@@ -8,7 +8,7 @@ to generate turnkey executables.
 
 - Unix host
 - ELF executable support
-- `objcpy` in the $PATH
+- `objcopy` in the $PATH
 
 ## Building
 

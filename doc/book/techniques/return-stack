@@ -1,7 +1,7 @@
 # The Return Stack
 
 RETRO has two stacks. The primary one is used to pass data
-beween words. The second one primarily holds return addresses.
+between words. The second one primarily holds return addresses.
 
 Each time a word is called, the next address is pushed to
 the return stack.

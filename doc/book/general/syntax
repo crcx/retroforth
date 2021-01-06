@@ -21,7 +21,7 @@ to guide the compiler. The use of these is a major way in
 which RETRO differs from traditional Forth.
 
 When a token is passed to `interpret`, RETRO first takes the
-intitial character and looks to see if there is a word that
+initial character and looks to see if there is a word that
 matches this. If so, it will pass the rest of the token to
 that word to handle.
 
