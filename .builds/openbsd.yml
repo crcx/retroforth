@@ -1,0 +1,10 @@
+image: openbsd/latest
+sources:
+- https://git.sr.ht/~crc_/retroforth
+tasks:
+- build: |
+    cd retroforth
+    make
+- test: |
+    cd retroforth
+    ./bin/retro example/1D-Cellular-Automota.retro
