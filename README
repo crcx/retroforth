@@ -1,4 +1,4 @@
-## RETRO FORTH
+## Retro: A Modern, Pragmatic Forth
 
 RETRO is a modern, pragmatic Forth drawing influences from many
 sources. It's clean, elegant, tiny, and easy to grasp and adapt
@@ -74,23 +74,13 @@ The primary documentation is in RETRO-Book.md (and the formatted
 RETRO-Book.html.) Additional notes can be found in the `doc`
 directory.
 
-## Commercial Versions
-
-I provide versions of RETRO for iOS and macOS via the Apple app
-stores. These use a custom, dual pane editor-based environment
-and some platform specific words and extensions. They do use the
-same image and virtual machine as `retro`, `retro-repl`, etc.
-
-iOS:   https://itunes.apple.com/us/app/retro-forth-12/id1170943580?ls=1&mt=8
-
-macOS: https://itunes.apple.com/us/app/retro-forth/id1317494014?ls=1&mt=12
-
 ## Alternative Implementations
 
-This source tree includes additional implementations in C#,
-JavaScript, Pascal, and Python. These are not officially
-supported, but are provided for your use if the C
-implementations will not suffice.
+In addition to the C and Python implementations, this source
+tree includes additional implementations in C#, JavaScript,
+and Pascal. These are not as well tested or as feature complete
+as the main implementations, but are provided for your use if
+the standard implementations will not suffice.
 
 ## Patreon
 

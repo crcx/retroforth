@@ -1804,7 +1804,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION,
 ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE
 OF THIS SOFTWARE.
 
-    Copyright (c) 2008 - 2020, Charles Childers
+    Copyright (c) 2008 - 2021, Charles Childers
     Copyright (c) 2012 - 2013, Michal J Wallace
     Copyright (c) 2009 - 2011, Luke Parrish
     Copyright (c) 2009 - 2010, JGL
