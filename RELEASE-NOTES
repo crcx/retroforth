@@ -37,6 +37,7 @@
 
 * retro-amalgamate.py added to generate a single file Python source
 * faster retro-extend.py
+* added retro-embedimage.py
 
 ----
 
@@ -65,5 +66,6 @@
 * added "2020 Advent of Code", days 1-5
 * added palindromic numbers detection (SVFIG challenge)
 * added bindings over curl
+* added muri with direct use of hex values
 * refactoring & general cleanups in Atua-WWW
 * Atua-WWW now ignores ?... appended to URLs

@@ -1,0 +1,162 @@
+# Muri, Extended
+
+Muri is my minimalist assembler for Nga. Using it requires
+some knowledge of the Nga architecture to be useful.
+
+Nga has 30 instructions. These are:
+
+    0 nop   5 push  10 ret   15 fetch 20 div   25 zret
+    1 lit   6 pop   11 eq    16 store 21 and   26 halt
+    2 dup   7 jump  12 neq   17 add   22 or    27 ienum
+    3 drop  8 call  13 lt    18 sub   23 xor   28 iquery
+    4 swap  9 ccall 14 gt    19 mul   24 shift 29 iinvoke
+
+The mnemonics allow for each name to be reduced to just two
+characters. In the same order as above:
+
+    0 ..    5 pu    10 re    15 fe    20 di    25 zr
+    1 li    6 po    11 eq    16 st    21 an    26 ha
+    2 du    7 ju    12 ne    17 ad    22 or    27 ie
+    3 dr    8 ca    13 lt    18 su    23 xo    28 iq
+    4 sw    9 cc    14 gt    19 mu    24 sh    29 ii
+
+Up to four instructions can be packed into a single memory
+location. (You can only use *no*p after a *ju*mp, *ca*ll,
+*cc*all, *re*t, or *zr*et as these alter the instruction
+pointer.)
+
+So a bundled sequence like:
+
+    lit 100
+    lit 200
+    add
+    ret
+
+Would look like:
+
+    'liliadre i
+    100       d
+    200       d
+
+And:
+
+    lit s:eq?
+    call
+
+Would become:
+
+    'lica.... i
+    's:eq?    r
+
+Note the use of `..` instead of `no` for the nop's; this is
+done to improve readability a little.
+
+Instruction bundles are specified as strings, and are converted
+to actual instructions by the `i` word. As in the standard Muri
+assembler, the RETRO version uses `d` for decimal values and `r`
+for references to named functions.
+
+----
+
+This implements an extended version of `i`, the instruction
+assembler. It allows for use of hex constants (in uppercase)
+in place of (or in addition to) the instruction names. This can
+be useful if you are running on a VM with an extended instruction
+set.
+
+When loaded, it will *replace* the original `i` with a jump to
+the one provided here, allowing existing words (like `prefix:\`)
+to use this instead.
+
+----
+
+I'm keeping everything in a private namespace to keep the final
+dictionary clean.
+
+~~~
+{{
+~~~
+
+It begins with an array of instruction names. The index matches
+the opcode, so these must be in order.
+
+~~~
+{ '.. 'li 'du 'dr 'sw 'pu 'po 'ju 'ca 'cc 're 'eq 'ne 'lt
+  'gt 'fe 'st 'ad 'su 'mu 'di 'an 'or 'xo 'sh 'zr 'ha 'ie
+  'iq 'ii } 'Instructions const
+~~~
+
+Then I define a `quad` combinator to simplify the later debundling
+of the instruction names.
+
+~~~
+:quad (xqqqq-)
+  'abcde 'abacadae reorder
+  \pupupupu \pupuca..
+  \popoca.. \popoca..
+  \popoca.. ;
+
+~~~
+
+Next, a word to handle hex numbers. A standard Retro system only
+handles decimal by default, so this just implements a quick hex
+conversion.
+
+~~~
+'0123456789ABCDEF 'DIGITS s:const
+'Number var
+:convert    (c-)  &DIGITS swap s:index-of @Number #16 * + !Number ;
+:check-sign (s-ns) dup fetch $- eq? [ #-1 swap n:inc ] [ #1 swap ] choose ;
+:s:to-hex-number (s-n)
+  #0 !Number check-sign [ convert ] s:for-each @Number * ;
+~~~
+
+Decoding an instruction is simple. If it's in the `Instructions`
+array, return the index. If not, convert to a number using the
+hex conversion above.
+
+~~~
+:decode (s-n)
+  dup &Instructions a:contains-string?
+  [ &Instructions swap a:index-of-string ]
+  [ s:to-hex-number ] choose ;
+~~~
+
+The `debundle` word breaks a string into four two byte substrings
+and runs `decode` against each.
+
+~~~
+:debundle (s-abcd)
+  [ #0 #2 s:substr decode ]
+  [ #2 #2 s:substr decode ]
+  [ #4 #2 s:substr decode ]
+  [ #6 #2 s:substr decode ] quad ;
+~~~
+
+Once debundled and decoded, I can then pack the opcodes into a
+single cell. This is simple, just some quick shifts and addition.
+
+~~~
+:pack (abcd-n)
+  #-24 shift swap #-16 shift + swap #-8 shift + + ;
+~~~
+
+Nearing completion, I wrap everything up into a single word and
+then patch the original `i` to jump to this.
+
+(The 1793 corresponds to the liju.... instruction sequence)
+
+~~~
+:assemble (s-) debundle pack , ;
+
+#1793 &i store
+&assemble &i n:inc store
+~~~
+
+And finally, close off the namespace leaving the dictionary clean
+of all the words used to implement this.
+
+~~~
+}}
+'muri s:put nl
+~~~
