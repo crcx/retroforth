@@ -43,8 +43,10 @@ def rxDivMod(a, b):
 
 
 def findEntry(named):
+    global Dictionary
+
     if named in Dictionary:
-      return Dictionary[named]
+        return Dictionary[named]
 
     header = memory[2]
     Done = False
@@ -54,6 +56,7 @@ def findEntry(named):
             Done = True
         else:
             header = memory[header]
+
     return header
 
 
@@ -369,6 +372,7 @@ def execute(word, output="console"):
             a = extractString(stack.pop())
             header = findEntry(a)
             stack.append(header)
+            memory[d_lookup - 20] = header # set "which"
             ip = address.pop()
         else:
           if validateOpcode(opcode):
@@ -399,6 +403,7 @@ def load_image():
         memory = list(struct.unpack(cells * "i", data))
     remaining = 1000000 - cells
     memory.extend([0] * remaining)
+    print("Initial Image Size: ", cells)
 
 
 def process(line):
@@ -406,18 +411,20 @@ def process(line):
       injectString(Token, 1025)
       stack.append(1025)
       execute(Interpreter)
+    return(len(line.split()))
 
 
 def process_files():
     for f in sys.argv[2:]:
-        print(f)
+        tokens = 0
         in_block = False
         with open(f, "r") as source:
             for line in source.readlines():
                 if line.rstrip() == "~~~":
                     in_block = not in_block
                 elif in_block:
-                    process(line.strip())
+                    tokens += process(line.strip())
+        print("   + ", tokens, "tokens from", f)
 
 
 def save_image():
@@ -425,7 +432,7 @@ def save_image():
     with open(sys.argv[1], "wb") as file:
         j = 0
         while j <= memory[3]:
-            file.write(struct.pack("<i", memory[j]))
+            file.write(struct.pack("i", memory[j]))
             j = j + 1
 
 if __name__ == "__main__":
