@@ -31,7 +31,7 @@ before returning to the prior one.
 To set a buffer as the active one use `buffer:set`. This takes
 an address.
 
-The buffer will be assumed to be empty. The inital value will
+The buffer will be assumed to be empty. The initial value will
 be set to ASCII:NULL.
 
 ## Add Value
@@ -84,7 +84,7 @@ Let's add some stuff using `buffer:add`:
 #300 buffer:add
 ```
 
-And then retreive the values:
+And then retrieve the values:
 
 ```
 buffer:get n:put nl

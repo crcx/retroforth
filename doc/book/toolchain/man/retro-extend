@@ -16,7 +16,7 @@ DESCRIPTION
      changes.
 
 
-CAVETS
+CAVEATS
      retro-extend only emulates the minimal console output device. If the
      source files require additional I/O to be present, the extend process
      will likely fail to work correctly.
@@ -25,4 +25,4 @@ CAVETS
 AUTHORS
      Charles Childers <crc@forthworks.com>
 
-OpenBSD 6.4			 February 2019			   OpenBSD 6.4
+OpenBSD 6.4			 January 2021			   OpenBSD 6.4

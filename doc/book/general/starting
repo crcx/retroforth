@@ -31,7 +31,7 @@ retro -s
 ## Using In a Pipe
 
 If using a Unix shell and piping input between processes, you
-will probably want to use `-s` to supress the startup messages
+will probably want to use `-s` to suppress the startup messages
 and `Ok` prompt that normally appear.
 
 E.g.,

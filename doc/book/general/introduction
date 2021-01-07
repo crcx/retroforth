@@ -1,7 +1,7 @@
 # RETRO: a Modern, Pragmatic Forth
 
 Welcome to RETRO, my personal take on the Forth language. This
-is a modern system primarily targetting desktop, mobile, and
+is a modern system primarily targeting desktop, mobile, and
 servers, though it can also be used on some larger (ARM, MIPS32)
 embedded systems.
 
