@@ -1,7 +1,12 @@
 PYTHON ?= python3
 
-default:
+default: baseimage
 	cp ngaImage pythonImage
 	$(PYTHON) tools/retro-extend.py pythonImage interface/clock.retro interface/filesystem.retro interface/floatingpoint.retro interface/rng.retro package/dict-words-listing.forth
 	$(PYTHON) tools/retro-embedimage.py pythonImage >vm/nga-python/InitialImage.py
 	rm -f pythonImage
+
+baseimage:
+	$(PYTHON) tools/retro-muri.py image/retro.muri
+	$(PYTHON) tools/retro-extend.py ngaImage image/retro.forth
+
