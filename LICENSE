@@ -43,6 +43,10 @@ Portions of the code derive from RETRO 11, which was:
     Copyright (c) 2012,        John M Harrison
     Copyright (c) 2012,        Todd Thomas
 
-The Free Pascal implementation in interfaces/pascal is:
+The Free Pascal implementation in vm/nga-pascal is:
 
     Copyright (c) 2016,        Rob Judd
+
+The Nim implementation in vm/nga-nim is:
+
+    Copyrigh  (c) 2021,        Jorge Acereda

@@ -59,6 +59,10 @@
 * now supports `-f`, `-i`, and `-u` command line parameters
 * improved error handling for invalid addresses
 
+### nga-nim
+
+* added initial Nim implementation by Jorge Acereda
+
 ----
 
 ## Examples
