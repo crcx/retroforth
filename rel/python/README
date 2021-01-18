@@ -1,0 +1,97 @@
+## Retro: A Modern, Pragmatic Forth
+
+RETRO is a modern, pragmatic Forth drawing influences from many
+sources. It's clean, elegant, tiny, and easy to grasp and adapt
+to various uses.
+
+Features:
+
+- Open Source (ISC License)
+- Portable (runs on a MISC-style virtual machine)
+- Small source & binaries
+- Builds into a single, self contained binary for easy deployment
+- Sources in literate format, using a Markdown variant
+
+## Quick Start
+
+For most systems (FreeBSD, NetBSD, OpenBSD, macOS, Linux):
+
+    make
+
+You will need a standard C compiler and `make`.
+
+## Executables
+
+Binaries will be placed in the `bin` directory.
+
+The primary executable is `retro`. This is used for running the
+examples and the Atua (gopher) & Casket (http) servers that
+power forthworks.com.
+
+The `retro` executable embeds the image into the binary, making
+it trivial to copy and deploy.
+
+This interface layer also extends the language with many new
+words and vocabularies, adds scripting, file i/o, gopher, and
+floating point math support.
+
+The `retro` executable can handle a variety of command line
+arguments:
+
+    retro -i
+
+Starts the *listener*, a basic REPL for interactive use.
+
+    retro filename
+
+This will run the code in the specified file, then exit. This
+is also used to run programs as shell-type scripts using a
+header line like `#!/usr/bin/env retro`.
+
+    retro -i -f filename
+
+This will run the code in the specified file, then start the
+listener.
+
+    retro -h
+
+Displays a summary of the command line arguments.
+
+Source files for use with `retro` are written with code in
+fenced blocks:
+
+    commentary here
+     
+    ~~~
+    code here
+    ~~~
+
+Anything outside the fenced blocks will be ignored.
+
+## Documentation
+
+The primary documentation is in RETRO-Book.md (and the formatted
+RETRO-Book.html.) Additional notes can be found in the `doc`
+directory.
+
+## Alternative Implementations
+
+In addition to the C and Python implementations, this source
+tree includes additional implementations in C#, JavaScript,
+and Pascal. These are not as well tested or as feature complete
+as the main implementations, but are provided for your use if
+the standard implementations will not suffice.
+
+## Patreon
+
+I have a Patreon at https://www.patreon.com/_crc for those that
+want to financially support development. All funds raised via
+Pateron are put into development related expenses (server expenses,
+app store fees, hardware).
+
+Thanks go out to my current and past patrons:
+
+- Kiyoshi YONEDA
+- Krinkleneck
+- Rick Carlino
+- Scott McCallum

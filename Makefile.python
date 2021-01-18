@@ -1,4 +1,5 @@
 PYTHON ?= python3
+EDITOR ?= nano
 
 default: baseimage
 	cp ngaImage pythonImage
@@ -10,3 +11,10 @@ baseimage:
 	$(PYTHON) tools/retro-muri.py image/retro.muri
 	$(PYTHON) tools/retro-extend.py ngaImage image/retro.forth
 
+release:
+	retro tools/amalgamate-python.retro >rel/python/retroforth/retroforth.py
+	$(EDITOR) rel/python/setup.py
+	cd rel/python && python3 setup.py sdist bdist_wheel
+
+upload:
+	cd rel/python && python3 -m twine upload dist/*
