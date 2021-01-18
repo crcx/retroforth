@@ -34,7 +34,7 @@
 <p>Multiply `n1` by `n2` and return the result.</p>
 <table><tr><td><b>Class:</b> </td><td>class:primitive</td></tr><tr><td><b>Namespace:</b> </td><td>global</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><p><b>Example:</b> <br>
 <br>
-<xmp style='background:#222'>    #2 #6 *
+<xmp style='background:#f2f2f2'>    #2 #6 *
     #-1 #100 *</xmp>
 </p>
 <hr/>
@@ -46,7 +46,7 @@
 <p>Add `n1` to `n2` and return the result.</p>
 <table><tr><td><b>Class:</b> </td><td>class:primitive</td></tr><tr><td><b>Namespace:</b> </td><td>global</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><p><b>Example:</b> <br>
 <br>
-<xmp style='background:#222'>    #1 #2 + </xmp>
+<xmp style='background:#f2f2f2'>    #1 #2 + </xmp>
 </p>
 <hr/>
 <h2>,</h2>
@@ -57,7 +57,7 @@
 <p>Store the specified value into the memory at `here` and increment `Heap` by 1.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>global</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><p><b>Example:</b> <br>
 <br>
-<xmp style='background:#222'>    $a , $b , $c , #0 ,</xmp>
+<xmp style='background:#f2f2f2'>    $a , $b , $c , #0 ,</xmp>
 </p>
 <hr/>
 <h2>-</h2>
@@ -68,7 +68,7 @@
 <p>Subtract `n2` from `n1` and return the result.</p>
 <table><tr><td><b>Class:</b> </td><td>class:primitive</td></tr><tr><td><b>Namespace:</b> </td><td>global</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><p><b>Example:</b> <br>
 <br>
-<xmp style='background:#222'>    #2 #1 - </xmp>
+<xmp style='background:#f2f2f2'>    #2 #1 - </xmp>
 </p>
 <hr/>
 <h2>---reveal---</h2>
@@ -86,7 +86,7 @@
 <p>Compare two values for inequality. Returns `TRUE` if they are not equal or `FALSE` otherwise.</p>
 <table><tr><td><b>Class:</b> </td><td>class:primitive</td></tr><tr><td><b>Namespace:</b> </td><td>global</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><p><b>Example:</b> <br>
 <br>
-<xmp style='background:#222'>    #1 #2 -eq?
+<xmp style='background:#f2f2f2'>    #1 #2 -eq?
     $a $b -eq?</xmp>
 </p>
 <hr/>
@@ -147,7 +147,7 @@
 <p>Duplicate top value on stack if not zero. If zero, do nothing.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>global</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><p><b>Example:</b> <br>
 <br>
-<xmp style='background:#222'>    #1 ?dup
+<xmp style='background:#f2f2f2'>    #1 ?dup
     #0 ?dup</xmp>
 </p>
 <hr/>
@@ -614,7 +614,7 @@
 <p>Fetch the value stored at the specified index in the specified array.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>a</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><p><b>Example:</b> <br>
 <br>
-<xmp style='background:#222'>    { #0 #1 #3 } #2 a:fetch</xmp>
+<xmp style='background:#f2f2f2'>    { #0 #1 #3 } #2 a:fetch</xmp>
 </p>
 <hr/>
 <h2>a:filter</h2>
@@ -723,7 +723,7 @@
 <p>Store a value into the array at the specified index.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>a</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><p><b>Example:</b> <br>
 <br>
-<xmp style='background:#222'>    #3 { #0 #1 #2 } #1 a:store</xmp>
+<xmp style='background:#f2f2f2'>    #3 { #0 #1 #2 } #1 a:store</xmp>
 </p>
 <hr/>
 <h2>a:th</h2>
@@ -762,7 +762,7 @@
 <p>Allocate the specified number of cells from the `Heap`.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>global</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><p><b>Example:</b> <br>
 <br>
-<xmp style='background:#222'>    'Buffer d:create  #100 allot</xmp>
+<xmp style='background:#f2f2f2'>    'Buffer d:create  #100 allot</xmp>
 </p>
 <hr/>
 <h2>and</h2>
@@ -787,7 +787,7 @@
 <p>Execute q1 against x, then execute q2 against a copy of x.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>global</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><p><b>Example:</b> <br>
 <br>
-<xmp style='background:#222'>    #100 [ #10 * ] [ #10 - ] bi</xmp>
+<xmp style='background:#f2f2f2'>    #100 [ #10 * ] [ #10 - ] bi</xmp>
 </p>
 <hr/>
 <h2>bi*</h2>
@@ -798,7 +798,7 @@
 <p>Execute q1 against x and q2 against y.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>global</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><p><b>Example:</b> <br>
 <br>
-<xmp style='background:#222'>    #10 #20 [ #2 * ] [ #10 / ] bi*</xmp>
+<xmp style='background:#f2f2f2'>    #10 #20 [ #2 * ] [ #10 / ] bi*</xmp>
 </p>
 <hr/>
 <h2>bi@</h2>
@@ -809,7 +809,7 @@
 <p>Execute q against x, then execute q against y.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>global</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><p><b>Example:</b> <br>
 <br>
-<xmp style='background:#222'>    #10 #20 [ #3 * ] bi@</xmp>
+<xmp style='background:#f2f2f2'>    #10 #20 [ #3 * ] bi@</xmp>
 </p>
 <hr/>
 <h2>buffer:add</h2>
@@ -1558,7 +1558,7 @@
 <p>Compare two values for equality. Returns `TRUE` if they are equal or `FALSE` otherwise.</p>
 <table><tr><td><b>Class:</b> </td><td>class:primitive</td></tr><tr><td><b>Namespace:</b> </td><td>global</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><p><b>Example:</b> <br>
 <br>
-<xmp style='background:#222'>    #1 #2 eq?
+<xmp style='background:#f2f2f2'>    #1 #2 eq?
     $a $b eq?</xmp>
 </p>
 <hr/>
@@ -1577,7 +1577,7 @@
 <p>Multiply two floating point numbers, returning the result.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>f</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><p><b>Example:</b> <br>
 <br>
-<xmp style='background:#222'>    .3.1415 .22 f:*</xmp>
+<xmp style='background:#f2f2f2'>    .3.1415 .22 f:*</xmp>
 </p>
 <hr/>
 <h2>f:+</h2>
@@ -1588,7 +1588,7 @@
 <p>Add two floating point numbers, returning the result.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>f</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><p><b>Example:</b> <br>
 <br>
-<xmp style='background:#222'>    .3.1 .22 f:+</xmp>
+<xmp style='background:#f2f2f2'>    .3.1 .22 f:+</xmp>
 </p>
 <hr/>
 <h2>f:-</h2>
@@ -1599,7 +1599,7 @@
 <p>Subtract F2 from F1 returing the result.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>f</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><p><b>Example:</b> <br>
 <br>
-<xmp style='background:#222'>    .22.3 .0.12 f:-</xmp>
+<xmp style='background:#f2f2f2'>    .22.3 .0.12 f:-</xmp>
 </p>
 <hr/>
 <h2>f:-INF</h2>
@@ -1708,7 +1708,7 @@
 <p>Return TRUE if number is between the lower (l) and upper (u) bounds. If not, return FALSE. This is inclusive of the limits.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>f</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><p><b>Example:</b> <br>
 <br>
-<xmp style='background:#222'>    .3 .1 .100 f:between?
+<xmp style='background:#f2f2f2'>    .3 .1 .100 f:between?
     .100 .200 .300   f:between?</xmp>
 </p>
 <hr/>
@@ -1741,7 +1741,7 @@
 <p>Decrement n by one.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>f</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><p><b>Example:</b> <br>
 <br>
-<xmp style='background:#222'>    .100 f:dec</xmp>
+<xmp style='background:#f2f2f2'>    .100 f:dec</xmp>
 </p>
 <hr/>
 <h2>f:depth</h2>
@@ -1829,7 +1829,7 @@
 <p>Increment n by one.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>f</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><p><b>Example:</b> <br>
 <br>
-<xmp style='background:#222'>    .100 f:inc</xmp>
+<xmp style='background:#f2f2f2'>    .100 f:inc</xmp>
 </p>
 <hr/>
 <h2>f:inf?</h2>
@@ -1847,7 +1847,7 @@
 <p>Return n if it is within the lower (l) and upper (u) bounds. If outside the bounds, return the closes boundary value.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>f</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><p><b>Example:</b> <br>
 <br>
-<xmp style='background:#222'>    .-10 .5 .8 f:limit
+<xmp style='background:#f2f2f2'>    .-10 .5 .8 f:limit
     .10  .1 .15 f:limit</xmp>
 </p>
 <hr/>
@@ -1873,7 +1873,7 @@
 <p>Return the greater of two values.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>f</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><p><b>Example:</b> <br>
 <br>
-<xmp style='background:#222'>    .1 .7 f:max
+<xmp style='background:#f2f2f2'>    .1 .7 f:max
     .-8 .-10 f:max</xmp>
 </p>
 <hr/>
@@ -1885,7 +1885,7 @@
 <p>Return the lesser of two values.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>f</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><p><b>Example:</b> <br>
 <br>
-<xmp style='background:#222'>    .1 .7 f:min
+<xmp style='background:#f2f2f2'>    .1 .7 f:min
     .-8 .-10 f:min</xmp>
 </p>
 <hr/>
@@ -1904,7 +1904,7 @@
 <p>Invert the sign of the floating point value.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>f</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><p><b>Example:</b> <br>
 <br>
-<xmp style='background:#222'>    .3.1415 f:negate</xmp>
+<xmp style='background:#f2f2f2'>    .3.1415 f:negate</xmp>
 </p>
 <hr/>
 <h2>f:negative?</h2>
@@ -1985,7 +1985,7 @@
 <p>Return 1 if the floating point value is positive or -1 if it is negative.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>f</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><p><b>Example:</b> <br>
 <br>
-<xmp style='background:#222'>    .3.1415 f:sign</xmp>
+<xmp style='background:#f2f2f2'>    .3.1415 f:sign</xmp>
 </p>
 <hr/>
 <h2>f:signed-sqrt</h2>
@@ -2080,7 +2080,7 @@
 <p>Fetch the value stored at the specified address.</p>
 <table><tr><td><b>Class:</b> </td><td>class:primitive</td></tr><tr><td><b>Namespace:</b> </td><td>global</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><p><b>Example:</b> <br>
 <br>
-<xmp style='background:#222'>    &Version fetch</xmp>
+<xmp style='background:#f2f2f2'>    &Version fetch</xmp>
 </p>
 <hr/>
 <h2>fetch-next</h2>
@@ -2161,7 +2161,7 @@
 <p>Open a named file (s) with the given mode (m). Returns a handle identifying the file.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>file</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><p><b>Example:</b> <br>
 <br>
-<xmp style='background:#222'>  '/etc/motd file:R file:open</xmp>
+<xmp style='background:#f2f2f2'>  '/etc/motd file:R file:open</xmp>
 </p>
 <hr/>
 <h2>file:open-for-append</h2>
@@ -2263,7 +2263,7 @@
 <p>Takes an address, a server, a port, and a selector. Fetch the resource and store it at address. Return the number of bytes received.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>gopher</td></tr><tr><td><b>Interface Layer:</b> </td><td>ios</td></tr></table><p><b>Example:</b> <br>
 <br>
-<xmp style='background:#222'>    here 'forthworks.com #70 '/ gopher:get
+<xmp style='background:#f2f2f2'>    here 'forthworks.com #70 '/ gopher:get
     here s:put</xmp>
 </p>
 <hr/>
@@ -2296,7 +2296,7 @@
 <p>Add a hook point into the current word. This should only be used as the first word in a definition.</p>
 <table><tr><td><b>Class:</b> </td><td>class:macro</td></tr><tr><td><b>Namespace:</b> </td><td>global</td></tr><tr><td><b>Interface Layer:</b> </td><td>global</td></tr></table><p><b>Example:</b> <br>
 <br>
-<xmp style='background:#222'>    :foo hook ;</xmp>
+<xmp style='background:#f2f2f2'>    :foo hook ;</xmp>
 </p>
 <hr/>
 <h2>i</h2>
@@ -2356,7 +2356,7 @@
 <p>Interpret a single input token.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>global</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><p><b>Example:</b> <br>
 <br>
-<xmp style='background:#222'>    '#100 interpret
+<xmp style='background:#f2f2f2'>    '#100 interpret
     'words interpret</xmp>
 </p>
 <hr/>
@@ -2459,7 +2459,7 @@
 <p>Return the absolute value of a number.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>n</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><p><b>Example:</b> <br>
 <br>
-<xmp style='background:#222'>    #10 n:abs
+<xmp style='background:#f2f2f2'>    #10 n:abs
     #-10 n:abs
 </xmp>
 </p>
@@ -2472,7 +2472,7 @@
 <p>Return TRUE if number is between the lower (l) and upper (u) bounds. If not, return FALSE. This is inclusive of the limits.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>n</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><p><b>Example:</b> <br>
 <br>
-<xmp style='background:#222'>    #3 #1 #100 n:between?
+<xmp style='background:#f2f2f2'>    #3 #1 #100 n:between?
     $q $a $b   n:between?</xmp>
 </p>
 <hr/>
@@ -2484,7 +2484,7 @@
 <p>Decrement n by one.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>n</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><p><b>Example:</b> <br>
 <br>
-<xmp style='background:#222'>    #100 n:dec</xmp>
+<xmp style='background:#f2f2f2'>    #100 n:dec</xmp>
 </p>
 <hr/>
 <h2>n:even?</h2>
@@ -2495,7 +2495,7 @@
 <p>Return `TRUE` if number is even, or `FALSE` if not.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>n</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><p><b>Example:</b> <br>
 <br>
-<xmp style='background:#222'>    #12 n:even?
+<xmp style='background:#f2f2f2'>    #12 n:even?
     #11 n:even?</xmp>
 </p>
 <hr/>
@@ -2507,7 +2507,7 @@
 <p>Increment n by one.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>n</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><p><b>Example:</b> <br>
 <br>
-<xmp style='background:#222'>    #100 n:inc</xmp>
+<xmp style='background:#f2f2f2'>    #100 n:inc</xmp>
 </p>
 <hr/>
 <h2>n:limit</h2>
@@ -2518,7 +2518,7 @@
 <p>Return n if it is within the lower (l) and upper (u) bounds. If outside the bounds, return the closes boundary value.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>n</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><p><b>Example:</b> <br>
 <br>
-<xmp style='background:#222'>    #-10 #5 #8 n:limit
+<xmp style='background:#f2f2f2'>    #-10 #5 #8 n:limit
     #10  #1 #15 n:limit</xmp>
 </p>
 <hr/>
@@ -2530,7 +2530,7 @@
 <p>Return the greater of two values.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>n</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><p><b>Example:</b> <br>
 <br>
-<xmp style='background:#222'>    #1 #7 n:max
+<xmp style='background:#f2f2f2'>    #1 #7 n:max
     #-8 #-10 n:max</xmp>
 </p>
 <hr/>
@@ -2542,7 +2542,7 @@
 <p>Return the lesser of two values.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>n</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><p><b>Example:</b> <br>
 <br>
-<xmp style='background:#222'>    #1 #7 n:min
+<xmp style='background:#f2f2f2'>    #1 #7 n:min
     #-8 #-10 n:min</xmp>
 </p>
 <hr/>
@@ -2554,7 +2554,7 @@
 <p>Invert the sign of a number.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>n</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><p><b>Example:</b> <br>
 <br>
-<xmp style='background:#222'>    #10 n:negate
+<xmp style='background:#f2f2f2'>    #10 n:negate
     #-10 n:negate</xmp>
 </p>
 <hr/>
@@ -2601,7 +2601,7 @@
 <p>Return a random number</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>n</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><p><b>Example:</b> <br>
 <br>
-<xmp style='background:#222'>    n:random n:put</xmp>
+<xmp style='background:#f2f2f2'>    n:random n:put</xmp>
 </p>
 <hr/>
 <h2>n:sqrt</h2>
@@ -2689,7 +2689,7 @@
 <p>Read input from stdin (via `c:get`) until the returned character is matched by the quote. Returns a string.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>all</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><p><b>Example:</b> <br>
 <br>
-<xmp style='background:#222'>  :read-until-period (-s)
+<xmp style='background:#f2f2f2'>  :read-until-period (-s)
     [ $. eq? ] parse-until ;</xmp>
 </p>
 <hr/>
@@ -2708,7 +2708,7 @@
 <p>Return the length of the string on the pasteboard.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>pb</td></tr><tr><td><b>Interface Layer:</b> </td><td>iOS</td></tr></table><p><b>Example:</b> <br>
 <br>
-<xmp style='background:#222'>pb</xmp>
+<xmp style='background:#f2f2f2'>pb</xmp>
 </p>
 <hr/>
 <h2>pb:set</h2>
@@ -3068,7 +3068,7 @@
 <p>Compare two strings for equality. Return `TRUE` if identical or `FALSE` if not.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>s</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><p><b>Example:</b> <br>
 <br>
-<xmp style='background:#222'>    'hello 'again s:eq?
+<xmp style='background:#f2f2f2'>    'hello 'again s:eq?
     'test  'test  s:eq?</xmp>
 </p>
 <hr/>
@@ -3227,7 +3227,7 @@
 <p>Split a string on the first occurrance of the specified string. After the split, the top stack item will be the part of the string before the specified subsring, and the second item will be the rest of the original string.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>s</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><p><b>Example:</b> <br>
 <br>
-<xmp style='background:#222'>  'Hello_Brave_World! 'Brave s:split-on-string s:put nl s:put nl</xmp>
+<xmp style='background:#f2f2f2'>  'Hello_Brave_World! 'Brave s:split-on-string s:put nl s:put nl</xmp>
 </p>
 <hr/>
 <h2>s:substr</h2>
@@ -3294,7 +3294,7 @@
 <p>Trim leading and trailing whitespace from a string.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>s</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><p><b>Example:</b> <br>
 <br>
-<xmp style='background:#222'>    '__hello__ s:trim</xmp>
+<xmp style='background:#f2f2f2'>    '__hello__ s:trim</xmp>
 </p>
 <hr/>
 <h2>s:trim-left</h2>
@@ -3305,7 +3305,7 @@
 <p>Trim leading whitespace from a string.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>s</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><p><b>Example:</b> <br>
 <br>
-<xmp style='background:#222'>    '__hello__ s:trim-left</xmp>
+<xmp style='background:#f2f2f2'>    '__hello__ s:trim-left</xmp>
 </p>
 <hr/>
 <h2>s:trim-right</h2>
@@ -3316,7 +3316,7 @@
 <p>Trim trailing whitespace from a string.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>s</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><p><b>Example:</b> <br>
 <br>
-<xmp style='background:#222'>    '__hello__ s:trim-right</xmp>
+<xmp style='background:#f2f2f2'>    '__hello__ s:trim-right</xmp>
 </p>
 <hr/>
 <h2>script:abort-include</h2>
@@ -3383,7 +3383,7 @@
 <p>Patch the hook point in a2 to point to a1.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>global</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><p><b>Example:</b> <br>
 <br>
-<xmp style='background:#222'>    :foo hook ;
+<xmp style='background:#f2f2f2'>    :foo hook ;
     :bar #1 ;
     &bar &foo set-hook</xmp>
 </p>
@@ -3487,7 +3487,7 @@
 <p>Display a space (`ASCII:SPACE`)</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>global</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><p><b>Example:</b> <br>
 <br>
-<xmp style='background:#222'>    :spaces (n-)  [ sp ] times ;
+<xmp style='background:#f2f2f2'>    :spaces (n-)  [ sp ] times ;
     #12 spaces</xmp>
 </p>
 <hr/>
@@ -3499,7 +3499,7 @@
 <p>Store a value into the specified address.</p>
 <table><tr><td><b>Class:</b> </td><td>class:primitive</td></tr><tr><td><b>Namespace:</b> </td><td>global</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><p><b>Example:</b> <br>
 <br>
-<xmp style='background:#222'>    'Base var
+<xmp style='background:#f2f2f2'>    'Base var
     #10 &Base store</xmp>
 </p>
 <hr/>
@@ -3532,7 +3532,7 @@
 <p>Run the specified quote the specified number of times.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>global</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><p><b>Example:</b> <br>
 <br>
-<xmp style='background:#222'>    #12 [ $- c:put ] times</xmp>
+<xmp style='background:#f2f2f2'>    #12 [ $- c:put ] times</xmp>
 </p>
 <hr/>
 <h2>tri</h2>
@@ -3571,7 +3571,7 @@
 <p>Reset the hook point in a1 to the default definition.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>global</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><p><b>Example:</b> <br>
 <br>
-<xmp style='background:#222'>    :foo hook #1 ;
+<xmp style='background:#f2f2f2'>    :foo hook #1 ;
     :bar #2 ;
     &bar &foo set-hook
     &foo unhook</xmp>
@@ -3585,7 +3585,7 @@
 <p>Change the current working directory to the specified one.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>unix</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><p><b>Example:</b> <br>
 <br>
-<xmp style='background:#222'>  '/etc unix:chdir</xmp>
+<xmp style='background:#f2f2f2'>  '/etc unix:chdir</xmp>
 </p>
 <hr/>
 <h2>unix:count-files-in-cwd</h2>
@@ -3659,7 +3659,7 @@
 <p>Get an environment variable. Provide the name and an address to store it in.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>unix</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><p><b>Example:</b> <br>
 <br>
-<xmp style='background:#222'>  'SHELL s:empty [ unix:getenv ] sip s:put nl</xmp>
+<xmp style='background:#f2f2f2'>  'SHELL s:empty [ unix:getenv ] sip s:put nl</xmp>
 </p>
 <hr/>
 <h2>unix:getpid</h2>
@@ -3691,7 +3691,7 @@
 <p>Takes a string with a Unix command line and run it in a pipe, returning a new string with the first line of the output from the pipe.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>unix</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><p><b>Example:</b> <br>
 <br>
-<xmp style='background:#222'>  'ls_-l unix:pipe s:put nl</xmp>
+<xmp style='background:#f2f2f2'>  'ls_-l unix:pipe s:put nl</xmp>
 </p>
 <hr/>
 <h2>unix:popen</h2>
@@ -3709,7 +3709,7 @@
 <p>Takes a string in the form `name=value` and sets an environment variable named `name` to `value`.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>unix</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><p><b>Example:</b> <br>
 <br>
-<xmp style='background:#222'>  'EDITOR=vi unix:putenv</xmp>
+<xmp style='background:#f2f2f2'>  'EDITOR=vi unix:putenv</xmp>
 </p>
 <hr/>
 <h2>unix:sleep</h2>
@@ -3734,7 +3734,7 @@
 <p>Runs another application using the system shell and returns after execution is completed.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>unix</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><p><b>Example:</b> <br>
 <br>
-<xmp style='background:#222'>  'ls_-lh_/etc unix:system</xmp>
+<xmp style='background:#f2f2f2'>  'ls_-lh_/etc unix:system</xmp>
 </p>
 <hr/>
 <h2>unix:wait</h2>
@@ -3752,7 +3752,7 @@
 <p>Execute quote repeatedly while the quote returns a value of `FALSE`. The quote should return a flag of either `TRUE` or `FALSE`, though `until` will treat any non-zero value as `TRUE`.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>global</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><p><b>Example:</b> <br>
 <br>
-<xmp style='background:#222'>    #10 [ dup n:put nl n:dec dup n:zero? ] until</xmp>
+<xmp style='background:#f2f2f2'>    #10 [ dup n:put nl n:dec dup n:zero? ] until</xmp>
 </p>
 <hr/>
 <h2>v:dec</h2>
@@ -3826,7 +3826,7 @@
 <p>Create a variable. The variable is initialized to 0.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>global</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><p><b>Example:</b> <br>
 <br>
-<xmp style='background:#222'>    'Base var</xmp>
+<xmp style='background:#f2f2f2'>    'Base var</xmp>
 </p>
 <hr/>
 <h2>var-n</h2>
@@ -3837,7 +3837,7 @@
 <p>Create a variable with the specified initial value.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>global</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><p><b>Example:</b> <br>
 <br>
-<xmp style='background:#222'>    #10 'Base var-n
+<xmp style='background:#f2f2f2'>    #10 'Base var-n
 </xmp>
 </p>
 <hr/>
@@ -3849,7 +3849,7 @@
 <p>Execute quote repeatedly while the quote returns a `TRUE` value. The quote should return a flag of either `TRUE` or `FALSE`, though `while` will treat any non-zero value as `TRUE`.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>global</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><p><b>Example:</b> <br>
 <br>
-<xmp style='background:#222'>    #10 [ dup n:put nl n:dec dup n:-zero? ] while</xmp>
+<xmp style='background:#f2f2f2'>    #10 [ dup n:put nl n:dec dup n:-zero? ] while</xmp>
 </p>
 <hr/>
 <h2>xor</h2>

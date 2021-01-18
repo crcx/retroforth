@@ -169,7 +169,7 @@ export and (eventually) ePub.
   :header          '<h2>  s:put  call  '</h2>  s:put nl ;
   :paragraph       '<p>   s:put  call  '</p>   s:put nl ;
   :br              '<br>  s:put nl ;
-  :xmp             '<xmp_style='background:#222'> s:put  call  '</xmp> s:put nl ;
+  :xmp             '<xmp_style='background:#f2f2f2'> s:put  call  '</xmp> s:put nl ;
   :b               '<b> s:put s:putfmtx '</b> s:put sp ;
 
   :name            field:name  '%s s:putfmtx ;
