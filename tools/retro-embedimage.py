@@ -21,11 +21,11 @@ if __name__ == "__main__":
     memory = list(struct.unpack(cells * "i", f.read()))
     f.close()
     count = 0
-    print('InitialImage = [')
+    print("InitialImage = [")
     for cell in memory:
-        print(cell, end=', ')
+        print(cell, end=", ")
         count = count + 1
         if count > 10:
-            print('')
+            print("")
             count = 0
-    print(']')
+    print("]")

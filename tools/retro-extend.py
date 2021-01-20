@@ -26,6 +26,7 @@
 
 import os, sys, math, time, struct, random, datetime
 
+
 class Clock:
     def __getitem__(self, id):
         import datetime
@@ -49,11 +50,16 @@ class Clock:
             "second_utc": now.utcnow().second,
         }
         return ids[id]
+
+
 import random
+
 
 class RNG:
     def __call__(self):
         return random.randint(-2147483647, 2147483646)
+
+
 import os
 
 
@@ -119,6 +125,7 @@ class FileSystem:
             os.remove(name)
             i = 1
         return i
+
 
 class FloatStack(object):
     def __init__(self, *d):
@@ -201,6 +208,8 @@ class FloatStack(object):
 
     def atan(self):
         self.data.append(math.atan(self.data.pop()))
+
+
 class IntegerStack(list):
     def __init__(self):
         stack = [] * 128
@@ -225,6 +234,8 @@ class IntegerStack(list):
         a = self[-2]
         self[-2] = self[-1]
         self[-1] = a
+
+
 import os
 import struct
 
@@ -259,7 +270,9 @@ class Memory(list):
     def size(self):
         return len(self)
 
+
 InitialImage = []
+
 
 class Retro:
     def map_in(self, name):
@@ -796,7 +809,9 @@ class Retro:
         with open(sys.argv[1], "wb") as file:
             j = 0
             while j <= self.memory[3]:
-                cell = struct.unpack("=l", struct.pack("=L", self.memory[j] & 0xFFFFFFFF))[0]
+                cell = struct.unpack(
+                    "=l", struct.pack("=L", self.memory[j] & 0xFFFFFFFF)
+                )[0]
                 file.write(struct.pack("i", cell))
                 j = j + 1
 
