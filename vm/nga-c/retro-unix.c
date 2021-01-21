@@ -268,8 +268,23 @@ void io_scripting_handler() {
   the word being run, and it's dependencies) are finished.
   ---------------------------------------------------------------------*/
 
+void invalid_opcode(CELL opcode) {
+  CELL a, b, i;
+  printf("\nERROR (nga/execute): Invalid instruction!\n");
+  printf("At %lld, opcode %lld\n", (long long)ip, (long long)opcode);
+  printf("Instructions: ");
+  a = opcode;
+  for (i = 0; i < 4; i++) {
+    b = a & 0xFF;
+    printf("%lldd ", (long long)b);
+    a = a >> 8;
+  }
+  printf("\n");
+  exit(1);
+}
+
 void execute(CELL cell, int silent) {
-  CELL a, b, i, token;
+  CELL token;
   CELL opcode;
   silence_input = silent;
   rp = 1;
@@ -288,17 +303,7 @@ void execute(CELL cell, int silent) {
       if (validate_opcode_bundle(opcode) != 0) {
         process_opcode_bundle(opcode);
       } else {
-        printf("\nERROR (nga/execute): Invalid instruction!\n");
-        printf("At %lld, opcode %lld\n", (long long)ip, (long long)opcode);
-        printf("Instructions: ");
-        a = opcode;
-        for (i = 0; i < 4; i++) {
-          b = a & 0xFF;
-          printf("%lldd ", (long long)b);
-          a = a >> 8;
-        }
-        printf("\n");
-        exit(1);
+        invalid_opcode(opcode);
       }
 #ifndef NOCHECKS
       if (sp < 0 || sp > STACK_DEPTH) {
