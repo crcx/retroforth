@@ -441,7 +441,7 @@ class Retro:
                 b = self.stack.pop()
                 self.stack.push(self.inject_string(sys.argv[a + 2], b))
             if action == 2:
-                run_file(self.extract_string(self.stack.pop()))
+                self.run_file(self.extract_string(self.stack.pop()))
             if action == 3:
                 b = self.stack.pop()
                 self.stack.push(self.inject_string(sys.argv[0], b))
