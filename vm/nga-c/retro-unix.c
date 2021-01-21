@@ -287,7 +287,8 @@ void execute(CELL cell, int silent) {
   CELL token;
   CELL opcode;
   silence_input = silent;
-  rp = 1;
+  if (rp == 0)
+    rp = 1;
   ip = cell;
   token = TIB;
   while (ip < IMAGE_SIZE) {
