@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title>.</title>
+<style type="text/css">
+
+    * { color: #000; background: #fff; max-width: 700px; }
+    tt, pre { background: #dedede; color: #111; font-family: monospace;
+             white-space: pre; display: block; width: 100%; }
+    .indentedcode { margin-left: 2em; margin-right: 2em; }
+    .codeblock {
+      background: #dedede; color: #111; font-family: monospace;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      padding: 7px;
+      display: block;
+    }
+
+    .indentedlist { margin-left: 2em; color: #000; }
+
+    span { white-space: pre; }
+    .text  { color: #000; white-space: pre; background: #dedede; }
+    .colon { color: #000; background: #dedede; }
+    .note  { color: #000; background: #dedede; }
+    .str   { color: #000; text-decoration: underline; background: #dedede; }
+    .num   { color: #000; background: #dedede; font-weight: bold; font-style: italic; }
+    .fnum  { color: #000; font-weight: bold; background: #dedede; }
+    .ptr   { color: #000; font-weight: bold; background: #dedede; }
+    .fetch { color: #000; font-style: italic; background: #dedede; }
+    .store { color: #000; font-style: italic; background: #dedede; }
+    .char  { color: #000; background: #dedede; }
+    .inst  { color: #000; background: #dedede; }
+    .defer { color: #000; background: #dedede; }
+    .imm   { color: #000; font-weight: bold; background: #dedede; }
+    .prim  { color: #000; font-weight: bolder; background: #dedede; }
+
+    .tt    { white-space: pre; font-family: monospace; background: #dedede; }
+
+    .h1, .h2, .h3, .h4 { white-space: normal; }
+    .h1 { font-size: 125%; }
+    .h2 { font-size: 120%; }
+    .h3 { font-size: 115%; }
+    .h4 { font-size: 110%; }
+    .hr { display: block; height: 2px; background: #000000; }
+</style>
+</head><body>
+<p><span class="h1">RETRO's Markdown Syntax</span>
+<br/><br/>
+I use a variation of Markdown for writing documentation and
+when commenting code written in RETRO. The syntax is
+described below.
+<br/><br/>
+<span class="h2">Basic Syntax</span>
+<br/><br/>
+<span class="h3">Headings</span>
+<br/><br/>
+Headings start with one or more number (<span class="tt">#</span>) signs. The
+number of number signs should correspond to the heading
+level.
+<br/><br/>
+<tt class='indentedcode'>#&nbsp;Heading&nbsp;1</tt>
+<tt class='indentedcode'>##&nbsp;Heading&nbsp;2</tt>
+<tt class='indentedcode'>###&nbsp;Heading&nbsp;3</tt>
+<tt class='indentedcode'>####&nbsp;Heading&nbsp;4</tt>
+<br/><br/>
+My Markdown does not support the alternate underline
+format for headings.
+<br/><br/>
+<span class="h3">Paragraphs & Line Breaks</span>
+<br/><br/>
+To create paragraphs, use a blank line to separate one or
+more lines of text.
+<br/><br/>
+Do not add spaces or tabs at the start of a paragraph as
+this may cause the Markdown tools to interpret the line
+improperly.
+<br/><br/>
+Line breaks are entered at the end of each line.
+<br/><br/>
+<span class="h3">Emphasis</span>
+<br/><br/>
+<span class="h4">Bold</span>
+<br/><br/>
+To make text bold, surround it with asterisks.
+<br/><br/>
+<tt class='indentedcode'>The&nbsp;*bold*&nbsp;word.</tt>
+<br/><br/>
+<span class="h4">Italic</span>
+<br/><br/>
+To make text italic, surround it with front slashes.
+<br/><br/>
+<tt class='indentedcode'>The&nbsp;/italic&nbsp;words/.</tt>
+<br/><br/>
+<span class="h4">Underline</span>
+<br/><br/>
+To underline text, surround it with underscores.
+<br/><br/>
+<tt class='indentedcode'>Underline&nbsp;_some&nbsp;text_.</tt>
+<br/><br/>
+<span class="h3">Horizontal Rules</span>
+<br/><br/>
+Horizontal rules can be inserted by starting a line with a
+sequence of four or more dashes (<span class="tt">-</span>) or four or more alternating
+dash and plus (<span class="tt">-+-+</span>) characters.
+<br/><br/>
+<tt class='indentedcode'>----</tt>
+<br/><br/>
+<span class="h2">Lists</span>
+<br/><br/>
+Lists start with a <span class="tt">-</span> or <span class="tt">*</span>, followed by a space, then the item
+text. Additionally, nested lists starting with two spaces before
+the list marker can be used.
+<br/><br/>
+<tt class='indentedcode'>-&nbsp;this&nbsp;is&nbsp;a&nbsp;list&nbsp;item</tt>
+<tt class='indentedcode'>-&nbsp;so&nbsp;is&nbsp;this</tt>
+<br/><br/>
+<tt class='indentedcode'>&nbsp;&nbsp;-&nbsp;this&nbsp;will&nbsp;be&nbsp;indented</tt>
+<tt class='indentedcode'>&nbsp;&nbsp;-&nbsp;likewise</tt>
+<br/><br/>
+<tt class='indentedcode'>-&nbsp;back&nbsp;to&nbsp;the&nbsp;standard&nbsp;level</tt>
+<br/><br/>
+<span class="h2">Code</span>
+<br/><br/>
+<span class="h3">Code Blocks</span>
+<br/><br/>
+Code blocks start and end with ~~~ on a line by themselves.
+<br/><br/>
+<tt class='indentedcode'>Sum&nbsp;the&nbsp;values.</tt>
+<br/><br/>
+<tt class='indentedcode'>~~~</tt>
+<tt class='indentedcode'>{&nbsp;#10&nbsp;#20&nbsp;#13&nbsp;#4&nbsp;#22&nbsp;}&nbsp;#0&nbsp;[&nbsp;+&nbsp;]&nbsp;a:reduce</tt>
+<tt class='indentedcode'>~~~</tt>
+<br/><br/>
+You can also denote code by starting the line with four spaces.
+<br/><br/>
+<tt class='indentedcode'>&nbsp;&nbsp;&nbsp;&nbsp;This&nbsp;line&nbsp;will&nbsp;be&nbsp;treated&nbsp;as&nbsp;code.</tt>
+<br/><br/>
+<span class="h3">Test Blocks</span>
+<br/><br/>
+Unit testing blocks start and end with <span class="tt"></span><span class="tt"> on a line by
+themselves.
+<br/><br/>
+<tt class='indentedcode'>```</tt>
+<tt class='indentedcode'>{&nbsp;#10&nbsp;#20&nbsp;#13&nbsp;#4&nbsp;#22&nbsp;}&nbsp;#0&nbsp;[&nbsp;+&nbsp;]&nbsp;a:reduce</tt>
+<tt class='indentedcode'>```</tt>
+<br/><br/>
+<span class="h3">Inline Code</span>
+<br/><br/>
+To mark a sequence as inline code, surround it with backticks.
+<br/><br/>
+<tt class='indentedcode'>For&nbsp;instance,&nbsp;look&nbsp;at&nbsp;the&nbsp;value&nbsp;in&nbsp;`Compiler`&nbsp;to&nbsp;see&nbsp;if</tt>
+<tt class='indentedcode'>the&nbsp;colon&nbsp;compiler&nbsp;is&nbsp;active.</tt>
+<br/><br/>
+<span class="h2">Escaping</span>
+<br/><br/>
+You can preceed a character with a backslash () to have it
+not be processed as a Markdown element.
+</p>
+</body></html>

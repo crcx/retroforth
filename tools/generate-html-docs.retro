@@ -1,0 +1,81 @@
+#!/usr/bin/env retro
+
+This tool is intended to be used to create an HTML version of the
+standard documentation.
+
+Our structure will look like:
+
+    Book Root Directory
+      |-- index.html
+      |-- chapters/...
+
+Begin by defining some helper functions for writing to a
+file.
+
+~~~
+'tools/book-chapters.retro include
+
+'FID var
+:file:s:put [ @FID file:write ] s:for-each ;
+:file:nl    ASCII:CR @FID file:write ;
+:unix:mkdir 'mkdir_-p_%s s:format unix:system ;
+~~~
+
+Create the directories needed.
+
+~~~
+'Create_directories s:put nl
+{ 'chapters
+  'chapters/building
+  'chapters/general
+  'chapters/internals
+  'chapters/tech-notes
+  'chapters/techniques
+  'chapters/toolchain
+  'chapters/toolchain/info
+  'chapters/toolchain/man
+  'html
+} [ dup tab s:put nl unix:mkdir ] a:for-each
+~~~
+
+# Create the Index file
+
+~~~
+'Generate_`index.html` s:put nl
+'html/index.html file:open-for-writing !FID
+
+{ '<html>
+  '<head>
+  '____<meta_name="dtb:uid"_content="works.forth.retro-manual"/>
+  '____<title>Retro_Forth:_Manual</title>
+  '</head>
+  '<body>
+  '<h1>Retro_Forth</h1>
+} [ file:s:put file:nl ] a:for-each
+
+:a:unpack [ ] a:for-each ;
+
+TOC [ a:unpack '____&bull;_<a_href="chapters/%s.html">%s</a><br> s:format file:s:put file:nl ] a:for-each
+
+{ '</body>
+  '</html>
+} [ file:s:put file:nl ] a:for-each
+
+@FID file:close
+~~~
+
+# Generate the Chapters
+
+~~~
+'Convert_chapters_to_XHTML s:put nl
+'retro_tools/epub/chapters-to-xhtml.retro unix:system
+~~~
+
+# Relocate Files
+
+~~~
+'Relocate_files s:put nl
+'rm_-rf_doc/html unix:system
+'mv_chapters_html unix:system
+'mv_html_doc unix:system
+~~~

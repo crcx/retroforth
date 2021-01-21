@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title>.</title>
+<style type="text/css">
+
+    * { color: #000; background: #fff; max-width: 700px; }
+    tt, pre { background: #dedede; color: #111; font-family: monospace;
+             white-space: pre; display: block; width: 100%; }
+    .indentedcode { margin-left: 2em; margin-right: 2em; }
+    .codeblock {
+      background: #dedede; color: #111; font-family: monospace;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      padding: 7px;
+      display: block;
+    }
+
+    .indentedlist { margin-left: 2em; color: #000; }
+
+    span { white-space: pre; }
+    .text  { color: #000; white-space: pre; background: #dedede; }
+    .colon { color: #000; background: #dedede; }
+    .note  { color: #000; background: #dedede; }
+    .str   { color: #000; text-decoration: underline; background: #dedede; }
+    .num   { color: #000; background: #dedede; font-weight: bold; font-style: italic; }
+    .fnum  { color: #000; font-weight: bold; background: #dedede; }
+    .ptr   { color: #000; font-weight: bold; background: #dedede; }
+    .fetch { color: #000; font-style: italic; background: #dedede; }
+    .store { color: #000; font-style: italic; background: #dedede; }
+    .char  { color: #000; background: #dedede; }
+    .inst  { color: #000; background: #dedede; }
+    .defer { color: #000; background: #dedede; }
+    .imm   { color: #000; font-weight: bold; background: #dedede; }
+    .prim  { color: #000; font-weight: bolder; background: #dedede; }
+
+    .tt    { white-space: pre; font-family: monospace; background: #dedede; }
+
+    .h1, .h2, .h3, .h4 { white-space: normal; }
+    .h1 { font-size: 125%; }
+    .h2 { font-size: 120%; }
+    .h3 { font-size: 115%; }
+    .h4 { font-size: 110%; }
+    .hr { display: block; height: 2px; background: #000000; }
+</style>
+</head><body>
+<p><span class="h1">Checking The Version</span>
+<br/><br/>
+RETRO releases add and change things. You can use the <span class="tt">Version</span>
+variable to determine the version in use and react accordingly.
+<br/><br/>
+<span class='codeblock'><span class="tt">```</span><br/><span class="tt"><span class='fetch'>@Version</span> <span class='num'>#201906</span> <span class='prim'>eq?</span> <span class='imm'>[</span> <span class='str'>'Needs_2019.6!</span> s:put nl bye <span class='imm'>]</span> <span class='prim'>if</span> </span><br/>
+<span class="tt">```</span></span><br/><br/>
+This can be also be used to conditionally load compatibility files:
+<br/><br/>
+<span class='codeblock'><span class="tt">```</span><br/><span class="tt"><span class='note'>(If_newer_than_2016.6,_load_aliases_for_renamed_words)</span> </span><br/>
+<span class="tt"><span class='fetch'>@Version</span> <span class='num'>#201906</span> <span class='prim'>gt?</span> <span class='imm'>[</span> <span class='str'>'Renamed_2019.6.forth</span> include <span class='imm'>]</span> <span class='prim'>if</span> </span><br/>
+<span class="tt">```</span></span><br/><br/>
+<span class="h2">Version Number Format</span>
+<br/><br/>
+The version is a six digit number encoding the year and month of
+the release. So:
+<br/><br/>
+<tt class='indentedcode'>201901&nbsp;&nbsp;is&nbsp;&nbsp;2019.1</tt>
+<tt class='indentedcode'>201906&nbsp;&nbsp;is&nbsp;&nbsp;2019.6</tt>
+<tt class='indentedcode'>201911&nbsp;&nbsp;is&nbsp;&nbsp;2019.11</tt>
+<br/><br/>
+A <span class="tt">#100 /mod</span> will suffice to split these if needed.
+</p>
+</body></html>

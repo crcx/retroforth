@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title>.</title>
+<style type="text/css">
+
+    * { color: #000; background: #fff; max-width: 700px; }
+    tt, pre { background: #dedede; color: #111; font-family: monospace;
+             white-space: pre; display: block; width: 100%; }
+    .indentedcode { margin-left: 2em; margin-right: 2em; }
+    .codeblock {
+      background: #dedede; color: #111; font-family: monospace;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      padding: 7px;
+      display: block;
+    }
+
+    .indentedlist { margin-left: 2em; color: #000; }
+
+    span { white-space: pre; }
+    .text  { color: #000; white-space: pre; background: #dedede; }
+    .colon { color: #000; background: #dedede; }
+    .note  { color: #000; background: #dedede; }
+    .str   { color: #000; text-decoration: underline; background: #dedede; }
+    .num   { color: #000; background: #dedede; font-weight: bold; font-style: italic; }
+    .fnum  { color: #000; font-weight: bold; background: #dedede; }
+    .ptr   { color: #000; font-weight: bold; background: #dedede; }
+    .fetch { color: #000; font-style: italic; background: #dedede; }
+    .store { color: #000; font-style: italic; background: #dedede; }
+    .char  { color: #000; background: #dedede; }
+    .inst  { color: #000; background: #dedede; }
+    .defer { color: #000; background: #dedede; }
+    .imm   { color: #000; font-weight: bold; background: #dedede; }
+    .prim  { color: #000; font-weight: bolder; background: #dedede; }
+
+    .tt    { white-space: pre; font-family: monospace; background: #dedede; }
+
+    .h1, .h2, .h3, .h4 { white-space: normal; }
+    .h1 { font-size: 125%; }
+    .h2 { font-size: 120%; }
+    .h3 { font-size: 115%; }
+    .h4 { font-size: 110%; }
+    .hr { display: block; height: 2px; background: #000000; }
+</style>
+</head><body>
+<p><span class="h2">The Path to Self Hosting</span>
+<br/><br/>
+RETRO is an image based Forth system running on a lightweight
+virtual machine. This is the story of how that image is made.
+<br/><br/>
+The first RETRO to use an image based approach was RETRO 10.
+The earliest images were built using a compiler written in
+Toka, an earlier experimental stack language I had written.
+It didn't take long to want to drop the dependency on Toka,
+so I rewrote the image compiler in RETRO and then began
+development at a faster pace.
+<br/><br/>
+RETRO 11 was built using the last RETRO 10 image and an
+evolved version of the metacompiler. This worked well, but
+I eventually found it to be problematic.
+<br/><br/>
+One of the issues I faced was the inability to make a new
+image from the prior stable release. Since I develop and
+test changes incrementally, I reached a point where the
+current metacompiler and image required each other. This
+wasn't a fatal flaw, but it was annoying.
+<br/><br/>
+Perhaps more critical was the fragility of the system. In
+R11 small mistakes could result in a corrupt image. The test
+suite helped identify some of these, but there were a few
+times I was forced to dig back through the version control
+history to recover a working image.
+<br/><br/>
+The fragile nature was amplified by some design decisions.
+In R11, after the initial kernel was built, it would be
+moved to memory address 0, then control would jump into the
+new kernel to finish building the higher level parts.
+<br/><br/>
+Handling this was a tricky task. In R11 almost everything
+could be revectored, so the metacompiler had to ensure that
+it didn't rely on anything in the old image during the move.
+This caused a large number of issues over R11's life.
+<br/><br/>
+So on to RETRO 12. I decided that this would be different.
+First, the kernel would be assembly, with an external tool
+to generate the core image. The kernel is in <span class="tt">Rx.md</span> and the
+assembler is <span class="tt">Muri</span>. To load the standard library, I wrote a
+second tool, <span class="tt">retro-extend</span>. This separation has allowed me
+many fewer headaches as I can make changes more easily and
+rebuild from scratch when necessary.
+<br/><br/>
+But I miss self-hosting. So last fall I decided to resolve
+this. And today I'm pleased to say that it is now done.
+<br/><br/>
+There are a few parts to this.
+<br/><br/>
+<strong></strong>Unu<strong></strong>. I use a Markdown variation with fenced code blocks.
+The tool I wrote in C to extract these is called <span class="tt">unu</span>. For
+a self hosting RETRO, I rewrote this as a combinator that
+reads in a file and runs another word against each line in the
+file. So I could display the code block contents by doing:
+<br/><br/>
+<tt class='indentedcode'>'filename&nbsp;[&nbsp;s:put&nbsp;nl&nbsp;]&nbsp;unu</tt>
+<br/><br/>
+This made it easier to implement the other tools.
+<br/><br/>
+<strong></strong>Muri<strong></strong>. This is my assembler. It's minimalistic, fast, and
+works really well for my purposes. RETRO includes a runtime
+version of this (using <span class="tt">as{</span>, <span class="tt">}as</span>, <span class="tt">i</span>, <span class="tt">d</span>, and <span class="tt">r</span>), so
+all I needed for this was to write a few words to parse the
+lines and run the corresponding runtime words. As with the C
+version, this is a two pass assembler.
+<br/><br/>
+Muri generates a new <span class="tt">ngaImage</span> with the kernel. To create a
+full image I needed a way to load in the standard library and
+I/O extensions.
+<br/><br/>
+This is handled by <strong></strong>retro-extend<strong></strong>. This is where it gets
+more complex. I implemented the Nga virtual machine in RETRO
+to allow this to run the new image in isolation from the
+host image. The new ngaImage is loaded, the interpreter is
+located, and each token is passed to the interpreter. Once
+done, the new image is written to disk.
+<br/><br/>
+So at this point I'm pleased to say that I can now develop
+RETRO using only an existing copy of RETRO (VM+image) and
+tools (unu, muri, retro-extend, and a line oriented text
+editor) written in RETRO.
+<br/><br/>
+This project has delivered some additional side benefits.
+During the testing I was able to use it to identify a few
+bugs in the I/O extensions, and the Nga-in-RETRO will replace
+the older attempt at this in the debugger, allowing a safer
+testing environment.
+<br/><br/>
+What issues remain?
+<br/><br/>
+The extend process is <strong>slow</strong>. On my main development server
+(Linode 1024, OpenBSD 6.4, 64-bit) it takes a bit over five
+minutes to complete loading the standard library, and a few
+additional depending on the I/O drivers selected.
+<br/><br/>
+Most of the performance issues come from running Nga-in-RETRO
+to isolate the new image from the host one. It'd be possible
+to do something a bit more clever (e.g., running a RETRO
+instance using the new image via a subprocess and piping in
+the source, or doing relocations of the data), but this is
+less error prone and will work on all systems that I plan to
+support (including, with a few minor adjustments, the native
+hardware versions [assuming the existance of mass storage]).
+<br/><br/>
+Sources:
+<br/><br/>
+<strong></strong>Unu<strong></strong>
+<br/><br/>
+&bull; http://forth.works/c8820f85e0c52d32c7f9f64c28f435c0<br/>
+&bull; gopher://forth.works/0/c8820f85e0c52d32c7f9f64c28f435c0<br/>
+<br/><br/>
+<strong></strong>Muri<strong></strong>
+<br/><br/>
+&bull; http://forth.works/09d6c4f3f8ab484a31107dca780058e3<br/>
+&bull; gopher://forth.works/0/09d6c4f3f8ab484a31107dca780058e3<br/>
+<br/><br/>
+<strong></strong>retro-extend<strong></strong>
+<br/><br/>
+&bull; http://forth.works/c812416f397af11db58e97388a3238f2<br/>
+&bull; gopher://forth.works/0/c812416f397af11db58e97388a3238f2<br/>
+</p>
+</body></html>

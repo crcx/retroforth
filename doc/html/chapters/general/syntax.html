@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title>.</title>
+<style type="text/css">
+
+    * { color: #000; background: #fff; max-width: 700px; }
+    tt, pre { background: #dedede; color: #111; font-family: monospace;
+             white-space: pre; display: block; width: 100%; }
+    .indentedcode { margin-left: 2em; margin-right: 2em; }
+    .codeblock {
+      background: #dedede; color: #111; font-family: monospace;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      padding: 7px;
+      display: block;
+    }
+
+    .indentedlist { margin-left: 2em; color: #000; }
+
+    span { white-space: pre; }
+    .text  { color: #000; white-space: pre; background: #dedede; }
+    .colon { color: #000; background: #dedede; }
+    .note  { color: #000; background: #dedede; }
+    .str   { color: #000; text-decoration: underline; background: #dedede; }
+    .num   { color: #000; background: #dedede; font-weight: bold; font-style: italic; }
+    .fnum  { color: #000; font-weight: bold; background: #dedede; }
+    .ptr   { color: #000; font-weight: bold; background: #dedede; }
+    .fetch { color: #000; font-style: italic; background: #dedede; }
+    .store { color: #000; font-style: italic; background: #dedede; }
+    .char  { color: #000; background: #dedede; }
+    .inst  { color: #000; background: #dedede; }
+    .defer { color: #000; background: #dedede; }
+    .imm   { color: #000; font-weight: bold; background: #dedede; }
+    .prim  { color: #000; font-weight: bolder; background: #dedede; }
+
+    .tt    { white-space: pre; font-family: monospace; background: #dedede; }
+
+    .h1, .h2, .h3, .h4 { white-space: normal; }
+    .h1 { font-size: 125%; }
+    .h2 { font-size: 120%; }
+    .h3 { font-size: 115%; }
+    .h4 { font-size: 110%; }
+    .hr { display: block; height: 2px; background: #000000; }
+</style>
+</head><body>
+<p><span class="h1">Syntax</span>
+<br/><br/>
+RETRO has more syntax than a traditional Forth due to ideas
+borrowed from ColorForth and some design decisions. This has
+some useful traits, and helps to make the language more
+consistent.
+<br/><br/>
+<span class="h2">Tokens</span>
+<br/><br/>
+Input is divided into a series of whitespace delimited tokens.
+Each of these is then processed individually. There are no
+parsing words in RETRO.
+<br/><br/>
+Tokens may have a single character <strong>prefix</strong>, which RETRO will
+use to decide how to process the token.
+<br/><br/>
+<span class="h2">Prefixes</span>
+<br/><br/>
+Prefixes are single characters added to the start of a token
+to guide the compiler. The use of these is a major way in
+which RETRO differs from traditional Forth.
+<br/><br/>
+When a token is passed to <span class="tt">interpret</span>, RETRO first takes the
+initial character and looks to see if there is a word that
+matches this. If so, it will pass the rest of the token to
+that word to handle.
+<br/><br/>
+In a traditional Forth, the interpret process is something
+like:
+<br/><br/>
+<tt class='indentedcode'>get&nbsp;token</tt>
+<tt class='indentedcode'>is&nbsp;token&nbsp;in&nbsp;the&nbsp;dictionary?</tt>
+<tt class='indentedcode'>&nbsp;&nbsp;yes:</tt>
+<tt class='indentedcode'>&nbsp;&nbsp;&nbsp;&nbsp;is&nbsp;it&nbsp;immediate?</tt>
+<tt class='indentedcode'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;yes:&nbsp;call&nbsp;the&nbsp;word.</tt>
+<tt class='indentedcode'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;no:&nbsp;&nbsp;are&nbsp;we&nbsp;interpreting?</tt>
+<tt class='indentedcode'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;yes:&nbsp;call&nbsp;the&nbsp;word</tt>
+<tt class='indentedcode'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;no:&nbsp;&nbsp;compile&nbsp;a&nbsp;call&nbsp;to&nbsp;the&nbsp;word</tt>
+<tt class='indentedcode'>&nbsp;&nbsp;no:</tt>
+<tt class='indentedcode'>&nbsp;&nbsp;&nbsp;&nbsp;is&nbsp;it&nbsp;a&nbsp;number?</tt>
+<tt class='indentedcode'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;yes:&nbsp;are&nbsp;we&nbsp;interpreting?</tt>
+<tt class='indentedcode'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;yes:&nbsp;push&nbsp;the&nbsp;number&nbsp;to&nbsp;the&nbsp;stack</tt>
+<tt class='indentedcode'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;no:&nbsp;&nbsp;compile&nbsp;the&nbsp;number&nbsp;as&nbsp;a&nbsp;literal</tt>
+<tt class='indentedcode'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;no:&nbsp;&nbsp;report&nbsp;an&nbsp;error&nbsp;("not&nbsp;found")</tt>
+<br/><br/>
+In RETRO, the interpret process is basically:
+<br/><br/>
+<tt class='indentedcode'>get&nbsp;token</tt>
+<tt class='indentedcode'>does&nbsp;the&nbsp;first&nbsp;character&nbsp;match&nbsp;a&nbsp;`prefix:`&nbsp;word?</tt>
+<tt class='indentedcode'>&nbsp;&nbsp;yes:&nbsp;pass&nbsp;the&nbsp;token&nbsp;to&nbsp;the&nbsp;prefix&nbsp;handler</tt>
+<tt class='indentedcode'>&nbsp;&nbsp;no:&nbsp;&nbsp;is&nbsp;token&nbsp;a&nbsp;word&nbsp;in&nbsp;the&nbsp;dictionary?</tt>
+<tt class='indentedcode'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;yes:&nbsp;push&nbsp;the&nbsp;XT&nbsp;to&nbsp;the&nbsp;stack&nbsp;and&nbsp;call&nbsp;the</tt>
+<tt class='indentedcode'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;handler</tt>
+<tt class='indentedcode'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;no:&nbsp;&nbsp;report&nbsp;an&nbsp;error&nbsp;("not&nbsp;found")</tt>
+<br/><br/>
+All of the actual logic for how to deal with tokens is moved
+to the individual prefix handlers, and the logic for handling
+words is moved to word class handlers.
+<br/><br/>
+This means that prefixes are used for a lot of things. Numbers?
+Handled by a <span class="tt">#</span> prefix. Strings? Use the <span class="tt">'</span> prefix. Comments?
+Use <span class="tt">(</span>. Making a new word? Use the <span class="tt">:</span> prefix.
+<br/><br/>
+The major prefixes are:
+<br/><br/>
+<tt class='indentedcode'>|&nbsp;Prefix&nbsp;|&nbsp;Used&nbsp;For&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;------&nbsp;|&nbsp;-----------------------------&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;@&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;Fetch&nbsp;from&nbsp;variable&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;!&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;Store&nbsp;into&nbsp;variable&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;&amp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;Pointer&nbsp;to&nbsp;named&nbsp;item&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;#&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;Numbers&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;$&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;ASCII&nbsp;characters&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;Strings&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;Comments&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;Define&nbsp;a&nbsp;word&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<br/><br/>
+The individual prefixes will be covered in more detail in the
+later chapters on working with different data types.
+<br/><br/>
+<span class="h2">Word Classes</span>
+<br/><br/>
+Word classes are words which take a pointer and do something
+with it. These are covered in detail in their own chapter,
+but essentially they decide <strong>how</strong> to execute or compile specific
+types of words.
+<br/><br/>
+</p>
+</body></html>

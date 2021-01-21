@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title>.</title>
+<style type="text/css">
+
+    * { color: #000; background: #fff; max-width: 700px; }
+    tt, pre { background: #dedede; color: #111; font-family: monospace;
+             white-space: pre; display: block; width: 100%; }
+    .indentedcode { margin-left: 2em; margin-right: 2em; }
+    .codeblock {
+      background: #dedede; color: #111; font-family: monospace;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      padding: 7px;
+      display: block;
+    }
+
+    .indentedlist { margin-left: 2em; color: #000; }
+
+    span { white-space: pre; }
+    .text  { color: #000; white-space: pre; background: #dedede; }
+    .colon { color: #000; background: #dedede; }
+    .note  { color: #000; background: #dedede; }
+    .str   { color: #000; text-decoration: underline; background: #dedede; }
+    .num   { color: #000; background: #dedede; font-weight: bold; font-style: italic; }
+    .fnum  { color: #000; font-weight: bold; background: #dedede; }
+    .ptr   { color: #000; font-weight: bold; background: #dedede; }
+    .fetch { color: #000; font-style: italic; background: #dedede; }
+    .store { color: #000; font-style: italic; background: #dedede; }
+    .char  { color: #000; background: #dedede; }
+    .inst  { color: #000; background: #dedede; }
+    .defer { color: #000; background: #dedede; }
+    .imm   { color: #000; font-weight: bold; background: #dedede; }
+    .prim  { color: #000; font-weight: bolder; background: #dedede; }
+
+    .tt    { white-space: pre; font-family: monospace; background: #dedede; }
+
+    .h1, .h2, .h3, .h4 { white-space: normal; }
+    .h1 { font-size: 125%; }
+    .h2 { font-size: 120%; }
+    .h3 { font-size: 115%; }
+    .h4 { font-size: 110%; }
+    .hr { display: block; height: 2px; background: #000000; }
+</style>
+</head><body>
+<p><span class="h3">On The Use Of Underscores In Word Names</span>
+<br/><br/>
+In brief: don't use underscores in word names.
+<br/><br/>
+There is a good reason for this, and it has to do with how RETRO
+processes strings. By default, underscores in strings are replaced
+by spaces. This is problematic when dealing with words like <span class="tt">var</span>,
+<span class="tt">const</span>, and <span class="tt">d:create</span> which take word names as strings.
+<br/><br/>
+Consider:
+<br/><br/>
+<tt class='indentedcode'>:hello_msg&nbsp;'hello_user&nbsp;;</tt>
+<tt class='indentedcode'>'test_name&nbsp;var</tt>
+<tt class='indentedcode'>#188&nbsp;!test_name</tt>
+<br/><br/>
+In the first case, the <span class="tt">:</span> prefix handles the token, so the
+underscore is not remapped to a space, creating a word name as
+<span class="tt">hello_msg</span>. But in the second, the <span class="tt">'</span> prefix remaps the
+underscore to a space, giving a variable name of <span class="tt">test name</span>.
+In the third line, the name lookup will fail as <span class="tt">test_name</span> is
+not defined, so the store will be done to an incorrect address.
+<br/><br/>
+Because of this, it's best to avoid underscores in names.
+<br/><br/>
+Having covered this, if you do need to use them for some reason,
+you can replace <span class="tt">d:add-header</span> with a version that remaps spaces
+back to underscores before creating the header. The following
+will allow for this.
+<br/><br/>
+<tt class='indentedcode'>~~~</tt>
+<tt class='indentedcode'>{{</tt>
+<tt class='indentedcode'>&nbsp;&nbsp;:fields&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@Dictionary&nbsp;,&nbsp;(link)&nbsp;,&nbsp;(xt)&nbsp;,&nbsp;(class)&nbsp;;</tt>
+<tt class='indentedcode'>&nbsp;&nbsp;:invalid-name?&nbsp;dup&nbsp;ASCII:SPACE&nbsp;s:contains-char?&nbsp;;</tt>
+<tt class='indentedcode'>&nbsp;&nbsp;:rewrite&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;ASCII:SPACE&nbsp;[&nbsp;$_&nbsp;]&nbsp;case&nbsp;]&nbsp;s:map&nbsp;;</tt>
+<tt class='indentedcode'>&nbsp;&nbsp;:entry&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;here&nbsp;&amp;call&nbsp;dip&nbsp;!Dictionary&nbsp;;</tt>
+<tt class='indentedcode'>&nbsp;&nbsp;[&nbsp;[&nbsp;fields&nbsp;invalid-name?&nbsp;&amp;rewrite&nbsp;if&nbsp;s,&nbsp;(name)&nbsp;]&nbsp;entry&nbsp;]</tt>
+<tt class='indentedcode'>}}</tt>
+<br/><br/>
+<tt class='indentedcode'>#1793&nbsp;&amp;d:add-header&nbsp;store</tt>
+<tt class='indentedcode'>&amp;d:add-header&nbsp;n:inc&nbsp;store</tt>
+<tt class='indentedcode'>~~~</tt>
+<br/><br/>
+Additional Note:
+<br/><br/>
+Some version of RETRO have included the above patch. The last
+release that will include this by default is 2020.4 as it is
+not needed by the majority of users. If you want to keep it in
+your system, you will need to load it yourself or add it to
+your <span class="tt">package/list.forth</span> (for Unix users) before building.
+</p>
+</body></html>

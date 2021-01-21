@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title>.</title>
+<style type="text/css">
+
+    * { color: #000; background: #fff; max-width: 700px; }
+    tt, pre { background: #dedede; color: #111; font-family: monospace;
+             white-space: pre; display: block; width: 100%; }
+    .indentedcode { margin-left: 2em; margin-right: 2em; }
+    .codeblock {
+      background: #dedede; color: #111; font-family: monospace;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      padding: 7px;
+      display: block;
+    }
+
+    .indentedlist { margin-left: 2em; color: #000; }
+
+    span { white-space: pre; }
+    .text  { color: #000; white-space: pre; background: #dedede; }
+    .colon { color: #000; background: #dedede; }
+    .note  { color: #000; background: #dedede; }
+    .str   { color: #000; text-decoration: underline; background: #dedede; }
+    .num   { color: #000; background: #dedede; font-weight: bold; font-style: italic; }
+    .fnum  { color: #000; font-weight: bold; background: #dedede; }
+    .ptr   { color: #000; font-weight: bold; background: #dedede; }
+    .fetch { color: #000; font-style: italic; background: #dedede; }
+    .store { color: #000; font-style: italic; background: #dedede; }
+    .char  { color: #000; background: #dedede; }
+    .inst  { color: #000; background: #dedede; }
+    .defer { color: #000; background: #dedede; }
+    .imm   { color: #000; font-weight: bold; background: #dedede; }
+    .prim  { color: #000; font-weight: bolder; background: #dedede; }
+
+    .tt    { white-space: pre; font-family: monospace; background: #dedede; }
+
+    .h1, .h2, .h3, .h4 { white-space: normal; }
+    .h1 { font-size: 125%; }
+    .h2 { font-size: 120%; }
+    .h3 { font-size: 115%; }
+    .h4 { font-size: 110%; }
+    .hr { display: block; height: 2px; background: #000000; }
+</style>
+</head><body>
+<p><span class="h1">Internals: The Retro Image</span>
+<br/><br/>
+The actual RETRO language is stored as a memory image for Nga.
+<br/><br/>
+<span class="h2">Format</span>
+<br/><br/>
+The image file is a flat, linear sequence of signed 32-bit
+values. Each value is stored in little endian format. The
+size is not fixed. An interface should check when loading to
+ensure that the physical image is not larger than the emulated
+memory.
+<br/><br/>
+<span class="h2">Header</span>
+<br/><br/>
+The image will start with two cells. The first is a liju....
+instruction, the second is the target address for the jump.
+This serves to skip over the rest of the data and reach the
+actual entry point.
+<br/><br/>
+This is followed by a pointer to the most recent dictionary
+header, a pointer to the next free address in memory, and
+then the RETRO version number.
+<br/><br/>
+<tt class='indentedcode'>|&nbsp;Offset&nbsp;|&nbsp;Contains&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;------&nbsp;|&nbsp;---------------------------&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;lit&nbsp;call&nbsp;nop&nbsp;nop&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;Pointer&nbsp;to&nbsp;main&nbsp;entry&nbsp;point&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;Dictionary&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;Heap&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;RETRO&nbsp;version&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<br/><br/>
+The actual code starts after this header.
+<br/><br/>
+The version number is the year and month. As an example,
+the 12.2019.6 release will have a version number of
+<span class="tt">201906</span>.
+<br/><br/>
+<span class="h2">Layout</span>
+<br/><br/>
+Assuming an Nga built with 524287 cells of memory:
+<br/><br/>
+<tt class='indentedcode'>|&nbsp;RANGE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;CONTAINS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;---------------&nbsp;|&nbsp;----------------------------&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;0&nbsp;-&nbsp;1024&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;RETRO&nbsp;Core&nbsp;kernel&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;1025&nbsp;-&nbsp;1535&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;token&nbsp;input&nbsp;buffer&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;1536&nbsp;+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;start&nbsp;of&nbsp;heap&nbsp;space&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;...............&nbsp;|&nbsp;free&nbsp;memory&nbsp;for&nbsp;your&nbsp;use&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;506879&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;buffer&nbsp;for&nbsp;string&nbsp;evaluate&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;507904&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;temporary&nbsp;strings&nbsp;(32&nbsp;*&nbsp;512)&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;524287&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;end&nbsp;of&nbsp;memory&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<br/><br/>
+The buffers at the end of memory will resize when specific
+variables related to them are altered.
+</p>
+</body></html>

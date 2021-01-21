@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title>.</title>
+<style type="text/css">
+
+    * { color: #000; background: #fff; max-width: 700px; }
+    tt, pre { background: #dedede; color: #111; font-family: monospace;
+             white-space: pre; display: block; width: 100%; }
+    .indentedcode { margin-left: 2em; margin-right: 2em; }
+    .codeblock {
+      background: #dedede; color: #111; font-family: monospace;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      padding: 7px;
+      display: block;
+    }
+
+    .indentedlist { margin-left: 2em; color: #000; }
+
+    span { white-space: pre; }
+    .text  { color: #000; white-space: pre; background: #dedede; }
+    .colon { color: #000; background: #dedede; }
+    .note  { color: #000; background: #dedede; }
+    .str   { color: #000; text-decoration: underline; background: #dedede; }
+    .num   { color: #000; background: #dedede; font-weight: bold; font-style: italic; }
+    .fnum  { color: #000; font-weight: bold; background: #dedede; }
+    .ptr   { color: #000; font-weight: bold; background: #dedede; }
+    .fetch { color: #000; font-style: italic; background: #dedede; }
+    .store { color: #000; font-style: italic; background: #dedede; }
+    .char  { color: #000; background: #dedede; }
+    .inst  { color: #000; background: #dedede; }
+    .defer { color: #000; background: #dedede; }
+    .imm   { color: #000; font-weight: bold; background: #dedede; }
+    .prim  { color: #000; font-weight: bolder; background: #dedede; }
+
+    .tt    { white-space: pre; font-family: monospace; background: #dedede; }
+
+    .h1, .h2, .h3, .h4 { white-space: normal; }
+    .h1 { font-size: 125%; }
+    .h2 { font-size: 120%; }
+    .h3 { font-size: 115%; }
+    .h4 { font-size: 110%; }
+    .hr { display: block; height: 2px; background: #000000; }
+</style>
+</head><body>
+<p><span class="h1">Working With a Buffer</span>
+<br/><br/>
+RETRO provides words for operating on a linear memory area.
+This can be useful in building strings or custom data
+structures.
+<br/><br/>
+<span class="h2">Namespace</span>
+<br/><br/>
+Words operating on the buffer are kept in the <span class="tt">buffer:</span>
+namespace.
+<br/><br/>
+<span class="h2">Implementation</span>
+<br/><br/>
+A buffer is a linear sequence of memory. The buffer words
+provide a means of incrementally storing and retrieving
+values from it.
+<br/><br/>
+The buffer words keep track of the start and end of the
+buffer. They also ensure that an <span class="tt">ASCII:NULL</span> is written
+after the last value, which make using them for string
+data easy.
+<br/><br/>
+<span class="h2">Limitations</span>
+<br/><br/>
+Only one buffer can be active at a time. RETRO provides a
+<span class="tt">buffer:preserve</span> combinator to allow using a second one
+before returning to the prior one.
+<br/><br/>
+<span class="h2">Set The Active Buffer</span>
+<br/><br/>
+To set a buffer as the active one use <span class="tt">buffer:set</span>. This takes
+an address.
+<br/><br/>
+The buffer will be assumed to be empty. The initial value will
+be set to ASCII:NULL.
+<br/><br/>
+<span class="h2">Add Value</span>
+<br/><br/>
+Use <span class="tt">buffer:add</span> to append a value to the buffer. This takes
+a single value and will also add an ASCII:NULL after the end
+of the buffer.
+<br/><br/>
+<span class="h2">Fetch Last Value</span>
+<br/><br/>
+To return the last value in the buffer you can use <span class="tt">buffer:get</span>.
+This removes the value and sets an ASCII:NULL in the memory
+location the returned value occupied.
+<br/><br/>
+<span class="h2">Get Data About The Buffer</span>
+<br/><br/>
+RETRO provides <span class="tt">buffer:start</span> to get the initial address in
+the buffer, <span class="tt">buffer:end</span> to get the last address (ignoring the
+ASCII:NULL), and <span class="tt">buffer:size</span> to return the number of values
+in the buffer.
+<br/><br/>
+<span class="h2">Reset</span>
+<br/><br/>
+You can reset a buffer to the empty state using <span class="tt">buffer:empty</span>.
+<br/><br/>
+<span class="h2">Example</span>
+<br/><br/>
+To begin, create a memory region to use as a buffer.
+<br/><br/>
+<span class='codeblock'><span class="tt">```</span><br/><span class="tt"><span class='str'>'Test</span> d:create <span class='num'>#1025</span> allot </span><br/>
+<span class="tt">```</span></span><br/><br/>
+Then you can set this as the current buffer:
+<br/><br/>
+<span class='codeblock'><span class="tt">```</span><br/><span class="tt"><span class='ptr'>&amp;Test</span> buffer:set </span><br/>
+<span class="tt">```</span></span><br/><br/>
+When a buffer is set, the vocabulary sets an internal
+index to the first address in it. This will be
+incremented when you add data and decremented when you
+remove data.
+<br/><br/>
+Let's add some stuff using <span class="tt">buffer:add</span>:
+<br/><br/>
+<span class='codeblock'><span class="tt">```</span><br/><span class="tt"><span class='num'>#100</span> buffer:add </span><br/>
+<span class="tt"><span class='num'>#200</span> buffer:add </span><br/>
+<span class="tt"><span class='num'>#300</span> buffer:add </span><br/>
+<span class="tt">```</span></span><br/><br/>
+And then retrieve the values:
+<br/><br/>
+<span class='codeblock'><span class="tt">```</span><br/><span class="tt">buffer:get n:put nl </span><br/>
+<span class="tt">buffer:get n:put nl </span><br/>
+<span class="tt">buffer:get n:put nl </span><br/>
+<span class="tt">```</span></span><br/><br/>
+You can remove all values using <span class="tt">buffer:empty</span>:
+<br/><br/>
+<span class='codeblock'><span class="tt">```</span><br/><span class="tt"><span class='num'>#100</span> buffer:add </span><br/>
+<span class="tt"><span class='num'>#200</span> buffer:add </span><br/>
+<span class="tt"><span class='num'>#300</span> buffer:add </span><br/>
+<span class="tt">buffer:empty </span><br/>
+<span class="tt">```</span></span><br/><br/>
+And ask the buffer how many items it contains:
+<br/><br/>
+<span class='codeblock'><span class="tt">```</span><br/><span class="tt">buffer:size n:put nl </span><br/>
+<span class="tt"><span class='num'>#100</span> buffer:add </span><br/>
+<span class="tt"><span class='num'>#200</span> buffer:add </span><br/>
+<span class="tt"><span class='num'>#300</span> buffer:add </span><br/>
+<span class="tt">buffer:size n:put nl </span><br/>
+<span class="tt">buffer:empty </span><br/>
+<span class="tt">```</span></span><br/><br/>
+The other functions are <span class="tt">buffer:start</span>, which returns
+the address of the buffer, <span class="tt">buffer:end</span>, which returns
+the address of the last value, and <span class="tt">buffer:preserve</span>.
+The first is easy to demo:
+<br/><br/>
+<span class='codeblock'><span class="tt">```</span><br/><span class="tt">buffer:start Test <span class='prim'>eq?</span> n:put nl </span><br/>
+<span class="tt">```</span></span><br/><br/>
+The last one is useful. Only one buffer is ever active
+at a given time. The <span class="tt">buffer:preserve</span> combinator lets
+you execute a word, saving and restoring the current
+buffer indexes. So the word could assign and use a new
+buffer and this will reset the previous one after
+control returns.
+<br/><br/>
+There are a few notes that need to be considered. The
+preserve combinator saves the start and current index
+but <strong>not</strong> the contents. If the word you call uses the
+same buffer, the contents will remain altered.
+<br/><br/>
+Finally, the buffer words have one interesting trait:
+they store an ASCII NULL after adding each item to the
+buffer. This lets one use them to build strings easily.
+<br/><br/>
+<span class='codeblock'><span class="tt">```</span><br/><span class="tt">Test buffer:set </span><br/>
+<span class="tt"><span class='char'>$h</span> buffer:add </span><br/>
+<span class="tt"><span class='char'>$e</span> buffer:add </span><br/>
+<span class="tt"><span class='char'>$l</span> buffer:add </span><br/>
+<span class="tt"><span class='char'>$l</span> buffer:add </span><br/>
+<span class="tt"><span class='char'>$o</span> buffer:add </span><br/>
+<span class="tt"><span class='char'>$,</span> buffer:add </span><br/>
+<span class="tt"><span class='num'>#32</span> buffer:add </span><br/>
+<span class="tt"><span class='char'>$w</span> buffer:add </span><br/>
+<span class="tt"><span class='char'>$o</span> buffer:add </span><br/>
+<span class="tt"><span class='char'>$r</span> buffer:add </span><br/>
+<span class="tt"><span class='char'>$l</span> buffer:add </span><br/>
+<span class="tt"><span class='char'>$d</span> buffer:add </span><br/>
+<span class="tt">buffer:start s:put nl </span><br/>
+<span class="tt">```</span></span></p>
+</body></html>

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title>.</title>
+<style type="text/css">
+
+    * { color: #000; background: #fff; max-width: 700px; }
+    tt, pre { background: #dedede; color: #111; font-family: monospace;
+             white-space: pre; display: block; width: 100%; }
+    .indentedcode { margin-left: 2em; margin-right: 2em; }
+    .codeblock {
+      background: #dedede; color: #111; font-family: monospace;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      padding: 7px;
+      display: block;
+    }
+
+    .indentedlist { margin-left: 2em; color: #000; }
+
+    span { white-space: pre; }
+    .text  { color: #000; white-space: pre; background: #dedede; }
+    .colon { color: #000; background: #dedede; }
+    .note  { color: #000; background: #dedede; }
+    .str   { color: #000; text-decoration: underline; background: #dedede; }
+    .num   { color: #000; background: #dedede; font-weight: bold; font-style: italic; }
+    .fnum  { color: #000; font-weight: bold; background: #dedede; }
+    .ptr   { color: #000; font-weight: bold; background: #dedede; }
+    .fetch { color: #000; font-style: italic; background: #dedede; }
+    .store { color: #000; font-style: italic; background: #dedede; }
+    .char  { color: #000; background: #dedede; }
+    .inst  { color: #000; background: #dedede; }
+    .defer { color: #000; background: #dedede; }
+    .imm   { color: #000; font-weight: bold; background: #dedede; }
+    .prim  { color: #000; font-weight: bolder; background: #dedede; }
+
+    .tt    { white-space: pre; font-family: monospace; background: #dedede; }
+
+    .h1, .h2, .h3, .h4 { white-space: normal; }
+    .h1 { font-size: 125%; }
+    .h2 { font-size: 120%; }
+    .h3 { font-size: 115%; }
+    .h4 { font-size: 110%; }
+    .hr { display: block; height: 2px; background: #000000; }
+</style>
+</head><body>
+<p><span class="h1">Additional Tools</span>
+<br/><br/>
+In addition to the core <span class="tt">retro</span> binary, the <span class="tt">bin</span> directory
+will contain a few other tools.
+<br/><br/>
+<span class="h2">retro</span>
+<br/><br/>
+This is the main RETRO binary.
+<br/><br/>
+<span class="h2">retro-describe</span>
+<br/><br/>
+This is a program that looks up entries in the Glossary.
+<br/><br/>
+At the command line, you can use it like:
+<br/><br/>
+<tt class='indentedcode'>retro-describe&nbsp;s:for-each</tt>
+<br/><br/>
+You can pass multiple word names to it:
+<br/><br/>
+<tt class='indentedcode'>retro-describe&nbsp;s:for-each&nbsp;nl&nbsp;d:words</tt>
+<br/><br/>
+<span class="h2">retro-embedimage</span>
+<br/><br/>
+This is a program which generates a C file with the ngaImage
+contents. It's used when building <span class="tt">retro</span>.
+<br/><br/>
+<tt class='indentedcode'>retro-embedimage&nbsp;ngaImage</tt>
+<br/><br/>
+The output is written to stdout; redirect it as needed.
+<br/><br/>
+<span class="h2">retro-extend</span>
+<br/><br/>
+This is a program which compiles code into the ngaImage.
+It's used when building <span class="tt">retro</span> and when you want to make a
+standalone image with custom additions.
+<br/><br/>
+Example command line:
+<br/><br/>
+<tt class='indentedcode'>retro-extend&nbsp;ngaImage&nbsp;example/rot13.forth</tt>
+<br/><br/>
+Pass the image name as the first argument, and then file names
+as subsequent ones. Do <strong>not</strong> use this for things relying on I/O
+apart from the basic console output as it doesn't emulate other
+devices. If you need to load in things that rely on using the
+optional I/O devices, see the <strong></strong>Advanced Builds<strong></strong> chapter.
+<br/><br/>
+<span class="h2">retro-muri</span>
+<br/><br/>
+This is the assembler for Nga. It's used to build the initial
+RETRO kernel and can be used by other tools as well.
+<br/><br/>
+<tt class='indentedcode'>retro-muri&nbsp;retro.muri</tt>
+<br/><br/>
+<span class="h2">retro-tags and retro-locate</span>
+<br/><br/>
+These tools are intended to be used together. The first tool,
+<span class="tt">retro-tags</span>, will recursively scan the current directory for
+RETRO source files and extract the locations of words defined
+in them. These will be written to disk in a <span class="tt">tags</span> file, using
+the standard ctags format.
+<br/><br/>
+<span class="tt">retro-locate</span> takes a word name, and returns the location(s)
+where it is defined. This requires a <span class="tt">tags</span> file to be present.
+<br/><br/>
+Create the <span class="tt">tags</span> file:
+<br/><br/>
+<tt class='indentedcode'>retro-tags</tt>
+<br/><br/>
+Locate a word:
+<br/><br/>
+<tt class='indentedcode'>retro-locate&nbsp;n:square</tt>
+<br/><br/>
+<span class="h2">retro-unu</span>
+<br/><br/>
+This is the literate source extraction tool for RETRO. It
+is used in building <span class="tt">retro</span>.
+<br/><br/>
+Example usage:
+<br/><br/>
+<tt class='indentedcode'>retro-unu&nbsp;literate/RetroForth.md</tt>
+<br/><br/>
+Output is written to stdout; redirect as neeeded.
+</p>
+</body></html>

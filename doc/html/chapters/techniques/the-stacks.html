@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title>.</title>
+<style type="text/css">
+
+    * { color: #000; background: #fff; max-width: 700px; }
+    tt, pre { background: #dedede; color: #111; font-family: monospace;
+             white-space: pre; display: block; width: 100%; }
+    .indentedcode { margin-left: 2em; margin-right: 2em; }
+    .codeblock {
+      background: #dedede; color: #111; font-family: monospace;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      padding: 7px;
+      display: block;
+    }
+
+    .indentedlist { margin-left: 2em; color: #000; }
+
+    span { white-space: pre; }
+    .text  { color: #000; white-space: pre; background: #dedede; }
+    .colon { color: #000; background: #dedede; }
+    .note  { color: #000; background: #dedede; }
+    .str   { color: #000; text-decoration: underline; background: #dedede; }
+    .num   { color: #000; background: #dedede; font-weight: bold; font-style: italic; }
+    .fnum  { color: #000; font-weight: bold; background: #dedede; }
+    .ptr   { color: #000; font-weight: bold; background: #dedede; }
+    .fetch { color: #000; font-style: italic; background: #dedede; }
+    .store { color: #000; font-style: italic; background: #dedede; }
+    .char  { color: #000; background: #dedede; }
+    .inst  { color: #000; background: #dedede; }
+    .defer { color: #000; background: #dedede; }
+    .imm   { color: #000; font-weight: bold; background: #dedede; }
+    .prim  { color: #000; font-weight: bolder; background: #dedede; }
+
+    .tt    { white-space: pre; font-family: monospace; background: #dedede; }
+
+    .h1, .h2, .h3, .h4 { white-space: normal; }
+    .h1 { font-size: 125%; }
+    .h2 { font-size: 120%; }
+    .h3 { font-size: 115%; }
+    .h4 { font-size: 110%; }
+    .hr { display: block; height: 2px; background: #000000; }
+</style>
+</head><body>
+<p><span class="h1">The Stacks</span>
+<br/><br/>
+The stacks are a defining feature of Forth. They are are used
+to pass data between words and to track return addresses for
+function calls.
+<br/><br/>
+RETRO always has two stacks, and optionally (if built with
+floating point support) a third.
+<br/><br/>
+<span class="h2">Data Stack</span>
+<br/><br/>
+This is the primary stack. Values are placed here, passed to
+words which consume them and then return results. When I
+refer to "the stack", this is the one I mean. Learning to use
+the stack is a crucial part to making effective use of RETRO.
+<br/><br/>
+<span class="h3">Placing Values On The Stack</span>
+<br/><br/>
+Values can be placed on the stack directly.
+<br/><br/>
+<tt class='indentedcode'>|&nbsp;Example&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;Action&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;--------------&nbsp;|&nbsp;----------------------------------------&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;`#300123`&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;Push&nbsp;the&nbsp;number&nbsp;`300123`&nbsp;to&nbsp;the&nbsp;stack&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;`$h`&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;Push&nbsp;the&nbsp;ASCII&nbsp;code&nbsp;for&nbsp;`h`&nbsp;to&nbsp;the&nbsp;stack&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;`'hello_world`&nbsp;|&nbsp;Push&nbsp;a&nbsp;pointer&nbsp;to&nbsp;a&nbsp;string&nbsp;to&nbsp;the&nbsp;stack&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;`&amp;fetch`&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;Push&nbsp;the&nbsp;address&nbsp;of&nbsp;`fetch`&nbsp;to&nbsp;the&nbsp;stack&nbsp;|</tt>
+<br/><br/>
+<span class="h3">Reordering The Stack</span>
+<br/><br/>
+RETRO provides a number of <strong>shufflers</strong> for reordering items
+on the stack.
+<br/><br/>
+Some of the most common ones are:
+<br/><br/>
+<tt class='indentedcode'>|&nbsp;Word&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;Before&nbsp;&nbsp;&nbsp;|&nbsp;After&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;-------&nbsp;|---------&nbsp;|&nbsp;--------&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;dup&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;#1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;#1&nbsp;#1&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;drop&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;#1&nbsp;#2&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;#1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;swap&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;#1&nbsp;#2&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;#2&nbsp;#1&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;over&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;#1&nbsp;#2&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;#1&nbsp;#2&nbsp;#1&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;tuck&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;#1&nbsp;#2&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;#2&nbsp;#1&nbsp;#2&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;nip&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;#1&nbsp;#2&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;#2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;rot&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;#1&nbsp;#2&nbsp;#3&nbsp;|&nbsp;#3&nbsp;#1&nbsp;#2&nbsp;|</tt>
+<br/><br/>
+You can use <span class="tt">push</span> and <span class="tt">pop</span> to move values to and from the
+address stack. Make sure you <span class="tt">pop</span> them back before the word
+ends or RETRO will crash. These two words can not be used
+at the interpreter.
+<br/><br/>
+There is also a special one, <span class="tt">reorder</span>, which allows for big
+stack restructuring. This is slow but can be very useful.
+<br/><br/>
+As an example, let's say we have four values:
+<br/><br/>
+<tt class='indentedcode'>#1&nbsp;#2&nbsp;#3&nbsp;#4</tt>
+<br/><br/>
+And we want them to become:
+<br/><br/>
+<tt class='indentedcode'>#4&nbsp;#3&nbsp;#2&nbsp;#1</tt>
+<br/><br/>
+Doing this with the basic shufflers is difficult. You could end
+up with something similar to:
+<br/><br/>
+<tt class='indentedcode'>swap&nbsp;rot&nbsp;push&nbsp;rot&nbsp;pop&nbsp;swap&nbsp;</tt>
+<br/><br/>
+But with <span class="tt">reorder</span>, you can just express the before and after
+states:
+<br/><br/>
+<tt class='indentedcode'>'abcd&nbsp;'dcba&nbsp;reorder</tt>
+<br/><br/>
+<span class="h3">Resetting The Stack</span>
+<br/><br/>
+If you need to quickly empty the stack, use <span class="tt">reset</span>.
+<br/><br/>
+<span class="h3">Get The Stack Depth</span>
+<br/><br/>
+To find out how many items are on the stack, use <span class="tt">depth</span>.
+<br/><br/>
+<span class="h3">Displaying The Stack</span>
+<br/><br/>
+You can display the stack by running <span class="tt">dump-stack</span>.
+<br/><br/>
+<span class="h3">Data Flow Combinators</span>
+<br/><br/>
+RETRO provides <strong>combinators</strong> for working with data order on
+the stack. These are covered in a later chapter and are worth
+learning to use as they can help provide a cleaner, more
+structured means of working.
+<br/><br/>
+<span class="h3">Tips</span>
+<br/><br/>
+The stack is <strong>not</strong> an array in addressable memory. Don't try
+to treat it like one.
+<br/><br/>
+<span class="h2">Address Stack</span>
+<br/><br/>
+This stack primarily holds return addresses for function calls.
+You normally won't need to directly interact with this stack,
+but you can use <span class="tt">push</span> and <span class="tt">pop</span> to move values between the
+data stack and this.
+<br/><br/>
+<span class="h2">Floating Point Stack</span>
+<br/><br/>
+If you are using a build with floating point support a third
+stack will be present. Floating point values are kept and
+passed between words using this.
+<br/><br/>
+See the Floating Point chapter for more details on this.
+<br/><br/>
+<span class="h2">Tips</span>
+<br/><br/>
+I recommend keeping the data stack shallow. Don't try to juggle
+too much; it's better to factor definitions into shorter ones
+that deal with simpler parts of the stack values than to have
+a big definition with a lot of complex shuffling.
+<br/><br/>
+<span class="h2">Notes</span>
+<br/><br/>
+The standard system is configured with a very deep data stack
+(around 2,000 items) and an address stack that is 3x deeper.
+In actual use, your programs are unlikely to ever need this,
+but if you do, keep the limits in mind.
+</p>
+</body></html>

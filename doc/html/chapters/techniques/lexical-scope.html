@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title>.</title>
+<style type="text/css">
+
+    * { color: #000; background: #fff; max-width: 700px; }
+    tt, pre { background: #dedede; color: #111; font-family: monospace;
+             white-space: pre; display: block; width: 100%; }
+    .indentedcode { margin-left: 2em; margin-right: 2em; }
+    .codeblock {
+      background: #dedede; color: #111; font-family: monospace;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      padding: 7px;
+      display: block;
+    }
+
+    .indentedlist { margin-left: 2em; color: #000; }
+
+    span { white-space: pre; }
+    .text  { color: #000; white-space: pre; background: #dedede; }
+    .colon { color: #000; background: #dedede; }
+    .note  { color: #000; background: #dedede; }
+    .str   { color: #000; text-decoration: underline; background: #dedede; }
+    .num   { color: #000; background: #dedede; font-weight: bold; font-style: italic; }
+    .fnum  { color: #000; font-weight: bold; background: #dedede; }
+    .ptr   { color: #000; font-weight: bold; background: #dedede; }
+    .fetch { color: #000; font-style: italic; background: #dedede; }
+    .store { color: #000; font-style: italic; background: #dedede; }
+    .char  { color: #000; background: #dedede; }
+    .inst  { color: #000; background: #dedede; }
+    .defer { color: #000; background: #dedede; }
+    .imm   { color: #000; font-weight: bold; background: #dedede; }
+    .prim  { color: #000; font-weight: bolder; background: #dedede; }
+
+    .tt    { white-space: pre; font-family: monospace; background: #dedede; }
+
+    .h1, .h2, .h3, .h4 { white-space: normal; }
+    .h1 { font-size: 125%; }
+    .h2 { font-size: 120%; }
+    .h3 { font-size: 115%; }
+    .h4 { font-size: 110%; }
+    .hr { display: block; height: 2px; background: #000000; }
+</style>
+</head><body>
+<p><span class="h1">Lexical Scope</span>
+<br/><br/>
+RETRO has a single dictionary, but does provide a means of using
+lexical scope to keep this dictionary clean.
+<br/><br/>
+<span class="h2">Example</span>
+<br/><br/>
+<span class='codeblock'><span class="tt">```</span><br/><span class="tt">{{ </span><br/>
+<span class="tt">&nbsp;&nbsp;<span class='str'>'A</span> var </span><br/>
+<span class="tt">&nbsp;&nbsp;<span class='colon'>:++A</span> &nbsp;<span class='ptr'>&amp;A</span> v:inc <span class='imm'>;</span> </span><br/>
+<span class="tt">---reveal--- </span><br/>
+<span class="tt">&nbsp;&nbsp;<span class='colon'>:B</span> ++A ++A <span class='fetch'>@A</span> n:put nl <span class='imm'>;</span> </span><br/>
+<span class="tt">}} </span><br/>
+<span class="tt">```</span></span><br/><br/>
+In this example, the lexical namespace is created with <span class="tt">{{</span>. A
+variable (<span class="tt">A</span>) and word (<span class="tt">++A</span>) are defined. Then a marker is
+set with <span class="tt">---reveal---</span>. Another word (<span class="tt">B</span>) is defined, and the
+lexical area is closed with <span class="tt">}}</span>.
+<br/><br/>
+The headers between <span class="tt">{{</span> and <span class="tt">---reveal---</span> are then hidden from
+the dictionary, leaving only the headers between <span class="tt">---reveal---</span>
+and <span class="tt">}}</span> exposed.
+<br/><br/>
+<span class="h2">Notes</span>
+<br/><br/>
+This only affects word visibility within the scoped area. As an
+example:
+<br/><br/>
+<span class='codeblock'><span class="tt">```</span><br/><span class="tt"><span class='colon'>:a</span> <span class='num'>#1</span> <span class='imm'>;</span> </span><br/>
+<span class="tt">&nbsp;</span><br/>
+<span class="tt">{{ </span><br/>
+<span class="tt">&nbsp;&nbsp;<span class='colon'>:a</span> <span class='num'>#2</span> <span class='imm'>;</span> </span><br/>
+<span class="tt">---reveal--- </span><br/>
+<span class="tt">&nbsp;&nbsp;<span class='colon'>:b</span> <span class='str'>'a</span> s:evaluate n:put <span class='imm'>;</span> </span><br/>
+<span class="tt">}} </span><br/>
+<span class="tt">```</span></span><br/><br/>
+In this, after <span class="tt">}}</span> closes the area, the <span class="tt">:a #2 ;</span> is hidden and
+the <span class="tt">s:evaluate</span> will find the <span class="tt">:a #1 ;</span> when <span class="tt">b</span> is run.
+</p>
+</body></html>

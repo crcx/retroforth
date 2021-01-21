@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title>.</title>
+<style type="text/css">
+
+    * { color: #000; background: #fff; max-width: 700px; }
+    tt, pre { background: #dedede; color: #111; font-family: monospace;
+             white-space: pre; display: block; width: 100%; }
+    .indentedcode { margin-left: 2em; margin-right: 2em; }
+    .codeblock {
+      background: #dedede; color: #111; font-family: monospace;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      padding: 7px;
+      display: block;
+    }
+
+    .indentedlist { margin-left: 2em; color: #000; }
+
+    span { white-space: pre; }
+    .text  { color: #000; white-space: pre; background: #dedede; }
+    .colon { color: #000; background: #dedede; }
+    .note  { color: #000; background: #dedede; }
+    .str   { color: #000; text-decoration: underline; background: #dedede; }
+    .num   { color: #000; background: #dedede; font-weight: bold; font-style: italic; }
+    .fnum  { color: #000; font-weight: bold; background: #dedede; }
+    .ptr   { color: #000; font-weight: bold; background: #dedede; }
+    .fetch { color: #000; font-style: italic; background: #dedede; }
+    .store { color: #000; font-style: italic; background: #dedede; }
+    .char  { color: #000; background: #dedede; }
+    .inst  { color: #000; background: #dedede; }
+    .defer { color: #000; background: #dedede; }
+    .imm   { color: #000; font-weight: bold; background: #dedede; }
+    .prim  { color: #000; font-weight: bolder; background: #dedede; }
+
+    .tt    { white-space: pre; font-family: monospace; background: #dedede; }
+
+    .h1, .h2, .h3, .h4 { white-space: normal; }
+    .h1 { font-size: 125%; }
+    .h2 { font-size: 120%; }
+    .h3 { font-size: 115%; }
+    .h4 { font-size: 110%; }
+    .hr { display: block; height: 2px; background: #000000; }
+</style>
+</head><body>
+<p><span class="h1">Quotations</span>
+<br/><br/>
+Quotes are anonymous functions. RETRO uses these as the basis for
+executable flow control and combinatorial logic.
+<br/><br/>
+<span class="h2">Using Quotations</span>
+<br/><br/>
+To make a quotation, surround the code with square brackets. E.g.,
+<br/><br/>
+<tt class='indentedcode'>#1&nbsp;#2&nbsp;eq?&nbsp;[&nbsp;'No_match&nbsp;s:put&nbsp;nl&nbsp;]&nbsp;-if</tt>
+<br/><br/>
+Quotes can be nested:
+<br/><br/>
+<tt class='indentedcode'>[&nbsp;#3&nbsp;[&nbsp;#4&nbsp;]&nbsp;dip&nbsp;]&nbsp;call</tt>
+<br/><br/>
+After creation, a pointer to the quotation is left on the stack
+(or is compiled into the current definition).
+<br/><br/>
+<span class="h2">Combinators</span>
+<br/><br/>
+Words operating on quotations are called combinators; these are
+discussed in <strong>Using Combinators</strong>.
+<br/><br/>
+<span class="h2">Implementation</span>
+<br/><br/>
+A quotation is compiled as:
+<br/><br/>
+<tt class='indentedcode'>...&nbsp;code&nbsp;before&nbsp;quotation&nbsp;...</tt>
+<tt class='indentedcode'>i&nbsp;liju....&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(if_compiling_only)</tt>
+<tt class='indentedcode'>d&nbsp;address&nbsp;after&nbsp;quotation&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(if_compiling_only)</tt>
+<tt class='indentedcode'>...&nbsp;code&nbsp;for&nbsp;quotation</tt>
+<tt class='indentedcode'>i&nbsp;re......&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(this_is_where_the_quote_ends)</tt>
+<tt class='indentedcode'>i&nbsp;li......</tt>
+<tt class='indentedcode'>d&nbsp;address&nbsp;of&nbsp;code&nbsp;for&nbsp;quotation</tt>
+<tt class='indentedcode'>...&nbsp;code&nbsp;after&nbsp;quotation&nbsp;....</tt>
+<br/><br/>
+<span class="h2">Other Notes</span>
+<br/><br/>
+Quotations are used heavily in RETRO. They give the source a
+feel that's different from traditional Forth, and allow for
+a more consistent syntax.
+<br/><br/>
+For instance, in a traditional Forth, you might have some
+conditionals:
+<br/><br/>
+<tt class='indentedcode'>IF&nbsp;...&nbsp;THEN</tt>
+<tt class='indentedcode'>IF&nbsp;...&nbsp;ELSE&nbsp;...&nbsp;THEN</tt>
+<tt class='indentedcode'>IF&nbsp;...&nbsp;EXIT&nbsp;THEN</tt>
+<br/><br/>
+RETRO uses conditional combinators for these:
+<br/><br/>
+<tt class='indentedcode'>[&nbsp;...&nbsp;]&nbsp;if</tt>
+<tt class='indentedcode'>[&nbsp;...&nbsp;]&nbsp;[&nbsp;...&nbsp;]&nbsp;choose</tt>
+<tt class='indentedcode'>[&nbsp;...&nbsp;]&nbsp;if;</tt>
+<br/><br/>
+Or loops:
+<br/><br/>
+<tt class='indentedcode'>FOR&nbsp;...&nbsp;NEXT</tt>
+<br/><br/>
+Is replaced by:
+<br/><br/>
+<tt class='indentedcode'>[&nbsp;...&nbsp;]&nbsp;times</tt>
+<br/><br/>
+This can also extend to stack flow. Sequences like:
+<br/><br/>
+<tt class='indentedcode'>&gt;R&nbsp;...&nbsp;&gt;R</tt>
+<tt class='indentedcode'>DUP&nbsp;&gt;R&nbsp;...&nbsp;&gt;R</tt>
+<br/><br/>
+Become:
+<br/><br/>
+<tt class='indentedcode'>[&nbsp;...&nbsp;]&nbsp;dip</tt>
+<tt class='indentedcode'>[&nbsp;...&nbsp;]&nbsp;sip</tt>
+<br/><br/>
+And forms like:
+<br/><br/>
+<tt class='indentedcode'>1&nbsp;2&nbsp;3&nbsp;*&nbsp;swap&nbsp;3&nbsp;*&nbsp;swap</tt>
+<br/><br/>
+Can be replaced with a combinator like:
+<br/><br/>
+<tt class='indentedcode'>#1&nbsp;#2&nbsp;[&nbsp;#3&nbsp;*&nbsp;]&nbsp;bi@</tt>
+<br/><br/>
+While there is a different set of words to learn, I find that
+overall there's less noise from low level stack shuffling words
+and the added consistency with regards to overall syntax has
+been nice as I was never fond of the multiple forms that existed
+in traditional Forth.
+</p>
+</body></html>

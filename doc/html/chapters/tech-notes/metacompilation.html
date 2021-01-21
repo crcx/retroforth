@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title>.</title>
+<style type="text/css">
+
+    * { color: #000; background: #fff; max-width: 700px; }
+    tt, pre { background: #dedede; color: #111; font-family: monospace;
+             white-space: pre; display: block; width: 100%; }
+    .indentedcode { margin-left: 2em; margin-right: 2em; }
+    .codeblock {
+      background: #dedede; color: #111; font-family: monospace;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      padding: 7px;
+      display: block;
+    }
+
+    .indentedlist { margin-left: 2em; color: #000; }
+
+    span { white-space: pre; }
+    .text  { color: #000; white-space: pre; background: #dedede; }
+    .colon { color: #000; background: #dedede; }
+    .note  { color: #000; background: #dedede; }
+    .str   { color: #000; text-decoration: underline; background: #dedede; }
+    .num   { color: #000; background: #dedede; font-weight: bold; font-style: italic; }
+    .fnum  { color: #000; font-weight: bold; background: #dedede; }
+    .ptr   { color: #000; font-weight: bold; background: #dedede; }
+    .fetch { color: #000; font-style: italic; background: #dedede; }
+    .store { color: #000; font-style: italic; background: #dedede; }
+    .char  { color: #000; background: #dedede; }
+    .inst  { color: #000; background: #dedede; }
+    .defer { color: #000; background: #dedede; }
+    .imm   { color: #000; font-weight: bold; background: #dedede; }
+    .prim  { color: #000; font-weight: bolder; background: #dedede; }
+
+    .tt    { white-space: pre; font-family: monospace; background: #dedede; }
+
+    .h1, .h2, .h3, .h4 { white-space: normal; }
+    .h1 { font-size: 125%; }
+    .h2 { font-size: 120%; }
+    .h3 { font-size: 115%; }
+    .h4 { font-size: 110%; }
+    .hr { display: block; height: 2px; background: #000000; }
+</style>
+</head><body>
+<p><span class="h2">Metacompilation and Assembly</span>
+<br/><br/>
+RETRO 10 and 11 were written in themselves using a metacompiler.
+I had been fascinated by this idea for a long time and was able
+to explore it heavily. While I still find it to be a good idea,
+the way I ended up doing it was problematic.
+<br/><br/>
+The biggest issue I faced was that I wanted to do this in one
+step, where loading the RETRO source would create a new image
+in place of the old one, switch to the new one, and then load
+the higher level parts of the language over this. In retrospect,
+this was a really bad idea.
+<br/><br/>
+My earlier design for RETRO was very flexible. I allowed almost
+everything to be swapped out or extended at any time. This made
+it extremely easy to customize the language and environment, but
+made it crucial to keep track of what was in memory and what had
+been patched so that the metacompiler wouldn't refer to anything
+in the old image during the relocation and control change. It
+was far too easy to make a mistake, discover that elements of
+the new image were broken, and then have to go and revert many
+changes to try to figure out what went wrong.
+<br/><br/>
+This was also complicated by the fact that I built new images
+as I worked, and, while a new image could be built from the last
+built one, it wasn't always possible to build a new image from
+the prior release version. (Actually, it was often worse - I
+failed to check in every change as I went, so often even the
+prior commits couldn't rebuild the latest images).
+<br/><br/>
+For RETRO 12 I wanted to avoid this problem, so I decided to go
+back to writing the kernel ("Rx") in assembly. I actually wrote
+a Machine Forth dialect to generate the initial assembly, before
+eventually hand tuning the final results to its current state.
+<br/><br/>
+I could (and likely will eventually) write the assembler in
+RETRO, but the current one is in C, and is built as part of the
+standard toolchain.
+<br/><br/>
+My VM actually has two assemblers. The older one is Naje. This
+was intended to be fairly friendly to work with, and handles
+many of the details of packing instructions for the user. Here
+is an example of a small program in it:
+<br/><br/>
+<tt class='indentedcode'>:square</tt>
+<tt class='indentedcode'>&nbsp;&nbsp;dup</tt>
+<tt class='indentedcode'>&nbsp;&nbsp;mul</tt>
+<tt class='indentedcode'>&nbsp;&nbsp;ret</tt>
+<tt class='indentedcode'>:main</tt>
+<tt class='indentedcode'>&nbsp;&nbsp;lit&nbsp;35</tt>
+<tt class='indentedcode'>&nbsp;&nbsp;lit&nbsp;&amp;square</tt>
+<tt class='indentedcode'>&nbsp;&nbsp;call</tt>
+<tt class='indentedcode'>&nbsp;&nbsp;end</tt>
+<br/><br/>
+The other assembler is Muri. This is a far more minimalistic
+assembler, but I've actually grown to prefer it. The above
+example in Muri would become:
+<br/><br/>
+<tt class='indentedcode'>i&nbsp;liju....</tt>
+<tt class='indentedcode'>r&nbsp;main</tt>
+<tt class='indentedcode'>:&nbsp;square</tt>
+<tt class='indentedcode'>i&nbsp;dumure..</tt>
+<tt class='indentedcode'>:&nbsp;main</tt>
+<tt class='indentedcode'>i&nbsp;lilica..</tt>
+<tt class='indentedcode'>d&nbsp;35</tt>
+<tt class='indentedcode'>r&nbsp;square</tt>
+<tt class='indentedcode'>i&nbsp;en......</tt>
+<br/><br/>
+In Muri, each instruction is reduced to two characters, and the
+bundlings are listed as part of an instruction bundle (lines
+starting with <span class="tt">i</span>). This is less readable if you aren't very
+familiar with Nga's assembly and packing rules, but allows a
+very quick, efficient way of writing assembly for those who are.
+<br/><br/>
+I eventually rewrote the kernel in the Muri style as it's what
+I prefer, and since there's not much need to make changes in it.
+</p>
+</body></html>

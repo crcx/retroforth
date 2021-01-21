@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title>.</title>
+<style type="text/css">
+
+    * { color: #000; background: #fff; max-width: 700px; }
+    tt, pre { background: #dedede; color: #111; font-family: monospace;
+             white-space: pre; display: block; width: 100%; }
+    .indentedcode { margin-left: 2em; margin-right: 2em; }
+    .codeblock {
+      background: #dedede; color: #111; font-family: monospace;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      padding: 7px;
+      display: block;
+    }
+
+    .indentedlist { margin-left: 2em; color: #000; }
+
+    span { white-space: pre; }
+    .text  { color: #000; white-space: pre; background: #dedede; }
+    .colon { color: #000; background: #dedede; }
+    .note  { color: #000; background: #dedede; }
+    .str   { color: #000; text-decoration: underline; background: #dedede; }
+    .num   { color: #000; background: #dedede; font-weight: bold; font-style: italic; }
+    .fnum  { color: #000; font-weight: bold; background: #dedede; }
+    .ptr   { color: #000; font-weight: bold; background: #dedede; }
+    .fetch { color: #000; font-style: italic; background: #dedede; }
+    .store { color: #000; font-style: italic; background: #dedede; }
+    .char  { color: #000; background: #dedede; }
+    .inst  { color: #000; background: #dedede; }
+    .defer { color: #000; background: #dedede; }
+    .imm   { color: #000; font-weight: bold; background: #dedede; }
+    .prim  { color: #000; font-weight: bolder; background: #dedede; }
+
+    .tt    { white-space: pre; font-family: monospace; background: #dedede; }
+
+    .h1, .h2, .h3, .h4 { white-space: normal; }
+    .h1 { font-size: 125%; }
+    .h2 { font-size: 120%; }
+    .h3 { font-size: 115%; }
+    .h4 { font-size: 110%; }
+    .hr { display: block; height: 2px; background: #000000; }
+</style>
+</head><body>
+<p><span class="h1">Errors</span>
+<br/><br/>
+RETRO does only minimal error checking.
+<br/><br/>
+<span class="h2">Non-Fatal</span>
+<br/><br/>
+A non-fatal error will be reported on <strong>word not found</strong> during
+interactive or compile time. Note that this only applies to
+calls: if you try to get a pointer to an undefined word, the
+returned pointer will be zero.
+<br/><br/>
+<span class="h2">Fatal</span>
+<br/><br/>
+A number of conditions are known to cause fatal errors. The
+main ones are stack overflow, stack underflow, and division
+by zero.
+<br/><br/>
+On these, RETRO will generally exit. For stack depth issues,
+the VM will attempt to display an error prior to exiting.
+<br/><br/>
+In some cases, the VM may get stuck in an endless loop. If this
+occurs, try using CTRL+C to kill the process, or kill it using
+whatever means your host system provides.
+<br/><br/>
+<span class="h2">Rationale</span>
+<br/><br/>
+Error checks are useful, but slow - especially on a minimal
+system like RETRO. The overhead of doing depth or other checks
+adds up quickly.
+<br/><br/>
+As an example, adding a depth check to <span class="tt">drop</span> increases the
+time to use it 250,000 times in a loop from 0.16 seconds to
+1.69 seconds.
+<br/><br/>
+</p>
+</body></html>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title>.</title>
+<style type="text/css">
+
+    * { color: #000; background: #fff; max-width: 700px; }
+    tt, pre { background: #dedede; color: #111; font-family: monospace;
+             white-space: pre; display: block; width: 100%; }
+    .indentedcode { margin-left: 2em; margin-right: 2em; }
+    .codeblock {
+      background: #dedede; color: #111; font-family: monospace;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      padding: 7px;
+      display: block;
+    }
+
+    .indentedlist { margin-left: 2em; color: #000; }
+
+    span { white-space: pre; }
+    .text  { color: #000; white-space: pre; background: #dedede; }
+    .colon { color: #000; background: #dedede; }
+    .note  { color: #000; background: #dedede; }
+    .str   { color: #000; text-decoration: underline; background: #dedede; }
+    .num   { color: #000; background: #dedede; font-weight: bold; font-style: italic; }
+    .fnum  { color: #000; font-weight: bold; background: #dedede; }
+    .ptr   { color: #000; font-weight: bold; background: #dedede; }
+    .fetch { color: #000; font-style: italic; background: #dedede; }
+    .store { color: #000; font-style: italic; background: #dedede; }
+    .char  { color: #000; background: #dedede; }
+    .inst  { color: #000; background: #dedede; }
+    .defer { color: #000; background: #dedede; }
+    .imm   { color: #000; font-weight: bold; background: #dedede; }
+    .prim  { color: #000; font-weight: bolder; background: #dedede; }
+
+    .tt    { white-space: pre; font-family: monospace; background: #dedede; }
+
+    .h1, .h2, .h3, .h4 { white-space: normal; }
+    .h1 { font-size: 125%; }
+    .h2 { font-size: 120%; }
+    .h3 { font-size: 115%; }
+    .h4 { font-size: 110%; }
+    .hr { display: block; height: 2px; background: #000000; }
+</style>
+</head><body>
+<p><span class="h1">Unu: Simple, Literate Source Files</span>
+<br/><br/>
+RETRO is written in a literate style. Most of the sources
+are in a format called Unu. This allows easy mixing of
+commentary and code blocks, making it simple to document
+the code.
+<br/><br/>
+As an example,
+<br/><br/>
+<tt class='indentedcode'>#&nbsp;Determine&nbsp;The&nbsp;Average&nbsp;Word&nbsp;Name&nbsp;Length</tt>
+<br/><br/>
+<tt class='indentedcode'>To&nbsp;determine&nbsp;the&nbsp;average&nbsp;length&nbsp;of&nbsp;a&nbsp;word&nbsp;name&nbsp;two&nbsp;values</tt>
+<tt class='indentedcode'>are&nbsp;needed.&nbsp;First,&nbsp;the&nbsp;total&nbsp;length&nbsp;of&nbsp;all&nbsp;names&nbsp;in&nbsp;the</tt>
+<tt class='indentedcode'>Dictionary:</tt>
+<br/><br/>
+<tt class='indentedcode'>~~~</tt>
+<tt class='indentedcode'>#0&nbsp;[&nbsp;d:name&nbsp;s:length&nbsp;+&nbsp;]&nbsp;d:for-each</tt>
+<tt class='indentedcode'>~~~</tt>
+<br/><br/>
+<tt class='indentedcode'>And&nbsp;then&nbsp;the&nbsp;number&nbsp;of&nbsp;words&nbsp;in&nbsp;the&nbsp;Dictionary:</tt>
+<br/><br/>
+<tt class='indentedcode'>~~~</tt>
+<tt class='indentedcode'>#0&nbsp;[&nbsp;drop&nbsp;n:inc&nbsp;]&nbsp;d:for-each</tt>
+<tt class='indentedcode'>~~~</tt>
+<br/><br/>
+<tt class='indentedcode'>With&nbsp;these,&nbsp;a&nbsp;simple&nbsp;division&nbsp;is&nbsp;all&nbsp;that's&nbsp;left.</tt>
+<br/><br/>
+<tt class='indentedcode'>~~~</tt>
+<tt class='indentedcode'>/</tt>
+<tt class='indentedcode'>~~~</tt>
+<br/><br/>
+<tt class='indentedcode'>Finally,&nbsp;display&nbsp;the&nbsp;results:</tt>
+<br/><br/>
+<br/><br/>
+<tt class='indentedcode'>~~~</tt>
+<tt class='indentedcode'>'Average_name_length:_%n\n&nbsp;s:format&nbsp;s:put</tt>
+<tt class='indentedcode'>~~~</tt>
+<br/><br/>
+This illustrates the format. Only code in the fenced blocks
+(between ~~~ pairs) get extracted and run.
+<br/><br/>
+(Note: this only applies to source files; fences are not used
+when entering code interactively).
+<br/><br/>
+<span class="h2">On The Name</span>
+<br/><br/>
+The name Unu comes from the Maori language, where it means:
+<br/><br/>
+<tt class='indentedcode'>(verb)&nbsp;(-hia)&nbsp;pull&nbsp;out,&nbsp;withdraw,&nbsp;draw&nbsp;out,&nbsp;extract.</tt>
+<tt class='indentedcode'>Taken&nbsp;from&nbsp;https://maoridictionary.co.nz/</tt>
+</p>
+</body></html>

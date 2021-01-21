@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title>.</title>
+<style type="text/css">
+
+    * { color: #000; background: #fff; max-width: 700px; }
+    tt, pre { background: #dedede; color: #111; font-family: monospace;
+             white-space: pre; display: block; width: 100%; }
+    .indentedcode { margin-left: 2em; margin-right: 2em; }
+    .codeblock {
+      background: #dedede; color: #111; font-family: monospace;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      padding: 7px;
+      display: block;
+    }
+
+    .indentedlist { margin-left: 2em; color: #000; }
+
+    span { white-space: pre; }
+    .text  { color: #000; white-space: pre; background: #dedede; }
+    .colon { color: #000; background: #dedede; }
+    .note  { color: #000; background: #dedede; }
+    .str   { color: #000; text-decoration: underline; background: #dedede; }
+    .num   { color: #000; background: #dedede; font-weight: bold; font-style: italic; }
+    .fnum  { color: #000; font-weight: bold; background: #dedede; }
+    .ptr   { color: #000; font-weight: bold; background: #dedede; }
+    .fetch { color: #000; font-style: italic; background: #dedede; }
+    .store { color: #000; font-style: italic; background: #dedede; }
+    .char  { color: #000; background: #dedede; }
+    .inst  { color: #000; background: #dedede; }
+    .defer { color: #000; background: #dedede; }
+    .imm   { color: #000; font-weight: bold; background: #dedede; }
+    .prim  { color: #000; font-weight: bolder; background: #dedede; }
+
+    .tt    { white-space: pre; font-family: monospace; background: #dedede; }
+
+    .h1, .h2, .h3, .h4 { white-space: normal; }
+    .h1 { font-size: 125%; }
+    .h2 { font-size: 120%; }
+    .h3 { font-size: 115%; }
+    .h4 { font-size: 110%; }
+    .hr { display: block; height: 2px; background: #000000; }
+</style>
+</head><body>
+<p><span class="h1">Unix Scripting</span>
+<br/><br/>
+RETRO on Unix hosts is designed to play well with scripting. 
+<br/><br/>
+<span class="h2">Shebang</span>
+<br/><br/>
+To run an entire program directly, start the file with the
+standard shebang and make the file executable:
+<br/><br/>
+<tt class='indentedcode'>#!/usr/bin/env&nbsp;retro</tt>
+<br/><br/>
+This requires the <span class="tt">retro</span> binary to be in your path.
+<br/><br/>
+<span class="h2">Arguments</span>
+<br/><br/>
+RETRO provides several words in the <span class="tt">script:</span> namespace for accessing
+command line arguments.
+<br/><br/>
+The number of arguments can be accessed via <span class="tt">script:arguments</span>. This
+will return a number with the arguments, other than the script
+name.
+<br/><br/>
+<tt class='indentedcode'>script:arguments&nbsp;'%n_arguments_passed\n&nbsp;s:format&nbsp;s:put</tt>
+<br/><br/>
+To retreive an argument, pass the argument number to <span class="tt">script:get-argument</span>:
+<br/><br/>
+<tt class='indentedcode'>script:arguments&nbsp;[&nbsp;I&nbsp;script:get-argument&nbsp;s:put&nbsp;nl&nbsp;]&nbsp;indexed-times&nbsp;</tt>
+<br/><br/>
+And to get the name of the script, use <span class="tt">script:name</span>.
+<br/><br/>
+<tt class='indentedcode'>script:name&nbsp;s:put</tt>
+<br/><br/>
+<span class="h2">Mixing</span>
+<br/><br/>
+With use of the Unu literate format, it's possible to mix both
+shell and RETRO code into a single script. As an example, this
+is a bit of shell that runs itself via retro for each .retro
+file in the current directory tree:
+<br/><br/>
+<tt class='indentedcode'>#!/bin/sh</tt>
+<br/><br/>
+<tt class='indentedcode'>#&nbsp;shell&nbsp;part</tt>
+<tt class='indentedcode'>find&nbsp;.&nbsp;-name&nbsp;'*.retro'&nbsp;-print0&nbsp;|&nbsp;xargs&nbsp;-0&nbsp;-n&nbsp;1&nbsp;retro&nbsp;$0</tt>
+<tt class='indentedcode'>exit</tt>
+<br/><br/>
+<tt class='indentedcode'>#&nbsp;retro&nbsp;part</tt>
+<br/><br/>
+<tt class='indentedcode'>This&nbsp;will&nbsp;scan&nbsp;a&nbsp;source&nbsp;file&nbsp;and&nbsp;do&nbsp;something&nbsp;with&nbsp;it:</tt>
+<br/><br/>
+<tt class='indentedcode'>~~~</tt>
+<tt class='indentedcode'>...&nbsp;do&nbsp;stuff&nbsp;...</tt>
+<tt class='indentedcode'>~~~</tt>
+</p>
+</body></html>

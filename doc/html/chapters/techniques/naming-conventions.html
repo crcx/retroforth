@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title>.</title>
+<style type="text/css">
+
+    * { color: #000; background: #fff; max-width: 700px; }
+    tt, pre { background: #dedede; color: #111; font-family: monospace;
+             white-space: pre; display: block; width: 100%; }
+    .indentedcode { margin-left: 2em; margin-right: 2em; }
+    .codeblock {
+      background: #dedede; color: #111; font-family: monospace;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      padding: 7px;
+      display: block;
+    }
+
+    .indentedlist { margin-left: 2em; color: #000; }
+
+    span { white-space: pre; }
+    .text  { color: #000; white-space: pre; background: #dedede; }
+    .colon { color: #000; background: #dedede; }
+    .note  { color: #000; background: #dedede; }
+    .str   { color: #000; text-decoration: underline; background: #dedede; }
+    .num   { color: #000; background: #dedede; font-weight: bold; font-style: italic; }
+    .fnum  { color: #000; font-weight: bold; background: #dedede; }
+    .ptr   { color: #000; font-weight: bold; background: #dedede; }
+    .fetch { color: #000; font-style: italic; background: #dedede; }
+    .store { color: #000; font-style: italic; background: #dedede; }
+    .char  { color: #000; background: #dedede; }
+    .inst  { color: #000; background: #dedede; }
+    .defer { color: #000; background: #dedede; }
+    .imm   { color: #000; font-weight: bold; background: #dedede; }
+    .prim  { color: #000; font-weight: bolder; background: #dedede; }
+
+    .tt    { white-space: pre; font-family: monospace; background: #dedede; }
+
+    .h1, .h2, .h3, .h4 { white-space: normal; }
+    .h1 { font-size: 125%; }
+    .h2 { font-size: 120%; }
+    .h3 { font-size: 115%; }
+    .h4 { font-size: 110%; }
+    .hr { display: block; height: 2px; background: #000000; }
+</style>
+</head><body>
+<p><span class="h1">Naming Conventions</span>
+<br/><br/>
+Word names in RETRO generally follow the following conventions.
+<br/><br/>
+<span class="h2">General Guidelines</span>
+<br/><br/>
+&bull; Readability is important<br/>
+&bull; Be consistent<br/>
+&bull; Don't use a prefix as the first character of a name<br/>
+&bull; Don't use underscores in word names<br/>
+&bull; Use short names for indices<br/>
+&bull; Word names start with a <span class="tt">-</span> for "not"<br/>
+&bull; Words returning a flag end in ?<br/>
+<br/><br/>
+<span class="h2">Typical Format</span>
+<br/><br/>
+The word names will generally follow a form like:
+<br/><br/>
+<tt class='indentedcode'>[namespace:]name</tt>
+<br/><br/>
+The <span class="tt">namespace:</span> is optional, but recommended for consistency
+with the rest of the system and to make it easier to identify
+related words.
+<br/><br/>
+<span class="h2">Case</span>
+<br/><br/>
+Word names are lowercase, with a dash (-) for compound names.
+<br/><br/>
+<tt class='indentedcode'>hello</tt>
+<tt class='indentedcode'>drop-pair</tt>
+<tt class='indentedcode'>s:for-each</tt>
+<br/><br/>
+Variables use TitleCase, with no dash between compound names.
+<br/><br/>
+<tt class='indentedcode'>Base</tt>
+<tt class='indentedcode'>Heap</tt>
+<tt class='indentedcode'>StringBuffers</tt>
+<br/><br/>
+Constants are UPPERCASE, with a dash (-) for compound names.
+<br/><br/>
+<tt class='indentedcode'>TRUE</tt>
+<tt class='indentedcode'>FALSE</tt>
+<tt class='indentedcode'>f:PI</tt>
+<tt class='indentedcode'>MAX-STRING-LENGTH</tt>
+<br/><br/>
+<span class="h2">Namespaces</span>
+<br/><br/>
+Words are grouped into broad namespaces by attaching a short
+prefix string to the start of a name.
+<br/><br/>
+The common namespaces are:
+<br/><br/>
+<tt class='indentedcode'>|&nbsp;Prefix&nbsp;&nbsp;|&nbsp;Contains&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;-------&nbsp;|&nbsp;------------------------------------------------------&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;a:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;Words&nbsp;operating&nbsp;on&nbsp;simple&nbsp;arrays&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;ASCII:&nbsp;&nbsp;|&nbsp;ASCII&nbsp;character&nbsp;constants&nbsp;for&nbsp;control&nbsp;characters&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;buffer:&nbsp;|&nbsp;Words&nbsp;for&nbsp;operating&nbsp;on&nbsp;a&nbsp;simple&nbsp;linear&nbsp;LIFO&nbsp;buffer&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;c:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;Words&nbsp;for&nbsp;operating&nbsp;on&nbsp;ASCII&nbsp;character&nbsp;data&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;class:&nbsp;&nbsp;|&nbsp;Contains&nbsp;class&nbsp;handlers&nbsp;for&nbsp;words&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;d:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;Words&nbsp;operating&nbsp;on&nbsp;the&nbsp;Dictionary&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;err:&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;Words&nbsp;for&nbsp;handling&nbsp;errors&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;io:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;General&nbsp;I/O&nbsp;words&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;n:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;Words&nbsp;operating&nbsp;on&nbsp;numeric&nbsp;data&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;prefix:&nbsp;|&nbsp;Contains&nbsp;prefix&nbsp;handlers&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;s:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;Words&nbsp;operating&nbsp;on&nbsp;string&nbsp;data&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;v:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;Words&nbsp;operating&nbsp;on&nbsp;variables&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;file:&nbsp;&nbsp;&nbsp;|&nbsp;File&nbsp;I/O&nbsp;words&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;f:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;Floating&nbsp;Point&nbsp;words&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;unix:&nbsp;&nbsp;&nbsp;|&nbsp;Unix&nbsp;system&nbsp;call&nbsp;words&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<br/><br/>
+<span class="h2">Tips</span>
+<br/><br/>
+<span class="h3">Don't Start Names With Prefix Characters</span>
+<br/><br/>
+Avoid using a prefix as the first character of a word name. RETRO
+will look for prefixes first, this will prevent direct use of
+the work in question.
+<br/><br/>
+To find a list of prefix characters, do:
+<br/><br/>
+<tt class='indentedcode'>'prefix:&nbsp;d:words-with</tt>
+<br/><br/>
+<span class="h3">Don't Use Underscores</span>
+<br/><br/>
+Underscores in strings are replaced by spaces. This is problematic,
+especially with variables. Consider:
+<br/><br/>
+<tt class='indentedcode'>'test_name&nbsp;var</tt>
+<tt class='indentedcode'>#188&nbsp;!test_name</tt>
+<br/><br/>
+In this, the string for the name is converted to "test name". The
+store in the second line will not add the space, so resolves to an
+incorrect address.
+<br/><br/>
+I personally recommend avoiding the use of underscores in any word
+names.
+</p>
+</body></html>

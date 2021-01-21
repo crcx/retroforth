@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title>.</title>
+<style type="text/css">
+
+    * { color: #000; background: #fff; max-width: 700px; }
+    tt, pre { background: #dedede; color: #111; font-family: monospace;
+             white-space: pre; display: block; width: 100%; }
+    .indentedcode { margin-left: 2em; margin-right: 2em; }
+    .codeblock {
+      background: #dedede; color: #111; font-family: monospace;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      padding: 7px;
+      display: block;
+    }
+
+    .indentedlist { margin-left: 2em; color: #000; }
+
+    span { white-space: pre; }
+    .text  { color: #000; white-space: pre; background: #dedede; }
+    .colon { color: #000; background: #dedede; }
+    .note  { color: #000; background: #dedede; }
+    .str   { color: #000; text-decoration: underline; background: #dedede; }
+    .num   { color: #000; background: #dedede; font-weight: bold; font-style: italic; }
+    .fnum  { color: #000; font-weight: bold; background: #dedede; }
+    .ptr   { color: #000; font-weight: bold; background: #dedede; }
+    .fetch { color: #000; font-style: italic; background: #dedede; }
+    .store { color: #000; font-style: italic; background: #dedede; }
+    .char  { color: #000; background: #dedede; }
+    .inst  { color: #000; background: #dedede; }
+    .defer { color: #000; background: #dedede; }
+    .imm   { color: #000; font-weight: bold; background: #dedede; }
+    .prim  { color: #000; font-weight: bolder; background: #dedede; }
+
+    .tt    { white-space: pre; font-family: monospace; background: #dedede; }
+
+    .h1, .h2, .h3, .h4 { white-space: normal; }
+    .h1 { font-size: 125%; }
+    .h2 { font-size: 120%; }
+    .h3 { font-size: 115%; }
+    .h4 { font-size: 110%; }
+    .hr { display: block; height: 2px; background: #000000; }
+</style>
+</head><body>
+<p><span class="h2">On The Evolution Of Ngaro Into Nga</span>
+<br/><br/>
+When I decided to begin work on what became RETRO 12, I knew
+the process would involve updating Ngaro, the virtual machine
+that RETRO 10 and 11 ran on.
+<br/><br/>
+Ngaro rose out of an earlier experimental virtual machine I had
+written back in 2005-2006. This earlier VM, called Maunga, was
+very close to what Ngaro ended up being, though it had a very
+different approach to I/O. (All I/O in Maunga was intended to be
+memory mapped; Ngaro adopted a port based I/O system).
+<br/><br/>
+Ngaro itself evolved along with RETRO, gaining features like
+automated skipping of NOPs and a LOOP opcode to help improve
+performance. But the I/O model proved to be a problem. When I
+created Ngaro, I had the idea that I would always be able to
+assume a console/terminal style environment. The assumption was
+that all code would be entered via the keyboard (or maybe a
+block editor), and that proved to be the fundamental flaw as
+time went on.
+<br/><br/>
+As RETRO grew it was evident that the model had some serious
+problems. Need to load code from a file? The VM and language had
+functionality to pretend it was being typed in. Want to run on
+something like a browser, Android, or iOS? The VM would need to
+be implemented in a way that simulates input being typed into
+the VM via a simulated keyboard. And RETRO was built around this.
+I couldn't change it because of a promise to maintain, as much
+as possible, source compatibility for a period of at least five
+years.
+<br/><br/>
+When the time came to fix this, I decided at the start to keep
+the I/O model separate from the core VM. I also decided that the
+core RETRO language would provide some means of interpreting
+code without requiring an assumption that a traditional terminal
+was being used.
+<br/><br/>
+So Nga began. I took the opportunity to simplify the instruction
+set to just 26 essential instructions, add support for packing
+multiple instructions per memory location (allowing a long due
+reduction in memory footprint), and to generally just make a far
+simpler design.
+<br/><br/>
+I've been pleased with Nga. On its own it really isn't useful
+though. So with RETRO I embed it into a larger framework that
+adds some basic I/O functionality. The <strong>interfaces</strong> handle the
+details of passing tokens into the language and capturing any
+output. They are free to do this in whatever model makes most
+sense on a given platform.
+<br/><br/>
+So far I've implemented:
+<br/><br/>
+<tt class='indentedcode'>-&nbsp;a&nbsp;scripting&nbsp;interface,&nbsp;reading&nbsp;input&nbsp;from&nbsp;a&nbsp;file&nbsp;and</tt>
+<tt class='indentedcode'>&nbsp;&nbsp;offering&nbsp;file&nbsp;i/o,&nbsp;gopher,&nbsp;and&nbsp;reading&nbsp;from&nbsp;stdin,&nbsp;and</tt>
+<tt class='indentedcode'>&nbsp;&nbsp;sending&nbsp;output&nbsp;to&nbsp;stdout.</tt>
+<tt class='indentedcode'>-&nbsp;an&nbsp;interactive&nbsp;interface,&nbsp;built&nbsp;around&nbsp;ncurses,&nbsp;reading</tt>
+<tt class='indentedcode'>&nbsp;&nbsp;input&nbsp;from&nbsp;stdin,&nbsp;and&nbsp;displaying&nbsp;output&nbsp;to&nbsp;a&nbsp;scrolling</tt>
+<tt class='indentedcode'>&nbsp;&nbsp;buffer.</tt>
+<tt class='indentedcode'>-&nbsp;an&nbsp;iOS&nbsp;interface,&nbsp;built&nbsp;around&nbsp;a&nbsp;text&nbsp;editor,&nbsp;directing</tt>
+<tt class='indentedcode'>&nbsp;&nbsp;output&nbsp;to&nbsp;a&nbsp;separate&nbsp;interface&nbsp;pane.</tt>
+<tt class='indentedcode'>-&nbsp;an&nbsp;interactive&nbsp;block&nbsp;editor,&nbsp;using&nbsp;a&nbsp;gopher-based&nbsp;block</tt>
+<tt class='indentedcode'>&nbsp;&nbsp;data&nbsp;store.&nbsp;Output&nbsp;is&nbsp;displayed&nbsp;to&nbsp;stdout,&nbsp;and&nbsp;input&nbsp;is</tt>
+<tt class='indentedcode'>&nbsp;&nbsp;done&nbsp;via&nbsp;the&nbsp;blocks&nbsp;being&nbsp;evaluated&nbsp;or&nbsp;by&nbsp;reading&nbsp;from</tt>
+<tt class='indentedcode'>&nbsp;&nbsp;stdin.</tt>
+<br/><br/>
+In all cases, the only common I/O word that has to map to an
+exposed instruction is <span class="tt">putc</span>, to display a single character to
+some output device. There is no requirement for a traditional
+keyboard input model.
+<br/><br/>
+By doing this I was able to solve the biggest portability issue
+with the RETRO 10/11 model, and make a much simpler, cleaner
+language in the end.
+</p>
+</body></html>

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title>.</title>
+<style type="text/css">
+
+    * { color: #000; background: #fff; max-width: 700px; }
+    tt, pre { background: #dedede; color: #111; font-family: monospace;
+             white-space: pre; display: block; width: 100%; }
+    .indentedcode { margin-left: 2em; margin-right: 2em; }
+    .codeblock {
+      background: #dedede; color: #111; font-family: monospace;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      padding: 7px;
+      display: block;
+    }
+
+    .indentedlist { margin-left: 2em; color: #000; }
+
+    span { white-space: pre; }
+    .text  { color: #000; white-space: pre; background: #dedede; }
+    .colon { color: #000; background: #dedede; }
+    .note  { color: #000; background: #dedede; }
+    .str   { color: #000; text-decoration: underline; background: #dedede; }
+    .num   { color: #000; background: #dedede; font-weight: bold; font-style: italic; }
+    .fnum  { color: #000; font-weight: bold; background: #dedede; }
+    .ptr   { color: #000; font-weight: bold; background: #dedede; }
+    .fetch { color: #000; font-style: italic; background: #dedede; }
+    .store { color: #000; font-style: italic; background: #dedede; }
+    .char  { color: #000; background: #dedede; }
+    .inst  { color: #000; background: #dedede; }
+    .defer { color: #000; background: #dedede; }
+    .imm   { color: #000; font-weight: bold; background: #dedede; }
+    .prim  { color: #000; font-weight: bolder; background: #dedede; }
+
+    .tt    { white-space: pre; font-family: monospace; background: #dedede; }
+
+    .h1, .h2, .h3, .h4 { white-space: normal; }
+    .h1 { font-size: 125%; }
+    .h2 { font-size: 120%; }
+    .h3 { font-size: 115%; }
+    .h4 { font-size: 110%; }
+    .hr { display: block; height: 2px; background: #000000; }
+</style>
+</head><body>
+<p><span class="h1">Building Alternative Systems</span>
+<br/><br/>
+In addition to the C implementation, there are a few other
+interfaces that can be built.
+<br/><br/>
+<span class="h2">Requirements</span>
+<br/><br/>
+&bull; c compiler (tested: clang, tcc, gcc)<br/>
+&bull; make<br/>
+&bull; standard unix shell<br/>
+<br/><br/>
+<span class="h2">retro-repl</span>
+<br/><br/>
+A basic interactive system can be built by using:
+<br/><br/>
+<tt class='indentedcode'>make&nbsp;bin/retro-repl</tt>
+<br/><br/>
+This requires a copy of <span class="tt">ngaImage</span> to be in the current
+directory.
+<br/><br/>
+<span class="h2">Barebones</span>
+<br/><br/>
+This is a minimal version of the <span class="tt">retro-repl</span>. It keeps the C
+portion as short as possible, making it a useful starting point
+for new interfaces.
+<br/><br/>
+To build:
+<br/><br/>
+<tt class='indentedcode'>make&nbsp;bin/retro-barebones</tt>
+<br/><br/>
+<span class="h2">retro-compiler</span>
+<br/><br/>
+This is a turnkey compiler. It can compile a new executable
+bundling a Retro VM and image.
+<br/><br/>
+Requirements:
+<br/><br/>
+&bull; BSD or Linux<br/>
+&bull; objcopy in $PATH<br/>
+<br/><br/>
+To build:
+<br/><br/>
+<tt class='indentedcode'>make&nbsp;bin/retro-compiler</tt>
+<br/><br/>
+Example use:
+<br/><br/>
+1. Given a source file like "Hello.forth":
+<br/><br/>
+<tt class='indentedcode'>~~~</tt>
+<tt class='indentedcode'>:hello&nbsp;'hello_world!&nbsp;s:put&nbsp;nl&nbsp;;</tt>
+<tt class='indentedcode'>~~~</tt>
+<br/><br/>
+2. Use:
+<br/><br/>
+<tt class='indentedcode'>./bin/retro-compiler&nbsp;Hello.forth&nbsp;hello</tt>
+<br/><br/>
+The first argument is the source file, the second is the
+word to run on startup.
+<br/><br/>
+3. Run the generated <span class="tt">a.out</span>
+<br/><br/>
+Limits:
+<br/><br/>
+This only supports the core words ('all' interface) and the
+file i/o words. Support for other I/O extensions will be
+added in the future.
+<br/><br/>
+<span class="h2">Pascal</span>
+<br/><br/>
+There is a Pascal version of <span class="tt">retro-repl</span>.
+<br/><br/>
+Dependencies:
+<br/><br/>
+&bull; freepascal<br/>
+<br/><br/>
+Building:
+<br/><br/>
+<tt class='indentedcode'>cd&nbsp;vm/nga-pascal</tt>
+<tt class='indentedcode'>fpc&nbsp;listener.lpr</tt>
+<br/><br/>
+This will require a copy of the <span class="tt">ngaImage</span> in the
+current directory.
+<br/><br/>
+<span class="h2">Python: retro.py</span>
+<br/><br/>
+This is an implementation of <span class="tt">retro-repl</span> in Python. As
+with <span class="tt">retro-repl</span> it requires the <span class="tt">ngaImage</span> in the current
+directory when starting.
+<br/><br/>
+<span class="h2">C#: retro.cs</span>
+<br/><br/>
+This is an implementation of <span class="tt">retro-repl</span> in C#. As with
+<span class="tt">retro-repl</span> it requires the <span class="tt">ngaImage</span> in the current
+directory when starting.
+<br/><br/>
+Building:
+<br/><br/>
+<tt class='indentedcode'>cd&nbsp;vm\nga-csharp</tt>
+<tt class='indentedcode'>csc&nbsp;retro.cs</tt>
+<br/><br/>
+You'll need to make sure your path has the CSC.EXE in it,
+or provide a full path to it. Something like this should
+reveal the path to use:
+<br/><br/>
+<tt class='indentedcode'>dir&nbsp;/s&nbsp;%WINDIR%\CSC.EXE</tt>
+<br/><br/>
+I've only tested building this using Microsoft's .NET tools.
+It should also build and run under Mono.
+</p>
+</body></html>

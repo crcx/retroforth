@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title>.</title>
+<style type="text/css">
+
+    * { color: #000; background: #fff; max-width: 700px; }
+    tt, pre { background: #dedede; color: #111; font-family: monospace;
+             white-space: pre; display: block; width: 100%; }
+    .indentedcode { margin-left: 2em; margin-right: 2em; }
+    .codeblock {
+      background: #dedede; color: #111; font-family: monospace;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      padding: 7px;
+      display: block;
+    }
+
+    .indentedlist { margin-left: 2em; color: #000; }
+
+    span { white-space: pre; }
+    .text  { color: #000; white-space: pre; background: #dedede; }
+    .colon { color: #000; background: #dedede; }
+    .note  { color: #000; background: #dedede; }
+    .str   { color: #000; text-decoration: underline; background: #dedede; }
+    .num   { color: #000; background: #dedede; font-weight: bold; font-style: italic; }
+    .fnum  { color: #000; font-weight: bold; background: #dedede; }
+    .ptr   { color: #000; font-weight: bold; background: #dedede; }
+    .fetch { color: #000; font-style: italic; background: #dedede; }
+    .store { color: #000; font-style: italic; background: #dedede; }
+    .char  { color: #000; background: #dedede; }
+    .inst  { color: #000; background: #dedede; }
+    .defer { color: #000; background: #dedede; }
+    .imm   { color: #000; font-weight: bold; background: #dedede; }
+    .prim  { color: #000; font-weight: bolder; background: #dedede; }
+
+    .tt    { white-space: pre; font-family: monospace; background: #dedede; }
+
+    .h1, .h2, .h3, .h4 { white-space: normal; }
+    .h1 { font-size: 125%; }
+    .h2 { font-size: 120%; }
+    .h3 { font-size: 115%; }
+    .h4 { font-size: 110%; }
+    .hr { display: block; height: 2px; background: #000000; }
+</style>
+</head><body>
+<p><span class="h1">Loops</span>
+<br/><br/>
+RETRO provides several words for creating loops.
+<br/><br/>
+<span class="h2">Unconditional Loops</span>
+<br/><br/>
+An unconditional loop begins with <span class="tt">repeat</span> and ends with <span class="tt">again</span>.
+<br/><br/>
+<tt class='indentedcode'>:test&nbsp;repeat&nbsp;#1&nbsp;n:put&nbsp;sp&nbsp;again&nbsp;;</tt>
+<tt class='indentedcode'>test</tt>
+<br/><br/>
+Unconditional loops must be inside a definition or quote. To exit
+one of these, use <span class="tt">0;</span>, <span class="tt">-if;</span> or <span class="tt">if;</span>.
+<br/><br/>
+<tt class='indentedcode'>:test&nbsp;#100&nbsp;repeat&nbsp;0;&nbsp;dup&nbsp;n:put&nbsp;sp&nbsp;n:dec&nbsp;again&nbsp;;</tt>
+<tt class='indentedcode'>test</tt>
+<br/><br/>
+<tt class='indentedcode'>:test&nbsp;#100&nbsp;repeat&nbsp;dup&nbsp;#50&nbsp;eq?&nbsp;[&nbsp;'done!&nbsp;s:put&nbsp;nl&nbsp;]&nbsp;if;&nbsp;n:dec&nbsp;again&nbsp;;</tt>
+<tt class='indentedcode'>test</tt>
+<br/><br/>
+You can also achieve this via recursion:
+<br/><br/>
+<tt class='indentedcode'>:test&nbsp;0;&nbsp;dup&nbsp;n:put&nbsp;sp&nbsp;n:dec&nbsp;test&nbsp;;</tt>
+<tt class='indentedcode'>#100&nbsp;test</tt>
+<br/><br/>
+Be careful with recursion as the virtual machine will have a limited
+amount of space for the address stack and recursing too many times
+can cause a stack overflow.
+<br/><br/>
+<span class="h2">Conditional Loops</span>
+<br/><br/>
+There are two conditional looping combinators: <span class="tt">while</span> and <span class="tt">until</span>.
+Both take a quote and execute it, checking a returned flag to decide
+when to stop running.
+<br/><br/>
+<tt class='indentedcode'>#0&nbsp;[&nbsp;dup&nbsp;n:put&nbsp;sp&nbsp;n:inc&nbsp;dup&nbsp;#10&nbsp;eq?&nbsp;]&nbsp;until</tt>
+<tt class='indentedcode'>#10&nbsp;[&nbsp;dup&nbsp;n:put&nbsp;sp&nbsp;n:dec&nbsp;dup&nbsp;n:-zero?&nbsp;]&nbsp;while</tt>
+<br/><br/>
+<span class="h2">Counted Loops</span>
+<br/><br/>
+There are two combinators for counted loops. These are <span class="tt">times</span> and
+<span class="tt">indexed-times</span>.
+<br/><br/>
+<tt class='indentedcode'>#0&nbsp;#10&nbsp;[&nbsp;dup&nbsp;n:put&nbsp;sp&nbsp;n:inc&nbsp;]&nbsp;times&nbsp;nl</tt>
+<tt class='indentedcode'>#10&nbsp;[&nbsp;I&nbsp;n:put&nbsp;sp&nbsp;]&nbsp;indexed-times</tt>
+<br/><br/>
+The <span class="tt">indexed-times</span> provides an index via the <span class="tt">I</span>, <span class="tt">J</span>, and
+<span class="tt">K</span> words. <span class="tt">I</span> will be the index of the current loop, with <span class="tt">J</span> and
+<span class="tt">K</span> being the indexes of the next two older loops.
+<br/><br/>
+The loop indexes can be accessed outside the loop body:
+<br/><br/>
+<tt class='indentedcode'>:display&nbsp;I&nbsp;n:square&nbsp;n:put&nbsp;sp&nbsp;;</tt>
+<tt class='indentedcode'>:squares&nbsp;[&nbsp;display&nbsp;]&nbsp;indexed-times&nbsp;nl&nbsp;;</tt>
+<tt class='indentedcode'>#100&nbsp;squares</tt>
+<br/><br/>
+<span class="h2">Tradeoffs</span>
+<br/><br/>
+The unconditional loop form is more efficient as it's just a
+simple jump operation. The <span class="tt">times</span> counted loops are a little
+slower, but can be cleaner and more readable in many cases. The
+<span class="tt">indexed-times</span> form is significantly slower than the other
+two forms.
+</p>
+</body></html>

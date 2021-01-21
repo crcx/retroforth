@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title>.</title>
+<style type="text/css">
+
+    * { color: #000; background: #fff; max-width: 700px; }
+    tt, pre { background: #dedede; color: #111; font-family: monospace;
+             white-space: pre; display: block; width: 100%; }
+    .indentedcode { margin-left: 2em; margin-right: 2em; }
+    .codeblock {
+      background: #dedede; color: #111; font-family: monospace;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      padding: 7px;
+      display: block;
+    }
+
+    .indentedlist { margin-left: 2em; color: #000; }
+
+    span { white-space: pre; }
+    .text  { color: #000; white-space: pre; background: #dedede; }
+    .colon { color: #000; background: #dedede; }
+    .note  { color: #000; background: #dedede; }
+    .str   { color: #000; text-decoration: underline; background: #dedede; }
+    .num   { color: #000; background: #dedede; font-weight: bold; font-style: italic; }
+    .fnum  { color: #000; font-weight: bold; background: #dedede; }
+    .ptr   { color: #000; font-weight: bold; background: #dedede; }
+    .fetch { color: #000; font-style: italic; background: #dedede; }
+    .store { color: #000; font-style: italic; background: #dedede; }
+    .char  { color: #000; background: #dedede; }
+    .inst  { color: #000; background: #dedede; }
+    .defer { color: #000; background: #dedede; }
+    .imm   { color: #000; font-weight: bold; background: #dedede; }
+    .prim  { color: #000; font-weight: bolder; background: #dedede; }
+
+    .tt    { white-space: pre; font-family: monospace; background: #dedede; }
+
+    .h1, .h2, .h3, .h4 { white-space: normal; }
+    .h1 { font-size: 125%; }
+    .h2 { font-size: 120%; }
+    .h3 { font-size: 115%; }
+    .h4 { font-size: 110%; }
+    .hr { display: block; height: 2px; background: #000000; }
+</style>
+</head><body>
+<p><span class="h2">On The Kernel Wordset</span>
+<br/><br/>
+In implementing the RETRO 12 kernel (called RETRO Core, and
+defined in <span class="tt">image/retro.muri</span>) I had to decide on what functionality
+would be needed. It was important to me that this be kept clean
+and minimalistic, as I didn't want to spend a lot of time
+changing it as time progressed. It's far nicer to code at the
+higher level, where the RETRO language is fully functional, as
+opposed to writing more assembly code.
+<br/><br/>
+So what made it in?
+<br/><br/>
+Primitives
+<br/><br/>
+These are words that map directly to Nga instructions.
+<br/><br/>
+<tt class='indentedcode'>dup&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;drop&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;swap&nbsp;&nbsp;&nbsp;call&nbsp;&nbsp;&nbsp;eq?&nbsp;&nbsp;&nbsp;-eq?&nbsp;&nbsp;&nbsp;lt?&nbsp;&nbsp;&nbsp;gt?</tt>
+<tt class='indentedcode'>fetch&nbsp;&nbsp;&nbsp;&nbsp;store&nbsp;&nbsp;&nbsp;&nbsp;+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/mod&nbsp;&nbsp;&nbsp;and&nbsp;&nbsp;&nbsp;or</tt>
+<tt class='indentedcode'>xor&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;shift&nbsp;&nbsp;&nbsp;&nbsp;push&nbsp;&nbsp;&nbsp;pop&nbsp;&nbsp;&nbsp;&nbsp;0;</tt>
+<br/><br/>
+Memory
+<br/><br/>
+<tt class='indentedcode'>fetch-next&nbsp;&nbsp;&nbsp;&nbsp;store-next&nbsp;&nbsp;&nbsp;&nbsp;,&nbsp;&nbsp;&nbsp;&nbsp;s,</tt>
+<br/><br/>
+Strings
+<br/><br/>
+<tt class='indentedcode'>s:to-number&nbsp;&nbsp;&nbsp;&nbsp;s:eq?&nbsp;&nbsp;&nbsp;&nbsp;s:length</tt>
+<br/><br/>
+Flow Control
+<br/><br/>
+<tt class='indentedcode'>choose&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;&nbsp;&nbsp;&nbsp;-if&nbsp;&nbsp;&nbsp;&nbsp;repeat&nbsp;&nbsp;&nbsp;&nbsp;again</tt>
+<br/><br/>
+Compiler &amp; Interpreter
+<br/><br/>
+<tt class='indentedcode'>Compiler&nbsp;&nbsp;&nbsp;&nbsp;Heap&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;&nbsp;&nbsp;&nbsp;]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dictionary</tt>
+<tt class='indentedcode'>d:link&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;d:class&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;d:xt&nbsp;&nbsp;&nbsp;&nbsp;d:name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;d:add-header</tt>
+<tt class='indentedcode'>class:word&nbsp;&nbsp;class:primitive&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class:data&nbsp;&nbsp;class:macro</tt>
+<tt class='indentedcode'>prefix::&nbsp;&nbsp;&nbsp;&nbsp;prefix:#&nbsp;&nbsp;&nbsp;&nbsp;prefix:&amp;&nbsp;&nbsp;&nbsp;&nbsp;prefix:$</tt>
+<tt class='indentedcode'>interpret&nbsp;&nbsp;&nbsp;d:lookup&nbsp;&nbsp;&nbsp;&nbsp;err:notfound</tt>
+<br/><br/>
+Assembler
+<br/><br/>
+<tt class='indentedcode'>i&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;r</tt>
+<br/><br/>
+I <strong>could</strong> slightly reduce this. The $ prefix could be defined in
+higher level code, and I don't strictly <strong>need</strong> to expose the
+<span class="tt">fetch-next</span> and <span class="tt">store-next</span> here. But since the are already
+implemented as dependencies of the words in the kernel, it would
+be a bit wasteful to redefine them later in higher level code.
+<br/><br/>
+A recent change was the addition of the assembler into the
+kernel. This allows the higher levels to use assembly as needed,
+which gives more flexibility and allows for more optimal code
+in the standard library.
+<br/><br/>
+With these words the rest of the language can be built up. Note
+that the RETRO kernel does not provide any I/O words. It's assumed
+that the RETRO interfaces will add these as best suited for the
+systems they run on.
+<br/><br/>
+There is another small bit. All images start with a few key
+pointers in fixed offsets of memory. These are:
+<br/><br/>
+<tt class='indentedcode'>|&nbsp;Offset&nbsp;|&nbsp;Contains&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;------&nbsp;|&nbsp;---------------------------&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;lit&nbsp;call&nbsp;nop&nbsp;nop&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;Pointer&nbsp;to&nbsp;main&nbsp;entry&nbsp;point&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;Dictionary&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;Heap&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;RETRO&nbsp;version&nbsp;identifier&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<br/><br/>
+An interface can use the dictionary pointer and knowledge of the
+dictionary format for a specific RETRO version to identify the
+location of essential words like <span class="tt">interpret</span> and <span class="tt">err:notfound</span>
+when implementing the user facing interface.
+</p>
+</body></html>

@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title>.</title>
+<style type="text/css">
+
+    * { color: #000; background: #fff; max-width: 700px; }
+    tt, pre { background: #dedede; color: #111; font-family: monospace;
+             white-space: pre; display: block; width: 100%; }
+    .indentedcode { margin-left: 2em; margin-right: 2em; }
+    .codeblock {
+      background: #dedede; color: #111; font-family: monospace;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      padding: 7px;
+      display: block;
+    }
+
+    .indentedlist { margin-left: 2em; color: #000; }
+
+    span { white-space: pre; }
+    .text  { color: #000; white-space: pre; background: #dedede; }
+    .colon { color: #000; background: #dedede; }
+    .note  { color: #000; background: #dedede; }
+    .str   { color: #000; text-decoration: underline; background: #dedede; }
+    .num   { color: #000; background: #dedede; font-weight: bold; font-style: italic; }
+    .fnum  { color: #000; font-weight: bold; background: #dedede; }
+    .ptr   { color: #000; font-weight: bold; background: #dedede; }
+    .fetch { color: #000; font-style: italic; background: #dedede; }
+    .store { color: #000; font-style: italic; background: #dedede; }
+    .char  { color: #000; background: #dedede; }
+    .inst  { color: #000; background: #dedede; }
+    .defer { color: #000; background: #dedede; }
+    .imm   { color: #000; font-weight: bold; background: #dedede; }
+    .prim  { color: #000; font-weight: bolder; background: #dedede; }
+
+    .tt    { white-space: pre; font-family: monospace; background: #dedede; }
+
+    .h1, .h2, .h3, .h4 { white-space: normal; }
+    .h1 { font-size: 125%; }
+    .h2 { font-size: 120%; }
+    .h3 { font-size: 115%; }
+    .h4 { font-size: 110%; }
+    .hr { display: block; height: 2px; background: #000000; }
+</style>
+</head><body>
+<p><span class="h1">Working With Strings</span>
+<br/><br/>
+Strings in RETRO are NULL terminated sequences of values
+representing characters. Being NULL terminated, they can't
+contain a NULL (ASCII 0).
+<br/><br/>
+The character words in RETRO are built around ASCII, but
+strings can contain UTF8 encoded data if the host platform
+allows. Words like <span class="tt">s:length</span> will return the number of bytes,
+not the number of logical characters in this case.
+<br/><br/>
+<span class="h2">Prefix</span>
+<br/><br/>
+Strings begin with a single <span class="tt">'</span>.
+<br/><br/>
+<tt class='indentedcode'>'Hello</tt>
+<tt class='indentedcode'>'This_is_a_string</tt>
+<tt class='indentedcode'>'This_is_a_much_longer_string_12345_67890_!!!</tt>
+<br/><br/>
+RETRO will replace spaces with underscores. If you need both
+spaces and underscores in a string, escape the underscores and
+use <span class="tt">s:format</span>:
+<br/><br/>
+<tt class='indentedcode'>'This_has_spaces_and_under\_scored_words.&nbsp;s:format</tt>
+<br/><br/>
+<span class="h2">Namespace</span>
+<br/><br/>
+Words operating on strings are in the <span class="tt">s:</span> namespace.
+<br/><br/>
+<span class="h2">Lifetime</span>
+<br/><br/>
+At the interpreter, strings get allocated in a rotating buffer.
+This is used by the words operating on strings, so if you need
+to keep them around, use <span class="tt">s:keep</span> or <span class="tt">s:copy</span> to move them to
+more permanent storage.
+<br/><br/>
+In a definition, the string is compiled inline and so is in
+permanent memory.
+<br/><br/>
+You can manually manage the string lifetime by using <span class="tt">s:keep</span>
+to place it into permanent memory or <span class="tt">s:temp</span> to copy it to
+the rotating buffer.
+<br/><br/>
+<span class="h2">Mutability</span>
+<br/><br/>
+Strings are mutable. If you need to ensure that a string is
+not altered, make a copy before operating on it or see the
+individual glossary entries for notes on words that may do
+this automatically.
+<br/><br/>
+<span class="h2">Searching</span>
+<br/><br/>
+RETRO provides four words for searching within a string.
+<br/><br/>
+&bull; <span class="tt">s:contains-char?</span> <br/>
+&bull; <span class="tt">s:contains-string?</span><br/>
+&bull; <span class="tt">s:index-of</span><br/>
+&bull; <span class="tt">s:index-of-string</span><br/>
+<br/><br/>
+<span class="h2">Comparisons</span>
+<br/><br/>
+&bull; <span class="tt">s:eq?</span><br/>
+&bull; <span class="tt">s:case</span><br/>
+<br/><br/>
+<span class="h2">Extraction</span>
+<br/><br/>
+To obtain a new string containing the first <span class="tt">n</span> characters from
+a source string, use <span class="tt">s:left</span>:
+<br/><br/>
+<tt class='indentedcode'>'Hello_World&nbsp;#5&nbsp;s:left</tt>
+<br/><br/>
+To obtain a new string containing the last <span class="tt">n</span> characters from
+a source string, use <span class="tt">s:right</span>:
+<br/><br/>
+<tt class='indentedcode'>'Hello_World&nbsp;#5&nbsp;s:right</tt>
+<br/><br/>
+If you need to extract data from the middle of the string, use
+<span class="tt">s:substr</span>. This takes a string, the offset of the first
+character, and the number of characters to extract.
+<br/><br/>
+<tt class='indentedcode'>'Hello_World&nbsp;#3&nbsp;#5&nbsp;s:substr</tt>
+<br/><br/>
+<span class="h2">Joining</span>
+<br/><br/>
+You can use <span class="tt">s:append</span> or <span class="tt">s:prepend</span> to merge two strings.
+<br/><br/>
+<tt class='indentedcode'>'First&nbsp;'Second&nbsp;s:append</tt>
+<tt class='indentedcode'>'Second&nbsp;'First&nbsp;s:prepend</tt>
+<br/><br/>
+<span class="h2">Tokenization</span>
+<br/><br/>
+&bull; <span class="tt">s:tokenize</span><br/>
+&bull; <span class="tt">s:tokenize-on-string</span><br/>
+&bull; <span class="tt">s:split</span><br/>
+&bull; <span class="tt">s:split-on-string</span><br/>
+<br/><br/>
+<span class="h2">Conversions</span>
+<br/><br/>
+To convert the case of a string, RETRO provides <span class="tt">s:to-lower</span>
+and <span class="tt">s:to-upper</span>.
+<br/><br/>
+<span class="tt">s:to-number</span> is provided to convert a string to an integer
+value. This has a few limitations:
+<br/><br/>
+&bull; only supports decimal<br/>
+&bull; non-numeric characters will result in incorrect values<br/>
+<br/><br/>
+<span class="h2">Cleanup</span>
+<br/><br/>
+RETRO provides a handful of words for cleaning up strings.
+<br/><br/>
+<span class="tt">s:chop</span> will remove the last character from a string. This
+is done by replacing it with an ASCII:NULL.
+<br/><br/>
+<span class="tt">s:trim</span> removes leading and trailing whitespace from a string.
+For more control, there is also <span class="tt">s:trim-left</span> and <span class="tt">s:trim-right</span>
+which let you trim just the leading or trailing end as desired.
+<br/><br/>
+<span class="h2">Combinators</span>
+<br/><br/>
+&bull; <span class="tt">s:for-each</span><br/>
+&bull; <span class="tt">s:filter</span><br/>
+&bull; <span class="tt">s:map</span><br/>
+<br/><br/>
+<span class="h2">Other</span>
+<br/><br/>
+&bull; <span class="tt">s:evaluate</span><br/>
+&bull; <span class="tt">s:copy</span><br/>
+&bull; <span class="tt">s:reverse</span><br/>
+&bull; <span class="tt">s:hash</span><br/>
+&bull; <span class="tt">s:length</span><br/>
+&bull; <span class="tt">s:replace</span><br/>
+&bull; <span class="tt">s:format</span><br/>
+&bull; <span class="tt">s:empty</span><br/>
+<br/><br/>
+<span class="h2">Controlling The Temporary Buffers</span>
+<br/><br/>
+As dicussed in the Lifetime subsection, temporary strings are
+allocated in a rotating buffer. The details of this can be
+altered by updating two variables.
+<br/><br/>
+<tt class='indentedcode'>|&nbsp;Variable&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;Holds&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;-------------&nbsp;|&nbsp;----------------------------------------&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;TempStrings&nbsp;&nbsp;&nbsp;|&nbsp;The&nbsp;number&nbsp;of&nbsp;temporary&nbsp;strings&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;TempStringMax&nbsp;|&nbsp;The&nbsp;maximum&nbsp;length&nbsp;of&nbsp;a&nbsp;temporary&nbsp;string&nbsp;|</tt>
+<br/><br/>
+For example, to increase the number of temporary strings to
+48:
+<br/><br/>
+<tt class='indentedcode'>#48&nbsp;!TempStrings</tt>
+<br/><br/>
+The defaults are:
+<br/><br/>
+<tt class='indentedcode'>|&nbsp;Variable&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;Default&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;-------------&nbsp;|&nbsp;-------&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;TempStrings&nbsp;&nbsp;&nbsp;|&nbsp;32&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;TempStringMax&nbsp;|&nbsp;512&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<br/><br/>
+It's also important to note that altering these will affect
+the memory map for all temporary buffers. Do not use anything
+already in the buffers after updating these or you will risk
+data corruption and possible crashes.
+</p>
+</body></html>

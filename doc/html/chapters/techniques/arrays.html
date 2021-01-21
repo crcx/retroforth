@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title>.</title>
+<style type="text/css">
+
+    * { color: #000; background: #fff; max-width: 700px; }
+    tt, pre { background: #dedede; color: #111; font-family: monospace;
+             white-space: pre; display: block; width: 100%; }
+    .indentedcode { margin-left: 2em; margin-right: 2em; }
+    .codeblock {
+      background: #dedede; color: #111; font-family: monospace;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      padding: 7px;
+      display: block;
+    }
+
+    .indentedlist { margin-left: 2em; color: #000; }
+
+    span { white-space: pre; }
+    .text  { color: #000; white-space: pre; background: #dedede; }
+    .colon { color: #000; background: #dedede; }
+    .note  { color: #000; background: #dedede; }
+    .str   { color: #000; text-decoration: underline; background: #dedede; }
+    .num   { color: #000; background: #dedede; font-weight: bold; font-style: italic; }
+    .fnum  { color: #000; font-weight: bold; background: #dedede; }
+    .ptr   { color: #000; font-weight: bold; background: #dedede; }
+    .fetch { color: #000; font-style: italic; background: #dedede; }
+    .store { color: #000; font-style: italic; background: #dedede; }
+    .char  { color: #000; background: #dedede; }
+    .inst  { color: #000; background: #dedede; }
+    .defer { color: #000; background: #dedede; }
+    .imm   { color: #000; font-weight: bold; background: #dedede; }
+    .prim  { color: #000; font-weight: bolder; background: #dedede; }
+
+    .tt    { white-space: pre; font-family: monospace; background: #dedede; }
+
+    .h1, .h2, .h3, .h4 { white-space: normal; }
+    .h1 { font-size: 125%; }
+    .h2 { font-size: 120%; }
+    .h3 { font-size: 115%; }
+    .h4 { font-size: 110%; }
+    .hr { display: block; height: 2px; background: #000000; }
+</style>
+</head><body>
+<p><span class="h1">Working With Arrays</span>
+<br/><br/>
+RETRO offers a number of words for operating on statically sized
+arrays.
+<br/><br/>
+<span class="h2">Namespace</span>
+<br/><br/>
+The words operating on arrays are kept in an <span class="tt">a:</span> namespace.
+<br/><br/>
+<span class="h2">Creating Arrays</span>
+<br/><br/>
+The easiest way to create an array is to wrap the values in a
+<span class="tt">{</span> and <span class="tt">}</span> pair:
+<br/><br/>
+<span class='codeblock'><span class="tt">```</span><br/><span class="tt"><span class='imm'>{</span> <span class='num'>#1</span> <span class='num'>#2</span> <span class='num'>#3</span> <span class='num'>#4</span> <span class='imm'>}</span> </span><br/>
+<span class="tt"><span class='imm'>{</span> <span class='str'>'this</span> <span class='str'>'is</span> <span class='str'>'an</span> <span class='str'>'array</span> <span class='str'>'of</span> <span class='str'>'strings</span> <span class='imm'>}</span> </span><br/>
+<span class="tt"><span class='imm'>{</span> <span class='str'>'this</span> <span class='str'>'is</span> <span class='str'>'a</span> <span class='str'>'mixed</span> <span class='str'>'array</span> <span class='num'>#1</span> <span class='num'>#2</span> <span class='num'>#3</span> <span class='imm'>}</span> </span><br/>
+<span class="tt">```</span></span><br/><br/>
+You can also make an array from a quotation which returns
+values and the number of values to store in the a:
+<br/><br/>
+<span class='codeblock'><span class="tt">```</span><br/><span class="tt"><span class='imm'>[</span> <span class='num'>#1</span> <span class='num'>#2</span> <span class='num'>#3</span> &nbsp;<span class='num'>#3</span> <span class='imm'>]</span> a:counted-results </span><br/>
+<span class="tt"><span class='imm'>[</span> <span class='num'>#1</span> <span class='num'>#2</span> <span class='num'>#3</span> &nbsp;<span class='num'>#3</span> <span class='imm'>]</span> a:make </span><br/>
+<span class="tt">```</span></span><br/><br/>
+<span class="h2">Accessing Elements</span>
+<br/><br/>
+You can access a specific value with <span class="tt">a:th</span> and <span class="tt">fetch</span> or
+<span class="tt">store</span>:
+<br/><br/>
+<span class='codeblock'><span class="tt">```</span><br/><span class="tt"><span class='imm'>{</span> <span class='num'>#1</span> <span class='num'>#2</span> <span class='num'>#3</span> <span class='num'>#4</span> <span class='imm'>}</span> <span class='num'>#3</span> a:th <span class='prim'>fetch</span> </span><br/>
+<span class="tt">```</span></span><br/><br/>
+<span class="h2">Find The Length</span>
+<br/><br/>
+Use <span class="tt">a:length</span> to find the size of the array.
+<br/><br/>
+<span class='codeblock'><span class="tt">```</span><br/><span class="tt"><span class='imm'>{</span> <span class='num'>#1</span> <span class='num'>#2</span> <span class='num'>#3</span> <span class='num'>#4</span> <span class='imm'>}</span> a:length </span><br/>
+<span class="tt">```</span></span><br/><br/>
+<span class="h2">Duplicate</span>
+<br/><br/>
+Use <span class="tt">a:dup</span> to make a copy of an a:
+<br/><br/>
+<span class='codeblock'><span class="tt">```</span><br/><span class="tt"><span class='imm'>{</span> <span class='num'>#1</span> <span class='num'>#2</span> <span class='num'>#3</span> <span class='num'>#4</span> <span class='imm'>}</span> a:dup </span><br/>
+<span class="tt">```</span></span><br/><br/>
+<span class="h2">Filtering</span>
+<br/><br/>
+RETRO provides <span class="tt">a:filter</span> which extracts matching values
+from an array. This is used like:
+<br/><br/>
+<span class='codeblock'><span class="tt">```</span><br/><span class="tt"><span class='imm'>{</span> <span class='num'>#1</span> <span class='num'>#2</span> <span class='num'>#3</span> <span class='num'>#4</span> <span class='num'>#5</span> <span class='num'>#6</span> <span class='num'>#7</span> <span class='num'>#8</span> <span class='imm'>}</span> <span class='imm'>[</span> n:even? <span class='imm'>]</span> a:filter </span><br/>
+<span class="tt">```</span></span><br/><br/>
+The quote will be passed each value in the array and should
+return TRUE or FALSE. Values that lead to TRUE will be collected
+into a new array.
+<br/><br/>
+<span class="h2">Mapping</span>
+<br/><br/>
+<span class="tt">a:map</span> applies a quotation to each item in an array and
+constructs a new array from the returned values.
+<br/><br/>
+Example:
+<br/><br/>
+<span class='codeblock'><span class="tt">```</span><br/><span class="tt"><span class='imm'>{</span> <span class='num'>#1</span> <span class='num'>#2</span> <span class='num'>#3</span> <span class='imm'>}</span> <span class='imm'>[</span> <span class='num'>#10</span> <span class='prim'>*</span> <span class='imm'>]</span> a:map </span><br/>
+<span class="tt">```</span></span><br/><br/>
+<span class="h2">Reduce</span>
+<br/><br/>
+<span class="tt">a:reduce</span> takes an array, a starting value, and a quote. It
+executes the quote once for each item in the array, passing the
+item and the value to the quote. The quote should consume both
+and return a new value.
+<br/><br/>
+<span class='codeblock'><span class="tt">```</span><br/><span class="tt"><span class='imm'>{</span> <span class='num'>#1</span> <span class='num'>#2</span> <span class='num'>#3</span> <span class='imm'>}</span> <span class='num'>#0</span> <span class='imm'>[</span> <span class='prim'>+</span> <span class='imm'>]</span> a:reduce </span><br/>
+<span class="tt">```</span></span><br/><br/>
+<span class="h2">Search</span>
+<br/><br/>
+RETRO provides <span class="tt">a:contains?</span> and <span class="tt">a:contains-string?</span>
+to search an array for a value (either a number or string) and
+return either TRUE or FALSE.
+<br/><br/>
+<span class='codeblock'><span class="tt">```</span><br/><span class="tt"><span class='num'>#100</span> &nbsp;<span class='imm'>{</span> <span class='num'>#1</span> <span class='num'>#2</span> <span class='num'>#3</span> <span class='imm'>}</span> a:contains? </span><br/>
+<span class="tt"><span class='str'>'test</span> <span class='imm'>{</span> <span class='str'>'abc</span> <span class='str'>'def</span> <span class='str'>'test</span> <span class='str'>'ghi</span> <span class='imm'>}</span> a:contains-string? </span><br/>
+<span class="tt">```</span></span><br/><br/>
+<span class="h2">Implementation</span>
+<br/><br/>
+In memory, an array is a count followed by the values. As an
+example, if you have an array:
+<br/><br/>
+<tt class='indentedcode'>{&nbsp;#10&nbsp;#20&nbsp;#30&nbsp;}</tt>
+<br/><br/>
+In memory this would be setup as:
+<br/><br/>
+<tt class='indentedcode'>|&nbsp;Offset&nbsp;|&nbsp;Value&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;------&nbsp;|&nbsp;-----&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;000&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;001&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;10&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;002&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;20&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;003&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;30&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<br/><br/>
+You can construct one on the fly by keeping a pointer to
+<span class="tt">here</span> and using <span class="tt">,</span> to place the values. E.g.,
+<br/><br/>
+<tt class='indentedcode'>here&nbsp;[&nbsp;#3&nbsp;,&nbsp;#10&nbsp;,&nbsp;#20&nbsp;,&nbsp;#30&nbsp;,&nbsp;]&nbsp;dip</tt>
+<br/><br/>
+An example of this can be seen in this excerpt from an example
+(<strong>example/Primes.forth</strong>):
+<br/><br/>
+<tt class='indentedcode'>:create-set&nbsp;(-a)&nbsp;</tt>
+<tt class='indentedcode'>&nbsp;&nbsp;&nbsp;&nbsp;here&nbsp;#3000&nbsp;,&nbsp;#2&nbsp;#3002&nbsp;[&nbsp;dup&nbsp;,&nbsp;n:inc&nbsp;]&nbsp;times&nbsp;drop&nbsp;;</tt>
+</p>
+</body></html>

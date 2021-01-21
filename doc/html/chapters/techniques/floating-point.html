@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title>.</title>
+<style type="text/css">
+
+    * { color: #000; background: #fff; max-width: 700px; }
+    tt, pre { background: #dedede; color: #111; font-family: monospace;
+             white-space: pre; display: block; width: 100%; }
+    .indentedcode { margin-left: 2em; margin-right: 2em; }
+    .codeblock {
+      background: #dedede; color: #111; font-family: monospace;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      padding: 7px;
+      display: block;
+    }
+
+    .indentedlist { margin-left: 2em; color: #000; }
+
+    span { white-space: pre; }
+    .text  { color: #000; white-space: pre; background: #dedede; }
+    .colon { color: #000; background: #dedede; }
+    .note  { color: #000; background: #dedede; }
+    .str   { color: #000; text-decoration: underline; background: #dedede; }
+    .num   { color: #000; background: #dedede; font-weight: bold; font-style: italic; }
+    .fnum  { color: #000; font-weight: bold; background: #dedede; }
+    .ptr   { color: #000; font-weight: bold; background: #dedede; }
+    .fetch { color: #000; font-style: italic; background: #dedede; }
+    .store { color: #000; font-style: italic; background: #dedede; }
+    .char  { color: #000; background: #dedede; }
+    .inst  { color: #000; background: #dedede; }
+    .defer { color: #000; background: #dedede; }
+    .imm   { color: #000; font-weight: bold; background: #dedede; }
+    .prim  { color: #000; font-weight: bolder; background: #dedede; }
+
+    .tt    { white-space: pre; font-family: monospace; background: #dedede; }
+
+    .h1, .h2, .h3, .h4 { white-space: normal; }
+    .h1 { font-size: 125%; }
+    .h2 { font-size: 120%; }
+    .h3 { font-size: 115%; }
+    .h4 { font-size: 110%; }
+    .hr { display: block; height: 2px; background: #000000; }
+</style>
+</head><body>
+<p><span class="h1">Working With Floating Point</span>
+<br/><br/>
+Some RETRO systems include support for floating point numbers.
+When present, this is built over the system <span class="tt">libm</span> using the
+C <span class="tt">double</span> type.
+<br/><br/>
+Floating point values are typically 64 bit IEEE 754 double
+precision (1 bit for the sign, 11 bits for the exponent, and
+the remaining 52 bits for the value), i.e. 15 decimal digits
+of precision.
+<br/><br/>
+<span class="h2">Prefix</span>
+<br/><br/>
+Floating point numbers start with a <span class="tt">.</span>
+<br/><br/>
+Examples:
+<br/><br/>
+   Token    Value
+<tt class='indentedcode'>.1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.0</tt>
+<tt class='indentedcode'>.0.5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0.5</tt>
+<tt class='indentedcode'>.-.4&nbsp;&nbsp;&nbsp;&nbsp;-0.4</tt>
+<tt class='indentedcode'>.1.3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.3</tt>
+<br/><br/>
+<span class="h2">Namespace</span>
+<br/><br/>
+Floating point words are in the <span class="tt">f:</span> namespace. There is also
+a related <span class="tt">e:</span> namespace for <strong>encoded values</strong>, which allows
+storing of floats in standard memory.
+<br/><br/>
+<span class="h2">Operation</span>
+<br/><br/>
+Floating point values exist on a separate stack, and are bigger
+than the standard memory cells, so can not be directly stored
+and fetched from memory.
+<br/><br/>
+The floating point system also provides an alternate stack that
+can be used to temporarily store values.
+<br/><br/>
+The following words exist for arranging values on the floating
+point stack. These are direct analogs to the non-prefiexd words
+for dealing with the data stack.
+<br/><br/>
+&bull; <span class="tt">f:nip</span><br/>
+&bull; <span class="tt">f:over</span><br/>
+&bull; <span class="tt">f:depth</span><br/>
+&bull; <span class="tt">f:drop</span><br/>
+&bull; <span class="tt">f:drop-pair</span><br/>
+&bull; <span class="tt">f:dup</span><br/>
+&bull; <span class="tt">f:dup-pair</span><br/>
+&bull; <span class="tt">f:dump-stack</span><br/>
+&bull; <span class="tt">f:tuck</span><br/>
+&bull; <span class="tt">f:swap</span><br/>
+&bull; <span class="tt">f:rot</span><br/>
+<br/><br/>
+For the secondary floating point stack, the following words are
+provided:
+<br/><br/>
+&bull; <span class="tt">f:push</span><br/>
+&bull; <span class="tt">f:pop</span><br/>
+&bull; <span class="tt">f:adepth</span><br/>
+&bull; <span class="tt">f:dump-astack</span><br/>
+<br/><br/>
+<span class="h2">Constants</span>
+<br/><br/>
+<tt class='indentedcode'>|&nbsp;Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;Returns&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;--------&nbsp;|&nbsp;-----------------&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;`f:E`&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;Euler's&nbsp;number&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;`f:-INF`&nbsp;|&nbsp;Negative&nbsp;infinity&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;`f:INF`&nbsp;&nbsp;|&nbsp;Positive&nbsp;infinity&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;`f:NAN`&nbsp;&nbsp;|&nbsp;Not&nbsp;a&nbsp;Number&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;`f:PI`&nbsp;&nbsp;&nbsp;|&nbsp;PI&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<br/><br/>
+<span class="h2">Comparisons</span>
+<br/><br/>
+The basic set of comparators are the same as those for
+operating on integers. These are:
+<br/><br/>
+&bull; <span class="tt">f:-eq?</span><br/>
+&bull; <span class="tt">f:between?</span><br/>
+&bull; <span class="tt">f:eq?</span><br/>
+&bull; <span class="tt">f:gt?</span><br/>
+&bull; <span class="tt">f:lt?</span><br/>
+&bull; <span class="tt">f:negative?</span><br/>
+&bull; <span class="tt">f:positive?</span><br/>
+&bull; <span class="tt">f:case</span><br/>
+<br/><br/>
+There are also a few additions for comparing to special values
+like infinity and NaN.
+<br/><br/>
+&bull; <span class="tt">f:-inf?</span><br/>
+&bull; <span class="tt">f:inf?</span><br/>
+&bull; <span class="tt">f:nan?</span><br/>
+<br/><br/>
+<span class="h2">Basic Math</span>
+<br/><br/>
+&bull; <span class="tt">f:*</span><br/>
+&bull; <span class="tt">f:+</span><br/>
+&bull; <span class="tt">f:-</span><br/>
+&bull; <span class="tt">f:/</span><br/>
+&bull; <span class="tt">f:abs</span><br/>
+&bull; <span class="tt">f:floor</span><br/>
+&bull; <span class="tt">f:inc</span><br/>
+&bull; <span class="tt">f:limit</span><br/>
+&bull; <span class="tt">f:max</span><br/>
+&bull; <span class="tt">f:min</span><br/>
+&bull; <span class="tt">f:negate</span><br/>
+&bull; <span class="tt">f:power</span><br/>
+&bull; <span class="tt">f:ceiling</span><br/>
+&bull; <span class="tt">f:dec</span><br/>
+&bull; <span class="tt">f:log</span><br/>
+&bull; <span class="tt">f:sqrt</span><br/>
+&bull; <span class="tt">f:square</span><br/>
+&bull; <span class="tt">f:round</span><br/>
+&bull; <span class="tt">f:sign</span><br/>
+&bull; <span class="tt">f:signed-sqrt</span><br/>
+&bull; <span class="tt">f:signed-square</span><br/>
+<br/><br/>
+<span class="h2">Geometry</span>
+<br/><br/>
+RETRO provides a small number of words for doing geometric
+related calculations.
+<br/><br/>
+| Word     | Returns      |
+| -------- | ------------ |
+| <span class="tt">f:acos</span> | arc cosine   |
+| <span class="tt">f:asin</span> | arc sine     |
+| <span class="tt">f:atan</span> | arc tangent  |
+| <span class="tt">f:cos</span>  | cosine       |
+| <span class="tt">f:sin</span>  | sine         |
+| <span class="tt">f:tan</span>  | tangent      |
+<br/><br/>
+<span class="h2">Storage and Retrieval</span>
+<br/><br/>
+By leveraging the encoded value functions, RETRO is able to
+allow storage of floating point values in memory. This does
+have a tradeoff in accuracy as the memory cells are considerably
+smaller than a full floating point size.
+<br/><br/>
+You can use <span class="tt">f:fetch</span> to fetch a floating point value and
+<span class="tt">f:store</span> to store one.
+<br/><br/>
+If you need more precision, try Kiyoshi Yoneda's FloatVar
+example (<span class="tt">example/FloatVar.forth</span>), which includes words to
+store and retrieve values using multiple cells.
+<br/><br/>
+&bull; <span class="tt">f:to-number</span><br/>
+&bull; <span class="tt">f:to-string</span><br/>
+<br/><br/>
+<span class="h2">I/O</span>
+<br/><br/>
+The floating point vocabulary has a single I/O word, <span class="tt">f:put</span>,
+for the display of floating point numbers.
+<br/><br/>
+<span class="h2">Encoded Values</span>
+<br/><br/>
+RETRO provides a means of encoding and decoding floating point
+values into standard integer cells. This is based on the paper
+"Encoding floating point values to shorter integers" by Kiyoshi
+Yoneda and Charles Childers.
+<br/><br/>
+&bull; <span class="tt">f:E1</span><br/>
+&bull; <span class="tt">f:to-e</span><br/>
+&bull; <span class="tt">e:-INF</span><br/>
+&bull; <span class="tt">e:-inf?</span><br/>
+&bull; <span class="tt">e:INF</span><br/>
+&bull; <span class="tt">e:MAX</span><br/>
+&bull; <span class="tt">e:MIN</span><br/>
+&bull; <span class="tt">e:NAN</span><br/>
+&bull; <span class="tt">e:clip</span><br/>
+&bull; <span class="tt">e:inf?</span><br/>
+&bull; <span class="tt">e:max?</span><br/>
+&bull; <span class="tt">e:min?</span><br/>
+&bull; <span class="tt">e:n?</span><br/>
+&bull; <span class="tt">e:nan?</span><br/>
+&bull; <span class="tt">e:put</span><br/>
+&bull; <span class="tt">e:to-f</span><br/>
+&bull; <span class="tt">e:zero?</span><br/>
+</p>
+</body></html>

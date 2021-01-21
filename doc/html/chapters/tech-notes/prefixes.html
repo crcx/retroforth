@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title>.</title>
+<style type="text/css">
+
+    * { color: #000; background: #fff; max-width: 700px; }
+    tt, pre { background: #dedede; color: #111; font-family: monospace;
+             white-space: pre; display: block; width: 100%; }
+    .indentedcode { margin-left: 2em; margin-right: 2em; }
+    .codeblock {
+      background: #dedede; color: #111; font-family: monospace;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      padding: 7px;
+      display: block;
+    }
+
+    .indentedlist { margin-left: 2em; color: #000; }
+
+    span { white-space: pre; }
+    .text  { color: #000; white-space: pre; background: #dedede; }
+    .colon { color: #000; background: #dedede; }
+    .note  { color: #000; background: #dedede; }
+    .str   { color: #000; text-decoration: underline; background: #dedede; }
+    .num   { color: #000; background: #dedede; font-weight: bold; font-style: italic; }
+    .fnum  { color: #000; font-weight: bold; background: #dedede; }
+    .ptr   { color: #000; font-weight: bold; background: #dedede; }
+    .fetch { color: #000; font-style: italic; background: #dedede; }
+    .store { color: #000; font-style: italic; background: #dedede; }
+    .char  { color: #000; background: #dedede; }
+    .inst  { color: #000; background: #dedede; }
+    .defer { color: #000; background: #dedede; }
+    .imm   { color: #000; font-weight: bold; background: #dedede; }
+    .prim  { color: #000; font-weight: bolder; background: #dedede; }
+
+    .tt    { white-space: pre; font-family: monospace; background: #dedede; }
+
+    .h1, .h2, .h3, .h4 { white-space: normal; }
+    .h1 { font-size: 125%; }
+    .h2 { font-size: 120%; }
+    .h3 { font-size: 115%; }
+    .h4 { font-size: 110%; }
+    .hr { display: block; height: 2px; background: #000000; }
+</style>
+</head><body>
+<p><span class="h2">Prefixes as a Language Element</span>
+<br/><br/>
+A big change in RETRO 12 was the elimination of the traditional
+parser from the language. This was a sacrifice due to the lack
+of an I/O model. RETRO has no way to know <strong>how</strong> input is given
+to the <span class="tt">interpret</span> word, or whether anything else will ever be
+passed into it.
+<br/><br/>
+And so <span class="tt">interpret</span> operates only on the current token. The core
+language does not track what came before or attempt to guess at
+what might come in the future.
+<br/><br/>
+This leads into the prefixes. RETRO 11 had a complicated system
+for prefixes, with different types of prefixes for words that
+parsed ahead (e.g., strings) and words that operated on the
+current token (e.g., <span class="tt">@</span>). RETRO 12 eliminates all of these in
+favor of just having a single prefix model.
+<br/><br/>
+The first thing <span class="tt">interpret</span> does is look to see if the first
+character in a token matches a <span class="tt">prefix:</span> word. If it does, it
+passes the rest of the token as a string pointer to the prefix
+specific handler to deal with. If there is no valid prefix
+found, it tries to find it in the dictionary. Assuming that it
+finds the words, it passes the <span class="tt">d:xt</span> field to the handler that
+<span class="tt">d:class</span> points to. Otherwise it calls <span class="tt">err:notfound</span>.
+<br/><br/>
+This has an important implication: <strong>words can not reliably
+have names that start with a prefix character.</strong>
+<br/><br/>
+It also simplifies things. Anything that would normally parse
+becomes a prefix handler. So creating a new word? Use the <span class="tt">:</span>
+prefix. Strings? Use <span class="tt">'</span>. Pointers? Try <span class="tt">&amp;</span>. And so on. E.g.,
+<br/><br/>
+<tt class='indentedcode'>In&nbsp;ANS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;In&nbsp;RETRO</tt>
+<tt class='indentedcode'>:&nbsp;foo&nbsp;...&nbsp;;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;:foo&nbsp;...&nbsp;;</tt>
+<tt class='indentedcode'>'&nbsp;foo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&amp;foo</tt>
+<tt class='indentedcode'>:&nbsp;bar&nbsp;...&nbsp;[']&nbsp;foo&nbsp;;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;:bar&nbsp;...&nbsp;&amp;foo&nbsp;;</tt>
+<tt class='indentedcode'>s"&nbsp;hello&nbsp;world!"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;'hello_world!</tt>
+<br/><br/>
+If you are familiar with ColorForth, prefixes are a similar
+idea to colors, but can be defined by the user as normal words.
+<br/><br/>
+After doing this for quite a while I rather like it. I can see
+why Chuck Moore eventually went towards ColorForth as using
+color (or prefixes in my case) does simplify the implementation
+in many ways.
+</p>
+</body></html>

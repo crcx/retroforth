@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title>.</title>
+<style type="text/css">
+
+    * { color: #000; background: #fff; max-width: 700px; }
+    tt, pre { background: #dedede; color: #111; font-family: monospace;
+             white-space: pre; display: block; width: 100%; }
+    .indentedcode { margin-left: 2em; margin-right: 2em; }
+    .codeblock {
+      background: #dedede; color: #111; font-family: monospace;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      padding: 7px;
+      display: block;
+    }
+
+    .indentedlist { margin-left: 2em; color: #000; }
+
+    span { white-space: pre; }
+    .text  { color: #000; white-space: pre; background: #dedede; }
+    .colon { color: #000; background: #dedede; }
+    .note  { color: #000; background: #dedede; }
+    .str   { color: #000; text-decoration: underline; background: #dedede; }
+    .num   { color: #000; background: #dedede; font-weight: bold; font-style: italic; }
+    .fnum  { color: #000; font-weight: bold; background: #dedede; }
+    .ptr   { color: #000; font-weight: bold; background: #dedede; }
+    .fetch { color: #000; font-style: italic; background: #dedede; }
+    .store { color: #000; font-style: italic; background: #dedede; }
+    .char  { color: #000; background: #dedede; }
+    .inst  { color: #000; background: #dedede; }
+    .defer { color: #000; background: #dedede; }
+    .imm   { color: #000; font-weight: bold; background: #dedede; }
+    .prim  { color: #000; font-weight: bolder; background: #dedede; }
+
+    .tt    { white-space: pre; font-family: monospace; background: #dedede; }
+
+    .h1, .h2, .h3, .h4 { white-space: normal; }
+    .h1 { font-size: 125%; }
+    .h2 { font-size: 120%; }
+    .h3 { font-size: 115%; }
+    .h4 { font-size: 110%; }
+    .hr { display: block; height: 2px; background: #000000; }
+</style>
+</head><body>
+<p><span class="h1">Obtaining RETRO</span>
+<br/><br/>
+<span class="h2">Stable Releases</span>
+<br/><br/>
+I periodically make stable releases. This will typically happen
+quarterly.
+<br/><br/>
+&bull; http://forthworks.com/retro<br/>
+&bull; http://forth.works<br/>
+<br/><br/>
+<span class="h2">Snapshots</span>
+<br/><br/>
+A lot of development happens between releases. I make snapshots
+of my working source tree nightly (and often more often).
+<br/><br/>
+The latest snapshot can be downloaded from the following stable
+URLs:
+<br/><br/>
+&bull; http://forthworks.com/retro/r/latest.tar.gz<br/>
+&bull; gopher://forthworks.com/9/retro/r/latest.tar.gz<br/>
+<br/><br/>
+<span class="h2">Fossil Repository</span>
+<br/><br/>
+I use a Fossil repository to manage development. To obtain a
+copy of the repository install Fossil and:
+<br/><br/>
+<tt class='indentedcode'>fossil&nbsp;clone&nbsp;http://forthworks.com:8000&nbsp;retro.fossil</tt>
+<tt class='indentedcode'>mkdir&nbsp;retro</tt>
+<tt class='indentedcode'>cd&nbsp;retro</tt>
+<tt class='indentedcode'>fossil&nbsp;open&nbsp;/path/to/retro.fossil</tt>
+<br/><br/>
+See the Fossil documentation for details on using Fossil to
+keep your local copy of the repository current.
+<br/><br/>
+This will let you stay current with my latest changes faster
+than the snapshots, but you may occasionally encounter bigger
+problems as some commits may be in a partially broken state.
+<br/><br/>
+If you have problems, check the version of Fossil you are
+using. I am currently using Fossil 2.10, you may experience
+issues checking out or cloning if using older versions.
+<br/><br/>
+<span class="h2">git Repository</span>
+<br/><br/>
+There is now a read-only mirror of the fossil repository
+provided via git. This is hosted on sr.ht.
+<br/><br/>
+<tt class='indentedcode'>git&nbsp;clone&nbsp;https://git.sr.ht/~crc_/retroforth</tt>
+<br/><br/>
+<span class="h2">Notes</span>
+<br/><br/>
+I personally recommend using either a recent snapshot or a
+build from one of the repositories. This will reflect the
+latest system as I use it, and are normally reliable as I
+run them daily for my production systems.
+</p>
+</body></html>

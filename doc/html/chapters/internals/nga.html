@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title>.</title>
+<style type="text/css">
+
+    * { color: #000; background: #fff; max-width: 700px; }
+    tt, pre { background: #dedede; color: #111; font-family: monospace;
+             white-space: pre; display: block; width: 100%; }
+    .indentedcode { margin-left: 2em; margin-right: 2em; }
+    .codeblock {
+      background: #dedede; color: #111; font-family: monospace;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      padding: 7px;
+      display: block;
+    }
+
+    .indentedlist { margin-left: 2em; color: #000; }
+
+    span { white-space: pre; }
+    .text  { color: #000; white-space: pre; background: #dedede; }
+    .colon { color: #000; background: #dedede; }
+    .note  { color: #000; background: #dedede; }
+    .str   { color: #000; text-decoration: underline; background: #dedede; }
+    .num   { color: #000; background: #dedede; font-weight: bold; font-style: italic; }
+    .fnum  { color: #000; font-weight: bold; background: #dedede; }
+    .ptr   { color: #000; font-weight: bold; background: #dedede; }
+    .fetch { color: #000; font-style: italic; background: #dedede; }
+    .store { color: #000; font-style: italic; background: #dedede; }
+    .char  { color: #000; background: #dedede; }
+    .inst  { color: #000; background: #dedede; }
+    .defer { color: #000; background: #dedede; }
+    .imm   { color: #000; font-weight: bold; background: #dedede; }
+    .prim  { color: #000; font-weight: bolder; background: #dedede; }
+
+    .tt    { white-space: pre; font-family: monospace; background: #dedede; }
+
+    .h1, .h2, .h3, .h4 { white-space: normal; }
+    .h1 { font-size: 125%; }
+    .h2 { font-size: 120%; }
+    .h3 { font-size: 115%; }
+    .h4 { font-size: 110%; }
+    .hr { display: block; height: 2px; background: #000000; }
+</style>
+</head><body>
+<p><span class="h1">Internals: Nga Virtual Machine</span>
+<br/><br/>
+<span class="h2">Overview</span>
+<br/><br/>
+At the heart of RETRO is a simple MISC (minimal instruction
+set computer) processor for a dual stack architecture.
+<br/><br/>
+This is a very simple and straightforward system. There are
+30 instructions. The memory is a linear array of signed 32
+bit values. And there are two stacks: one for data and one
+for return addresses.
+<br/><br/>
+<span class="h2">Instruction Table</span>
+<br/><br/>
+<tt class='indentedcode'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Stacks&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;Opcode&nbsp;|&nbsp;Muri&nbsp;|&nbsp;Full&nbsp;Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;Data&nbsp;&nbsp;|&nbsp;Address&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;------&nbsp;|&nbsp;----&nbsp;|&nbsp;------------------&nbsp;|&nbsp;-----&nbsp;|&nbsp;-------&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;..&nbsp;&nbsp;&nbsp;|&nbsp;nop&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;li&nbsp;&nbsp;&nbsp;|&nbsp;lit&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;-n&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;du&nbsp;&nbsp;&nbsp;|&nbsp;dup&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;n-nn&nbsp;|&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;dr&nbsp;&nbsp;&nbsp;|&nbsp;drop&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;n-&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;&nbsp;4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;sw&nbsp;&nbsp;&nbsp;|&nbsp;swap&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;xy-yx&nbsp;|&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;&nbsp;5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;pu&nbsp;&nbsp;&nbsp;|&nbsp;push&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;n-&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;-n&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;&nbsp;6&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;po&nbsp;&nbsp;&nbsp;|&nbsp;pop&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;-n&nbsp;&nbsp;|&nbsp;&nbsp;n-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;&nbsp;7&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;ju&nbsp;&nbsp;&nbsp;|&nbsp;jump&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;a-&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;&nbsp;8&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;ca&nbsp;&nbsp;&nbsp;|&nbsp;call&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;a-&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;-A&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;&nbsp;9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;cc&nbsp;&nbsp;&nbsp;|&nbsp;conditional&nbsp;call&nbsp;&nbsp;&nbsp;|&nbsp;af-&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;-A&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;10&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;re&nbsp;&nbsp;&nbsp;|&nbsp;return&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;A-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;11&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;eq&nbsp;&nbsp;&nbsp;|&nbsp;equality&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;xy-f&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;12&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;ne&nbsp;&nbsp;&nbsp;|&nbsp;inequality&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;xy-f&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;13&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;lt&nbsp;&nbsp;&nbsp;|&nbsp;less&nbsp;than&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;xy-f&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;14&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;gt&nbsp;&nbsp;&nbsp;|&nbsp;greater&nbsp;than&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;xy-f&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;15&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;fe&nbsp;&nbsp;&nbsp;|&nbsp;fetch&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;a-n&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;16&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;st&nbsp;&nbsp;&nbsp;|&nbsp;store&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;na-&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;17&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;ad&nbsp;&nbsp;&nbsp;|&nbsp;addition&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;xy-n&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;18&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;su&nbsp;&nbsp;&nbsp;|&nbsp;subtraction&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;xy-n&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;19&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;mu&nbsp;&nbsp;&nbsp;|&nbsp;multiplication&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;xy-n&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;20&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;di&nbsp;&nbsp;&nbsp;|&nbsp;divide&nbsp;&amp;&nbsp;remainder&nbsp;|&nbsp;xy-rq&nbsp;|&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;21&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;an&nbsp;&nbsp;&nbsp;|&nbsp;bitwise&nbsp;and&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;xy-n&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;22&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;or&nbsp;&nbsp;&nbsp;|&nbsp;bitwise&nbsp;or&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;xy-n&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;23&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;xo&nbsp;&nbsp;&nbsp;|&nbsp;bitwise&nbsp;xor&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;xy-n&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;24&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;sh&nbsp;&nbsp;&nbsp;|&nbsp;shift&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;xy-n&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;25&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;zr&nbsp;&nbsp;&nbsp;|&nbsp;zero&nbsp;return&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;n-?&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;26&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;ha&nbsp;&nbsp;&nbsp;|&nbsp;halt&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;27&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;ie&nbsp;&nbsp;&nbsp;|&nbsp;i/o&nbsp;enumerate&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;-n&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;28&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;iq&nbsp;&nbsp;&nbsp;|&nbsp;i/o&nbsp;query&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;n-xy&nbsp;|&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;29&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;ii&nbsp;&nbsp;&nbsp;|&nbsp;i/o&nbsp;invoke&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;...n-&nbsp;|&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<br/><br/>
+<span class="h2">Encoding</span>
+<br/><br/>
+Up to four instructions can be packed into each memory cell.
+<br/><br/>
+As an example,
+<br/><br/>
+<tt class='indentedcode'>Opcode&nbsp;4&nbsp;Opcode&nbsp;3&nbsp;Opcode&nbsp;2&nbsp;Opcode&nbsp;1</tt>
+<tt class='indentedcode'>00000000:00000000:00000000:00000000</tt>
+<br/><br/>
+If we have a bundle of <span class="tt">duliswst</span>, it would look like:
+<br/><br/>
+<tt class='indentedcode'>st&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sw&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;li&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;du</tt>
+<tt class='indentedcode'>00010000:00000100:00000001:00000010</tt>
+<br/><br/>
+Each <span class="tt">li</span> should have a value in the following cell(s). These
+values will be pushed to the stack. E.g., <span class="tt">lili....</span> and
+1, 2:
+<br/><br/>
+<tt class='indentedcode'>00000000:00000000:00000001:00000001</tt>
+<tt class='indentedcode'>00000000&nbsp;00000000&nbsp;00000000&nbsp;00000001&nbsp;(1)</tt>
+<tt class='indentedcode'>00000000&nbsp;00000000&nbsp;00000000&nbsp;00000010&nbsp;(2)</tt>
+<br/><br/>
+<span class="h2">Shifts</span>
+<br/><br/>
+<span class="tt">sh</span> performs a bitwise arithmetic shift operation.
+<br/><br/>
+This takes two values:
+<br/><br/>
+<tt class='indentedcode'>xy</tt>
+<br/><br/>
+And returns a single one:
+<br/><br/>
+<tt class='indentedcode'>z</tt>
+<br/><br/>
+If y is positive, this shifts <span class="tt">x</span> right by <span class="tt">y</span> bits. If negative,
+it shifts left.
+<br/><br/>
+<span class="h2">Queries: Memory, Stacks</span>
+<br/><br/>
+The <span class="tt">fe</span> instruction allows queries of some data related to
+the Nga VM state. These are returned by reading from negative
+addresses:
+<br/><br/>
+<tt class='indentedcode'>|&nbsp;Address&nbsp;|&nbsp;Returns&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;-------&nbsp;|&nbsp;----------------------&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;-1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;Data&nbsp;stack&nbsp;depth&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;-2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;Address&nbsp;stack&nbsp;depth&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;-3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;Maximum&nbsp;Image&nbsp;Size&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;-4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;Minimum&nbsp;Integer&nbsp;Value&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;-5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;Maximum&nbsp;Integer&nbsp;Value&nbsp;&nbsp;|</tt>
+<br/><br/>
+<span class="h2">I/O Devices</span>
+<br/><br/>
+Nga provides three instructions for interacting with I/O devices.
+These are:
+<br/><br/>
+<tt class='indentedcode'>ie&nbsp;&nbsp;&nbsp;i/o&nbsp;enumerate&nbsp;&nbsp;&nbsp;&nbsp;returns&nbsp;the&nbsp;number&nbsp;of&nbsp;attached&nbsp;devices</tt>
+<tt class='indentedcode'>iq&nbsp;&nbsp;&nbsp;i/o&nbsp;query&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;returns&nbsp;information&nbsp;about&nbsp;a&nbsp;device</tt>
+<tt class='indentedcode'>ii&nbsp;&nbsp;&nbsp;i/o&nbsp;interact&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;invokes&nbsp;an&nbsp;interaction&nbsp;with&nbsp;a&nbsp;device</tt>
+<br/><br/>
+As an example, with an implementation providing an output source,
+a block storage system, and keyboard:
+<br/><br/>
+<tt class='indentedcode'>ie&nbsp;&nbsp;&nbsp;&nbsp;will&nbsp;return&nbsp;`3`&nbsp;since&nbsp;there&nbsp;are&nbsp;three&nbsp;i/o&nbsp;devices</tt>
+<tt class='indentedcode'>0&nbsp;iq&nbsp;&nbsp;will&nbsp;return&nbsp;0&nbsp;0,&nbsp;since&nbsp;the&nbsp;first&nbsp;device&nbsp;is&nbsp;a&nbsp;screen&nbsp;(0)</tt>
+<tt class='indentedcode'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with&nbsp;a&nbsp;version&nbsp;of&nbsp;0</tt>
+<tt class='indentedcode'>1&nbsp;iq&nbsp;&nbsp;will&nbsp;return&nbsp;1&nbsp;3,&nbsp;since&nbsp;the&nbsp;second&nbsp;device&nbsp;is&nbsp;a&nbsp;block</tt>
+<tt class='indentedcode'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;storage&nbsp;(3),&nbsp;with&nbsp;a&nbsp;version&nbsp;of&nbsp;1</tt>
+<tt class='indentedcode'>2&nbsp;iq&nbsp;&nbsp;will&nbsp;return&nbsp;0&nbsp;1,&nbsp;since&nbsp;the&nbsp;third&nbsp;device&nbsp;is&nbsp;a&nbsp;keyboard</tt>
+<tt class='indentedcode'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(1),&nbsp;with&nbsp;a&nbsp;version&nbsp;of&nbsp;0</tt>
+<br/><br/>
+In this case, some interactions can be defined:
+<br/><br/>
+<tt class='indentedcode'>:&nbsp;c:put</tt>
+<tt class='indentedcode'>i&nbsp;liiire..</tt>
+<tt class='indentedcode'>d&nbsp;0</tt>
+<tt class='indentedcode'></tt>
+<tt class='indentedcode'>:&nbsp;c:get</tt>
+<tt class='indentedcode'>i&nbsp;liiire..</tt>
+<tt class='indentedcode'>d&nbsp;2</tt>
+<br/><br/>
+Setup the stack, push the device ID to the stack, and then use
+<span class="tt">ii</span> to invoke the interaction.
+<br/><br/>
+A RETRO system requires one I/O device (a generic output for a
+single character). This must be the first device, and must have
+a device ID of 0.
+<br/><br/>
+All other devices are optional and can be specified in any order.
+<br/><br/>
+The currently supported and reserved device identifiers are:
+<br/><br/>
+<tt class='indentedcode'>|&nbsp;ID&nbsp;&nbsp;&nbsp;|&nbsp;Device&nbsp;Type&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;Notes&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;----&nbsp;|&nbsp;----------------&nbsp;|&nbsp;--------------------------&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;0000&nbsp;|&nbsp;Generic&nbsp;Output&nbsp;&nbsp;&nbsp;|&nbsp;Always&nbsp;present&nbsp;as&nbsp;device&nbsp;0&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;0001&nbsp;|&nbsp;Keyboard&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;0002&nbsp;|&nbsp;Floating&nbsp;Point&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;0003&nbsp;|&nbsp;Block&nbsp;Storage&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;Raw,&nbsp;1024&nbsp;cell&nbsp;blocks&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;0004&nbsp;|&nbsp;Filesystem&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;Unix-style&nbsp;Files&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;0005&nbsp;|&nbsp;Network:&nbsp;Gopher&nbsp;&nbsp;|&nbsp;Make&nbsp;gopher&nbsp;requests&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;0006&nbsp;|&nbsp;Network:&nbsp;HTTP&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;Make&nbsp;HTTP&nbsp;requests&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;0007&nbsp;|&nbsp;Network:&nbsp;Sockets&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;0008&nbsp;|&nbsp;Syscalls:&nbsp;Unix&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;0009&nbsp;|&nbsp;Scripting&nbsp;Hooks&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;0010&nbsp;|&nbsp;Random&nbsp;Number&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<br/><br/>
+This list may be revised in the future. The only guaranteed
+stable indentifier is 0000 for generic output.
+</p>
+</body></html>

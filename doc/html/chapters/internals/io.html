@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title>.</title>
+<style type="text/css">
+
+    * { color: #000; background: #fff; max-width: 700px; }
+    tt, pre { background: #dedede; color: #111; font-family: monospace;
+             white-space: pre; display: block; width: 100%; }
+    .indentedcode { margin-left: 2em; margin-right: 2em; }
+    .codeblock {
+      background: #dedede; color: #111; font-family: monospace;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      padding: 7px;
+      display: block;
+    }
+
+    .indentedlist { margin-left: 2em; color: #000; }
+
+    span { white-space: pre; }
+    .text  { color: #000; white-space: pre; background: #dedede; }
+    .colon { color: #000; background: #dedede; }
+    .note  { color: #000; background: #dedede; }
+    .str   { color: #000; text-decoration: underline; background: #dedede; }
+    .num   { color: #000; background: #dedede; font-weight: bold; font-style: italic; }
+    .fnum  { color: #000; font-weight: bold; background: #dedede; }
+    .ptr   { color: #000; font-weight: bold; background: #dedede; }
+    .fetch { color: #000; font-style: italic; background: #dedede; }
+    .store { color: #000; font-style: italic; background: #dedede; }
+    .char  { color: #000; background: #dedede; }
+    .inst  { color: #000; background: #dedede; }
+    .defer { color: #000; background: #dedede; }
+    .imm   { color: #000; font-weight: bold; background: #dedede; }
+    .prim  { color: #000; font-weight: bolder; background: #dedede; }
+
+    .tt    { white-space: pre; font-family: monospace; background: #dedede; }
+
+    .h1, .h2, .h3, .h4 { white-space: normal; }
+    .h1 { font-size: 125%; }
+    .h2 { font-size: 120%; }
+    .h3 { font-size: 115%; }
+    .h4 { font-size: 110%; }
+    .hr { display: block; height: 2px; background: #000000; }
+</style>
+</head><body>
+<p><span class="h1">Internals: I/O</span>
+<br/><br/>
+RETRO provides three words for interacting with I/O. These are:
+<br/><br/>
+<tt class='indentedcode'>io:enumerate&nbsp;&nbsp;&nbsp;&nbsp;returns&nbsp;the&nbsp;number&nbsp;of&nbsp;attached&nbsp;devices</tt>
+<tt class='indentedcode'>io:query&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;returns&nbsp;information&nbsp;about&nbsp;a&nbsp;device</tt>
+<tt class='indentedcode'>io:invoke&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;invokes&nbsp;an&nbsp;interaction&nbsp;with&nbsp;a&nbsp;device</tt>
+<br/><br/>
+As an example, with an implementation providing an output source,
+a block storage system, and keyboard:
+<br/><br/>
+<tt class='indentedcode'>io:enumerate&nbsp;&nbsp;&nbsp;&nbsp;will&nbsp;return&nbsp;`3`&nbsp;since&nbsp;there&nbsp;are&nbsp;three</tt>
+<tt class='indentedcode'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;i/o&nbsp;devices</tt>
+<tt class='indentedcode'>#0&nbsp;io:query&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;will&nbsp;return&nbsp;0&nbsp;0,&nbsp;since&nbsp;the&nbsp;first&nbsp;device</tt>
+<tt class='indentedcode'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;is&nbsp;a&nbsp;screen&nbsp;(type&nbsp;0)&nbsp;with&nbsp;a&nbsp;version&nbsp;of&nbsp;0</tt>
+<tt class='indentedcode'>#1&nbsp;io:query&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;will&nbsp;return&nbsp;1&nbsp;3,&nbsp;since&nbsp;the&nbsp;second&nbsp;device&nbsp;is</tt>
+<tt class='indentedcode'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;block&nbsp;storage&nbsp;(type&nbsp;3),&nbsp;with&nbsp;a&nbsp;version&nbsp;of&nbsp;1</tt>
+<tt class='indentedcode'>#2&nbsp;io:query&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;will&nbsp;return&nbsp;0&nbsp;1,&nbsp;since&nbsp;the&nbsp;last&nbsp;device&nbsp;is&nbsp;a</tt>
+<tt class='indentedcode'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;keyboard&nbsp;(type&nbsp;1),&nbsp;with&nbsp;a&nbsp;version&nbsp;of&nbsp;0</tt>
+<br/><br/>
+In this case, some interactions can be defined:
+<br/><br/>
+<tt class='indentedcode'>:c:put&nbsp;#0&nbsp;io:invoke&nbsp;;</tt>
+<tt class='indentedcode'>:c:get&nbsp;#2&nbsp;io:invoke&nbsp;;</tt>
+<br/><br/>
+Setup the stack, push the device ID, and then use <span class="tt">io:invoke</span>
+to invoke the interaction.
+<br/><br/>
+A RETRO system requires one I/O device (a generic output for a
+single character). This must be the first device, and must have
+a device ID of 0.
+<br/><br/>
+All other devices are optional and can be specified in any
+order.
+<br/><br/>
+</p>
+</body></html>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title>.</title>
+<style type="text/css">
+
+    * { color: #000; background: #fff; max-width: 700px; }
+    tt, pre { background: #dedede; color: #111; font-family: monospace;
+             white-space: pre; display: block; width: 100%; }
+    .indentedcode { margin-left: 2em; margin-right: 2em; }
+    .codeblock {
+      background: #dedede; color: #111; font-family: monospace;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      padding: 7px;
+      display: block;
+    }
+
+    .indentedlist { margin-left: 2em; color: #000; }
+
+    span { white-space: pre; }
+    .text  { color: #000; white-space: pre; background: #dedede; }
+    .colon { color: #000; background: #dedede; }
+    .note  { color: #000; background: #dedede; }
+    .str   { color: #000; text-decoration: underline; background: #dedede; }
+    .num   { color: #000; background: #dedede; font-weight: bold; font-style: italic; }
+    .fnum  { color: #000; font-weight: bold; background: #dedede; }
+    .ptr   { color: #000; font-weight: bold; background: #dedede; }
+    .fetch { color: #000; font-style: italic; background: #dedede; }
+    .store { color: #000; font-style: italic; background: #dedede; }
+    .char  { color: #000; background: #dedede; }
+    .inst  { color: #000; background: #dedede; }
+    .defer { color: #000; background: #dedede; }
+    .imm   { color: #000; font-weight: bold; background: #dedede; }
+    .prim  { color: #000; font-weight: bolder; background: #dedede; }
+
+    .tt    { white-space: pre; font-family: monospace; background: #dedede; }
+
+    .h1, .h2, .h3, .h4 { white-space: normal; }
+    .h1 { font-size: 125%; }
+    .h2 { font-size: 120%; }
+    .h3 { font-size: 115%; }
+    .h4 { font-size: 110%; }
+    .hr { display: block; height: 2px; background: #000000; }
+</style>
+</head><body>
+<p><span class="h1">Word Classes</span>
+<br/><br/>
+Word classes are one of the two elements at the heart of
+RETRO's interpreter.
+<br/><br/>
+There are different types of words in a Forth system. At a
+minimum there are data words, regular words, and immediate
+words. There are numerous approaches to dealing with this.
+<br/><br/>
+In RETRO I define special words which receive a pointer and
+decide how to deal with it. These are grouped into a <span class="tt">class:</span>
+namespace.
+<br/><br/>
+<span class="h2">How It Works</span>
+<br/><br/>
+When a word is found in the dictionary, RETRO will push a
+pointer to the definition (the <span class="tt">d:xt</span> field) to the stack
+and then call the word specified by the <span class="tt">d:class</span> field.
+<br/><br/>
+The word called is responsible for processing the pointer
+passed to it.
+<br/><br/>
+As a simple case, let's look at <span class="tt">immediate</span> words. These are
+words which will always be called when encountered. A common
+strategy is to have an immediacy bit which the interpreter
+will look at, but RETRO uses a class for this. The class is
+defined:
+<br/><br/>
+<span class='codeblock'><span class="tt">```</span><br/><span class="tt"><span class='colon'>:class:immediate</span> <span class='note'>(a-)</span> &nbsp;<span class='prim'>call</span> <span class='imm'>;</span> </span><br/>
+<span class="tt">```</span></span><br/><br/>
+Or a normal word. These should be called at interpret time
+or compiled into definitions. The handler for this can look
+like:
+<br/><br/>
+<span class='codeblock'><span class="tt">```</span><br/><span class="tt"><span class='colon'>:class:word</span> <span class='note'>(a-)</span> compiling? <span class='imm'>[</span> compile:call <span class='imm'>]</span> <span class='imm'>[</span> <span class='prim'>call</span> <span class='imm'>]</span> choose <span class='imm'>;</span> </span><br/>
+<span class="tt">```</span></span><br/><br/>
+<span class="h2">Using Classes</span>
+<br/><br/>
+The ability to add new classes is useful. If I wanted to add
+a category of word that preserves an input value, I could do
+it with a class:
+<br/><br/>
+<span class='codeblock'><span class="tt">```</span><br/><span class="tt"><span class='colon'>:class:duplicating</span> <span class='note'>(a-)</span> </span><br/>
+<span class="tt">&nbsp;&nbsp;compiling? <span class='imm'>[</span> <span class='ptr'>&amp;dup</span> compile:call <span class='imm'>]</span> <span class='imm'>[</span> <span class='ptr'>&amp;dup</span> dip <span class='imm'>]</span> choose </span><br/>
+<span class="tt">&nbsp;&nbsp;class:word <span class='imm'>;</span> &nbsp;</span><br/>
+<span class="tt">&nbsp;</span><br/>
+<span class="tt"><span class='colon'>:duplicating</span> <span class='ptr'>&amp;class:duplicating</span> reclass <span class='imm'>;</span> </span><br/>
+<span class="tt">&nbsp;</span><br/>
+<span class="tt"><span class='colon'>:.</span> n:put nl <span class='imm'>;</span> duplicating </span><br/>
+<span class="tt"><span class='num'>#100</span> <span class='fnum'>.</span> <span class='fnum'>.</span> <span class='fnum'>.</span> </span><br/>
+<span class="tt">```</span></span></p>
+</body></html>

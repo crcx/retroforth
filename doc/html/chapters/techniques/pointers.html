@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title>.</title>
+<style type="text/css">
+
+    * { color: #000; background: #fff; max-width: 700px; }
+    tt, pre { background: #dedede; color: #111; font-family: monospace;
+             white-space: pre; display: block; width: 100%; }
+    .indentedcode { margin-left: 2em; margin-right: 2em; }
+    .codeblock {
+      background: #dedede; color: #111; font-family: monospace;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      padding: 7px;
+      display: block;
+    }
+
+    .indentedlist { margin-left: 2em; color: #000; }
+
+    span { white-space: pre; }
+    .text  { color: #000; white-space: pre; background: #dedede; }
+    .colon { color: #000; background: #dedede; }
+    .note  { color: #000; background: #dedede; }
+    .str   { color: #000; text-decoration: underline; background: #dedede; }
+    .num   { color: #000; background: #dedede; font-weight: bold; font-style: italic; }
+    .fnum  { color: #000; font-weight: bold; background: #dedede; }
+    .ptr   { color: #000; font-weight: bold; background: #dedede; }
+    .fetch { color: #000; font-style: italic; background: #dedede; }
+    .store { color: #000; font-style: italic; background: #dedede; }
+    .char  { color: #000; background: #dedede; }
+    .inst  { color: #000; background: #dedede; }
+    .defer { color: #000; background: #dedede; }
+    .imm   { color: #000; font-weight: bold; background: #dedede; }
+    .prim  { color: #000; font-weight: bolder; background: #dedede; }
+
+    .tt    { white-space: pre; font-family: monospace; background: #dedede; }
+
+    .h1, .h2, .h3, .h4 { white-space: normal; }
+    .h1 { font-size: 125%; }
+    .h2 { font-size: 120%; }
+    .h3 { font-size: 115%; }
+    .h4 { font-size: 110%; }
+    .hr { display: block; height: 2px; background: #000000; }
+</style>
+</head><body>
+<p><span class="h1">Working With Pointers</span>
+<br/><br/>
+<span class="h2">Prefix</span>
+<br/><br/>
+Pointers are returned by the <span class="tt">&amp;</span> prefix.
+<br/><br/>
+<span class="h2">Examples</span>
+<br/><br/>
+<span class='codeblock'><span class="tt">```</span><br/><span class="tt"><span class='str'>'Base</span> var </span><br/>
+<span class="tt"><span class='ptr'>&amp;Base</span> <span class='prim'>fetch</span> </span><br/>
+<span class="tt"><span class='num'>#10</span> <span class='ptr'>&amp;Base</span> <span class='prim'>store</span> </span><br/>
+<span class="tt">&nbsp;</span><br/>
+<span class="tt"><span class='num'>#10</span> <span class='ptr'>&amp;n:inc</span> <span class='prim'>call</span> </span><br/>
+<span class="tt">```</span></span><br/><br/>
+<span class="h2">Notes</span>
+<br/><br/>
+The use of <span class="tt">&amp;</span> to get a pointer to a data structure (with a
+word class of <span class="tt">class:data</span>) is not required. I like to use it
+anyway as it makes my intent a little clearer.
+<br/><br/>
+Pointers are useful with combinators. Consider:
+<br/><br/>
+<span class='codeblock'><span class="tt">```</span><br/><span class="tt"><span class='colon'>:abs</span> <span class='prim'>dup</span> n:negative? <span class='imm'>[</span> n:negate <span class='imm'>]</span> <span class='prim'>if</span> <span class='imm'>;</span> </span><br/>
+<span class="tt">```</span></span><br/><br/>
+Since the target quote body is a single word, it is more
+efficient to use a pointer instead:
+<br/><br/>
+<span class='codeblock'><span class="tt">```</span><br/><span class="tt"><span class='colon'>:abs</span> <span class='prim'>dup</span> n:negative? <span class='ptr'>&amp;n:negate</span> <span class='prim'>if</span> <span class='imm'>;</span> </span><br/>
+<span class="tt">```</span></span><br/><br/>
+The advantages are speed (saves a level of call/return by
+avoiding the quotation) and size (for the same reason).
+This may be less readable though, so consider the balance
+of performance to readability when using this approach.
+</p>
+</body></html>

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title>.</title>
+<style type="text/css">
+
+    * { color: #000; background: #fff; max-width: 700px; }
+    tt, pre { background: #dedede; color: #111; font-family: monospace;
+             white-space: pre; display: block; width: 100%; }
+    .indentedcode { margin-left: 2em; margin-right: 2em; }
+    .codeblock {
+      background: #dedede; color: #111; font-family: monospace;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      padding: 7px;
+      display: block;
+    }
+
+    .indentedlist { margin-left: 2em; color: #000; }
+
+    span { white-space: pre; }
+    .text  { color: #000; white-space: pre; background: #dedede; }
+    .colon { color: #000; background: #dedede; }
+    .note  { color: #000; background: #dedede; }
+    .str   { color: #000; text-decoration: underline; background: #dedede; }
+    .num   { color: #000; background: #dedede; font-weight: bold; font-style: italic; }
+    .fnum  { color: #000; font-weight: bold; background: #dedede; }
+    .ptr   { color: #000; font-weight: bold; background: #dedede; }
+    .fetch { color: #000; font-style: italic; background: #dedede; }
+    .store { color: #000; font-style: italic; background: #dedede; }
+    .char  { color: #000; background: #dedede; }
+    .inst  { color: #000; background: #dedede; }
+    .defer { color: #000; background: #dedede; }
+    .imm   { color: #000; font-weight: bold; background: #dedede; }
+    .prim  { color: #000; font-weight: bolder; background: #dedede; }
+
+    .tt    { white-space: pre; font-family: monospace; background: #dedede; }
+
+    .h1, .h2, .h3, .h4 { white-space: normal; }
+    .h1 { font-size: 125%; }
+    .h2 { font-size: 120%; }
+    .h3 { font-size: 115%; }
+    .h4 { font-size: 110%; }
+    .hr { display: block; height: 2px; background: #000000; }
+</style>
+</head><body>
+<p><span class="h1">Working With Numbers</span>
+<br/><br/>
+Numbers in RETRO are signed integers.
+<br/><br/>
+<span class="h2">Token Prefix</span>
+<br/><br/>
+All numbers start with a <span class="tt">#</span> prefix.
+<br/><br/>
+<span class="h2">Namespace</span>
+<br/><br/>
+Most words operating on numbers are in the <span class="tt">n:</span> namespace.
+<br/><br/>
+<span class="h2">Range of Values</span>
+<br/><br/>
+A default RETRO system with 32 bit cells provides a range of
+-2,147,483,648 to 2,147,483,647. For 64 bit systems, the range
+will be -9,223,372,036,854,775,807 to 9,223,372,036,854,775,806.
+<br/><br/>
+You can check the range your VM and image support using:
+<br/><br/>
+<tt class='indentedcode'>n:MIN</tt>
+<tt class='indentedcode'>n:MAX</tt>
+<br/><br/>
+These will return the limits for your system.
+<br/><br/>
+<span class="h2">Comparisons</span>
+<br/><br/>
+RETRO provides a number of comparison words for numeric values.
+<br/><br/>
+The basic comparators are:
+<br/><br/>
+<tt class='indentedcode'>-eq?</tt>
+<tt class='indentedcode'>eq?</tt>
+<tt class='indentedcode'>lt?</tt>
+<tt class='indentedcode'>lteq?</tt>
+<tt class='indentedcode'>gt?</tt>
+<tt class='indentedcode'>gteq?</tt>
+<br/><br/>
+Additionally RETRO also provides:
+<br/><br/>
+<tt class='indentedcode'>n:-zero?</tt>
+<tt class='indentedcode'>n:between?</tt>
+<tt class='indentedcode'>n:even?</tt>
+<tt class='indentedcode'>n:negative?</tt>
+<tt class='indentedcode'>n:odd?</tt>
+<tt class='indentedcode'>n:positive?</tt>
+<tt class='indentedcode'>n:strictly-positive?</tt>
+<tt class='indentedcode'>n:zero?</tt>
+<br/><br/>
+<span class="h2">Basic Operations</span>
+<br/><br/>
+<tt class='indentedcode'>+</tt>
+<tt class='indentedcode'>-</tt>
+<tt class='indentedcode'>*</tt>
+<tt class='indentedcode'>/</tt>
+<tt class='indentedcode'>mod</tt>
+<tt class='indentedcode'>/mod</tt>
+<tt class='indentedcode'>n:abs</tt>
+<tt class='indentedcode'>n:dec</tt>
+<tt class='indentedcode'>n:inc</tt>
+<tt class='indentedcode'>n:limit</tt>
+<tt class='indentedcode'>n:max</tt>
+<tt class='indentedcode'>n:min</tt>
+<tt class='indentedcode'>n:negate</tt>
+<tt class='indentedcode'>n:pow</tt>
+<tt class='indentedcode'>n:sqrt</tt>
+<tt class='indentedcode'>n:square</tt>
+<br/><br/>
+<span class="h2">Conversions</span>
+<br/><br/>
+You can convert a number to a string with <span class="tt">n:to-string</span> or
+to a floating point value with <span class="tt">n:to-float</span>.
+<br/><br/>
+<tt class='indentedcode'>#123&nbsp;n:to-float&nbsp;&nbsp;f:put</tt>
+<br/><br/>
+<tt class='indentedcode'>#123&nbsp;n:to-string&nbsp;s:put</tt>
+<br/><br/>
+<span class="h2">Display</span>
+<br/><br/>
+To display a number, use <span class="tt">n:put</span>.
+<br/><br/>
+<tt class='indentedcode'>#123&nbsp;n:put</tt>
+</p>
+</body></html>

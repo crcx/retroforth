@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title>.</title>
+<style type="text/css">
+
+    * { color: #000; background: #fff; max-width: 700px; }
+    tt, pre { background: #dedede; color: #111; font-family: monospace;
+             white-space: pre; display: block; width: 100%; }
+    .indentedcode { margin-left: 2em; margin-right: 2em; }
+    .codeblock {
+      background: #dedede; color: #111; font-family: monospace;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      padding: 7px;
+      display: block;
+    }
+
+    .indentedlist { margin-left: 2em; color: #000; }
+
+    span { white-space: pre; }
+    .text  { color: #000; white-space: pre; background: #dedede; }
+    .colon { color: #000; background: #dedede; }
+    .note  { color: #000; background: #dedede; }
+    .str   { color: #000; text-decoration: underline; background: #dedede; }
+    .num   { color: #000; background: #dedede; font-weight: bold; font-style: italic; }
+    .fnum  { color: #000; font-weight: bold; background: #dedede; }
+    .ptr   { color: #000; font-weight: bold; background: #dedede; }
+    .fetch { color: #000; font-style: italic; background: #dedede; }
+    .store { color: #000; font-style: italic; background: #dedede; }
+    .char  { color: #000; background: #dedede; }
+    .inst  { color: #000; background: #dedede; }
+    .defer { color: #000; background: #dedede; }
+    .imm   { color: #000; font-weight: bold; background: #dedede; }
+    .prim  { color: #000; font-weight: bolder; background: #dedede; }
+
+    .tt    { white-space: pre; font-family: monospace; background: #dedede; }
+
+    .h1, .h2, .h3, .h4 { white-space: normal; }
+    .h1 { font-size: 125%; }
+    .h2 { font-size: 120%; }
+    .h3 { font-size: 115%; }
+    .h4 { font-size: 110%; }
+    .hr { display: block; height: 2px; background: #000000; }
+</style>
+</head><body>
+<p><span class="h1">Using Combinators</span>
+<br/><br/>
+A combinator is a function that consumes functions as input.
+They are used heavily by the RETRO system.
+<br/><br/>
+<span class="h2">Types of Combinators</span>
+<br/><br/>
+Combinators are divided into three primary types: compositional,
+execution flow, and data flow.
+<br/><br/>
+<span class="h2">Compositional</span>
+<br/><br/>
+A compositional combinator takes elements from the stack and
+returns a new quote.
+<br/><br/>
+<span class="tt">curry</span> takes a value and a quote and returns a new quote
+applying the specified quote to the specified value. As an
+example,
+<br/><br/>
+<span class='codeblock'><span class="tt">```</span><br/><span class="tt"><span class='colon'>:acc</span> <span class='note'>(n-)</span> &nbsp;here <span class='prim'>swap</span> , <span class='imm'>[</span> <span class='prim'>dup</span> v:inc <span class='prim'>fetch</span> <span class='imm'>]</span> curry <span class='imm'>;</span> </span><br/>
+<span class="tt">```</span></span><br/><br/>
+This would create an accumulator function, which takes an
+initial value and returns a quote that will increase the
+accumulator by 1 each time it is invoked. It will also return
+the latest value. So:
+<br/><br/>
+<span class='codeblock'><span class="tt">```</span><br/><span class="tt"><span class='num'>#10</span> acc </span><br/>
+<span class="tt"><span class='prim'>dup</span> <span class='prim'>call</span> n:put </span><br/>
+<span class="tt"><span class='prim'>dup</span> <span class='prim'>call</span> n:put </span><br/>
+<span class="tt"><span class='prim'>dup</span> <span class='prim'>call</span> n:put </span><br/>
+<span class="tt">```</span></span><br/><br/>
+<span class="h2">Execution Flow</span>
+<br/><br/>
+Combinators of this type execute other functions.
+<br/><br/>
+<span class="h3">Fundamental</span>
+<br/><br/>
+<span class="tt">call</span> takes a quote and executes it immediately.
+<br/><br/>
+<span class='codeblock'><span class="tt">```</span><br/><span class="tt"><span class='imm'>[</span> <span class='num'>#1</span> n:put <span class='imm'>]</span> <span class='prim'>call</span> </span><br/>
+<span class="tt"><span class='ptr'>&amp;words</span> <span class='prim'>call</span> </span><br/>
+<span class="tt">```</span></span><br/><br/>
+<span class="h3">Conditionals</span>
+<br/><br/>
+RETRO provides three primary combinators for use with
+conditional execution of quotes. These are <span class="tt">choose</span>, <span class="tt">if</span>,
+and <span class="tt">-if</span>.
+<br/><br/>
+<span class="tt">choose</span> takes a flag and two quotes from the stack. If the
+flag is true, the first quote is executed. If false, the
+second quote is executed.
+<br/><br/>
+<span class='codeblock'><span class="tt">```</span><br/><span class="tt"><span class='num'>#-1</span> <span class='imm'>[</span> <span class='str'>'true</span> s:put <span class='imm'>]</span> <span class='imm'>[</span> <span class='str'>'false</span> s:put <span class='imm'>]</span> choose </span><br/>
+<span class="tt">&nbsp;<span class='num'>#0</span> <span class='imm'>[</span> <span class='str'>'true</span> s:put <span class='imm'>]</span> <span class='imm'>[</span> <span class='str'>'false</span> s:put <span class='imm'>]</span> choose </span><br/>
+<span class="tt">```</span></span><br/><br/>
+<span class="tt">if</span> takes a flag and one quote from the stack. If the flag is
+true, the quote is executed. If false, the quote is discarded.
+<br/><br/>
+<span class='codeblock'><span class="tt">```</span><br/><span class="tt"><span class='num'>#-1</span> <span class='imm'>[</span> <span class='str'>'true</span> s:put <span class='imm'>]</span> <span class='prim'>if</span> </span><br/>
+<span class="tt">&nbsp;<span class='num'>#0</span> <span class='imm'>[</span> <span class='str'>'true</span> s:put <span class='imm'>]</span> <span class='prim'>if</span> </span><br/>
+<span class="tt">```</span></span><br/><br/>
+<span class="tt">-if</span> takes a flag and one quote from the stack. If the flag is
+false, the quote is executed. If true, the quote is discarded.
+<br/><br/>
+<span class='codeblock'><span class="tt">```</span><br/><span class="tt"><span class='num'>#-1</span> <span class='imm'>[</span> <span class='str'>'false</span> s:put <span class='imm'>]</span> -if </span><br/>
+<span class="tt">&nbsp;<span class='num'>#0</span> <span class='imm'>[</span> <span class='str'>'false</span> s:put <span class='imm'>]</span> -if </span><br/>
+<span class="tt">```</span></span><br/><br/>
+RETRO also provides <span class="tt">case</span> and <span class="tt">s:case</span> for use when you have
+multiple values to check against. This is similar to a <span class="tt">switch</span>
+in C.
+<br/><br/>
+<span class="tt">case</span> takes two numbers and a quote. The initial value is
+compared to the second one. If they match, the quote is
+executed. If false, the quote is discarded and the initial
+value is left on the stack.
+<br/><br/>
+Additionally, if the first value was matched, <span class="tt">case</span> will exit
+the calling function, but if false, it returns to the calling
+function.
+<br/><br/>
+<span class="tt">s:case</span> works the same way, but for strings instead of simple
+values.
+<br/><br/>
+<span class='codeblock'><span class="tt">```</span><br/><span class="tt"><span class='colon'>:test</span> <span class='note'>(n-)</span> </span><br/>
+<span class="tt">&nbsp;&nbsp;<span class='num'>#1</span> <span class='imm'>[</span> <span class='str'>'Yes</span> s:put <span class='imm'>]</span> case </span><br/>
+<span class="tt">&nbsp;&nbsp;<span class='num'>#2</span> <span class='imm'>[</span> <span class='str'>'No</span> &nbsp;s:put <span class='imm'>]</span> case </span><br/>
+<span class="tt">&nbsp;&nbsp;<span class='prim'>drop</span> <span class='str'>'No</span> idea s:put <span class='imm'>;</span> </span><br/>
+<span class="tt">```</span></span><br/><br/>
+<span class="h3">Looping</span>
+<br/><br/>
+Several combinators are available for handling various looping
+constructs.
+<br/><br/>
+<span class="tt">while</span> takes a quote from the stack and executes it repeatedly
+as long as the quote returns a true flag on the stack. This flag
+must be well formed and equal -1 or 0.
+<br/><br/>
+<span class='codeblock'><span class="tt">```</span><br/><span class="tt"><span class='num'>#10</span> <span class='imm'>[</span> <span class='prim'>dup</span> n:put sp n:dec <span class='prim'>dup</span> 0 <span class='prim'>-eq?</span> <span class='imm'>]</span> while </span><br/>
+<span class="tt">```</span></span><br/><br/>
+<span class="tt">times</span> takes a count and quote from the stack. The quote will
+be executed the number of times specified. No indexes are pushed
+to the stack.
+<br/><br/>
+<span class='codeblock'><span class="tt">```</span><br/><span class="tt"><span class='num'>#1</span> <span class='num'>#10</span> <span class='imm'>[</span> <span class='prim'>dup</span> n:put sp n:inc <span class='imm'>]</span> times <span class='prim'>drop</span> </span><br/>
+<span class="tt">```</span></span><br/><br/>
+There is also a <span class="tt">indexed-times</span> variation that provides
+access to the loop index (via <span class="tt">I</span>) and parent loop indexes
+(via <span class="tt">J</span> and <span class="tt">K</span>).
+<br/><br/>
+<span class='codeblock'><span class="tt">```</span><br/><span class="tt"><span class='num'>#10</span> <span class='imm'>[</span> I n:put sp <span class='imm'>]</span> indexed-times </span><br/>
+<span class="tt">```</span></span><br/><br/>
+<span class="h2">Data Flow</span>
+<br/><br/>
+These combinators exist to simplify stack usage in various
+circumstances.
+<br/><br/>
+<span class="h3">Preserving</span>
+<br/><br/>
+Preserving combinators execute code while preserving portions
+of the data stack.
+<br/><br/>
+<span class="tt">dip</span> takes a value and a quote, moves the value off the main
+stack temporarily, executes the quote, and then restores the
+value.
+<br/><br/>
+<span class='codeblock'><span class="tt">```</span><br/><span class="tt"><span class='num'>#10</span> <span class='num'>#20</span> <span class='imm'>[</span> n:inc <span class='imm'>]</span> dip </span><br/>
+<span class="tt">```</span></span><br/><br/>
+Would yield the following on the stack:
+<br/><br/>
+<span class='codeblock'><span class="tt">```</span><br/><span class="tt">11 20 </span><br/>
+<span class="tt">```</span></span><br/><br/>
+<span class="tt">sip</span> is similar to <span class="tt">dip</span>, but leaves a copy of the original
+value on the stack during execution of the quote. So:
+<br/><br/>
+<span class='codeblock'><span class="tt">```</span><br/><span class="tt"><span class='num'>#10</span> <span class='imm'>[</span> n:inc <span class='imm'>]</span> sip </span><br/>
+<span class="tt">```</span></span><br/><br/>
+Leaves us with:
+<br/><br/>
+<span class='codeblock'><span class="tt">```</span><br/><span class="tt">11 10 </span><br/>
+<span class="tt">```</span></span><br/><br/>
+<span class="h3">Cleave</span>
+<br/><br/>
+Cleave combinators apply multiple quotations to a single value
+or set of values.
+<br/><br/>
+<span class="tt">bi</span> takes a value and two quotes, it then applies each quote to
+a copy of the value.
+<br/><br/>
+<span class='codeblock'><span class="tt">```</span><br/><span class="tt"><span class='num'>#100</span> <span class='imm'>[</span> n:inc <span class='imm'>]</span> <span class='imm'>[</span> n:dec <span class='imm'>]</span> bi </span><br/>
+<span class="tt">```</span></span><br/><br/>
+<span class="tt">tri</span> takes a value and three quotes. It then applies each quote
+to a copy of the value.
+<br/><br/>
+<span class='codeblock'><span class="tt">```</span><br/><span class="tt"><span class='num'>#100</span> <span class='imm'>[</span> n:inc <span class='imm'>]</span> <span class='imm'>[</span> n:dec <span class='imm'>]</span> <span class='imm'>[</span> <span class='prim'>dup</span> <span class='prim'>*</span> <span class='imm'>]</span> tri </span><br/>
+<span class="tt">```</span></span><br/><br/>
+<span class="h3">Spread</span>
+<br/><br/>
+Spread combinators apply multiple quotations to multiple values.
+The asterisk suffixed to these function names signifies that
+they are spread combinators.
+<br/><br/>
+<span class="tt">bi*</span> takes two values and two quotes. It applies the first
+quote to the first value and the second quote to the second
+value.
+<br/><br/>
+<span class='codeblock'><span class="tt">```</span><br/><span class="tt"><span class='num'>#1</span> <span class='num'>#2</span> <span class='imm'>[</span> n:inc <span class='imm'>]</span> <span class='imm'>[</span> <span class='num'>#2</span> <span class='prim'>*</span> <span class='imm'>]</span> bi* </span><br/>
+<span class="tt">```</span></span><br/><br/>
+<span class="tt">tri*</span> takes three values and three quotes, applying the
+first quote to the first value, the second quote to the
+second value, and the third quote to the third value.
+<br/><br/>
+<span class='codeblock'><span class="tt">```</span><br/><span class="tt"><span class='num'>#1</span> <span class='num'>#2</span> <span class='num'>#3</span> <span class='imm'>[</span> n:inc <span class='imm'>]</span> <span class='imm'>[</span> <span class='num'>#2</span> <span class='prim'>*</span> <span class='imm'>]</span> <span class='imm'>[</span> n:dec <span class='imm'>]</span> tri* </span><br/>
+<span class="tt">```</span></span><br/><br/>
+<span class="h3">Apply</span>
+<br/><br/>
+Apply combinators apply a single quotation to multiple values.
+The @ sign suffixed to these function names signifies that they
+are apply combinators.
+<br/><br/>
+<span class="tt">bi@</span> takes two values and a quote. It then applies the quote to
+each value.
+<br/><br/>
+<span class='codeblock'><span class="tt">```</span><br/><span class="tt"><span class='num'>#1</span> <span class='num'>#2</span> <span class='imm'>[</span> n:inc <span class='imm'>]</span> bi@ </span><br/>
+<span class="tt">```</span></span><br/><br/>
+<span class="tt">tri@</span> takes three values and a quote. It then applies the quote
+to each value.
+<br/><br/>
+<span class='codeblock'><span class="tt">```</span><br/><span class="tt"><span class='num'>#1</span> <span class='num'>#2</span> <span class='num'>#3</span> <span class='imm'>[</span> n:inc <span class='imm'>]</span> tri@ </span><br/>
+<span class="tt">```</span></span><br/><br/>
+RETRO also provides <span class="tt">for-each</span> combinators for various data
+structures. The exact usage of these varies; consult the
+Glossary and relevant chapters for more details on these.
+</p>
+</body></html>

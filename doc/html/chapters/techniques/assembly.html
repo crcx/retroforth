@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title>.</title>
+<style type="text/css">
+
+    * { color: #000; background: #fff; max-width: 700px; }
+    tt, pre { background: #dedede; color: #111; font-family: monospace;
+             white-space: pre; display: block; width: 100%; }
+    .indentedcode { margin-left: 2em; margin-right: 2em; }
+    .codeblock {
+      background: #dedede; color: #111; font-family: monospace;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      padding: 7px;
+      display: block;
+    }
+
+    .indentedlist { margin-left: 2em; color: #000; }
+
+    span { white-space: pre; }
+    .text  { color: #000; white-space: pre; background: #dedede; }
+    .colon { color: #000; background: #dedede; }
+    .note  { color: #000; background: #dedede; }
+    .str   { color: #000; text-decoration: underline; background: #dedede; }
+    .num   { color: #000; background: #dedede; font-weight: bold; font-style: italic; }
+    .fnum  { color: #000; font-weight: bold; background: #dedede; }
+    .ptr   { color: #000; font-weight: bold; background: #dedede; }
+    .fetch { color: #000; font-style: italic; background: #dedede; }
+    .store { color: #000; font-style: italic; background: #dedede; }
+    .char  { color: #000; background: #dedede; }
+    .inst  { color: #000; background: #dedede; }
+    .defer { color: #000; background: #dedede; }
+    .imm   { color: #000; font-weight: bold; background: #dedede; }
+    .prim  { color: #000; font-weight: bolder; background: #dedede; }
+
+    .tt    { white-space: pre; font-family: monospace; background: #dedede; }
+
+    .h1, .h2, .h3, .h4 { white-space: normal; }
+    .h1 { font-size: 125%; }
+    .h2 { font-size: 120%; }
+    .h3 { font-size: 115%; }
+    .h4 { font-size: 110%; }
+    .hr { display: block; height: 2px; background: #000000; }
+</style>
+</head><body>
+<p><span class="h1">Working With Assembly Language</span>
+<br/><br/>
+RETRO runs on a virtual machine called Nga. It provides a
+standard assembler for this called <strong>Muri</strong>.
+<br/><br/>
+Muri is a simple, multipass model that's not fancy, but
+suffices for RETRO's needs.
+<br/><br/>
+<span class="h2">Assembling A Standalone File</span>
+<br/><br/>
+A small example (<strong>test.muri</strong>)
+<br/><br/>
+<tt class='indentedcode'>~~~</tt>
+<tt class='indentedcode'>i&nbsp;liju....</tt>
+<tt class='indentedcode'>r&nbsp;main</tt>
+<tt class='indentedcode'>:&nbsp;c:put</tt>
+<tt class='indentedcode'>i&nbsp;liiire..</tt>
+<tt class='indentedcode'>i&nbsp;0</tt>
+<tt class='indentedcode'>:&nbsp;main</tt>
+<tt class='indentedcode'>i&nbsp;lilica..</tt>
+<tt class='indentedcode'>d&nbsp;97</tt>
+<tt class='indentedcode'>i&nbsp;liju....</tt>
+<tt class='indentedcode'>r&nbsp;main</tt>
+<tt class='indentedcode'>~~~</tt>
+<br/><br/>
+Assembling it:
+<br/><br/>
+<tt class='indentedcode'>retro-muri&nbsp;test.muri</tt>
+<br/><br/>
+So breaking down: Muri extracts the assembly code blocks to
+assemble, then proceeds to do the assembly. Each source line
+starts with a directive, followed by a space, and then ending
+with a value.
+<br/><br/>
+The directives are:
+<br/><br/>
+<tt class='indentedcode'>:&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;is&nbsp;a&nbsp;label</tt>
+<tt class='indentedcode'>i&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;is&nbsp;an&nbsp;instruction&nbsp;bundle</tt>
+<tt class='indentedcode'>d&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;is&nbsp;a&nbsp;numeric&nbsp;value</tt>
+<tt class='indentedcode'>r&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;is&nbsp;a&nbsp;reference</tt>
+<tt class='indentedcode'>s&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;is&nbsp;a&nbsp;string&nbsp;to&nbsp;inline</tt>
+<br/><br/>
+Instructions for Nga are provided as bundles. Each memory
+location can store up to four instructions. And each instruction
+gets a two character identifier.
+<br/><br/>
+From the list of instructions:
+<br/><br/>
+<tt class='indentedcode'>0&nbsp;nop&nbsp;&nbsp;&nbsp;5&nbsp;push&nbsp;&nbsp;10&nbsp;ret&nbsp;&nbsp;&nbsp;15&nbsp;fetch&nbsp;20&nbsp;div&nbsp;&nbsp;&nbsp;25&nbsp;zret</tt>
+<tt class='indentedcode'>1&nbsp;lit&nbsp;&nbsp;&nbsp;6&nbsp;pop&nbsp;&nbsp;&nbsp;11&nbsp;eq&nbsp;&nbsp;&nbsp;&nbsp;16&nbsp;store&nbsp;21&nbsp;and&nbsp;&nbsp;&nbsp;26&nbsp;halt</tt>
+<tt class='indentedcode'>2&nbsp;dup&nbsp;&nbsp;&nbsp;7&nbsp;jump&nbsp;&nbsp;12&nbsp;neq&nbsp;&nbsp;&nbsp;17&nbsp;add&nbsp;&nbsp;&nbsp;22&nbsp;or&nbsp;&nbsp;&nbsp;&nbsp;27&nbsp;ienum</tt>
+<tt class='indentedcode'>3&nbsp;drop&nbsp;&nbsp;8&nbsp;call&nbsp;&nbsp;13&nbsp;lt&nbsp;&nbsp;&nbsp;&nbsp;18&nbsp;sub&nbsp;&nbsp;&nbsp;23&nbsp;xor&nbsp;&nbsp;&nbsp;28&nbsp;iquery</tt>
+<tt class='indentedcode'>4&nbsp;swap&nbsp;&nbsp;9&nbsp;ccall&nbsp;14&nbsp;gt&nbsp;&nbsp;&nbsp;&nbsp;19&nbsp;mul&nbsp;&nbsp;&nbsp;24&nbsp;shift&nbsp;29&nbsp;iinvoke</tt>
+<br/><br/>
+This reduces to:
+<br/><br/>
+<tt class='indentedcode'>0&nbsp;..&nbsp;&nbsp;&nbsp;&nbsp;5&nbsp;pu&nbsp;&nbsp;&nbsp;&nbsp;10&nbsp;re&nbsp;&nbsp;&nbsp;&nbsp;15&nbsp;fe&nbsp;&nbsp;&nbsp;&nbsp;20&nbsp;di&nbsp;&nbsp;&nbsp;&nbsp;25&nbsp;zr</tt>
+<tt class='indentedcode'>1&nbsp;li&nbsp;&nbsp;&nbsp;&nbsp;6&nbsp;po&nbsp;&nbsp;&nbsp;&nbsp;11&nbsp;eq&nbsp;&nbsp;&nbsp;&nbsp;16&nbsp;st&nbsp;&nbsp;&nbsp;&nbsp;21&nbsp;an&nbsp;&nbsp;&nbsp;&nbsp;26&nbsp;ha</tt>
+<tt class='indentedcode'>2&nbsp;du&nbsp;&nbsp;&nbsp;&nbsp;7&nbsp;ju&nbsp;&nbsp;&nbsp;&nbsp;12&nbsp;ne&nbsp;&nbsp;&nbsp;&nbsp;17&nbsp;ad&nbsp;&nbsp;&nbsp;&nbsp;22&nbsp;or&nbsp;&nbsp;&nbsp;&nbsp;27&nbsp;ie</tt>
+<tt class='indentedcode'>3&nbsp;dr&nbsp;&nbsp;&nbsp;&nbsp;8&nbsp;ca&nbsp;&nbsp;&nbsp;&nbsp;13&nbsp;lt&nbsp;&nbsp;&nbsp;&nbsp;18&nbsp;su&nbsp;&nbsp;&nbsp;&nbsp;23&nbsp;xo&nbsp;&nbsp;&nbsp;&nbsp;28&nbsp;iq</tt>
+<tt class='indentedcode'>4&nbsp;sw&nbsp;&nbsp;&nbsp;&nbsp;9&nbsp;cc&nbsp;&nbsp;&nbsp;&nbsp;14&nbsp;gt&nbsp;&nbsp;&nbsp;&nbsp;19&nbsp;mu&nbsp;&nbsp;&nbsp;&nbsp;24&nbsp;sh&nbsp;&nbsp;&nbsp;&nbsp;29&nbsp;ii</tt>
+<br/><br/>
+Most are just the first two letters of the instruction name. I
+use <span class="tt">..</span> instead of <span class="tt">no</span> for <span class="tt">NOP</span>, and the first letter of
+each I/O instruction name. So a bundle may look like:
+<br/><br/>
+<tt class='indentedcode'>dumure..</tt>
+<br/><br/>
+(This would correspond to <span class="tt">dup multiply return nop</span>).
+<br/><br/>
+<span class="h2">Runtime Assembler</span>
+<br/><br/>
+RETRO also has a runtime variation of Muri that can be used
+when you need to generate more optimal code. So one can write:
+<br/><br/>
+<tt class='indentedcode'>:n:square&nbsp;dup&nbsp;*&nbsp;;</tt>
+<br/><br/>
+Or:
+<br/><br/>
+<tt class='indentedcode'>:n:square&nbsp;\dumure..&nbsp;;</tt>
+<br/><br/>
+The second one will be faster, as the entire definition is one
+bundle, which reduces memory reads and decoding by 2/3.
+<br/><br/>
+Doing this is less readable, so I only recommend doing so after
+you have finalized working RETRO level code and determined the
+best places to optimize.
+<br/><br/>
+The runtime assembler has the following directives:
+<br/><br/>
+<tt class='indentedcode'>i&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;is&nbsp;an&nbsp;instruction&nbsp;bundle</tt>
+<tt class='indentedcode'>d&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;is&nbsp;a&nbsp;numeric&nbsp;value</tt>
+<tt class='indentedcode'>r&nbsp;&nbsp;&nbsp;&nbsp;value&nbsp;is&nbsp;a&nbsp;reference</tt>
+<br/><br/>
+Additionally, in the runtime assembler, these are reversed:
+<br/><br/>
+<tt class='indentedcode'>'dudumu..&nbsp;i</tt>
+<br/><br/>
+Instead of:
+<br/><br/>
+<tt class='indentedcode'>i&nbsp;dudumu..</tt>
+<br/><br/>
+The runtime assembler also provides three prefixes for use in
+inlining machine code into a definition. These are:
+<br/><br/>
+<tt class='indentedcode'>&nbsp;\&nbsp;&nbsp;&nbsp;&nbsp;Treat&nbsp;token&nbsp;as&nbsp;an&nbsp;assembly&nbsp;sequence</tt>
+<tt class='indentedcode'>&nbsp;`&nbsp;&nbsp;&nbsp;&nbsp;Treat&nbsp;token&nbsp;as&nbsp;a&nbsp;numeric&nbsp;value</tt>
+<tt class='indentedcode'>&nbsp;^&nbsp;&nbsp;&nbsp;&nbsp;Treat&nbsp;token&nbsp;as&nbsp;a&nbsp;reference</tt>
+<br/><br/>
+E.g., instead of doing something like:
+<br/><br/>
+<tt class='indentedcode'>:n:square&nbsp;as{&nbsp;'dumu....&nbsp;i&nbsp;}as&nbsp;;</tt>
+<tt class='indentedcode'>:test&nbsp;as{&nbsp;'lilica....&nbsp;i&nbsp;#22&nbsp;d&nbsp;'n:square&nbsp;r&nbsp;}as&nbsp;;</tt>
+<br/><br/>
+Just write:
+<br/><br/>
+<tt class='indentedcode'>:n:square&nbsp;\dumu....&nbsp;;</tt>
+<tt class='indentedcode'>:test&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\lilica..&nbsp;`22&nbsp;^n:square&nbsp;;&nbsp;</tt>
+</p>
+</body></html>
