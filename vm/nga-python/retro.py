@@ -471,10 +471,17 @@ class Retro:
         self.memory[to] = 0
 
     def execute(self, word, notfound):
-        self.ip = word
         if self.address.depth() == 0:
             self.address.push(0)
+        else:
+            self.address.push(-1)
+            self.address.push(self.ip)
+        self.ip = word
         while self.ip < 1000000:
+            if self.address.tos() == -1:
+                self.address.pop()
+                self.ip = self.address.tos()
+                return
             if self.ip == self.Cached["s:eq?"]:
                 a = self.extract_string(self.stack.pop())
                 b = self.extract_string(self.stack.pop())
