@@ -289,10 +289,20 @@ void execute(CELL cell, int silent) {
   silence_input = silent;
   if (rp == 0)
     rp = 1;
+  else {
+    rp++;
+    TORS = -1;
+    rp++;
+  }
   ip = cell;
   token = TIB;
   while (ip < IMAGE_SIZE) {
     if (perform_abort == 0) {
+      if (TORS == -1) {
+        rp--;
+        ip = TORS;
+        return;
+      }
       if (ip == NotFound) {
         printf("\nERROR: Word Not Found: ");
         printf("`%s`\n\n", string_extract(token));
