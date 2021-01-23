@@ -47,6 +47,8 @@
 
 * reduced redundancy across the various implementations in C
 * removed an unused function
+* fixed several bugs in address stack handling in execute() that
+  were causing issues when including files in some circumstances
 
 ### nga-python
 
@@ -58,6 +60,8 @@
 * embeds image as a Python source
 * now supports `-f`, `-i`, and `-u` command line parameters
 * improved error handling for invalid addresses
+* fixed a bugs in address stack handling in execute() that was
+  causing issues when including files in some circumstances
 
 ### nga-nim
 
