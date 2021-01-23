@@ -325,6 +325,7 @@ void execute(CELL cell, int silent) {
       if (rp < 0 || rp > ADDRESSES) {
         printf("\nERROR (nga/execute): Address Stack Limits Exceeded!\n");
         printf("At %lld, opcode %lld. rp = %lld\n", (long long)ip, (long long)opcode, (long long)rp);
+        exit(1);
       }
 #endif
       ip++;
@@ -680,7 +681,7 @@ int main(int argc, char **argv) {
 
   /* Run the Listener (if interactive mode was set) */
   if (modes[FLAG_INTERACTIVE] == 1) {
-    while (1) execute(0, -1);
+    execute(0, -1);
   }
 
   if (modes[FLAG_RUN] == 1) {
