@@ -133,7 +133,7 @@ vm/nga-c/retro-image.c: ngaImage bin/retro-embedimage bin/retro-extend interface
 
 bin/retro: vm/nga-c/retro-image.c vm/nga-c/retro-unix.c vm/nga-c/bsd-strl.c vm/nga-c/config.h vm/nga-c/dev-clock.c vm/nga-c/dev-files.c vm/nga-c/dev-floatingpoint.c vm/nga-c/dev-image.c vm/nga-c/dev-rng.c vm/nga-c/dev-sockets.c vm/nga-c/dev-unix.c vm/nga-c/prototypes.h package/list.forth package/load-extensions.retro
 	cd vm/nga-c && $(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o ../../bin/retro retro-unix.c $(LIBM)
-	cd package && ../bin/retro -f list.forth
+	cd package && ../bin/retro -u rre.image -f list.forth
 	./bin/retro-embedimage rre.image >vm/nga-c/retro-image.c
 	rm rre.image
 	cd vm/nga-c && $(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o ../../bin/retro retro-unix.c $(LIBM)
