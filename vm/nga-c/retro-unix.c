@@ -269,14 +269,13 @@ void io_scripting_handler() {
   ---------------------------------------------------------------------*/
 
 void invalid_opcode(CELL opcode) {
-  CELL a, b, i;
+  CELL a, i;
   printf("\nERROR (nga/execute): Invalid instruction!\n");
   printf("At %lld, opcode %lld\n", (long long)ip, (long long)opcode);
   printf("Instructions: ");
   a = opcode;
   for (i = 0; i < 4; i++) {
-    b = a & 0xFF;
-    printf("%lldd ", (long long)b);
+    printf("%lldd ", (long long)a & 0xFF);
     a = a >> 8;
   }
   printf("\n");
