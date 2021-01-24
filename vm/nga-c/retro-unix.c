@@ -5,7 +5,7 @@
   includes a number of I/O interfaces, extensive commentary, and has
   been refined by over a decade of use and development.
 
-  Copyright (c) 2008 - 2020, Charles Childers
+  Copyright (c) 2008 - 2021, Charles Childers
 
   Portions are based on Ngaro, which was additionally copyrighted by
   the following:
@@ -21,7 +21,7 @@
   C Headers
   ---------------------------------------------------------------------*/
 
-#include <ctype.h> 
+#include <ctype.h>
 #include <errno.h>
 #include <math.h>
 #include <signal.h>
@@ -95,8 +95,8 @@ Handler IO_queryHandlers[] = {
 };
 
 
-/*--------------------------------------------------------------------- 
-  Variables Related To Image Introspection 
+/*---------------------------------------------------------------------
+  Variables Related To Image Introspection
   ---------------------------------------------------------------------*/
 
 CELL Compiler;
@@ -288,20 +288,10 @@ void execute(CELL cell, int silent) {
   silence_input = silent;
   if (rp == 0)
     rp = 1;
-  else {
-    rp++;
-    TORS = -1;
-    rp++;
-  }
   ip = cell;
   token = TIB;
   while (ip < IMAGE_SIZE) {
     if (perform_abort == 0) {
-      if (TORS == -1) {
-        rp--;
-        ip = TORS;
-        return;
-      }
       if (ip == NotFound) {
         printf("\nERROR: Word Not Found: ");
         printf("`%s`\n\n", string_extract(token));
@@ -469,6 +459,9 @@ void include_file(char *fname, int run_tests) {
   char line[64 * 1024];            /* Line buffer [about 64K]          */
   char fence[33];                  /* Used with `fence_boundary()`     */
 
+  CELL ReturnStack[ADDRESSES];
+  CELL arp, aip;
+  
   long offset = 0;
   CELL at = 0;
   int tokens = 0;
@@ -477,8 +470,14 @@ void include_file(char *fname, int run_tests) {
   if (fp == NULL)
     return;
 
+  arp = rp;
+  aip = ip;
+  for(rp = 0; rp <= arp; rp++)
+    ReturnStack[rp] = address[rp];
+  rp = 0;
+  
   current_source++;
-  bsd_strlcpy(scripting_sources[current_source], fname, 8192);
+   bsd_strlcpy(scripting_sources[current_source], fname, 8192);
 
   ignoreToEOF = 0;
 
@@ -520,6 +519,10 @@ void include_file(char *fname, int run_tests) {
   if (perform_abort == -1) {
     carry_out_abort();
   }
+  for(rp = 0; rp <= arp; rp++)
+    address[rp] = ReturnStack[rp];
+  rp = arp;
+  ip = aip;
 }
 
 
