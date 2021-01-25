@@ -1,0 +1,100 @@
+# Decimal Numbers
+
+~~~
+{{
+  'DPU var
+  :identify
+    @DPU n:zero? 0; drop
+      #20 io:scan-for dup n:negative?
+      [ drop 'IO_DEVICE_TYPE_0020_NOT_FOUND s:put nl ]
+      [ !DPU ] choose ;
+---reveal---
+  :decimal:operation identify @DPU io:invoke ;
+}}
+~~~
+
+~~~
+:n:to-decimal  (n-_dec:-n)   #0 decimal:operation ;
+:s:to-decimal  (s-_dec:-n)   #1 decimal:operation ;
+:dec:to-number (dec:a-__-n)  #2 decimal:operation ;
+:dec:to-string (dec:n-__-s) s:empty dup #3 decimal:operation ;
+:dec:+     (dec:ab-c)    #4 decimal:operation ;
+:dec:-     (dec:ab-c)    #5 decimal:operation ;
+:dec:*     (dec:ab-c)    #6 decimal:operation ;
+:dec:/     (dec:ab-c)    #7 decimal:operation ;
+:dec:floor (dec:ab-c)    #8 decimal:operation ;
+:dec:ceiling (dec:f-f)   #9 decimal:operation ;
+:dec:sqrt  (dec:f-f)    #10 decimal:operation ;
+:dec:eq?   (dec:ab-c)   #11 decimal:operation ;
+:dec:-eq?  (dec:ab-c)   #12 decimal:operation ;
+:dec:lt?   (dec:ab-c)   #13 decimal:operation ;
+:dec:gt?   (dec:ab-c)   #14 decimal:operation ;
+:dec:depth (-n)       #15 decimal:operation ;
+:dec:dup   (dec:a-aa)   #16 decimal:operation ;
+:dec:drop  (dec:a-)     #17 decimal:operation ;
+:dec:swap  (dec:ab-ba)  #18 decimal:operation ;
+:dec:log   (dec:ab-c)   #19 decimal:operation ;
+:dec:power (dec:ab-c)   #20 decimal:operation ;
+:dec:sin   (dec:f-f)    #21 decimal:operation ;
+:dec:cos   (dec:f-f)    #22 decimal:operation ;
+:dec:tan   (dec:f-f)    #23 decimal:operation ;
+:dec:asin  (dec:f-f)    #24 decimal:operation ;
+:dec:acos  (dec:f-f)    #25 decimal:operation ;
+:dec:atan  (dec:f-f)    #26 decimal:operation ;
+:dec:push  (dec:f-)     #27 decimal:operation ;
+:dec:pop   (dec:-f)     #28 decimal:operation ;
+:dec:adepth  (-n)     #29 decimal:operation ;
+~~~
+
+Above this, additional functions are defined. First are words
+to aid in structuring the floating point stack.
+
+~~~
+:dec:over  (dec:ab-aba) dec:push dec:dup dec:pop dec:swap ;
+:dec:tuck  (dec:ab-bab) dec:dup dec:push dec:swap dec:pop ;
+:dec:nip   (dec:ab-b)   dec:swap dec:drop ;
+:dec:drop-pair (dec:ab-) dec:drop dec:drop ;
+:dec:dup-pair (dec:ab-abab) dec:over dec:over ;
+:dec:rot  (dec:abc-bca)  dec:push dec:swap dec:pop dec:swap ;
+~~~
+
+Then a word to allow creation of floating point values via a
+`,` prefix.
+
+~~~
+:prefix:, (s-__dec:-a)
+  compiling? &s:keep &s:temp choose &s:to-decimal class:word ; immediate
+~~~
+
+~~~
+:dec:square (dec:n-m)   dec:dup dec:* ;
+:dec:positive? (-f__dec:a-) #0 n:to-decimal dec:gt? ;
+:dec:negative? (-f__dec:a-) #0 n:to-decimal dec:lt? ;
+:dec:negate (dec:a-b)  #-1 n:to-decimal dec:* ;
+:dec:abs    (dec:a-b)  dec:dup dec:negative? &dec:negate if ;
+:dec:put  (dec:a-) dec:to-string s:put ;
+
+:dec:PI   (dec:-F) ,3.141592 ;
+:dec:E    (dec:-F) ,2.718281 ;
+:dec:NAN  (dec:-n) ,0 ,0 dec:/ ;
+:dec:INF  (dec:-n) ,1.0 ,0 dec:/ ;
+:dec:-INF (dec:-n) ,-1.0 ,0 dec:/ ;
+:dec:nan? (dec:n-,-f)  dec:dup dec:-eq? ;
+:dec:inf? (dec:n-,-f)  dec:INF dec:eq? ;
+:dec:-inf? (dec:n-,-f) dec:-INF dec:eq? ;
+:dec:round (-|dec:a-b)
+  dec:dup dec:negative?
+  [ ,0.5 dec:- dec:ceiling ]
+  [ ,0.5 dec:+ dec:floor   ] choose ;
+:dec:min   (dec:nn-n)  dec:dup-pair dec:lt? &dec:drop &dec:nip choose ;
+:dec:max   (dec:nn-n)  dec:dup-pair dec:gt? &dec:drop &dec:nip choose ;
+:dec:limit (dec:nlu-n) dec:swap dec:push dec:min dec:pop dec:max ;
+:dec:between? (dec:nlu-n) dec:rot dec:dup dec:push dec:rot dec:rot dec:limit dec:pop dec:eq? ;
+:dec:inc   (dec:n-n)   ,1 dec:+ ;
+:dec:dec   (dec:n-n)   ,1 dec:- ;
+:dec:case  (dec:ff-,q-)
+  dec:over dec:eq? [ dec:drop call #-1 ] [ drop #0 ] choose 0; pop drop-pair ;
+:dec:sign (-n|dec:a-)
+  dec:dup ,0 dec:eq? [ #0 dec:drop ] if;
+  ,0 dec:gt? [ #1 ] [ #-1 ] choose ;
+~~~

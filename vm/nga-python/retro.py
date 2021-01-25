@@ -24,13 +24,14 @@
 # combine the separate files into a single one for deployment.
 # -------------------------------------------------------------
 
-import os, sys, math, time, struct, random, datetime
+import os, sys, math, time, struct, random, datetime, decimal
 
 from ClockDevice import Clock
 from RNGDevice import RNG
 from FileSystemDevice import FileSystem
 
 from FloatStack import FloatStack
+from DecimalDevice import DecimalStack
 from IntegerStack import IntegerStack
 from Memory import Memory
 from InitialImage import InitialImage
@@ -50,6 +51,9 @@ class Retro:
         self.files = FileSystem()
         self.floats = FloatStack()
         self.afloats = FloatStack()
+        self.decimals = DecimalStack()
+        self.adecimals = DecimalStack()
+
         self.Dictionary = self.populate_dictionary()
         self.Cached = self.cache_words()
 
@@ -319,7 +323,7 @@ class Retro:
         self.ip = 9000000
 
     def i_ienumerate(self):
-        self.stack.push(6)
+        self.stack.push(7)
 
     def i_iquery(self):
         device = self.stack.pop()
@@ -341,6 +345,9 @@ class Retro:
         if device == 5:  # scripting
             self.stack.push(0)
             self.stack.push(9)
+        if device == 6:  # decimal
+            self.stack.push(0)
+            self.stack.push(20)
 
     def file_open_params(self):
         mode = self.stack.pop()
@@ -416,6 +423,39 @@ class Retro:
             29: lambda: self.stack.push(self.afloats.depth()),
         }
 
+        self.decimal_instr = {
+            0: lambda: self.decimals.push(decimal.Decimal(self.stack.pop())),
+            1: lambda: self.decimals.push(decimal.Decimal(self.extract_string(self.stack.pop()))),
+            2: lambda: self.stack.push(int(self.decimals.pop())),
+            3: lambda: self.inject_string(str(self.decimals.pop()), self.stack.pop()),
+            4: lambda: self.decimals.add(),
+            5: lambda: self.decimals.sub(),
+            6: lambda: self.decimals.mul(),
+            7: lambda: self.decimals.div(),
+            8: lambda: self.decimals.floor(),
+            9: lambda: self.decimals.ceil(),
+            10: lambda: self.decimals.sqrt(),
+            11: lambda: self.stack.push(self.decimals.eq()),
+            12: lambda: self.stack.push(self.decimals.neq()),
+            13: lambda: self.stack.push(self.decimals.lt()),
+            14: lambda: self.stack.push(self.decimals.gt()),
+            15: lambda: self.stack.push(self.decimals.depth()),
+            16: lambda: self.decimals.dup(),
+            17: lambda: self.decimals.drop(),
+            18: lambda: self.decimals.swap(),
+            19: lambda: self.decimals.log(),
+            20: lambda: self.decimals.pow(),
+            21: lambda: self.decimals.sin(),
+            22: lambda: self.decimals.cos(),
+            23: lambda: self.decimals.tan(),
+            24: lambda: self.decimals.asin(),
+            25: lambda: self.decimals.atan(),
+            26: lambda: self.decimals.acos(),
+            27: lambda: self.adecimals.push(self.decimals.pop()),
+            28: lambda: self.decimals.push(self.adecimals.pop()),
+            29: lambda: self.stack.push(self.adecimals.depth()),
+        }
+
     def i_iinvoke(self):
         device = self.stack.pop()
         #        print('dev:', device)
@@ -445,6 +485,9 @@ class Retro:
             if action == 3:
                 b = self.stack.pop()
                 self.stack.push(self.inject_string(sys.argv[0], b))
+        if device == 6:
+            action = self.stack.pop()
+            self.decimal_instr[int(action)]()
 
     def validate_opcode(self, I0, I1, I2, I3):
         if (
