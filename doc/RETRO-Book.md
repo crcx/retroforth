@@ -1,7 +1,7 @@
 # RETRO: a Modern, Pragmatic Forth
 
 Welcome to RETRO, my personal take on the Forth language. This
-is a modern system primarily targetting desktop, mobile, and
+is a modern system primarily targeting desktop, mobile, and
 servers, though it can also be used on some larger (ARM, MIPS32)
 embedded systems.
 
@@ -74,7 +74,7 @@ build from one of the repositories. This will reflect the
 latest system as I use it, and are normally reliable as I
 run them daily for my production systems.
 
-# Building on BSD, Linux, macOS, and outher Inix Targets
+# Building on BSD, Linux, macOS, and other Unix Targets
 
 RETRO is well supported on BSD (tested on FreeBSD, NetBSD,
 OpenBSD), Linux, and macOS systems. It should build on any
@@ -338,7 +338,7 @@ retro -s
 ## Using In a Pipe
 
 If using a Unix shell and piping input between processes, you
-will probably want to use `-s` to supress the startup messages
+will probably want to use `-s` to suppress the startup messages
 and `Ok` prompt that normally appear.
 
 E.g.,
@@ -645,7 +645,7 @@ to guide the compiler. The use of these is a major way in
 which RETRO differs from traditional Forth.
 
 When a token is passed to `interpret`, RETRO first takes the
-intitial character and looks to see if there is a word that
+initial character and looks to see if there is a word that
 matches this. If so, it will pass the rest of the token to
 that word to handle.
 
@@ -750,7 +750,7 @@ Example command line:
     retro-extend ngaImage example/rot13.forth
 
 Pass the image name as the first argument, and then file names
-as susequent ones. Do *not* use this for things relying on I/O
+as subsequent ones. Do *not* use this for things relying on I/O
 apart from the basic console output as it doesn't emulate other
 devices. If you need to load in things that rely on using the
 optional I/O devices, see the **Advanced Builds** chapter.
@@ -802,7 +802,7 @@ to generate turnkey executables.
 
 - Unix host
 - ELF executable support
-- `objcpy` in the $PATH
+- `objcopy` in the $PATH
 
 ## Building
 
@@ -890,7 +890,7 @@ OPTIONS
 AUTHORS
      Charles Childers <crc@forthworks.com>
 
-OpenBSD 6.4			 Setember 2019			   OpenBSD 6.4
+OpenBSD 6.4			 September 2019			   OpenBSD 6.4
 
 RETRO-DESCRIBE(1)	    General Commands Manual	     RETRO-DESCRIBE(1)
 
@@ -974,7 +974,7 @@ DESCRIPTION
      changes.
 
 
-CAVETS
+CAVEATS
      retro-extend only emulates the minimal console output device. If the
      source files require additional I/O to be present, the extend process
      will likely fail to work correctly.
@@ -983,7 +983,7 @@ CAVETS
 AUTHORS
      Charles Childers <crc@forthworks.com>
 
-OpenBSD 6.4			 February 2019			   OpenBSD 6.4
+OpenBSD 6.4			 January 2021			   OpenBSD 6.4
 
 RETRO-LOCATE(1)		    General Commands Manual	       RETRO-LOCATE(1)
 
@@ -1149,7 +1149,7 @@ names.
 # The Return Stack
 
 RETRO has two stacks. The primary one is used to pass data
-beween words. The second one primarily holds return addresses.
+between words. The second one primarily holds return addresses.
 
 Each time a word is called, the next address is pushed to
 the return stack.
@@ -1465,7 +1465,7 @@ before returning to the prior one.
 To set a buffer as the active one use `buffer:set`. This takes
 an address.
 
-The buffer will be assumed to be empty. The inital value will
+The buffer will be assumed to be empty. The initial value will
 be set to ASCII:NULL.
 
 ## Add Value
@@ -1518,7 +1518,7 @@ Let's add some stuff using `buffer:add`:
 #300 buffer:add
 ```
 
-And then retreive the values:
+And then retrieve the values:
 
 ```
 buffer:get n:put nl
