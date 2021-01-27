@@ -2,5 +2,10 @@
 
 ~~~
 'Line var
-'tags [ &Heap [ ASCII:HT s:tokenize !Line @Line #0 a:fetch #0 script:get-argument s:eq? [ @Line #2 a:fetch @Line #1 a:fetch s:put $: c:put s:put nl ] if ] v:preserve ] file:for-each-line
+:parse  (s-a) ASCII:HT s:tokenize dup !Line ;
+:word   (-s)  #0 script:get-argument ;
+:match? (a-f) #0 a:fetch word s:eq? ;
+:fields (-ss) @Line [ #2 a:fetch ] [ #1 a:fetch ] bi ;
+:display (-)  fields s:put $: c:put s:put nl ;
+'tags [ &Heap [ parse match? [ display ] if ] v:preserve ] file:for-each-line
 ~~~
