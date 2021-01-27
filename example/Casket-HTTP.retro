@@ -53,7 +53,7 @@ input.
   [ ASCII:SPACE eq? ] tri or or ;
 
 :s:get (a-)
-  buffer:set [ c:get [ buffer:add ] [ eot? ] bi ] until 
+  buffer:set [ c:get [ buffer:add ] [ eot? ] bi ] until
   buffer:get drop ;
 
 :read-request (-)
@@ -199,15 +199,19 @@ And the code for Casket is done.
 
 ## Using Casket
 
-Casket requires [Retro](http://forthworks.com/retro) and a Unix system with inetd.
+Casket requires [Retro](http://forthworks.com/retro) and a Unix system
+with inetd.
 
-Install Retro and put the `casket.forth` somewhere. Then add a configuration line to your `/etc/inetd.conf`. I use:
+Install Retro and put the `casket.forth` somewhere. Then add a
+configuration line to your `/etc/inetd.conf`. I use:
 
     http    stream  tcp     nowait/6/30/2   casket    /home/crc/servers/casket.forth
 
 Restart inetd.
 
-Edit the `WEBROOT` in `casket.forth` to point to your web directory. Then go to the web directory and create a directory for each domain. E.g.,
+Edit the `WEBROOT` in `casket.forth` to point to your web directory.
+Then go to the web directory and create a directory for each domain.
+E.g.,
 
     /home/crc/www/casket.forthworks.com
 
@@ -222,7 +226,9 @@ Put your `index.html` and other files here and try accessing your website.
 
 ## Real World Uses
 
-Casket has been in use since the second half of 2018 serving a number of small websites. It's also used to host the Casket project page you are looking at.
+Casket has been in use since the second half of 2018 serving a number of
+small websites. It's also used to host the Casket project page you are
+looking at.
 
 ---
 

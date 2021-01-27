@@ -79,7 +79,8 @@ Given that, making a request is simply:
 ~~~
 :make-request
   @Params dup s:length @Host @Request
-  'POST_%s_HTTP/1.1\r\nHost:_%s\r\nContent-Type:_text/plain\r\nContent-Length:_%n\r\n\r\n%s\r\n s:format @Socket socket:send drop-pair ;
+  'POST_%s_HTTP/1.1\r\nHost:_%s\r\nContent-Type:_text/plain\r\nContent-Length:_%n\r\n\r\n%s\r\n
+  s:format @Socket socket:send drop-pair ;
 ~~~
 
 Moving on to reading the body, this is just reading bytes and shoving

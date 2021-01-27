@@ -5,17 +5,30 @@ Updated for RETRO 12 by Charles Childers, 2018
 
 ## Description
 
-This vocabulary provides support for testing code in a clean, predicatable manner.
+This vocabulary provides support for testing code in a clean,
+predicatable manner.
 
-Assertion predicates first check the stack for underflow; if the stack is deep enough, their embedded predicates are applied; if not, the assertion fails.
+Assertion predicates first check the stack for underflow; if the stack
+is deep enough, their embedded predicates are applied; if not, the
+assertion fails.
 
-The result of each assertion - including the underflow check - is ANDed with the assertionFlag which can then be tested after the containing thread has finished executing; this is handled by the .assertion word class.
+The result of each assertion - including the underflow check - is ANDed
+with the assertionFlag which can then be tested after the containing
+thread has finished executing; this is handled by the .assertion word
+class.
 
-For custom behaviour, revector preCond and/or postCond; by default the pre-condition is an effective nop while the post-condition simply prints 'Success' or 'Failure'.
+For custom behaviour, revector preCond and/or postCond; by default the
+pre-condition is an effective nop while the post-condition simply prints
+'Success' or 'Failure'.
 
-Given that each assertion predicate mutates assertionFlag, use of the word class `class:assertion` is encouraged; this resets the `assertionFlag` before execution and push its final value to the stack before calling postCond when the thread exits.
+Given that each assertion predicate mutates assertionFlag, use of the
+word class `class:assertion` is encouraged; this resets the
+`assertionFlag` before execution and push its final value to the stack
+before calling postCond when the thread exits.
 
-NOTE: For simplicity of implementation, failure within a word of class `class:assertion` will not result in immediate termination; instead, the false value of `assertionFlag` is left to propagate.
+NOTE: For simplicity of implementation, failure within a word of class
+`class:assertion` will not result in immediate termination; instead, the
+false value of `assertionFlag` is left to propagate.
 
 
 ## Code & Commentary
@@ -158,7 +171,7 @@ These are from Hooks.forth:
 |                 |     | assertions            |
 +-----------------+-----+-----------------------+
 | assertion       | -   | Change the class of a |
-|                 |     | function to           | 
+|                 |     | function to           |
 |                 |     | class:asssertion      |
 +-----------------+-----+-----------------------+
 

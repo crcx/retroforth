@@ -4,23 +4,30 @@
 
 December: Palindromic numbers
 
-Palindromic Numbers: The programming challenge for the Saturday, Dec. 19 Silicon Valley Forth Interest Group meeting. Numbers the same forward and backward as for RADAR but with numbers. Such as 88 and 666 and 12321.
+Palindromic Numbers: The programming challenge for the Saturday, Dec. 19
+Silicon Valley Forth Interest Group meeting. Numbers the same forward
+and backward as for RADAR but with numbers. Such as 88 and 666 and
+12321.
 
-Program a generator or a filter to find all palindromic integers from 1 (yes, it is) to 99999. Please confirm your interest to Bill Ragsdale, bill@billragsdale.cc
+Program a generator or a filter to find all palindromic integers from
+1 (yes, it is) to 99999. Please confirm your interest to Bill Ragsdale,
+bill@billragsdale.cc
 
 ## Code & Commentary
 
-Well this is really easy. I begin by creating an array of potential values.
+Well this is really easy. I begin by creating an array of potential
+values.
 
 ~~~
-#100000 [ I n:inc , ] 
+#100000 [ I n:inc , ]
 'Potentials d:create over , indexed-times
 ~~~
 
-Then a simple `palindrome?` word to convert the number to a string and return a flag indicating if it's a palindrome.
+Then a simple `palindrome?` word to convert the number to a string and
+return a flag indicating if it's a palindrome.
 
 ~~~
-:palindrome? n:to-string dup s:reverse s:eq? ; 
+:palindrome? n:to-string dup s:reverse s:eq? ;
 ~~~
 
 Use `palindrome?` to filter out invalid values.
@@ -39,13 +46,18 @@ And finally, display the palindromes.
 
 *Numeric Bases*
 
-While Retro only supports decimal values by default, if you have extended `n:to-string` to support a `Base`, this will still work with other bases.
+While Retro only supports decimal values by default, if you have
+extended `n:to-string` to support a `Base`, this will still work with
+other bases.
 
 *Memory Use*
 
-In my tests, this isn't memory efficient, as I'm keeping both the list of potentials and the results in memory, so it ends up consuming about 101k memory locations. If the results don't need to be kept, a much smaller solution would look like:
+In my tests, this isn't memory efficient, as I'm keeping both the list
+of potentials and the results in memory, so it ends up consuming about
+101k memory locations. If the results don't need to be kept, a much
+smaller solution would look like:
 
-    :palindrome? n:to-string dup s:reverse s:eq? ; 
+    :palindrome? n:to-string dup s:reverse s:eq? ;
     :value I n:inc dup ;
     :process [ n:put nl ] &drop choose ;
 
