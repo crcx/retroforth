@@ -1,0 +1,22 @@
+~~~
+#941687072 'forth.works::pythonista/ui const
+:ui:operation forth.works::pythonista/ui io:scan-for io:invoke ;
+
+:ui:create-view (name,type) #0 ui:operation ;
+:ui:add-view (name) #1 ui:operation ;
+:ui:remove-view (name) #2 ui:operation ;
+:ui:present (name) #3 ui:operation ;
+
+:ui:set-size (h,w,name) #4 ui:operation ;
+:ui:set-position (x,y,name) #5 ui:operation ;
+:ui:get-size (name-h,w) #6 ui:operation ;
+:ui:get-position (name-x,y) #7 ui:operation ;
+
+:ui:set-title (title,name) #8 ui:operation ;
+:ui:set-text (text,name) #9 ui:operation ;
+:ui:get-title (name-title) #10 ui:operation ;
+:ui:get-text (name-text) #11 ui:operation ;
+
+:ui:set-action (action,name) #12 ui:operation ;
+:ui:get-action (name-action) #13 ui:operation ;
+~~~
