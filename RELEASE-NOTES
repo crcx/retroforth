@@ -8,6 +8,28 @@
 
 ## Toolchain
 
+- retro-extend.py now does run length encoding
+
 ## VM
 
+- nga-python
+
+  - added support for run length encoded images
+  - added a decimal device (alt. to floating point w/higher precision)
+  - better fix for nested file inclusion handling
+  - added pythonista ui support (iOS)
+
+- nga-c
+
+  - better fix for nested file inclusion handling
+  - removed unused variables
+
 ## Examples
+
+- reduced some line lengths
+- refactored retro-locate
+- file names now using a consistent case/format
+
+## Documentation
+
+- epub now has a cover image
