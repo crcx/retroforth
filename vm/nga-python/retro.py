@@ -481,7 +481,12 @@ class Retro:
                 b = self.stack.pop()
                 self.stack.push(self.inject_string(sys.argv[a + 2], b))
             if action == 2:
+                prior = self.address
+                prior_ip = self.ip
+                self.address = IntegerStack()
                 self.run_file(self.extract_string(self.stack.pop()))
+                self.address = prior
+                self.ip = prior_ip
             if action == 3:
                 b = self.stack.pop()
                 self.stack.push(self.inject_string(sys.argv[0], b))
@@ -516,15 +521,8 @@ class Retro:
     def execute(self, word, notfound):
         if self.address.depth() == 0:
             self.address.push(0)
-        else:
-            self.address.push(-1)
-            self.address.push(self.ip)
         self.ip = word
         while self.ip < 1000000:
-            if self.address.tos() == -1:
-                self.address.pop()
-                self.ip = self.address.tos()
-                return
             if self.ip == self.Cached["s:eq?"]:
                 a = self.extract_string(self.stack.pop())
                 b = self.extract_string(self.stack.pop())
