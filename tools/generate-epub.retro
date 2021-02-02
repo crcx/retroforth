@@ -118,6 +118,7 @@ that are used in the book.
   '____<dc:creator_opf:role="aut">Charles_Childers</dc:creator>
   '__</metadata>
   '__<manifest>
+  '____<item_id="cover"_href="Book-Cover.png"_media-type="image/png"_properties="cover-image"/>
   '____<item_id="ncx"_href="TOC.ncx"_media-type="application/x-dtbncx+xml"/>
 } [ file:s:put file:nl ] a:for-each
 
@@ -151,6 +152,7 @@ drop
 'Relocate_files s:put nl
 'epub unix:chdir
 'cp_-r_../chapters_. unix:system
+'cp_../doc/Book-Cover.png_. unix:system
 ~~~
 
 # Zip Everything
@@ -162,6 +164,7 @@ drop
 'zip_-Xr9Dqv_../book.epub_TOC.ncx unix:system
 'zip_-Xr9Dqv_../book.epub_META-INF unix:system
 'zip_-Xr9Dqv_../book.epub_chapters unix:system
+'zip_-Xr9Dqv_../book.epub_Book-Cover.png unix:system
 '.. unix:chdir
 ~~~
 
