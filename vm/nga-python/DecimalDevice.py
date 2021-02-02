@@ -1,5 +1,6 @@
 from decimal import *
 
+
 class DecimalStack(object):
     def __init__(self, *d):
         self.data = list(d)

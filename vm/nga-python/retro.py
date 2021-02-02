@@ -425,7 +425,9 @@ class Retro:
 
         self.decimal_instr = {
             0: lambda: self.decimals.push(decimal.Decimal(self.stack.pop())),
-            1: lambda: self.decimals.push(decimal.Decimal(self.extract_string(self.stack.pop()))),
+            1: lambda: self.decimals.push(
+                decimal.Decimal(self.extract_string(self.stack.pop()))
+            ),
             2: lambda: self.stack.push(int(self.decimals.pop())),
             3: lambda: self.inject_string(str(self.decimals.pop()), self.stack.pop()),
             4: lambda: self.decimals.add(),

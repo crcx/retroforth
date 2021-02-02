@@ -22,9 +22,17 @@ if __name__ == "__main__":
     f.close()
     count = 0
     print("InitialImage = [")
+    rl = 0
     for cell in memory:
-        print(cell, end=", ")
-        count = count + 1
+        if cell == 0:
+            rl = rl + 1
+        if rl > 0 and cell != 0:
+            print("[{0}]".format(rl), end=", ")
+            rl = 0
+            count = count + 1
+        if cell != 0:
+            print(cell, end=", ")
+            count = count + 1
         if count > 10:
             print("")
             count = 0

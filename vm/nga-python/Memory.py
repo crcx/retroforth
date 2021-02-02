@@ -17,8 +17,13 @@ class Memory(list):
         else:
             i = 0
             for cell in initial:
-                self[i] = cell
-                i = i + 1
+                if type(cell) == list:
+                    for v in range(0, cell[0]):
+                        self[i] = 0
+                        i = i + 1
+                else:
+                    self[i] = cell
+                    i = i + 1
 
     def load_image(self, name):
         cells = int(os.path.getsize(name) / 4)
