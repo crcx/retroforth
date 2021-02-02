@@ -19,7 +19,7 @@ class Memory(list):
             for cell in initial:
                 if type(cell) == list:
                     for v in range(0, cell[0]):
-                        self[i] = 0
+                        self[i] = cell[1]
                         i = i + 1
                 else:
                     self[i] = cell

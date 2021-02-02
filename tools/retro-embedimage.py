@@ -6,6 +6,7 @@
 # image as a Python list. Output is written to stdout.
 #
 # Copyright (c) 2020, Charles Childers
+# Copyright (c) 2021, Arland Childers
 #
 # Usage:
 #
@@ -15,25 +16,35 @@
 import os, sys, struct
 from struct import pack, unpack
 
+
+def prints(length, priv, end=", "):
+    if priv != None:
+        if length == 1:
+            print(priv, end=end)
+        else:
+            print("[{},{}]".format(length, priv), end=end)
+
+
 if __name__ == "__main__":
     cells = int(os.path.getsize(sys.argv[1]) / 4)
     f = open(sys.argv[1], "rb")
     memory = list(struct.unpack(cells * "i", f.read()))
     f.close()
-    count = 0
-    print("InitialImage = [")
-    rl = 0
+    count = -1  # This is counts for the extra loop at the beginning
+    print("InitialImage = [", end="\n  ")
+    length = 1
+    priv = None
+
     for cell in memory:
-        if cell == 0:
-            rl = rl + 1
-        if rl > 0 and cell != 0:
-            print("[{0}]".format(rl), end=", ")
-            rl = 0
-            count = count + 1
-        if cell != 0:
-            print(cell, end=", ")
-            count = count + 1
-        if count > 10:
-            print("")
+        if cell == priv:
+            length += 1
+        else:
+            prints(length, priv)
+            priv = cell
+            length = 1
+            count += 1
+        if count >= 10:
+            print(end="\n  ")
             count = 0
-    print("]")
+    prints(length, priv, end="")
+    print("\n]")
