@@ -5469,6 +5469,171 @@ Put a copy of the top item on the stack under the second one.
 Class: class:word | Namespace: global | Interface Layer: all
 ------------------------------------------------------------------------
 
+ui:add-view
+
+  Data:  s-
+  Addr:  -
+  Float: -
+
+Add view named `s` to the displayed views.
+
+Class: class:word | Namespace: ui | Interface Layer: retro/python
+------------------------------------------------------------------------
+
+ui:create-view
+
+  Data:  ss-
+  Addr:  -
+  Float: -
+
+Create a new view. `s1` is the name and `s2` is the type.
+
+Class: class:word | Namespace: ui | Interface Layer: retro/python
+------------------------------------------------------------------------
+
+ui:get-action
+
+  Data:  s-a
+  Addr:  -
+  Float: -
+
+Return the address of the Retro handler for a view's associated action.
+
+Class: class:word | Namespace: ui | Interface Layer: retro/python
+------------------------------------------------------------------------
+
+ui:get-position
+
+  Data:  s-nn
+  Addr:  -
+  Float: -
+
+Return the row and column of the named view.
+
+Class: class:word | Namespace: ui | Interface Layer: retro/python
+------------------------------------------------------------------------
+
+ui:get-size
+
+  Data:  s-nn
+  Addr:  -
+  Float: -
+
+Return the height and width of the named view.
+
+Class: class:word | Namespace: ui | Interface Layer: retro/python
+------------------------------------------------------------------------
+
+ui:get-text
+
+  Data:  s-s
+  Addr:  -
+  Float: -
+
+Get the value of the text property of the named view.
+
+Class: class:word | Namespace: ui | Interface Layer: retro/python
+------------------------------------------------------------------------
+
+ui:get-title
+
+  Data:  s-s
+  Addr:  -
+  Float: -
+
+Get the value of the title property for the named view.
+
+Class: class:word | Namespace: ui | Interface Layer: retro/python
+------------------------------------------------------------------------
+
+ui:operation
+
+  Data:  ...n-
+  Addr:  -
+  Float: -
+
+Carry out a UI operation. Used internally by the other `ui:` words.
+
+Class: class:word | Namespace: ui | Interface Layer: retro/python
+------------------------------------------------------------------------
+
+ui:present
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Display all views.
+
+Class: class:word | Namespace: ui | Interface Layer: retro/python
+------------------------------------------------------------------------
+
+ui:remove-view
+
+  Data:  s-
+  Addr:  -
+  Float: -
+
+Remove view named `s` from the displayed views.
+
+Class: class:word | Namespace: ui | Interface Layer: retro/python
+------------------------------------------------------------------------
+
+ui:set-action
+
+  Data:  as-
+  Addr:  -
+  Float: -
+
+Set the action handler for a view to the specified Retro word address.
+
+Class: class:word | Namespace: ui | Interface Layer: retro/python
+------------------------------------------------------------------------
+
+ui:set-position
+
+  Data:  nns-
+  Addr:  -
+  Float: -
+
+Move view `s` to row `n1` and column `n2`.
+
+Class: class:word | Namespace: ui | Interface Layer: retro/python
+------------------------------------------------------------------------
+
+ui:set-size
+
+  Data:  nns-
+  Addr:  -
+  Float: -
+
+Set view `s` to height `n1` and width `n2`.
+
+Class: class:word | Namespace: ui | Interface Layer: retro/python
+------------------------------------------------------------------------
+
+ui:set-text
+
+  Data:  ss-
+  Addr:  -
+  Float: -
+
+Set the text property of view `s2` to `s1`.
+
+Class: class:word | Namespace: ui | Interface Layer: retro/python
+------------------------------------------------------------------------
+
+ui:set-title
+
+  Data:  ss-
+  Addr:  -
+  Float: -
+
+Set the title property of view `s2` to `s1`.
+
+Class: class:word | Namespace: ui | Interface Layer: retro/python
+------------------------------------------------------------------------
+
 unhook
 
   Data:  a-

@@ -1390,6 +1390,51 @@ Apply q against x, then against y, and finally against z.
 tuck                     D: nm-mnm  A: -  F: -
 Put a copy of the top item on the stack under the second one.
 
+ui:add-view              D: s-  A: -  F: -
+Add view named `s` to the displayed views.
+
+ui:create-view           D: ss-  A: -  F: -
+Create a new view. `s1` is the name and `s2` is the type.
+
+ui:get-action            D: s-a  A: -  F: -
+Return the address of the Retro handler for a view's associated action.
+
+ui:get-position          D: s-nn  A: -  F: -
+Return the row and column of the named view.
+
+ui:get-size              D: s-nn  A: -  F: -
+Return the height and width of the named view.
+
+ui:get-text              D: s-s  A: -  F: -
+Get the value of the text property of the named view.
+
+ui:get-title             D: s-s  A: -  F: -
+Get the value of the title property for the named view.
+
+ui:operation             D: ...n-  A: -  F: -
+Carry out a UI operation. Used internally by the other `ui:` words.
+
+ui:present               D: -  A: -  F: -
+Display all views.
+
+ui:remove-view           D: s-  A: -  F: -
+Remove view named `s` from the displayed views.
+
+ui:set-action            D: as-  A: -  F: -
+Set the action handler for a view to the specified Retro word address.
+
+ui:set-position          D: nns-  A: -  F: -
+Move view `s` to row `n1` and column `n2`.
+
+ui:set-size              D: nns-  A: -  F: -
+Set view `s` to height `n1` and width `n2`.
+
+ui:set-text              D: ss-  A: -  F: -
+Set the text property of view `s2` to `s1`.
+
+ui:set-title             D: ss-  A: -  F: -
+Set the title property of view `s2` to `s1`.
+
 unhook                   D: a-  A: -  F: -
 Reset the hook point in a1 to the default definition.
 

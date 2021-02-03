@@ -462,6 +462,21 @@ tri	xqqq-?	-	-	Apply q1 against x, then q2 against a copy of x, and finally q3 a
 tri*	xyzqqq-?	-	-	Apply q1 against x, q2 against y, and q3 against z.			class:word	{n/a}	{n/a}	global	all	
 tri@	xyzq-?	-	-	Apply q against x, then against y, and finally against z.			class:word	{n/a}	{n/a}	global	all	
 tuck	nm-mnm	-	-	Put a copy of the top item on the stack under the second one.			class:word	{n/a}	{n/a}	global	all	
+ui:add-view	s-	-	-	Add view named `s` to the displayed views.			class:word	{n/a}	{n/a}	ui	retro/python	
+ui:create-view	ss-	-	-	Create a new view. `s1` is the name and `s2` is the type.			class:word	{n/a}	{n/a}	ui	retro/python	
+ui:get-action	s-a	-	-	Return the address of the Retro handler for a view's associated action.			class:word	{n/a}	{n/a}	ui	retro/python	
+ui:get-position	s-nn	-	-	Return the row and column of the named view.			class:word	{n/a}	{n/a}	ui	retro/python	
+ui:get-size	s-nn	-	-	Return the height and width of the named view.			class:word	{n/a}	{n/a}	ui	retro/python	
+ui:get-text	s-s	-	-	Get the value of the text property of the named view.			class:word	{n/a}	{n/a}	ui	retro/python	
+ui:get-title	s-s	-	-	Get the value of the title property for the named view.			class:word	{n/a}	{n/a}	ui	retro/python	
+ui:operation	...n-	-	-	Carry out a UI operation. Used internally by the other `ui:` words.			class:word	{n/a}	{n/a}	ui	retro/python	
+ui:present	-	-	-	Display all views.			class:word	{n/a}	{n/a}	ui	retro/python	
+ui:remove-view	s-	-	-	Remove view named `s` from the displayed views.			class:word	{n/a}	{n/a}	ui	retro/python	
+ui:set-action	as-	-	-	Set the action handler for a view to the specified Retro word address.			class:word	{n/a}	{n/a}	ui	retro/python	
+ui:set-position	nns-	-	-	Move view `s` to row `n1` and column `n2`.			class:word	{n/a}	{n/a}	ui	retro/python	
+ui:set-size	nns-	-	-	Set view `s` to height `n1` and width `n2`.			class:word	{n/a}	{n/a}	ui	retro/python	
+ui:set-text	ss-	-	-	Set the text property of view `s2` to `s1`.			class:word	{n/a}	{n/a}	ui	retro/python	
+ui:set-title	ss-	-	-	Set the title property of view `s2` to `s1`.			class:word	{n/a}	{n/a}	ui	retro/python	
 unhook	a-	-	-	Reset the hook point in a1 to the default definition.			class:word	    :foo hook #1 ;\n    :bar #2 ;\n    &bar &foo set-hook\n    &foo unhook	{n/a}	global	all	
 unix:chdir	s-	-	-	Change the current working directory to the specified one.			class:word	  '/etc unix:chdir	{n/a}	unix	rre	
 unix:count-files-in-cwd	-n	-	-	Return the number of files (and subdirectories) in the current working directory			class:word	{n/a}	{n/a}	unix	rre	

@@ -3563,6 +3563,111 @@
 </div>
 <p>Put a copy of the top item on the stack under the second one.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>global</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
+<h2>ui:add-view</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> s-<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Add view named `s` to the displayed views.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>ui</td></tr><tr><td><b>Interface Layer:</b> </td><td>retro/python</td></tr></table><hr/>
+<h2>ui:create-view</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> ss-<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Create a new view. `s1` is the name and `s2` is the type.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>ui</td></tr><tr><td><b>Interface Layer:</b> </td><td>retro/python</td></tr></table><hr/>
+<h2>ui:get-action</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> s-a<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Return the address of the Retro handler for a view's associated action.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>ui</td></tr><tr><td><b>Interface Layer:</b> </td><td>retro/python</td></tr></table><hr/>
+<h2>ui:get-position</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> s-nn<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Return the row and column of the named view.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>ui</td></tr><tr><td><b>Interface Layer:</b> </td><td>retro/python</td></tr></table><hr/>
+<h2>ui:get-size</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> s-nn<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Return the height and width of the named view.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>ui</td></tr><tr><td><b>Interface Layer:</b> </td><td>retro/python</td></tr></table><hr/>
+<h2>ui:get-text</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> s-s<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Get the value of the text property of the named view.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>ui</td></tr><tr><td><b>Interface Layer:</b> </td><td>retro/python</td></tr></table><hr/>
+<h2>ui:get-title</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> s-s<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Get the value of the title property for the named view.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>ui</td></tr><tr><td><b>Interface Layer:</b> </td><td>retro/python</td></tr></table><hr/>
+<h2>ui:operation</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> ...n-<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Carry out a UI operation. Used internally by the other `ui:` words.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>ui</td></tr><tr><td><b>Interface Layer:</b> </td><td>retro/python</td></tr></table><hr/>
+<h2>ui:present</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> -<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Display all views.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>ui</td></tr><tr><td><b>Interface Layer:</b> </td><td>retro/python</td></tr></table><hr/>
+<h2>ui:remove-view</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> s-<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Remove view named `s` from the displayed views.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>ui</td></tr><tr><td><b>Interface Layer:</b> </td><td>retro/python</td></tr></table><hr/>
+<h2>ui:set-action</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> as-<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Set the action handler for a view to the specified Retro word address.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>ui</td></tr><tr><td><b>Interface Layer:</b> </td><td>retro/python</td></tr></table><hr/>
+<h2>ui:set-position</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> nns-<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Move view `s` to row `n1` and column `n2`.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>ui</td></tr><tr><td><b>Interface Layer:</b> </td><td>retro/python</td></tr></table><hr/>
+<h2>ui:set-size</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> nns-<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Set view `s` to height `n1` and width `n2`.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>ui</td></tr><tr><td><b>Interface Layer:</b> </td><td>retro/python</td></tr></table><hr/>
+<h2>ui:set-text</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> ss-<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Set the text property of view `s2` to `s1`.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>ui</td></tr><tr><td><b>Interface Layer:</b> </td><td>retro/python</td></tr></table><hr/>
+<h2>ui:set-title</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> ss-<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Set the title property of view `s2` to `s1`.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>ui</td></tr><tr><td><b>Interface Layer:</b> </td><td>retro/python</td></tr></table><hr/>
 <h2>unhook</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> a-<br>
 <b>Addr:</b> -<br>
