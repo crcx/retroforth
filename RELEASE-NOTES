@@ -18,6 +18,7 @@
   - added a decimal device (alt. to floating point w/higher precision)
   - better fix for nested file inclusion handling
   - added pythonista ui support (iOS)
+  - now runs under Python 2
 
 - nga-c
 
@@ -29,6 +30,7 @@
 - reduced some line lengths
 - refactored retro-locate
 - file names now using a consistent case/format
+- added a line oriented text editor
 
 ## Documentation
 
