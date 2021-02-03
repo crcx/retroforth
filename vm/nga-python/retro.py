@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 
 # Nga: a Virtual Machine
-# Copyright (c) 2010 - 2020, Charles Childers
+#
+# Copyright (c) 2010 - 2021, Charles Childers
 # Floating Point I/O by Arland Childers, (c) 2020
+# Pythonista UI support by Arland Childers, (c) 2021
 # Optimizations and process() rewrite by Greg Copeland
 # -------------------------------------------------------------
 # This implementation of the VM differs from the reference
@@ -36,6 +38,20 @@ from IntegerStack import IntegerStack
 from Memory import Memory
 from InitialImage import InitialImage
 
+from BenchmarkDevice import BenchmarkDevice
+
+# -------------------------------------------------------------
+# To Support Python 2.x
+# -------------------------------------------------------------
+
+from sys import version_info
+if version_info.major == 3:
+    pass
+elif version_info.major == 2:
+    try:
+        input = raw_input
+    except NameError:
+        pass
 
 class Retro:
     def map_in(self, name):
