@@ -53,6 +53,16 @@ elif version_info.major == 2:
     except NameError:
         pass
 
+# -------------------------------------------------------------
+# For Pythonista users
+# -------------------------------------------------------------
+
+try:
+    import ui
+    from UIDevice import UI
+except:
+    pass
+
 class Retro:
     def map_in(self, name):
         return self.memory[self.find_entry(name) + 1]
@@ -72,6 +82,11 @@ class Retro:
 
         self.Dictionary = self.populate_dictionary()
         self.Cached = self.cache_words()
+
+        try:
+            self.ui = UI('RETRO', 10, 10)
+        except:
+            pass
 
         self.setup_devices()
         self.instructions = [
@@ -339,7 +354,7 @@ class Retro:
         self.ip = 9000000
 
     def i_ienumerate(self):
-        self.stack.push(7)
+        self.stack.push(8)
 
     def i_iquery(self):
         device = self.stack.pop()
@@ -364,6 +379,9 @@ class Retro:
         if device == 6:  # decimal
             self.stack.push(0)
             self.stack.push(20)
+        if device == 7: # Pythonista UI
+            self.stack.push(0)
+            self.stack.push(941687072)
 
     def file_open_params(self):
         mode = self.stack.pop()
@@ -511,6 +529,66 @@ class Retro:
         if device == 6:
             action = self.stack.pop()
             self.decimal_instr[int(action)]()
+        if device == 7:
+            action = self.stack.pop()
+            if action == 0:
+                view = self.extract_string(self.stack.pop())
+                name = self.extract_string(self.stack.pop())
+                which = None
+                if view == 'button':
+                    which = ui.Button()
+                if view == 'label':
+                    which = ui.Label()
+                if view == 'textfield':
+                    which = ui.TextField()
+                if view == 'textview':
+                    which = ui.TextView()
+                self.ui.create_view(name, which)
+            if action == 1:
+                self.ui.add_view(self.extract_string(self.stack.pop()))
+            if action == 2:
+                self.ui.remove_view(self.extract_string(self.stack.pop()))
+            if action == 3:
+                self.ui.present()
+            if action == 4:
+                name = self.extract_string(self.stack.pop())
+                w = self.stack.pop()
+                h = self.stack.pop()
+                self.ui.set_size(name, h, w)
+            if action == 5:
+                name = self.extract_string(self.stack.pop())
+                y = self.stack.pop()
+                x = self.stack.pop()
+                self.ui.set_coords(name, x, y)
+            if action == 6:
+                name = self.extract_string(self.stack.pop())
+                self.stack.push(self.ui.get_size(name)[0])
+                self.stack.push(self.ui.get_size(name)[1])
+            if action == 7:
+                name = self.extract_string(self.stack.pop())
+                self.stack.push(self.ui.get_coords(name)[0])
+                self.stack.push(self.ui.get_coords(name)[1])
+            if action == 8:
+                name = self.extract_string(self.stack.pop())
+                title = self.extract_string(self.stack.pop())
+                self.ui.set_title(name, title)
+            if action == 9:
+                name = self.extract_string(self.stack.pop())
+                text = self.extract_string(self.stack.pop())
+                self.ui.set_text(name, text)
+            if action == 10:
+                name = self.extract_string(self.stack.pop())
+                self.stack.push(self.ui.get_title(name))
+            if action == 11:
+                name = self.extract_string(self.stack.pop())
+                self.stack.push(self.ui.get_text(name))
+            if action == 12:
+                name = self.extract_string(self.stack.pop())
+                handler = self.stack.pop()
+                self.ui.add_action(name, handler, self)
+            if action == 13:
+                name = self.extract_string(self.stack.pop())
+                self.stack.push(self.ui.get_action(name))
 
     def validate_opcode(self, I0, I1, I2, I3):
         if (
