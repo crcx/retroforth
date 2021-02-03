@@ -1,0 +1,236 @@
+#!/usr/bin/env retro
+
+# retro-edit
+
+Copyright (c) 2021, Charles Childers
+
+This is a little line oriented editor.
+
+It's simple, not efficient, and probably will be difficult to use
+for most. But it's simple, only requires Retro, and has no dependencies
+on an addressable character display. You could use this with a serial
+line printing terminal, or a trivial 1-4 line character LCD. It's also
+useful if you're on a slow connection to a remote system.
+
+The editor is intentionally simple. Each line in a file is read into
+an array of lines, and input is typed at the terminal. Each command is
+a single character, followed by any needed parameters.
+
+An editing session (sans output) might look like:
+
+    ,
+    a5
+    i5,enter some text on line 5
+    r0,10
+    x8
+    r15,30
+    X20,22
+    ,
+    W
+    q
+
+Look further in the source for a table of commands.
+
+## Configuration
+
+The editor needs a max line length and max number of lines per
+file.
+
+~~~
+#140 'cfg:MAX-LINE-LENGTH const
+#2000 'cfg:MAX-LINES const
+~~~
+
+## The File Contents
+
+The file gets read into an array of lines. This is in the `File`
+structure. `Lines` holds the number of lines in the file.
+
+A word, `ed:to-line` takes a line number and returns the address
+of the actual line contents.
+
+Of note here: these account for adding in a NULL terminator for
+each line.
+
+~~~
+'File d:create
+  cfg:MAX-LINES cfg:MAX-LINE-LENGTH *
+  cfg:MAX-LINES + allot
+
+'Lines var
+
+:ed:constrain (n-m) #0 @Lines n:limit ;
+:ed:to-line   (n-a) cfg:MAX-LINE-LENGTH over * + &File + ;
+~~~
+
+## Display A Line
+
+Line display is trivial in this. I optionally support line numbers,
+controlled by setting `ShowLineNumbers` to `TRUE`.
+
+~~~
+TRUE 'ShowLineNumbers var-n
+
+:ed:show-line-number (-)
+  @ShowLineNumbers [ dup n:put ':___ s:put ] if ;
+
+:ed:display-line (n)
+  ed:constrain ed:show-line-number ed:to-line s:put nl ;
+~~~
+
+## Command Processor
+
+Commands are single characters. I reserve an array of pointers
+(`Commands`), with the ASCII value of the character being an
+index into this. If the final pointer is non-zero, this will
+call the command handler.
+
+`ed:register-command` is used to add a handler to the table,
+and `ed:deregister-command` is used to remove one.
+
+~~~
+'Commands d:create #255 allot
+
+:ed:register-command  (ac) &Commands + store ;
+:ed:deregister-command (c) &Commands + v:off ;
+:ed:process-command    (c) fetch &Commands + fetch 0; call ;
+~~~
+
+## Some Editing Functions
+
+~~~
+:ed:blank-line  (n) ed:to-line s:empty swap s:copy ;
+
+:ed:delete-line (n)
+  &Lines v:dec
+  @Lines over - [ [ ed:blank-line ]
+                  [ dup n:inc swap [ ed:to-line ] bi@ s:copy ]
+                  [ n:inc ] tri ] times drop ;
+
+:ed:copy-line (mn) [ ed:to-line ] bi@ s:copy ;
+
+{{
+  :shift-line dup n:dec swap ed:copy-line ;
+---reveal---
+  :ed:insert-line (n)
+    [ @Lines [ [ shift-line ] sip n:dec dup-pair eq? ] until drop
+      &Lines v:inc ] sip ed:blank-line ;
+}}
+~~~
+
+## Input
+
+Input is read by `ed:get-input`. This returns the first character as
+a value and stores the rest, with the pointer being kept in `Input`.
+
+~~~
+'Input var
+
+:ed:get-input (-c) s:get dup n:inc s:keep !Input ;
+~~~
+
+## Editor Loop
+
+The editor loop is thus simple. Get input, process the command, and
+repeat. I run this in a simple `Heap` preserving loop, so command
+handlers can allocate space at `here` without worrying about cleanup
+afterwards. I also reset the stack.
+
+~~~
+:edit
+  repeat &Heap [
+    reset ed:get-input ed:process-command
+  ] v:preserve again ;
+~~~
+
+## The Commands
+
+In general, each command is intended to do a single task.
+
+    | a | line       | add a line at line number, shifting lines down |
+    | d | line       | erase contents of a line                       |
+    | i | line,text  | replace contents of line with text             |
+    | n | line       | indent line                                    |
+    | N | line       | unindent line                                  |
+    | p | line       | display a single line                          |
+    | q |            | quit retro-edit                                |
+    | r | first,last | display a range of lines                       |
+    | W |            | save file                                      |
+    | x | line       | remove line                                    |
+    | X | first,last | remove lines first through last, inclusive     |
+    | , |            | display all lines in the file                  |
+    | # |            | toggle display of line numbers                 |
+    | / |            | search for text; display matching lines        |
+
+~~~
+{{
+  :valid? @Input $, s:contains-char? ;
+  :get-limits @Input $, s:tokenize [ s:to-number ed:constrain ] a:for-each ;
+  :display-range over - n:inc [ dup ed:display-line n:inc ] times drop ;
+---reveal---
+  :cmd:p @Input s:to-number ed:display-line ;
+  :cmd:r valid? [ get-limits display-range ] if ;
+}}
+
+{{
+  :match? I ed:to-line @Input s:contains-string? ;
+---reveal---
+  :cmd:/ @Lines [ match? [ I ed:display-line ] if ] indexed-times ;
+}}
+
+:cmd:# @ShowLineNumbers not !ShowLineNumbers ;
+:cmd:i @Input $, s:split s:to-number ed:to-line [ n:inc ] dip s:copy ;
+:cmd:d @Input s:to-number ed:blank-line ;
+:cmd:q nl bye ;
+:cmd:x @Input s:to-number ed:delete-line ;
+:cmd:a @Input s:to-number ed:insert-line ;
+
+{{
+  :valid? @Input $, s:contains-char? ;
+  :get-limits @Input $, s:tokenize [ s:to-number ed:constrain ] a:for-each ;
+  :delete-lines [ dup ed:delete-line n:dec dup-pair lteq? ] while drop-pair ;
+---reveal---
+  :cmd:X valid? [ get-limits delete-lines ] if ;
+}}
+
+:cmd:, #0 @Lines [ dup ed:display-line n:inc ] times drop ;
+:cmd:n @Input s:to-number ed:to-line dup '__ s:prepend swap s:copy ;
+:cmd:N @Input s:to-number ed:to-line dup #2 + swap s:copy ;
+
+{{
+  :filename   #0 script:get-argument ;
+  :with-file  filename file:open-for-writing [ swap call ] sip file:close ;
+  :write-line I ed:to-line [ over file:write ] s:for-each ;
+  :nl         ASCII:LF over file:write ;
+---reveal---
+  :cmd:W [ @Lines [ write-line nl ] indexed-times ] with-file ;
+}}
+~~~
+
+## Register The Commands
+
+~~~
+&cmd:p $p ed:register-command
+&cmd:r $r ed:register-command
+&cmd:/ $/ ed:register-command
+&cmd:# $# ed:register-command
+&cmd:d $d ed:register-command
+&cmd:i $i ed:register-command
+&cmd:q $q ed:register-command
+&cmd:a $a ed:register-command
+&cmd:x $x ed:register-command
+&cmd:X $X ed:register-command
+&cmd:, $, ed:register-command
+&cmd:W $W ed:register-command
+&cmd:n $n ed:register-command
+&cmd:N $N ed:register-command
+~~~
+
+~~~
+(import_file)
+#0 #0 script:get-argument [ over ed:to-line s:copy n:inc ] file:for-each-line
+!Lines
+
+edit
+~~~
+
