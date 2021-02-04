@@ -148,6 +148,7 @@ afterwards. I also reset the stack.
 In general, each command is intended to do a single task.
 
     | a | line       | add a line at line number, shifting lines down |
+    | A | line,count | add lines at line number, shifting lines down  |
     | d | line       | erase contents of a line                       |
     | i | line,text  | replace contents of line with text             |
     | n | line       | indent line                                    |
@@ -170,6 +171,7 @@ In general, each command is intended to do a single task.
 ---reveal---
   :cmd:p @Input s:to-number ed:display-line ;
   :cmd:r valid? [ get-limits display-range ] if ;
+  :cmd:A valid? [ get-limits [ dup ed:insert-line ] times drop ] if ;
 }}
 
 {{
@@ -218,6 +220,7 @@ In general, each command is intended to do a single task.
 &cmd:i $i ed:register-command
 &cmd:q $q ed:register-command
 &cmd:a $a ed:register-command
+&cmd:A $A ed:register-command
 &cmd:x $x ed:register-command
 &cmd:X $X ed:register-command
 &cmd:, $, ed:register-command
