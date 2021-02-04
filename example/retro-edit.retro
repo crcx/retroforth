@@ -151,6 +151,7 @@ In general, each command is intended to do a single task.
     | A | line,count | add lines at line number, shifting lines down  |
     | d | line       | erase contents of a line                       |
     | i | line,text  | replace contents of line with text             |
+    | e | line       | insert text beginning at line, shifting down   |
     | n | line       | indent line                                    |
     | N | line       | unindent line                                  |
     | p | line       | display a single line                          |
@@ -195,6 +196,17 @@ In general, each command is intended to do a single task.
   :cmd:X valid? [ get-limits delete-lines ] if ;
 }}
 
+
+{{
+  :add-space  dup ed:insert-line ;
+  :store-line over ed:to-line s:copy n:inc ;
+  :cleanup    n:dec ed:delete-line ;
+---reveal---
+  :cmd:e
+    @Input s:to-number
+    [ add-space s:get [ store-line ] sip '. s:eq? ] until cleanup ;
+}}
+
 :cmd:, #0 @Lines [ dup ed:display-line n:inc ] times drop ;
 :cmd:n @Input s:to-number ed:to-line dup '__ s:prepend swap s:copy ;
 :cmd:N @Input s:to-number ed:to-line dup #2 + swap s:copy ;
@@ -221,6 +233,7 @@ In general, each command is intended to do a single task.
 &cmd:q $q ed:register-command
 &cmd:a $a ed:register-command
 &cmd:A $A ed:register-command
+&cmd:e $e ed:register-command
 &cmd:x $x ed:register-command
 &cmd:X $X ed:register-command
 &cmd:, $, ed:register-command
