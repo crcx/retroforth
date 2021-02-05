@@ -163,6 +163,8 @@ In general, each command is intended to do a single task.
     | , |            | display all lines in the file                  |
     | # |            | toggle display of line numbers                 |
     | / |            | search for text; display matching lines        |
+    | ; |            | save, then run file via retro                  |
+    | ; | text       | save, then run text as a shell command         |
 
 ~~~
 {{
@@ -219,6 +221,18 @@ In general, each command is intended to do a single task.
 ---reveal---
   :cmd:W [ @Lines [ write-line nl ] indexed-times ] with-file ;
 }}
+
+:cmd:;
+  @Input dup s:length n:zero?
+  [ drop #0 script:get-argument 'retro_%s s:format ] if unix:system ;
+
+&cmd:; $; ed:register-command
+
+:cmd:?
+  @Input s:length n:-zero?
+  [ @Input 'retro-describe_%s s:format unix:system ] if ;
+
+&cmd:? $? ed:register-command
 ~~~
 
 ## Register The Commands
