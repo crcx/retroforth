@@ -58,6 +58,8 @@ each line.
   cfg:MAX-LINES + allot
 
 'Lines var
+'Filename d:create
+  #1025 allot
 
 :ed:constrain (n-m) #0 @Lines n:limit ;
 :ed:to-line   (n-a) cfg:MAX-LINE-LENGTH over * + &File + ;
@@ -214,7 +216,7 @@ In general, each command is intended to do a single task.
 :cmd:N @Input s:to-number ed:to-line dup #2 + swap s:copy ;
 
 {{
-  :filename   #0 script:get-argument ;
+  :filename &Filename ;
   :with-file  filename file:open-for-writing [ swap call ] sip file:close ;
   :write-line I ed:to-line [ over file:write ] s:for-each ;
   :nl         ASCII:LF over file:write ;
@@ -224,7 +226,7 @@ In general, each command is intended to do a single task.
 
 :cmd:;
   @Input dup s:length n:zero?
-  [ drop #0 script:get-argument 'retro_%s s:format ] if unix:system ;
+  [ drop &Filename 'retro_%s s:format ] if unix:system ;
 
 &cmd:; $; ed:register-command
 
@@ -257,8 +259,8 @@ In general, each command is intended to do a single task.
 ~~~
 
 ~~~
-(import_file)
-#0 #0 script:get-argument [ over ed:to-line s:copy n:inc ] file:for-each-line
+#0 script:get-argument &Filename s:copy
+#0 &Filename [ over ed:to-line s:copy n:inc ] file:for-each-line
 !Lines
 
 edit
