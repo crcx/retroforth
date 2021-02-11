@@ -335,29 +335,20 @@ Use `q` to quit the editor.
 ## Register The Commands
 
 ~~~
-&cmd:, $, ed:register-command
-&cmd:p $p ed:register-command
-&cmd:# $# ed:register-command
-&cmd:/ $/ ed:register-command
-
-&cmd:a $a ed:register-command
-&cmd:x $x ed:register-command
-&cmd:d $d ed:register-command
-&cmd:i $i ed:register-command
-&cmd:e $e ed:register-command
-
-&cmd:f $f ed:register-command
-&cmd:w $w ed:register-command
-&cmd:l $l ed:register-command
-&cmd:q $q ed:register-command
-
-&cmd:n $n ed:register-command
-&cmd:N $N ed:register-command
-&cmd:; $; ed:register-command
-&cmd:? $? ed:register-command
+{ ',p#/axdiefwlqnN;? [ ] s:for-each }
+[ [ 'cmd:%c s:format d:lookup d:xt fetch ] sip ed:register-command ]
+a:for-each
 ~~~
 
+The final startup process is:
+
+- copy the file name to Filename
+- create it if the file does not exist
+- load the file into memory
+- run the editor command loop
+
 ~~~
-#0 script:get-argument &Filename s:copy load-file
-edit
+#0 script:get-argument &Filename s:copy
+&Filename file:exists? [ &Filename file:W file:open file:close ] -if
+load-file edit
 ~~~
