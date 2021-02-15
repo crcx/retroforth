@@ -38,33 +38,33 @@ CELL load_image(char *imageFile) {
 }
 
 void prepare_vm() {
-  ip = sp = rp = 0;
-  for (ip = 0; ip < IMAGE_SIZE; ip++)
-    memory[ip] = 0; /* NO - nop instruction */
-  for (ip = 0; ip < STACK_DEPTH; ip++)
-    data[ip] = 0;
-  for (ip = 0; ip < ADDRESSES; ip++)
-    address[ip] = 0;
+  cpu.ip = cpu.sp = cpu.rp = 0;
+  for (cpu.ip = 0; cpu.ip < IMAGE_SIZE; cpu.ip++)
+    memory[cpu.ip] = 0; /* NO - nop instruction */
+  for (cpu.ip = 0; cpu.ip < STACK_DEPTH; cpu.ip++)
+    cpu.data[cpu.ip] = 0;
+  for (cpu.ip = 0; cpu.ip < ADDRESSES; cpu.ip++)
+    cpu.address[cpu.ip] = 0;
 }
 
 void inst_no() {
 }
 
 void inst_li() {
-  sp++;
-  ip++;
-  TOS = memory[ip];
+  cpu.sp++;
+  cpu.ip++;
+  TOS = memory[cpu.ip];
 }
 
 void inst_du() {
-  sp++;
-  data[sp] = NOS;
+  cpu.sp++;
+  cpu.data[cpu.sp] = NOS;
 }
 
 void inst_dr() {
-  data[sp] = 0;
-   if (--sp < 0)
-     ip = IMAGE_SIZE;
+  cpu.data[cpu.sp] = 0;
+   if (--cpu.sp < 0)
+     cpu.ip = IMAGE_SIZE;
 }
 
 void inst_sw() {
@@ -75,26 +75,26 @@ void inst_sw() {
 }
 
 void inst_pu() {
-  rp++;
+  cpu.rp++;
   TORS = TOS;
   inst_dr();
 }
 
 void inst_po() {
-  sp++;
+  cpu.sp++;
   TOS = TORS;
-  rp--;
+  cpu.rp--;
 }
 
 void inst_ju() {
-  ip = TOS - 1;
+  cpu.ip = TOS - 1;
   inst_dr();
 }
 
 void inst_ca() {
-  rp++;
-  TORS = ip;
-  ip = TOS - 1;
+  cpu.rp++;
+  TORS = cpu.ip;
+  cpu.ip = TOS - 1;
   inst_dr();
 }
 
@@ -103,15 +103,15 @@ void inst_cc() {
   a = TOS; inst_dr();  /* Target */
   b = TOS; inst_dr();  /* Flag   */
   if (b != 0) {
-    rp++;
-    TORS = ip;
-    ip = a - 1;
+    cpu.rp++;
+    TORS = cpu.ip;
+    cpu.ip = a - 1;
   }
 }
 
 void inst_re() {
-  ip = TORS;
-  rp--;
+  cpu.ip = TORS;
+  cpu.rp--;
 }
 
 void inst_eq() {
@@ -137,14 +137,14 @@ void inst_gt() {
 void inst_fe() {
 #ifndef NOCHECKS
   if (TOS >= IMAGE_SIZE || TOS < -5) {
-    ip = IMAGE_SIZE;
+    cpu.ip = IMAGE_SIZE;
     printf("\nERROR (nga/inst_fe): Fetch beyond valid memory range\n");
     exit(1);
   } else {
 #endif
     switch (TOS) {
-      case -1: TOS = sp - 1; break;
-      case -2: TOS = rp; break;
+      case -1: TOS = cpu.sp - 1; break;
+      case -2: TOS = cpu.rp; break;
       case -3: TOS = IMAGE_SIZE; break;
       case -4: TOS = CELL_MIN; break;
       case -5: TOS = CELL_MAX; break;
@@ -164,7 +164,7 @@ void inst_st() {
     inst_dr();
 #ifndef NOCHECKS
   } else {
-    ip = IMAGE_SIZE;
+    cpu.ip = IMAGE_SIZE;
     printf("\nERROR (nga/inst_st): Store beyond valid memory range\n");
     exit(1);
   }
@@ -232,17 +232,17 @@ void inst_sh() {
 void inst_zr() {
   if (TOS == 0) {
     inst_dr();
-    ip = TORS;
-    rp--;
+    cpu.ip = TORS;
+    cpu.rp--;
   }
 }
 
 void inst_ha() {
-  ip = IMAGE_SIZE;
+  cpu.ip = IMAGE_SIZE;
 }
 
 void inst_ie() {
-  sp++;
+  cpu.sp++;
   TOS = NUM_DEVICES;
 }
 

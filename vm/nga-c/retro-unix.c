@@ -46,15 +46,17 @@
   Image, Stack, and VM variables
   ---------------------------------------------------------------------*/
 
-CELL sp, rp, ip;                  /* Stack & instruction pointers      */
-CELL data[STACK_DEPTH];           /* The data stack                    */
-CELL address[ADDRESSES];          /* The address stack                 */
 CELL memory[IMAGE_SIZE + 1];      /* The memory for the image          */
 
-#define TOS  data[sp]             /* Shortcut for top item on stack    */
-#define NOS  data[sp-1]           /* Shortcut for second item on stack */
-#define TORS address[rp]          /* Shortcut for top item on address stack */
+#define TOS  cpu.data[cpu.sp]     /* Shortcut for top item on stack    */
+#define NOS  cpu.data[cpu.sp-1]   /* Shortcut for second item on stack */
+#define TORS cpu.address[cpu.rp]  /* Shortcut for top item on address stack */
 
+struct NgaCore {
+  CELL sp, rp, ip;                /* Stack & instruction pointers      */
+  CELL data[STACK_DEPTH];         /* The data stack                    */
+  CELL address[ADDRESSES];        /* The address stack                 */
+} cpu;
 
 /*---------------------------------------------------------------------
   Markers for code & test blocks
@@ -220,9 +222,9 @@ void scripting_abort() {
 }
 
 void carry_out_abort() {
-  ip = IMAGE_SIZE + 1;
-  rp = 0;
-  sp = 0;
+  cpu.ip = IMAGE_SIZE + 1;
+  cpu.rp = 0;
+  cpu.sp = 0;
   fsp = 0;
   afsp = 0;
 
@@ -271,7 +273,7 @@ void io_scripting_handler() {
 void invalid_opcode(CELL opcode) {
   CELL a, i;
   printf("\nERROR (nga/execute): Invalid instruction!\n");
-  printf("At %lld, opcode %lld\n", (long long)ip, (long long)opcode);
+  printf("At %lld, opcode %lld\n", (long long)cpu.ip, (long long)opcode);
   printf("Instructions: ");
   a = opcode;
   for (i = 0; i < 4; i++) {
@@ -286,40 +288,40 @@ void execute(CELL cell, int silent) {
   CELL token;
   CELL opcode;
   silence_input = silent;
-  if (rp == 0)
-    rp = 1;
-  ip = cell;
+  if (cpu.rp == 0)
+    cpu.rp = 1;
+  cpu.ip = cell;
   token = TIB;
-  while (ip < IMAGE_SIZE) {
+  while (cpu.ip < IMAGE_SIZE) {
     if (perform_abort == 0) {
-      if (ip == NotFound) {
+      if (cpu.ip == NotFound) {
         printf("\nERROR: Word Not Found: ");
         printf("`%s`\n\n", string_extract(token));
       }
-      if (ip == interpret) {
+      if (cpu.ip == interpret) {
         token = TOS;
       }
-      opcode = memory[ip];
+      opcode = memory[cpu.ip];
       if (validate_opcode_bundle(opcode) != 0) {
         process_opcode_bundle(opcode);
       } else {
         invalid_opcode(opcode);
       }
 #ifndef NOCHECKS
-      if (sp < 0 || sp > STACK_DEPTH) {
+      if (cpu.sp < 0 || cpu.sp > STACK_DEPTH) {
         printf("\nERROR (nga/execute): Stack Limits Exceeded!\n");
-        printf("At %lld, opcode %lld. sp = %lld\n", (long long)ip, (long long)opcode, (long long)sp);
+        printf("At %lld, opcode %lld. sp = %lld\n", (long long)cpu.ip, (long long)opcode, (long long)cpu.sp);
         exit(1);
       }
-      if (rp < 0 || rp > ADDRESSES) {
+      if (cpu.rp < 0 || cpu.rp > ADDRESSES) {
         printf("\nERROR (nga/execute): Address Stack Limits Exceeded!\n");
-        printf("At %lld, opcode %lld. rp = %lld\n", (long long)ip, (long long)opcode, (long long)rp);
+        printf("At %lld, opcode %lld. rp = %lld\n", (long long)cpu.ip, (long long)opcode, (long long)cpu.rp);
         exit(1);
       }
 #endif
-      ip++;
-      if (rp == 0)
-        ip = IMAGE_SIZE;
+      cpu.ip++;
+      if (cpu.rp == 0)
+        cpu.ip = IMAGE_SIZE;
     } else {
       carry_out_abort();
     }
@@ -381,13 +383,13 @@ void read_token(FILE *file, char *token_buffer, int echo) {
 
 void dump_stack() {
   CELL i;
-  if (sp == 0)  return;
+  if (cpu.sp == 0)  return;
   printf("\nStack: ");
-  for (i = 1; i <= sp; i++) {
-    if (i == sp)
-      printf("[ TOS: %lld ]", (long long)data[i]);
+  for (i = 1; i <= cpu.sp; i++) {
+    if (i == cpu.sp)
+      printf("[ TOS: %lld ]", (long long)cpu.data[i]);
     else
-      printf("%lld ", (long long)data[i]);
+      printf("%lld ", (long long)cpu.data[i]);
   }
   printf("\n");
 }
@@ -470,11 +472,11 @@ void include_file(char *fname, int run_tests) {
   if (fp == NULL)
     return;
 
-  arp = rp;
-  aip = ip;
-  for(rp = 0; rp <= arp; rp++)
-    ReturnStack[rp] = address[rp];
-  rp = 0;
+  arp = cpu.rp;
+  aip = cpu.ip;
+  for(cpu.rp = 0; cpu.rp <= arp; cpu.rp++)
+    ReturnStack[cpu.rp] = cpu.address[cpu.rp];
+  cpu.rp = 0;
   
   current_source++;
    bsd_strlcpy(scripting_sources[current_source], fname, 8192);
@@ -519,10 +521,10 @@ void include_file(char *fname, int run_tests) {
   if (perform_abort == -1) {
     carry_out_abort();
   }
-  for(rp = 0; rp <= arp; rp++)
-    address[rp] = ReturnStack[rp];
-  rp = arp;
-  ip = aip;
+  for(cpu.rp = 0; cpu.rp <= arp; cpu.rp++)
+    cpu.address[cpu.rp] = ReturnStack[cpu.rp];
+  cpu.rp = arp;
+  cpu.ip = aip;
 }
 
 
@@ -613,7 +615,7 @@ int main(int argc, char **argv) {
   if (argc >= 2 && argv[1][0] != '-') {
     update_rx();
     include_file(argv[1], 0);             /* If no flags were passed,  */
-    if (sp >= 1)  dump_stack();           /* load the file specified,  */
+    if (cpu.sp >= 1)  dump_stack();       /* load the file specified,  */
     exit(0);                              /* and exit                  */
   }
 
@@ -708,25 +710,25 @@ int main(int argc, char **argv) {
   ---------------------------------------------------------------------*/
 
 CELL stack_pop() {
-  sp--;
+  cpu.sp--;
 #ifndef NOCHECKS
-  if (sp < 0) {
+  if (cpu.sp < 0) {
     printf("\nERROR (nga/stack_pop): Data stack underflow.\n");
     exit(1);
   }
 #endif
-  return data[sp + 1];
+  return cpu.data[cpu.sp + 1];
 }
 
 void stack_push(CELL value) {
-  sp++;
+  cpu.sp++;
 #ifndef NOCHECKS
-  if (sp >= STACK_DEPTH) {
+  if (cpu.sp >= STACK_DEPTH) {
     printf("\nERROR (nga/stack_push): Data stack overflow.\n");
     exit(1);
   }
 #endif
-  data[sp] = value;
+  cpu.data[cpu.sp] = value;
 }
 
 

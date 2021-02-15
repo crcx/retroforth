@@ -23,12 +23,12 @@ void float_guard() {
 #ifndef NOCHECKS
   if (fsp < 0 || fsp > 255) {
     printf("\nERROR (nga/float_guard): Float Stack Limits Exceeded!\n");
-    printf("At %lld, fsp = %lld\n", (long long)ip, (long long)fsp);
+    printf("At %lld, fsp = %lld\n", (long long)cpu.ip, (long long)fsp);
     exit(1);
   }
   if (afsp < 0 || afsp > 255) {
     printf("\nERROR (nga/float_guard): 	Alternate Float Stack Limits Exceeded!\n");
-    printf("At %lld, afsp = %lld\n", (long long)ip, (long long)afsp);
+    printf("At %lld, afsp = %lld\n", (long long)cpu.ip, (long long)afsp);
     exit(1);
   }
 #endif

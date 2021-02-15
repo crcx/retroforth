@@ -28,14 +28,17 @@
 #define ADDRESSES    256          /* Depth of address stack            */
 #define STACK_DEPTH  128          /* Depth of data stack               */
 
-CELL sp, rp, ip;                  /* Data, address, instruction pointers */
-CELL data[STACK_DEPTH];           /* The data stack                    */
-CELL address[ADDRESSES];          /* The address stack                 */
 CELL memory[IMAGE_SIZE + 1];      /* The memory for the image          */
 
-#define TOS  data[sp]             /* Shortcut for top item on stack    */
-#define NOS  data[sp-1]           /* Shortcut for second item on stack */
-#define TORS address[rp]          /* Shortcut for top item on address stack */
+#define TOS  cpu.data[cpu.sp]     /* Shortcut for top item on stack    */
+#define NOS  cpu.data[cpu.sp-1]   /* Shortcut for second item on stack */
+#define TORS cpu.address[cpu.rp]  /* Shortcut for top item on address stack */
+
+struct NgaCore {
+  CELL sp, rp, ip;                /* Stack & instruction pointers      */
+  CELL data[STACK_DEPTH];         /* The data stack                    */
+  CELL address[ADDRESSES];        /* The address stack                 */
+} cpu;
 
 #define NUM_DEVICES  2
 
@@ -56,13 +59,13 @@ void process_opcode_bundle(CELL opcode);
 int validate_opcode_bundle(CELL opcode);
 
 CELL stack_pop() {
-  sp--;
-  return data[sp + 1];
+  cpu.sp--;
+  return cpu.data[cpu.sp + 1];
 }
 
 void stack_push(CELL value) {
-  sp++;
-  data[sp] = value;
+  cpu.sp++;
+  cpu.data[cpu.sp] = value;
 }
 
 void generic_output() {
@@ -87,19 +90,19 @@ void generic_input_query() {
 
 void execute(CELL cell) {
   CELL opcode;
-  rp = 1;
-  ip = cell;
-  while (ip < IMAGE_SIZE) {
-    opcode = memory[ip];
+  cpu.rp = 1;
+  cpu.ip = cell;
+  while (cpu.ip < IMAGE_SIZE) {
+    opcode = memory[cpu.ip];
     if (validate_opcode_bundle(opcode) != 0) {
       process_opcode_bundle(opcode);
     } else {
       printf("Invalid instruction!\n");
       exit(1);
     }
-    ip++;
-    if (rp == 0)
-      ip = IMAGE_SIZE;
+    cpu.ip++;
+    if (cpu.rp == 0)
+      cpu.ip = IMAGE_SIZE;
   }
 }
 

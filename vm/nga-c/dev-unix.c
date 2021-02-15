@@ -43,7 +43,7 @@ void unix_open_pipe() {
 void unix_close_pipe() {
   pclose(OpenFileHandles[TOS]);
   OpenFileHandles[TOS] = 0;
-  sp--;
+  stack_pop();
 }
 
 void unix_system() {
