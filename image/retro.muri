@@ -1,4 +1,4 @@
-# RETRO Core 2021.4
+# RETRO Core 2021.2
 
 RETRO Core is  a minimal Forth implementation for the Nga
 virtual machine. Like Nga this is intended to be used within
@@ -88,7 +88,7 @@ when composing the bundles, with NOP being named as two dots.
 So:
 
     lit lit add nop
-    
+
 Is a bundle named:
 
     liliad..
@@ -143,7 +143,7 @@ r 9999
 d 1536
 
 : Version
-d 202104
+d 202102
 ~~~
 
 Both of these are pointers. `Dictionary` points to the most
