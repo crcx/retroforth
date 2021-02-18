@@ -5,7 +5,7 @@
   includes a number of I/O interfaces, extensive commentary, and has
   been refined by over a decade of use and development.
 
-  Copyright (c) 2008 - 2020, Charles Childers
+  Copyright (c) 2008 - 2021, Charles Childers
 
   Portions are based on Ngaro, which was additionally copyrighted by
   the following:
@@ -45,14 +45,18 @@
   Image, Stack, and VM variables
   ---------------------------------------------------------------------*/
 
-CELL sp, rp, ip;                  /* Stack & instruction pointers      */
-CELL data[STACK_DEPTH];           /* The data stack                    */
-CELL address[ADDRESSES];          /* The address stack                 */
 CELL memory[IMAGE_SIZE + 1];      /* The memory for the image          */
 
-#define TOS  data[sp]             /* Shortcut for top item on stack    */
-#define NOS  data[sp-1]           /* Shortcut for second item on stack */
-#define TORS address[rp]          /* Shortcut for top item on address stack */
+#define TOS  cpu.data[cpu.sp]     /* Shortcut for top item on stack    */
+#define NOS  cpu.data[cpu.sp-1]   /* Shortcut for second item on stack */
+#define TORS cpu.address[cpu.rp]  /* Shortcut for top item on address stack */
+
+struct NgaCore {
+  CELL sp, rp, ip;                /* Stack & instruction pointers      */
+  CELL data[STACK_DEPTH];         /* The data stack                    */
+  CELL address[ADDRESSES];        /* The address stack                 */
+} cpu;
+
 
 
 #include "prototypes.h"
@@ -228,33 +232,33 @@ void rre_execute(CELL cell, int silent) {
   CELL a, b, token;
   CELL opcode;
   silence_input = silent;
-  rp = 1;
-  ip = cell;
+  cpu.rp = 1;
+  cpu.ip = cell;
   token = TIB;
-  while (ip < IMAGE_SIZE) {
-    if (ip == NotFound) {
+  while (cpu.ip < IMAGE_SIZE) {
+    if (cpu.ip == NotFound) {
       printf("\nERROR: Word Not Found: ");
       printf("`%s`\n\n", string_extract(token));
     }
-    if (ip == interpret) {
+    if (cpu.ip == interpret) {
       token = TOS;
     }
-    opcode = memory[ip];
+    opcode = memory[cpu.ip];
     if (validate_opcode_bundle(opcode) != 0) {
       process_opcode_bundle(opcode);
     } else {
       printf("Invalid instruction!\n");
-      printf("At %d, opcode %d\n", ip, opcode);
+      printf("At %d, opcode %d\n", cpu.ip, opcode);
       exit(1);
     }
-    if (sp < 0 || sp > STACK_DEPTH) {
+    if (cpu.sp < 0 || cpu.sp > STACK_DEPTH) {
       printf("\nStack Limits Exceeded!\n");
-      printf("At %d, opcode %d\n", ip, opcode);
+      printf("At %d, opcode %d\n", cpu.ip, opcode);
       exit(1);
     }
-    ip++;
-    if (rp == 0)
-      ip = IMAGE_SIZE;
+    cpu.ip++;
+    if (cpu.rp == 0)
+      cpu.ip = IMAGE_SIZE;
   }
 }
 
@@ -314,13 +318,13 @@ void read_token(FILE *file, char *token_buffer, int echo) {
 
 void dump_stack() {
   CELL i;
-  if (sp == 0)  return;
+  if (cpu.sp == 0)  return;
   printf("\nStack: ");
-  for (i = 1; i <= sp; i++) {
-    if (i == sp)
-      printf("[ TOS: %d ]", data[i]);
+  for (i = 1; i <= cpu.sp; i++) {
+    if (i == cpu.sp)
+      printf("[ TOS: %d ]", cpu.data[i]);
     else
-      printf("%d ", data[i]);
+      printf("%d ", cpu.data[i]);
   }
   printf("\n");
 }
@@ -475,21 +479,21 @@ int main(int argc, char **argv) {
   ---------------------------------------------------------------------*/
 
 CELL stack_pop() {
-  sp--;
-  if (sp < 0) {
+  cpu.sp--;
+  if (cpu.sp < 0) {
     printf("Data stack underflow.\n");
     exit(1);
   }
-  return data[sp + 1];
+  return cpu.data[cpu.sp + 1];
 }
 
 void stack_push(CELL value) {
-  sp++;
-  if (sp >= STACK_DEPTH) {
+  cpu.sp++;
+  if (cpu.sp >= STACK_DEPTH) {
     printf("Data stack overflow.\n");
     exit(1);
   }
-  data[sp] = value;
+  cpu.data[cpu.sp] = value;
 }
 
 
