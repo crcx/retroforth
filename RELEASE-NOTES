@@ -1,4 +1,4 @@
-# RetroForth 2021.4 Release Notes
+# RetroForth 2021.2 Release Notes
 
 ## Core Language
 
@@ -17,13 +17,14 @@
   - added support for run length encoded images
   - added a decimal device (alt. to floating point w/higher precision)
   - better fix for nested file inclusion handling
-  - added pythonista ui support (iOS)
+  - start adding pythonista ui support (iOS)
   - now runs under Python 2
 
 - nga-c
 
   - better fix for nested file inclusion handling
   - removed unused variables
+  - use a struct for processor state, stacks
 
 ## Examples
 
