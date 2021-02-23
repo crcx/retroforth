@@ -26,6 +26,11 @@
   - removed unused variables
   - use a struct for processor state, stacks
 
+- nga-816
+
+  - assembly implementation for 65c816
+  - by Piotr Meyer
+
 ## Examples
 
 - reduced some line lengths
