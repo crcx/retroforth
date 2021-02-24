@@ -1,7 +1,7 @@
 
 ; 64tass Turbo Assembler Macro V1.55.2200 listing file
 ; 64tass -Wall -Wmacro-prefix -Wshadow --verbose-list -o nga.hex -L nga.lst --intel-hex --m65816 nga.asm
-; Mon Feb 22 20:54:30 2021
+; Tue Feb 23 23:13:15 2021
 
 ;Offset	;Hex		;Monitor	;Source
 
@@ -226,7 +226,7 @@
 .3a0011	20 7b 01	jsr $3a017b	            jsr  prints
 
 .3a0014	20 32 00	jsr $3a0032	            jsr  prepare_vm
-.3a0017	20 bc 00	jsr $3a00bc		jsr  execute
+.3a0017	20 bc 00	jsr $3a00bc	            jsr  execute
 
 .3a001a	48		pha		            pha             ; begin setdbr macro
 .3a001b	08		php		            php
@@ -337,7 +337,7 @@
 
 .3a009d	e2 20		sep #$20	                SEP #$20        ; set A short
 					                .as
-.3a009f	a0 68 94	ldy #$9468	            ldy  #IMAGE_SIZE
+.3a009f	a0 7c 94	ldy #$947c	            ldy  #IMAGE_SIZE
 .3a00a2	a2 00 00	ldx #$0000	            ldx  #0
 					            .databank ?
 .3a00a5	bf 1b 08 3a	lda $3a081b,x	copy0       lda  IMAGE_SRC,x
@@ -365,23 +365,23 @@
 .3a00bc	c2 30		rep #$30	                REP #$30        ; set A&X long
 					                .al
 					                .xl
-.3a00be	a9 04 00	lda #$0004		lda	#CELL_SIZE
-.3a00c1	85 68		sta $68			sta	RP
+.3a00be	a9 04 00	lda #$0004	            lda  #CELL_SIZE
+.3a00c1	85 68		sta $68		            sta  RP
 .3a00c3	64 66		stz $66		            stz  SP
-.3a00c5	64 60		stz $60			stz	IP
+.3a00c5	64 60		stz $60		            stz  IP
 .3a00c7	20 56 01	jsr $3a0156	            jsr  update_ipptr
 
-.3a00ca	20 e0 00	jsr $3a00e0	execute0    jsr	process_bundle
+.3a00ca	20 e0 00	jsr $3a00e0	execute0    jsr  process_bundle
 .3a00cd	42 04		wdm #$04	            wdm  #4              ; debugging - op count
-.3a00cf	a5 68		lda $68			lda	RP
-.3a00d1	f0 0c		beq $3a00df		beq	quit
+.3a00cf	a5 68		lda $68		            lda  RP
+.3a00d1	f0 0c		beq $3a00df	            beq  quit
 
 .3a00d3	20 6d 01	jsr $3a016d	            jsr  next_ipptr
 .3a00d6	e6 60		inc $60		            inc  IP
 .3a00d8	a5 60		lda $60		            lda  IP
-.3a00da	c9 ff ff	cmp #$ffff		cmp	#CELL_MAX       ; NGA exit condition
-.3a00dd	90 eb		bcc $3a00ca		bcc 	execute0
-.3a00df	60		rts		quit	rts
+.3a00da	c9 ff ff	cmp #$ffff	            cmp  #CELL_MAX       ; NGA exit condition
+.3a00dd	90 eb		bcc $3a00ca	            bcc                  execute0
+.3a00df	60		rts		quit        rts
 
 					; ### process 4 commands in bundle
 .3a00e0					process_bundle
@@ -393,63 +393,63 @@
 
 .3a00eb	29 ff 00	and #$00ff	            and   #$ff
 .3a00ee	f0 05		beq $3a00f5	            beq   +              ; skip .. (nop)
-.3a00f0	0a		asl a			asl   a
-.3a00f1	aa		tax			tax
-.3a00f2	fc 1a 01	jsr ($3a011a,x)		jsr   (#<>op_table,k,x)
+.3a00f0	0a		asl a		            asl   a
+.3a00f1	aa		tax		            tax
+.3a00f2	fc 1a 01	jsr ($3a011a,x)	            jsr   (#<>op_table,k,x)
 
 .3a00f5	a5 6b		lda $6b		+           lda   CMD+1
 .3a00f7	29 ff 00	and #$00ff	            and   #$ff
 .3a00fa	f0 05		beq $3a0101	            beq   +              ; skip .. (nop)
 .3a00fc	0a		asl a		            asl   a
 .3a00fd	aa		tax		            tax
-.3a00fe	fc 1a 01	jsr ($3a011a,x)		jsr   (#<>op_table,k,x)
+.3a00fe	fc 1a 01	jsr ($3a011a,x)	            jsr   (#<>op_table,k,x)
 
 .3a0101	a5 6c		lda $6c		+           lda   CMD+2
 .3a0103	29 ff 00	and #$00ff	            and   #$ff
 .3a0106	f0 05		beq $3a010d	            beq   +              ; skip .. (nop)
 .3a0108	0a		asl a		            asl   a
 .3a0109	aa		tax		            tax
-.3a010a	fc 1a 01	jsr ($3a011a,x)		jsr   (#<>op_table,k,x)
+.3a010a	fc 1a 01	jsr ($3a011a,x)	            jsr   (#<>op_table,k,x)
 
 .3a010d	a5 6d		lda $6d		+           lda   CMD+3
 .3a010f	29 ff 00	and #$00ff	            and   #$ff
 .3a0112	f0 05		beq $3a0119	            beq   +              ; bne/rts for -1 cycle
 .3a0114	0a		asl a		            asl   a
 .3a0115	aa		tax		            tax
-.3a0116	fc 1a 01	jsr ($3a011a,x)		jsr   (#<>op_table,k,x)
-.3a0119	60		rts		+	rts
+.3a0116	fc 1a 01	jsr ($3a011a,x)	            jsr   (#<>op_table,k,x)
+.3a0119	60		rts		+           rts
 
 .3a011a					op_table
->3a011a	8e 01					.addr inst_no
->3a011c	8f 01					.addr inst_li
->3a011e	ab 01					.addr inst_du
->3a0120	c1 01					.addr inst_dr
->3a0122	d9 01					.addr inst_sw
->3a0124	f6 01					.addr inst_pu
->3a0126	10 02					.addr inst_po
->3a0128	2f 02					.addr inst_ju
->3a012a	3d 02					.addr inst_ca
->3a012c	59 02					.addr inst_cc
->3a012e	92 02					.addr inst_re
->3a0130	a4 02					.addr inst_eq
->3a0132	ce 02					.addr inst_ne
->3a0134	f8 02					.addr inst_lt
->3a0136	25 03					.addr inst_gt
->3a0138	52 03					.addr inst_fe
->3a013a	e5 03					.addr inst_st
->3a013c	11 04					.addr inst_ad
->3a013e	29 04					.addr inst_su
->3a0140	41 04					.addr inst_mu
->3a0142	a1 04					.addr inst_di
->3a0144	53 05					.addr inst_an
->3a0146	6a 05					.addr inst_or
->3a0148	81 05					.addr inst_xo
->3a014a	98 05					.addr inst_sh
->3a014c	04 06					.addr inst_zr
->3a014e	25 06					.addr inst_ha
->3a0150	2b 06					.addr inst_ie
->3a0152	3e 06					.addr inst_iq
->3a0154	4a 06					.addr inst_ii
+>3a011a	8e 01				            .addr inst_no
+>3a011c	8f 01				            .addr inst_li
+>3a011e	ab 01				            .addr inst_du
+>3a0120	c1 01				            .addr inst_dr
+>3a0122	d9 01				            .addr inst_sw
+>3a0124	f6 01				            .addr inst_pu
+>3a0126	10 02				            .addr inst_po
+>3a0128	2f 02				            .addr inst_ju
+>3a012a	3d 02				            .addr inst_ca
+>3a012c	59 02				            .addr inst_cc
+>3a012e	92 02				            .addr inst_re
+>3a0130	a4 02				            .addr inst_eq
+>3a0132	ce 02				            .addr inst_ne
+>3a0134	f8 02				            .addr inst_lt
+>3a0136	25 03				            .addr inst_gt
+>3a0138	52 03				            .addr inst_fe
+>3a013a	e5 03				            .addr inst_st
+>3a013c	11 04				            .addr inst_ad
+>3a013e	29 04				            .addr inst_su
+>3a0140	41 04				            .addr inst_mu
+>3a0142	a1 04				            .addr inst_di
+>3a0144	53 05				            .addr inst_an
+>3a0146	6a 05				            .addr inst_or
+>3a0148	81 05				            .addr inst_xo
+>3a014a	98 05				            .addr inst_sh
+>3a014c	04 06				            .addr inst_zr
+>3a014e	25 06				            .addr inst_ha
+>3a0150	2b 06				            .addr inst_ie
+>3a0152	3e 06				            .addr inst_iq
+>3a0154	4a 06				            .addr inst_ii
 
 					;----------------------------------------------------------
 					; ## tooling routines
@@ -1069,8 +1069,8 @@
 					; XXX - no checks now
 
 .3a03e5					inst_st
-.3a03e5	a6 66		ldx $66			ldx	SP
-.3a03e7	bd 04 00	lda $3a0004,x		lda	#TOSl,b,x	; XXX only low word in use
+.3a03e5	a6 66		ldx $66		            ldx  SP
+.3a03e7	bd 04 00	lda $3a0004,x	            lda  #TOSl,b,x       ; XXX only low word in use
 
 .3a03ea	85 6e		sta $6e		            sta  TMP
 .3a03ec	64 70		stz $70		            stz  TMP+2
@@ -1085,14 +1085,14 @@
 .3a03f9	69 02 00	adc #$0002	            adc  #`IMAGE_ADDR
 .3a03fc	85 70		sta $70		            sta  TMP+2
 
-.3a03fe	bd 00 00	lda $3a0000,x		lda	#NOSl,b,x
+.3a03fe	bd 00 00	lda $3a0000,x	            lda  #NOSl,b,x
 .3a0401	87 6e		sta [$6e]	            sta  [TMP]
 .3a0403	a0 02 00	ldy #$0002	            ldy  #2
-.3a0406	bd 02 00	lda $3a0002,x		lda	#NOSh,b,x
+.3a0406	bd 02 00	lda $3a0002,x	            lda  #NOSh,b,x
 .3a0409	97 6e		sta [$6e],y	            sta  [TMP],y
 
-.3a040b	20 c1 01	jsr $3a01c1		jsr	inst_dr
-.3a040e	4c c1 01	jmp $3a01c1		jmp	inst_dr
+.3a040b	20 c1 01	jsr $3a01c1	            jsr  inst_dr
+.3a040e	4c c1 01	jmp $3a01c1	            jmp  inst_dr
 
 					; ---------------------------------------------------------
 					; ## ad (17) stack: xy-n  |   -    addition
@@ -1103,15 +1103,15 @@
 					; }
 
 .3a0411					inst_ad
-.3a0411	a6 66		ldx $66			ldx	SP
-.3a0413	18		clc			clc
-.3a0414	bd 00 00	lda $3a0000,x		lda   #NOSl,b,x
-.3a0417	7d 04 00	adc $3a0004,x		adc	#TOSl,b,x
-.3a041a	9d 00 00	sta $3a0000,x		sta	#NOSl,b,x
-.3a041d	bd 02 00	lda $3a0002,x		lda	#NOSh,b,x
-.3a0420	7d 06 00	adc $3a0006,x		adc	#TOSh,b,x
-.3a0423	9d 02 00	sta $3a0002,x		sta	#NOSh,b,x
-.3a0426	4c c1 01	jmp $3a01c1		jmp	inst_dr
+.3a0411	a6 66		ldx $66		            ldx  SP
+.3a0413	18		clc		            clc
+.3a0414	bd 00 00	lda $3a0000,x	            lda   #NOSl,b,x
+.3a0417	7d 04 00	adc $3a0004,x	            adc  #TOSl,b,x
+.3a041a	9d 00 00	sta $3a0000,x	            sta  #NOSl,b,x
+.3a041d	bd 02 00	lda $3a0002,x	            lda  #NOSh,b,x
+.3a0420	7d 06 00	adc $3a0006,x	            adc  #TOSh,b,x
+.3a0423	9d 02 00	sta $3a0002,x	            sta  #NOSh,b,x
+.3a0426	4c c1 01	jmp $3a01c1	            jmp  inst_dr
 
 					; ---------------------------------------------------------
 					; ## su (18) stack: xy-n  |   -    subtraction
@@ -1122,15 +1122,15 @@
 					; }
 
 .3a0429					inst_su
-.3a0429	a6 66		ldx $66			ldx	SP
-.3a042b	38		sec			sec
-.3a042c	bd 00 00	lda $3a0000,x		lda   #NOSl,b,x
-.3a042f	fd 04 00	sbc $3a0004,x		sbc	#TOSl,b,x
-.3a0432	9d 00 00	sta $3a0000,x		sta	#NOSl,b,x
-.3a0435	bd 02 00	lda $3a0002,x		lda	#NOSh,b,x
-.3a0438	fd 06 00	sbc $3a0006,x		sbc	#TOSh,b,x
-.3a043b	9d 02 00	sta $3a0002,x		sta	#NOSh,b,x
-.3a043e	4c c1 01	jmp $3a01c1		jmp	inst_dr
+.3a0429	a6 66		ldx $66		            ldx  SP
+.3a042b	38		sec		            sec
+.3a042c	bd 00 00	lda $3a0000,x	            lda   #NOSl,b,x
+.3a042f	fd 04 00	sbc $3a0004,x	            sbc  #TOSl,b,x
+.3a0432	9d 00 00	sta $3a0000,x	            sta  #NOSl,b,x
+.3a0435	bd 02 00	lda $3a0002,x	            lda  #NOSh,b,x
+.3a0438	fd 06 00	sbc $3a0006,x	            sbc  #TOSh,b,x
+.3a043b	9d 02 00	sta $3a0002,x	            sta  #NOSh,b,x
+.3a043e	4c c1 01	jmp $3a01c1	            jmp  inst_dr
 
 					; ---------------------------------------------------------
 					; ## mu (19) stack: xy-n  |   -    multiplication
@@ -1147,7 +1147,7 @@
 =$6e					N = TMP
 
 .3a0441					inst_mu
-.3a0441	a6 66		ldx $66			ldx   SP
+.3a0441	a6 66		ldx $66		            ldx   SP
 					            ; only for 1:1 with original nga
 .3a0443	bd 06 00	lda $3a0006,x	            lda   #TOSh,b,x
 .3a0446	48		pha		            pha
@@ -1155,36 +1155,36 @@
 .3a044a	48		pha		            pha
 					            ; end
 
-.3a044b	a5 70		lda $70			lda   N+2
-.3a044d	48		pha			pha
-.3a044e	a5 6e		lda $6e			lda   N
-.3a0450	48		pha			pha
-.3a0451	a9 00 00	lda #$0000		lda   #$00
-.3a0454	85 6e		sta $6e			sta   N
-.3a0456	a0 20 00	ldy #$0020		ldy   #32
-.3a0459	5e 06 00	lsr $3a0006,x		lsr   #TOSh,b,x	; STACKBASE+6,x
-.3a045c	7e 04 00	ror $3a0004,x		ror   #TOSl,b,x	; STACKBASE+4,x
-.3a045f	90 0f		bcc $3a0470	l1:	bcc   l2
-.3a0461	18		clc			clc
-.3a0462	85 70		sta $70			sta   N+2
-.3a0464	a5 6e		lda $6e			lda   N
-.3a0466	7d 00 00	adc $3a0000,x		adc   #NOSl,b,x	; STACKBASE+0,x
-.3a0469	85 6e		sta $6e			sta   N
-.3a046b	a5 70		lda $70			lda   N+2
-.3a046d	7d 02 00	adc $3a0002,x		adc   #NOSh,b,x	; STACKBASE+2,x
-.3a0470	6a		ror a		l2:	ror   a
-.3a0471	66 6e		ror $6e			ror   N
-.3a0473	7e 06 00	ror $3a0006,x		ror   #TOSh,b,x	; STACKBASE+6,x
-.3a0476	7e 04 00	ror $3a0004,x		ror   #TOSl,b,x	; STACKBASE+4,x
-.3a0479	88		dey			dey
-.3a047a	d0 e3		bne $3a045f		bne   l1
-.3a047c	9d 02 00	sta $3a0002,x		sta   #NOSh,b,x	; STACKBASE+2,x
-.3a047f	a5 6e		lda $6e			lda   N
-.3a0481	9d 00 00	sta $3a0000,x		sta   #NOSl,b,x	; STACKBASE+0,x
-.3a0484	68		pla			pla
-.3a0485	85 6e		sta $6e			sta   N
-.3a0487	68		pla			pla
-.3a0488	85 70		sta $70			sta   N+2
+.3a044b	a5 70		lda $70		            lda   N+2
+.3a044d	48		pha		            pha
+.3a044e	a5 6e		lda $6e		            lda   N
+.3a0450	48		pha		            pha
+.3a0451	a9 00 00	lda #$0000	            lda   #$00
+.3a0454	85 6e		sta $6e		            sta   N
+.3a0456	a0 20 00	ldy #$0020	            ldy   #32
+.3a0459	5e 06 00	lsr $3a0006,x	            lsr   #TOSh,b,x      ; STACKBASE+6,x
+.3a045c	7e 04 00	ror $3a0004,x	            ror   #TOSl,b,x      ; STACKBASE+4,x
+.3a045f	90 0f		bcc $3a0470	l1:         bcc   l2
+.3a0461	18		clc		            clc
+.3a0462	85 70		sta $70		            sta   N+2
+.3a0464	a5 6e		lda $6e		            lda   N
+.3a0466	7d 00 00	adc $3a0000,x	            adc   #NOSl,b,x      ; STACKBASE+0,x
+.3a0469	85 6e		sta $6e		            sta   N
+.3a046b	a5 70		lda $70		            lda   N+2
+.3a046d	7d 02 00	adc $3a0002,x	            adc   #NOSh,b,x      ; STACKBASE+2,x
+.3a0470	6a		ror a		l2:         ror   a
+.3a0471	66 6e		ror $6e		            ror   N
+.3a0473	7e 06 00	ror $3a0006,x	            ror   #TOSh,b,x      ; STACKBASE+6,x
+.3a0476	7e 04 00	ror $3a0004,x	            ror   #TOSl,b,x      ; STACKBASE+4,x
+.3a0479	88		dey		            dey
+.3a047a	d0 e3		bne $3a045f	            bne   l1
+.3a047c	9d 02 00	sta $3a0002,x	            sta   #NOSh,b,x      ; STACKBASE+2,x
+.3a047f	a5 6e		lda $6e		            lda   N
+.3a0481	9d 00 00	sta $3a0000,x	            sta   #NOSl,b,x      ; STACKBASE+0,x
+.3a0484	68		pla		            pla
+.3a0485	85 6e		sta $6e		            sta   N
+.3a0487	68		pla		            pla
+.3a0488	85 70		sta $70		            sta   N+2
 
 					            ; only for 1:1 with original nga - XXX - fix it
 .3a048a	bd 04 00	lda $3a0004,x	            lda   #TOSl,b,x
@@ -1198,7 +1198,7 @@
 .3a049b	9d 06 00	sta $3a0006,x	            sta   #TOSh,b,x
 					            ; end
 
-.3a049e	4c c1 01	jmp $3a01c1		jmp   inst_dr
+.3a049e	4c c1 01	jmp $3a01c1	            jmp   inst_dr
 
 					; ---------------------------------------------------------
 					; ## di (20) stack: xy-rq |   -    divide & remainder
@@ -1221,7 +1221,7 @@
 					            .warn "inst_di is unsigned, change it"
 
 .3a04a1					inst_di
-.3a04a1	a6 66		ldx $66			ldx	SP
+.3a04a1	a6 66		ldx $66		            ldx  SP
 
 .3a04a3	bd 04 00	lda $3a0004,x	            lda  #TOSl,b,x
 .3a04a6	d0 27		bne $3a04cf	            bne  di4
@@ -1257,61 +1257,61 @@
 .3a04cc	85 60		sta $60		            sta  IP
 .3a04ce	60		rts		            rts
 
-.3a04cf	bd 00 00	lda $010000,x	di4	lda	#NOSl,b,x	; NOS to TMPb via TMP(a)
-.3a04d2	85 6e		sta $6e			sta  TMP
-.3a04d4	bd 02 00	lda $010002,x		lda	#NOSh,b,x
-.3a04d7	85 70		sta $70			sta	TMP+2
-.3a04d9	24 70		bit $70			bit	TMP+2
-.3a04db	10 05		bpl $3a04e2		bpl	di3
+.3a04cf	bd 00 00	lda $010000,x	di4         lda  #NOSl,b,x       ; NOS to TMPb via TMP(a)
+.3a04d2	85 6e		sta $6e		            sta  TMP
+.3a04d4	bd 02 00	lda $010002,x	            lda  #NOSh,b,x
+.3a04d7	85 70		sta $70		            sta  TMP+2
+.3a04d9	24 70		bit $70		            bit  TMP+2
+.3a04db	10 05		bpl $3a04e2	            bpl  di3
 
 .3a04dd	e6 78		inc $78		            inc  TMPd
-.3a04df	20 3a 05	jsr $3a053a		jsr	negate_tmp
-.3a04e2	a5 6e		lda $6e		di3	lda	TMP	; NOS from TMP(a) to TMPb
-.3a04e4	85 72		sta $72			sta	TMPb
-.3a04e6	a5 70		lda $70			lda	TMP+2
-.3a04e8	85 74		sta $74			sta	TMPb+2
+.3a04df	20 3a 05	jsr $3a053a	            jsr  negate_tmp
+.3a04e2	a5 6e		lda $6e		di3         lda  TMP             ; NOS from TMP(a) to TMPb
+.3a04e4	85 72		sta $72		            sta  TMPb
+.3a04e6	a5 70		lda $70		            lda  TMP+2
+.3a04e8	85 74		sta $74		            sta  TMPb+2
 
-.3a04ea	bd 04 00	lda $010004,x		lda	#TOSl,b,x	; TOS to TMP(a)
-.3a04ed	85 6e		sta $6e			sta  TMP
-.3a04ef	bd 06 00	lda $010006,x		lda	#TOSh,b,x
-.3a04f2	85 70		sta $70			sta	TMP+2
-.3a04f4	24 70		bit $70			bit	TMP+2
-.3a04f6	10 05		bpl $3a04fd		bpl	di2
+.3a04ea	bd 04 00	lda $010004,x	            lda  #TOSl,b,x       ; TOS to TMP(a)
+.3a04ed	85 6e		sta $6e		            sta  TMP
+.3a04ef	bd 06 00	lda $010006,x	            lda  #TOSh,b,x
+.3a04f2	85 70		sta $70		            sta  TMP+2
+.3a04f4	24 70		bit $70		            bit  TMP+2
+.3a04f6	10 05		bpl $3a04fd	            bpl  di2
 
 .3a04f8	e6 78		inc $78		            inc  TMPd
-.3a04fa	20 3a 05	jsr $3a053a		jsr	negate_tmp
-.3a04fd	9e 04 00	stz $010004,x	di2	stz	#TOSl,b,x       ; prepare result space
-.3a0500	9e 06 00	stz $010006,x		stz	#TOSh,b,x
-.3a0503	9e 00 00	stz $010000,x		stz	#NOSl,b,x
-.3a0506	9e 02 00	stz $010002,x		stz	#NOSh,b,x
+.3a04fa	20 3a 05	jsr $3a053a	            jsr  negate_tmp
+.3a04fd	9e 04 00	stz $010004,x	di2         stz  #TOSl,b,x       ; prepare result space
+.3a0500	9e 06 00	stz $010006,x	            stz  #TOSh,b,x
+.3a0503	9e 00 00	stz $010000,x	            stz  #NOSl,b,x
+.3a0506	9e 02 00	stz $010002,x	            stz  #NOSh,b,x
 
-.3a0509	a5 72		lda $72		di0	lda	TMPb            ; is NOS<TOS?
-.3a050b	c5 6e		cmp $6e			cmp	TMPa
-.3a050d	a5 74		lda $74			lda	TMPb+2
-.3a050f	e5 70		sbc $70			sbc	TMPa+2
-.3a0511	50 03		bvc $3a0516		bvc	di1
-.3a0513	49 80 00	eor #$0080		eor  #$80
-.3a0516	30 17		bmi $3a052f	di1	bmi	finish	; yes, NOS<TOS
+.3a0509	a5 72		lda $72		di0         lda  TMPb            ; is NOS<TOS?
+.3a050b	c5 6e		cmp $6e		            cmp  TMPa
+.3a050d	a5 74		lda $74		            lda  TMPb+2
+.3a050f	e5 70		sbc $70		            sbc  TMPa+2
+.3a0511	50 03		bvc $3a0516	            bvc  di1
+.3a0513	49 80 00	eor #$0080	            eor  #$80
+.3a0516	30 17		bmi $3a052f	di1         bmi  finish          ; yes, NOS<TOS
 
-.3a0518	38		sec			sec
-.3a0519	a5 72		lda $72			lda	TMPb
-.3a051b	e5 6e		sbc $6e			sbc	TMPa
+.3a0518	38		sec		            sec
+.3a0519	a5 72		lda $72		            lda  TMPb
+.3a051b	e5 6e		sbc $6e		            sbc  TMPa
 .3a051d	85 72		sta $72		            sta  TMPb
-.3a051f	a5 74		lda $74			lda	TMPb+2
-.3a0521	e5 70		sbc $70			sbc	TMPa+2
+.3a051f	a5 74		lda $74		            lda  TMPb+2
+.3a0521	e5 70		sbc $70		            sbc  TMPa+2
 .3a0523	85 74		sta $74		            sta  TMPb+2
 
-						; increase result
-.3a0525	fe 04 00	inc $010004,x		inc  #TOSl,b,x
-.3a0528	d0 df		bne $3a0509		bne  di0	; overflow means high+=1
-.3a052a	fe 06 00	inc $010006,x		inc	#TOSh,b,x
-.3a052d	80 da		bra $3a0509		bra  di0
+					            ; increase result
+.3a0525	fe 04 00	inc $010004,x	            inc  #TOSl,b,x
+.3a0528	d0 df		bne $3a0509	            bne  di0             ; overflow means high+=1
+.3a052a	fe 06 00	inc $010006,x	            inc  #TOSh,b,x
+.3a052d	80 da		bra $3a0509	            bra  di0
 
-.3a052f	a5 72		lda $72		finish	lda	TMPb	; remainder
-.3a0531	9d 00 00	sta $010000,x		sta	#NOSl,b,x
-.3a0534	a5 74		lda $74			lda	TMPb+2
-.3a0536	9d 02 00	sta $010002,x		sta	#NOSh,b,x
-.3a0539	60		rts			rts
+.3a052f	a5 72		lda $72		finish      lda  TMPb            ; remainder
+.3a0531	9d 00 00	sta $010000,x	            sta  #NOSl,b,x
+.3a0534	a5 74		lda $74		            lda  TMPb+2
+.3a0536	9d 02 00	sta $010002,x	            sta  #NOSh,b,x
+.3a0539	60		rts		            rts
 
 					            ; additional routines for shifting ------------
 .3a053a					negate_tmp
@@ -1341,17 +1341,17 @@
 					; }
 
 .3a0553					inst_an
-.3a0553	a6 66		ldx $66			ldx	SP
+.3a0553	a6 66		ldx $66		            ldx  SP
 
-.3a0555	bd 00 00	lda $010000,x		lda   #NOSl,b,x
-.3a0558	3d 04 00	and $010004,x		and   #TOSl,b,x
-.3a055b	9d 00 00	sta $010000,x		sta	#NOSl,b,x
+.3a0555	bd 00 00	lda $010000,x	            lda   #NOSl,b,x
+.3a0558	3d 04 00	and $010004,x	            and   #TOSl,b,x
+.3a055b	9d 00 00	sta $010000,x	            sta  #NOSl,b,x
 
-.3a055e	bd 02 00	lda $010002,x		lda   #NOSh,b,x
-.3a0561	3d 06 00	and $010006,x		and   #TOSh,b,x
-.3a0564	9d 02 00	sta $010002,x		sta	#NOSh,b,x
+.3a055e	bd 02 00	lda $010002,x	            lda   #NOSh,b,x
+.3a0561	3d 06 00	and $010006,x	            and   #TOSh,b,x
+.3a0564	9d 02 00	sta $010002,x	            sta  #NOSh,b,x
 
-.3a0567	4c c1 01	jmp $3a01c1		jmp	inst_dr
+.3a0567	4c c1 01	jmp $3a01c1	            jmp  inst_dr
 
 					; ---------------------------------------------------------
 					; ## or (22) stack: xy-n  |   -    bitwise or
@@ -1362,17 +1362,17 @@
 					; }
 
 .3a056a					inst_or
-.3a056a	a6 66		ldx $66			ldx	SP
+.3a056a	a6 66		ldx $66		            ldx  SP
 
-.3a056c	bd 00 00	lda $010000,x		lda   #NOSl,b,x
-.3a056f	1d 04 00	ora $010004,x		ora   #TOSl,b,x
-.3a0572	9d 00 00	sta $010000,x		sta	#NOSl,b,x
+.3a056c	bd 00 00	lda $010000,x	            lda   #NOSl,b,x
+.3a056f	1d 04 00	ora $010004,x	            ora   #TOSl,b,x
+.3a0572	9d 00 00	sta $010000,x	            sta  #NOSl,b,x
 
-.3a0575	bd 02 00	lda $010002,x		lda   #NOSh,b,x
-.3a0578	1d 06 00	ora $010006,x		ora   #TOSh,b,x
-.3a057b	9d 02 00	sta $010002,x		sta	#NOSh,b,x
+.3a0575	bd 02 00	lda $010002,x	            lda   #NOSh,b,x
+.3a0578	1d 06 00	ora $010006,x	            ora   #TOSh,b,x
+.3a057b	9d 02 00	sta $010002,x	            sta  #NOSh,b,x
 
-.3a057e	4c c1 01	jmp $3a01c1		jmp	inst_dr
+.3a057e	4c c1 01	jmp $3a01c1	            jmp  inst_dr
 
 					; ---------------------------------------------------------
 					; ## xo (23) stack: xy-n  |   -    bitwise xor
@@ -1383,17 +1383,17 @@
 					; }
 
 .3a0581					inst_xo
-.3a0581	a6 66		ldx $66			ldx	SP
+.3a0581	a6 66		ldx $66		            ldx  SP
 
-.3a0583	bd 00 00	lda $010000,x		lda   #NOSl,b,x
-.3a0586	5d 04 00	eor $010004,x		eor   #TOSl,b,x
-.3a0589	9d 00 00	sta $010000,x		sta	#NOSl,b,x
+.3a0583	bd 00 00	lda $010000,x	            lda   #NOSl,b,x
+.3a0586	5d 04 00	eor $010004,x	            eor   #TOSl,b,x
+.3a0589	9d 00 00	sta $010000,x	            sta  #NOSl,b,x
 
-.3a058c	bd 02 00	lda $010002,x		lda   #NOSh,b,x
-.3a058f	5d 06 00	eor $010006,x		eor   #TOSh,b,x
-.3a0592	9d 02 00	sta $010002,x		sta	#NOSh,b,x
+.3a058c	bd 02 00	lda $010002,x	            lda   #NOSh,b,x
+.3a058f	5d 06 00	eor $010006,x	            eor   #TOSh,b,x
+.3a0592	9d 02 00	sta $010002,x	            sta  #NOSh,b,x
 
-.3a0595	4c c1 01	jmp $3a01c1		jmp	inst_dr
+.3a0595	4c c1 01	jmp $3a01c1	            jmp  inst_dr
 
 					; ---------------------------------------------------------
 					; ## sh (24) stack: xy-n  |   -    shift
@@ -1424,69 +1424,69 @@
 					;
 
 .3a0598					inst_sh
-.3a0598	a6 66		ldx $66			ldx	SP
+.3a0598	a6 66		ldx $66		            ldx  SP
 
-						; check if shift count is positive or negative
-.3a059a	3c 06 00	bit $010006,x		bit	#TOSh,b,x
-.3a059d	10 1b		bpl $3a05ba		bpl	shr_main	; shift to right
+					            ; check if shift count is positive or negative
+.3a059a	3c 06 00	bit $010006,x	            bit  #TOSh,b,x
+.3a059d	10 1b		bpl $3a05ba	            bpl  shr_main        ; shift to right
 
-						; we shifting left, so we need to negate arg
-.3a059f	20 e4 05	jsr $3a05e4		jsr	negate_tos
+					            ; we shifting left, so we need to negate arg
+.3a059f	20 e4 05	jsr $3a05e4	            jsr  negate_tos
 
-.3a05a2	bd 04 00	lda $010004,x		lda   #TOSl,b,x
-.3a05a5	29 3f 00	and #$003f		and   #63	; we need only low 6 bits
-.3a05a8	d0 03		bne $3a05ad		bne   +	; do something if > 0
-.3a05aa	4c c1 01	jmp $3a01c1		jmp	inst_dr
-.3a05ad	a8		tay		+	tay
+.3a05a2	bd 04 00	lda $010004,x	            lda   #TOSl,b,x
+.3a05a5	29 3f 00	and #$003f	            and   #63            ; we need only low 6 bits
+.3a05a8	d0 03		bne $3a05ad	            bne   +              ; do something if > 0
+.3a05aa	4c c1 01	jmp $3a01c1	            jmp  inst_dr
+.3a05ad	a8		tay		+           tay
 
-						; shifting left is the same for neg and pos vals
-.3a05ae	1e 00 00	asl $010000,x	shl_main	asl	#NOSl,b,x
-.3a05b1	3e 02 00	rol $010002,x		rol   #NOSh,b,x
-.3a05b4	88		dey			dey
-.3a05b5	d0 f7		bne $3a05ae		bne   shl_main
-.3a05b7	4c c1 01	jmp $3a01c1		jmp	inst_dr
+					            ; shifting left is the same for neg and pos vals
+.3a05ae	1e 00 00	asl $010000,x	shl_main    asl  #NOSl,b,x
+.3a05b1	3e 02 00	rol $010002,x	            rol   #NOSh,b,x
+.3a05b4	88		dey		            dey
+.3a05b5	d0 f7		bne $3a05ae	            bne   shl_main
+.3a05b7	4c c1 01	jmp $3a01c1	            jmp  inst_dr
 
 
-						; shift right ---------------------------------
-.3a05ba	bd 04 00	lda $010004,x	shr_main	lda   #TOSl,b,x
-.3a05bd	29 3f 00	and #$003f		and   #63	; we need only low 6 bits
-.3a05c0	d0 03		bne $3a05c5		bne   +	; do something if > 0
-.3a05c2	4c c1 01	jmp $3a01c1		jmp	inst_dr
-.3a05c5	a8		tay		+	tay
+					            ; shift right ---------------------------------
+.3a05ba	bd 04 00	lda $010004,x	shr_main    lda   #TOSl,b,x
+.3a05bd	29 3f 00	and #$003f	            and   #63            ; we need only low 6 bits
+.3a05c0	d0 03		bne $3a05c5	            bne   +              ; do something if > 0
+.3a05c2	4c c1 01	jmp $3a01c1	            jmp  inst_dr
+.3a05c5	a8		tay		+           tay
 
-						; did we shifting negative or positive value?
-.3a05c6	3c 02 00	bit $010002,x		bit	#NOSh,b,x
-.3a05c9	30 0c		bmi $3a05d7		bmi	shr_neg
+					            ; did we shifting negative or positive value?
+.3a05c6	3c 02 00	bit $010002,x	            bit  #NOSh,b,x
+.3a05c9	30 0c		bmi $3a05d7	            bmi  shr_neg
 
-.3a05cb	5e 02 00	lsr $010002,x	shr_pos	lsr   #NOSh,b,x
-.3a05ce	7e 00 00	ror $010000,x		ror	#NOSl,b,x
-.3a05d1	88		dey			dey
-.3a05d2	d0 f7		bne $3a05cb		bne   shr_pos
-.3a05d4	4c c1 01	jmp $3a01c1		jmp	inst_dr
+.3a05cb	5e 02 00	lsr $010002,x	shr_pos     lsr   #NOSh,b,x
+.3a05ce	7e 00 00	ror $010000,x	            ror  #NOSl,b,x
+.3a05d1	88		dey		            dey
+.3a05d2	d0 f7		bne $3a05cb	            bne   shr_pos
+.3a05d4	4c c1 01	jmp $3a01c1	            jmp  inst_dr
 
-.3a05d7	18		clc		shr_neg	clc
-.3a05d8	7e 02 00	ror $010002,x		ror   #NOSh,b,x
-.3a05db	7e 00 00	ror $010000,x		ror	#NOSl,b,x
-.3a05de	88		dey			dey
-.3a05df	d0 f6		bne $3a05d7		bne   shr_neg
-.3a05e1	4c c1 01	jmp $3a01c1		jmp	inst_dr
+.3a05d7	18		clc		shr_neg     clc
+.3a05d8	7e 02 00	ror $010002,x	            ror   #NOSh,b,x
+.3a05db	7e 00 00	ror $010000,x	            ror  #NOSl,b,x
+.3a05de	88		dey		            dey
+.3a05df	d0 f6		bne $3a05d7	            bne   shr_neg
+.3a05e1	4c c1 01	jmp $3a01c1	            jmp  inst_dr
 
-						; additional routines for shifting ------------
+					            ; additional routines for shifting ------------
 .3a05e4	ea		nop		negate_tos nop
-.3a05e5	20 f1 05	jsr $3a05f1		jsr   invert_tos
-.3a05e8	fe 04 00	inc $010004,x		inc   #TOSl,b,x       ; STACKBASE+0,x
-.3a05eb	d0 03		bne $3a05f0		bne   +
-.3a05ed	fe 06 00	inc $010006,x		inc   #TOSh,b,x       ; STACKBASE+2,x
-.3a05f0	60		rts		+	rts
+.3a05e5	20 f1 05	jsr $3a05f1	            jsr   invert_tos
+.3a05e8	fe 04 00	inc $010004,x	            inc   #TOSl,b,x       ; STACKBASE+0,x
+.3a05eb	d0 03		bne $3a05f0	            bne   +
+.3a05ed	fe 06 00	inc $010006,x	            inc   #TOSh,b,x       ; STACKBASE+2,x
+.3a05f0	60		rts		+           rts
 
 .3a05f1					invert_tos
-.3a05f1	bd 04 00	lda $010004,x		lda   #TOSl,b,x	; STACKBASE+0,x
-.3a05f4	49 ff ff	eor #$ffff		eor   #$FFFF
-.3a05f7	9d 04 00	sta $010004,x		sta   #TOSl,b,x	; STACKBASE+0,x
-.3a05fa	bd 06 00	lda $010006,x		lda   #TOSh,b,x       ; STACKBASE+2,x
-.3a05fd	49 ff ff	eor #$ffff		eor   #$FFFF
-.3a0600	9d 06 00	sta $010006,x		sta   #TOSh,b,x       ; STACKBASE+2,x
-.3a0603	60		rts			rts
+.3a05f1	bd 04 00	lda $010004,x	            lda   #TOSl,b,x      ; STACKBASE+0,x
+.3a05f4	49 ff ff	eor #$ffff	            eor   #$FFFF
+.3a05f7	9d 04 00	sta $010004,x	            sta   #TOSl,b,x      ; STACKBASE+0,x
+.3a05fa	bd 06 00	lda $010006,x	            lda   #TOSh,b,x       ; STACKBASE+2,x
+.3a05fd	49 ff ff	eor #$ffff	            eor   #$FFFF
+.3a0600	9d 06 00	sta $010006,x	            sta   #TOSh,b,x       ; STACKBASE+2,x
+.3a0603	60		rts		            rts
 
 					; ---------------------------------------------------------
 					; ## zr (25) stack:  n-?  |   -    zero return
@@ -1503,16 +1503,16 @@
 					; }
 
 .3a0604					inst_zr
-.3a0604	a6 66		ldx $66			ldx	SP
-.3a0606	bd 04 00	lda $010004,x		lda	#TOSl,b,x
-.3a0609	d0 19		bne $3a0624		bne	zr_quit
-.3a060b	bd 06 00	lda $010006,x	            lda	#TOSh,b,x
-.3a060e	d0 14		bne $3a0624		bne	zr_quit
+.3a0604	a6 66		ldx $66		            ldx  SP
+.3a0606	bd 04 00	lda $010004,x	            lda  #TOSl,b,x
+.3a0609	d0 19		bne $3a0624	            bne  zr_quit
+.3a060b	bd 06 00	lda $010006,x	            lda  #TOSh,b,x
+.3a060e	d0 14		bne $3a0624	            bne  zr_quit
 
-.3a0610	20 c1 01	jsr $3a01c1	do_zr	jsr	inst_dr
-.3a0613	a4 68		ldy $68			ldy	RP
-.3a0615	b9 00 04	lda $010400,y		lda	#TRSl,b,y
-.3a0618	85 60		sta $60			sta	IP
+.3a0610	20 c1 01	jsr $3a01c1	do_zr       jsr  inst_dr
+.3a0613	a4 68		ldy $68		            ldy  RP
+.3a0615	b9 00 04	lda $010400,y	            lda  #TRSl,b,y
+.3a0618	85 60		sta $60		            sta  IP
 .3a061a	20 56 01	jsr $3a0156	            jsr  update_ipptr
 
 .3a061d	98		tya		            tya
@@ -1525,24 +1525,24 @@
 					; ## ha (26) stack:   -   |   -    halt
 
 .3a0625					inst_ha
-.3a0625	a9 fe ff	lda #$fffe		lda	#CELL_MAX-1     ; XXX - change it
-.3a0628	85 60		sta $60			sta	IP
-.3a062a	60		rts			rts
+.3a0625	a9 fe ff	lda #$fffe	            lda  #CELL_MAX-1     ; XXX - change it
+.3a0628	85 60		sta $60		            sta  IP
+.3a062a	60		rts		            rts
 
 					; ---------------------------------------------------------
 					; ## ie (27) stack:   -n  |   -    i/o enumerate
 
 .3a062b					inst_ie
-.3a062b	a5 66		lda $66			lda	SP
-.3a062d	18		clc			clc
-.3a062e	69 04 00	adc #$0004		adc	#CELL_SIZE      ; 4 bytes
-.3a0631	85 66		sta $66			sta	SP
-.3a0633	aa		tax			tax
+.3a062b	a5 66		lda $66		            lda  SP
+.3a062d	18		clc		            clc
+.3a062e	69 04 00	adc #$0004	            adc  #CELL_SIZE      ; 4 bytes
+.3a0631	85 66		sta $66		            sta  SP
+.3a0633	aa		tax		            tax
 
-.3a0634	a9 02 00	lda #$0002		lda	#NUM_DEVICES
-.3a0637	9d 04 00	sta $010004,x		sta	#TOSl,b,x
-.3a063a	9e 06 00	stz $010006,x		stz	#TOSh,b,x
-.3a063d	60		rts			rts
+.3a0634	a9 02 00	lda #$0002	            lda  #NUM_DEVICES
+.3a0637	9d 04 00	sta $010004,x	            sta  #TOSl,b,x
+.3a063a	9e 06 00	stz $010006,x	            stz  #TOSh,b,x
+.3a063d	60		rts		            rts
 
 					; ---------------------------------------------------------
 					; ## iq (28) stack:  n-xy |   -    i/o query
@@ -1554,11 +1554,11 @@
 					; }
 
 .3a063e					inst_iq
-.3a063e	a6 66		ldx $66			ldx	SP
-.3a0640	bd 04 00	lda $010004,x		lda	#TOSl,b,x
-.3a0643	48		pha			pha
-.3a0644	20 c1 01	jsr $3a01c1		jsr	inst_dr
-.3a0647	4c 56 06	jmp $3a0656		jmp	io_query
+.3a063e	a6 66		ldx $66		            ldx  SP
+.3a0640	bd 04 00	lda $010004,x	            lda  #TOSl,b,x
+.3a0643	48		pha		            pha
+.3a0644	20 c1 01	jsr $3a01c1	            jsr  inst_dr
+.3a0647	4c 56 06	jmp $3a0656	            jmp  io_query
 
 
 					; ## ii (29) stack: ...n- |   -    i/o invoke
@@ -1576,11 +1576,11 @@
 
 
 .3a064a					inst_ii
-.3a064a	a6 66		ldx $66			ldx	SP
-.3a064c	bd 04 00	lda $010004,x		lda	#TOSl,b,x
-.3a064f	48		pha			pha
-.3a0650	20 c1 01	jsr $3a01c1		jsr	inst_dr
-.3a0653	4c 89 06	jmp $3a0689		jmp	io_handle
+.3a064a	a6 66		ldx $66		            ldx  SP
+.3a064c	bd 04 00	lda $010004,x	            lda  #TOSl,b,x
+.3a064f	48		pha		            pha
+.3a0650	20 c1 01	jsr $3a01c1	            jsr  inst_dr
+.3a0653	4c 89 06	jmp $3a0689	            jmp  io_handle
 
 					; ---------------------------------------------------------
 					; device support
@@ -1588,99 +1588,99 @@
 
 					; number of device on stack
 .3a0656					io_query
-						; numbers are counted from 0, so val should be
-						; lower than number of devices
-.3a0656	7a		ply			ply
-.3a0657	c0 02 00	cpy #$0002		cpy	#NUM_DEVICES
-.3a065a	90 05		bcc $3a0661		bcc  query
+					            ; numbers are counted from 0, so val should be
+					            ; lower than number of devices
+.3a0656	7a		ply		            ply
+.3a0657	c0 02 00	cpy #$0002	            cpy  #NUM_DEVICES
+.3a065a	90 05		bcc $3a0661	            bcc  query
 
 .3a065c	a9 fe ff	lda #$fffe	            lda  #CELL_MAX-1
 .3a065f	85 60		sta $60		            sta  IP
-						;wdm  #KILL		; effective error
+					            ;wdm  #KILL                          ; effective error
 
-.3a0661	a5 66		lda $66		query	lda	SP
-.3a0663	18		clc			clc
-.3a0664	69 04 00	adc #$0004		adc	#4
-.3a0667	85 66		sta $66			sta	SP
-.3a0669	aa		tax			tax
+.3a0661	a5 66		lda $66		query       lda  SP
+.3a0663	18		clc		            clc
+.3a0664	69 04 00	adc #$0004	            adc  #4
+.3a0667	85 66		sta $66		            sta  SP
+.3a0669	aa		tax		            tax
 
-.3a066a	98		tya			tya
-.3a066b	9d 04 00	sta $010004,x		sta	#TOSl,b,x	; device number
-.3a066e	9e 06 00	stz $010006,x		stz	#TOSh,b,x
+.3a066a	98		tya		            tya
+.3a066b	9d 04 00	sta $010004,x	            sta  #TOSl,b,x       ; device number
+.3a066e	9e 06 00	stz $010006,x	            stz  #TOSh,b,x
 
-.3a0671	d0 03		bne $3a0676		bne	is_key
-.3a0673	4c 82 06	jmp $3a0682	is_output	jmp	version0	; output ver0
+.3a0671	d0 03		bne $3a0676	            bne  is_key
+.3a0673	4c 82 06	jmp $3a0682	is_output   jmp  version0        ; output ver0
 
-.3a0676	c9 01 00	cmp #$0001	is_key	cmp   #1
-.3a0679	d0 03		bne $3a067e		bne	unknown
-.3a067b	4c 82 06	jmp $3a0682		jmp	version0	; keyboard ver0
+.3a0676	c9 01 00	cmp #$0001	is_key      cmp   #1
+.3a0679	d0 03		bne $3a067e	            bne  unknown
+.3a067b	4c 82 06	jmp $3a0682	            jmp  version0        ; keyboard ver0
 
-.3a067e	20 c1 01	jsr $3a01c1	unknown	jsr	inst_dr	; drop already put dev no
-.3a0681	60		rts			rts		; never reachable
+.3a067e	20 c1 01	jsr $3a01c1	unknown     jsr  inst_dr         ; drop already put dev no
+.3a0681	60		rts		            rts                  ; never reachable
 
-.3a0682	9e 00 00	stz $010000,x	version0	stz	#NOSl,b,x
-.3a0685	9e 02 00	stz $010002,x		stz	#NOSh,b,x
-.3a0688	60		rts			rts
+.3a0682	9e 00 00	stz $010000,x	version0    stz  #NOSl,b,x
+.3a0685	9e 02 00	stz $010002,x	            stz  #NOSh,b,x
+.3a0688	60		rts		            rts
 
 
 					; ---------------------------------------------------------
 					; number of device on stack
 .3a0689					io_handle
-						; numbers are counted from 0, so val should be
-						; lower than number of devices
-.3a0689	7a		ply			ply
-.3a068a	c0 02 00	cpy #$0002		cpy	#NUM_DEVICES
-.3a068d	90 05		bcc $3a0694		bcc  interact
+					            ; numbers are counted from 0, so val should be
+					            ; lower than number of devices
+.3a0689	7a		ply		            ply
+.3a068a	c0 02 00	cpy #$0002	            cpy  #NUM_DEVICES
+.3a068d	90 05		bcc $3a0694	            bcc  interact
 .3a068f	a9 fe ff	lda #$fffe	            lda  #CELL_MAX-1
 .3a0692	85 60		sta $60		            sta  IP
 					            ;wdm  #KILL            ; stop - error
 
-.3a0694	c0 00 00	cpy #$0000	interact	cpy  #0
-.3a0697	f0 22		beq $3a06bb	            beq	screen	; crude, but should work
+.3a0694	c0 00 00	cpy #$0000	interact    cpy  #0
+.3a0697	f0 22		beq $3a06bb	            beq  screen          ; crude, but should work
 
-						; keyboard input
-.3a0699	a5 66		lda $66			lda	SP
-.3a069b	18		clc			clc
-.3a069c	69 04 00	adc #$0004		adc	#4
-.3a069f	85 66		sta $66			sta	SP
-.3a06a1	aa		tax			tax
+					            ; keyboard input
+.3a0699	a5 66		lda $66		            lda  SP
+.3a069b	18		clc		            clc
+.3a069c	69 04 00	adc #$0004	            adc  #4
+.3a069f	85 66		sta $66		            sta  SP
+.3a06a1	aa		tax		            tax
 
 					            ;wdm   #TRACE_OFF
-.3a06a2	22 4c 10 00	jsl $00104c		jsl   C256_GETCHW	; all regs preserved here
+.3a06a2	22 4c 10 00	jsl $00104c	            jsl   C256_GETCHW    ; all regs preserved here
 					            ;wdm   #TRACE_ON
 .3a06a6	c2 30		rep #$30	                REP #$30        ; set A&X long
 					                .al
 					                .xl
-.3a06a8	29 ff 00	and #$00ff		and   #$00ff          ; only byte lower is needed
+.3a06a8	29 ff 00	and #$00ff	            and   #$00ff          ; only byte lower is needed
 .3a06ab	c9 0d 00	cmp #$000d	            cmp   #$0d            ; change 0d to 0a
 .3a06ae	d0 03		bne $3a06b3	            bne   +
 .3a06b0	a9 0a 00	lda #$000a	            lda   #$0a
 .3a06b3	ea		nop		+           nop
-.3a06b4	9d 04 00	sta $010004,x		sta	#TOSl,b,x
-.3a06b7	9e 06 00	stz $010006,x		stz	#TOSh,b,x
-.3a06ba	60		rts			rts
+.3a06b4	9d 04 00	sta $010004,x	            sta  #TOSl,b,x
+.3a06b7	9e 06 00	stz $010006,x	            stz  #TOSh,b,x
+.3a06ba	60		rts		            rts
 
-						; screen output
-.3a06bb	a6 66		ldx $66		screen	ldx	SP
-.3a06bd	8a		txa			txa
-.3a06be	38		sec			sec
-.3a06bf	e9 04 00	sbc #$0004		sbc	#4
-.3a06c2	85 66		sta $66			sta	SP
+					            ; screen output
+.3a06bb	a6 66		ldx $66		screen      ldx  SP
+.3a06bd	8a		txa		            txa
+.3a06be	38		sec		            sec
+.3a06bf	e9 04 00	sbc #$0004	            sbc  #4
+.3a06c2	85 66		sta $66		            sta  SP
 
-						; SP is new but X point to previous element
-.3a06c4	bd 04 00	lda $010004,x		lda	#TOSl,b,x
+					            ; SP is new but X point to previous element
+.3a06c4	bd 04 00	lda $010004,x	            lda  #TOSl,b,x
 .3a06c7	29 ff 00	and #$00ff	            and  #$00ff
 .3a06ca	c9 0a 00	cmp #$000a	            cmp  #$0a
 .3a06cd	d0 03		bne $3a06d2	            bne  +
 .3a06cf	a9 0d 00	lda #$000d	            lda  #$0d
 .3a06d2	ea		nop		+           nop
 					            ;wdm  #TRACE_OFF
-.3a06d3	22 18 10 00	jsl $001018		jsl	C256_PUTC
+.3a06d3	22 18 10 00	jsl $001018	            jsl  C256_PUTC
 					            ;wdm  #TRACE_ON
 .3a06d7	c2 30		rep #$30	                REP #$30        ; set A&X long
 					                .al
 					                .xl
-.3a06d9	60		rts			rts
+.3a06d9	60		rts		            rts
 
 
 					            .warn "Code size: ", repr(* - main)
@@ -1731,8 +1731,8 @@
 					; ./bin/retro-extend barebones.image interface/barebones.forth
 					;
 
->3a081b	01 07 00 00 07 25 00 00		IMAGE_SRC   .binary "barebones.image"
->3a0823	5c 24 00 00 19 25 00 00 75 15 03 00 00 00 00 00
+>3a081b	01 07 00 00 10 25 00 00		IMAGE_SRC   .binary "barebones.image"
+>3a0823	5c 24 00 00 1e 25 00 00 75 15 03 00 00 00 00 00
 >3a0833	0a 00 00 00 01 00 00 00 0a 00 00 00 02 00 00 00
 >3a0843	0a 00 00 00 03 00 00 00 0a 00 00 00 04 00 00 00
 >3a0853	0a 00 00 00 05 00 00 00 0a 00 00 00 06 00 00 00
@@ -4068,46 +4068,48 @@
 >3a99f3	7b 24 00 00 01 00 00 00 0d 00 00 00 0b 00 00 00
 >3a9a03	0a 00 00 00 01 00 00 00 77 24 00 00 01 07 00 00
 >3a9a13	83 24 00 00 01 00 00 00 0a 00 00 00 0b 00 00 00
->3a9a23	0a 00 00 00 01 00 00 00 7f 24 00 00 01 08 00 00
->3a9a33	4a 08 00 00 16 00 00 00 0a 00 00 00 6d 24 00 00
->3a9a43	93 24 00 00 92 00 00 00 76 00 00 00 61 00 00 00
->3a9a53	6c 00 00 00 69 00 00 00 64 00 00 00 3f 00 00 00
->3a9a63	00 00 00 00 02 00 00 00 01 08 00 00 51 00 00 00
->3a9a73	01 08 00 00 ef 09 00 00 0a 00 00 00 89 24 00 00
->3a9a83	a5 24 00 00 92 00 00 00 63 00 00 00 68 00 00 00
->3a9a93	65 00 00 00 63 00 00 00 6b 00 00 00 2d 00 00 00
->3a9aa3	62 00 00 00 73 00 00 00 00 00 00 00 02 00 00 00
->3a9ab3	01 07 00 00 ac 24 00 00 01 00 00 00 08 00 00 00
->3a9ac3	0b 00 00 00 0a 00 00 00 01 00 00 00 a8 24 00 00
->3a9ad3	01 07 00 00 b4 24 00 00 01 00 00 00 7f 00 00 00
->3a9ae3	0b 00 00 00 0a 00 00 00 01 00 00 00 b0 24 00 00
->3a9af3	01 08 00 00 4a 08 00 00 16 00 00 00 01 07 00 00
->3a9b03	c1 24 00 00 01 08 00 00 20 0d 00 00 01 08 00 00
->3a9b13	20 0d 00 00 03 03 00 00 0a 00 00 00 01 00 00 00
->3a9b23	bb 24 00 00 09 00 00 00 0a 00 00 00 99 24 00 00
->3a9b33	ce 24 00 00 92 00 00 00 63 00 00 00 3a 00 00 00
->3a9b43	67 00 00 00 65 00 00 00 74 00 00 00 00 00 00 00
->3a9b53	01 1d 00 00 01 00 00 00 0a 00 00 00 c5 24 00 00
->3a9b63	da 24 00 00 92 00 00 00 73 00 00 00 3a 00 00 00
->3a9b73	67 00 00 00 65 00 00 00 74 00 00 00 00 00 00 00
->3a9b83	01 07 00 00 f8 24 00 00 01 00 00 00 01 04 00 00
->3a9b93	01 08 00 00 64 0d 00 00 01 07 00 00 ef 24 00 00
->3a9ba3	01 08 00 00 ce 24 00 00 02 00 00 00 02 00 00 00
->3a9bb3	01 08 00 00 ee 23 00 00 01 08 00 00 08 0d 00 00
->3a9bc3	01 08 00 00 a5 24 00 00 01 08 00 00 75 24 00 00
->3a9bd3	0a 00 00 00 01 00 00 00 e2 24 00 00 01 08 00 00
->3a9be3	ca 08 00 00 01 08 00 00 e6 0c 00 00 01 08 00 00
->3a9bf3	8c 0e 00 00 0a 00 00 00 01 00 00 00 dc 24 00 00
->3a9c03	01 08 00 00 7c 0d 00 00 0a 00 00 00 d1 24 00 00
->3a9c13	07 25 00 00 92 00 00 00 6c 00 00 00 69 00 00 00
->3a9c23	73 00 00 00 74 00 00 00 65 00 00 00 6e 00 00 00
->3a9c33	00 00 00 00 01 00 00 00 3e 00 00 00 01 08 00 00
->3a9c43	ee 23 00 00 01 08 00 00 da 24 00 00 01 08 00 00
->3a9c53	93 24 00 00 01 00 00 00 71 01 00 00 01 00 00 00
->3a9c63	0b 00 00 00 01 08 00 00 40 00 00 00 01 00 00 00
->3a9c73	07 25 00 00 07 00 00 00 0a 00 00 00 00 00 00 00
-=$03a9c83				IMAGE_END   = *
-=37992					IMAGE_SIZE  = IMAGE_END - IMAGE_SRC
+>3a9a23	0a 00 00 00 01 00 00 00 7f 24 00 00 01 07 00 00
+>3a9a33	8b 24 00 00 01 00 00 00 20 00 00 00 0b 00 00 00
+>3a9a43	0a 00 00 00 01 00 00 00 87 24 00 00 01 08 00 00
+>3a9a53	6f 08 00 00 16 00 00 00 16 00 00 00 0a 00 00 00
+>3a9a63	6d 24 00 00 9c 24 00 00 92 00 00 00 76 00 00 00
+>3a9a73	61 00 00 00 6c 00 00 00 69 00 00 00 64 00 00 00
+>3a9a83	3f 00 00 00 00 00 00 00 02 00 00 00 01 08 00 00
+>3a9a93	51 00 00 00 01 08 00 00 ef 09 00 00 0a 00 00 00
+>3a9aa3	92 24 00 00 ae 24 00 00 92 00 00 00 63 00 00 00
+>3a9ab3	68 00 00 00 65 00 00 00 63 00 00 00 6b 00 00 00
+>3a9ac3	2d 00 00 00 62 00 00 00 73 00 00 00 00 00 00 00
+>3a9ad3	02 00 00 00 01 07 00 00 b5 24 00 00 01 00 00 00
+>3a9ae3	08 00 00 00 0b 00 00 00 0a 00 00 00 01 00 00 00
+>3a9af3	b1 24 00 00 01 07 00 00 bd 24 00 00 01 00 00 00
+>3a9b03	7f 00 00 00 0b 00 00 00 0a 00 00 00 01 00 00 00
+>3a9b13	b9 24 00 00 01 08 00 00 4a 08 00 00 16 00 00 00
+>3a9b23	01 07 00 00 ca 24 00 00 01 08 00 00 20 0d 00 00
+>3a9b33	01 08 00 00 20 0d 00 00 03 03 00 00 0a 00 00 00
+>3a9b43	01 00 00 00 c4 24 00 00 09 00 00 00 0a 00 00 00
+>3a9b53	a2 24 00 00 d7 24 00 00 92 00 00 00 63 00 00 00
+>3a9b63	3a 00 00 00 67 00 00 00 65 00 00 00 74 00 00 00
+>3a9b73	00 00 00 00 01 1d 00 00 01 00 00 00 0a 00 00 00
+>3a9b83	ce 24 00 00 e3 24 00 00 92 00 00 00 73 00 00 00
+>3a9b93	3a 00 00 00 67 00 00 00 65 00 00 00 74 00 00 00
+>3a9ba3	00 00 00 00 01 07 00 00 01 25 00 00 01 00 00 00
+>3a9bb3	01 04 00 00 01 08 00 00 64 0d 00 00 01 07 00 00
+>3a9bc3	f8 24 00 00 01 08 00 00 d7 24 00 00 02 00 00 00
+>3a9bd3	02 00 00 00 01 08 00 00 ee 23 00 00 01 08 00 00
+>3a9be3	08 0d 00 00 01 08 00 00 ae 24 00 00 01 08 00 00
+>3a9bf3	75 24 00 00 0a 00 00 00 01 00 00 00 eb 24 00 00
+>3a9c03	01 08 00 00 ca 08 00 00 01 08 00 00 e6 0c 00 00
+>3a9c13	01 08 00 00 8c 0e 00 00 0a 00 00 00 01 00 00 00
+>3a9c23	e5 24 00 00 01 08 00 00 7c 0d 00 00 0a 00 00 00
+>3a9c33	da 24 00 00 10 25 00 00 92 00 00 00 6c 00 00 00
+>3a9c43	69 00 00 00 73 00 00 00 74 00 00 00 65 00 00 00
+>3a9c53	6e 00 00 00 00 00 00 00 01 08 00 00 e3 24 00 00
+>3a9c63	01 08 00 00 9c 24 00 00 01 00 00 00 71 01 00 00
+>3a9c73	01 00 00 00 0b 00 00 00 01 08 00 00 40 00 00 00
+>3a9c83	01 00 00 00 10 25 00 00 07 00 00 00 0a 00 00 00
+>3a9c93	00 00 00 00
+=$03a9c97				IMAGE_END   = *
+=38012					IMAGE_SIZE  = IMAGE_END - IMAGE_SRC
 
 					; eof
 

@@ -172,7 +172,7 @@ main0       .setaxl
             jsr  prints
 
             jsr  prepare_vm
-	jsr  execute
+            jsr  execute
 
             .sdb `msg_end
             ldx  #<>msg_end
@@ -252,23 +252,23 @@ copy0       lda  IMAGE_SRC,x
 ; ## main execute loop
 execute
             .setaxl
-	lda	#CELL_SIZE
-	sta	RP
+            lda  #CELL_SIZE
+            sta  RP
             stz  SP
-	stz	IP
+            stz  IP
             jsr  update_ipptr
 
-execute0    jsr	process_bundle
+execute0    jsr  process_bundle
             wdm  #4              ; debugging - op count
-	lda	RP
-	beq	quit
+            lda  RP
+            beq  quit
 
             jsr  next_ipptr
             inc  IP
             lda  IP
-	cmp	#CELL_MAX       ; NGA exit condition
-	bcc 	execute0
-quit	rts
+            cmp  #CELL_MAX       ; NGA exit condition
+            bcc                  execute0
+quit        rts
 
 ; ### process 4 commands in bundle
 process_bundle
@@ -280,63 +280,63 @@ process_bundle
 
             and   #$ff
             beq   +              ; skip .. (nop)
-	asl   a
-	tax
-	jsr   (#<>op_table,k,x)
+            asl   a
+            tax
+            jsr   (#<>op_table,k,x)
 
 +           lda   CMD+1
             and   #$ff
             beq   +              ; skip .. (nop)
             asl   a
             tax
-	jsr   (#<>op_table,k,x)
+            jsr   (#<>op_table,k,x)
 
 +           lda   CMD+2
             and   #$ff
             beq   +              ; skip .. (nop)
             asl   a
             tax
-	jsr   (#<>op_table,k,x)
+            jsr   (#<>op_table,k,x)
 
 +           lda   CMD+3
             and   #$ff
             beq   +              ; bne/rts for -1 cycle
             asl   a
             tax
-	jsr   (#<>op_table,k,x)
-+	rts
+            jsr   (#<>op_table,k,x)
++           rts
 
 op_table
-	.addr inst_no
-	.addr inst_li
-	.addr inst_du
-	.addr inst_dr
-	.addr inst_sw
-	.addr inst_pu
-	.addr inst_po
-	.addr inst_ju
-	.addr inst_ca
-	.addr inst_cc
-	.addr inst_re
-	.addr inst_eq
-	.addr inst_ne
-	.addr inst_lt
-	.addr inst_gt
-	.addr inst_fe
-	.addr inst_st
-	.addr inst_ad
-	.addr inst_su
-	.addr inst_mu
-	.addr inst_di
-	.addr inst_an
-	.addr inst_or
-	.addr inst_xo
-	.addr inst_sh
-	.addr inst_zr
-	.addr inst_ha
-	.addr inst_ie
-	.addr inst_iq
-	.addr inst_ii
+            .addr inst_no
+            .addr inst_li
+            .addr inst_du
+            .addr inst_dr
+            .addr inst_sw
+            .addr inst_pu
+            .addr inst_po
+            .addr inst_ju
+            .addr inst_ca
+            .addr inst_cc
+            .addr inst_re
+            .addr inst_eq
+            .addr inst_ne
+            .addr inst_lt
+            .addr inst_gt
+            .addr inst_fe
+            .addr inst_st
+            .addr inst_ad
+            .addr inst_su
+            .addr inst_mu
+            .addr inst_di
+            .addr inst_an
+            .addr inst_or
+            .addr inst_xo
+            .addr inst_sh
+            .addr inst_zr
+            .addr inst_ha
+            .addr inst_ie
+            .addr inst_iq
+            .addr inst_ii
 
 ;----------------------------------------------------------
 ; ## tooling routines
@@ -943,8 +943,8 @@ inst_bad                          ; XXX - message to interpreter
 ; XXX - no checks now
 
 inst_st
-	ldx	SP
-	lda	#TOSl,b,x	; XXX only low word in use
+            ldx  SP
+            lda  #TOSl,b,x       ; XXX only low word in use
 
             sta  TMP
             stz  TMP+2
@@ -959,14 +959,14 @@ inst_st
             adc  #`IMAGE_ADDR
             sta  TMP+2
 
-	lda	#NOSl,b,x
+            lda  #NOSl,b,x
             sta  [TMP]
             ldy  #2
-	lda	#NOSh,b,x
+            lda  #NOSh,b,x
             sta  [TMP],y
 
-	jsr	inst_dr
-	jmp	inst_dr
+            jsr  inst_dr
+            jmp  inst_dr
 
 ; ---------------------------------------------------------
 ; ## ad (17) stack: xy-n  |   -    addition
@@ -977,15 +977,15 @@ inst_st
 ; }
 
 inst_ad
-	ldx	SP
-	clc
-	lda   #NOSl,b,x
-	adc	#TOSl,b,x
-	sta	#NOSl,b,x
-	lda	#NOSh,b,x
-	adc	#TOSh,b,x
-	sta	#NOSh,b,x
-	jmp	inst_dr
+            ldx  SP
+            clc
+            lda   #NOSl,b,x
+            adc  #TOSl,b,x
+            sta  #NOSl,b,x
+            lda  #NOSh,b,x
+            adc  #TOSh,b,x
+            sta  #NOSh,b,x
+            jmp  inst_dr
 
 ; ---------------------------------------------------------
 ; ## su (18) stack: xy-n  |   -    subtraction
@@ -996,15 +996,15 @@ inst_ad
 ; }
 
 inst_su
-	ldx	SP
-	sec
-	lda   #NOSl,b,x
-	sbc	#TOSl,b,x
-	sta	#NOSl,b,x
-	lda	#NOSh,b,x
-	sbc	#TOSh,b,x
-	sta	#NOSh,b,x
-	jmp	inst_dr
+            ldx  SP
+            sec
+            lda   #NOSl,b,x
+            sbc  #TOSl,b,x
+            sta  #NOSl,b,x
+            lda  #NOSh,b,x
+            sbc  #TOSh,b,x
+            sta  #NOSh,b,x
+            jmp  inst_dr
 
 ; ---------------------------------------------------------
 ; ## mu (19) stack: xy-n  |   -    multiplication
@@ -1021,7 +1021,7 @@ inst_su
 N = TMP
 
 inst_mu
-	ldx   SP
+            ldx   SP
             ; only for 1:1 with original nga
             lda   #TOSh,b,x
             pha
@@ -1029,36 +1029,36 @@ inst_mu
             pha
             ; end
 
-	lda   N+2
-	pha
-	lda   N
-	pha
-	lda   #$00
-	sta   N
-	ldy   #32
-	lsr   #TOSh,b,x	; STACKBASE+6,x
-	ror   #TOSl,b,x	; STACKBASE+4,x
-l1:	bcc   l2
-	clc
-	sta   N+2
-	lda   N
-	adc   #NOSl,b,x	; STACKBASE+0,x
-	sta   N
-	lda   N+2
-	adc   #NOSh,b,x	; STACKBASE+2,x
-l2:	ror   a
-	ror   N
-	ror   #TOSh,b,x	; STACKBASE+6,x
-	ror   #TOSl,b,x	; STACKBASE+4,x
-	dey
-	bne   l1
-	sta   #NOSh,b,x	; STACKBASE+2,x
-	lda   N
-	sta   #NOSl,b,x	; STACKBASE+0,x
-	pla
-	sta   N
-	pla
-	sta   N+2
+            lda   N+2
+            pha
+            lda   N
+            pha
+            lda   #$00
+            sta   N
+            ldy   #32
+            lsr   #TOSh,b,x      ; STACKBASE+6,x
+            ror   #TOSl,b,x      ; STACKBASE+4,x
+l1:         bcc   l2
+            clc
+            sta   N+2
+            lda   N
+            adc   #NOSl,b,x      ; STACKBASE+0,x
+            sta   N
+            lda   N+2
+            adc   #NOSh,b,x      ; STACKBASE+2,x
+l2:         ror   a
+            ror   N
+            ror   #TOSh,b,x      ; STACKBASE+6,x
+            ror   #TOSl,b,x      ; STACKBASE+4,x
+            dey
+            bne   l1
+            sta   #NOSh,b,x      ; STACKBASE+2,x
+            lda   N
+            sta   #NOSl,b,x      ; STACKBASE+0,x
+            pla
+            sta   N
+            pla
+            sta   N+2
 
             ; only for 1:1 with original nga - XXX - fix it
             lda   #TOSl,b,x
@@ -1072,7 +1072,7 @@ l2:	ror   a
             sta   #TOSh,b,x
             ; end
 
-	jmp   inst_dr
+            jmp   inst_dr
 
 ; ---------------------------------------------------------
 ; ## di (20) stack: xy-rq |   -    divide & remainder
@@ -1095,7 +1095,7 @@ l2:	ror   a
             .warn "inst_di is unsigned, change it"
 
 inst_di
-	ldx	SP
+            ldx  SP
 
             lda  #TOSl,b,x
             bne  di4
@@ -1111,61 +1111,61 @@ inst_di
             sta  IP
             rts
 
-di4	lda	#NOSl,b,x	; NOS to TMPb via TMP(a)
-	sta  TMP
-	lda	#NOSh,b,x
-	sta	TMP+2
-	bit	TMP+2
-	bpl	di3
+di4         lda  #NOSl,b,x       ; NOS to TMPb via TMP(a)
+            sta  TMP
+            lda  #NOSh,b,x
+            sta  TMP+2
+            bit  TMP+2
+            bpl  di3
 
             inc  TMPd
-	jsr	negate_tmp
-di3	lda	TMP	; NOS from TMP(a) to TMPb
-	sta	TMPb
-	lda	TMP+2
-	sta	TMPb+2
-
-	lda	#TOSl,b,x	; TOS to TMP(a)
-	sta  TMP
-	lda	#TOSh,b,x
-	sta	TMP+2
-	bit	TMP+2
-	bpl	di2
-
-            inc  TMPd
-	jsr	negate_tmp
-di2	stz	#TOSl,b,x       ; prepare result space
-	stz	#TOSh,b,x
-	stz	#NOSl,b,x
-	stz	#NOSh,b,x
-
-di0	lda	TMPb            ; is NOS<TOS?
-	cmp	TMPa
-	lda	TMPb+2
-	sbc	TMPa+2
-	bvc	di1
-	eor  #$80
-di1	bmi	finish	; yes, NOS<TOS
-
-	sec
-	lda	TMPb
-	sbc	TMPa
+            jsr  negate_tmp
+di3         lda  TMP             ; NOS from TMP(a) to TMPb
             sta  TMPb
-	lda	TMPb+2
-	sbc	TMPa+2
+            lda  TMP+2
             sta  TMPb+2
 
-	; increase result
-	inc  #TOSl,b,x
-	bne  di0	; overflow means high+=1
-	inc	#TOSh,b,x
-	bra  di0
+            lda  #TOSl,b,x       ; TOS to TMP(a)
+            sta  TMP
+            lda  #TOSh,b,x
+            sta  TMP+2
+            bit  TMP+2
+            bpl  di2
 
-finish	lda	TMPb	; remainder
-	sta	#NOSl,b,x
-	lda	TMPb+2
-	sta	#NOSh,b,x
-	rts
+            inc  TMPd
+            jsr  negate_tmp
+di2         stz  #TOSl,b,x       ; prepare result space
+            stz  #TOSh,b,x
+            stz  #NOSl,b,x
+            stz  #NOSh,b,x
+
+di0         lda  TMPb            ; is NOS<TOS?
+            cmp  TMPa
+            lda  TMPb+2
+            sbc  TMPa+2
+            bvc  di1
+            eor  #$80
+di1         bmi  finish          ; yes, NOS<TOS
+
+            sec
+            lda  TMPb
+            sbc  TMPa
+            sta  TMPb
+            lda  TMPb+2
+            sbc  TMPa+2
+            sta  TMPb+2
+
+            ; increase result
+            inc  #TOSl,b,x
+            bne  di0             ; overflow means high+=1
+            inc  #TOSh,b,x
+            bra  di0
+
+finish      lda  TMPb            ; remainder
+            sta  #NOSl,b,x
+            lda  TMPb+2
+            sta  #NOSh,b,x
+            rts
 
             ; additional routines for shifting ------------
 negate_tmp
@@ -1195,17 +1195,17 @@ invert_tmp
 ; }
 
 inst_an
-	ldx	SP
+            ldx  SP
 
-	lda   #NOSl,b,x
-	and   #TOSl,b,x
-	sta	#NOSl,b,x
+            lda   #NOSl,b,x
+            and   #TOSl,b,x
+            sta  #NOSl,b,x
 
-	lda   #NOSh,b,x
-	and   #TOSh,b,x
-	sta	#NOSh,b,x
+            lda   #NOSh,b,x
+            and   #TOSh,b,x
+            sta  #NOSh,b,x
 
-	jmp	inst_dr
+            jmp  inst_dr
 
 ; ---------------------------------------------------------
 ; ## or (22) stack: xy-n  |   -    bitwise or
@@ -1216,17 +1216,17 @@ inst_an
 ; }
 
 inst_or
-	ldx	SP
+            ldx  SP
 
-	lda   #NOSl,b,x
-	ora   #TOSl,b,x
-	sta	#NOSl,b,x
+            lda   #NOSl,b,x
+            ora   #TOSl,b,x
+            sta  #NOSl,b,x
 
-	lda   #NOSh,b,x
-	ora   #TOSh,b,x
-	sta	#NOSh,b,x
+            lda   #NOSh,b,x
+            ora   #TOSh,b,x
+            sta  #NOSh,b,x
 
-	jmp	inst_dr
+            jmp  inst_dr
 
 ; ---------------------------------------------------------
 ; ## xo (23) stack: xy-n  |   -    bitwise xor
@@ -1237,17 +1237,17 @@ inst_or
 ; }
 
 inst_xo
-	ldx	SP
+            ldx  SP
 
-	lda   #NOSl,b,x
-	eor   #TOSl,b,x
-	sta	#NOSl,b,x
+            lda   #NOSl,b,x
+            eor   #TOSl,b,x
+            sta  #NOSl,b,x
 
-	lda   #NOSh,b,x
-	eor   #TOSh,b,x
-	sta	#NOSh,b,x
+            lda   #NOSh,b,x
+            eor   #TOSh,b,x
+            sta  #NOSh,b,x
 
-	jmp	inst_dr
+            jmp  inst_dr
 
 ; ---------------------------------------------------------
 ; ## sh (24) stack: xy-n  |   -    shift
@@ -1278,69 +1278,69 @@ inst_xo
 ;
 
 inst_sh
-	ldx	SP
+            ldx  SP
 
-	; check if shift count is positive or negative
-	bit	#TOSh,b,x
-	bpl	shr_main	; shift to right
+            ; check if shift count is positive or negative
+            bit  #TOSh,b,x
+            bpl  shr_main        ; shift to right
 
-	; we shifting left, so we need to negate arg
-	jsr	negate_tos
+            ; we shifting left, so we need to negate arg
+            jsr  negate_tos
 
-	lda   #TOSl,b,x
-	and   #63	; we need only low 6 bits
-	bne   +	; do something if > 0
-	jmp	inst_dr
-+	tay
+            lda   #TOSl,b,x
+            and   #63            ; we need only low 6 bits
+            bne   +              ; do something if > 0
+            jmp  inst_dr
++           tay
 
-	; shifting left is the same for neg and pos vals
-shl_main	asl	#NOSl,b,x
-	rol   #NOSh,b,x
-	dey
-	bne   shl_main
-	jmp	inst_dr
+            ; shifting left is the same for neg and pos vals
+shl_main    asl  #NOSl,b,x
+            rol   #NOSh,b,x
+            dey
+            bne   shl_main
+            jmp  inst_dr
 
 
-	; shift right ---------------------------------
-shr_main	lda   #TOSl,b,x
-	and   #63	; we need only low 6 bits
-	bne   +	; do something if > 0
-	jmp	inst_dr
-+	tay
+            ; shift right ---------------------------------
+shr_main    lda   #TOSl,b,x
+            and   #63            ; we need only low 6 bits
+            bne   +              ; do something if > 0
+            jmp  inst_dr
++           tay
 
-	; did we shifting negative or positive value?
-	bit	#NOSh,b,x
-	bmi	shr_neg
+            ; did we shifting negative or positive value?
+            bit  #NOSh,b,x
+            bmi  shr_neg
 
-shr_pos	lsr   #NOSh,b,x
-	ror	#NOSl,b,x
-	dey
-	bne   shr_pos
-	jmp	inst_dr
+shr_pos     lsr   #NOSh,b,x
+            ror  #NOSl,b,x
+            dey
+            bne   shr_pos
+            jmp  inst_dr
 
-shr_neg	clc
-	ror   #NOSh,b,x
-	ror	#NOSl,b,x
-	dey
-	bne   shr_neg
-	jmp	inst_dr
+shr_neg     clc
+            ror   #NOSh,b,x
+            ror  #NOSl,b,x
+            dey
+            bne   shr_neg
+            jmp  inst_dr
 
-	; additional routines for shifting ------------
+            ; additional routines for shifting ------------
 negate_tos nop
-	jsr   invert_tos
-	inc   #TOSl,b,x       ; STACKBASE+0,x
-	bne   +
-	inc   #TOSh,b,x       ; STACKBASE+2,x
-+	rts
+            jsr   invert_tos
+            inc   #TOSl,b,x       ; STACKBASE+0,x
+            bne   +
+            inc   #TOSh,b,x       ; STACKBASE+2,x
++           rts
 
 invert_tos
-	lda   #TOSl,b,x	; STACKBASE+0,x
-	eor   #$FFFF
-	sta   #TOSl,b,x	; STACKBASE+0,x
-	lda   #TOSh,b,x       ; STACKBASE+2,x
-	eor   #$FFFF
-	sta   #TOSh,b,x       ; STACKBASE+2,x
-	rts
+            lda   #TOSl,b,x      ; STACKBASE+0,x
+            eor   #$FFFF
+            sta   #TOSl,b,x      ; STACKBASE+0,x
+            lda   #TOSh,b,x       ; STACKBASE+2,x
+            eor   #$FFFF
+            sta   #TOSh,b,x       ; STACKBASE+2,x
+            rts
 
 ; ---------------------------------------------------------
 ; ## zr (25) stack:  n-?  |   -    zero return
@@ -1357,16 +1357,16 @@ invert_tos
 ; }
 
 inst_zr
-	ldx	SP
-	lda	#TOSl,b,x
-	bne	zr_quit
-            lda	#TOSh,b,x
-	bne	zr_quit
+            ldx  SP
+            lda  #TOSl,b,x
+            bne  zr_quit
+            lda  #TOSh,b,x
+            bne  zr_quit
 
-do_zr	jsr	inst_dr
-	ldy	RP
-	lda	#TRSl,b,y
-	sta	IP
+do_zr       jsr  inst_dr
+            ldy  RP
+            lda  #TRSl,b,y
+            sta  IP
             jsr  update_ipptr
 
             tya
@@ -1379,24 +1379,24 @@ zr_quit     rts
 ; ## ha (26) stack:   -   |   -    halt
 
 inst_ha
-	lda	#CELL_MAX-1     ; XXX - change it
-	sta	IP
-	rts
+            lda  #CELL_MAX-1     ; XXX - change it
+            sta  IP
+            rts
 
 ; ---------------------------------------------------------
 ; ## ie (27) stack:   -n  |   -    i/o enumerate
 
 inst_ie
-	lda	SP
-	clc
-	adc	#CELL_SIZE      ; 4 bytes
-	sta	SP
-	tax
+            lda  SP
+            clc
+            adc  #CELL_SIZE      ; 4 bytes
+            sta  SP
+            tax
 
-	lda	#NUM_DEVICES
-	sta	#TOSl,b,x
-	stz	#TOSh,b,x
-	rts
+            lda  #NUM_DEVICES
+            sta  #TOSl,b,x
+            stz  #TOSh,b,x
+            rts
 
 ; ---------------------------------------------------------
 ; ## iq (28) stack:  n-xy |   -    i/o query
@@ -1408,11 +1408,11 @@ inst_ie
 ; }
 
 inst_iq
-	ldx	SP
-	lda	#TOSl,b,x
-	pha
-	jsr	inst_dr
-	jmp	io_query
+            ldx  SP
+            lda  #TOSl,b,x
+            pha
+            jsr  inst_dr
+            jmp  io_query
 
 
 ; ## ii (29) stack: ...n- |   -    i/o invoke
@@ -1430,11 +1430,11 @@ inst_iq
 
 
 inst_ii
-	ldx	SP
-	lda	#TOSl,b,x
-	pha
-	jsr	inst_dr
-	jmp	io_handle
+            ldx  SP
+            lda  #TOSl,b,x
+            pha
+            jsr  inst_dr
+            jmp  io_handle
 
 ; ---------------------------------------------------------
 ; device support
@@ -1442,95 +1442,95 @@ inst_ii
 
 ; number of device on stack
 io_query
-	; numbers are counted from 0, so val should be
-	; lower than number of devices
-	ply
-	cpy	#NUM_DEVICES
-	bcc  query
+            ; numbers are counted from 0, so val should be
+            ; lower than number of devices
+            ply
+            cpy  #NUM_DEVICES
+            bcc  query
 
             lda  #CELL_MAX-1
             sta  IP
-	;wdm  #KILL		; effective error
+            ;wdm  #KILL                          ; effective error
 
-query	lda	SP
-	clc
-	adc	#4
-	sta	SP
-	tax
+query       lda  SP
+            clc
+            adc  #4
+            sta  SP
+            tax
 
-	tya
-	sta	#TOSl,b,x	; device number
-	stz	#TOSh,b,x
+            tya
+            sta  #TOSl,b,x       ; device number
+            stz  #TOSh,b,x
 
-	bne	is_key
-is_output	jmp	version0	; output ver0
+            bne  is_key
+is_output   jmp  version0        ; output ver0
 
-is_key	cmp   #1
-	bne	unknown
-	jmp	version0	; keyboard ver0
+is_key      cmp   #1
+            bne  unknown
+            jmp  version0        ; keyboard ver0
 
-unknown	jsr	inst_dr	; drop already put dev no
-	rts		; never reachable
+unknown     jsr  inst_dr         ; drop already put dev no
+            rts                  ; never reachable
 
-version0	stz	#NOSl,b,x
-	stz	#NOSh,b,x
-	rts
+version0    stz  #NOSl,b,x
+            stz  #NOSh,b,x
+            rts
 
 
 ; ---------------------------------------------------------
 ; number of device on stack
 io_handle
-	; numbers are counted from 0, so val should be
-	; lower than number of devices
-	ply
-	cpy	#NUM_DEVICES
-	bcc  interact
+            ; numbers are counted from 0, so val should be
+            ; lower than number of devices
+            ply
+            cpy  #NUM_DEVICES
+            bcc  interact
             lda  #CELL_MAX-1
             sta  IP
             ;wdm  #KILL            ; stop - error
 
-interact	cpy  #0
-            beq	screen	; crude, but should work
+interact    cpy  #0
+            beq  screen          ; crude, but should work
 
-	; keyboard input
-	lda	SP
-	clc
-	adc	#4
-	sta	SP
-	tax
+            ; keyboard input
+            lda  SP
+            clc
+            adc  #4
+            sta  SP
+            tax
 
             ;wdm   #TRACE_OFF
-	jsl   C256_GETCHW	; all regs preserved here
+            jsl   C256_GETCHW    ; all regs preserved here
             ;wdm   #TRACE_ON
-	.setaxl	; redundant
-	and   #$00ff          ; only byte lower is needed
+            .setaxl              ; redundant
+            and   #$00ff          ; only byte lower is needed
             cmp   #$0d            ; change 0d to 0a
             bne   +
             lda   #$0a
 +           nop
-	sta	#TOSl,b,x
-	stz	#TOSh,b,x
-	rts
+            sta  #TOSl,b,x
+            stz  #TOSh,b,x
+            rts
 
-	; screen output
-screen	ldx	SP
-	txa
-	sec
-	sbc	#4
-	sta	SP
+            ; screen output
+screen      ldx  SP
+            txa
+            sec
+            sbc  #4
+            sta  SP
 
-	; SP is new but X point to previous element
-	lda	#TOSl,b,x
+            ; SP is new but X point to previous element
+            lda  #TOSl,b,x
             and  #$00ff
             cmp  #$0a
             bne  +
             lda  #$0d
 +           nop
             ;wdm  #TRACE_OFF
-	jsl	C256_PUTC
+            jsl  C256_PUTC
             ;wdm  #TRACE_ON
-	.setaxl	; redundant
-	rts
+            .setaxl              ; redundant
+            rts
 
 
             .warn "Code size: ", repr(* - main)
