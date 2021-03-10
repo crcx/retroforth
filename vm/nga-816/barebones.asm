@@ -216,6 +216,7 @@ mclean1     stz  $0,b,x
             jsr  prints
 
             .sdb MEM_SEGMENT
+            .setal
             ldx  #STACK_DEPTH-2
 prep0       stz  #DSTACK,b,x
             dex
