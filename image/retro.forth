@@ -705,22 +705,21 @@ null) and other simple structures.
     |                 | execute a quotation that may set a new |
     |                 | buffer. restores the saved pointers    |
     |                 | when done                              |
-    
+
 ~~~
 {{
-  :Start `0 ; data
-  :End   `0 ; data
-  :terminate (-) #0 @End store ;
+  :start `0 ; data
+  :end   `0 ; data
+  :terminate (-) #0 @end store ;
 ---reveal---
-  :buffer:start  (-a) @Start ;
-  :buffer:end    (-a) @End ;
-  :buffer:add    (c-) @End store &End v:inc terminate ;
-  :buffer:get    (-c) &End v:dec @End fetch terminate ;
-  :buffer:empty  (-)  @Start !End terminate ;
-  :buffer:size   (-n) @End @Start - ;
-  :buffer:set    (a-) !Start buffer:empty ;
-  :buffer:preserve (q-)
-    @Start @End [ &call dip !Start ] dip !End ;
+  :buffer:start  (-a) @start ;
+  :buffer:end    (-a) @end ;
+  :buffer:add    (c-) @end store &end v:inc terminate ;
+  :buffer:get    (-c) &end v:dec @end fetch terminate ;
+  :buffer:empty  (-)  @start !end terminate ;
+  :buffer:size   (-n) @end @start - ;
+  :buffer:set    (a-) !start buffer:empty ;
+  :buffer:preserve (q-) @start @end [ &call dip !start ] dip !end ;
 }}
 ~~~
 
