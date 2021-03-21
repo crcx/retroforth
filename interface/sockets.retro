@@ -11,7 +11,7 @@ that it is fairly low level.
   :identify
      @Sockets n:zero? 0; drop
      #7 io:scan-for dup n:negative?
-     [ drop 'IO_DEVICE_TYPE_0004_NOT_FOUND s:put nl ]
+     [ drop 'IO_DEVICE_TYPE_0007_NOT_FOUND s:put nl ]
      [ !Sockets ] choose ;
   ---reveal---
   :socket:operation identify @Sockets io:invoke ;

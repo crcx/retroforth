@@ -29,6 +29,10 @@
 #define D_OFFSET_CLASS    2
 #define D_OFFSET_NAME     3
 
+#ifdef ENABLE_SOCKETS
+#define NUM_DEVICES      10
+#else
 #define NUM_DEVICES       9       /* Set the number of I/O devices     */
+#endif
 
 #define MAX_OPEN_FILES   32

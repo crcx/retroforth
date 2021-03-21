@@ -29,6 +29,7 @@ void io_random();
 void io_random_query();
 
 void io_socket();
+void query_socket();
 
 CELL load_image();
 void prepare_vm();

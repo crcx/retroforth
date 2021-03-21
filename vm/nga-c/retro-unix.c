@@ -82,6 +82,9 @@ Handler IO_deviceHandlers[] = {
   io_scripting_handler,
   io_random,
   io_image,
+#ifdef ENABLE_SOCKETS
+  io_socket,
+#endif
 };
 
 Handler IO_queryHandlers[] = {
@@ -94,6 +97,9 @@ Handler IO_queryHandlers[] = {
   io_scripting_query,
   io_random_query,
   io_image_query,
+#ifdef ENABLE_SOCKETS
+  query_socket,
+#endif
 };
 
 
@@ -131,7 +137,9 @@ int perform_abort;
 #include "dev-unix.c"
 #include "dev-clock.c"
 #include "dev-rng.c"
-
+#ifdef ENABLE_SOCKETS
+#include "dev-sockets.c"
+#endif
 
 /*---------------------------------------------------------------------
   Now on to I/O and extensions!
