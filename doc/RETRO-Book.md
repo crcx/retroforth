@@ -132,6 +132,13 @@ E.g.:
 
     make LDFLAGS=-lnetwork
 
+### Unix
+
+On Unix, you can optionally enable the sockets device (and thus the socket
+words) by building with `-DENABLE_SOCKETS`.
+
+    make OPTIONS="-DENABLE_SOCKETS"
+
 ## Issues
 
 If you run into any build issues, please send details to
@@ -2463,16 +2470,16 @@ To close a socket, pass the socket handle to `socket:close`.
 
 # Unix Scripting
 
-RETRO on Unix hosts is designed to play well with scripting. 
+RETRO on Unix hosts is designed to play well with scripting.
 
-## Shebang
+Shebang
 
-To run an entire program directly, start the file with the
-standard shebang and make the file executable:
+To run an entire program directly, start the file with the standard
+shebang and make the file executable:
 
     #!/usr/bin/env retro
 
-This requires the `retro` binary to be in your path.
+This requires the retro binary to be in your path.
 
 ## Arguments
 
@@ -2480,14 +2487,13 @@ RETRO provides several words in the `script:` namespace for accessing
 command line arguments.
 
 The number of arguments can be accessed via `script:arguments`. This
-will return a number with the arguments, other than the script
-name.
+will return a number with the arguments, other than the script name.
 
     script:arguments '%n_arguments_passed\n s:format s:put
 
 To retreive an argument, pass the argument number to `script:get-argument`:
 
-    script:arguments [ I script:get-argument s:put nl ] indexed-times 
+    script:arguments [ I script:get-argument s:put nl ] indexed-times
 
 And to get the name of the script, use `script:name`.
 
@@ -2495,10 +2501,10 @@ And to get the name of the script, use `script:name`.
 
 ## Mixing
 
-With use of the Unu literate format, it's possible to mix both
-shell and RETRO code into a single script. As an example, this
-is a bit of shell that runs itself via retro for each .retro
-file in the current directory tree:
+With use of the Unu literate format, it's possible to mix both shell
+and RETRO code into a single script. As an example, this is a bit of
+shell that runs itself via retro for each .retro file in the current
+directory tree:
 
     #!/bin/sh
 
@@ -4242,14 +4248,14 @@ http://pestilenz.org/~ckeen/blog/posts/ciy-manifesto.html
 
 # Deprecation Policy
 
-As RETRO evolves, some words will become obsolete and no longer
-be needed. In each release, these will be marked as deprecated
-in the glossary. Any deprecated words will be removed in the
-next quarterly release.
+As RETRO evolves, some words will become obsolete and no longer be
+needed. In each release, these will be marked as deprecated in the
+glossary. Any deprecated words will be removed in the next quarterly
+release.
 
-E.g., if 2020.1 had deprecated words, these would be removed in
-the 2020.4 release. Any words made deprecated in between 2020.1
-and 2020.4 would be removed in the 2020.7 release.
+E.g., if 2020.1 had deprecated words, these would be removed in the
+020.4 release. Any words made deprecated in between 2020.1 and
+2020.4 would be removed in the 2020.7 release.
 
 The text in these files is Copyright (c) 2018-2020 by
 Charles Childers.

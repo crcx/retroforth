@@ -56,6 +56,13 @@ E.g.:
 
     make LDFLAGS=-lnetwork
 
+### Unix
+
+On Unix, you can optionally enable the sockets device (and thus the socket
+words) by building with `-DENABLE_SOCKETS`.
+
+    make OPTIONS="-DENABLE_SOCKETS"
+
 ## Issues
 
 If you run into any build issues, please send details to

@@ -45,16 +45,16 @@
 </head><body>
 <p><span class="h1">Unix Scripting</span>
 <br/><br/>
-RETRO on Unix hosts is designed to play well with scripting. 
+RETRO on Unix hosts is designed to play well with scripting.
 <br/><br/>
-<span class="h2">Shebang</span>
+Shebang
 <br/><br/>
-To run an entire program directly, start the file with the
-standard shebang and make the file executable:
+To run an entire program directly, start the file with the standard
+shebang and make the file executable:
 <br/><br/>
 <tt class='indentedcode'>#!/usr/bin/env&nbsp;retro</tt>
 <br/><br/>
-This requires the <span class="tt">retro</span> binary to be in your path.
+This requires the retro binary to be in your path.
 <br/><br/>
 <span class="h2">Arguments</span>
 <br/><br/>
@@ -62,14 +62,13 @@ RETRO provides several words in the <span class="tt">script:</span> namespace fo
 command line arguments.
 <br/><br/>
 The number of arguments can be accessed via <span class="tt">script:arguments</span>. This
-will return a number with the arguments, other than the script
-name.
+will return a number with the arguments, other than the script name.
 <br/><br/>
 <tt class='indentedcode'>script:arguments&nbsp;'%n_arguments_passed\n&nbsp;s:format&nbsp;s:put</tt>
 <br/><br/>
 To retreive an argument, pass the argument number to <span class="tt">script:get-argument</span>:
 <br/><br/>
-<tt class='indentedcode'>script:arguments&nbsp;[&nbsp;I&nbsp;script:get-argument&nbsp;s:put&nbsp;nl&nbsp;]&nbsp;indexed-times&nbsp;</tt>
+<tt class='indentedcode'>script:arguments&nbsp;[&nbsp;I&nbsp;script:get-argument&nbsp;s:put&nbsp;nl&nbsp;]&nbsp;indexed-times</tt>
 <br/><br/>
 And to get the name of the script, use <span class="tt">script:name</span>.
 <br/><br/>
@@ -77,10 +76,10 @@ And to get the name of the script, use <span class="tt">script:name</span>.
 <br/><br/>
 <span class="h2">Mixing</span>
 <br/><br/>
-With use of the Unu literate format, it's possible to mix both
-shell and RETRO code into a single script. As an example, this
-is a bit of shell that runs itself via retro for each .retro
-file in the current directory tree:
+With use of the Unu literate format, it's possible to mix both shell
+and RETRO code into a single script. As an example, this is a bit of
+shell that runs itself via retro for each .retro file in the current
+directory tree:
 <br/><br/>
 <tt class='indentedcode'>#!/bin/sh</tt>
 <br/><br/>

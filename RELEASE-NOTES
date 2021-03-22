@@ -25,6 +25,7 @@
   - better fix for nested file inclusion handling
   - removed unused variables
   - use a struct for processor state, stacks
+  - sockets interface now optional, disabled by default
 
 - nga-816
 
@@ -41,3 +42,6 @@
 ## Documentation
 
 - epub now has a cover image
+- added back some missing files
+- add note on enabling sockets when building on Unix
+
