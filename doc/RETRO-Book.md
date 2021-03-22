@@ -101,7 +101,7 @@ executable.
 
 ## Executables
 
-In the `bin/` directory:
+In the `bin/` directory, you should see the following:
 
     retro
     retro-unu
@@ -109,6 +109,25 @@ In the `bin/` directory:
     retro-extend
     retro-embedimage
     retro-describe
+
+## Test The Build
+
+You can conduct a quick test of the build by running `bin/retro`:
+
+    ./bin/retro
+
+Exit by typing `bye` and pressing enter.
+
+## Installation
+
+You can install Retro globally on BSD systems (and possibly Linux)
+by doing:
+
+    doas make install
+
+or:
+
+    sudo make install
 
 ## Platform Specific Notes
 
@@ -4254,7 +4273,7 @@ glossary. Any deprecated words will be removed in the next quarterly
 release.
 
 E.g., if 2020.1 had deprecated words, these would be removed in the
-020.4 release. Any words made deprecated in between 2020.1 and
+2020.4 release. Any words made deprecated in between 2020.1 and
 2020.4 would be removed in the 2020.7 release.
 
 The text in these files is Copyright (c) 2018-2020 by

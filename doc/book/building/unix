@@ -25,7 +25,7 @@ executable.
 
 ## Executables
 
-In the `bin/` directory:
+In the `bin/` directory, you should see the following:
 
     retro
     retro-unu
@@ -33,6 +33,25 @@ In the `bin/` directory:
     retro-extend
     retro-embedimage
     retro-describe
+
+## Test The Build
+
+You can conduct a quick test of the build by running `bin/retro`:
+
+    ./bin/retro
+
+Exit by typing `bye` and pressing enter.
+
+## Installation
+
+You can install Retro globally on BSD systems (and possibly Linux)
+by doing:
+
+    doas make install
+
+or:
+
+    sudo make install
 
 ## Platform Specific Notes
 
