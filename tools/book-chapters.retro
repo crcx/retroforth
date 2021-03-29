@@ -49,7 +49,8 @@ This contains the list of files for the chapters in the book.
   { 'The_Stacks                     'techniques/the-stacks }
   { 'The_Nga_Virtual_Machine        'internals/nga }
   { 'Interface_Layers               'internals/interface-layers }
-  { 'I/O                            'internals/io }
+  { 'Basic_I/O                      'internals/io }
+  { 'Detailed_I/O                   'internals/io-devices }
   { 'Image                          'internals/image }
   { 'Historical_Papers              'tech-notes/historical-papers }
   { 'Metacompiling                  'tech-notes/metacompilation }

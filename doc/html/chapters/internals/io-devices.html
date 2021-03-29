@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title>.</title>
+<style type="text/css">
+
+    * { color: #000; background: #fff; max-width: 700px; }
+    tt, pre { background: #dedede; color: #111; font-family: monospace;
+             white-space: pre; display: block; width: 100%; }
+    .indentedcode { margin-left: 2em; margin-right: 2em; }
+    .codeblock {
+      background: #dedede; color: #111; font-family: monospace;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      padding: 7px;
+      display: block;
+    }
+
+    .indentedlist { margin-left: 2em; color: #000; }
+
+    span { white-space: pre; }
+    .text  { color: #000; white-space: pre; background: #dedede; }
+    .colon { color: #000; background: #dedede; }
+    .note  { color: #000; background: #dedede; }
+    .str   { color: #000; text-decoration: underline; background: #dedede; }
+    .num   { color: #000; background: #dedede; font-weight: bold; font-style: italic; }
+    .fnum  { color: #000; font-weight: bold; background: #dedede; }
+    .ptr   { color: #000; font-weight: bold; background: #dedede; }
+    .fetch { color: #000; font-style: italic; background: #dedede; }
+    .store { color: #000; font-style: italic; background: #dedede; }
+    .char  { color: #000; background: #dedede; }
+    .inst  { color: #000; background: #dedede; }
+    .defer { color: #000; background: #dedede; }
+    .imm   { color: #000; font-weight: bold; background: #dedede; }
+    .prim  { color: #000; font-weight: bolder; background: #dedede; }
+
+    .tt    { white-space: pre; font-family: monospace; background: #dedede; }
+
+    .h1, .h2, .h3, .h4 { white-space: normal; }
+    .h1 { font-size: 125%; }
+    .h2 { font-size: 120%; }
+    .h3 { font-size: 115%; }
+    .h4 { font-size: 110%; }
+    .hr { display: block; height: 2px; background: #000000; }
+</style>
+</head><body>
+<p><span class="h1">I/O Devices</span>
+<br/><br/>
+I/O devices on Nga are exposed via three instructions:
+<br/><br/>
+<tt class='indentedcode'>ie&nbsp;&nbsp;enumerate&nbsp;i/o&nbsp;devices</tt>
+<tt class='indentedcode'>iq&nbsp;&nbsp;query&nbsp;i/o&nbsp;device</tt>
+<tt class='indentedcode'>ii&nbsp;&nbsp;invoke&nbsp;i/o&nbsp;interaction</tt>
+<br/><br/>
+All devices are registered with the VM. How this occurs is
+implementation dependent.
+<br/><br/>
+<span class="h2">Counting Devices</span>
+<br/><br/>
+Use the <span class="tt">ie</span> instruction to return the number of attached devices.
+<br/><br/>
+<tt class='indentedcode'>i&nbsp;ie......</tt>
+<br/><br/>
+Upon running, the stack will contain the number of devices. You
+can then query these by passing the device number to <span class="tt">iq</span>.
+<br/><br/>
+<span class="h2">Query Devices</span>
+<br/><br/>
+Use <span class="tt">iq</span> to query an attached device. This will return two values,
+a device identifer and a revision number.
+<br/><br/>
+The device identifier will be the top value on the stack.
+<br/><br/>
+<span class="h2">Invoking a Device</span>
+<br/><br/>
+You can trigger an I/O operation by passing the device number to
+the <span class="tt">ii</span> instruction.
+<br/><br/>
+E.g., to display a character (ASCII code 98 in this case):
+<br/><br/>
+<tt class='indentedcode'>i&nbsp;liliii..</tt>
+<tt class='indentedcode'>d&nbsp;98</tt>
+<tt class='indentedcode'>d&nbsp;0</tt>
+<br/><br/>
+Be sure to pass the device number, not the device identifier.
+<br/><br/>
+<span class="h2">Device Identifiers</span>
+<br/><br/>
+Ultimately device identifiers are implementation-specific, but the
+most common system (Nga on Unix) provides or reserves the following:
+<br/><br/>
+<tt class='indentedcode'>&nbsp;ID&nbsp;&nbsp;|&nbsp;Device&nbsp;Type&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;Notes&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>-----+------------------+----------------------------+</tt>
+<tt class='indentedcode'>0000&nbsp;|&nbsp;Generic&nbsp;Output&nbsp;&nbsp;&nbsp;|&nbsp;Always&nbsp;present&nbsp;as&nbsp;device&nbsp;0&nbsp;|</tt>
+<tt class='indentedcode'>0001&nbsp;|&nbsp;Keyboard&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>0002&nbsp;|&nbsp;Floating&nbsp;Point&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>0003&nbsp;|&nbsp;Block&nbsp;Storage&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;Raw,&nbsp;1024&nbsp;cell&nbsp;blocks&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>0004&nbsp;|&nbsp;Filesystem&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;Unix-style&nbsp;Files&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>0005&nbsp;|&nbsp;Clock&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>0006&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>0007&nbsp;|&nbsp;Network:&nbsp;Sockets&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>0008&nbsp;|&nbsp;Syscalls:&nbsp;Unix&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>0009&nbsp;|&nbsp;Scripting&nbsp;Hooks&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>0010&nbsp;|&nbsp;Random&nbsp;Number&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>1000&nbsp;|&nbsp;Image&nbsp;Saving&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<br/><br/>
+It must be noted here that nothing forces devices to use these
+identifiers, and one must take care to use an Nga implementation
+that provides the devices they need.
+<br/><br/>
+<span class="h2">Device Revisions</span>
+<br/><br/>
+Over time, the functionality a device provides may change. To allow
+detection of this, the query functionality provides a revision number.
+Your code can use this to ensure that the device provided supports
+the level of functionality you need.
+<br/><br/>
+<span class="h2">Nga/Retro-Unix Device Details</span>
+<br/><br/>
+<span class="h3">0000: Generic Output</span>
+<br/><br/>
+Supported by all Nga implementations. This is required to be the
+first device, and is the only one guaranteed to be provided. It
+consumes a value from the stack, writing to to the host-specific
+output. (This does not need to be a screen).
+<br/><br/>
+<span class="h3">0001: Keyboard</span>
+<br/><br/>
+Read and return a keypress.
+<br/><br/>
+Consumes no data, returns a single value representing the
+character that was read.
+<br/><br/>
+No subcommands are defined.
+<br/><br/>
+<span class="h3">0002: Floating Point</span>
+<br/><br/>
+The current revision is 1.
+<br/><br/>
+It currently provides:
+<br/><br/>
+<tt class='indentedcode'>n:to-float&nbsp;&nbsp;(n-_f:-n)</tt>
+<tt class='indentedcode'>s:to-float&nbsp;&nbsp;(s-_f:-n)</tt>
+<tt class='indentedcode'>f:to-number&nbsp;(f:a-__-n)</tt>
+<tt class='indentedcode'>f:to-string&nbsp;(f:n-__-s)</tt>
+<tt class='indentedcode'>f:+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(f:ab-c)</tt>
+<tt class='indentedcode'>f:-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(f:ab-c)</tt>
+<tt class='indentedcode'>f:*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(f:ab-c)</tt>
+<tt class='indentedcode'>f:/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(f:ab-c)</tt>
+<tt class='indentedcode'>f:floor&nbsp;(f:ab-c)</tt>
+<tt class='indentedcode'>f:ceiling&nbsp;(f:f-f)</tt>
+<tt class='indentedcode'>f:sqrt&nbsp;&nbsp;(f:f-f)</tt>
+<tt class='indentedcode'>f:eq?&nbsp;&nbsp;&nbsp;(f:ab-c)</tt>
+<tt class='indentedcode'>f:-eq?&nbsp;&nbsp;(f:ab-c)</tt>
+<tt class='indentedcode'>f:lt?&nbsp;&nbsp;&nbsp;(f:ab-c)</tt>
+<tt class='indentedcode'>f:gt?&nbsp;&nbsp;&nbsp;(f:ab-c)</tt>
+<tt class='indentedcode'>f:depth&nbsp;(-n)</tt>
+<tt class='indentedcode'>f:dup&nbsp;&nbsp;&nbsp;(f:a-aa)</tt>
+<tt class='indentedcode'>f:drop&nbsp;&nbsp;(f:a-)</tt>
+<tt class='indentedcode'>f:swap&nbsp;&nbsp;(f:ab-ba)</tt>
+<tt class='indentedcode'>f:log&nbsp;&nbsp;&nbsp;(f:ab-c)</tt>
+<tt class='indentedcode'>f:power&nbsp;(f:ab-c)</tt>
+<tt class='indentedcode'>f:sin&nbsp;&nbsp;&nbsp;(f:f-f)</tt>
+<tt class='indentedcode'>f:cos&nbsp;&nbsp;&nbsp;(f:f-f)</tt>
+<tt class='indentedcode'>f:tan&nbsp;&nbsp;&nbsp;(f:f-f)</tt>
+<tt class='indentedcode'>f:asin&nbsp;&nbsp;(f:f-f)</tt>
+<tt class='indentedcode'>f:acos&nbsp;&nbsp;(f:f-f)</tt>
+<tt class='indentedcode'>f:atan&nbsp;&nbsp;(f:f-f)</tt>
+<tt class='indentedcode'>f:push&nbsp;&nbsp;(f:f-)</tt>
+<tt class='indentedcode'>f:pop&nbsp;&nbsp;&nbsp;(f:-f)</tt>
+<tt class='indentedcode'>f:adepth&nbsp;&nbsp;(-n)</tt>
+<br/><br/>
+<span class="h3">0003: Block Storage</span>
+<br/><br/>
+Reserved for future use.
+<br/><br/>
+<span class="h3">0004: Filesystem</span>
+<br/><br/>
+Currently at revision 0.
+<br/><br/>
+This implements a device providing traditional Unix-like files.
+<br/><br/>
+Takes a value indicating an operation, and each operation takes
+additional values.
+<br/><br/>
+<tt class='indentedcode'>|&nbsp;Operation&nbsp;|&nbsp;Stack&nbsp;|&nbsp;Action&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;---------&nbsp;|&nbsp;-----&nbsp;|&nbsp;--------------------------------&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;sm-h&nbsp;&nbsp;|&nbsp;Open&nbsp;a&nbsp;file&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;h-&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;Close&nbsp;a&nbsp;file&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;h-c&nbsp;&nbsp;&nbsp;|&nbsp;Read&nbsp;a&nbsp;byte&nbsp;from&nbsp;a&nbsp;file&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;ch-&nbsp;&nbsp;&nbsp;|&nbsp;Write&nbsp;a&nbsp;byte&nbsp;to&nbsp;a&nbsp;file&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;h-n&nbsp;&nbsp;&nbsp;|&nbsp;Return&nbsp;current&nbsp;pointer&nbsp;into&nbsp;file&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;nh-&nbsp;&nbsp;&nbsp;|&nbsp;Move&nbsp;pointer&nbsp;in&nbsp;a&nbsp;file&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;6&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;h-n&nbsp;&nbsp;&nbsp;|&nbsp;Return&nbsp;the&nbsp;size&nbsp;of&nbsp;a&nbsp;file&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;7&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;s-&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;Delete&nbsp;a&nbsp;file&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;8&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;h-&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;Flush&nbsp;pending&nbsp;writes&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<br/><br/>
+<span class="h3">0010: Random Number Generator</span>
+<br/><br/>
+This is currently at revision 0.
+<br/><br/>
+On invocation, this returns a random number.
+<br/><br/>
+<span class="h2">Implementation Details (C)</span>
+<br/><br/>
+On the C implementation, each I/O device has the needed support
+functions defined, then a query function and invocation function
+defined.
+<br/><br/>
+As an example, to add a device that has two functions, I might do:
+<br/><br/>
+<tt class='indentedcode'>void&nbsp;one()&nbsp;{</tt>
+<tt class='indentedcode'>&nbsp;&nbsp;stack_push(100);</tt>
+<tt class='indentedcode'>}</tt>
+<br/><br/>
+<tt class='indentedcode'>void&nbsp;two()&nbsp;{</tt>
+<tt class='indentedcode'>&nbsp;&nbsp;stack_push(200);</tt>
+<tt class='indentedcode'>}</tt>
+<br/><br/>
+<tt class='indentedcode'>Handler&nbsp;device_actions[]&nbsp;=&nbsp;{</tt>
+<tt class='indentedcode'>&nbsp;&nbsp;one,&nbsp;two</tt>
+<tt class='indentedcode'>}</tt>
+<br/><br/>
+<tt class='indentedcode'>void&nbsp;io_device()&nbsp;{</tt>
+<tt class='indentedcode'>&nbsp;&nbsp;device_actions[stack_pop()]();</tt>
+<tt class='indentedcode'>}</tt>
+<br/><br/>
+<tt class='indentedcode'>void&nbsp;query_device()&nbsp;{</tt>
+<tt class='indentedcode'>&nbsp;&nbsp;stack_push(0);&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;Revision&nbsp;&nbsp;*/</tt>
+<tt class='indentedcode'>&nbsp;&nbsp;stack_push(1234);&nbsp;/*&nbsp;Device&nbsp;ID&nbsp;*/</tt>
+<tt class='indentedcode'>}</tt>
+<br/><br/>
+Then add pointers to <span class="tt">io_device</span> to <span class="tt">IO_deviceHandlers</span> and
+<span class="tt">query_device</span> to <span class="tt">IO_queryHandlers</span> and increase the <span class="tt">NUM_DEVICES</span>
+by one.
+<br/><br/>
+You will then need to write a set of Retro words to use the new
+device.
+<br/><br/>
+<tt class='indentedcode'>:device:one&nbsp;#1&nbsp;#1234&nbsp;io:scan-for&nbsp;io:invoke&nbsp;;</tt>
+<tt class='indentedcode'>:device:two&nbsp;#2&nbsp;#1234&nbsp;io:scan-for&nbsp;io:invoke&nbsp;;</tt>
+<br/><br/>
+Rebuild the VM, adding these to image.
+</p>
+</body></html>

@@ -1,0 +1,197 @@
+# I/O Devices
+
+I/O devices on Nga are exposed via three instructions:
+
+    ie  enumerate i/o devices
+    iq  query i/o device
+    ii  invoke i/o interaction
+
+All devices are registered with the VM. How this occurs is
+implementation dependent.
+
+## Counting Devices
+
+Use the `ie` instruction to return the number of attached devices.
+
+    i ie......
+
+Upon running, the stack will contain the number of devices. You
+can then query these by passing the device number to `iq`.
+
+## Query Devices
+
+Use `iq` to query an attached device. This will return two values,
+a device identifer and a revision number.
+
+The device identifier will be the top value on the stack.
+
+## Invoking a Device
+
+You can trigger an I/O operation by passing the device number to
+the `ii` instruction.
+
+E.g., to display a character (ASCII code 98 in this case):
+
+    i liliii..
+    d 98
+    d 0
+
+Be sure to pass the device number, not the device identifier.
+
+## Device Identifiers
+
+Ultimately device identifiers are implementation-specific, but the
+most common system (Nga on Unix) provides or reserves the following:
+
+     ID  | Device Type      | Notes                      |
+    -----+------------------+----------------------------+
+    0000 | Generic Output   | Always present as device 0 |
+    0001 | Keyboard         |                            |
+    0002 | Floating Point   |                            |
+    0003 | Block Storage    | Raw, 1024 cell blocks      |
+    0004 | Filesystem       | Unix-style Files           |
+    0005 | Clock            |                            |
+    0006 |                  |                            |
+    0007 | Network: Sockets |                            |
+    0008 | Syscalls: Unix   |                            |
+    0009 | Scripting Hooks  |                            |
+    0010 | Random Number    |                            |
+    1000 | Image Saving     |                            |
+
+It must be noted here that nothing forces devices to use these
+identifiers, and one must take care to use an Nga implementation
+that provides the devices they need.
+
+## Device Revisions
+
+Over time, the functionality a device provides may change. To allow
+detection of this, the query functionality provides a revision number.
+Your code can use this to ensure that the device provided supports
+the level of functionality you need.
+
+## Nga/Retro-Unix Device Details
+
+### 0000: Generic Output
+
+Supported by all Nga implementations. This is required to be the
+first device, and is the only one guaranteed to be provided. It
+consumes a value from the stack, writing to to the host-specific
+output. (This does not need to be a screen).
+
+### 0001: Keyboard
+
+Read and return a keypress.
+
+Consumes no data, returns a single value representing the
+character that was read.
+
+No subcommands are defined.
+
+### 0002: Floating Point
+
+The current revision is 1.
+
+It currently provides:
+
+    n:to-float  (n-_f:-n)
+    s:to-float  (s-_f:-n)
+    f:to-number (f:a-__-n)
+    f:to-string (f:n-__-s)
+    f:+     (f:ab-c)
+    f:-     (f:ab-c)
+    f:*     (f:ab-c)
+    f:/     (f:ab-c)
+    f:floor (f:ab-c)
+    f:ceiling (f:f-f)
+    f:sqrt  (f:f-f)
+    f:eq?   (f:ab-c)
+    f:-eq?  (f:ab-c)
+    f:lt?   (f:ab-c)
+    f:gt?   (f:ab-c)
+    f:depth (-n)
+    f:dup   (f:a-aa)
+    f:drop  (f:a-)
+    f:swap  (f:ab-ba)
+    f:log   (f:ab-c)
+    f:power (f:ab-c)
+    f:sin   (f:f-f)
+    f:cos   (f:f-f)
+    f:tan   (f:f-f)
+    f:asin  (f:f-f)
+    f:acos  (f:f-f)
+    f:atan  (f:f-f)
+    f:push  (f:f-)
+    f:pop   (f:-f)
+    f:adepth  (-n)
+
+### 0003: Block Storage
+
+Reserved for future use.
+
+### 0004: Filesystem
+
+Currently at revision 0.
+
+This implements a device providing traditional Unix-like files.
+
+Takes a value indicating an operation, and each operation takes
+additional values.
+
+    | Operation | Stack | Action                           |
+    | --------- | ----- | -------------------------------- |
+    | 0         | sm-h  | Open a file                      |
+    | 1         | h-    | Close a file                     |
+    | 2         | h-c   | Read a byte from a file          |
+    | 3         | ch-   | Write a byte to a file           |
+    | 4         | h-n   | Return current pointer into file |
+    | 5         | nh-   | Move pointer in a file           |
+    | 6         | h-n   | Return the size of a file        |
+    | 7         | s-    | Delete a file                    |
+    | 8         | h-    | Flush pending writes             |
+
+### 0010: Random Number Generator
+
+This is currently at revision 0.
+
+On invocation, this returns a random number.
+
+## Implementation Details (C)
+
+On the C implementation, each I/O device has the needed support
+functions defined, then a query function and invocation function
+defined.
+
+As an example, to add a device that has two functions, I might do:
+
+    void one() {
+      stack_push(100);
+    }
+
+    void two() {
+      stack_push(200);
+    }
+
+    Handler device_actions[] = {
+      one, two
+    }
+
+    void io_device() {
+      device_actions[stack_pop()]();
+    }
+
+    void query_device() {
+      stack_push(0);    /* Revision  */
+      stack_push(1234); /* Device ID */
+    }
+
+Then add pointers to `io_device` to `IO_deviceHandlers` and
+`query_device` to `IO_queryHandlers` and increase the `NUM_DEVICES`
+by one.
+
+You will then need to write a set of Retro words to use the new
+device.
+
+    :device:one #1 #1234 io:scan-for io:invoke ;
+    :device:two #2 #1234 io:scan-for io:invoke ;
+
+Rebuild the VM, adding these to image.
