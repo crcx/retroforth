@@ -52,6 +52,7 @@ This contains the list of files for the chapters in the book.
   { 'Basic_I/O                      'internals/io }
   { 'Detailed_I/O                   'internals/io-devices }
   { 'Image                          'internals/image }
+  { 'Calling_Retro_From_C           'internals/calling-retro-from-c }
   { 'Historical_Papers              'tech-notes/historical-papers }
   { 'Metacompiling                  'tech-notes/metacompilation }
   { 'Self-Hosting                   'tech-notes/self-hosting }

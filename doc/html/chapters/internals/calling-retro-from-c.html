@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title>.</title>
+<style type="text/css">
+
+    * { color: #000; background: #fff; max-width: 700px; }
+    tt, pre { background: #dedede; color: #111; font-family: monospace;
+             white-space: pre; display: block; width: 100%; }
+    .indentedcode { margin-left: 2em; margin-right: 2em; }
+    .codeblock {
+      background: #dedede; color: #111; font-family: monospace;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      padding: 7px;
+      display: block;
+    }
+
+    .indentedlist { margin-left: 2em; color: #000; }
+
+    span { white-space: pre; }
+    .text  { color: #000; white-space: pre; background: #dedede; }
+    .colon { color: #000; background: #dedede; }
+    .note  { color: #000; background: #dedede; }
+    .str   { color: #000; text-decoration: underline; background: #dedede; }
+    .num   { color: #000; background: #dedede; font-weight: bold; font-style: italic; }
+    .fnum  { color: #000; font-weight: bold; background: #dedede; }
+    .ptr   { color: #000; font-weight: bold; background: #dedede; }
+    .fetch { color: #000; font-style: italic; background: #dedede; }
+    .store { color: #000; font-style: italic; background: #dedede; }
+    .char  { color: #000; background: #dedede; }
+    .inst  { color: #000; background: #dedede; }
+    .defer { color: #000; background: #dedede; }
+    .imm   { color: #000; font-weight: bold; background: #dedede; }
+    .prim  { color: #000; font-weight: bolder; background: #dedede; }
+
+    .tt    { white-space: pre; font-family: monospace; background: #dedede; }
+
+    .h1, .h2, .h3, .h4 { white-space: normal; }
+    .h1 { font-size: 125%; }
+    .h2 { font-size: 120%; }
+    .h3 { font-size: 115%; }
+    .h4 { font-size: 110%; }
+    .hr { display: block; height: 2px; background: #000000; }
+</style>
+</head><body>
+<p><span class="h1">Calling Retro from C</span>
+<br/><br/>
+The C implementation of Retro provides several functions for
+interacting with code written in Retro.
+<br/><br/>
+<span class="h2">Dictionary</span>
+<br/><br/>
+The dictionary is a linked list, with a pointer to the most
+recent entry stored in address 2.
+<br/><br/>
+You can access the fields for each entry using:
+<br/><br/>
+<tt class='indentedcode'>d_link</tt>
+<tt class='indentedcode'>d_xt</tt>
+<tt class='indentedcode'>d_class</tt>
+<tt class='indentedcode'>d_name</tt>
+<br/><br/>
+Each takes a dictionary header address (the "dictionary token")
+and returns a pointer to the Retro address for the desired data.
+<br/><br/>
+To find a dictionary token, use <span class="tt">d_lookup</span>. This takes the address
+of the dictionary to search (<span class="tt">memory[2]</span> in most cases) and the
+name of the word to find.
+<br/><br/>
+There is also <span class="tt">d_xt_for()</span> which takes a name and a dictionary
+pointer and returns the execution token for the specified word.
+<br/><br/>
+<span class="h2">Strings</span>
+<br/><br/>
+Like C, Retro uses NUL terminated strings. But, since all
+addressing is 32-bit (or 64-bit, depending on your configuration),
+some conversion is needed.
+<br/><br/>
+To get a C version of a string, use <span class="tt">string_extract()</span>. This takes
+a Retro address and returns a pointer to a C string.
+<br/><br/>
+Example:
+<br/><br/>
+<tt class='indentedcode'>//&nbsp;Get&nbsp;the&nbsp;name&nbsp;of&nbsp;the&nbsp;most&nbsp;recently&nbsp;defined&nbsp;word</tt>
+<tt class='indentedcode'>string_extract(d_name(memory[2]));</tt>
+<br/><br/>
+To push a C string into Retro memory, use <span class="tt">string_inject()</span>. This
+takes a C string and a Retro address.
+<br/><br/>
+<tt class='indentedcode'>//&nbsp;Copy&nbsp;a&nbsp;string&nbsp;to&nbsp;the&nbsp;TIB&nbsp;buffer</tt>
+<tt class='indentedcode'>string_inject("hello",&nbsp;1024);</tt>
+<br/><br/>
+<span class="h2">Stack</span>
+<br/><br/>
+You can push values to the stack with <span class="tt">stack_push()</span> and pop them
+off with <span class="tt">stack_pop()</span>.
+<br/><br/>
+<span class="h2">Interacting</span>
+<br/><br/>
+If you have a word named <span class="tt">hello</span> that you wish to run:
+<br/><br/>
+<tt class='indentedcode'>execute(d_xt_for("hello",&nbsp;memory[2]));</tt>
+<br/><br/>
+If you want to evaluate a token as if it was typed into a Retro
+listener:
+<br/><br/>
+<tt class='indentedcode'>string_inject("token",&nbsp;1024);</tt>
+<tt class='indentedcode'>stack_push(1024);</tt>
+<tt class='indentedcode'>execute("interpret",&nbsp;memory[2]);</tt>
+<br/><br/>
+The <span class="tt">interpret</span> word handles things like prefixes, so this is
+needed if you want to run something that needs those.
+</p>
+</body></html>

@@ -1,0 +1,67 @@
+# Calling Retro from C
+
+The C implementation of Retro provides several functions for
+interacting with code written in Retro.
+
+## Dictionary
+
+The dictionary is a linked list, with a pointer to the most
+recent entry stored in address 2.
+
+You can access the fields for each entry using:
+
+    d_link
+    d_xt
+    d_class
+    d_name
+
+Each takes a dictionary header address (the "dictionary token")
+and returns a pointer to the Retro address for the desired data.
+
+To find a dictionary token, use `d_lookup`. This takes the address
+of the dictionary to search (`memory[2]` in most cases) and the
+name of the word to find.
+
+There is also `d_xt_for()` which takes a name and a dictionary
+pointer and returns the execution token for the specified word.
+
+## Strings
+
+Like C, Retro uses NUL terminated strings. But, since all
+addressing is 32-bit (or 64-bit, depending on your configuration),
+some conversion is needed.
+
+To get a C version of a string, use `string_extract()`. This takes
+a Retro address and returns a pointer to a C string.
+
+Example:
+
+    // Get the name of the most recently defined word
+    string_extract(d_name(memory[2]));
+
+To push a C string into Retro memory, use `string_inject()`. This
+takes a C string and a Retro address.
+
+    // Copy a string to the TIB buffer
+    string_inject("hello", 1024);
+
+## Stack
+
+You can push values to the stack with `stack_push()` and pop them
+off with `stack_pop()`.
+
+## Interacting
+
+If you have a word named `hello` that you wish to run:
+
+    execute(d_xt_for("hello", memory[2]));
+
+If you want to evaluate a token as if it was typed into a Retro
+listener:
+
+    string_inject("token", 1024);
+    stack_push(1024);
+    execute("interpret", memory[2]);
+
+The `interpret` word handles things like prefixes, so this is
+needed if you want to run something that needs those.
