@@ -6,7 +6,7 @@ Word names in RETRO generally follow the following conventions.
 
 * Readability is important
 * Be consistent
-* Don't use a prefix as the first character of a name
+* Don't use a sigil as the first character of a name
 * Don't use underscores in word names
 * Use short names for indices
 * Word names start with a `-` for "not"
@@ -61,7 +61,7 @@ The common namespaces are:
     | err:    | Words for handling errors                              |
     | io:     | General I/O words                                      |
     | n:      | Words operating on numeric data                        |
-    | prefix: | Contains prefix handlers                               |
+    | sigil:  | Contains sigil handlers                                |
     | s:      | Words operating on string data                         |
     | v:      | Words operating on variables                           |
     | file:   | File I/O words                                         |
@@ -70,15 +70,15 @@ The common namespaces are:
 
 ## Tips
 
-### Don't Start Names With Prefix Characters
+### Don't Start Names With Sigil Characters
 
-Avoid using a prefix as the first character of a word name. RETRO
-will look for prefixes first, this will prevent direct use of
+Avoid using a sigil as the first character of a word name. RETRO
+will look for sigils first, this will prevent direct use of
 the work in question.
 
-To find a list of prefix characters, do:
+To find a list of sigil characters, do:
 
-    'prefix: d:words-with
+    'sigil: d:words-with
 
 ### Don't Use Underscores
 

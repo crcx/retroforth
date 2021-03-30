@@ -58,9 +58,9 @@ Consider:
 <tt class='indentedcode'>'test_name&nbsp;var</tt>
 <tt class='indentedcode'>#188&nbsp;!test_name</tt>
 <br/><br/>
-In the first case, the <span class="tt">:</span> prefix handles the token, so the
+In the first case, the <span class="tt">:</span> sigil handles the token, so the
 underscore is not remapped to a space, creating a word name as
-<span class="tt">hello_msg</span>. But in the second, the <span class="tt">'</span> prefix remaps the
+<span class="tt">hello_msg</span>. But in the second, the <span class="tt">'</span> sigil remaps the
 underscore to a space, giving a variable name of <span class="tt">test name</span>.
 In the third line, the name lookup will fail as <span class="tt">test_name</span> is
 not defined, so the store will be done to an incorrect address.

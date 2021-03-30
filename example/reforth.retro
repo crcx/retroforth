@@ -56,7 +56,7 @@ quick implementation. (The actual preseve/restore using the
 > this later.
 
 I'm not comfortable with this as it does add some overhead. The colon
-prefix is extended to add a jump around word entries, so that nesting
+sigil is extended to add a jump around word entries, so that nesting
 can work properly. This also extends the colon and semicolon words to
 add support for preserving the `my` and `at` variables.
 
@@ -74,7 +74,7 @@ add support for preserving the `my` and `at` variables.
     !Compiler here swap store
     &Nest v:dec @Nest n:zero? [ @Scope !Dictionary ] if ; immediate
 ---reveal---
-  :prefix:: def ; immediate
+  :sigil:: def ; immediate
   :; |-def -def immediate
   #0 !Nest
 }}

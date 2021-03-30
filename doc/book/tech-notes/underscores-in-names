@@ -13,9 +13,9 @@ Consider:
     'test_name var
     #188 !test_name
 
-In the first case, the `:` prefix handles the token, so the
+In the first case, the `:` sigil handles the token, so the
 underscore is not remapped to a space, creating a word name as
-`hello_msg`. But in the second, the `'` prefix remaps the
+`hello_msg`. But in the second, the `'` sigil remaps the
 underscore to a space, giving a variable name of `test name`.
 In the third line, the name lookup will fail as `test_name` is
 not defined, so the store will be done to an incorrect address.

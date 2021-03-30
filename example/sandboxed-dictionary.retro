@@ -47,7 +47,7 @@ the global dictionary with the sandboxed one.
 # A Test Case
 
 This will expose a dictionary with just two words that can be
-used with a new `%` prefix.
+used with a new `%` sigil.
 
 ```
 {{
@@ -55,7 +55,7 @@ used with a new `%` prefix.
   :dup $B ;
   dict{ 'swap 'dup }dict 'SANDBOX const
 ---reveal---
-  :prefix:% (s) [ s:evaluate c:put ] SANDBOX d:with ;
+  :sigil:% (s) [ s:evaluate c:put ] SANDBOX d:with ;
 }}
 
 #70 dup swap

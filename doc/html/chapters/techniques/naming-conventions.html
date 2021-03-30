@@ -51,7 +51,7 @@ Word names in RETRO generally follow the following conventions.
 <br/><br/>
 &bull; Readability is important<br/>
 &bull; Be consistent<br/>
-&bull; Don't use a prefix as the first character of a name<br/>
+&bull; Don't use a sigil as the first character of a name<br/>
 &bull; Don't use underscores in word names<br/>
 &bull; Use short names for indices<br/>
 &bull; Word names start with a <span class="tt">-</span> for "not"<br/>
@@ -106,7 +106,7 @@ The common namespaces are:
 <tt class='indentedcode'>|&nbsp;err:&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;Words&nbsp;for&nbsp;handling&nbsp;errors&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
 <tt class='indentedcode'>|&nbsp;io:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;General&nbsp;I/O&nbsp;words&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
 <tt class='indentedcode'>|&nbsp;n:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;Words&nbsp;operating&nbsp;on&nbsp;numeric&nbsp;data&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
-<tt class='indentedcode'>|&nbsp;prefix:&nbsp;|&nbsp;Contains&nbsp;prefix&nbsp;handlers&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;sigil:&nbsp;&nbsp;|&nbsp;Contains&nbsp;sigil&nbsp;handlers&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
 <tt class='indentedcode'>|&nbsp;s:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;Words&nbsp;operating&nbsp;on&nbsp;string&nbsp;data&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
 <tt class='indentedcode'>|&nbsp;v:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;Words&nbsp;operating&nbsp;on&nbsp;variables&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
 <tt class='indentedcode'>|&nbsp;file:&nbsp;&nbsp;&nbsp;|&nbsp;File&nbsp;I/O&nbsp;words&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
@@ -115,15 +115,15 @@ The common namespaces are:
 <br/><br/>
 <span class="h2">Tips</span>
 <br/><br/>
-<span class="h3">Don't Start Names With Prefix Characters</span>
+<span class="h3">Don't Start Names With Sigil Characters</span>
 <br/><br/>
-Avoid using a prefix as the first character of a word name. RETRO
-will look for prefixes first, this will prevent direct use of
+Avoid using a sigil as the first character of a word name. RETRO
+will look for sigils first, this will prevent direct use of
 the work in question.
 <br/><br/>
-To find a list of prefix characters, do:
+To find a list of sigil characters, do:
 <br/><br/>
-<tt class='indentedcode'>'prefix:&nbsp;d:words-with</tt>
+<tt class='indentedcode'>'sigil:&nbsp;d:words-with</tt>
 <br/><br/>
 <span class="h3">Don't Use Underscores</span>
 <br/><br/>

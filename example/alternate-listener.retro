@@ -78,10 +78,10 @@ far.
 
 ~~~
 {{
-  :prefix?
-    TIB fetch 'prefix:_ [ #7 + store ] sip d:lookup n:-zero? ; 
+  :sigil?
+    TIB fetch 'sigil:_ [ #7 + store ] sip d:lookup n:-zero? ;
   :hint
-    nl TIB prefix? [ n:inc ] if d:words-beginning-with nl
+    nl TIB sigil? [ n:inc ] if d:words-beginning-with nl
     TIB s:put ;
 ---reveal---
   :handle:tab (c-c) hook
@@ -91,7 +91,7 @@ far.
 
 Control + k (`ASCII:VT`) will display help for the word being typed.
 This assumes that `retro-describe` is in your $PATH and that the
-typed text is a complete word name (without a prefix).
+typed text is a complete word name (without a sigil).
 
 ~~~
 :handle:CTRL+K (c-c) hook

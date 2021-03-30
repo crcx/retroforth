@@ -1078,45 +1078,6 @@ Copy a string to the pasteboard.
 pop                      D: -n  A: n-  F: -
 Move a value from the return stack to the data stack.
 
-prefix:!                 D: ns-  A: -  F: -
-Store a value into a variable.
-
-prefix:#                 D: s-n  A: -  F: -
-Process token as a number.
-
-prefix:$                 D: s-c  A: -  F: -
-Process token as an ASCII character.
-
-prefix:&                 D: s-a  A: -  F: -
-Return a pointer to a named item.
-
-prefix:'                 D: s-s  A: -  F: -
-Process token as a string.
-
-prefix:(                 D: s-  A: -  F: -
-Process token as a comment.
-
-prefix:.                 D: s-  A: -  F: -F
-Interpret time: convert string to a floating point value. Compile time: convert string to a floating point value and compile code to push this value to the float stack.
-
-prefix::                 D: s-  A: -  F: -
-Process token as a new definition.
-
-prefix:@                 D: s-n  A: -  F: -
-Fetch from a stored variable.
-
-prefix:\                 D: s-  A: -  F: -
-Process token as an instruction bundle.
-
-prefix:^                 D: s-  A: -  F: -
-Process token as a function reference.
-
-prefix:`                 D: s-  A: -  F: -
-Process token as a bytecode.
-
-prefix:|                 D: s-  A: -  F: -
-POSTPONE equivalent.
-
 primitive                D: -  A: -  F: -
 Change the class of the most recently defined word to `class:primitive`.
 
@@ -1323,6 +1284,45 @@ Patch the hook point in a2 to point to a1.
 
 shift                    D: mn-o  A: -  F: -
 Peform a bitwise shift of m by n bits. If n is positive, shift right. If negative, the shift will be to the left.
+
+sigil:!                  D: ns-  A: -  F: -
+Store a value into a variable.
+
+sigil:#                  D: s-n  A: -  F: -
+Process token as a number.
+
+sigil:$                  D: s-c  A: -  F: -
+Process token as an ASCII character.
+
+sigil:&                  D: s-a  A: -  F: -
+Return a pointer to a named item.
+
+sigil:'                  D: s-s  A: -  F: -
+Process token as a string.
+
+sigil:(                  D: s-  A: -  F: -
+Process token as a comment.
+
+sigil:.                  D: s-  A: -  F: -F
+Interpret time: convert string to a floating point value. Compile time: convert string to a floating point value and compile code to push this value to the float stack.
+
+sigil::                  D: s-  A: -  F: -
+Process token as a new definition.
+
+sigil:@                  D: s-n  A: -  F: -
+Fetch from a stored variable.
+
+sigil:\                  D: s-  A: -  F: -
+Process token as an instruction bundle.
+
+sigil:^                  D: s-  A: -  F: -
+Process token as a function reference.
+
+sigil:`                  D: s-  A: -  F: -
+Process token as a bytecode.
+
+sigil:|                  D: s-  A: -  F: -
+POSTPONE equivalent.
 
 sip                      D: nq-n  A: -  F: -
 Run quote. After execution completes, put a copy of n back on top of the stack.

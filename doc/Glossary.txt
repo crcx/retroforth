@@ -28,7 +28,7 @@ Class: class:macro | Namespace: global | Interface Layer: all
 
 Provide a visual indication of a code group.
 
-Class: class:macro | Namespace: prefix | Interface Layer: all
+Class: class:macro | Namespace: sigil | Interface Layer: all
 ------------------------------------------------------------------------
 
 )
@@ -39,7 +39,7 @@ Class: class:macro | Namespace: prefix | Interface Layer: all
 
 Provide a visual indication of a code group.
 
-Class: class:macro | Namespace: prefix | Interface Layer: all
+Class: class:macro | Namespace: sigil | Interface Layer: all
 ------------------------------------------------------------------------
 
 *
@@ -4206,218 +4206,6 @@ Move a value from the return stack to the data stack.
 Class: class:macro | Namespace: global | Interface Layer: all
 ------------------------------------------------------------------------
 
-prefix:!
-
-  Data:  ns-
-  Addr:  -
-  Float: -
-
-Store a value into a variable.
-
-Interpret Time:
-  Store a value into the named variable.
-
-Compile Time:
-  Compile the code to store a value into a named variable.
-
-Class: class:macro | Namespace: prefix | Interface Layer: all
-------------------------------------------------------------------------
-
-prefix:#
-
-  Data:  s-n
-  Addr:  -
-  Float: -
-
-Process token as a number.
-
-Interpret Time:
-  Convert the string into a number and leave on the stack.
-
-Compile Time:
-  Convert the string into a number and compile into the current definition as a literal.
-
-Class: class:macro | Namespace: prefix | Interface Layer: all
-------------------------------------------------------------------------
-
-prefix:$
-
-  Data:  s-c
-  Addr:  -
-  Float: -
-
-Process token as an ASCII character.
-
-Interpret Time:
-  Fetch first character from string. Leave on stack.
-
-Compile Time:
-  Fetch first character from the string. Compile into the current definition as  literal.
-
-Class: class:macro | Namespace: prefix | Interface Layer: all
-------------------------------------------------------------------------
-
-prefix:&
-
-  Data:  s-a
-  Addr:  -
-  Float: -
-
-Return a pointer to a named item.
-
-Interpret Time:
-  Lookup name in dictionary, return contents of the xt field on the stack.
-
-Compile Time:
-  Lookup name in dictionary, compile code to push the contents of the xt field into the current definition.
-
-Class: class:macro | Namespace: prefix | Interface Layer: all
-------------------------------------------------------------------------
-
-prefix:'
-
-  Data:  s-s
-  Addr:  -
-  Float: -
-
-Process token as a string.
-
-Interpret Time:
-  Move string into temporary buffer. If `RewriteUnderscores` is `TRUE`, replace all instances of _ with space.
-
-Compile Time:
-  Move string into temporary buffer. If `RewriteUnderscores` is `TRUE`, replace all instances of _ with space. Then compile the string into the current definition.
-
-Class: class:macro | Namespace: prefix | Interface Layer: all
-------------------------------------------------------------------------
-
-prefix:(
-
-  Data:  s-
-  Addr:  -
-  Float: -
-
-Process token as a comment.
-
-Interpret Time:
-  Discard the string.
-
-Compile Time:
-  Discard the string.
-
-Class: class:macro | Namespace: prefix | Interface Layer: all
-------------------------------------------------------------------------
-
-prefix:.
-
-  Data:  s-
-  Addr:  -
-  Float: -F
-
-Interpret time: convert string to a floating point value. Compile time: convert string to a floating point value and compile code to push this value to the float stack.
-
-Class: class:macro | Namespace: prefix | Interface Layer: rre
-------------------------------------------------------------------------
-
-prefix::
-
-  Data:  s-
-  Addr:  -
-  Float: -
-
-Process token as a new definition.
-
-Interpret Time:
-  Create a header pointing to `here` with the provided string as the name. Sets class to `class:word`.
-
-Class: class:macro | Namespace: prefix | Interface Layer: all
-------------------------------------------------------------------------
-
-prefix:@
-
-  Data:  s-n
-  Addr:  -
-  Float: -
-
-Fetch from a stored variable.
-
-Interpret Time:
-  Fetch a value from a named variable.
-
-Compile Time:
-  Compile the code to fetch a value from a named variable into the current definition.
-
-Class: class:macro | Namespace: prefix | Interface Layer: all
-------------------------------------------------------------------------
-
-prefix:\
-
-  Data:  s-
-  Addr:  -
-  Float: -
-
-Process token as an instruction bundle.
-
-Interpret Time:
-  Discard the string.
-
-Compile Time:
-  Assemble the opcodes in the string and use `,` to inline it into the current definition.
-
-Class: class:macro | Namespace: prefix | Interface Layer: all
-------------------------------------------------------------------------
-
-prefix:^
-
-  Data:  s-
-  Addr:  -
-  Float: -
-
-Process token as a function reference.
-
-Interpret Time:
-  Discard the string.
-
-Compile Time:
-  Comma the XT of the word into the current definition.
-
-Class: class:macro | Namespace: prefix | Interface Layer: all
-------------------------------------------------------------------------
-
-prefix:`
-
-  Data:  s-
-  Addr:  -
-  Float: -
-
-Process token as a bytecode.
-
-Interpret Time:
-  Discard the string.
-
-Compile Time:
-  Convert the string to a number and use `,` to inline it into the current definition.
-
-Class: class:macro | Namespace: prefix | Interface Layer: all
-------------------------------------------------------------------------
-
-prefix:|
-
-  Data:  s-
-  Addr:  -
-  Float: -
-
-POSTPONE equivalent.
-
-Interpret Time:
-  Discard the string.
-
-Compile Time:
-  Convert the string to a number and use `,` to inline it into the current definition.
-
-Class: class:macro | Namespace: prefix | Interface Layer: all
-------------------------------------------------------------------------
-
 primitive
 
   Data:  -
@@ -5208,6 +4996,218 @@ shift
 Peform a bitwise shift of m by n bits. If n is positive, shift right. If negative, the shift will be to the left.
 
 Class: class:primitive | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+sigil:!
+
+  Data:  ns-
+  Addr:  -
+  Float: -
+
+Store a value into a variable.
+
+Interpret Time:
+  Store a value into the named variable.
+
+Compile Time:
+  Compile the code to store a value into a named variable.
+
+Class: class:macro | Namespace: sigil | Interface Layer: all
+------------------------------------------------------------------------
+
+sigil:#
+
+  Data:  s-n
+  Addr:  -
+  Float: -
+
+Process token as a number.
+
+Interpret Time:
+  Convert the string into a number and leave on the stack.
+
+Compile Time:
+  Convert the string into a number and compile into the current definition as a literal.
+
+Class: class:macro | Namespace: sigil | Interface Layer: all
+------------------------------------------------------------------------
+
+sigil:$
+
+  Data:  s-c
+  Addr:  -
+  Float: -
+
+Process token as an ASCII character.
+
+Interpret Time:
+  Fetch first character from string. Leave on stack.
+
+Compile Time:
+  Fetch first character from the string. Compile into the current definition as  literal.
+
+Class: class:macro | Namespace: sigil | Interface Layer: all
+------------------------------------------------------------------------
+
+sigil:&
+
+  Data:  s-a
+  Addr:  -
+  Float: -
+
+Return a pointer to a named item.
+
+Interpret Time:
+  Lookup name in dictionary, return contents of the xt field on the stack.
+
+Compile Time:
+  Lookup name in dictionary, compile code to push the contents of the xt field into the current definition.
+
+Class: class:macro | Namespace: sigil | Interface Layer: all
+------------------------------------------------------------------------
+
+sigil:'
+
+  Data:  s-s
+  Addr:  -
+  Float: -
+
+Process token as a string.
+
+Interpret Time:
+  Move string into temporary buffer. If `RewriteUnderscores` is `TRUE`, replace all instances of _ with space.
+
+Compile Time:
+  Move string into temporary buffer. If `RewriteUnderscores` is `TRUE`, replace all instances of _ with space. Then compile the string into the current definition.
+
+Class: class:macro | Namespace: sigil | Interface Layer: all
+------------------------------------------------------------------------
+
+sigil:(
+
+  Data:  s-
+  Addr:  -
+  Float: -
+
+Process token as a comment.
+
+Interpret Time:
+  Discard the string.
+
+Compile Time:
+  Discard the string.
+
+Class: class:macro | Namespace: sigil | Interface Layer: all
+------------------------------------------------------------------------
+
+sigil:.
+
+  Data:  s-
+  Addr:  -
+  Float: -F
+
+Interpret time: convert string to a floating point value. Compile time: convert string to a floating point value and compile code to push this value to the float stack.
+
+Class: class:macro | Namespace: sigil | Interface Layer: rre
+------------------------------------------------------------------------
+
+sigil::
+
+  Data:  s-
+  Addr:  -
+  Float: -
+
+Process token as a new definition.
+
+Interpret Time:
+  Create a header pointing to `here` with the provided string as the name. Sets class to `class:word`.
+
+Class: class:macro | Namespace: sigil | Interface Layer: all
+------------------------------------------------------------------------
+
+sigil:@
+
+  Data:  s-n
+  Addr:  -
+  Float: -
+
+Fetch from a stored variable.
+
+Interpret Time:
+  Fetch a value from a named variable.
+
+Compile Time:
+  Compile the code to fetch a value from a named variable into the current definition.
+
+Class: class:macro | Namespace: sigil | Interface Layer: all
+------------------------------------------------------------------------
+
+sigil:\
+
+  Data:  s-
+  Addr:  -
+  Float: -
+
+Process token as an instruction bundle.
+
+Interpret Time:
+  Discard the string.
+
+Compile Time:
+  Assemble the opcodes in the string and use `,` to inline it into the current definition.
+
+Class: class:macro | Namespace: sigil | Interface Layer: all
+------------------------------------------------------------------------
+
+sigil:^
+
+  Data:  s-
+  Addr:  -
+  Float: -
+
+Process token as a function reference.
+
+Interpret Time:
+  Discard the string.
+
+Compile Time:
+  Comma the XT of the word into the current definition.
+
+Class: class:macro | Namespace: sigil | Interface Layer: all
+------------------------------------------------------------------------
+
+sigil:`
+
+  Data:  s-
+  Addr:  -
+  Float: -
+
+Process token as a bytecode.
+
+Interpret Time:
+  Discard the string.
+
+Compile Time:
+  Convert the string to a number and use `,` to inline it into the current definition.
+
+Class: class:macro | Namespace: sigil | Interface Layer: all
+------------------------------------------------------------------------
+
+sigil:|
+
+  Data:  s-
+  Addr:  -
+  Float: -
+
+POSTPONE equivalent.
+
+Interpret Time:
+  Discard the string.
+
+Compile Time:
+  Convert the string to a number and use `,` to inline it into the current definition.
+
+Class: class:macro | Namespace: sigil | Interface Layer: all
 ------------------------------------------------------------------------
 
 sip

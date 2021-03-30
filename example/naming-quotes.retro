@@ -9,7 +9,7 @@ like:
 
     : foo ... ;
 
-In Retro, there are no parsing words. There is a prefix
+In Retro, there are no parsing words. There is a sigil
 handler `:`, yielding:
 
     :foo ... ;

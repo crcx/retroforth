@@ -47,19 +47,19 @@ across namespaces. E.g.,
     s:put
     s:to-upper
 
-### Prefixes
+### Sigils
 
-Prefixes are an integral part of RETRO. These are single symbol
+Sigils are an integral part of RETRO. These are single symbol
 modifiers added to the start of a word which control how RETRO
 processes the word.
 
-The interpreter model is covered in *Rx.md*, but basically:
+The interpreter model is covered in *retro.muri*, but basically:
 
     - Get a token (whitespace delimited string)
     - Pass it to `interpret`
-      + if the token starts with a known prefix then pass
-        it to the prefix handler
-      + if the initial character is not a known prefix,
+      + if the token starts with a known sigil then pass
+        it to the sigil handler
+      + if the initial character is not a known sigil,
         look it up
         - if found, push the address ("xt") to the stack
           and call the word's class handler
@@ -70,12 +70,12 @@ This is different than the process in traditional Forth. A few
 observations:
 
     - there are no parsing words
-    - numbers are handled using a prefix
-    - prefixes can be added or changed at any time
+    - numbers are handled using a sigil
+    - sigils can be added or changed at any time
 
-The basic prefixes are:
+The basic sigils are:
 
-    | prefix | used for               |
+    | sigil | used for               |
     | ------ | ---------------------- |
     | :      | starting a definition  |
     | &      | obtaining pointers     |
@@ -96,7 +96,7 @@ The basic prefixes are:
 * Word names should be lowercase
 * Variable names should be Title case
 * Constants should be UPPERCASE
-* Names may not start with a prefix character
+* Names may not start with a sigil character
 * Names returning a flag should end with a ?
 * Words with an effect on the stack should have a stack comment
 
@@ -227,12 +227,12 @@ have an accessor word that aids in readability.
 ~~~
 
 It's sometimes useful to inline values directly. I use a
-backtick prefix for this.
+backtick sigil for this.
 
 ~~~
-:prefix:`  (s-)  s:to-number , ; immediate
-:prefix:\  (s-)  i ; immediate
-:prefix:^  (s-)  r ; immediate
+:sigil:`  (s-)  s:to-number , ; immediate
+:sigil:\  (s-)  i ; immediate
+:sigil:^  (s-)  r ; immediate
 ~~~
 
 It's traditional to have a word named `here` which returns the
@@ -244,9 +244,9 @@ next free address in memory.
 
 ## Variables
 
-The next two are additional prefixes to make working with
-variables a bit less painful. By default you have to do things
-like:
+The next two are additional sigils to make working with
+variables a bit less painful. By default you have to do
+things like:
 
     &Name fetch #10 * &Name store
 
@@ -254,7 +254,7 @@ Or using combinators:
 
     &Name [ fetch #10 * ] sip store
 
-With the @ and ! prefixes this can become:
+With the @ and ! sigils this can become:
 
     @Name #10 * !Name
 
@@ -265,19 +265,19 @@ corresponding to:
     lit + store + nop + nop    'list....   #4097
 
 ~~~
-:prefix:@  (s-n)
+:sigil:@  (s-n)
   d:lookup d:xt fetch
   compiling? [ (life.... #3841 , , ) ]
              [ fetch                 ] choose ; immediate
 
-:prefix:!  (s-n)
+:sigil:!  (s-n)
   d:lookup d:xt fetch
   compiling? [ (list.... #4097 , , ) ]
              [ store                 ] choose ; immediate
 ~~~
 
 The next few words aren't actually useful until the `s:`
-namespace is defined. With strings and the `'` prefix they
+namespace is defined. With strings and the `'` sigil they
 allow creation of variables and constants.
 
     | To create a                  | Use a form like    |
@@ -451,7 +451,7 @@ to:
 ## A Shortcut
 
 ~~~
-:prefix:|
+:sigil:|
   d:lookup [ d:xt fetch ] [ d:class fetch ] bi
   compiling? [ &class:data dip compile:call ]
              &call choose ; immediate
@@ -784,7 +784,7 @@ pointer to skip to the code following the stored string.
   here &s, dip class:data ;
 ~~~
 
-And now a quick `'` prefix. (This will be replaced later). What
+And now a quick `'` sigil. (This will be replaced later). What
 this does is either move the string token to the temporary
 buffer or compile it into the current definition.
 
@@ -796,7 +796,7 @@ Later in the code I'll add a better implementation which can
 handle conversion of _ into spaces.
 
 ~~~
-:prefix:' compiling? &s:keep &s:temp choose ; immediate
+:sigil:' compiling? &s:keep &s:temp choose ; immediate
 ~~~
 
 `s:chop` removes the last character from a string.
@@ -1016,7 +1016,7 @@ characters that are of some general interest.
 ~~~
 
 I have a few words that correspond to empty versions of the
-prefixes.
+sigils.
 
 ~~~
 :' |s:empty ; immediate
@@ -1025,7 +1025,7 @@ prefixes.
 
 ## ASCII Constants
 
-Not all characters can be obtained via the $ prefix. ASCII has
+Not all characters can be obtained via the $ sigil. ASCII has
 many characters that aren't really intended to be printable.
 RETRO has an `ASCII` namespace providing symbolic names for
 these.
@@ -1131,7 +1131,7 @@ Convert a decimal (base 10) number to a string.
 }}
 ~~~
 
-Now replace the old prefix:' with this one that can optionally
+Now replace the old sigil:' with this one that can optionally
 turn underscores into spaces.
 
 ~~~
@@ -1140,9 +1140,9 @@ TRUE 'RewriteUnderscores var-n
 {{
   :sub     (c-c) $_ [ ASCII:SPACE ] case ;
   :rewrite (s-s) @RewriteUnderscores [ &sub s:map ] if ;
-  :handle        &prefix:' call ;
+  :handle        &sigil:' call ;
 ---reveal---
-  :prefix:' rewrite handle ; immediate
+  :sigil:' rewrite handle ; immediate
 }}
 ~~~
 
@@ -1648,7 +1648,7 @@ remaining string.
 And then the `process-tokens` uses `next-token` and `interpret`
 to go through the string, processing each token in turn. Using
 the standard `interpret` word allows for proper handling of the
-prefixes and classes so everything works just as if entered
+sigils and classes so everything works just as if entered
 directly.
 
 ~~~

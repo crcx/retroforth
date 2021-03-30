@@ -100,7 +100,7 @@ Instead of:
 
     i dudumu..
 
-The runtime assembler also provides three prefixes for use in
+The runtime assembler also provides three sigils for use in
 inlining machine code into a definition. These are:
 
      \    Treat token as an assembly sequence

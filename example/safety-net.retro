@@ -2,7 +2,7 @@ This implements a sort of "safety net", adding some compile and runtime
 error checking and reporting.
 
 
-The first of these is to extend the `@` and `!` prefixes to check for
+The first of these is to extend the `@` and `!` sigils to check for
 the existence of a word name. In a basic image, if the name isn't found,
 it will resolve to address 0 silently. This will have it report an error
 if the word is not found.
@@ -14,11 +14,11 @@ if the word is not found.
 :if:not-defined (sq-s)
   over d:lookup n:zero? swap if ;
 
-:prefix:@
+:sigil:@
   [ err:var-not-defined ] if:not-defined
   d:lookup d:xt fetch class:data |fetch ; immediate
 
-:prefix:!
+:sigil:!
   [ err:var-not-defined ] if:not-defined
   d:lookup d:xt fetch class:data |store ; immediate
 ~~~

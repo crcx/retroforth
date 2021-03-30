@@ -9,7 +9,7 @@ precision (1 bit for the sign, 11 bits for the exponent, and
 the remaining 52 bits for the value), i.e. 15 decimal digits
 of precision.
 
-## Prefix
+## Sigil
 
 Floating point numbers start with a `.`
 

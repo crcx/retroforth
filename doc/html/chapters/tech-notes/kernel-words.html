@@ -80,14 +80,14 @@ Compiler &amp; Interpreter
 <tt class='indentedcode'>Compiler&nbsp;&nbsp;&nbsp;&nbsp;Heap&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;&nbsp;&nbsp;&nbsp;]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dictionary</tt>
 <tt class='indentedcode'>d:link&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;d:class&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;d:xt&nbsp;&nbsp;&nbsp;&nbsp;d:name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;d:add-header</tt>
 <tt class='indentedcode'>class:word&nbsp;&nbsp;class:primitive&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class:data&nbsp;&nbsp;class:macro</tt>
-<tt class='indentedcode'>prefix::&nbsp;&nbsp;&nbsp;&nbsp;prefix:#&nbsp;&nbsp;&nbsp;&nbsp;prefix:&amp;&nbsp;&nbsp;&nbsp;&nbsp;prefix:$</tt>
+<tt class='indentedcode'>sigil::&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sigil:#&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sigil:&amp;&nbsp;sigil:$</tt>
 <tt class='indentedcode'>interpret&nbsp;&nbsp;&nbsp;d:lookup&nbsp;&nbsp;&nbsp;&nbsp;err:notfound</tt>
 <br/><br/>
 Assembler
 <br/><br/>
 <tt class='indentedcode'>i&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;d&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;r</tt>
 <br/><br/>
-I <strong>could</strong> slightly reduce this. The $ prefix could be defined in
+I <strong>could</strong> slightly reduce this. The $ sigil could be defined in
 higher level code, and I don't strictly <strong>need</strong> to expose the
 <span class="tt">fetch-next</span> and <span class="tt">store-next</span> here. But since the are already
 implemented as dependencies of the words in the kernel, it would

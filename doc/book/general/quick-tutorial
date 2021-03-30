@@ -32,7 +32,7 @@ name it:
 :palindrome? dup s:reverse s:eq? ;
 ```
 
-Naming uses the `:` prefix to add a new word to the dictionary.
+Naming uses the `:` sigil to add a new word to the dictionary.
 The words that make up the definition are then placed, with a
 final word (`;`) ending the definition. We can then use this:
 

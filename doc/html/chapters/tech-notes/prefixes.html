@@ -43,7 +43,7 @@
     .hr { display: block; height: 2px; background: #000000; }
 </style>
 </head><body>
-<p><span class="h2">Prefixes as a Language Element</span>
+<p><span class="h2">Sigils as a Language Element</span>
 <br/><br/>
 A big change in RETRO 12 was the elimination of the traditional
 parser from the language. This was a sacrifice due to the lack
@@ -55,26 +55,26 @@ And so <span class="tt">interpret</span> operates only on the current token. The
 language does not track what came before or attempt to guess at
 what might come in the future.
 <br/><br/>
-This leads into the prefixes. RETRO 11 had a complicated system
-for prefixes, with different types of prefixes for words that
+This leads into the sigils. RETRO 11 had a complicated system
+for sigils, with different types of sigilss for words that
 parsed ahead (e.g., strings) and words that operated on the
 current token (e.g., <span class="tt">@</span>). RETRO 12 eliminates all of these in
-favor of just having a single prefix model.
+favor of just having a single sigil model.
 <br/><br/>
 The first thing <span class="tt">interpret</span> does is look to see if the first
-character in a token matches a <span class="tt">prefix:</span> word. If it does, it
-passes the rest of the token as a string pointer to the prefix
-specific handler to deal with. If there is no valid prefix
+character in a token matches a <span class="tt">sigil:</span> word. If it does, it
+passes the rest of the token as a string pointer to the sigil
+specific handler to deal with. If there is no valid sigil
 found, it tries to find it in the dictionary. Assuming that it
 finds the words, it passes the <span class="tt">d:xt</span> field to the handler that
 <span class="tt">d:class</span> points to. Otherwise it calls <span class="tt">err:notfound</span>.
 <br/><br/>
 This has an important implication: <strong>words can not reliably
-have names that start with a prefix character.</strong>
+have names that start with a sigil character.</strong>
 <br/><br/>
 It also simplifies things. Anything that would normally parse
-becomes a prefix handler. So creating a new word? Use the <span class="tt">:</span>
-prefix. Strings? Use <span class="tt">'</span>. Pointers? Try <span class="tt">&amp;</span>. And so on. E.g.,
+becomes a sigil handler. So creating a new word? Use the <span class="tt">:</span>
+sigil. Strings? Use <span class="tt">'</span>. Pointers? Try <span class="tt">&amp;</span>. And so on. E.g.,
 <br/><br/>
 <tt class='indentedcode'>In&nbsp;ANS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;In&nbsp;RETRO</tt>
 <tt class='indentedcode'>:&nbsp;foo&nbsp;...&nbsp;;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;:foo&nbsp;...&nbsp;;</tt>
@@ -82,12 +82,12 @@ prefix. Strings? Use <span class="tt">'</span>. Pointers? Try <span class="tt">&
 <tt class='indentedcode'>:&nbsp;bar&nbsp;...&nbsp;[']&nbsp;foo&nbsp;;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;:bar&nbsp;...&nbsp;&amp;foo&nbsp;;</tt>
 <tt class='indentedcode'>s"&nbsp;hello&nbsp;world!"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;'hello_world!</tt>
 <br/><br/>
-If you are familiar with ColorForth, prefixes are a similar
+If you are familiar with ColorForth, sigils are a similar
 idea to colors, but can be defined by the user as normal words.
 <br/><br/>
 After doing this for quite a while I rather like it. I can see
 why Chuck Moore eventually went towards ColorForth as using
-color (or prefixes in my case) does simplify the implementation
+color (or sigils in my case) does simplify the implementation
 in many ways.
 </p>
 </body></html>

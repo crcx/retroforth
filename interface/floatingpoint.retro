@@ -69,10 +69,10 @@ to aid in structuring the floating point stack.
 ~~~
 
 Then a word to allow creation of floating point values via a
-`.` prefix.
+`.` sigil.
 
 ~~~
-:prefix:. (s-__f:-a)
+:sigil:. (s-__f:-a)
   compiling? &s:keep &s:temp choose &s:to-float class:word ; immediate
 ~~~
 

@@ -56,7 +56,7 @@ This contains the list of files for the chapters in the book.
   { 'Historical_Papers              'tech-notes/historical-papers }
   { 'Metacompiling                  'tech-notes/metacompilation }
   { 'Self-Hosting                   'tech-notes/self-hosting }
-  { 'Prefixes                       'tech-notes/prefixes }
+  { 'Sigils                         'tech-notes/prefixes }
   { 'Kernel_Words                   'tech-notes/kernel-words }
   { 'Ngaro_to_Nga                   'tech-notes/ngaro-to-nga }
   { 'RETRO11_Retrospective          'tech-notes/retro11-retrospective }

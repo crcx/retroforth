@@ -2,6 +2,10 @@
 
 ## Core Language
 
+## Renamed
+
+- prefix: namespace to sigil:
+
 ## I/O
 
 - simplify definition of `c:get`

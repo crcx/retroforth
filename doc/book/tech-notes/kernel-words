@@ -35,14 +35,14 @@ Compiler & Interpreter
     Compiler    Heap        ;       [    ]      Dictionary
     d:link      d:class     d:xt    d:name      d:add-header
     class:word  class:primitive     class:data  class:macro
-    prefix::    prefix:#    prefix:&    prefix:$
+    sigil::     sigil:#     sigil:& sigil:$
     interpret   d:lookup    err:notfound
 
 Assembler
 
     i           d           r
 
-I *could* slightly reduce this. The $ prefix could be defined in
+I *could* slightly reduce this. The $ sigil could be defined in
 higher level code, and I don't strictly *need* to expose the
 `fetch-next` and `store-next` here. But since the are already
 implemented as dependencies of the words in the kernel, it would

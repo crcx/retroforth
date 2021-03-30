@@ -1,6 +1,6 @@
 This is a quick little thing to generate some statistics
 from the RETRO image and VM, along with some introspection
-to identify prefix handlers and word classes.
+to identify sigil handlers and word classes.
 
 # Memory Use
 
@@ -56,7 +56,7 @@ Determine the average length of a word name.
   / '__Average_name_length:_%n\n s:format s:put
 ~~~
 
-And without the prefixes...
+And without the sigils...
 
 ~~~
   #0 #0 [ d:name dup $: s:index-of n:inc + s:length + [ n:inc ] dip ] d:for-each swap /
@@ -92,11 +92,11 @@ nl 'Classes: s:put nl nl
 sp sp identify-classes [ s:put sp ] a:for-each nl
 ~~~
 
-# Identify Prefixes
+# Identify Sigils
 
-Prefixes are named as:
+Sigils are named as:
 
-    prefix:<character>
+    sigil:<character>
 
 Unlike classes, this is not merely a convention, but an actual
 requirement.
@@ -105,15 +105,15 @@ The process for obtaining an array of them and printing it is
 the same as with the class handlers.
 
 ~~~
-nl 'Prefixes: s:put nl nl
+nl 'Sigils: s:put nl nl
 
-:identify-prefixes (-a)
+:identify-sigils (-a)
   here #0 ,
-  [ d:name dup 'prefix: s:contains-string?
+  [ d:name dup 'sigil: s:contains-string?
     &, &drop choose ] d:for-each
   here over - n:dec over store ;
 
-sp sp identify-prefixes [ s:put sp ] a:for-each nl
+sp sp identify-sigils [ s:put sp ] a:for-each nl
 
 nl
 ~~~

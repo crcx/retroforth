@@ -63,5 +63,5 @@ listener:
     stack_push(1024);
     execute("interpret", memory[2]);
 
-The `interpret` word handles things like prefixes, so this is
+The `interpret` word handles things like sigils, so this is
 needed if you want to run something that needs those.

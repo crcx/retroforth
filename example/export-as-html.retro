@@ -202,7 +202,7 @@ delimiters.
 ~~~
 
 On to generating the actual HTML for the syntax highlighted
-source. This is driven by the prefix, then by word class via
+source. This is driven by the sigil, then by word class via
 a little quick introspection.
 
 ~~~
@@ -213,8 +213,8 @@ a little quick introspection.
   :format-code (s-)
     (ignore_empty_tokens)
     dup s:length n:zero? [ '&nbsp; s:put drop ] if;
- 
-    (tokens_with_prefixes)
+
+    (tokens_with_sigils)
     dup fetch
     $: [ 'colon     span ] case
     $( [ 'note      span ] case

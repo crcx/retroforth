@@ -10,7 +10,7 @@ This is a little experiment in combinator-driven HTML generation.
 :h1     (s-)   '<h1>      s:put s:put '</h1>     s:put nl ;
 :div    (q-)   '<div>     s:put call  '</div>    s:put nl ;
 :body   (q-)   '<body>    s:put call  '</body>   s:put nl ;
-:prefix:"      s:keep &s:put compile:call ; immediate
+:sigil:"       s:keep &s:put compile:call ; immediate
 ~~~
 
 Test case:

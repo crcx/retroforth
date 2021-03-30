@@ -722,7 +722,7 @@ handler, and a pointer to the start of the function. RETRO does
 the rest.
 
 In actual practice, I never use this outside of RETRO. New words
-are made using the `:` prefix, or `d:create` (once defined in
+are made using the `:` sigil, or `d:create` (once defined in
 the standard library). At some point I may simplify this by
 moving `d:create` into Rx and using it in place of `d:add-header`.
 
@@ -849,94 +849,94 @@ i drmure..
 
 An input token has a form like:
 
-    <prefix-char>string
+    <sigil>string
 
 RETRO will check the first character to see if it matches a
-known prefix. If it does, it will pass the string (sans prefix)
-to the prefix handler. If not, it will attempt to find the token
+known sigil. If it does, it will pass the string (sans sigil)
+to the sigil handler. If not, it will attempt to find the token
 in the dictionary.
 
-Prefixes are handled by functions with specific naming
-conventions. A prefix name should be:
+Sigils are handled by functions with specific naming
+conventions. A sigil name should be:
 
-    prefix:<prefix-char>
+    sigil:<sigil>
 
-Where <prefix-char> is the character for the prefix. These are
+Where <sigil> is the character for the sigil. These are
 compiler macros (using the `class:macro` class) and watch the
 `Compiler` to decide how to deal with the token. To find a
-prefix, RETRO stores the prefix character into a string named
-`prefixed`. It then searches for this string in the dictionary.
-If found, it sets an internal variable (`prefix:handler`) to
+sigil, RETRO stores the sigil character into a string named
+`sigil`. It then searches for this string in the dictionary.
+If found, it sets an internal variable (`sigil:handler`) to
 the dictionary entry for the handler function. If not found,
-`prefix:handler` is set to zero. The check, done by `prefix?`,
+`sigil:handler` is set to zero. The check, done by `sigil?`,
 also returns a flag.
 
-    '_         'prefix:no s:const
-    'prefix:_  'prefixed  s:const
+    '_        'sigil:no s:const
+    'sigil:_  'sigil    s:const
 
-    'prefix:handler var
+    'sigil:handler var
 
 ~~~
-: prefix:no
+: sigil:no
 d 32
 d 0
 
-: prefix:handler
+: sigil:handler
 d 0
 
-: prefixed
-s prefix:_
+: sigil
+s sigil:_
 ~~~
 
-    :prefix:prepare
-      fetch &prefixed #7 + store ;
+    :sigil:prepare
+      fetch &sigil #6 + store ;
 
 ~~~
-: prefix:prepare
+: sigil:prepare
 i feliliad
-r prefixed
-d 7
+r sigil
+d 6
 i stre....
 ~~~
 
-    :prefix:has-token?
-      dup s:length #1 0; drop-pair &prefix:no ;
+    :sigil:has-token?
+      dup s:length #1 0; drop-pair &sigil:no ;
 
 ~~~
-: prefix:has-token?
+: sigil:has-token?
 i dulica..
 r s:length
 i lieqzr..
 d 1
 i drdrlire
-r prefix:no
+r sigil:no
 ~~~
 
-    :prefix?
-      prefix:has-token? prefix:prepare &prefixed d:lookup
-      dup &prefix:handler store #0 -eq? ;
+    :sigil?
+      sigil:has-token? sigil:prepare &sigil d:lookup
+      dup &sigil:handler store #0 -eq? ;
 
 ~~~
-: prefix?
+: sigil?
 i lica....
-r prefix:has-token?
+r sigil:has-token?
 i lica....
-r prefix:prepare
+r sigil:prepare
 i lilica..
-r prefixed
+r sigil
 r d:lookup
 i dulistli
-r prefix:handler
+r sigil:handler
 d 0
 i nere....
 ~~~
 
-RETRO makes extensive use of prefixes for implementing major
-parts of the language, including  parsing numbers (prefix with
-`#`), obtaining pointers (prefix with `&`), and defining
-functions (using the `:` prefix).
+RETRO makes extensive use of sigils for implementing major
+parts of the language, including parsing numbers (`#` sigil),
+obtaining pointers (`&`), and defining functions (using the
+`:` sigil).
 
-| prefix | used for          | example |
+| sigil  | used for          | example |
 | ------ | ----------------- | ------- |
 | #      | numbers           | #100    |
 | $      | ASCII characters  | $e      |
@@ -944,38 +944,38 @@ functions (using the `:` prefix).
 | :      | definitions       | :foo    |
 | (      | Comments          | (n-)    |
 
-    :prefix:(  (s-)  drop ;
+    :sigil:(  (s-)  drop ;
 
 ~~~
-: prefix:(
+: sigil:(
 i drre....
 ~~~
 
-    :prefix:#  (s-n)  s:to-number class:data ;
+    :sigil:#  (s-n)  s:to-number class:data ;
 
 ~~~
-: prefix:#
+: sigil:#
 i lica....
 r s:to-number
 i liju....
 r class:data
 ~~~
 
-    :prefix:$  (s-c)  fetch class:data ;
+    :sigil:$  (s-c)  fetch class:data ;
 
 ~~~
-: prefix:$
+: sigil:$
 i feliju..
 r class:data
 ~~~
 
-    :prefix::  (s-)
+    :sigil::  (s-)
       &class:word &Heap fetch d:add-header
       &Heap fetch &Dictionary d:xt store
       #-1 &Compiler store ;
 
 ~~~
-: prefix::
+: sigil::
 i lilifeli
 r class:word
 r Heap
@@ -993,11 +993,11 @@ d -1
 r Compiler
 ~~~
 
-The `&` prefix is used to return the address of a named item.
+The `&` sigil is used to return the address of a named item.
 This will correspond to the `d:xt` field of the word header.
 In higher level Retro this would be:
 
-    :prefix:&  (s-a)  d:lookup d:xt fetch class:data ;
+    :sigil:&  (s-a)  d:lookup d:xt fetch class:data ;
 
 As an example:
 
@@ -1005,7 +1005,7 @@ As an example:
     &Heap fetch          (fetch_from_`Heap`)
 
 In the latter case, the use of `class:data` means that I
-don't *need* to use the `&` prefix, but I do this anyway as
+don't *need* to use the `&` sigil, but I do this anyway as
 I find it helps to provide a visual clue as to the intent of
 the code.
 
@@ -1013,13 +1013,13 @@ This is also useful with combinators. If you are only using
 a single word, using `&word` instead of `[ word ]` will be
 smaller and faster.
 
-For those familiar with traditional Forth, the `&` prefix
+For those familiar with traditional Forth, the `&` sigil
 replaces both `'` and `[']`.
 
-    :prefix:&  d:lookup d:xt fetch class:data ;
+    :sigil:&  d:lookup d:xt fetch class:data ;
 
 ~~~
-: prefix:&
+: sigil:&
 i lica....
 r d:lookup
 i lica....
@@ -1136,9 +1136,9 @@ r comma:opcode
 The *interpreter* is what processes input. What it does is:
 
 * Take a string
-* See if the first character has a prefix handler
+* See if the first character has a sigil handler
 
-  * Yes: pass the rest of the string to the prefix handler
+  * Yes: pass the rest of the string to the sigil handler
   * No: lookup in the dictionary
 
     * Found: pass xt of word to the class handler
@@ -1181,11 +1181,11 @@ i feju....
 : input:source
 d 0
 
-: interpret:prefix
+: interpret:sigil
 i ........
 i ........
 i lifezr..
-r prefix:handler
+r sigil:handler
 i lifeliad
 r input:source
 d 1
@@ -1197,7 +1197,7 @@ i lifeliju
 r Which
 r call:dt
 
-: interpret:noprefix
+: interpret:nosigil
 i lifelica
 r input:source
 r d:lookup
@@ -1214,11 +1214,11 @@ r _interpret
 : _interpret
 i dulistli
 r input:source
-r prefix?
+r sigil?
 i ca......
 i lililiju
-r interpret:prefix
-r interpret:noprefix
+r interpret:sigil
+r interpret:nosigil
 r choose
 ~~~
 
@@ -1603,9 +1603,9 @@ r class:word
 s -if
 : 0029
 r 0028
-r prefix:(
+r sigil:(
 r class:macro
-s prefix:(
+s sigil:(
 : 0030
 r 0029
 r Compiler
@@ -1688,24 +1688,24 @@ r class:word
 s d:add-header
 : 0046
 r 0045
-r prefix:#
+r sigil:#
 r class:macro
-s prefix:#
+s sigil:#
 : 0047
 r 0046
-r prefix::
+r sigil::
 r class:macro
-s prefix::
+s sigil::
 : 0048
 r 0047
-r prefix:&
+r sigil:&
 r class:macro
-s prefix:&
+s sigil:&
 : 0049
 r 0048
-r prefix:$
+r sigil:$
 r class:macro
-s prefix:$
+s sigil:$
 : 0050
 r 0049
 r repeat
@@ -1808,11 +1808,11 @@ s err:notfound
 | class:macro     | p-        | Class handler for immediate functions             |
 | class:data      | p-        | Class handler for data                            |
 | d:add-header    | saa-      | Add an item to the dictionary                     |
-| prefix:#        | s-        | # prefix for numbers                              |
-| prefix::        | s-        | : prefix for definitions                          |
-| prefix:&        | s-        | & prefix for pointers                             |
-| prefix:$        | s-        | $ prefix for ASCII characters                     |
-| prefix:(        | s-        | ( prefix for comments                             |
+| sigil:#         | s-        | # sigil for numbers                               |
+| sigil::         | s-        | : sigil for definitions                           |
+| sigil:&         | s-        | & sigil for pointers                              |
+| sigil:$         | s-        | $ sigil for ASCII characters                      |
+| sigil:(         | s-        | ( sigil for comments                              |
 | repeat          | -a        | Start an unconditional loop                       |
 | again           | a-        | End an unconditional loop                         |
 | interpret       | s-?       | Evaluate a token                                  |

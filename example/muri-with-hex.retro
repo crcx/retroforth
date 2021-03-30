@@ -65,7 +65,7 @@ be useful if you are running on a VM with an extended instruction
 set.
 
 When loaded, it will *replace* the original `i` with a jump to
-the one provided here, allowing existing words (like `prefix:\`)
+the one provided here, allowing existing words (like `sigil:\`)
 to use this instead.
 
 ----

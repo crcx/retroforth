@@ -18,14 +18,14 @@
 <b>Float:</b> -</p>
 </div>
 <p>Provide a visual indication of a code group.</p>
-<table><tr><td><b>Class:</b> </td><td>class:macro</td></tr><tr><td><b>Namespace:</b> </td><td>prefix</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
+<table><tr><td><b>Class:</b> </td><td>class:macro</td></tr><tr><td><b>Namespace:</b> </td><td>sigil</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
 <h2>)</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> -<br>
 <b>Addr:</b> -<br>
 <b>Float:</b> -</p>
 </div>
 <p>Provide a visual indication of a code group.</p>
-<table><tr><td><b>Class:</b> </td><td>class:macro</td></tr><tr><td><b>Namespace:</b> </td><td>prefix</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
+<table><tr><td><b>Class:</b> </td><td>class:macro</td></tr><tr><td><b>Namespace:</b> </td><td>sigil</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
 <h2>*</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> nn-n<br>
 <b>Addr:</b> -<br>
@@ -2725,166 +2725,6 @@
 </div>
 <p>Move a value from the return stack to the data stack.</p>
 <table><tr><td><b>Class:</b> </td><td>class:macro</td></tr><tr><td><b>Namespace:</b> </td><td>global</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
-<h2>prefix:!</h2>
-<div style='margin-left: 1em;'><p><b>Data:</b> ns-<br>
-<b>Addr:</b> -<br>
-<b>Float:</b> -</p>
-</div>
-<p>Store a value into a variable.</p>
-<p>Interpret Time:
-  Store a value into the named variable.</p>
-
-<p>Compile Time:
-  Compile the code to store a value into a named variable.</p>
-
-<table><tr><td><b>Class:</b> </td><td>class:macro</td></tr><tr><td><b>Namespace:</b> </td><td>prefix</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
-<h2>prefix:#</h2>
-<div style='margin-left: 1em;'><p><b>Data:</b> s-n<br>
-<b>Addr:</b> -<br>
-<b>Float:</b> -</p>
-</div>
-<p>Process token as a number.</p>
-<p>Interpret Time:
-  Convert the string into a number and leave on the stack.</p>
-
-<p>Compile Time:
-  Convert the string into a number and compile into the current definition as a literal.</p>
-
-<table><tr><td><b>Class:</b> </td><td>class:macro</td></tr><tr><td><b>Namespace:</b> </td><td>prefix</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
-<h2>prefix:$</h2>
-<div style='margin-left: 1em;'><p><b>Data:</b> s-c<br>
-<b>Addr:</b> -<br>
-<b>Float:</b> -</p>
-</div>
-<p>Process token as an ASCII character.</p>
-<p>Interpret Time:
-  Fetch first character from string. Leave on stack.</p>
-
-<p>Compile Time:
-  Fetch first character from the string. Compile into the current definition as  literal.</p>
-
-<table><tr><td><b>Class:</b> </td><td>class:macro</td></tr><tr><td><b>Namespace:</b> </td><td>prefix</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
-<h2>prefix:&amp;</h2>
-<div style='margin-left: 1em;'><p><b>Data:</b> s-a<br>
-<b>Addr:</b> -<br>
-<b>Float:</b> -</p>
-</div>
-<p>Return a pointer to a named item.</p>
-<p>Interpret Time:
-  Lookup name in dictionary, return contents of the xt field on the stack.</p>
-
-<p>Compile Time:
-  Lookup name in dictionary, compile code to push the contents of the xt field into the current definition.</p>
-
-<table><tr><td><b>Class:</b> </td><td>class:macro</td></tr><tr><td><b>Namespace:</b> </td><td>prefix</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
-<h2>prefix:'</h2>
-<div style='margin-left: 1em;'><p><b>Data:</b> s-s<br>
-<b>Addr:</b> -<br>
-<b>Float:</b> -</p>
-</div>
-<p>Process token as a string.</p>
-<p>Interpret Time:
-  Move string into temporary buffer. If `RewriteUnderscores` is `TRUE`, replace all instances of _ with space.</p>
-
-<p>Compile Time:
-  Move string into temporary buffer. If `RewriteUnderscores` is `TRUE`, replace all instances of _ with space. Then compile the string into the current definition.</p>
-
-<table><tr><td><b>Class:</b> </td><td>class:macro</td></tr><tr><td><b>Namespace:</b> </td><td>prefix</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
-<h2>prefix:(</h2>
-<div style='margin-left: 1em;'><p><b>Data:</b> s-<br>
-<b>Addr:</b> -<br>
-<b>Float:</b> -</p>
-</div>
-<p>Process token as a comment.</p>
-<p>Interpret Time:
-  Discard the string.</p>
-
-<p>Compile Time:
-  Discard the string.</p>
-
-<table><tr><td><b>Class:</b> </td><td>class:macro</td></tr><tr><td><b>Namespace:</b> </td><td>prefix</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
-<h2>prefix:.</h2>
-<div style='margin-left: 1em;'><p><b>Data:</b> s-<br>
-<b>Addr:</b> -<br>
-<b>Float:</b> -F</p>
-</div>
-<p>Interpret time: convert string to a floating point value. Compile time: convert string to a floating point value and compile code to push this value to the float stack.</p>
-<table><tr><td><b>Class:</b> </td><td>class:macro</td></tr><tr><td><b>Namespace:</b> </td><td>prefix</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><hr/>
-<h2>prefix::</h2>
-<div style='margin-left: 1em;'><p><b>Data:</b> s-<br>
-<b>Addr:</b> -<br>
-<b>Float:</b> -</p>
-</div>
-<p>Process token as a new definition.</p>
-<p>Interpret Time:
-  Create a header pointing to `here` with the provided string as the name. Sets class to `class:word`.</p>
-
-<table><tr><td><b>Class:</b> </td><td>class:macro</td></tr><tr><td><b>Namespace:</b> </td><td>prefix</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
-<h2>prefix:@</h2>
-<div style='margin-left: 1em;'><p><b>Data:</b> s-n<br>
-<b>Addr:</b> -<br>
-<b>Float:</b> -</p>
-</div>
-<p>Fetch from a stored variable.</p>
-<p>Interpret Time:
-  Fetch a value from a named variable.</p>
-
-<p>Compile Time:
-  Compile the code to fetch a value from a named variable into the current definition.</p>
-
-<table><tr><td><b>Class:</b> </td><td>class:macro</td></tr><tr><td><b>Namespace:</b> </td><td>prefix</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
-<h2>prefix:\</h2>
-<div style='margin-left: 1em;'><p><b>Data:</b> s-<br>
-<b>Addr:</b> -<br>
-<b>Float:</b> -</p>
-</div>
-<p>Process token as an instruction bundle.</p>
-<p>Interpret Time:
-  Discard the string.</p>
-
-<p>Compile Time:
-  Assemble the opcodes in the string and use `,` to inline it into the current definition.</p>
-
-<table><tr><td><b>Class:</b> </td><td>class:macro</td></tr><tr><td><b>Namespace:</b> </td><td>prefix</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
-<h2>prefix:^</h2>
-<div style='margin-left: 1em;'><p><b>Data:</b> s-<br>
-<b>Addr:</b> -<br>
-<b>Float:</b> -</p>
-</div>
-<p>Process token as a function reference.</p>
-<p>Interpret Time:
-  Discard the string.</p>
-
-<p>Compile Time:
-  Comma the XT of the word into the current definition.</p>
-
-<table><tr><td><b>Class:</b> </td><td>class:macro</td></tr><tr><td><b>Namespace:</b> </td><td>prefix</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
-<h2>prefix:`</h2>
-<div style='margin-left: 1em;'><p><b>Data:</b> s-<br>
-<b>Addr:</b> -<br>
-<b>Float:</b> -</p>
-</div>
-<p>Process token as a bytecode.</p>
-<p>Interpret Time:
-  Discard the string.</p>
-
-<p>Compile Time:
-  Convert the string to a number and use `,` to inline it into the current definition.</p>
-
-<table><tr><td><b>Class:</b> </td><td>class:macro</td></tr><tr><td><b>Namespace:</b> </td><td>prefix</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
-<h2>prefix:|</h2>
-<div style='margin-left: 1em;'><p><b>Data:</b> s-<br>
-<b>Addr:</b> -<br>
-<b>Float:</b> -</p>
-</div>
-<p>POSTPONE equivalent.</p>
-<p>Interpret Time:
-  Discard the string.</p>
-
-<p>Compile Time:
-  Convert the string to a number and use `,` to inline it into the current definition.</p>
-
-<table><tr><td><b>Class:</b> </td><td>class:macro</td></tr><tr><td><b>Namespace:</b> </td><td>prefix</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
 <h2>primitive</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> -<br>
 <b>Addr:</b> -<br>
@@ -3395,6 +3235,166 @@
 </div>
 <p>Peform a bitwise shift of m by n bits. If n is positive, shift right. If negative, the shift will be to the left.</p>
 <table><tr><td><b>Class:</b> </td><td>class:primitive</td></tr><tr><td><b>Namespace:</b> </td><td>global</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
+<h2>sigil:!</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> ns-<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Store a value into a variable.</p>
+<p>Interpret Time:
+  Store a value into the named variable.</p>
+
+<p>Compile Time:
+  Compile the code to store a value into a named variable.</p>
+
+<table><tr><td><b>Class:</b> </td><td>class:macro</td></tr><tr><td><b>Namespace:</b> </td><td>sigil</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
+<h2>sigil:#</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> s-n<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Process token as a number.</p>
+<p>Interpret Time:
+  Convert the string into a number and leave on the stack.</p>
+
+<p>Compile Time:
+  Convert the string into a number and compile into the current definition as a literal.</p>
+
+<table><tr><td><b>Class:</b> </td><td>class:macro</td></tr><tr><td><b>Namespace:</b> </td><td>sigil</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
+<h2>sigil:$</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> s-c<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Process token as an ASCII character.</p>
+<p>Interpret Time:
+  Fetch first character from string. Leave on stack.</p>
+
+<p>Compile Time:
+  Fetch first character from the string. Compile into the current definition as  literal.</p>
+
+<table><tr><td><b>Class:</b> </td><td>class:macro</td></tr><tr><td><b>Namespace:</b> </td><td>sigil</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
+<h2>sigil:&amp;</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> s-a<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Return a pointer to a named item.</p>
+<p>Interpret Time:
+  Lookup name in dictionary, return contents of the xt field on the stack.</p>
+
+<p>Compile Time:
+  Lookup name in dictionary, compile code to push the contents of the xt field into the current definition.</p>
+
+<table><tr><td><b>Class:</b> </td><td>class:macro</td></tr><tr><td><b>Namespace:</b> </td><td>sigil</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
+<h2>sigil:'</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> s-s<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Process token as a string.</p>
+<p>Interpret Time:
+  Move string into temporary buffer. If `RewriteUnderscores` is `TRUE`, replace all instances of _ with space.</p>
+
+<p>Compile Time:
+  Move string into temporary buffer. If `RewriteUnderscores` is `TRUE`, replace all instances of _ with space. Then compile the string into the current definition.</p>
+
+<table><tr><td><b>Class:</b> </td><td>class:macro</td></tr><tr><td><b>Namespace:</b> </td><td>sigil</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
+<h2>sigil:(</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> s-<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Process token as a comment.</p>
+<p>Interpret Time:
+  Discard the string.</p>
+
+<p>Compile Time:
+  Discard the string.</p>
+
+<table><tr><td><b>Class:</b> </td><td>class:macro</td></tr><tr><td><b>Namespace:</b> </td><td>sigil</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
+<h2>sigil:.</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> s-<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -F</p>
+</div>
+<p>Interpret time: convert string to a floating point value. Compile time: convert string to a floating point value and compile code to push this value to the float stack.</p>
+<table><tr><td><b>Class:</b> </td><td>class:macro</td></tr><tr><td><b>Namespace:</b> </td><td>sigil</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><hr/>
+<h2>sigil::</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> s-<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Process token as a new definition.</p>
+<p>Interpret Time:
+  Create a header pointing to `here` with the provided string as the name. Sets class to `class:word`.</p>
+
+<table><tr><td><b>Class:</b> </td><td>class:macro</td></tr><tr><td><b>Namespace:</b> </td><td>sigil</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
+<h2>sigil:@</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> s-n<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Fetch from a stored variable.</p>
+<p>Interpret Time:
+  Fetch a value from a named variable.</p>
+
+<p>Compile Time:
+  Compile the code to fetch a value from a named variable into the current definition.</p>
+
+<table><tr><td><b>Class:</b> </td><td>class:macro</td></tr><tr><td><b>Namespace:</b> </td><td>sigil</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
+<h2>sigil:\</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> s-<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Process token as an instruction bundle.</p>
+<p>Interpret Time:
+  Discard the string.</p>
+
+<p>Compile Time:
+  Assemble the opcodes in the string and use `,` to inline it into the current definition.</p>
+
+<table><tr><td><b>Class:</b> </td><td>class:macro</td></tr><tr><td><b>Namespace:</b> </td><td>sigil</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
+<h2>sigil:^</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> s-<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Process token as a function reference.</p>
+<p>Interpret Time:
+  Discard the string.</p>
+
+<p>Compile Time:
+  Comma the XT of the word into the current definition.</p>
+
+<table><tr><td><b>Class:</b> </td><td>class:macro</td></tr><tr><td><b>Namespace:</b> </td><td>sigil</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
+<h2>sigil:`</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> s-<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Process token as a bytecode.</p>
+<p>Interpret Time:
+  Discard the string.</p>
+
+<p>Compile Time:
+  Convert the string to a number and use `,` to inline it into the current definition.</p>
+
+<table><tr><td><b>Class:</b> </td><td>class:macro</td></tr><tr><td><b>Namespace:</b> </td><td>sigil</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
+<h2>sigil:|</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> s-<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>POSTPONE equivalent.</p>
+<p>Interpret Time:
+  Discard the string.</p>
+
+<p>Compile Time:
+  Convert the string to a number and use `,` to inline it into the current definition.</p>
+
+<table><tr><td><b>Class:</b> </td><td>class:macro</td></tr><tr><td><b>Namespace:</b> </td><td>sigil</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
 <h2>sip</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> nq-n<br>
 <b>Addr:</b> -<br>

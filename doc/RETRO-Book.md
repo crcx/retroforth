@@ -637,7 +637,7 @@ name it:
 :palindrome? dup s:reverse s:eq? ;
 ```
 
-Naming uses the `:` prefix to add a new word to the dictionary.
+Naming uses the `:` sigil to add a new word to the dictionary.
 The words that make up the definition are then placed, with a
 final word (`;`) ending the definition. We can then use this:
 
@@ -661,12 +661,12 @@ Input is divided into a series of whitespace delimited tokens.
 Each of these is then processed individually. There are no
 parsing words in RETRO.
 
-Tokens may have a single character *prefix*, which RETRO will
+Tokens may have a single character *sigil*, which RETRO will
 use to decide how to process the token.
 
-## Prefixes
+## Sigils
 
-Prefixes are single characters added to the start of a token
+Sigils are single characters added to the start of a token
 to guide the compiler. The use of these is a major way in
 which RETRO differs from traditional Forth.
 
@@ -696,24 +696,24 @@ like:
 In RETRO, the interpret process is basically:
 
     get token
-    does the first character match a `prefix:` word?
-      yes: pass the token to the prefix handler
+    does the first character match a `sigil:` word?
+      yes: pass the token to the sigil handler
       no:  is token a word in the dictionary?
            yes: push the XT to the stack and call the
                 class handler
            no:  report an error ("not found")
 
 All of the actual logic for how to deal with tokens is moved
-to the individual prefix handlers, and the logic for handling
+to the individual sigil handlers, and the logic for handling
 words is moved to word class handlers.
 
-This means that prefixes are used for a lot of things. Numbers?
-Handled by a `#` prefix. Strings? Use the `'` prefix. Comments?
-Use `(`. Making a new word? Use the `:` prefix.
+This means that sigils are used for a lot of things. Numbers?
+Handled by a `#` sigil. Strings? Use the `'` sigil. Comments?
+Use `(`. Making a new word? Use the `:` sigil.
 
-The major prefixes are:
+The major sigils are:
 
-    | Prefix | Used For                      |
+    | Sigil  | Used For                      |
     | ------ | ----------------------------- |
     | @      | Fetch from variable           |
     | !      | Store into variable           |
@@ -724,7 +724,7 @@ The major prefixes are:
     | (      | Comments                      |
     | :      | Define a word                 |
 
-The individual prefixes will be covered in more detail in the
+The individual sigils will be covered in more detail in the
 later chapters on working with different data types.
 
 ## Word Classes
@@ -1083,7 +1083,7 @@ Word names in RETRO generally follow the following conventions.
 
 * Readability is important
 * Be consistent
-* Don't use a prefix as the first character of a name
+* Don't use a sigil as the first character of a name
 * Don't use underscores in word names
 * Use short names for indices
 * Word names start with a `-` for "not"
@@ -1138,7 +1138,7 @@ The common namespaces are:
     | err:    | Words for handling errors                              |
     | io:     | General I/O words                                      |
     | n:      | Words operating on numeric data                        |
-    | prefix: | Contains prefix handlers                               |
+    | sigil:  | Contains sigil handlers                                |
     | s:      | Words operating on string data                         |
     | v:      | Words operating on variables                           |
     | file:   | File I/O words                                         |
@@ -1147,15 +1147,15 @@ The common namespaces are:
 
 ## Tips
 
-### Don't Start Names With Prefix Characters
+### Don't Start Names With Sigil Characters
 
-Avoid using a prefix as the first character of a word name. RETRO
-will look for prefixes first, this will prevent direct use of
+Avoid using a sigil as the first character of a word name. RETRO
+will look for sigils first, this will prevent direct use of
 the work in question.
 
-To find a list of prefix characters, do:
+To find a list of sigil characters, do:
 
-    'prefix: d:words-with
+    'sigil: d:words-with
 
 ### Don't Use Underscores
 
@@ -1441,7 +1441,7 @@ Instead of:
 
     i dudumu..
 
-The runtime assembler also provides three prefixes for use in
+The runtime assembler also provides three sigils for use in
 inlining machine code into a definition. These are:
 
      \    Treat token as an assembly sequence
@@ -1618,9 +1618,9 @@ buffer:start s:put nl
 
 RETRO provides words for working with ASCII characters.
 
-## Prefix
+## Sigil
 
-Character constants are returned using the `$` prefix.
+Character constants are returned using the `$` sigil.
 
 ## Namespace
 
@@ -1812,7 +1812,7 @@ precision (1 bit for the sign, 11 bits for the exponent, and
 the remaining 52 bits for the value), i.e. 15 decimal digits
 of precision.
 
-## Prefix
+## Sigil
 
 Floating point numbers start with a `.`
 
@@ -2213,9 +2213,9 @@ two forms.
 
 Numbers in RETRO are signed integers.
 
-## Token Prefix
+## Sigil
 
-All numbers start with a `#` prefix.
+All numbers start with a `#` sigil.
 
 ## Namespace
 
@@ -2294,9 +2294,9 @@ To display a number, use `n:put`.
 
 # Working With Pointers
 
-## Prefix
+## Sigil
 
-Pointers are returned by the `&` prefix.
+Pointers are returned by the `&` sigil.
 
 ## Examples
 
@@ -2550,7 +2550,7 @@ strings can contain UTF8 encoded data if the host platform
 allows. Words like `s:length` will return the number of bytes,
 not the number of logical characters in this case.
 
-## Prefix
+## Sigil
 
 Strings begin with a single `'`.
 
@@ -3746,7 +3746,7 @@ listener:
     stack_push(1024);
     execute("interpret", memory[2]);
 
-The `interpret` word handles things like prefixes, so this is
+The `interpret` word handles things like sigils, so this is
 needed if you want to run something that needs those.
 
 # Historical Papers and Notes
@@ -4103,7 +4103,7 @@ Sources:
 - http://forth.works/c812416f397af11db58e97388a3238f2
 - gopher://forth.works/0/c812416f397af11db58e97388a3238f2
 
-## Prefixes as a Language Element
+## Sigils as a Language Element
 
 A big change in RETRO 12 was the elimination of the traditional
 parser from the language. This was a sacrifice due to the lack
@@ -4115,26 +4115,26 @@ And so `interpret` operates only on the current token. The core
 language does not track what came before or attempt to guess at
 what might come in the future.
 
-This leads into the prefixes. RETRO 11 had a complicated system
-for prefixes, with different types of prefixes for words that
+This leads into the sigils. RETRO 11 had a complicated system
+for sigils, with different types of sigilss for words that
 parsed ahead (e.g., strings) and words that operated on the
 current token (e.g., `@`). RETRO 12 eliminates all of these in
-favor of just having a single prefix model.
+favor of just having a single sigil model.
 
 The first thing `interpret` does is look to see if the first
-character in a token matches a `prefix:` word. If it does, it
-passes the rest of the token as a string pointer to the prefix
-specific handler to deal with. If there is no valid prefix
+character in a token matches a `sigil:` word. If it does, it
+passes the rest of the token as a string pointer to the sigil
+specific handler to deal with. If there is no valid sigil
 found, it tries to find it in the dictionary. Assuming that it
 finds the words, it passes the `d:xt` field to the handler that
 `d:class` points to. Otherwise it calls `err:notfound`.
 
 This has an important implication: *words can not reliably
-have names that start with a prefix character.*
+have names that start with a sigil character.*
 
 It also simplifies things. Anything that would normally parse
-becomes a prefix handler. So creating a new word? Use the `:`
-prefix. Strings? Use `'`. Pointers? Try `&`. And so on. E.g.,
+becomes a sigil handler. So creating a new word? Use the `:`
+sigil. Strings? Use `'`. Pointers? Try `&`. And so on. E.g.,
 
     In ANS                  | In RETRO
     : foo ... ;             | :foo ... ;
@@ -4142,12 +4142,12 @@ prefix. Strings? Use `'`. Pointers? Try `&`. And so on. E.g.,
     : bar ... ['] foo ;     | :bar ... &foo ;
     s" hello world!"        | 'hello_world!
 
-If you are familiar with ColorForth, prefixes are a similar
+If you are familiar with ColorForth, sigils are a similar
 idea to colors, but can be defined by the user as normal words.
 
 After doing this for quite a while I rather like it. I can see
 why Chuck Moore eventually went towards ColorForth as using
-color (or prefixes in my case) does simplify the implementation
+color (or sigils in my case) does simplify the implementation
 in many ways.
 
 ## On The Kernel Wordset
@@ -4187,14 +4187,14 @@ Compiler & Interpreter
     Compiler    Heap        ;       [    ]      Dictionary
     d:link      d:class     d:xt    d:name      d:add-header
     class:word  class:primitive     class:data  class:macro
-    prefix::    prefix:#    prefix:&    prefix:$
+    sigil::     sigil:#     sigil:& sigil:$
     interpret   d:lookup    err:notfound
 
 Assembler
 
     i           d           r
 
-I *could* slightly reduce this. The $ prefix could be defined in
+I *could* slightly reduce this. The $ sigil could be defined in
 higher level code, and I don't strictly *need* to expose the
 `fetch-next` and `store-next` here. But since the are already
 implemented as dependencies of the words in the kernel, it would
@@ -4440,9 +4440,9 @@ Consider:
     'test_name var
     #188 !test_name
 
-In the first case, the `:` prefix handles the token, so the
+In the first case, the `:` sigil handles the token, so the
 underscore is not remapped to a space, creating a word name as
-`hello_msg`. But in the second, the `'` prefix remaps the
+`hello_msg`. But in the second, the `'` sigil remaps the
 underscore to a space, giving a variable name of `test name`.
 In the third line, the name lookup will fail as `test_name` is
 not defined, so the store will be done to an incorrect address.

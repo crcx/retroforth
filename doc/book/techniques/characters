@@ -2,9 +2,9 @@
 
 RETRO provides words for working with ASCII characters.
 
-## Prefix
+## Sigil
 
-Character constants are returned using the `$` prefix.
+Character constants are returned using the `$` sigil.
 
 ## Namespace
 

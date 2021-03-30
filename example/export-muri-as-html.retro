@@ -66,7 +66,7 @@ Everything else gets treated as text.
   (ignore_empty_tokens)
   dup s:length n:zero? [ drop ] if;
 
-  (tokens_with_prefixes)
+  (tokens_with_sigils)
   dup fetch
   $: [ 'name      span ] case
   $s [ 'string    span ] case

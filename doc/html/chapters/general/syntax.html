@@ -56,12 +56,12 @@ Input is divided into a series of whitespace delimited tokens.
 Each of these is then processed individually. There are no
 parsing words in RETRO.
 <br/><br/>
-Tokens may have a single character <strong>prefix</strong>, which RETRO will
+Tokens may have a single character <strong>sigil</strong>, which RETRO will
 use to decide how to process the token.
 <br/><br/>
-<span class="h2">Prefixes</span>
+<span class="h2">Sigils</span>
 <br/><br/>
-Prefixes are single characters added to the start of a token
+Sigils are single characters added to the start of a token
 to guide the compiler. The use of these is a major way in
 which RETRO differs from traditional Forth.
 <br/><br/>
@@ -91,24 +91,24 @@ like:
 In RETRO, the interpret process is basically:
 <br/><br/>
 <tt class='indentedcode'>get&nbsp;token</tt>
-<tt class='indentedcode'>does&nbsp;the&nbsp;first&nbsp;character&nbsp;match&nbsp;a&nbsp;`prefix:`&nbsp;word?</tt>
-<tt class='indentedcode'>&nbsp;&nbsp;yes:&nbsp;pass&nbsp;the&nbsp;token&nbsp;to&nbsp;the&nbsp;prefix&nbsp;handler</tt>
+<tt class='indentedcode'>does&nbsp;the&nbsp;first&nbsp;character&nbsp;match&nbsp;a&nbsp;`sigil:`&nbsp;word?</tt>
+<tt class='indentedcode'>&nbsp;&nbsp;yes:&nbsp;pass&nbsp;the&nbsp;token&nbsp;to&nbsp;the&nbsp;sigil&nbsp;handler</tt>
 <tt class='indentedcode'>&nbsp;&nbsp;no:&nbsp;&nbsp;is&nbsp;token&nbsp;a&nbsp;word&nbsp;in&nbsp;the&nbsp;dictionary?</tt>
 <tt class='indentedcode'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;yes:&nbsp;push&nbsp;the&nbsp;XT&nbsp;to&nbsp;the&nbsp;stack&nbsp;and&nbsp;call&nbsp;the</tt>
 <tt class='indentedcode'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class&nbsp;handler</tt>
 <tt class='indentedcode'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;no:&nbsp;&nbsp;report&nbsp;an&nbsp;error&nbsp;("not&nbsp;found")</tt>
 <br/><br/>
 All of the actual logic for how to deal with tokens is moved
-to the individual prefix handlers, and the logic for handling
+to the individual sigil handlers, and the logic for handling
 words is moved to word class handlers.
 <br/><br/>
-This means that prefixes are used for a lot of things. Numbers?
-Handled by a <span class="tt">#</span> prefix. Strings? Use the <span class="tt">'</span> prefix. Comments?
-Use <span class="tt">(</span>. Making a new word? Use the <span class="tt">:</span> prefix.
+This means that sigils are used for a lot of things. Numbers?
+Handled by a <span class="tt">#</span> sigil. Strings? Use the <span class="tt">'</span> sigil. Comments?
+Use <span class="tt">(</span>. Making a new word? Use the <span class="tt">:</span> sigil.
 <br/><br/>
-The major prefixes are:
+The major sigils are:
 <br/><br/>
-<tt class='indentedcode'>|&nbsp;Prefix&nbsp;|&nbsp;Used&nbsp;For&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;Sigil&nbsp;&nbsp;|&nbsp;Used&nbsp;For&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
 <tt class='indentedcode'>|&nbsp;------&nbsp;|&nbsp;-----------------------------&nbsp;|</tt>
 <tt class='indentedcode'>|&nbsp;@&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;Fetch&nbsp;from&nbsp;variable&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
 <tt class='indentedcode'>|&nbsp;!&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;Store&nbsp;into&nbsp;variable&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
@@ -119,7 +119,7 @@ The major prefixes are:
 <tt class='indentedcode'>|&nbsp;(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;Comments&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
 <tt class='indentedcode'>|&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;Define&nbsp;a&nbsp;word&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
 <br/><br/>
-The individual prefixes will be covered in more detail in the
+The individual sigils will be covered in more detail in the
 later chapters on working with different data types.
 <br/><br/>
 <span class="h2">Word Classes</span>

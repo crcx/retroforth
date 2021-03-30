@@ -2,9 +2,9 @@
 
 Numbers in RETRO are signed integers.
 
-## Token Prefix
+## Sigil
 
-All numbers start with a `#` prefix.
+All numbers start with a `#` sigil.
 
 ## Namespace
 

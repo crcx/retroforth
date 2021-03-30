@@ -9,7 +9,7 @@ strings can contain UTF8 encoded data if the host platform
 allows. Words like `s:length` will return the number of bytes,
 not the number of logical characters in this case.
 
-## Prefix
+## Sigil
 
 Strings begin with a single `'`.
 
