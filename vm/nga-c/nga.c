@@ -267,8 +267,44 @@ Handler instructions[] = {
 };
 
 void process_opcode(CELL opcode) {
+#ifdef FAST
+  switch (opcode) {
+    case 0: break;
+    case 1: inst_li(); break;
+    case 2: inst_du(); break;
+    case 3: inst_dr(); break;
+    case 4: inst_sw(); break;
+    case 5: inst_pu(); break;
+    case 6: inst_po(); break;
+    case 7: inst_ju(); break;
+    case 8: inst_ca(); break;
+    case 9: inst_cc(); break;
+    case 10: inst_re(); break;
+    case 11: inst_eq(); break;
+    case 12: inst_ne(); break;
+    case 13: inst_lt(); break;
+    case 14: inst_gt(); break;
+    case 15: inst_fe(); break;
+    case 16: inst_st(); break;
+    case 17: inst_ad(); break;
+    case 18: inst_su(); break;
+    case 19: inst_mu(); break;
+    case 20: inst_di(); break;
+    case 21: inst_an(); break;
+    case 22: inst_or(); break;
+    case 23: inst_xo(); break;
+    case 24: inst_sh(); break;
+    case 25: inst_zr(); break;
+    case 26: inst_ha(); break;
+    case 27: inst_ie(); break;
+    case 28: inst_iq(); break;
+    case 29: inst_ii(); break;
+    default: break;
+  }
+#else
   if (opcode != 0)
     instructions[opcode]();
+#endif
 }
 
 int validate_opcode_bundle(CELL opcode) {
