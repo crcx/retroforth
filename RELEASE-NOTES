@@ -30,6 +30,8 @@
   - removed unused variables
   - use a struct for processor state, stacks
   - sockets interface now optional, disabled by default
+  - dev-image.c removed (`image:save` is now written in Retro)
+  - faster opcode processing (enabled by default on Unix)
 
 - nga-816
 
