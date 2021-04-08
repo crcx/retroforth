@@ -1,0 +1,611 @@
+# File I/O
+
+The file device (device type 4) adds support for generic file I/O
+that is similar to the C standard library on Unix. On a Unix host
+these are very thin wrappers over fopen(), fclose(), etc. For non
+Unix hosts, implementing these may take much more work, and it may
+be preferable to design a file I/O device that models the host
+expectations.
+
+~~~
+{{
+  'Files var
+  :identify
+    @Files n:zero? 0; drop
+      #4 io:scan-for dup n:negative?
+      [ drop 'IO_DEVICE_TYPE_0004_NOT_FOUND s:put nl ]
+      [ !Files ] choose ;
+---reveal---
+  :file:operation identify @Files io:invoke ;
+}}
+~~~
+
+First up, constants for the file modes.
+
+| #  | Used For                     |
+| -- | ---------------------------- |
+| R  | Mode for READING             |
+| W  | Mode for WRITING             |
+| A  | Mode for APPENDING           |
+| R+ | Mode for READING and WRITING |
+
+~~~
+#0 'file:R  const
+#1 'file:W  const
+#2 'file:A  const
+#3 'file:R+ const
+~~~
+
+For opening a file, provide the file name and mode. This will return
+a number identifying the file handle.
+
+~~~
+:file:open  (sm-h) #0 file:operation ;
+~~~
+
+Given a file handle, close the file.
+
+~~~
+:file:close (h-) #1 file:operation ;
+~~~
+
+Given a file handle, read a character.
+
+~~~
+:file:read  (h-c) #2 file:operation ;
+~~~
+
+Write a character to an open file.
+
+~~~
+:file:write (ch-) #3 file:operation ;
+~~~
+
+Return the current pointer within a file.
+
+~~~
+:file:tell  (h-n) #4 file:operation ;
+~~~
+
+Move the file pointer to the specified location.
+
+~~~
+:file:seek  (nh-) #5 file:operation ;
+~~~
+
+Return the size of the opened file.
+
+~~~
+:file:size  (h-n) #6 file:operation ;
+~~~
+
+Given a file name, delete the file.
+
+~~~
+:file:delete (s-) #7 file:operation ;
+~~~
+
+Flush pending writes to disk.
+
+~~~
+:file:flush (f-) #8 file:operation ;
+~~~
+
+Given a file name, return `TRUE` if it exists or `FALSE` otherwise.
+
+~~~
+:file:exists?  (s-f)
+  file:R file:open dup n:-zero?
+  [ file:close TRUE ]
+  [ drop FALSE      ] choose ;
+~~~
+
+
+~~~
+:file:open-for-reading (s-nn)
+  file:R file:open dup file:size swap ;
+
+:file:open-for-append (s-nn)
+  file:A file:open dup file:size swap ;
+
+:file:open-for-writing (s-n)
+  file:W file:open ;
+~~~
+
+With that out of the way, we can begin building higher level functionality.
+
+The first of these reads a line from the file. This is read to `here`; move
+it somewhere safe if you need to keep it around.
+
+The second goes with it. The `for-each-line` word will invoke a combinator
+once for each line in a file. This makes some things trivial. E.g., a simple
+'cat' implementation could be as simple as:
+
+  'filename [ s:put nl ] file:for-each-line
+
+~~~
+{{
+  'FID var
+  'Size var
+  'Action var
+  'Buffer var
+  :-eof? (-f) @FID file:tell @Size lt? ;
+  :preserve (q-) &FID [ &Size &call v:preserve ] v:preserve ;
+---reveal---
+  :file:read-line (f-s)
+    !FID
+    [ here dup !Buffer buffer:set
+      [ @FID file:read dup buffer:add
+        [ ASCII:CR eq? ] [ ASCII:LF eq? ] [ ASCII:NUL eq? ] tri or or ] until
+        buffer:get drop ] buffer:preserve
+    @Buffer ;
+
+  :file:for-each-line (sq-)
+    [ !Action
+      file:open-for-reading !FID !Size
+      [ @FID file:read-line @Action call -eof? ] while
+      @FID file:close
+    ] preserve ;
+}}
+~~~
+
+`file:slurp` reads a file into a buffer.
+
+~~~
+{{
+  'FID var
+---reveal---
+  :file:slurp (as-)
+    [ swap buffer:set file:open-for-reading !FID
+      [ @FID file:read buffer:add ] times
+      @FID file:close
+    ] buffer:preserve ;
+}}
+~~~
+
+`file:spew` writes a string to a file.
+
+~~~
+:file:spew (ss-)
+  file:open-for-writing swap [ over file:write ] s:for-each file:close ;
+~~~
+
+# Floating Point
+
+On Unix hosts, the floating point stack provides a set of
+words building on the C `double` data type. In most cases,
+this will be a 64-bit, IEEE 754 double precision floating
+point format.
+
+
+~~~
+:float:operation #2 io:scan-for io:invoke ;
+~~~
+
+The initial set of words build directly over the core
+floating point device functionality, which on a Unix host
+maps closely to C and `libm`.
+
+~~~
+:n:to-float  (n-_f:-n)   #0 float:operation ;
+:s:to-float  (s-_f:-n)   #1 float:operation ;
+:f:to-number (f:a-__-n)  #2 float:operation ;
+:f:to-string (f:n-__-s) s:empty dup #3 float:operation ;
+:f:+     (f:ab-c)    #4 float:operation ;
+:f:-     (f:ab-c)    #5 float:operation ;
+:f:*     (f:ab-c)    #6 float:operation ;
+:f:/     (f:ab-c)    #7 float:operation ;
+:f:floor (f:ab-c)    #8 float:operation ;
+:f:ceiling (f:f-f)   #9 float:operation ;
+:f:sqrt  (f:f-f)    #10 float:operation ;
+:f:eq?   (f:ab-c)   #11 float:operation ;
+:f:-eq?  (f:ab-c)   #12 float:operation ;
+:f:lt?   (f:ab-c)   #13 float:operation ;
+:f:gt?   (f:ab-c)   #14 float:operation ;
+:f:depth (-n)       #15 float:operation ;
+:f:dup   (f:a-aa)   #16 float:operation ;
+:f:drop  (f:a-)     #17 float:operation ;
+:f:swap  (f:ab-ba)  #18 float:operation ;
+:f:log   (f:ab-c)   #19 float:operation ;
+:f:power (f:ab-c)   #20 float:operation ;
+:f:sin   (f:f-f)    #21 float:operation ;
+:f:cos   (f:f-f)    #22 float:operation ;
+:f:tan   (f:f-f)    #23 float:operation ;
+:f:asin  (f:f-f)    #24 float:operation ;
+:f:acos  (f:f-f)    #25 float:operation ;
+:f:atan  (f:f-f)    #26 float:operation ;
+:f:push  (f:f-)     #27 float:operation ;
+:f:pop   (f:-f)     #28 float:operation ;
+:f:adepth  (-n)     #29 float:operation ;
+~~~
+
+Above this, additional functions are defined. First are words
+to aid in structuring the floating point stack.
+
+~~~
+:f:over  (f:ab-aba) f:push f:dup f:pop f:swap ;
+:f:tuck  (f:ab-bab) f:dup f:push f:swap f:pop ;
+:f:nip   (f:ab-b)   f:swap f:drop ;
+:f:drop-pair (f:ab-) f:drop f:drop ;
+:f:dup-pair (f:ab-abab) f:over f:over ;
+:f:rot  (f:abc-bca)  f:push f:swap f:pop f:swap ;
+~~~
+
+Then a word to allow creation of floating point values via a
+`.` sigil.
+
+~~~
+:sigil:. (s-__f:-a)
+  compiling? &s:keep &s:temp choose &s:to-float class:word ; immediate
+~~~
+
+~~~
+:f:square (f:n-m)   f:dup f:* ;
+:f:positive? (-f__f:a-) #0 n:to-float f:gt? ;
+:f:negative? (-f__f:a-) #0 n:to-float f:lt? ;
+:f:negate (f:a-b)  #-1 n:to-float f:* ;
+:f:abs    (f:a-b)  f:dup f:negative? &f:negate if ;
+:f:put  (f:a-) f:to-string s:put ;
+
+:f:PI   (f:-F) .3.141592 ;
+:f:E    (f:-F) .2.718281 ;
+:f:NAN  (f:-n) .0 .0 f:/ ;
+:f:INF  (f:-n) .1.0 .0 f:/ ;
+:f:-INF (f:-n) .-1.0 .0 f:/ ;
+:f:nan? (f:n-,-f)  f:dup f:-eq? ;
+:f:inf? (f:n-,-f)  f:INF f:eq? ;
+:f:-inf? (f:n-,-f) f:-INF f:eq? ;
+:f:round (-|f:a-b)
+  f:dup f:negative?
+  [ .0.5 f:- f:ceiling ]
+  [ .0.5 f:+ f:floor   ] choose ;
+:f:min   (f:nn-n)  f:dup-pair f:lt? &f:drop &f:nip choose ;
+:f:max   (f:nn-n)  f:dup-pair f:gt? &f:drop &f:nip choose ;
+:f:limit (f:nlu-n) f:swap f:push f:min f:pop f:max ;
+:f:between? (f:nlu-n) f:rot f:dup f:push f:rot f:rot f:limit f:pop f:eq? ;
+:f:inc   (f:n-n)   .1 f:+ ;
+:f:dec   (f:n-n)   .1 f:- ;
+:f:case  (f:ff-,q-)
+  f:over f:eq? [ f:drop call #-1 ] [ drop #0 ] choose 0; pop drop-pair ;
+:f:sign (-n|f:a-)
+  f:dup .0 f:eq? [ #0 f:drop ] if;
+  .0 f:gt? [ #1 ] [ #-1 ] choose ;
+~~~
+
+---------------------------------------------------------------
+
+# Floating Point Encoding
+
+This implements a means of encoding floating point values
+into signed integer cells. The technique is described in
+the paper titled "Encoding floating point numbers to shorter
+integers" by Kiyoshi Yoneda and Charles Childers.
+
+This will extend the `f:` vocabulary and adds a new `e:`
+vocabulary.
+
+## Code & Commentary
+
+Define some constants. The range is slightly reduced from
+the standard  integer range as the smallest value is used
+for NaN.
+
+~~~
+n:MAX n:dec          'e:MAX const
+n:MAX n:dec n:negate 'e:MIN const
+n:MIN                'e:NAN const
+n:MAX                'e:INF const
+n:MAX n:negate       'e:-INF const
+~~~
+
+~~~
+:e:n?    (u-f) e:MIN n:inc e:MAX n:dec n:between? ;
+:e:max?  (u-f) e:MAX   eq? ;
+:e:min?  (u-f) e:MIN   eq? ;
+:e:zero? (u-f) n:zero?     ;
+:e:nan?  (u-f) e:NAN   eq? ;
+:e:inf?  (u-f) e:INF   eq? ;
+:e:-inf? (u-f) e:-INF  eq? ;
+:e:clip  (u-u) e:MIN e:MAX n:limit ;
+~~~
+
+Since 32-bit cells take about 9 decimal digits, if you set
+
+    `[ .1e5 ] &f:E1 set-hook`
+
+you will have 5 decimal digits left for the integer part of
+the encoded number, which corresponds to 8 decimal digits
+decoded.
+
+Encode/decode words to secure dynamic range. This portion
+is the essence of the method.
+
+~~~
+:f:E1 (-|f:-n)_e-unit_in_float  hook .1.e5 ; (decimal_digits_to_shift_left
+:f:signed-sqrt   (|f:n-n) f:dup f:sign  f:abs f:sqrt n:to-float f:* ;
+:f:signed-square (|f:n-n) f:dup f:sign  f:dup f:*    n:to-float f:* ;
+~~~
+
+Deal with special cases.
+
+~~~
+{{
+  :f:-shift      (|f:n-n)_shift_left  f:E1 f:* ;
+  :f:+shift      (|f:n-n)_shift_right f:E1 f:/ ;
+  :f:+encode     (|f:n-n) f:signed-sqrt f:-shift ;
+  :f:-encode     (|f:n-n) f:dup f:sign  f:+shift f:dup f:*  n:to-float f:* ;
+---reveal---
+  :f:to-e (-e|f:n-)
+    f:dup f:nan?  [ f:drop e:NAN  ] if;
+    f:dup f:inf?  [ f:drop e:INF  ] if;
+    f:dup f:-inf? [ f:drop e:-INF ] if;
+    f:+encode f:round f:to-number e:clip      (e
+    e:MIN         &f:drop           case
+    e:MAX         &f:drop           case ;
+
+  :e:to-f (e-|f:-n)
+    e:NAN  &f:NAN  case
+    e:INF  &f:INF  case
+    e:-INF &f:-INF case
+    n:to-float f:-encode ;
+}}
+~~~
+
+~~~
+:f:store (a-|f:n-) &f:to-e dip store ;
+:f:fetch (a-|f:-n) fetch e:to-f ;
+~~~
+
+~~~
+:f:dump-stack  (-)
+  f:depth dup &f:push times
+              [ f:pop f:dup f:put sp ] times ;
+:f:dump-astack (-)
+  f:adepth dup &f:pop times
+               [ f:dup f:put sp f:push ] times ;
+~~~
+
+~~~
+:e:put (e-)
+  e:MAX  [ 'e:MAX  s:put ] case
+  e:MIN  [ 'e:MIN  s:put ] case
+  #0     [ 'e:0    s:put ] case
+  e:NAN  [ 'e:NAN  s:put ] case
+  e:INF  [ 'e:INF  s:put ] case
+  e:-INF [ 'e:-INF s:put ] case
+  e:to-f f:put ;
+~~~
+# System Interaction
+
+The `unix:` namespace contains words for interacting with the
+host operating system on Unix style systems.
+
+~~~
+{{
+  'Unix var
+  :identify
+    @Unix n:zero? 0; drop
+      #8 io:scan-for dup n:negative?
+      [ drop 'IO_DEVICE_TYPE_0008_NOT_FOUND s:put nl ]
+      [ !Unix ] choose ;
+---reveal---
+  :io:unix-syscall identify @Unix io:invoke ;
+}}
+~~~
+
+`unix:system` runs another application using the system shell
+and returns after execution is completed.
+
+~~~
+:unix:system (s-)    #0 io:unix-syscall ;
+~~~
+
+`unix:fork` forks the current process and returns a process
+identifier.
+
+~~~
+:unix:fork   (-n)    #1 io:unix-syscall ;
+~~~
+
+This group is used to execute a new process in place of the
+current one. These take a program and optionally 1-3 arguments.
+They map to the execl() system call.
+
+Example:
+
+    '/usr/bin/cal '2 '2019 unix:exec2
+
+~~~
+:unix:exec0  (s-)    #2 io:unix-syscall ;
+:unix:exec1  (ss-)   #3 io:unix-syscall ;
+:unix:exec2  (sss-)  #4 io:unix-syscall ;
+:unix:exec3  (ssss-) #5 io:unix-syscall ;
+~~~
+
+`unix:exit` takes a return code and exits RRE, returning the
+specified code.
+
+~~~
+:unix:exit   (n-)    #6 io:unix-syscall ;
+~~~
+
+`unix:getpid` returns the current process identifier.
+
+~~~
+:unix:getpid (-n)    #7 io:unix-syscall ;
+~~~
+
+`unix:wait` waits for a child process to complete. This maps to
+the wait() system call.
+
+~~~
+:unix:wait   (-n)    #8 io:unix-syscall ;
+~~~
+
+`unix:kill` terminates a process. Takes a process and a signal
+to send.
+
+~~~
+:unix:kill (nn-)  #9 io:unix-syscall ;
+~~~
+
+The next two words allow opening and closing pipes. The first,
+`unix:popen` takes the name of a program and a file mode and
+returns a file handle usable with words in the `file:` namespace.
+The second, `unix:pclose` closes the pipe.
+
+~~~
+:unix:popen (sn-n) #10 io:unix-syscall ;
+:unix:pclose (n-) #11 io:unix-syscall ;
+~~~
+
+`unix:chdir` changes the current working directory to the
+specified one.
+
+~~~
+:unix:chdir (s-) #13 io:unix-syscall ;
+~~~
+
+~~~
+:unix:getenv (sa-) #14 io:unix-syscall ;
+:unix:putenv (s-)  #15 io:unix-syscall ;
+~~~
+
+`unix:sleep` pauses execution for the specified number of
+seconds.
+
+~~~
+:unix:sleep (n-) #16 io:unix-syscall ;
+~~~
+
+~~~
+(s-s)  :unix:pipe
+         file:R unix:popen &file:read-line &unix:pclose bi ;
+~~~
+
+~~~
+(-s)   :unix:get-cwd
+         'pwd unix:pipe s:trim '/ s:append ;
+~~~
+
+~~~
+(-n)   :unix:count-files-in-cwd
+         'ls_-1_|_wc_-l unix:pipe s:trim s:to-number ;
+~~~
+
+~~~
+(q-)   :unix:for-each-file (q-)
+         'ls_-1_-p file:R unix:popen
+         unix:count-files-in-cwd
+         [ [ file:read-line s:temp over call ] sip ] times
+         unix:pclose drop ;
+~~~
+
+~~~
+{{
+  :start  swap buffer:set file:R unix:popen ;
+  :read   dup file:read dup buffer:add n:zero? ;
+  :finish unix:pclose buffer:size ;
+---reveal---
+  :unix:slurp-pipe (as-n)
+    [ start &read until finish ] buffer:preserve ;
+}}
+~~~
+
+# Random Number Generator
+
+I/O device type 10 is a random number generator. I do this as
+part of the VM I/O extensions to allow implementors to use the
+best approach on their host system.
+
+~~~
+:n:random (-n)  #10 io:scan-for io:invoke ;
+~~~
+
+# Scripting Support
+
+This is the scripting interface words for use with retro-unix
+or other interfaces providing device type 9 support.
+
+The initial words were provided in a `sys:` namespace. In 2020.10
+this is changing to `script:`, with the old names being deprecated.
+
+## Rev. 0
+
+The initial version of this I/O device provides support for some
+basic interactions.
+
+- obtaining the name of the script
+- obtaining the number of arguments passed
+- obtaining the arguments passed
+- "including" a file (which has RETRO process the file as inuput)
+
+## Rev. 1
+
+In 2020.10, the device was extended to add support for new additional
+introspection and control of the `include` process.
+
+- obtaining the current file name
+- obtaining the current line number
+- direct RETRO to ignore the rest of the current line
+- direct RETRO to ignore any remaining lines in the file
+
+## Rev. 2
+
+Adds support for `abort`.
+
+# The Code
+
+~~~
+{{
+  'Scripting var
+  :identify
+    @Scripting n:zero? 0; drop
+      #9 io:scan-for dup n:negative?
+      [ drop 'IO_DEVICE_TYPE_0009_NOT_FOUND s:put nl ]
+      [ !Scripting ] choose ;
+---reveal---
+  :script:arguments (-n)            identify #0 @Scripting io:invoke ;
+  :script:get-argument (n-s)  s:empty swap identify #1 @Scripting io:invoke ;
+  :include  (s-)                    identify #2 @Scripting io:invoke ;
+  :script:name (-s)         s:empty identify #3 @Scripting io:invoke ;
+
+  :script:current-file (-s) s:empty identify #4 @Scripting io:invoke ;
+  :script:current-line (-n)         identify #5 @Scripting io:invoke ;
+  :script:ignore-to-eol (-)         identify #6 @Scripting io:invoke ;
+  :script:abort-include (-)         identify #7 @Scripting io:invoke ;
+
+  :abort (-) &Compiler v:off identify #8 @Scripting io:invoke ;
+}}
+~~~
+# Time and Date
+
+The `clock:` namespace contains words for interacting with the
+system clock.
+
+~~~
+{{
+  'Clock var
+  :identify
+    @Clock n:zero? 0; drop
+      #5 io:scan-for dup n:negative?
+      [ drop 'IO_DEVICE_TYPE_0005_NOT_FOUND s:put nl ]
+      [ !Clock ] choose ;
+---reveal---
+  :clock:operation identify @Clock io:invoke ;
+}}
+
+:clock:timestamp  (-n) #0 clock:operation ;
+:clock:day        (-n) #1 clock:operation ;
+:clock:month      (-n) #2 clock:operation ;
+:clock:year       (-n) #3 clock:operation ;
+:clock:hour       (-n) #4 clock:operation ;
+:clock:minute     (-n) #5 clock:operation ;
+:clock:second     (-n) #6 clock:operation ;
+:clock:utc:day    (-n) #7 clock:operation ;
+:clock:utc:month  (-n) #8 clock:operation ;
+:clock:utc:year   (-n) #9 clock:operation ;
+:clock:utc:hour   (-n) #10 clock:operation ;
+:clock:utc:minute (-n) #11 clock:operation ;
+:clock:utc:second (-n) #12 clock:operation ;
+~~~
