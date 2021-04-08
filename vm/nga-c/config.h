@@ -30,9 +30,9 @@
 #define D_OFFSET_NAME     3
 
 #ifdef ENABLE_SOCKETS
-#define NUM_DEVICES      10
+#define NUM_DEVICES       9
 #else
-#define NUM_DEVICES       9       /* Set the number of I/O devices     */
+#define NUM_DEVICES       8       /* Set the number of I/O devices     */
 #endif
 
 #define MAX_OPEN_FILES   32

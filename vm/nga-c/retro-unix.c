@@ -81,7 +81,6 @@ Handler IO_deviceHandlers[] = {
   io_unix_handler,
   io_scripting_handler,
   io_random,
-  io_image,
 #ifdef ENABLE_SOCKETS
   io_socket,
 #endif
@@ -96,7 +95,6 @@ Handler IO_queryHandlers[] = {
   io_unix_query,
   io_scripting_query,
   io_random_query,
-  io_image_query,
 #ifdef ENABLE_SOCKETS
   query_socket,
 #endif
@@ -132,7 +130,6 @@ int perform_abort;
 #include "retro-image.c"
 #include "bsd-strl.c"
 #include "dev-floatingpoint.c"
-#include "dev-image.c"
 #include "dev-files.c"
 #include "dev-unix.c"
 #include "dev-clock.c"
