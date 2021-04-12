@@ -23,7 +23,7 @@ expectations.
 First up, constants for the file modes.
 
 | #  | Used For                     |
-| -- | ---------------------------- | 
+| -- | ---------------------------- |
 | R  | Mode for READING             |
 | W  | Mode for WRITING             |
 | A  | Mode for APPENDING           |

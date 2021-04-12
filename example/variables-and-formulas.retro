@@ -1,0 +1,62 @@
+From my mastodon feed:
+
+    @millihertz@oldbytes.space:
+
+    so i just saw this example given as a reason why
+    concatenative languages tend to be called "write-only":
+
+    f x y z = y² + x�- |y|
+
+    : f
+      drop dup dup *
+      swap abs
+      rot3 dup *
+      swap - + ;
+
+... snipped ...
+
+He ends up writing the following:
+
+    lastly, nobody would ever write Forth like that anyway!
+
+    : ²+  dup * swap dup * + ;
+    : y²+x²-|y|  ( y x -- result )
+      tuck ²+ swap abs - ;
+
+Given a dislike of stack shufflers, a Retro implementation could be:
+
+    :f [ [ n:square ] bi@ + ] sip n:abs - ;
+
+Assuming one knows the combinators, this is pretty straightforward,
+but doesn't really resemble the original formula. I decided to write
+a quick set of words to let me convert the original formula into
+something more recognizable while still being RPN.
+
+    :f /xyz
+       x: n:square y: n:square + y: n:abs - ;
+
+This adds a / sigil that maps stack values to an internal set of
+variables, whose values are returned by words with the variable names
+followed by a colon.
+
+The code follows.
+
+~~~
+'Vars d:create #256 allot
+
+'abcdefghijklmnopqrstuvwxyz s:keep
+[ dup ':%c:_&Vars_$%c_+_fetch_; s:format s:evaluate ] s:for-each
+
+:sigil:/
+  s:reverse [ 'liliadst i , &Vars , ] s:for-each ; immediate
+~~~
+
+And the test case:
+
+```
+:f /xyz
+  x: n:square y: n:square + y: n:abs - ;
+
+#33 #12 #301 f n:put
+```
+
