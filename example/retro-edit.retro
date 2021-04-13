@@ -34,12 +34,19 @@ Look further in the source for a table of commands.
 
 ## Configuration
 
+On startup, this loads a working file specified here. Use the
+commands later to load a specific file if needed.
+
+~~~
+'scratch 'SCRATCH s:const
+~~~
+
 The editor needs a max line length and max number of lines per
 file.
 
 ~~~
 #140 'cfg:MAX-LINE-LENGTH const
-#2000 'cfg:MAX-LINES const
+#2001 'cfg:MAX-LINES const
 ~~~
 
 ## The File Contents
@@ -72,7 +79,7 @@ Line display is trivial in this. I optionally support line numbers,
 controlled by setting `ShowLineNumbers` to `TRUE`.
 
 ~~~
-'ShowLineNumbers var
+TRUE 'ShowLineNumbers var-n
 
 :ed:show-line-number (-)
   @ShowLineNumbers [ dup n:put ': s:put tab ] if ;
@@ -142,8 +149,11 @@ afterwards. I also reset the stack.
 ~~~
 'Done var
 
+'Context var
+
 :edit
   [ &Heap [
+    @Context [ @Context call ] if
     reset ed:get-input ed:process-command
   ] v:preserve @Done ] until ;
 ~~~
@@ -258,12 +268,27 @@ otherwise blank line to return to the command processing mode.
   :add-space  dup ed:insert-line ;
   :store-line over ed:to-line s:copy n:inc ;
   :cleanup    n:dec ed:delete-line ;
+  :ruler   #6 [ '---------+ s:put ] times '---- s:put nl ;
 ---reveal---
+  'Prompt var
   :cmd:e
+    ruler
     @Input s:to-number
-    [ add-space s:get [ store-line ] sip '. s:eq? ] until cleanup ;
+    [ @Prompt [ @Prompt call ] if
+      add-space s:get [ store-line ] sip '. s:eq? ] until cleanup ;
 }}
 ~~~
+
+Copy/paste
+
+~~~
+'LineBuffer d:create
+  cfg:MAX-LINE-LENGTH allot #0 ,
+
+:cmd:c @Input s:to-number ed:to-line &LineBuffer s:copy ;
+:cmd:u cmd:a &LineBuffer @Input s:to-number ed:to-line s:copy ;
+~~~
+
 
 ### Setting the Filename
 
@@ -272,6 +297,7 @@ otherwise blank line to return to the command processing mode.
 ~~~
 :cmd:f @Input &Filename s:copy ;
 ~~~
+
 
 ### Saving
 
@@ -285,21 +311,34 @@ upon completion.
   :with-file  &Filename file:open-for-writing [ swap call ] sip file:close ;
   :file:nl    ASCII:LF over file:write ;
   :write-line I ed:to-line [ over file:write ] s:for-each file:nl ;
+  :write-file [ @Lines [ write-line ] indexed-times ] with-file ;
+  :select     @Input s:length n:-zero? [ cmd:f ] if ;
 ---reveal---
-  :cmd:w [ @Lines [ write-line ] indexed-times ] with-file @Lines n:put nl ;
+  :cmd:w select write-file @Lines n:put nl ;
 }}
 ~~~
 
-
 ~~~
+:create-if-not-present
+  @Input s:length n:-zero? [ cmd:f ] if
+  &Filename file:exists? [ &Filename file:W file:open file:close ] -if ;
+
 :erase-all
   #0 cfg:MAX-LINES [ #0 over ed:to-line store n:inc ] times drop ;
 
 :load-file
+  create-if-not-present
   #0 &Filename [ over ed:to-line s:copy n:inc ] file:for-each-line
   !Lines ;
 
-:cmd:l erase-all load-file ;
+:cmd:l erase-all load-file @Lines n:put nl ;
+~~~
+
+
+### New
+
+~~~
+:cmd:* SCRATCH &Filename s:copy erase-all #1 !Lines ;
 ~~~
 
 ### Quit
@@ -323,19 +362,15 @@ Use `q` to quit the editor.
 :cmd:n @Input s:to-number ed:to-line dup '__ s:prepend swap s:copy ;
 :cmd:N @Input s:to-number ed:to-line dup #2 + swap s:copy ;
 
-:cmd:;
+:cmd::
   @Input dup s:length n:zero?
-  [ drop &Filename 'retro_%s s:format ] if unix:system ;
-
-:cmd:?
-  @Input s:length n:-zero?
-  [ @Input 'retro-describe_%s s:format unix:system ] if ;
+  [ drop &Filename ] if 'retro_%s s:format unix:system ;
 ~~~
 
 ## Register The Commands
 
 ~~~
-{ ',p#/axdiefwlqnN;? [ ] s:for-each }
+{ ',p#/axdiefwlqnN:*cu [ ] s:for-each }
 [ [ 'cmd:%c s:format d:lookup d:xt fetch ] sip ed:register-command ]
 a:for-each
 ~~~
@@ -348,7 +383,20 @@ The final startup process is:
 - run the editor command loop
 
 ~~~
-#0 script:get-argument &Filename s:copy
-&Filename file:exists? [ &Filename file:W file:open file:close ] -if
-load-file edit
+:cmd:?
+  here n:put nl ;
+&cmd:? $? ed:register-command
 ~~~
+
+~~~
+SCRATCH &Filename s:copy s:empty !Input
+{ 'RETRO
+  'Ready.
+} [ s:put nl ] a:for-each
+erase-all load-file
+edit bye
+~~~
+
+{ '|\_|V|_/|\_|\_/\__Charles_Childers'_Personal_Computing_System
+  '|/_|_|__|__|/_\/__a_Unix_Kernel,_Retro_Forth,_and_a_non-POSIX
+  '|\_|_|__|__|\_/\__environment_written_in_Forth }
