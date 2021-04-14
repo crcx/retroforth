@@ -122,12 +122,11 @@ struct NgaCore {
   CELL address[ADDRESSES];        /* The address stack                 */
 } cpu;
 
-int devices;
+int devices;                      /* The number of I/O devices         */
 
 
 /* Markers for code & test blocks ------------------------------------ */
 char code_start[33], code_end[33], test_start[33], test_end[33];
-
 
 /* Populate The I/O Device Tables ------------------------------------ */
 typedef void (*Handler)(void);
@@ -1156,14 +1155,10 @@ void carry_out_abort() {
 }
 
 Handler ScriptingActions[] = {
-  scripting_arg_count,
-  scripting_arg,
-  scripting_include,
-  scripting_name,
-  scripting_source,
-  scripting_line,
-  scripting_ignore_to_eol,
-  scripting_ignore_to_eof,
+  scripting_arg_count,     scripting_arg,
+  scripting_include,       scripting_name,
+  scripting_source,        scripting_line,
+  scripting_ignore_to_eol, scripting_ignore_to_eof,
   scripting_abort
 };
 
@@ -1352,11 +1347,9 @@ void read_line(FILE *file, char *token_buffer) {
 }
 
 int count_tokens(char *line) {
-  char ch = line[0];
   int count = 1;
   while (*line++) {
-    ch = line[0];
-    if (isspace(ch))
+    if (isspace(line[0]))
       count++;
   }
   return count;
@@ -1588,9 +1581,6 @@ int main(int argc, char **argv) {
     execute(0, -1);
   }
 }
-
-
-/*=====================================================================*/
 
 
 /*=====================================================================*/
@@ -1974,10 +1964,7 @@ Handler instructions[] = {
 };
 
 void process_opcode(CELL opcode) {
-#ifdef SLOW
-  if (opcode != 0)
-    instructions[opcode]();
-#else
+#ifdef FAST
   switch (opcode) {
     case 0: break;
     case 1: inst_li(); break;
@@ -2011,6 +1998,9 @@ void process_opcode(CELL opcode) {
     case 29: inst_ii(); break;
     default: break;
   }
+#else
+  if (opcode != 0)
+    instructions[opcode]();
 #endif
 }
 
