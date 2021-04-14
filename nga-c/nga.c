@@ -134,26 +134,18 @@ Handler IO_deviceHandlers[MAX_DEVICES];
 Handler IO_queryHandlers[MAX_DEVICES];
 
 /* Global Variables -------------------------------------------------- */
-
 CELL Compiler, Dictionary, NotFound, interpret;
 
 char string_data[8192];
 char **sys_argv;
 int sys_argc;
-int silence_input;
 char scripting_sources[64][8192];
 int current_source;
 int perform_abort;
 
-void register_device(void *handler, void *query) {
-  IO_deviceHandlers[devices] = handler;
-  IO_queryHandlers[devices] = query;
-  devices++;
-}
 
-
-#ifdef ENABLE_FLOATS
 /* Floating Point ---------------------------------------------------- */
+#ifdef ENABLE_FLOATS
 double Floats[256], AFloats[256];
 CELL fsp, afsp;
 
@@ -384,14 +376,15 @@ void float_atan() {
   With this finally done, I implement the FPU instructions.
   ---------------------------------------------------------------------*/
 Handler FloatHandlers[] = {
-  float_from_number,  float_from_string,  float_to_number,  float_to_string,
-  float_add,          float_sub,          float_mul,        float_div,
-  float_floor,        float_ceil,         float_sqrt,       float_eq,
-  float_neq,          float_lt,           float_gt,         float_depth,
-  float_dup,          float_drop,         float_swap,       float_log,
-  float_pow,          float_sin,          float_tan,        float_cos,
-  float_asin,         float_acos,         float_atan,       float_to_alt,
-  float_from_alt,     float_adepth,
+  float_from_number,  float_from_string,
+  float_to_number,    float_to_string,
+  float_add,      float_sub,     float_mul,   float_div,
+  float_floor,    float_ceil,    float_sqrt,  float_eq,
+  float_neq,      float_lt,      float_gt,    float_depth,
+  float_dup,      float_drop,    float_swap,  float_log,
+  float_pow,      float_sin,     float_tan,   float_cos,
+  float_asin,     float_acos,    float_atan,  float_to_alt,
+  float_from_alt, float_adepth,
 };
 
 void query_floatingpoint() {
@@ -401,9 +394,6 @@ void query_floatingpoint() {
 
 void io_floatingpoint() {
   FloatHandlers[stack_pop()]();
-}
-
-void init_floatingpoint() {
 }
 #endif
 
@@ -612,16 +602,11 @@ void file_flush() {
   fflush(OpenFileHandles[slot]);
 }
 
-
 Handler FileActions[10] = {
-  file_open,
-  file_close,
-  file_read,
-  file_write,
-  file_get_position,
-  file_set_position,
-  file_get_size,
-  file_delete,
+  file_open,          file_close,
+  file_read,          file_write,
+  file_get_position,  file_set_position,
+  file_get_size,      file_delete,
   file_flush
 };
 
@@ -803,11 +788,8 @@ void io_unix() {
 #endif
 
 
+/* Time and Date Functions --------------------------------------------*/
 #ifdef ENABLE_CLOCK
-/*---------------------------------------------------------------------
-  Time and Date Functions
-  ---------------------------------------------------------------------*/
-
 void clock_time() {
   stack_push((CELL)time(NULL));
 }
@@ -891,11 +873,8 @@ void io_clock() {
 #endif
 
 
+/* Random Number Generator --------------------------------------------*/
 #ifdef ENABLE_RNG
-/*---------------------------------------------------------------------
-  Random Number Generator
-  ---------------------------------------------------------------------*/
-
 void io_rng() {
   int64_t r = 0;
   char buffer[8];
@@ -1197,10 +1176,9 @@ void invalid_opcode(CELL opcode) {
   exit(1);
 }
 
-void execute(CELL cell, int silent) {
+void execute(CELL cell) {
   CELL token;
   CELL opcode;
-  silence_input = silent;
   if (cpu.rp == 0)
     cpu.rp = 1;
   cpu.ip = cell;
@@ -1246,11 +1224,11 @@ void execute(CELL cell, int silent) {
   calls `interpret` to process it.
   ---------------------------------------------------------------------*/
 
-void evaluate(char *s, int silent) {
+void evaluate(char *s) {
   if (strlen(s) == 0)  return;
   string_inject(s, TIB);
   stack_push(TIB);
-  execute(interpret, silent);
+  execute(interpret);
 }
 
 
@@ -1405,7 +1383,7 @@ void include_file(char *fname, int run_tests) {
       } else {
         if (inBlock == 1) {
           currentLine = at;
-          evaluate(source, -1);
+          evaluate(source);
           currentLine = at;
         }
       }
@@ -1449,13 +1427,10 @@ int arg_is(char *argv, char *t) {
 }
 
 
-/*---------------------------------------------------------------------
-  Main Entry Point
-  ---------------------------------------------------------------------*/
-
+/* Main Entry Point ---------------------------------------------------*/
 enum flags {
-  FLAG_HELP, FLAG_RUN_TESTS, FLAG_INCLUDE, FLAG_INTERACTIVE, FLAG_SILENT,
-  FLAG_RUN,
+  FLAG_HELP, FLAG_RUN_TESTS, FLAG_INCLUDE,
+  FLAG_INTERACTIVE, FLAG_RUN,
 };
 
 int main(int argc, char **argv) {
@@ -1528,9 +1503,6 @@ int main(int argc, char **argv) {
   for (i = 1; i < argc; i++) {
     if (strcmp(argv[i], "-i") == 0) {
       modes[FLAG_INTERACTIVE] = 1;
-    } else if (strcmp(argv[i], "-s") == 0) {
-      modes[FLAG_INTERACTIVE] = 1;
-      modes[FLAG_SILENT] = 1;
     } else if (strcmp(argv[i], "-f") == 0) {
       files[fsp] = argv[i + 1];
       fsp++;
@@ -1568,17 +1540,9 @@ int main(int argc, char **argv) {
       include_file(files[i], run_tests);
   }
 
-  /* Set Image Flags for NoEcho if started with `-s` */
-  if (modes[FLAG_SILENT] == 1)
-    memory[d_xt_for("NoEcho", Dictionary)] = -1;
-
   /* Run the Listener (if interactive mode was set) */
-  if (modes[FLAG_INTERACTIVE] == 1) {
-    execute(0, -1);
-  }
-
-  if (modes[FLAG_RUN] == 1) {
-    execute(0, -1);
+  if (modes[FLAG_INTERACTIVE] == 1 || modes[FLAG_RUN == 1]) {
+    execute(0);
   }
 }
 
@@ -1733,6 +1697,12 @@ void update_rx() {
 }
 
 /*=====================================================================*/
+
+void register_device(void *handler, void *query) {
+  IO_deviceHandlers[devices] = handler;
+  IO_queryHandlers[devices] = query;
+  devices++;
+}
 
 void load_embedded_image() {
   int i;
