@@ -65,8 +65,6 @@ RRE's C part will access a couple parts of this, based on the
 startup flags passed.
 
 ~~~
-'NoEcho var
-
 :bye #0 unix:exit ;
 
 {{
@@ -92,9 +90,7 @@ startup flags passed.
                      &interpret &drop choose ;
 ---reveal---
   ://    script:ignore-to-eol &Ignoring v:on ; immediate
-  :banner  version 'RETRO_12_(%n.%n)\n s:format s:put
-           EOM here - here EOM '%n_Max,_%n_Used,_%n_Free\n s:format s:put ;
-  :listen  @NoEcho [ banner ] -if repeat input process again ;
+  :listen  repeat input process again ;
 }}
 
 listen

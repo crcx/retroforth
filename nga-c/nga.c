@@ -52,6 +52,7 @@
 #define MAX_DEVICES      32
 #define MAX_OPEN_FILES   32
 
+#include "image.c"
 
 /* Function Prototypes ----------------------------------------------- */
 CELL stack_pop();
@@ -83,6 +84,7 @@ void io_floatingpoint();    void query_floatingpoint();
 void io_socket();           void query_socket();
 #endif
 
+void load_embedded_image();
 CELL load_image();
 void prepare_vm();
 void process_opcode_bundle(CELL opcode);
@@ -1440,11 +1442,7 @@ void include_file(char *fname, int run_tests) {
 
 void initialize() {
   prepare_vm();
-/*
-  CELL i = 0;
-  for (i = 0; i < ngaImageCells; i++)
-    memory[i] = ngaImage[i];
-*/
+  load_embedded_image();
 }
 
 
@@ -1513,14 +1511,12 @@ int main(int argc, char **argv) {
   ignoreToEOF = 0;
 
   if (argc >= 2 && argv[1][0] != '-') {
-    load_image("ngaImage");
     update_rx();
     include_file(argv[1], 0);             /* If no flags were passed,  */
     if (cpu.sp >= 1)  dump_stack();       /* load the file specified,  */
     exit(0);                              /* and exit                  */
   }
 
-  load_image("ngaImage");
   /* Clear startup modes       */
   for (i = 0; i < 16; i++)
     modes[i] = 0;
@@ -1747,6 +1743,12 @@ void update_rx() {
 }
 
 /*=====================================================================*/
+
+void load_embedded_image() {
+  int i;
+  for (i = 0; i < ngaImageCells; i++)
+    memory[i] = ngaImage[i];
+}
 
 CELL load_image(char *imageFile) {
   FILE *fp;

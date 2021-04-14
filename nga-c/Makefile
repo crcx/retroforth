@@ -21,7 +21,7 @@ kernel: retro.forth retro.muri assemble.retro
 	./retro -u ngaImage -f retro.forth -f assemble.retro
 
 extend: retro.forth devices.retro extend.retro
-	./retro -u retro.nga -f retro.forth -f devices.retro -f extend.retro
+	./retro -u retro.nga -f retro.forth -f devices.retro -f listen.retro -f extend.retro
 
 finish:
 	mv retro.nga ngaImage
