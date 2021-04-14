@@ -11,10 +11,6 @@ at addresses 0 to 1023).
 #1024 'TIB const
 ~~~
 
-~~~
-:image:save (s-) #1000 io:scan-for io:invoke ;
-~~~
-
 ## Console Input
 
 The RRE interface provides a keyboard device. This exposes it
@@ -93,5 +89,5 @@ startup flags passed.
   :listen  repeat input process again ;
 }}
 
-listen
+&listen #1 store
 ~~~
