@@ -12,8 +12,6 @@ Things I'm working on in this:
 [x] Assemble new image w/o retro-muri in C
 [ ] Support for embedding device words in the C source
 [ ] Embed image in the C source using tool written in Retro
-
-Notes: this requires an external image. One is provided.
 ---------------------------------------------------------------
 Specifics:
 
