@@ -4724,7 +4724,7 @@ s:split
   Addr:  -
   Float: -
 
-Split a string on the first occurrance of the specified character.
+Split a string on the first occurrence of the specified character.
 
 Class: class:word | Namespace: s | Interface Layer: all
 ------------------------------------------------------------------------
@@ -4735,7 +4735,7 @@ s:split-on-string
   Addr:  -
   Float: -
 
-Split a string on the first occurrance of the specified string. After the split, the top stack item will be the part of the string before the specified subsring, and the second item will be the rest of the original string.
+Split a string on the first occurrence of the specified string. After the split, the top stack item will be the part of the string before the specified subsring, and the second item will be the rest of the original string.
 
 Class: class:word | Namespace: s | Interface Layer: all
 

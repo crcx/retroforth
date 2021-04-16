@@ -1217,10 +1217,10 @@ s:skip                   D: -  A: -  F: -
 Internal helper function used to skip over a string in a definition.
 
 s:split                  D: sc-ss  A: -  F: -
-Split a string on the first occurrance of the specified character.
+Split a string on the first occurrence of the specified character.
 
 s:split-on-string        D: ss-ss  A: -  F: -
-Split a string on the first occurrance of the specified string. After the split, the top stack item will be the part of the string before the specified subsring, and the second item will be the rest of the original string.
+Split a string on the first occurrence of the specified string. After the split, the top stack item will be the part of the string before the specified subsring, and the second item will be the rest of the original string.
 
 s:substr                 D: sfl-s  A: -  F: -
 Extract a substring from the specified string. This will take the characters starting at `f` and extend `l` characters in length.

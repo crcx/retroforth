@@ -404,8 +404,8 @@ s:replace-all	sss-s	-	-	Replace all instances of s2 in s1 with s3.			class:word	
 s:reverse	s-s	-	-	Reverse the order of ASCII characters in a string.			class:word	{n/a}	{n/a}	s	all	
 s:right	sn-s	-	-	Return a new string containing the specified number of characters from the right side of the string.			class:word	{n/a}	{n/a}	s	all	
 s:skip	-	-	-	Internal helper function used to skip over a string in a definition.			class:word	{n/a}	{n/a}	s	all	
-s:split	sc-ss	-	-	Split a string on the first occurrance of the specified character.			class:word	{n/a}	{n/a}	s	all	
-s:split-on-string	ss-ss	-	-	Split a string on the first occurrance of the specified string. After the split, the top stack item will be the part of the string before the specified subsring, and the second item will be the rest of the original string.			class:word	  'Hello_Brave_World! 'Brave s:split-on-string s:put nl s:put nl	{n/a}	s	all	
+s:split	sc-ss	-	-	Split a string on the first occurrence of the specified character.			class:word	{n/a}	{n/a}	s	all	
+s:split-on-string	ss-ss	-	-	Split a string on the first occurrence of the specified string. After the split, the top stack item will be the part of the string before the specified subsring, and the second item will be the rest of the original string.			class:word	  'Hello_Brave_World! 'Brave s:split-on-string s:put nl s:put nl	{n/a}	s	all	
 s:substr	sfl-s	-	-	Extract a substring from the specified string. This will take the characters starting at `f` and extend `l` characters in length.			class:word	{n/a}	{n/a}	s	all	
 s:temp	s-s	-	-	Move a string into the temporary string buffers.			class:word	{n/a}	{n/a}	s	all	
 s:to-float	s-	-	-F	Convert a string representation into a floating point value.			class:word	{n/a}	{n/a}	s	rre	
