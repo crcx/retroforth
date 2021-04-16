@@ -873,7 +873,7 @@ a:contains-string?
   Addr:  -
   Float: -
 
-Return `TRUE` if the string value is in the array or`FALSE` otherwise.
+Return `TRUE` if the string value is in the array or `FALSE` otherwise.
 
 Class: class:word | Namespace: a | Interface Layer: all
 ------------------------------------------------------------------------
@@ -2247,7 +2247,7 @@ e:-INF
   Addr:  -
   Float: -
 
-Constant. Negative infinity.  For encoded floating point values.
+Constant. Negative infinity.  For encoded floating-point values.
 
 Class: class:word | Namespace: e | Interface Layer: rre
 ------------------------------------------------------------------------
@@ -2269,7 +2269,7 @@ e:INF
   Addr:  -
   Float: -
 
-Constant. Infinity. For encoded floating point values.
+Constant. Infinity. For encoded floating-point values.
 
 Class: class:word | Namespace: e | Interface Layer: rre
 ------------------------------------------------------------------------
@@ -2280,7 +2280,7 @@ e:MAX
   Addr:  -
   Float: -
 
-Constant. Maximum value. For encoded floating point values.
+Constant. Maximum value. For encoded floating-point values.
 
 Class: class:word | Namespace: e | Interface Layer: rre
 ------------------------------------------------------------------------
@@ -2291,7 +2291,7 @@ e:MIN
   Addr:  -
   Float: -
 
-Constant. Minimum value. For encoded floating point values.
+Constant. Minimum value. For encoded floating-point values.
 
 Class: class:word | Namespace: e | Interface Layer: rre
 ------------------------------------------------------------------------
@@ -2302,7 +2302,7 @@ e:NAN
   Addr:  -
   Float: -
 
-Constant. Not a Number. For encoded floating point values.
+Constant. Not a Number. For encoded floating-point values.
 
 Class: class:word | Namespace: e | Interface Layer: rre
 ------------------------------------------------------------------------
@@ -2390,7 +2390,7 @@ e:to-f
   Addr:  -
   Float: -n
 
-Decode an encoded floating point value.
+Decode an encoded floating-point value.
 
 Class: class:word | Namespace: e | Interface Layer: rre
 ------------------------------------------------------------------------
@@ -2440,7 +2440,7 @@ f:*
   Addr:  -
   Float: FF-F
 
-Multiply two floating point numbers, returning the result.
+Multiply two floating-point numbers, returning the result.
 
 Class: class:word | Namespace: f | Interface Layer: rre
 
@@ -2456,7 +2456,7 @@ f:+
   Addr:  -
   Float: FF-F
 
-Add two floating point numbers, returning the result.
+Add two floating-point numbers, returning the result.
 
 Class: class:word | Namespace: f | Interface Layer: rre
 
@@ -2472,7 +2472,7 @@ f:-
   Addr:  -
   Float: FF-F
 
-Subtract F2 from F1 returing the result.
+Subtract F2 from F1 returning the result.
 
 Class: class:word | Namespace: f | Interface Layer: rre
 
@@ -2499,7 +2499,7 @@ f:-eq?
   Addr:  -
   Float: FF-
 
-Compare two floating point values for inequality. Returns `TRUE` if they are not equal or `FALSE` otherwise.
+Compare two floating-point values for inequality. Returns `TRUE` if they are not equal or `FALSE` otherwise.
 
 Class: class:word | Namespace: f | Interface Layer: rre
 ------------------------------------------------------------------------
@@ -2510,7 +2510,7 @@ f:-inf?
   Addr:  -
   Float: F-
 
-Return `TRUE` if floating point value is -INF or `FALSE` otherwise.
+Return `TRUE` if floating-point value is -INF or `FALSE` otherwise.
 
 Class: class:word | Namespace: f | Interface Layer: rre
 ------------------------------------------------------------------------
@@ -2521,7 +2521,7 @@ f:/
   Addr:  -
   Float: FF-F
 
-Divide floating point value F1 by F2.
+Divide floating-point value F1 by F2.
 
 Class: class:word | Namespace: f | Interface Layer: rre
 ------------------------------------------------------------------------
@@ -2532,7 +2532,7 @@ f:E
   Addr:  -
   Float: -F
 
-Return the floating point value for Euler's number.
+Return the floating-point value for Euler's number.
 
 Class: class:word | Namespace: f | Interface Layer: rre
 ------------------------------------------------------------------------
@@ -2576,7 +2576,7 @@ f:PI
   Addr:  -
   Float: -F
 
-Return the floating point value for PI.
+Return the floating-point value for PI.
 
 Class: class:word | Namespace: f | Interface Layer: rre
 ------------------------------------------------------------------------
@@ -2587,7 +2587,7 @@ f:abs
   Addr:  -
   Float: F-F
 
-Return the absolute value for a floating point value.
+Return the absolute value for a floating-point value.
 
 Class: class:word | Namespace: f | Interface Layer: rre
 ------------------------------------------------------------------------
@@ -2598,7 +2598,7 @@ f:acos
   Addr:  -
   Float: F-F
 
-Return the arc cosine of a floating point number.
+Return the arc cosine of a floating-point number.
 
 Class: class:word | Namespace: f | Interface Layer: rre
 ------------------------------------------------------------------------
@@ -2609,7 +2609,7 @@ f:adepth
   Addr:  -
   Float: -
 
-Return the number of items on the alternate floating point stack.
+Return the number of items on the alternate floating-point stack.
 
 Class: class:word | Namespace: f | Interface Layer: rre
 ------------------------------------------------------------------------
@@ -2620,7 +2620,7 @@ f:asin
   Addr:  -
   Float: F-F
 
-Return the arc sine of a floating point number.
+Return the arc sine of a floating-point number.
 
 Class: class:word | Namespace: f | Interface Layer: rre
 ------------------------------------------------------------------------
@@ -2631,7 +2631,7 @@ f:atan
   Addr:  -
   Float: F-F
 
-Return the arc tangent of a floating point number.
+Return the arc tangent of a floating-point number.
 
 Class: class:word | Namespace: f | Interface Layer: rre
 ------------------------------------------------------------------------
@@ -2681,7 +2681,7 @@ f:cos
   Addr:  -
   Float: F-F
 
-Return the cosine of a floating point number.
+Return the cosine of a floating-point number.
 
 Class: class:word | Namespace: f | Interface Layer: rre
 ------------------------------------------------------------------------
@@ -2708,7 +2708,7 @@ f:depth
   Addr:  -
   Float: -
 
-Return the number of items on the floating point stack.
+Return the number of items on the floating-point stack.
 
 Class: class:word | Namespace: f | Interface Layer: rre
 ------------------------------------------------------------------------
@@ -2719,7 +2719,7 @@ f:drop
   Addr:  -
   Float: F-
 
-Discard the top item on the floating point stack.
+Discard the top item on the floating-point stack.
 
 Class: class:word | Namespace: f | Interface Layer: rre
 ------------------------------------------------------------------------
@@ -2741,7 +2741,7 @@ f:dump-astack
   Addr:  -
   Float: -
 
-Display the items on the alternate floating point stack.
+Display the items on the alternate floating-point stack.
 
 Class: class:word | Namespace: f | Interface Layer: rre
 ------------------------------------------------------------------------
@@ -2752,7 +2752,7 @@ f:dump-stack
   Addr:  -
   Float: -
 
-Display the items on the floating point stack.
+Display the items on the floating-point stack.
 
 Class: class:word | Namespace: f | Interface Layer: rre
 ------------------------------------------------------------------------
@@ -2763,7 +2763,7 @@ f:dup
   Addr:  -
   Float: F-FF
 
-Duplicate the top item on the floating point stack.
+Duplicate the top item on the floating-point stack.
 
 Class: class:word | Namespace: f | Interface Layer: rre
 ------------------------------------------------------------------------
@@ -2785,7 +2785,7 @@ f:eq?
   Addr:  -
   Float: FF-
 
-Compare two floating point values for equality. Returns `TRUE` if they are equal or `FALSE` otherwise.
+Compare two floating-point values for equality. Returns `TRUE` if they are equal or `FALSE` otherwise.
 
 Class: class:word | Namespace: f | Interface Layer: rre
 ------------------------------------------------------------------------
@@ -2796,7 +2796,7 @@ f:fetch
   Addr:  -
   Float: -n
 
-Fetch a stored floating point value.
+Fetch a stored floating-point value.
 
 Class: class:word | Namespace: f | Interface Layer: rre
 ------------------------------------------------------------------------
@@ -2807,7 +2807,7 @@ f:floor
   Addr:  -
   Float: F-F
 
-Perform a mathmatical floor operation on the floating point value.
+Perform a mathematical floor operation on the floating-point value.
 
 Class: class:word | Namespace: f | Interface Layer: rre
 ------------------------------------------------------------------------
@@ -2818,7 +2818,7 @@ f:gt?
   Addr:  -
   Float: FF-
 
-Compare two floating point values for greater than.
+Compare two floating-point values for greater than.
 
 Class: class:word | Namespace: f | Interface Layer: rre
 ------------------------------------------------------------------------
@@ -2845,7 +2845,7 @@ f:inf?
   Addr:  -
   Float: F-
 
-Return `TRUE` if floating point value is INF or `FALSE` otherwise.
+Return `TRUE` if floating-point value is INF or `FALSE` otherwise.
 
 Class: class:word | Namespace: f | Interface Layer: rre
 ------------------------------------------------------------------------
@@ -2873,7 +2873,7 @@ f:log
   Addr:  -
   Float: FF-F
 
-Return log(F1) for base F2 for floating point values.
+Return log(F1) for base F2 for floating-point values.
 
 Class: class:word | Namespace: f | Interface Layer: rre
 ------------------------------------------------------------------------
@@ -2884,7 +2884,7 @@ f:lt?
   Addr:  -
   Float: FF-
 
-Compare two floating point values for less than.
+Compare two floating-point values for less than.
 
 Class: class:word | Namespace: f | Interface Layer: rre
 ------------------------------------------------------------------------
@@ -2929,7 +2929,7 @@ f:nan?
   Addr:  -
   Float: F-
 
-Return `TRUE` if floating point value is NaN or `FALSE` otherwise.
+Return `TRUE` if floating-point value is NaN or `FALSE` otherwise.
 
 Class: class:word | Namespace: f | Interface Layer: rre
 ------------------------------------------------------------------------
@@ -2940,7 +2940,7 @@ f:negate
   Addr:  -
   Float: F-F
 
-Invert the sign of the floating point value.
+Invert the sign of the floating-point value.
 
 Class: class:word | Namespace: f | Interface Layer: rre
 
@@ -2956,7 +2956,7 @@ f:negative?
   Addr:  -
   Float: F-
 
-Return `TRUE` if floating point value is negative or `FALSE` if not.
+Return `TRUE` if floating-point value is negative or `FALSE` if not.
 
 Class: class:word | Namespace: f | Interface Layer: rre
 ------------------------------------------------------------------------
@@ -2978,7 +2978,7 @@ f:over
   Addr:  -
   Float: FG-FGF
 
-Put a copy of the second floating point value over the top one.
+Put a copy of the second floating-point value over the top one.
 
 Class: class:word | Namespace: f | Interface Layer: rre
 ------------------------------------------------------------------------
@@ -2989,7 +2989,7 @@ f:pop
   Addr:  -
   Float: -F
 
-Pop a floating point value from the alternate stack.
+Pop a floating-point value from the alternate stack.
 
 Class: class:word | Namespace: f | Interface Layer: rre
 ------------------------------------------------------------------------
@@ -3000,7 +3000,7 @@ f:positive?
   Addr:  -
   Float: F-
 
-Return `TRUE` if floating point value is positive or `FALSE` otherwise.
+Return `TRUE` if floating-point value is positive or `FALSE` otherwise.
 
 Class: class:word | Namespace: f | Interface Layer: rre
 ------------------------------------------------------------------------
@@ -3011,7 +3011,7 @@ f:power
   Addr:  -
   Float: FF-F
 
-Return F1^F2 for floating point values.
+Return F1^F2 for floating-point values.
 
 Class: class:word | Namespace: f | Interface Layer: rre
 ------------------------------------------------------------------------
@@ -3022,7 +3022,7 @@ f:push
   Addr:  -
   Float: F-
 
-Push a floating point value to an alternative stack.
+Push a floating-point value to an alternative stack.
 
 Class: class:word | Namespace: f | Interface Layer: rre
 ------------------------------------------------------------------------
@@ -3033,7 +3033,7 @@ f:put
   Addr:  -
   Float: F-
 
-Display a floating point number.
+Display a floating-point number.
 
 Class: class:word | Namespace: global | Interface Layer: rre
 ------------------------------------------------------------------------
@@ -3055,7 +3055,7 @@ f:round
   Addr:  -
   Float: f-f
 
-Round a floating point value.
+Round a floating-point value.
 
 Class: class:word | Namespace: f | Interface Layer: rre
 ------------------------------------------------------------------------
@@ -3066,7 +3066,7 @@ f:sign
   Addr:  -
   Float: F-
 
-Return 1 if the floating point value is positive or -1 if it is negative.
+Return 1 if the floating-point value is positive or -1 if it is negative.
 
 Class: class:word | Namespace: f | Interface Layer: rre
 
@@ -3082,7 +3082,7 @@ f:signed-sqrt
   Addr:  -
   Float: F-F
 
-Return the square root of a floating point number.
+Return the square root of a floating-point number.
 
 Class: class:word | Namespace: f | Interface Layer: rre
 ------------------------------------------------------------------------
@@ -3093,7 +3093,7 @@ f:signed-square
   Addr:  -
   Float: f-f
 
-Return the square of a floating point number.
+Return the square of a floating-point number.
 
 Class: class:word | Namespace: f | Interface Layer: rre
 ------------------------------------------------------------------------
@@ -3104,7 +3104,7 @@ f:sin
   Addr:  -
   Float: F-F
 
-Return the sine of a floating point number.
+Return the sine of a floating-point number.
 
 Class: class:word | Namespace: f | Interface Layer: rre
 ------------------------------------------------------------------------
@@ -3115,7 +3115,7 @@ f:sqrt
   Addr:  -
   Float: F-F
 
-Return the square root of a floating point number.
+Return the square root of a floating-point number.
 
 Class: class:word | Namespace: f | Interface Layer: rre
 ------------------------------------------------------------------------
@@ -3126,7 +3126,7 @@ f:square
   Addr:  -
   Float: f-f
 
-Return the square of a floating point number.
+Return the square of a floating-point number.
 
 Class: class:word | Namespace: f | Interface Layer: rre
 ------------------------------------------------------------------------
@@ -3137,7 +3137,7 @@ f:store
   Addr:  -
   Float: n-
 
-Store a floating point value to the specified memory location.
+Store a floating-point value to the specified memory location.
 
 Class: class:word | Namespace: f | Interface Layer: rre
 ------------------------------------------------------------------------
@@ -3148,7 +3148,7 @@ f:swap
   Addr:  -
   Float: FG-GF
 
-Exchange the top and second items on the floating point stack.
+Exchange the top and second items on the floating-point stack.
 
 Class: class:word | Namespace: f | Interface Layer: rre
 ------------------------------------------------------------------------
@@ -3159,7 +3159,7 @@ f:tan
   Addr:  -
   Float: F-F
 
-Return the tangent of a floating point number.
+Return the tangent of a floating-point number.
 
 Class: class:word | Namespace: f | Interface Layer: rre
 ------------------------------------------------------------------------
@@ -3170,7 +3170,7 @@ f:to-e
   Addr:  -
   Float: n-
 
-Encode the floating point value to an integer.
+Encode the floating-point value to an integer.
 
 Class: class:word | Namespace: f | Interface Layer: rre
 ------------------------------------------------------------------------
@@ -3181,7 +3181,7 @@ f:to-number
   Addr:  -
   Float: F-
 
-Convert a floating point value into a number.
+Convert a floating-point value into a number.
 
 Class: class:word | Namespace: f | Interface Layer: rre
 ------------------------------------------------------------------------
@@ -3192,7 +3192,7 @@ f:to-string
   Addr:  -
   Float: F-
 
-Convert a floating point value into a string.
+Convert a floating-point value into a string.
 
 Class: class:word | Namespace: f | Interface Layer: rre
 ------------------------------------------------------------------------
@@ -3203,7 +3203,7 @@ f:tuck
   Addr:  -
   Float: FG-GFG
 
-Tuck a copy of the top floating point value under the second one.
+Tuck a copy of the top floating-point value under the second one.
 
 Class: class:word | Namespace: f | Interface Layer: rre
 ------------------------------------------------------------------------
@@ -3455,7 +3455,7 @@ file:spew
   Addr:  -
   Float: -
 
-Given a string (s1) and a file name (s2), write the string into the file, replacing any existing cotent.
+Given a string (s1) and a file name (s2), write the string into the file, replacing any existing content.
 
 Class: class:word | Namespace: file | Interface Layer: rre
 ------------------------------------------------------------------------
@@ -3488,7 +3488,7 @@ float:operation
   Addr:  -
   Float: -
 
-Trigger a floating point operation. This is not intended to be used directly.
+Trigger a floating-point operation. This is not intended to be used directly.
 
 Class: class:word | Namespace: float | Interface Layer: rre
 ------------------------------------------------------------------------
@@ -4009,7 +4009,7 @@ n:random
   Addr:  -
   Float: -
 
-Return a random number
+Return a random number.
 
 Class: class:word | Namespace: n | Interface Layer: rre
 
@@ -4058,7 +4058,7 @@ n:to-float
   Addr:  -
   Float: -F
 
-Convert a number into a floating point value.
+Convert a number into a floating-point value.
 
 Class: class:word | Namespace: n | Interface Layer: rre
 ------------------------------------------------------------------------
@@ -4773,7 +4773,7 @@ s:to-float
   Addr:  -
   Float: -F
 
-Convert a string representation into a floating point value.
+Convert a string representation into a floating-point value.
 
 Class: class:word | Namespace: s | Interface Layer: rre
 ------------------------------------------------------------------------
@@ -5106,7 +5106,7 @@ sigil:.
   Addr:  -
   Float: -F
 
-Interpret time: convert string to a floating point value. Compile time: convert string to a floating point value and compile code to push this value to the float stack.
+Interpret time: convert string to a floating-point value. Compile time: convert string to a floating-point value and compile code to push this value to the float stack.
 
 Class: class:macro | Namespace: sigil | Interface Layer: rre
 ------------------------------------------------------------------------

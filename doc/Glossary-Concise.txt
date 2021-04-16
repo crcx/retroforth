@@ -227,7 +227,7 @@ a:chop                   D: a-a  A: -  F: -
 Return a new array containing all but the last value in the source array.
 
 a:contains-string?       D: sa-f  A: -  F: -
-Return `TRUE` if the string value is in the array or`FALSE` otherwise.
+Return `TRUE` if the string value is in the array or `FALSE` otherwise.
 
 a:contains?              D: na-f  A: -  F: -
 Return `TRUE` if the value is in the array or `FALSE` otherwise.
@@ -587,22 +587,22 @@ dup-pair                 D: nm-nmnm  A: -  F: -
 Duplicate the top two items on the stack.
 
 e:-INF                   D: -e  A: -  F: -
-Constant. Negative infinity.  For encoded floating point values.
+Constant. Negative infinity.  For encoded floating-point values.
 
 e:-inf?                  D: e-f  A: -  F: -
 Is encoded value negative infinity?
 
 e:INF                    D: -e  A: -  F: -
-Constant. Infinity. For encoded floating point values.
+Constant. Infinity. For encoded floating-point values.
 
 e:MAX                    D: -e  A: -  F: -
-Constant. Maximum value. For encoded floating point values.
+Constant. Maximum value. For encoded floating-point values.
 
 e:MIN                    D: -e  A: -  F: -
-Constant. Minimum value. For encoded floating point values.
+Constant. Minimum value. For encoded floating-point values.
 
 e:NAN                    D: -e  A: -  F: -
-Constant. Not a Number. For encoded floating point values.
+Constant. Not a Number. For encoded floating-point values.
 
 e:clip                   D: e-E  A: -  F: -
 Constrain the encoded value to the allowable range.
@@ -626,7 +626,7 @@ e:put                    D: e-  A: -  F: -
 Display an encoded number.
 
 e:to-f                   D: e-  A: -  F: -n
-Decode an encoded floating point value.
+Decode an encoded floating-point value.
 
 e:zero?                  D: e-f  A: -  F: -
 Return `TRUE` if the value is zero, or `FALSE` otherwise.
@@ -638,28 +638,28 @@ err:notfound             D: -  A: -  F: -
 Error handler. Called when a word is not found by `interpret`.
 
 f:*                      D: -  A: -  F: FF-F
-Multiply two floating point numbers, returning the result.
+Multiply two floating-point numbers, returning the result.
 
 f:+                      D: -  A: -  F: FF-F
-Add two floating point numbers, returning the result.
+Add two floating-point numbers, returning the result.
 
 f:-                      D: -  A: -  F: FF-F
-Subtract F2 from F1 returing the result.
+Subtract F2 from F1 returning the result.
 
 f:-INF                   D: -  A: -  F: -n
 Return a value corresponding to negative infinity
 
 f:-eq?                   D: -f  A: -  F: FF-
-Compare two floating point values for inequality. Returns `TRUE` if they are not equal or `FALSE` otherwise.
+Compare two floating-point values for inequality. Returns `TRUE` if they are not equal or `FALSE` otherwise.
 
 f:-inf?                  D: -f  A: -  F: F-
-Return `TRUE` if floating point value is -INF or `FALSE` otherwise.
+Return `TRUE` if floating-point value is -INF or `FALSE` otherwise.
 
 f:/                      D: -  A: -  F: FF-F
-Divide floating point value F1 by F2.
+Divide floating-point value F1 by F2.
 
 f:E                      D: -  A: -  F: -F
-Return the floating point value for Euler's number.
+Return the floating-point value for Euler's number.
 
 f:E1                     D: -  A: -  F: -f
 Hook. Return a constant used as the scaling factor for the e: words.
@@ -671,22 +671,22 @@ f:NAN                    D: -  A: -  F: -n
 Return a value corresponding to NaN
 
 f:PI                     D: -  A: -  F: -F
-Return the floating point value for PI.
+Return the floating-point value for PI.
 
 f:abs                    D: -  A: -  F: F-F
-Return the absolute value for a floating point value.
+Return the absolute value for a floating-point value.
 
 f:acos                   D: -  A: -  F: F-F
-Return the arc cosine of a floating point number.
+Return the arc cosine of a floating-point number.
 
 f:adepth                 D: -n  A: -  F: -
-Return the number of items on the alternate floating point stack.
+Return the number of items on the alternate floating-point stack.
 
 f:asin                   D: -  A: -  F: F-F
-Return the arc sine of a floating point number.
+Return the arc sine of a floating-point number.
 
 f:atan                   D: -  A: -  F: F-F
-Return the arc tangent of a floating point number.
+Return the arc tangent of a floating-point number.
 
 f:between?               D: -f  A: -  F: nlu-
 Return TRUE if number is between the lower (l) and upper (u) bounds. If not, return FALSE. This is inclusive of the limits.
@@ -698,58 +698,58 @@ f:ceiling                D: -  A: -  F: F-F
 Return the smallest integral value greater than or equal to the specified value.
 
 f:cos                    D: -  A: -  F: F-F
-Return the cosine of a floating point number.
+Return the cosine of a floating-point number.
 
 f:dec                    D: -  A: -  F: n-m
 Decrement n by one.
 
 f:depth                  D: -n  A: -  F: -
-Return the number of items on the floating point stack.
+Return the number of items on the floating-point stack.
 
 f:drop                   D: -  A: -  F: F-
-Discard the top item on the floating point stack.
+Discard the top item on the floating-point stack.
 
 f:drop-pair              D: -  A: -  F: FF-
 Remove top two items on the stack.
 
 f:dump-astack            D: -  A: -  F: -
-Display the items on the alternate floating point stack.
+Display the items on the alternate floating-point stack.
 
 f:dump-stack             D: -  A: -  F: -
-Display the items on the floating point stack.
+Display the items on the floating-point stack.
 
 f:dup                    D: -  A: -  F: F-FF
-Duplicate the top item on the floating point stack.
+Duplicate the top item on the floating-point stack.
 
 f:dup-pair               D: -  A: -  F: nm-nmnm
 Duplicate the top two items on the stack.
 
 f:eq?                    D: -f  A: -  F: FF-
-Compare two floating point values for equality. Returns `TRUE` if they are equal or `FALSE` otherwise.
+Compare two floating-point values for equality. Returns `TRUE` if they are equal or `FALSE` otherwise.
 
 f:fetch                  D: a-  A: -  F: -n
-Fetch a stored floating point value.
+Fetch a stored floating-point value.
 
 f:floor                  D: -  A: -  F: F-F
-Perform a mathmatical floor operation on the floating point value.
+Perform a mathematical floor operation on the floating-point value.
 
 f:gt?                    D: -f  A: -  F: FF-
-Compare two floating point values for greater than.
+Compare two floating-point values for greater than.
 
 f:inc                    D: -  A: -  F: n-m
 Increment n by one.
 
 f:inf?                   D: -f  A: -  F: F-
-Return `TRUE` if floating point value is INF or `FALSE` otherwise.
+Return `TRUE` if floating-point value is INF or `FALSE` otherwise.
 
 f:limit                  D: -  A: -  F: nlu-m
 Return n if it is within the lower (l) and upper (u) bounds. If outside the bounds, return the closes boundary value.
 
 f:log                    D: -  A: -  F: FF-F
-Return log(F1) for base F2 for floating point values.
+Return log(F1) for base F2 for floating-point values.
 
 f:lt?                    D: -f  A: -  F: FF-
-Compare two floating point values for less than.
+Compare two floating-point values for less than.
 
 f:max                    D: -  A: -  F: mn-o
 Return the greater of two values.
@@ -758,79 +758,79 @@ f:min                    D: -  A: -  F: mn-o
 Return the lesser of two values.
 
 f:nan?                   D: -f  A: -  F: F-
-Return `TRUE` if floating point value is NaN or `FALSE` otherwise.
+Return `TRUE` if floating-point value is NaN or `FALSE` otherwise.
 
 f:negate                 D: -  A: -  F: F-F
-Invert the sign of the floating point value.
+Invert the sign of the floating-point value.
 
 f:negative?              D: -f  A: -  F: F-
-Return `TRUE` if floating point value is negative or `FALSE` if not.
+Return `TRUE` if floating-point value is negative or `FALSE` if not.
 
 f:nip                    D: -  A: -  F: NM-M
 Remove the second item from the stack.
 
 f:over                   D: -  A: -  F: FG-FGF
-Put a copy of the second floating point value over the top one.
+Put a copy of the second floating-point value over the top one.
 
 f:pop                    D: -  A: -  F: -F
-Pop a floating point value from the alternate stack.
+Pop a floating-point value from the alternate stack.
 
 f:positive?              D: -f  A: -  F: F-
-Return `TRUE` if floating point value is positive or `FALSE` otherwise.
+Return `TRUE` if floating-point value is positive or `FALSE` otherwise.
 
 f:power                  D: -  A: -  F: FF-F
-Return F1^F2 for floating point values.
+Return F1^F2 for floating-point values.
 
 f:push                   D: -  A: -  F: F-
-Push a floating point value to an alternative stack.
+Push a floating-point value to an alternative stack.
 
 f:put                    D: -  A: -  F: F-
-Display a floating point number.
+Display a floating-point number.
 
 f:rot                    D: -  A: -  F: abc-bca
 Rotate the top three values.
 
 f:round                  D: -  A: -  F: f-f
-Round a floating point value.
+Round a floating-point value.
 
 f:sign                   D: -n  A: -  F: F-
-Return 1 if the floating point value is positive or -1 if it is negative.
+Return 1 if the floating-point value is positive or -1 if it is negative.
 
 f:signed-sqrt            D: -  A: -  F: F-F
-Return the square root of a floating point number.
+Return the square root of a floating-point number.
 
 f:signed-square          D: -  A: -  F: f-f
-Return the square of a floating point number.
+Return the square of a floating-point number.
 
 f:sin                    D: -  A: -  F: F-F
-Return the sine of a floating point number.
+Return the sine of a floating-point number.
 
 f:sqrt                   D: -  A: -  F: F-F
-Return the square root of a floating point number.
+Return the square root of a floating-point number.
 
 f:square                 D: -  A: -  F: f-f
-Return the square of a floating point number.
+Return the square of a floating-point number.
 
 f:store                  D: a-  A: -  F: n-
-Store a floating point value to the specified memory location.
+Store a floating-point value to the specified memory location.
 
 f:swap                   D: -  A: -  F: FG-GF
-Exchange the top and second items on the floating point stack.
+Exchange the top and second items on the floating-point stack.
 
 f:tan                    D: -  A: -  F: F-F
-Return the tangent of a floating point number.
+Return the tangent of a floating-point number.
 
 f:to-e                   D: -e  A: -  F: n-
-Encode the floating point value to an integer.
+Encode the floating-point value to an integer.
 
 f:to-number              D: -n  A: -  F: F-
-Convert a floating point value into a number.
+Convert a floating-point value into a number.
 
 f:to-string              D: -s  A: -  F: F-
-Convert a floating point value into a string.
+Convert a floating-point value into a string.
 
 f:tuck                   D: -  A: -  F: FG-GFG
-Tuck a copy of the top floating point value under the second one.
+Tuck a copy of the top floating-point value under the second one.
 
 fetch                    D: a-n  A: -  F: -
 Fetch the value stored at the specified address.
@@ -896,7 +896,7 @@ file:slurp               D: as-  A: -  F: -
 Given an address and a file name, read the file contents into memory starting at the address.
 
 file:spew                D: ss-  A: -  F: -
-Given a string (s1) and a file name (s2), write the string into the file, replacing any existing cotent.
+Given a string (s1) and a file name (s2), write the string into the file, replacing any existing content.
 
 file:tell                D: h-n  A: -  F: -
 Given a file handle, return the current offset in the file.
@@ -905,7 +905,7 @@ file:write               D: ch-  A: -  F: -
 Write a character to the file represented by the handle.
 
 float:operation          D: ...n-  A: -  F: -
-Trigger a floating point operation. This is not intended to be used directly.
+Trigger a floating-point operation. This is not intended to be used directly.
 
 gopher:get               D: asns-n  A: -  F: -
 Takes an address, a server, a port, and a selector. Fetch the resource and store it at address. Return the number of bytes received.
@@ -1028,7 +1028,7 @@ n:put                    D: n-  A: -  F: -
 Display a number.
 
 n:random                 D: -n  A: -  F: -
-Return a random number
+Return a random number.
 
 n:sqrt                   D: n-m  A: -  F: -
 Return the square root of a number.
@@ -1040,7 +1040,7 @@ n:strictly-positive?     D: n-f  A: -  F: -
 Return TRUE if number is greater than zero or FALSE if it is zero or less.
 
 n:to-float               D: n-  A: -  F: -F
-Convert a number into a floating point value.
+Convert a number into a floating-point value.
 
 n:to-string              D: n-s  A: -  F: -
 Convert a number into a string.
@@ -1229,7 +1229,7 @@ s:temp                   D: s-s  A: -  F: -
 Move a string into the temporary string buffers.
 
 s:to-float               D: s-  A: -  F: -F
-Convert a string representation into a floating point value.
+Convert a string representation into a floating-point value.
 
 s:to-lower               D: s-s  A: -  F: -
 Convert uppercase ASCII characters in a string to lowercase.
@@ -1304,7 +1304,7 @@ sigil:(                  D: s-  A: -  F: -
 Process token as a comment.
 
 sigil:.                  D: s-  A: -  F: -F
-Interpret time: convert string to a floating point value. Compile time: convert string to a floating point value and compile code to push this value to the float stack.
+Interpret time: convert string to a floating-point value. Compile time: convert string to a floating-point value and compile code to push this value to the float stack.
 
 sigil::                  D: s-  A: -  F: -
 Process token as a new definition.
