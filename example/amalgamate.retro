@@ -9,15 +9,23 @@ Output will be written to stdout.
 
 ## References
 
-[1] vm/nga-c/retro-unix.c
-[2] vm/nga-c/retro-image.c
+[1] vm/nga-c/retro.c
+[2] vm/nga-c/image.c
 
 ## Code
 
-Include compilation instructions.
+Include compilation instructions and enable i/o devices.
 
 ~~~
 '/*_Build_with_`cc_-lm_-O2_retro-unix.c_-o_retro`_*/ s:put nl nl
+
+{ 'ENABLE_FLOATS
+  'ENABLE_FILES
+  'ENABLE_UNIX
+  'ENABLE_RNG
+  'ENABLE_CLOCK
+  'ENABLE_SCRIPTING
+} [ '#define_%s s:format s:put nl ] a:for-each nl
 ~~~
 
 Then extract and generate the single file source.
@@ -34,7 +42,7 @@ Then extract and generate the single file source.
 ---reveal---
 
   :amalgamate
-    'vm/nga-c/retro-unix.c [ source:line ] file:for-each-line ;
+    'vm/nga-c/retro.c [ source:line ] file:for-each-line ;
 }}
 
 amalgamate

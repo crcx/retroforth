@@ -133,7 +133,7 @@ bin/retro-repl: vm/nga-c/repl.c vm/nga-c/image.c
 update-extensions: bin/retro
 	cd package/extensions && ../../bin/retro -f ../../tools/generate-extensions-list.retro >../load-extensions.retro
 
-vm/nga-c/retro-image.c: ngaImage bin/retro-embedimage bin/retro-extend interface/filesystem.retro interface/floatingpoint.retro interface/unix.retro interface/rng.retro interface/sockets.retro interface/scripting.retro interface/retro-unix.retro interface/clock.retro
+vm/nga-c/image.c: ngaImage bin/retro-embedimage bin/retro-extend interface/filesystem.retro interface/floatingpoint.retro interface/unix.retro interface/rng.retro interface/sockets.retro interface/scripting.retro interface/retro-unix.retro interface/clock.retro
 	cp ngaImage rre.image
 	./bin/retro-extend rre.image interface/filesystem.retro interface/floatingpoint.retro interface/unix.retro interface/rng.retro interface/sockets.retro interface/scripting.retro interface/clock.retro interface/retro-unix.retro 
 	./bin/retro-embedimage rre.image >vm/nga-c/image.c
@@ -143,7 +143,7 @@ bin/retro: vm/nga-c/image.c vm/nga-c/retro.c package/list.forth package/load-ext
 	cd package && ../bin/retro -u rre.image -f list.forth
 	./bin/retro-embedimage rre.image >vm/nga-c/image.c
 	rm rre.image
-	cd vm/nga-c && $(CC) -DFAST $(OPTIONS) $(ENABLED) $(CFLAGS) $(LDFLAGS) -o ../../bin/retro retro-unix.c $(LIBM)
+	cd vm/nga-c && $(CC) -DFAST $(OPTIONS) $(ENABLED) $(CFLAGS) $(LDFLAGS) -o ../../bin/retro retro.c $(LIBM)
 
 
 # optional targets
