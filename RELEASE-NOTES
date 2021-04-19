@@ -22,7 +22,7 @@
   - added a decimal device (alt. to floating point w/higher precision)
   - better fix for nested file inclusion handling
   - start adding pythonista ui support (iOS)
-  - now runs under Python 2
+  - now runs under Python 2 again
 
 - nga-c
 
@@ -50,4 +50,4 @@
 - epub now has a cover image
 - added back some missing files
 - add note on enabling sockets when building on Unix
-
+- fixed typos in the glossary

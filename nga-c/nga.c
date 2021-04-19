@@ -20,9 +20,7 @@
 #include <string.h>
 #include <sys/stat.h>
 #include <sys/types.h>
-#include <sys/wait.h>
 #include <time.h>
-#include <unistd.h>
 
 #ifdef ENABLE_FLOATS
 #include <math.h>
@@ -33,6 +31,19 @@
 #include <netdb.h>
 #include <netinet/in.h>
 #include <sys/socket.h>
+#endif
+
+#ifdef ENABLE_UNIX
+#include <sys/wait.h>
+#include <unistd.h>
+#endif
+
+#ifdef _WIN32
+#define NEEDS_STRL
+#endif
+
+#ifdef _WIN64
+#define NEEDS_STRL
 #endif
 
 /* Configuration ----------------------------------------------------- */
