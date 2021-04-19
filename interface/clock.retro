@@ -4,16 +4,10 @@ The `clock:` namespace contains words for interacting with the
 system clock.
 
 ~~~
-{{
-  'Clock var
-  :identify
-    @Clock n:zero? 0; drop
-      #5 io:scan-for dup n:negative?
-      [ drop 'IO_DEVICE_TYPE_0005_NOT_FOUND s:put nl ]
-      [ !Clock ] choose ;
----reveal---
-  :clock:operation identify @Clock io:invoke ;
-}}
+:clock:operation
+  #5 io:scan-for
+    dup n:negative? [ drop 'Error:_device_(0005)_not_found s:put nl ] if;
+    io:invoke ;
 
 :clock:timestamp  (-n) #0 clock:operation ;
 :clock:day        (-n) #1 clock:operation ;
