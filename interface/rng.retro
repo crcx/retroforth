@@ -5,16 +5,8 @@ part of the VM I/O extensions to allow implementors to use the
 best approach on their host system.
 
 ~~~
-{{
-  'io var
-  :identify
-    @io n:zero? 0; drop
-      #10 io:scan-for dup n:negative?
-      [ drop 'IO_DEVICE_TYPE_0010_NOT_FOUND s:put nl ]
-      [ !io ] choose ;
----reveal---
-  :io:rng-operation identify @io io:invoke ;
-}}
-
-:n:random (-n)  io:rng-operation ;
+:n:random (-n)
+  #10 io:scan-for
+    dup n:negative? [ drop 'Error:_device_(0010)_not_found s:put nl ] if;
+    io:invoke ;
 ~~~

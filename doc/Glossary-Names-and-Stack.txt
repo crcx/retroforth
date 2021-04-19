@@ -317,7 +317,6 @@ interpret                D: s-  A: -  F: -
 io:enumerate             D: -n  A: -  F: -
 io:invoke                D: n-  A: -  F: -
 io:query                 D: n-mN  A: -  F: -
-io:rng-operation         D: -n  A: -  F: -
 io:scan-for              D: n-m  A: -  F: -
 io:unix-syscall          D: ...n-  A: -  F: -
 listen                   D: -  A: -  F: -

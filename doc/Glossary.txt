@@ -3686,17 +3686,6 @@ Ask an I/O device to identify itself. Returns a version (m) and device ID (N).
 Class: class:word | Namespace: io | Interface Layer: all
 ------------------------------------------------------------------------
 
-io:rng-operation
-
-  Data:  -n
-  Addr:  -
-  Float: -
-
-Trigger a rng operation. This is not intended to be used directly.
-
-Class: class:word | Namespace: io | Interface Layer: rre
-------------------------------------------------------------------------
-
 io:scan-for
 
   Data:  n-m
