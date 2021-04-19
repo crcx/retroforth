@@ -8,16 +8,10 @@ be preferable to design a file I/O device that models the host
 expectations.
 
 ~~~
-{{
-  'Files var
-  :identify
-    @Files n:zero? 0; drop
-      #4 io:scan-for dup n:negative?
-      [ drop 'IO_DEVICE_TYPE_0004_NOT_FOUND s:put nl ]
-      [ !Files ] choose ;
----reveal---
-  :file:operation identify @Files io:invoke ;
-}}
+:file:operation
+  #4 io:scan-for
+    dup n:negative? [ drop 'Error:_device_(0004)_not_found s:put nl ] if;
+    io:invoke ;
 ~~~
 
 First up, constants for the file modes.
