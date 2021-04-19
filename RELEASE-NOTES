@@ -9,6 +9,8 @@
 ## I/O
 
 - simplify definition of `c:get`
+- reduced memory usage of the forth part of the code
+  in most devices
 
 ## Toolchain
 
@@ -26,6 +28,8 @@
 
 - nga-c
 
+  - single file implementation (runs on unix, windows)
+  - compile time defines for enabling i/o devices
   - better fix for nested file inclusion handling
   - removed unused variables
   - use a struct for processor state, stacks
@@ -44,6 +48,7 @@
 - refactored retro-locate
 - file names now using a consistent case/format
 - added a line oriented text editor
+- updated amalgamation tool for latest nga-c
 
 ## Documentation
 

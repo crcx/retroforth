@@ -6,6 +6,7 @@ DOCSDIR ?= $(PREFIX)/share/doc/RETRO12
 EXAMPLESDIR ?= $(PREFIX)/share/examples/RETRO12
 MANDIR ?= $(PREFIX)/share/man/man1
 LIBM ?= -lm
+CFLAGS ?= -O2
 ENABLED ?=
 ENABLED += -DENABLE_FLOATS
 ENABLED += -DENABLE_FILES
@@ -13,6 +14,7 @@ ENABLED += -DENABLE_UNIX
 ENABLED += -DENABLE_RNG
 ENABLED += -DENABLE_CLOCK
 ENABLED += -DENABLE_SCRIPTING
+ENABLED += -DNEEDS_STRL
 
 all: build
 
@@ -140,7 +142,7 @@ vm/nga-c/image.c: ngaImage bin/retro-embedimage bin/retro-extend interface/files
 	./bin/retro-embedimage rre.image >vm/nga-c/image.c
 
 bin/retro: vm/nga-c/image.c vm/nga-c/retro.c package/list.forth package/load-extensions.retro
-	cd vm/nga-c && $(CC) $(OPTIONS) $(ENABLEd) $(CFLAGS) $(LDFLAGS) -o ../../bin/retro retro.c $(LIBM)
+	cd vm/nga-c && $(CC) $(OPTIONS) $(ENABLED) $(CFLAGS) $(LDFLAGS) -o ../../bin/retro retro.c $(LIBM)
 	cd package && ../bin/retro -u rre.image -f list.forth
 	./bin/retro-embedimage rre.image >vm/nga-c/image.c
 	rm rre.image
