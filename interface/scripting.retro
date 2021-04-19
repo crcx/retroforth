@@ -34,23 +34,21 @@ Adds support for `abort`.
 
 ~~~
 {{
-  'Scripting var
-  :identify
-    @Scripting n:zero? 0; drop
-      #9 io:scan-for dup n:negative?
-      [ drop 'IO_DEVICE_TYPE_0009_NOT_FOUND s:put nl ]
-      [ !Scripting ] choose ;
+  :script:operation
+    #9 io:scan-for
+      dup n:negative? [ drop 'Error:_device_(0009)_not_found s:put nl ] if;
+      io:invoke ;
 ---reveal---
-  :script:arguments (-n)            identify #0 @Scripting io:invoke ;
-  :script:get-argument (n-s)  s:empty swap identify #1 @Scripting io:invoke ;
-  :include  (s-)                    identify #2 @Scripting io:invoke ;
-  :script:name (-s)         s:empty identify #3 @Scripting io:invoke ;
+  :script:arguments (-n)             #0 script:operation ;
+  :script:get-argument (n-s) s:empty swap #1 script:operation ;
+  :include  (s-)                     #2 script:operation ;
+  :script:name (-s)          s:empty #3 script:operation ;
 
-  :script:current-file (-s) s:empty identify #4 @Scripting io:invoke ;
-  :script:current-line (-n)         identify #5 @Scripting io:invoke ;
-  :script:ignore-to-eol (-)         identify #6 @Scripting io:invoke ;
-  :script:abort-include (-)         identify #7 @Scripting io:invoke ;
+  :script:current-file (-s)  s:empty #4 script:operation ;
+  :script:current-line (-n)          #5 script:operation ;
+  :script:ignore-to-eol (-)          #6 script:operation ;
+  :script:abort-include (-)          #7 script:operation ;
 
-  :abort (-) &Compiler v:off identify #8 @Scripting io:invoke ;
+  :abort (-) &Compiler v:off         #8 script:operation ;
 }}
 ~~~
