@@ -681,7 +681,8 @@ void unix_close_pipe() {
 }
 
 void unix_system() {
-  system(string_extract(stack_pop()));
+  int ignore = 0;
+  ignore = system(string_extract(stack_pop()));
 }
 
 void unix_fork() {
@@ -756,14 +757,16 @@ void unix_kill() {
 
 void unix_write() {
   CELL a, b, c;
+  ssize_t ignore;
   c = stack_pop();
   b = stack_pop();
   a = stack_pop();
-  write(fileno(OpenFileHandles[c]), string_extract(a), b);
+  ignore = write(fileno(OpenFileHandles[c]), string_extract(a), b);
 }
 
 void unix_chdir() {
-  chdir(string_extract(stack_pop()));
+  int ignore;
+  ignore = chdir(string_extract(stack_pop()));
 }
 
 void unix_getenv() {
@@ -890,8 +893,9 @@ void io_rng() {
   int64_t r = 0;
   char buffer[8];
   int i;
+  ssize_t ignore;
   int fd = open("/dev/urandom", O_RDONLY);
-  read(fd, buffer, 8);
+  ignore = read(fd, buffer, 8);
   close(fd);
   for(i = 0; i < 8; ++i) {
     r = r << 8;
