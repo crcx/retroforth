@@ -47,12 +47,28 @@
 #endif
 
 /* Configuration ----------------------------------------------------- */
+#ifndef BIT64
 #define CELL int32_t
 #define CELL_MIN INT_MIN + 1
 #define CELL_MAX INT_MAX - 1
-#define IMAGE_SIZE   524288       /* Amount of RAM, in cells           */
-#define ADDRESSES    256          /* Depth of address stack            */
-#define STACK_DEPTH  256          /* Depth of data stack               */
+#else
+#define CELL int64_t
+#define CELL_MIN LLONG_MIN + 1
+#define CELL_MAX LLONG_MAX - 1
+#endif
+
+#ifndef IMAGE_SIZE
+#define IMAGE_SIZE   524288       /* Amount of RAM, in cells */
+#endif
+
+#ifndef ADDRESSES
+#define ADDRESSES    256          /* Depth of address stack */
+#endif
+
+#ifndef STACK_DEPTH
+#define STACK_DEPTH  256          /* Depth of data stack */
+#endif
+
 #define TIB          1025         /* Location of TIB                   */
 
 #define D_OFFSET_LINK     0       /* Dictionary Format Info. Update if */
