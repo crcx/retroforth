@@ -46,6 +46,12 @@
 #define NEEDS_STRL
 #endif
 
+#if defined(__APPLE__) && defined(__MACH__)
+#ifdef NEEDS_STRL
+#undef NEEDS_STRL
+#endif
+#endif
+
 /* Configuration ----------------------------------------------------- */
 #ifndef BIT64
 #define CELL int32_t
