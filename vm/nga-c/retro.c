@@ -917,8 +917,11 @@ void io_rng() {
     r = r << 8;
     r += ((int64_t)buffer[i] & 0xFF);
   }
-  /* If using a 64-bit image, change to: stack_push(llabs(r)); */
+#ifndef BIT64
   stack_push((CELL)abs((CELL)r));
+#else
+  stack_push((CELL)llabs((CELL)r));
+#endif
 }
 
 void query_rng() {
