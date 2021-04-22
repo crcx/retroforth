@@ -1,6 +1,14 @@
 #include <stdint.h>
 #ifndef CELL
+#ifndef BIT64
 #define CELL int32_t
+#define CELL_MIN INT_MIN + 1
+#define CELL_MAX INT_MAX - 1
+#else
+#define CELL int64_t
+#define CELL_MIN LLONG_MIN + 1
+#define CELL_MAX LLONG_MAX - 1
+#endif
 #endif
 CELL ngaImageCells = 10220;
 CELL ngaImage[] = { 1793,-1,10207,10219,202104,0,10,1,10,2,10,3,10,4,10,5,10,6,10,

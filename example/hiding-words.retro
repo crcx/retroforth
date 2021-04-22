@@ -1,0 +1,39 @@
+# Hiding Words
+
+It's often useful to be able to hide a word from the global
+dictionary. This can be done with the lexical scope words,
+but here I present a different approach.
+
+To hide a word, it is sufficient to change its name to
+something that will never be matched. Since strings are
+null terminated, just replacing the first character with
+a null suffices.
+
+So all that needs to be done is to create an array of headers
+we want to hide, then iterate over that to smudge out the
+names.
+
+# Code
+
+~~~
+'To-Hide d:create #65 allot
+
+:private @Dictionary @To-Hide &To-Hide + n:inc store &To-Hide v:inc ;
+
+:hide-private
+  &To-Hide [ d:name v:off ] a:for-each &To-Hide v:off ;
+~~~
+
+# Example
+
+```
+:a ;
+:b ; private
+:f ; private
+:c ;
+:d ; private
+:e ;
+
+hide-private
+```
+
