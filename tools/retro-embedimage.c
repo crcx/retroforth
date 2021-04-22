@@ -48,7 +48,15 @@ CELL ngaLoadImage(char *imageFile) {
 void output_header(int size) {
   printf("#include <stdint.h>\n");
   printf("#ifndef CELL\n");
+  printf("#ifndef BIT64\n");
   printf("#define CELL int32_t\n");
+  printf("#define CELL_MIN INT_MIN + 1\n");
+  printf("#define CELL_MAX INT_MAX - 1\n");
+  printf("#else\n");
+  printf("#define CELL int64_t\n");
+  printf("#define CELL_MIN LLONG_MIN + 1\n");
+  printf("#define CELL_MAX LLONG_MAX - 1\n");
+  printf("#endif\n");
   printf("#endif\n");
   printf("CELL ngaImageCells = %lld;\n", (long long)size);
   printf("CELL ngaImage[] = { ");
