@@ -4,7 +4,7 @@ sources:
 tasks:
 - build: |
     cd retroforth
-    make
+    make OPTIONS=-DBIT64
 - test: |
     cd retroforth
     ./bin/retro example/1D-Cellular-Automota.retro
