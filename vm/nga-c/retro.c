@@ -117,6 +117,8 @@ void io_floatingpoint();    void query_floatingpoint();
 void io_socket();           void query_socket();
 #endif
 
+void io_image();            void query_image();
+
 void load_embedded_image();
 CELL load_image();
 void prepare_vm();
@@ -1101,6 +1103,24 @@ void query_keyboard() {
   stack_push(1);
 }
 
+/*=====================================================================*/
+
+void io_image() {
+  FILE *fp;
+  char *f = string_extract(stack_pop());
+  if ((fp = fopen(f, "wb")) == NULL) {
+    printf("\nERROR (nga/io_image): Unable to save the image: %s!\n", f);
+    exit(2);
+  }
+  fwrite(&memory, sizeof(CELL), memory[3] + 1, fp);
+  fclose(fp);
+}
+
+void query_image() {
+  stack_push(0);
+  stack_push(1000);
+}
+
 
 /*=====================================================================*/
 
@@ -1486,6 +1506,7 @@ int main(int argc, char **argv) {
   register_device(io_output, query_output);
   register_device(io_keyboard, query_keyboard);
   register_device(io_filesystem, query_filesystem);
+  register_device(io_image, query_image);
 #ifdef ENABLE_FLOATS
   register_device(io_floatingpoint, query_floatingpoint);
 #endif

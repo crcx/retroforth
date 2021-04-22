@@ -12,23 +12,7 @@ at addresses 0 to 1023).
 ~~~
 
 ~~~
-{{
-  'FID var
-
-  :write-byte (n-)  @FID file:write ;
-  :mask       (n-)  #255 and ;
-
-  :write-cell (n-)
-           dup mask write-byte
-    #8 shift dup mask write-byte
-    #8 shift dup mask write-byte
-    #8 shift     mask write-byte ;
----reveal---
-  :image:save (s-)
-    file:open-for-writing !FID
-    #0 here [ fetch-next write-cell ] times drop
-    @FID file:close ;
-}}
+:image:save (s-) #1000 io:scan-for io:invoke ;
 ~~~
 
 ## Console Input
