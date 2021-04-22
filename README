@@ -1,5 +1,3 @@
-## Retro: A Modern, Pragmatic Forth
-
 RETRO is a modern, pragmatic Forth drawing influences from many
 sources. It's clean, elegant, tiny, and easy to grasp and adapt
 to various uses.
@@ -32,13 +30,14 @@ The `retro` executable embeds the image into the binary, making
 it trivial to copy and deploy.
 
 This interface layer also extends the language with many new
-words and vocabularies, adds scripting, file i/o, gopher, and
-floating point math support.
+words and vocabularies, adds scripting, file i/o, floating point,
+and more.
 
 The `retro` executable can handle a variety of command line
-arguments:
+arguments which are covered in the manpage, but the most common
+ones are:
 
-    retro -i
+    retro
 
 Starts the *listener*, a basic REPL for interactive use.
 
@@ -53,15 +52,13 @@ header line like `#!/usr/bin/env retro`.
 This will run the code in the specified file, then start the
 listener.
 
-    retro -h
-
-Displays a summary of the command line arguments.
+## Literate Sources
 
 Source files for use with `retro` are written with code in
 fenced blocks:
 
     commentary here
-     
+
     ~~~
     code here
     ~~~
@@ -71,13 +68,12 @@ Anything outside the fenced blocks will be ignored.
 ## Documentation
 
 The primary documentation is in RETRO-Book.md (and the formatted
-RETRO-Book.html.) Additional notes can be found in the `doc`
-directory.
+epub.) Additional notes can be found in the `doc` directory.
 
 ## Alternative Implementations
 
 In addition to the C and Python implementations, this source
-tree includes additional implementations in C#, JavaScript,
+tree includes additional implementations in C#, Nim, JavaScript,
 and Pascal. These are not as well tested or as feature complete
 as the main implementations, but are provided for your use if
 the standard implementations will not suffice.
@@ -95,3 +91,4 @@ Thanks go out to my current and past patrons:
 - Krinkleneck
 - Rick Carlino
 - Scott McCallum
+- Bartels Jon Randy
