@@ -1,58 +1,16 @@
-# RetroForth 2021.4 Release Notes
+# RetroForth 2021.7 (In-Progress) Release Notes
 
 ## Core Language
 
 ## Renamed
 
-- prefix: namespace to sigil:
-
 ## I/O
-
-- simplify definition of `c:get`
-- reduced memory usage of the forth part of the code
-  in most devices
 
 ## Toolchain
 
-- retro-extend.py now does run length encoding
-
 ## VM
-
-- nga-python
-
-  - added support for run length encoded images
-  - added a decimal device (alt. to floating point w/higher precision)
-  - better fix for nested file inclusion handling
-  - start adding pythonista ui support (iOS)
-  - now runs under Python 2 again
-
-- nga-c
-
-  - single file implementation (runs on unix, windows)
-  - compile time defines for enabling i/o devices
-  - better fix for nested file inclusion handling
-  - removed unused variables
-  - use a struct for processor state, stacks
-  - sockets interface now optional, disabled by default
-  - dev-image.c removed (`image:save` is now written in Retro)
-  - faster opcode processing (enabled by default on Unix)
-
-- nga-816
-
-  - assembly implementation for 65c816
-  - by Piotr Meyer
 
 ## Examples
 
-- reduced some line lengths
-- refactored retro-locate
-- file names now using a consistent case/format
-- added a line oriented text editor
-- updated amalgamation tool for latest nga-c
-
 ## Documentation
 
-- epub now has a cover image
-- added back some missing files
-- add note on enabling sockets when building on Unix
-- fixed typos in the glossary
