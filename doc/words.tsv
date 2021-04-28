@@ -9,6 +9,7 @@ $	-c	-	-	Return ASCII:NUL (0).			class:macro	{n/a}	{n/a}	global	all
 ---reveal---	-	-	-	Switch to the exposed (public) portion of a lexical namespace.			class:word	{n/a}	{n/a}	global	all	
 -eq?	nn-f	-	-	Compare two values for inequality. Returns `TRUE` if they are not equal or `FALSE` otherwise.			class:primitive	    #1 #2 -eq?\n    $a $b -eq?	{n/a}	global	all	
 -if	fq-	-	-	Execute the quotation if the flag is `FALSE`.			class:word	{n/a}	{n/a}	global	all	
+-if:	f-	-	-	Execute the remainder of the word or quotation if the flag is `FALSE`. If `TRUE`, exit the word. This should be used inside a definition only.			class:macro	{n/a}	{n/a}	global	all	
 -if;	fq-	-	-	Execute the quotation if the flag is `FALSE`. If false, also exit the word.			class:word	{n/a}	{n/a}	global	all	
 /	nm-q	-	-	Divide `n` by `m` and return the integer part of the quotient.			class:word	{n/a}	{n/a}	global	all	
 //	-	-	-	Ignore any tokens remaining on the current line. Works with files and the interactive "listener".			class:word	{n/a}	{n/a}	global	rre	
@@ -308,6 +309,7 @@ here	-a	-	-	Return the next free address in memory.			class:word	{n/a}	{n/a}	glo
 hook	-	-	-	Add a hook point into the current word. This should only be used as the first word in a definition.			class:macro	    :foo hook ;	{n/a}	global	global	
 i	s-	-	-	Assemble the instructions specified by the string into the current assembly scope.			class:word	{n/a}	{n/a}	global	all	
 if	fq-	-	-	Execute the quote if the flag is `TRUE`.			class:word	{n/a}	{n/a}	global	all	
+if:	f-	-	-	Execute the rest of the word or quotation if the flag is `TRUE`. If `FALSE`, exit the word. This should be used inside a definition only.			class:macro	{n/a}	{n/a}	global	all	
 if;	fq-	-	-	Execute the quotation if the flag is `TRUE`. If true, also exit the word.			class:word	{n/a}	{n/a}	global	all	
 image:save	s-	-	-	Save the current system to a new image file.			class:word	{n/a}	{n/a}	image	rre	
 immediate	-	-	-	Change the class of the most recently defined word to `class:macro`.			class:word	{n/a}	{n/a}	global	all	

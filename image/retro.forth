@@ -513,12 +513,14 @@ Some numeric comparisons.
 :n:odd?       (n-f)  n:even? not ;
 ~~~
 
-The basic RETRO kernel doesn't provide two useful forms
+The basic RETRO kernel doesn't provide a few useful forms
 which I'll provide here.
 
 ~~~
 :if;   (qf-)  over &if  dip     0; pop drop-pair ;
 :-if;  (qf-)  over &-if dip not 0; pop drop-pair ;
+:if:   (f-)   #25 , #3 , ; immediate
+:-if:  (f-)   #1644289 , #-1 , #3 , ; immediate
 ~~~
 
 ## More Stack Shufflers.
