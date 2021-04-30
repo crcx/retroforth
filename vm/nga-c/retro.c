@@ -1487,6 +1487,25 @@ int arg_is(char *argv, char *t) {
 }
 
 
+void help(char *exename) {
+  printf("Scripting Usage: %s filename\n\n", exename);
+  printf("Interactive Usage: %s [-h] [-i] [-f filename] [-t]\n\n", exename);
+  printf("Valid Arguments:\n\n");
+  printf("  -h\n");
+  printf("    Display this help text\n");
+  printf("  -i\n");
+  printf("    Launches in interactive mode\n");
+  printf("  -f filename\n");
+  printf("    Run the contents of the specified file\n");
+  printf("  -u filename\n");
+  printf("    Use the image in the specified file instead of the internal one\n");
+  printf("  -r filename\n");
+  printf("    Use the image in the specified file instead of the internal one and run the code in it\n");
+  printf("  -t\n");
+  printf("    Run tests (in ``` blocks) in any loaded files\n\n");
+}
+
+
 /* Main Entry Point ---------------------------------------------------*/
 enum flags {
   FLAG_HELP, FLAG_RUN_TESTS, FLAG_INCLUDE,
@@ -1562,7 +1581,10 @@ int main(int argc, char **argv) {
 
   /* Process Arguments */
   for (i = 1; i < argc; i++) {
-    if (strcmp(argv[i], "-i") == 0) {
+    if (strcmp(argv[i], "-h") == 0) {
+      help(argv[0]);
+      exit(0);
+    } else if (strcmp(argv[i], "-i") == 0) {
       modes[FLAG_INTERACTIVE] = 1;
     } else if (strcmp(argv[i], "-f") == 0) {
       files[fsp] = argv[i + 1];

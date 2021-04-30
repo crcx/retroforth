@@ -23,7 +23,7 @@ A second way is to parse the `/etc/passwd` file.
 ~~~
 {{
   :setup  (s-fs)    FALSE swap ': s:append s:keep ;
-  :match? (fss-fsf) over s:begins-with? ;  
+  :match? (fss-fsf) over s:begins-with? ;
   :found  (fs-fs)   drop-pair TRUE s:empty s:keep ;
   :check  (fss-fs)  match? [ found ] if ;
   :seek   (fs-fs)   '/etc/passwd [ check ] file:for-each-line ;
