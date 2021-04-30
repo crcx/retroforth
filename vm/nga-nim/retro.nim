@@ -1,5 +1,8 @@
 #  Copyright (c) 2021 Jorge Acereda Macia <jacereda@gmail.com>
+#  Copyright (c) 2021 Charles Childers <crc@forth.works>
+
 import strutils
+import logging
 
 proc go() =
   type Op = enum
@@ -33,22 +36,34 @@ proc go() =
       VM_IE
       VM_IQ
       VM_II
+      VM_RES0
+      VM_RES1
+
   type CELL = int32
   type UCELL = uint32
-  const IMAGE_SIZE = 524288
-  const DSTACK_DEPTH = 32
-  const RSTACK_DEPTH   = 128
-  const TIB = 1025
-  const XT = 1
-  var ds: array[DSTACK_DEPTH, CELL]
-  var rs: array[RSTACK_DEPTH, CELL]
-  var im: array[IMAGE_SIZE, CELL]
+
+  const IMAGE_SIZE = 524288           # number of cells in image
+  const DSTACK_DEPTH = 32             # max depth for data stack
+  const RSTACK_DEPTH   = 128          # max depth for address stack
+  const TIB = 1025                    # location of text input buffer
+  const XT = 1                        # dictionary header offset for XT
+
+  var ds: array[DSTACK_DEPTH, CELL]   # data stack values
+  var rs: array[RSTACK_DEPTH, CELL]   # address stack values
+  var im: array[IMAGE_SIZE, CELL]     # image memory
+  var ts: CELL = 0                    # top of stack
+  var sp: UCELL = 0                   # data stack pointer
+  var rp: UCELL = 0                   # return stack pointer
+
+  var log = newConsoleLogger()
+  addHandler(log)
 
   proc loadImage(path: string) =
     let f = path.open()
     discard f.readBuffer(addr im[0], sizeof(im))
     f.close()
-  proc rxGetString(starting: int): string =
+
+  proc extract(starting: int): string =
     var done = false
     var i = starting
     while not done:
@@ -58,36 +73,39 @@ proc go() =
         done = true
       else:
         result.add char(c)
+
   proc inject(s: string, at: int) =
     var i = at
     for c in s:
       im[i] = CELL(c)
       inc i
     im[i] = 0
+
   proc lookup(name: string): CELL =
     var i = im[2]
     while im[i] != 0:
-      let target = rxGetString(i + 3)
+      let target = extract(i + 3)
       if name == target:
         return i
       else:
         i = im[i]
     return 0
+
   loadImage("ngaImage")
-  var ts: CELL = 0
-  var sp: UCELL = 0
-  var rp: UCELL = 0
+
   proc ddump() : string =
     result = " ds:"&sp.toHex
     for i in 2..sp:
       result = result & " " & ds[i].toHex
     if sp > 0:
       result = result & " " & ts.toHex
+
   proc rdump() : string =
     result = " rs:"&rp.toHex
     if rp < RSTACK_DEPTH:
       for i in 0..rp:
         result = result & " " & rs[i].toHex
+
   while true:
     let input = stdin.readLine()
     for word in input.split(' '):
@@ -230,8 +248,8 @@ proc go() =
             ts = ts xor ds[sp]
             dec sp
           of VM_SHIFT:
-            if ts < 0  :
-              ts = ds[sp] shl ts
+            if ts < 0 :
+              ts = ds[sp] shl (0 - ts)
             else:
               ts = ds[sp] shr ts
             dec sp
@@ -255,9 +273,13 @@ proc go() =
             discard stdout.writeChars([ts.char],0,1)
             ts = ds[sp]
             dec sp
+          of VM_RES0:
+            fatal "reserved"
+          of VM_RES1:
+            fatal "reserved"
 
       let notfound = im[XT+lookup("err:notfound")].UCELL
       if ip == notfound:
-        echo("\n" & rxGetString(1471) & " ?\n")
+        echo("\n" & extract(1471) & " ?\n")
 
 go()

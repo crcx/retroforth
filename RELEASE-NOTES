@@ -14,6 +14,12 @@
 
 ## VM
 
+- nga-nim
+
+  - fix bug in VM_SH
+  - minor formatting adjustments
+  - start work to report some errors
+
 ## Examples
 
 ## Documentation
