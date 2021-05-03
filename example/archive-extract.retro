@@ -1,0 +1,53 @@
+This is archive-extract, an un-archiver. Pass it a file created
+by `archive.retro` to extract the files.
+
+As a recap of the file format.
+
+    # of files
+    filename
+    length in bytes
+    ... data ...
+    filename
+    length in bytes
+    ... data ...
+    [ ... repeat for each file ... ]
+
+I track the input (the archive) in `In` and the current file
+being extracted in `Out`.
+
+~~~
+'In var
+'Out var
+~~~
+
+The filename is passed in via the command line. Open it, save
+the pointer.
+
+~~~
+#0 script:get-argument file:open-for-reading nip !In
+~~~
+
+I define a helper that will be used write data to the output
+file.
+
+~~~
+:write @Out file:write ;
+~~~
+
+Define words to process the archive data.
+
+~~~
+:get-count  @In file:read-line s:to-number ;
+:filename   @In file:read-line file:open-for-writing !Out ;
+:size       @In file:read-line s:to-number ;
+:extract    [ @In file:read write ] times ;
+:skip-nl    @In file:read-line drop ;
+:close      @Out file:close ;
+~~~
+
+Then use them to process the file.
+
+~~~
+get-count [ filename size extract close skip-nl ] times
+@In file:close
+~~~

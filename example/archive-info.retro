@@ -1,0 +1,32 @@
+This displays the contents (file names, sizes) of an archive.
+
+I track the input (the archive) in `In`.
+
+~~~
+'In var
+~~~
+
+The filename is passed in via the command line. Open it, save
+the pointer.
+
+~~~
+#0 script:get-argument file:open-for-reading nip !In
+~~~
+
+Define words to process the archive data.
+
+~~~
+:get-count  @In file:read-line s:to-number dup n:put '_files s:put nl ;
+:pad        s:length #32 swap - #0 n:max [ sp ] times ;
+:filename   @In file:read-line dup s:put pad ;
+:size       @In file:read-line s:to-number dup n:put '_bytes s:put nl ;
+:skip       [ @In file:read drop ] times ;
+:skip-nl    @In file:read-line drop ;
+~~~
+
+Then use them to process the file.
+
+~~~
+get-count [ filename size skip skip-nl ] times
+@In file:close
+~~~

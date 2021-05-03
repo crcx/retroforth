@@ -1,0 +1,77 @@
+This generates an archive of files. It's currently only tested
+with plain text, so use caution if archiving binary files.
+
+The file format is currently very simple. An archive starts
+with a line containing the number of entries. This is followed
+by a file name, then the file size in bytes. Then data for the
+file, a newline, and then any other files.
+
+It's not robust, it's not scalable, and it's definitely not a
+thing that most people should use. But it's simple, and works
+well enough for my small tasks.
+
+#Entries
+filename
+length
+...
+filename
+length
+...
+
+The output file handle is stored in the `Out` variable.
+
+~~~
+'Out var
+~~~
+
+I define `file:put` to write to the `Out` file. This will be
+mapped in place of `c:put` later.
+
+~~~
+:file:put @Out file:write ;
+~~~
+
+Each entry has a file name, size, and data. These words write
+the relevant information to the archive.
+
+~~~
+:name    dup s:put nl ;
+:size    n:put nl ;
+:copy    [ [ file:read c:put ] sip ] times nl ;
+:data    file:open-for-reading swap [ size ] [ copy ] bi file:close ;
+:archive name data ;
+~~~
+
+The top level part gets the filename for the archive and stores
+the file pointer in `Out`.
+
+~~~
+#0 script:get-argument file:open-for-writing !Out
+~~~
+
+Then I replace `c:put` with `file:put` so I can just use the
+standard output words to write to the archive.
+
+~~~
+&file:put &c:put set-hook
+~~~
+
+The first line in the archive is the number of files in the
+archive.
+
+~~~
+script:arguments n:dec n:put nl
+~~~
+
+Then loop over the files, copying them in
+~~~
+script:arguments n:dec
+[ I n:inc script:get-argument archive ] indexed-times
+~~~
+
+And cleanup by reverting `c:put` and closing the archive file.
+
+~~~
+&c:put unhook
+@Out file:close
+~~~
