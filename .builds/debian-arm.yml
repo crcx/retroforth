@@ -9,3 +9,9 @@ tasks:
 - test: |
     cd retroforth
     ./bin/retro example/1D-Cellular-Automota.retro
+- check-missing: |
+    cd retroforth
+    ./bin/retro tools/glossary.retro missing
+- install: |
+    cd retroforth
+    sudo make install
