@@ -364,7 +364,7 @@ Use `q` to quit the editor.
 
 :cmd::
   @Input dup s:length n:zero?
-  [ drop &Filename ] if 'retro_%s s:format unix:system ;
+  [ drop &Filename ] if unix:system ;
 ~~~
 
 ## Register The Commands
