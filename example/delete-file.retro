@@ -1,0 +1,13 @@
+#!/usr/bin/env retro
+
+This will delete the file specified on the command
+line.
+
+Example:
+
+    ./delete-file.retro /tmp/foo
+
+~~~
+#0 script:get-argument file:delete
+~~~
+
