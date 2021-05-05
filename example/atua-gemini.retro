@@ -1,0 +1,183 @@
+#!/bin/sh
+
+cd /home/crc/gemini
+retro atua-gemini
+exit
+
+---------------------------------------------------------------
+
+This is Atua-Gemini, my Gemini server in RetroForth.
+
+As with most of my servers, it runs under inetd, and is only
+built to meet my needs.
+
+The relevant parts of the Gemini spec are included here. I'm
+using 0.14.3, taken from
+https://gemini.circumlunar.space/docs/specification.html
+
+---------------------------------------------------------------
+
+1.1 Gemini transactions
+
+There is one kind of Gemini transaction, roughly equivalent to
+a gopher request or a HTTP "GET" request. Transactions happen
+as follows:
+
+    C: Opens connection
+    S: Accepts connection
+    C/S: Complete TLS handshake (see section 4)
+    C: Validates server certificate (see 4.2)
+    C: Sends request (one CRLF terminated line) (see section 2)
+    S: Sends response header (one CRLF terminated line), closes
+       connection under non-success conditions (see 3.1 & 3.2)
+    S: Sends response body (text or binary data) (see 3.3)
+    S: Closes connection
+    C: Handles response (see 3.4)
+
+---------------------------------------------------------------
+
+~~~
+:eol ASCII:CR ASCII:LF [ c:put ] bi@ ;
+~~~
+
+
+I am delegating the connection handling to inetd and the TLS
+handling to ssltunnel. So all I need to handle is the request
+itself.
+
+Reading the request is just a matter of:
+
+~~~
+'Request var
+:request s:get s:keep &Request store ;
+~~~
+
+---------------------------------------------------------------
+
+1.2 Gemini URI scheme
+
+Resources hosted via Gemini are identified using URIs with the
+scheme "gemini". This scheme is syntactically compatible with
+the generic URI syntax defined in RFC 3986, but does not
+support all components of the generic syntax. In particular,
+the authority component is allowed and required, but its
+userinfo subcomponent is NOT allowed. The host subcomponent
+is required. The port subcomponent is optional, with a default
+value of 1965. The path, query and fragment components are
+allowed and have no special meanings beyond those defined by
+the generic syntax. Spaces in gemini URIs should be encoded as
+%20, not +.
+
+---------------------------------------------------------------
+
+From the RFC 3986:
+
+   The following are two example URIs and their component parts:
+
+         foo://example.com:8042/over/there?name=ferret#nose
+         \_/   \______________/\_________/ \_________/ \__/
+          |           |            |            |        |
+       scheme     authority       path        query   fragment
+          |   _____________________|__
+         / \ /                        \
+         urn:example:animal:ferret:nose
+
+~~~
+'Scheme var
+'Authority var
+'Port var
+'Path var
+'Query var
+'Fragment var
+
+:uri:parse #9 + s:keep !Path ;
+~~~
+
+---------------------------------------------------------------
+
+3 Gemini responses
+
+Gemini response consist of a single CRLF-terminated header
+line, optionally followed by a response body.
+
+3.1 Response headers
+
+Gemini response headers look like this:
+
+    <STATUS><SPACE><META><CR><LF>
+
+    <STATUS> is a two-digit numeric status code, as described
+    below in 3.2 and in Appendix 1.
+
+    <SPACE> is a single space character, i.e. the byte 0x20.
+
+    <META> is a UTF-8 encoded string of maximum length 1024
+    bytes, whose meaning is <STATUS> dependent.
+
+    <STATUS> and <META> are separated by a single space
+    character.
+
+If <STATUS> does not belong to the "SUCCESS" range of codes,
+then the server MUST close the connection after sending the
+header and MUST NOT send a response body.
+
+If a server sends a <STATUS> which is not a two-digit number or
+a <META> which exceeds 1024 bytes in length, the client SHOULD
+close the connection and disregard the response header,
+informing the user of an error.
+
+---------------------------------------------------------------
+
+I define constants for the statuses. Most of these won't be
+used by this server.
+
+~~~
+{ { '10 'status:INPUT }
+  { '11 'status:SENSITIVE-INPUT }
+  { '20 'status:SUCCESS }
+  { '30 'status:REDIRECT-TEMPORARY }
+  { '31 'status:REDIRECT-PERMANENT }
+  { '40 'status:TEMPORARY-FAILURE }
+  { '41 'status:SERVER-UNAVAILABLE }
+  { '42 'status:CGI-ERROR }
+  { '43 'status:PROXY-ERROR }
+  { '44 'status:SLOW-DOWN }
+  { '50 'status:PERMANENT-FAILURE }
+  { '51 'status:NOT-FOUND }
+  { '52 'status:GONE }
+  { '53 'status:PROXY-REQUEST-REFUSED }
+  { '59 'status:BAD-REQUEST }
+  { '60 'status:CLIENT-CERTIFICATE-REQUIRED }
+  { '61 'status:CERTIFICATE-NOT-AUTHORISED }
+  { '62 'status:CERTIFICATE-NOT-VALID }
+} [ [ ] a:for-each s:const ] a:for-each
+~~~
+
+
+~~~
+:status s:put ;
+:meta s:put ;
+:response status sp meta eol ;
+~~~
+
+
+---------------------------------------------------------------
+
+~~~
+:process
+  @Request '/ s:ends-with? [ @Request 'index.gmi s:append s:keep !Request ] if
+  @Request '.com s:ends-with? [ @Request '/index.gmi s:append s:keep !Request ] if
+  @Request uri:parse
+  @Path file:exists? [ FALSE 'Resource_not_found:_ @Path s:append status:NOT-FOUND ] -if;
+  here @Path file:slurp here TRUE 'text/gemini status:SUCCESS ;
+~~~
+
+
+---------------------------------------------------------------
+
+~~~
+:serve
+  request process response [ s:put ] if ;
+
+serve
+~~~
