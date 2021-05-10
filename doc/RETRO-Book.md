@@ -338,7 +338,7 @@ RETRO can be run for scripting or interactive use.
 ## Interactive
 
 To start it interactively, run: `retro` without any command line
-arguments, or with `-i`, `-s`, or `-i,c`.
+arguments, or with `-i`.
 
 Starting the interactive system:
 
@@ -354,23 +354,14 @@ retro -i
 
 This should be sufficient for most uses.
 
-Starting the interactive system (without displaying the
-startup banner):
-
-```
-retro -s
-```
-
 ## Using In a Pipe
 
-If using a Unix shell and piping input between processes, you
-will probably want to use `-s` to suppress the startup messages
-and `Ok` prompt that normally appear.
+Retro will work with piped input.
 
 E.g.,
 
 ```
-echo "'lol s:put nl" | retro -s
+echo "'lol s:put nl" | retro
 ```
 
 ## Running A Program In A File
@@ -409,11 +400,10 @@ For a summary of the full command line arguments available:
 
     Interactive Usage:
 
-        retro [-h] [-i] [-c] [-s] [-f filename] [-t]
+        retro [-h] [-i] [-f filename] [-t]
 
       -h           Display this help text
       -i           Interactive mode (line buffered)
-      -s           Suppress the startup text
       -f filename  Run the contents of the specified file
       -t           Run tests (in ``` blocks) in any loaded files
 
@@ -427,18 +417,22 @@ retro -i
 
 You should see something similar to this:
 
-    RETRO 12 (2019.6)
+    RETRO 12 (2021.7)
     8388608 MAX, TIB @ 1025, Heap @ 9374
 
 At this point you are at the *listener*, which reads and
 processes your input. You are now set to begin exploring
 RETRO.
 
+RETRO is normally silent; unlike other Forth systems, it
+does not display an "ok" prompt.
+
 To exit, run `bye`:
 
 ```
 bye
 ```
+
 
 # Unu: Simple, Literate Source Files
 

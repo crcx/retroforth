@@ -8,15 +8,19 @@ retro -i
 
 You should see something similar to this:
 
-    RETRO 12 (2019.6)
+    RETRO 12 (2021.7)
     8388608 MAX, TIB @ 1025, Heap @ 9374
 
 At this point you are at the *listener*, which reads and
 processes your input. You are now set to begin exploring
 RETRO.
 
+RETRO is normally silent; unlike other Forth systems, it
+does not display an "ok" prompt.
+
 To exit, run `bye`:
 
 ```
 bye
 ```
+

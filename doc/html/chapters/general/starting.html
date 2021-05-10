@@ -50,7 +50,7 @@ RETRO can be run for scripting or interactive use.
 <span class="h2">Interactive</span>
 <br/><br/>
 To start it interactively, run: <span class="tt">retro</span> without any command line
-arguments, or with <span class="tt">-i</span>, <span class="tt">-s</span>, or <span class="tt">-i,c</span>.
+arguments, or with <span class="tt">-i</span>.
 <br/><br/>
 Starting the interactive system:
 <br/><br/>
@@ -62,20 +62,13 @@ Or:
 <span class="tt">```</span></span><br/><br/>
 This should be sufficient for most uses.
 <br/><br/>
-Starting the interactive system (without displaying the
-startup banner):
-<br/><br/>
-<span class='codeblock'><span class="tt">```</span><br/><span class="tt">retro -s </span><br/>
-<span class="tt">```</span></span><br/><br/>
 <span class="h2">Using In a Pipe</span>
 <br/><br/>
-If using a Unix shell and piping input between processes, you
-will probably want to use <span class="tt">-s</span> to suppress the startup messages
-and <span class="tt">Ok</span> prompt that normally appear.
+Retro will work with piped input.
 <br/><br/>
 E.g.,
 <br/><br/>
-<span class='codeblock'><span class="tt">```</span><br/><span class="tt">echo "'lol s:put nl" <span class='defer'>|</span> retro -s </span><br/>
+<span class='codeblock'><span class="tt">```</span><br/><span class="tt">echo "'lol s:put nl" <span class='defer'>|</span> retro </span><br/>
 <span class="tt">```</span></span><br/><br/>
 <span class="h2">Running A Program In A File</span>
 <br/><br/>
@@ -109,11 +102,10 @@ For a summary of the full command line arguments available:
 <br/><br/>
 <tt class='indentedcode'>Interactive&nbsp;Usage:</tt>
 <br/><br/>
-<tt class='indentedcode'>&nbsp;&nbsp;&nbsp;&nbsp;retro&nbsp;[-h]&nbsp;[-i]&nbsp;[-c]&nbsp;[-s]&nbsp;[-f&nbsp;filename]&nbsp;[-t]</tt>
+<tt class='indentedcode'>&nbsp;&nbsp;&nbsp;&nbsp;retro&nbsp;[-h]&nbsp;[-i]&nbsp;[-f&nbsp;filename]&nbsp;[-t]</tt>
 <br/><br/>
 <tt class='indentedcode'>&nbsp;&nbsp;-h&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Display&nbsp;this&nbsp;help&nbsp;text</tt>
 <tt class='indentedcode'>&nbsp;&nbsp;-i&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Interactive&nbsp;mode&nbsp;(line&nbsp;buffered)</tt>
-<tt class='indentedcode'>&nbsp;&nbsp;-s&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Suppress&nbsp;the&nbsp;startup&nbsp;text</tt>
 <tt class='indentedcode'>&nbsp;&nbsp;-f&nbsp;filename&nbsp;&nbsp;Run&nbsp;the&nbsp;contents&nbsp;of&nbsp;the&nbsp;specified&nbsp;file</tt>
 <tt class='indentedcode'>&nbsp;&nbsp;-t&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Run&nbsp;tests&nbsp;(in&nbsp;```&nbsp;blocks)&nbsp;in&nbsp;any&nbsp;loaded&nbsp;files</tt>
 </p>
