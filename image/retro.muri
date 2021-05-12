@@ -134,6 +134,7 @@ Here's the initial memory map:
 | 2      | Dictionary                  |
 | 3      | Heap                        |
 | 4      | RETRO version               |
+| 5      | Pointer to `interpret`      |
 
 ~~~
 : Dictionary
@@ -144,6 +145,9 @@ d 1536
 
 : Version
 d 202107
+
+: point-to-interpret
+r interpret
 ~~~
 
 Both of these are pointers. `Dictionary` points to the most
