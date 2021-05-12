@@ -1,17 +1,17 @@
 ## Metacompilation and Assembly
 
-RETRO 10 and 11 were written in themselves using a metacompiler.
+Retro 10 and 11 were written in themselves using a metacompiler.
 I had been fascinated by this idea for a long time and was able
 to explore it heavily. While I still find it to be a good idea,
 the way I ended up doing it was problematic.
 
 The biggest issue I faced was that I wanted to do this in one
-step, where loading the RETRO source would create a new image
+step, where loading the Retro source would create a new image
 in place of the old one, switch to the new one, and then load
 the higher level parts of the language over this. In retrospect,
 this was a really bad idea.
 
-My earlier design for RETRO was very flexible. I allowed almost
+My earlier design for Retro was very flexible. I allowed almost
 everything to be swapped out or extended at any time. This made
 it extremely easy to customize the language and environment, but
 made it crucial to keep track of what was in memory and what had
@@ -28,13 +28,13 @@ the prior release version. (Actually, it was often worse - I
 failed to check in every change as I went, so often even the
 prior commits couldn't rebuild the latest images).
 
-For RETRO 12 I wanted to avoid this problem, so I decided to go
+For Retro 12 I wanted to avoid this problem, so I decided to go
 back to writing the kernel ("Rx") in assembly. I actually wrote
 a Machine Forth dialect to generate the initial assembly, before
 eventually hand tuning the final results to its current state.
 
 I could (and likely will eventually) write the assembler in
-RETRO, but the current one is in C, and is built as part of the
+Retro, but the current one is in C, and is built as part of the
 standard toolchain.
 
 My VM actually has two assemblers. The older one is Naje. This

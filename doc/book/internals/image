@@ -1,6 +1,6 @@
 # Internals: The Retro Image
 
-The actual RETRO language is stored as a memory image for Nga.
+The actual Retro language is stored as a memory image for Nga.
 
 ## Format
 
@@ -19,7 +19,7 @@ actual entry point.
 
 This is followed by a pointer to the most recent dictionary
 header, a pointer to the next free address in memory, and
-then the RETRO version number.
+then the Retro version number.
 
     | Offset | Contains                    |
     | ------ | --------------------------- |
@@ -27,7 +27,7 @@ then the RETRO version number.
     | 1      | Pointer to main entry point |
     | 2      | Dictionary                  |
     | 3      | Heap                        |
-    | 4      | RETRO version               |
+    | 4      | Retro version               |
 
 The actual code starts after this header.
 
@@ -41,7 +41,7 @@ Assuming an Nga built with 524287 cells of memory:
 
     | RANGE           | CONTAINS                     |
     | --------------- | ---------------------------- |
-    | 0 - 1024        | RETRO Core kernel            |
+    | 0 - 1024        | Retro Core kernel            |
     | 1025 - 1535     | token input buffer           |
     | 1536 +          | start of heap space          |
     | ............... | free memory for your use     |

@@ -2,7 +2,7 @@
 
 ## Overview
 
-At the heart of RETRO is a simple MISC (minimal instruction
+At the heart of Retro is a simple MISC (minimal instruction
 set computer) processor for a dual stack architecture.
 
 This is a very simple and straightforward system. There are
@@ -122,7 +122,7 @@ In this case, some interactions can be defined:
     : c:put
     i liiire..
     d 0
-    
+
     : c:get
     i liiire..
     d 2
@@ -130,7 +130,7 @@ In this case, some interactions can be defined:
 Setup the stack, push the device ID to the stack, and then use
 `ii` to invoke the interaction.
 
-A RETRO system requires one I/O device (a generic output for a
+A Retro system requires one I/O device (a generic output for a
 single character). This must be the first device, and must have
 a device ID of 0.
 

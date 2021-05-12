@@ -1,6 +1,6 @@
 # Syntax
 
-RETRO has more syntax than a traditional Forth due to ideas
+Retro has more syntax than a traditional Forth due to ideas
 borrowed from ColorForth and some design decisions. This has
 some useful traits, and helps to make the language more
 consistent.
@@ -9,18 +9,18 @@ consistent.
 
 Input is divided into a series of whitespace delimited tokens.
 Each of these is then processed individually. There are no
-parsing words in RETRO.
+parsing words in Retro.
 
-Tokens may have a single character *sigil*, which RETRO will
+Tokens may have a single character *sigil*, which Retro will
 use to decide how to process the token.
 
 ## Sigils
 
 Sigils are single characters added to the start of a token
 to guide the compiler. The use of these is a major way in
-which RETRO differs from traditional Forth.
+which Retro differs from traditional Forth.
 
-When a token is passed to `interpret`, RETRO first takes the
+When a token is passed to `interpret`, Retro first takes the
 initial character and looks to see if there is a word that
 matches this. If so, it will pass the rest of the token to
 that word to handle.
@@ -43,7 +43,7 @@ like:
                no:  compile the number as a literal
           no:  report an error ("not found")
 
-In RETRO, the interpret process is basically:
+In Retro, the interpret process is basically:
 
     get token
     does the first character match a `sigil:` word?

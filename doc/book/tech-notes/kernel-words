@@ -1,11 +1,11 @@
 ## On The Kernel Wordset
 
-In implementing the RETRO 12 kernel (called RETRO Core, and
+In implementing the Retro 12 kernel (called Retro Core, and
 defined in `image/retro.muri`) I had to decide on what functionality
 would be needed. It was important to me that this be kept clean
 and minimalistic, as I didn't want to spend a lot of time
 changing it as time progressed. It's far nicer to code at the
-higher level, where the RETRO language is fully functional, as
+higher level, where the Retro language is fully functional, as
 opposed to writing more assembly code.
 
 So what made it in?
@@ -54,8 +54,8 @@ which gives more flexibility and allows for more optimal code
 in the standard library.
 
 With these words the rest of the language can be built up. Note
-that the RETRO kernel does not provide any I/O words. It's assumed
-that the RETRO interfaces will add these as best suited for the
+that the Retro kernel does not provide any I/O words. It's assumed
+that the Retro interfaces will add these as best suited for the
 systems they run on.
 
 There is another small bit. All images start with a few key
@@ -67,9 +67,9 @@ pointers in fixed offsets of memory. These are:
     | 1      | Pointer to main entry point |
     | 2      | Dictionary                  |
     | 3      | Heap                        |
-    | 4      | RETRO version identifier    |
+    | 4      | Retro version identifier    |
 
 An interface can use the dictionary pointer and knowledge of the
-dictionary format for a specific RETRO version to identify the
+dictionary format for a specific Retro version to identify the
 location of essential words like `interpret` and `err:notfound`
 when implementing the user facing interface.

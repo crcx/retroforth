@@ -664,7 +664,7 @@ FREE
   Addr:  -
   Float: -
 
-Returns the number of cells available to your application. This is the amount of memory, less the already consumed portion and buffers mapped for RETRO's internal use.
+Returns the number of cells available to your application. This is the amount of memory, less the already consumed portion and buffers mapped for Retro's internal use.
 
 Class: class:word | Namespace: global | Interface Layer: all
 ------------------------------------------------------------------------
@@ -730,7 +730,7 @@ RewriteUnderscores
   Addr:  -
   Float: -
 
-Variable. When set to `TRUE`, RETRO will replace underscores in strings with spaces. When `FALSE`, RETRO does not.
+Variable. When set to `TRUE`, Retro will replace underscores in strings with spaces. When `FALSE`, Retro does not.
 
 Class: class:data | Namespace: global | Interface Layer: all
 ------------------------------------------------------------------------
@@ -1365,7 +1365,7 @@ bye
   Addr:  -
   Float: -
 
-Exit RETRO.
+Exit Retro.
 
 Class: class:word | Namespace: global | Interface Layer: rre
 ------------------------------------------------------------------------

@@ -1,8 +1,8 @@
 ## On The Evolution Of Ngaro Into Nga
 
-When I decided to begin work on what became RETRO 12, I knew
+When I decided to begin work on what became Retro 12, I knew
 the process would involve updating Ngaro, the virtual machine
-that RETRO 10 and 11 ran on.
+that Retro 10 and 11 ran on.
 
 Ngaro rose out of an earlier experimental virtual machine I had
 written back in 2005-2006. This earlier VM, called Maunga, was
@@ -10,7 +10,7 @@ very close to what Ngaro ended up being, though it had a very
 different approach to I/O. (All I/O in Maunga was intended to be
 memory mapped; Ngaro adopted a port based I/O system).
 
-Ngaro itself evolved along with RETRO, gaining features like
+Ngaro itself evolved along with Retro, gaining features like
 automated skipping of NOPs and a LOOP opcode to help improve
 performance. But the I/O model proved to be a problem. When I
 created Ngaro, I had the idea that I would always be able to
@@ -19,19 +19,19 @@ that all code would be entered via the keyboard (or maybe a
 block editor), and that proved to be the fundamental flaw as
 time went on.
 
-As RETRO grew it was evident that the model had some serious
+As Retro grew it was evident that the model had some serious
 problems. Need to load code from a file? The VM and language had
 functionality to pretend it was being typed in. Want to run on
 something like a browser, Android, or iOS? The VM would need to
 be implemented in a way that simulates input being typed into
-the VM via a simulated keyboard. And RETRO was built around this.
+the VM via a simulated keyboard. And Retro was built around this.
 I couldn't change it because of a promise to maintain, as much
 as possible, source compatibility for a period of at least five
 years.
 
 When the time came to fix this, I decided at the start to keep
 the I/O model separate from the core VM. I also decided that the
-core RETRO language would provide some means of interpreting
+core Retro language would provide some means of interpreting
 code without requiring an assumption that a traditional terminal
 was being used.
 
@@ -42,7 +42,7 @@ reduction in memory footprint), and to generally just make a far
 simpler design.
 
 I've been pleased with Nga. On its own it really isn't useful
-though. So with RETRO I embed it into a larger framework that
+though. So with Retro I embed it into a larger framework that
 adds some basic I/O functionality. The *interfaces* handle the
 details of passing tokens into the language and capturing any
 output. They are free to do this in whatever model makes most
@@ -69,5 +69,5 @@ some output device. There is no requirement for a traditional
 keyboard input model.
 
 By doing this I was able to solve the biggest portability issue
-with the RETRO 10/11 model, and make a much simpler, cleaner
+with the Retro 10/11 model, and make a much simpler, cleaner
 language in the end.

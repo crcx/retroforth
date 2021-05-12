@@ -170,7 +170,7 @@ FALSE                    D: -n  A: -  F: -
 Returns `0`, the value used to indicate a FALSE result.
 
 FREE                     D: -n  A: -  F: -
-Returns the number of cells available to your application. This is the amount of memory, less the already consumed portion and buffers mapped for RETRO's internal use.
+Returns the number of cells available to your application. This is the amount of memory, less the already consumed portion and buffers mapped for Retro's internal use.
 
 Heap                     D: -a  A: -  F: -
 Variable. Holds the address of the next available cell.
@@ -188,7 +188,7 @@ NoEcho                   D: -a  A: -  F: -
 Variable. If TRUE, allow display of the "ok" prompt and startup banner.
 
 RewriteUnderscores       D: -a  A: -  F: -
-Variable. When set to `TRUE`, RETRO will replace underscores in strings with spaces. When `FALSE`, RETRO does not.
+Variable. When set to `TRUE`, Retro will replace underscores in strings with spaces. When `FALSE`, Retro does not.
 
 STRINGS                  D: -a  A: -  F: -
 Return the address of the start of the temporary string pool. This can be altered by changing the values of `TempStrings` and `TempStringMax`.
@@ -353,7 +353,7 @@ buffer:start             D: -a  A: -  F: -
 Return the start address of the current buffer.
 
 bye                      D: -  A: -  F: -
-Exit RETRO.
+Exit Retro.
 
 c:-consonant?            D: c-f  A: -  F: -
 Return TRUE if character is a not consonant or FALSE otherwise.

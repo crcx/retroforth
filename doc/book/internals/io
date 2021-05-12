@@ -1,6 +1,6 @@
 # Internals: I/O
 
-RETRO provides three words for interacting with I/O. These are:
+Retro provides three words for interacting with I/O. These are:
 
     io:enumerate    returns the number of attached devices
     io:query        returns information about a device
@@ -26,7 +26,7 @@ In this case, some interactions can be defined:
 Setup the stack, push the device ID, and then use `io:invoke`
 to invoke the interaction.
 
-A RETRO system requires one I/O device (a generic output for a
+A Retro system requires one I/O device (a generic output for a
 single character). This must be the first device, and must have
 a device ID of 0.
 

@@ -1,8 +1,8 @@
 ## Sigils as a Language Element
 
-A big change in RETRO 12 was the elimination of the traditional
+A big change in Retro 12 was the elimination of the traditional
 parser from the language. This was a sacrifice due to the lack
-of an I/O model. RETRO has no way to know *how* input is given
+of an I/O model. Retro has no way to know *how* input is given
 to the `interpret` word, or whether anything else will ever be
 passed into it.
 
@@ -10,10 +10,10 @@ And so `interpret` operates only on the current token. The core
 language does not track what came before or attempt to guess at
 what might come in the future.
 
-This leads into the sigils. RETRO 11 had a complicated system
+This leads into the sigils. Retro 11 had a complicated system
 for sigils, with different types of sigilss for words that
 parsed ahead (e.g., strings) and words that operated on the
-current token (e.g., `@`). RETRO 12 eliminates all of these in
+current token (e.g., `@`). Retro 12 eliminates all of these in
 favor of just having a single sigil model.
 
 The first thing `interpret` does is look to see if the first
@@ -31,7 +31,7 @@ It also simplifies things. Anything that would normally parse
 becomes a sigil handler. So creating a new word? Use the `:`
 sigil. Strings? Use `'`. Pointers? Try `&`. And so on. E.g.,
 
-    In ANS                  | In RETRO
+    In ANS                  | In Retro
     : foo ... ;             | :foo ... ;
     ' foo                   | &foo
     : bar ... ['] foo ;     | :bar ... &foo ;

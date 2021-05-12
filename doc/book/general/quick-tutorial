@@ -1,6 +1,6 @@
 # A Quick Tutorial
 
-Programming in RETRO is all about creating words to solve
+Programming in Retro is all about creating words to solve
 the problem at hand. Words operate on data, which can be
 kept in memory or on the stack.
 
@@ -41,4 +41,4 @@ final word (`;`) ending the definition. We can then use this:
 ```
 
 Once defined there is no difference between our new word and
-any of the words already provided by the RETRO system.
+any of the words already provided by the Retro system.

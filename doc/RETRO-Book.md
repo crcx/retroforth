@@ -1,6 +1,6 @@
-# RETRO: a Modern, Pragmatic Forth
+# Retro: a Modern, Pragmatic Forth
 
-Welcome to RETRO, my personal take on the Forth language. This
+Welcome to Retro, my personal take on the Forth language. This
 is a modern system primarily targeting desktop, mobile, and
 servers, though it can also be used on some larger (ARM, MIPS32)
 embedded systems.
@@ -9,16 +9,16 @@ The language is Forth. It is untyped, uses a stack to pass data
 between functions called words, and a dictionary which tracks
 the word names and data structures.
 
-But it's not a traditional Forth. RETRO draws influences from
+But it's not a traditional Forth. Retro draws influences from
 many sources and takes a unique approach to the language.
 
-RETRO has a large vocabulary of words. Keeping a copy of the
-Glossary on hand is highly recommended as you learn to use RETRO.
+Retro has a large vocabulary of words. Keeping a copy of the
+Glossary on hand is highly recommended as you learn to use Retro.
 
 This book will hopefully help you develop a better understanding
-of RETRO and how it works.
+of Retro and how it works.
 
-# Obtaining RETRO
+# Obtaining Retro
 
 ## Stable Releases
 
@@ -76,7 +76,7 @@ run them daily for my production systems.
 
 # Building on BSD, Linux, macOS, and other Unix Targets
 
-RETRO is well supported on BSD (tested on FreeBSD, NetBSD,
+Retro is well supported on BSD (tested on FreeBSD, NetBSD,
 OpenBSD), Linux, and macOS systems. It should build on any
 of these without issue.
 
@@ -164,9 +164,9 @@ If you run into any build issues, please send details to
 crc@forth.works so I can work on addressing them as quickly
 as possible.
 
-# Building RETRO on Windows
+# Building Retro on Windows
 
-It is possible to build RETRO on Windows, though a few of the
+It is possible to build Retro on Windows, though a few of the
 extensions are not supported:
 
 - no `unix:` words
@@ -178,7 +178,7 @@ the Unix instructions).
 
 ## Setup Build Environment
 
-RETRO on Windows is built with TCC.
+Retro on Windows is built with TCC.
 
 Go to http://download.savannah.gnu.org/releases/tinycc/
 
@@ -195,7 +195,7 @@ tcc into.
 ## Build
 
 Building will require use of the command line. Assuming that
-tcc.exe is in the current directory along with the RETRO sources:
+tcc.exe is in the current directory along with the Retro sources:
 
     tcc retro-windows.c -o retro.exe
 
@@ -331,9 +331,9 @@ example, add:
 To the start of the `list.forth` file and then run `make` again.
 The newly built `bin/retro` will now include your additions.
 
-# Starting RETRO
+# Starting Retro
 
-RETRO can be run for scripting or interactive use.
+Retro can be run for scripting or interactive use.
 
 ## Interactive
 
@@ -380,7 +380,7 @@ Source files must be written in Unu format.
 
 ## Scripting
 
-You can use RETRO to write scripts. Add a shebang:
+You can use Retro to write scripts. Add a shebang:
 
 ```
 #!/usr/bin/env retro
@@ -409,7 +409,7 @@ For a summary of the full command line arguments available:
 
 # Basic Interactions
 
-Start RETRO in interactive mode:
+Start Retro in interactive mode:
 
 ```
 retro -i
@@ -417,14 +417,14 @@ retro -i
 
 You should see something similar to this:
 
-    RETRO 12 (2021.7)
+    Retro 12 (2021.7)
     8388608 MAX, TIB @ 1025, Heap @ 9374
 
 At this point you are at the *listener*, which reads and
 processes your input. You are now set to begin exploring
-RETRO.
+Retro.
 
-RETRO is normally silent; unlike other Forth systems, it
+Retro is normally silent; unlike other Forth systems, it
 does not display an "ok" prompt.
 
 To exit, run `bye`:
@@ -436,7 +436,7 @@ bye
 
 # Unu: Simple, Literate Source Files
 
-RETRO is written in a literate style. Most of the sources
+Retro is written in a literate style. Most of the sources
 are in a format called Unu. This allows easy mixing of
 commentary and code blocks, making it simple to document
 the code.
@@ -485,10 +485,10 @@ The name Unu comes from the Maori language, where it means:
     (verb) (-hia) pull out, withdraw, draw out, extract.
     Taken from https://maoridictionary.co.nz/
 
-# RETRO's Markdown Syntax
+# Retro's Markdown Syntax
 
 I use a variation of Markdown for writing documentation and
-when commenting code written in RETRO. The syntax is
+when commenting code written in Retro. The syntax is
 described below.
 
 ## Basic Syntax
@@ -599,7 +599,7 @@ not be processed as a Markdown element.
 
 # A Quick Tutorial
 
-Programming in RETRO is all about creating words to solve
+Programming in Retro is all about creating words to solve
 the problem at hand. Words operate on data, which can be
 kept in memory or on the stack.
 
@@ -640,11 +640,11 @@ final word (`;`) ending the definition. We can then use this:
 ```
 
 Once defined there is no difference between our new word and
-any of the words already provided by the RETRO system.
+any of the words already provided by the Retro system.
 
 # Syntax
 
-RETRO has more syntax than a traditional Forth due to ideas
+Retro has more syntax than a traditional Forth due to ideas
 borrowed from ColorForth and some design decisions. This has
 some useful traits, and helps to make the language more
 consistent.
@@ -653,18 +653,18 @@ consistent.
 
 Input is divided into a series of whitespace delimited tokens.
 Each of these is then processed individually. There are no
-parsing words in RETRO.
+parsing words in Retro.
 
-Tokens may have a single character *sigil*, which RETRO will
+Tokens may have a single character *sigil*, which Retro will
 use to decide how to process the token.
 
 ## Sigils
 
 Sigils are single characters added to the start of a token
 to guide the compiler. The use of these is a major way in
-which RETRO differs from traditional Forth.
+which Retro differs from traditional Forth.
 
-When a token is passed to `interpret`, RETRO first takes the
+When a token is passed to `interpret`, Retro first takes the
 initial character and looks to see if there is a word that
 matches this. If so, it will pass the rest of the token to
 that word to handle.
@@ -687,7 +687,7 @@ like:
                no:  compile the number as a literal
           no:  report an error ("not found")
 
-In RETRO, the interpret process is basically:
+In Retro, the interpret process is basically:
 
     get token
     does the first character match a `sigil:` word?
@@ -3218,7 +3218,7 @@ but if you do, keep the limits in mind.
 
 ## Overview
 
-At the heart of RETRO is a simple MISC (minimal instruction
+At the heart of Retro is a simple MISC (minimal instruction
 set computer) processor for a dual stack architecture.
 
 This is a very simple and straightforward system. There are
@@ -3338,7 +3338,7 @@ In this case, some interactions can be defined:
     : c:put
     i liiire..
     d 0
-    
+
     : c:get
     i liiire..
     d 2
@@ -3346,7 +3346,7 @@ In this case, some interactions can be defined:
 Setup the stack, push the device ID to the stack, and then use
 `ii` to invoke the interaction.
 
-A RETRO system requires one I/O device (a generic output for a
+A Retro system requires one I/O device (a generic output for a
 single character). This must be the first device, and must have
 a device ID of 0.
 
@@ -3389,7 +3389,7 @@ The image will typically be extended with words to use these.
 
 # Internals: I/O
 
-RETRO provides three words for interacting with I/O. These are:
+Retro provides three words for interacting with I/O. These are:
 
     io:enumerate    returns the number of attached devices
     io:query        returns information about a device
@@ -3415,7 +3415,7 @@ In this case, some interactions can be defined:
 Setup the stack, push the device ID, and then use `io:invoke`
 to invoke the interaction.
 
-A RETRO system requires one I/O device (a generic output for a
+A Retro system requires one I/O device (a generic output for a
 single character). This must be the first device, and must have
 a device ID of 0.
 
@@ -3623,7 +3623,7 @@ Rebuild the VM, adding these to image.
 
 # Internals: The Retro Image
 
-The actual RETRO language is stored as a memory image for Nga.
+The actual Retro language is stored as a memory image for Nga.
 
 ## Format
 
@@ -3642,7 +3642,7 @@ actual entry point.
 
 This is followed by a pointer to the most recent dictionary
 header, a pointer to the next free address in memory, and
-then the RETRO version number.
+then the Retro version number.
 
     | Offset | Contains                    |
     | ------ | --------------------------- |
@@ -3650,7 +3650,7 @@ then the RETRO version number.
     | 1      | Pointer to main entry point |
     | 2      | Dictionary                  |
     | 3      | Heap                        |
-    | 4      | RETRO version               |
+    | 4      | Retro version               |
 
 The actual code starts after this header.
 
@@ -3664,7 +3664,7 @@ Assuming an Nga built with 524287 cells of memory:
 
     | RANGE           | CONTAINS                     |
     | --------------- | ---------------------------- |
-    | 0 - 1024        | RETRO Core kernel            |
+    | 0 - 1024        | Retro Core kernel            |
     | 1025 - 1535     | token input buffer           |
     | 1536 +          | start of heap space          |
     | ............... | free memory for your use     |
@@ -3745,7 +3745,7 @@ needed if you want to run something that needs those.
 
 # Historical Papers and Notes
 
-## On the Naming of RETRO
+## On the Naming of Retro
 
 Taken from http://lists.tunes.org/archives/tunes-lll/1999-July/000121.html
 
@@ -3789,7 +3789,7 @@ software on 90's and 00's hardware :)
 - Tom Novelli <tcn@tunes.org>
 
 
-## The Design Philosophy of RETRO Native Forth
+## The Design Philosophy of Retro Native Forth
 
 Computer software is a technology in its infancy, a mere fifty years
 old.  The last 25 years in particular have seen an explosion in the
@@ -3899,18 +3899,18 @@ Tom Novelli, 3/4/2000
 
 ## Metacompilation and Assembly
 
-RETRO 10 and 11 were written in themselves using a metacompiler.
+Retro 10 and 11 were written in themselves using a metacompiler.
 I had been fascinated by this idea for a long time and was able
 to explore it heavily. While I still find it to be a good idea,
 the way I ended up doing it was problematic.
 
 The biggest issue I faced was that I wanted to do this in one
-step, where loading the RETRO source would create a new image
+step, where loading the Retro source would create a new image
 in place of the old one, switch to the new one, and then load
 the higher level parts of the language over this. In retrospect,
 this was a really bad idea.
 
-My earlier design for RETRO was very flexible. I allowed almost
+My earlier design for Retro was very flexible. I allowed almost
 everything to be swapped out or extended at any time. This made
 it extremely easy to customize the language and environment, but
 made it crucial to keep track of what was in memory and what had
@@ -3927,13 +3927,13 @@ the prior release version. (Actually, it was often worse - I
 failed to check in every change as I went, so often even the
 prior commits couldn't rebuild the latest images).
 
-For RETRO 12 I wanted to avoid this problem, so I decided to go
+For Retro 12 I wanted to avoid this problem, so I decided to go
 back to writing the kernel ("Rx") in assembly. I actually wrote
 a Machine Forth dialect to generate the initial assembly, before
 eventually hand tuning the final results to its current state.
 
 I could (and likely will eventually) write the assembler in
-RETRO, but the current one is in C, and is built as part of the
+Retro, but the current one is in C, and is built as part of the
 standard toolchain.
 
 My VM actually has two assemblers. The older one is Naje. This
@@ -3976,17 +3976,17 @@ I prefer, and since there's not much need to make changes in it.
 
 ## The Path to Self Hosting
 
-RETRO is an image based Forth system running on a lightweight
+Retro is an image based Forth system running on a lightweight
 virtual machine. This is the story of how that image is made.
 
-The first RETRO to use an image based approach was RETRO 10.
+The first Retro to use an image based approach was Retro 10.
 The earliest images were built using a compiler written in
 Toka, an earlier experimental stack language I had written.
 It didn't take long to want to drop the dependency on Toka,
-so I rewrote the image compiler in RETRO and then began
+so I rewrote the image compiler in Retro and then began
 development at a faster pace.
 
-RETRO 11 was built using the last RETRO 10 image and an
+Retro 11 was built using the last Retro 10 image and an
 evolved version of the metacompiler. This worked well, but
 I eventually found it to be problematic.
 
@@ -4012,11 +4012,11 @@ could be revectored, so the metacompiler had to ensure that
 it didn't rely on anything in the old image during the move.
 This caused a large number of issues over R11's life.
 
-So on to RETRO 12. I decided that this would be different.
+So on to Retro 12. I decided that this would be different.
 First, the kernel would be assembly, with an external tool
 to generate the core image. The kernel is in `Rx.md` and the
 assembler is `Muri`. To load the standard library, I wrote a
-second tool, `retro-extend`. This separation has allowed me
+second tool, `Retro-extend`. This separation has allowed me
 many fewer headaches as I can make changes more easily and
 rebuild from scratch when necessary.
 
@@ -4027,7 +4027,7 @@ There are a few parts to this.
 
 **Unu**. I use a Markdown variation with fenced code blocks.
 The tool I wrote in C to extract these is called `unu`. For
-a self hosting RETRO, I rewrote this as a combinator that
+a self hosting Retro, I rewrote this as a combinator that
 reads in a file and runs another word against each line in the
 file. So I could display the code block contents by doing:
 
@@ -4036,7 +4036,7 @@ file. So I could display the code block contents by doing:
 This made it easier to implement the other tools.
 
 **Muri**. This is my assembler. It's minimalistic, fast, and
-works really well for my purposes. RETRO includes a runtime
+works really well for my purposes. Retro includes a runtime
 version of this (using `as{`, `}as`, `i`, `d`, and `r`), so
 all I needed for this was to write a few words to parse the
 lines and run the corresponding runtime words. As with the C
@@ -4047,20 +4047,20 @@ full image I needed a way to load in the standard library and
 I/O extensions.
 
 This is handled by **retro-extend**. This is where it gets
-more complex. I implemented the Nga virtual machine in RETRO
+more complex. I implemented the Nga virtual machine in Retro
 to allow this to run the new image in isolation from the
 host image. The new ngaImage is loaded, the interpreter is
 located, and each token is passed to the interpreter. Once
 done, the new image is written to disk.
 
 So at this point I'm pleased to say that I can now develop
-RETRO using only an existing copy of RETRO (VM+image) and
+Retro using only an existing copy of Retro (VM+image) and
 tools (unu, muri, retro-extend, and a line oriented text
-editor) written in RETRO.
+editor) written in Retro.
 
 This project has delivered some additional side benefits.
 During the testing I was able to use it to identify a few
-bugs in the I/O extensions, and the Nga-in-RETRO will replace
+bugs in the I/O extensions, and the Nga-in-Retro will replace
 the older attempt at this in the debugger, allowing a safer
 testing environment.
 
@@ -4071,9 +4071,9 @@ The extend process is *slow*. On my main development server
 minutes to complete loading the standard library, and a few
 additional depending on the I/O drivers selected.
 
-Most of the performance issues come from running Nga-in-RETRO
+Most of the performance issues come from running Nga-in-Retro
 to isolate the new image from the host one. It'd be possible
-to do something a bit more clever (e.g., running a RETRO
+to do something a bit more clever (e.g., running a Retro
 instance using the new image via a subprocess and piping in
 the source, or doing relocations of the data), but this is
 less error prone and will work on all systems that I plan to
@@ -4099,9 +4099,9 @@ Sources:
 
 ## Sigils as a Language Element
 
-A big change in RETRO 12 was the elimination of the traditional
+A big change in Retro 12 was the elimination of the traditional
 parser from the language. This was a sacrifice due to the lack
-of an I/O model. RETRO has no way to know *how* input is given
+of an I/O model. Retro has no way to know *how* input is given
 to the `interpret` word, or whether anything else will ever be
 passed into it.
 
@@ -4109,10 +4109,10 @@ And so `interpret` operates only on the current token. The core
 language does not track what came before or attempt to guess at
 what might come in the future.
 
-This leads into the sigils. RETRO 11 had a complicated system
+This leads into the sigils. Retro 11 had a complicated system
 for sigils, with different types of sigilss for words that
 parsed ahead (e.g., strings) and words that operated on the
-current token (e.g., `@`). RETRO 12 eliminates all of these in
+current token (e.g., `@`). Retro 12 eliminates all of these in
 favor of just having a single sigil model.
 
 The first thing `interpret` does is look to see if the first
@@ -4130,7 +4130,7 @@ It also simplifies things. Anything that would normally parse
 becomes a sigil handler. So creating a new word? Use the `:`
 sigil. Strings? Use `'`. Pointers? Try `&`. And so on. E.g.,
 
-    In ANS                  | In RETRO
+    In ANS                  | In Retro
     : foo ... ;             | :foo ... ;
     ' foo                   | &foo
     : bar ... ['] foo ;     | :bar ... &foo ;
@@ -4146,12 +4146,12 @@ in many ways.
 
 ## On The Kernel Wordset
 
-In implementing the RETRO 12 kernel (called RETRO Core, and
+In implementing the Retro 12 kernel (called Retro Core, and
 defined in `image/retro.muri`) I had to decide on what functionality
 would be needed. It was important to me that this be kept clean
 and minimalistic, as I didn't want to spend a lot of time
 changing it as time progressed. It's far nicer to code at the
-higher level, where the RETRO language is fully functional, as
+higher level, where the Retro language is fully functional, as
 opposed to writing more assembly code.
 
 So what made it in?
@@ -4200,8 +4200,8 @@ which gives more flexibility and allows for more optimal code
 in the standard library.
 
 With these words the rest of the language can be built up. Note
-that the RETRO kernel does not provide any I/O words. It's assumed
-that the RETRO interfaces will add these as best suited for the
+that the Retro kernel does not provide any I/O words. It's assumed
+that the Retro interfaces will add these as best suited for the
 systems they run on.
 
 There is another small bit. All images start with a few key
@@ -4213,18 +4213,18 @@ pointers in fixed offsets of memory. These are:
     | 1      | Pointer to main entry point |
     | 2      | Dictionary                  |
     | 3      | Heap                        |
-    | 4      | RETRO version identifier    |
+    | 4      | Retro version identifier    |
 
 An interface can use the dictionary pointer and knowledge of the
-dictionary format for a specific RETRO version to identify the
+dictionary format for a specific Retro version to identify the
 location of essential words like `interpret` and `err:notfound`
 when implementing the user facing interface.
 
 ## On The Evolution Of Ngaro Into Nga
 
-When I decided to begin work on what became RETRO 12, I knew
+When I decided to begin work on what became Retro 12, I knew
 the process would involve updating Ngaro, the virtual machine
-that RETRO 10 and 11 ran on.
+that Retro 10 and 11 ran on.
 
 Ngaro rose out of an earlier experimental virtual machine I had
 written back in 2005-2006. This earlier VM, called Maunga, was
@@ -4232,7 +4232,7 @@ very close to what Ngaro ended up being, though it had a very
 different approach to I/O. (All I/O in Maunga was intended to be
 memory mapped; Ngaro adopted a port based I/O system).
 
-Ngaro itself evolved along with RETRO, gaining features like
+Ngaro itself evolved along with Retro, gaining features like
 automated skipping of NOPs and a LOOP opcode to help improve
 performance. But the I/O model proved to be a problem. When I
 created Ngaro, I had the idea that I would always be able to
@@ -4241,19 +4241,19 @@ that all code would be entered via the keyboard (or maybe a
 block editor), and that proved to be the fundamental flaw as
 time went on.
 
-As RETRO grew it was evident that the model had some serious
+As Retro grew it was evident that the model had some serious
 problems. Need to load code from a file? The VM and language had
 functionality to pretend it was being typed in. Want to run on
 something like a browser, Android, or iOS? The VM would need to
 be implemented in a way that simulates input being typed into
-the VM via a simulated keyboard. And RETRO was built around this.
+the VM via a simulated keyboard. And Retro was built around this.
 I couldn't change it because of a promise to maintain, as much
 as possible, source compatibility for a period of at least five
 years.
 
 When the time came to fix this, I decided at the start to keep
 the I/O model separate from the core VM. I also decided that the
-core RETRO language would provide some means of interpreting
+core Retro language would provide some means of interpreting
 code without requiring an assumption that a traditional terminal
 was being used.
 
@@ -4264,7 +4264,7 @@ reduction in memory footprint), and to generally just make a far
 simpler design.
 
 I've been pleased with Nga. On its own it really isn't useful
-though. So with RETRO I embed it into a larger framework that
+though. So with Retro I embed it into a larger framework that
 adds some basic I/O functionality. The *interfaces* handle the
 details of passing tokens into the language and capturing any
 output. They are free to do this in whatever model makes most
@@ -4291,26 +4291,26 @@ some output device. There is no requirement for a traditional
 keyboard input model.
 
 By doing this I was able to solve the biggest portability issue
-with the RETRO 10/11 model, and make a much simpler, cleaner
+with the Retro 10/11 model, and make a much simpler, cleaner
 language in the end.
 
-## RETRO 11 (2011 - 2019): A Look Back
+## Retro 11 (2011 - 2019): A Look Back
 
-So it's now been about five years since the last release of RETRO
+So it's now been about five years since the last release of Retro
 11. While I still see some people obtaining and using it, I've
-moved on to the twelth generation of RETRO. It's time for me to
-finally retire RETRO 11.
+moved on to the twelth generation of Retro. It's time for me to
+finally retire Retro 11.
 
 As I prepare to do so, I thought I'd take a brief look back.
 
-RETRO 11 began life in 2011. It grew out of RETRO 10, which was
-the first version of RETRO to not be written in x86 assembly
+Retro 11 began life in 2011. It grew out of Retro 10, which was
+the first version of Retro to not be written in x86 assembly
 language. For R10 and R11, I wrote a portable virtual machine
 (with numerous implementations) and the Forth dialect was kept
 in an image file which ran on the VM.
 
-RETRO 10 worked, but was always a bit too sloppy and changed
-drastically between releases. The major goal of RETRO 11 was to
+Retro 10 worked, but was always a bit too sloppy and changed
+drastically between releases. The major goal of Retro 11 was to
 provide a stable base for a five year period. In retrospect,
 this was mostly achieved. Code from earlier releases normally
 needed only minor adjustments to run on later releases, though
@@ -4331,7 +4331,7 @@ had to slow down due to RSI problems. It was also the point
 which I started experiencing some problems with the metacompiler
 (as discussed previously).
 
-RETRO 11 was flexible. All colon definitions were setup as hooks,
+Retro 11 was flexible. All colon definitions were setup as hooks,
 allowing new functionality to be layered in easily. This allowed
 the later releases to add things like vocabularies, search order,
 tab completion, and keyboard remapping. This all came at a cost
@@ -4339,7 +4339,7 @@ though: later things could use the hooks to alter behavior of
 existing words, so it was necessary to use a lot of caution to
 ensure that the layers didn't break the earlier code.
 
-The biggest issue was the I/O model. RETRO 11 and the Ngaro VM
+The biggest issue was the I/O model. Retro 11 and the Ngaro VM
 assumed the existence of a console environment. All input was
 required to be input at the keyboard, and all output was to be
 shown on screen. This caused some problems. Including code from
@@ -4350,8 +4350,8 @@ keyboard and console complicated everything and I had to spend
 a considerable amount of effort to deal with battery performance
 resulting from the I/O polling and wait states.
 
-But on the whole it worked well. I used RETRO 11.6 until I started
-work on RETRO 12 in late 2016, and continued running some tools
+But on the whole it worked well. I used Retro 11.6 until I started
+work on Retro 12 in late 2016, and continued running some tools
 written in R11 until the first quarter of last year.
 
 The final image file was 23,137 cells (92,548 bytes). This was
@@ -4359,7 +4359,7 @@ bloated by keeping some documentation (stack comments and short
 descriptions) in the image, which started in 11.4. This contained
 269 words.
 
-I used RETRO 11 for a wide variety of tasks. A small selection of
+I used Retro 11 for a wide variety of tasks. A small selection of
 things that were written includes:
 
 - a pastebin
@@ -4370,18 +4370,18 @@ things that were written includes:
 - tool to automate creation of an SVCD from a set of photos
 - tools to generate reports from data sets for my employer
 
-In the end, I'm happy with how RETRO 11 turned out. I made some
+In the end, I'm happy with how Retro 11 turned out. I made some
 mistakes in embracing too much complexity, but despite this it
 was a successful system for many years.
 
 # Security Concerns
 
-The standard RETRO is not a good choice for applications
+The standard Retro is not a good choice for applications
 needing to be highly secure.
 
 ## Runtime Checks
 
-The RETRO system performs only minimal checks. It will not
+The Retro system performs only minimal checks. It will not
 load an image larger than the max set at build time. And
 stack over/underflow are checked for as code executes.
 
@@ -4393,7 +4393,7 @@ quite easy to crash.
 The VM itself and the core code is self contained. Nga does
 not make use of malloc/free, and uses only standard system
 libraries. It's possible for buffer overruns within the image
-(overwriting Nga code), but the RETRO image shouldn't leak
+(overwriting Nga code), but the Retro image shouldn't leak
 into the C portions.
 
 I/O presents a bigger issue. Anything involving I/O, especially
@@ -4414,7 +4414,7 @@ against attacks.
 
 ## Rationale
 
-RETRO is, primarily, a personal system. I'm running code I wrote
+Retro is, primarily, a personal system. I'm running code I wrote
 to solve problems I face. On the occasions where I run code sent
 to me by others, I read it carefully first and then run inside a
 sandboxed environment if I'm worried about anything in it.
@@ -4423,7 +4423,7 @@ sandboxed environment if I'm worried about anything in it.
 
 In brief: don't use underscores in word names.
 
-There is a good reason for this, and it has to do with how RETRO
+There is a good reason for this, and it has to do with how Retro
 processes strings. By default, underscores in strings are replaced
 by spaces. This is problematic when dealing with words like `var`,
 `const`, and `d:create` which take word names as strings.
@@ -4463,7 +4463,7 @@ will allow for this.
 
 Additional Note:
 
-Some version of RETRO have included the above patch. The last
+Some version of Retro have included the above patch. The last
 release that will include this by default is 2020.4 as it is
 not needed by the majority of users. If you want to keep it in
 your system, you will need to load it yourself or add it to
@@ -4527,7 +4527,7 @@ http://pestilenz.org/~ckeen/blog/posts/ciy-manifesto.html
 
 # Deprecation Policy
 
-As RETRO evolves, some words will become obsolete and no longer be
+As Retro evolves, some words will become obsolete and no longer be
 needed. In each release, these will be marked as deprecated in the
 glossary. Any deprecated words will be removed in the next quarterly
 release.
@@ -4541,7 +4541,7 @@ Charles Childers.
 
 To the extent possible under law, Charles Childers has
 waived all copyright and related or neighboring rights
-to the RETRO Documentation. This work is published from:
+to the Retro Documentation. This work is published from:
 United States.
 
 The historical papers are Copyright (c) 1999-2000 by

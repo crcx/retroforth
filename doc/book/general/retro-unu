@@ -1,6 +1,6 @@
 # Unu: Simple, Literate Source Files
 
-RETRO is written in a literate style. Most of the sources
+Retro is written in a literate style. Most of the sources
 are in a format called Unu. This allows easy mixing of
 commentary and code blocks, making it simple to document
 the code.

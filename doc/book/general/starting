@@ -1,6 +1,6 @@
-# Starting RETRO
+# Starting Retro
 
-RETRO can be run for scripting or interactive use.
+Retro can be run for scripting or interactive use.
 
 ## Interactive
 
@@ -47,7 +47,7 @@ Source files must be written in Unu format.
 
 ## Scripting
 
-You can use RETRO to write scripts. Add a shebang:
+You can use Retro to write scripts. Add a shebang:
 
 ```
 #!/usr/bin/env retro

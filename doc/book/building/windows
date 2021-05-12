@@ -1,6 +1,6 @@
-# Building RETRO on Windows
+# Building Retro on Windows
 
-It is possible to build RETRO on Windows, though a few of the
+It is possible to build Retro on Windows, though a few of the
 extensions are not supported:
 
 - no `unix:` words
@@ -12,7 +12,7 @@ the Unix instructions).
 
 ## Setup Build Environment
 
-RETRO on Windows is built with TCC.
+Retro on Windows is built with TCC.
 
 Go to http://download.savannah.gnu.org/releases/tinycc/
 
@@ -29,6 +29,6 @@ tcc into.
 ## Build
 
 Building will require use of the command line. Assuming that
-tcc.exe is in the current directory along with the RETRO sources:
+tcc.exe is in the current directory along with the Retro sources:
 
     tcc retro-windows.c -o retro.exe

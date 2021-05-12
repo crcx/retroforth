@@ -2,7 +2,7 @@
 
 In brief: don't use underscores in word names.
 
-There is a good reason for this, and it has to do with how RETRO
+There is a good reason for this, and it has to do with how Retro
 processes strings. By default, underscores in strings are replaced
 by spaces. This is problematic when dealing with words like `var`,
 `const`, and `d:create` which take word names as strings.
@@ -42,7 +42,7 @@ will allow for this.
 
 Additional Note:
 
-Some version of RETRO have included the above patch. The last
+Some version of Retro have included the above patch. The last
 release that will include this by default is 2020.4 as it is
 not needed by the majority of users. If you want to keep it in
 your system, you will need to load it yourself or add it to
