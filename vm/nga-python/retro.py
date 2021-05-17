@@ -44,10 +44,9 @@ from BenchmarkDevice import BenchmarkDevice
 # To Support Python 2.x
 # -------------------------------------------------------------
 
-from sys import version_info
-if version_info.major == 3:
+if sys.version_info.major == 3:
     pass
-elif version_info.major == 2:
+elif sys.version_info.major == 2:
     try:
         input = raw_input
     except NameError:
