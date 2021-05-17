@@ -77,11 +77,6 @@
 
 #define TIB          1025         /* Location of TIB                   */
 
-#define D_OFFSET_LINK     0       /* Dictionary Format Info. Update if */
-#define D_OFFSET_XT       1       /* you change the dictionary fields. */
-#define D_OFFSET_CLASS    2
-#define D_OFFSET_NAME     3
-
 #define MAX_DEVICES      32
 #define MAX_OPEN_FILES   32
 
@@ -92,7 +87,6 @@ CELL stack_pop();
 void stack_push(CELL value);
 CELL string_inject(char *str, CELL buffer);
 char *string_extract(CELL at);
-CELL d_xt_for(char *Name, CELL Dictionary);
 void update_rx();
 void include_file(char *fname, int run_tests);
 
@@ -1693,72 +1687,6 @@ char *string_extract(CELL at) {
   return (char *)string_data;
 }
 
-
-/*---------------------------------------------------------------------
-  Continuing along, I now define functions to access the dictionary.
-
-  RETRO's dictionary is a linked list. Each entry is setup like:
-
-  0000  Link to previous entry (NULL if this is the root entry)
-  0001  Pointer to definition start
-  0002  Pointer to class handler
-  0003  Start of a NULL terminated string with the word name
-
-  First, functions to access each field. The offsets were defineed at
-  the start of the file.
-  ---------------------------------------------------------------------*/
-
-CELL d_link(CELL dt) {
-  return dt + D_OFFSET_LINK;
-}
-
-CELL d_xt(CELL dt) {
-  return dt + D_OFFSET_XT;
-}
-
-CELL d_class(CELL dt) {
-  return dt + D_OFFSET_CLASS;
-}
-
-CELL d_name(CELL dt) {
-  return dt + D_OFFSET_NAME;
-}
-
-
-/*---------------------------------------------------------------------
-  Next, a more complext word. This will walk through the entries to
-  find one with a name that matches the specified name. This is *slow*,
-  but works ok unless you have a really large dictionary. (I've not
-  run into issues with this in practice).
-  ---------------------------------------------------------------------*/
-
-CELL d_lookup(CELL Dictionary, char *name) {
-  CELL dt = 0;
-  CELL i = Dictionary;
-  char *dname;
-  while (memory[i] != 0 && i != 0) {
-    dname = string_extract(d_name(i));
-    if (strcmp(dname, name) == 0) {
-      dt = i;
-      i = 0;
-    } else {
-      i = memory[i];
-    }
-  }
-  return dt;
-}
-
-
-/*---------------------------------------------------------------------
-  My last dictionary related word returns the `xt` pointer for a word.
-  This is used to help keep various important bits up to date.
-  ---------------------------------------------------------------------*/
-
-CELL d_xt_for(char *Name, CELL Dictionary) {
-  return memory[d_xt(d_lookup(Dictionary, Name))];
-}
-
-
 /*---------------------------------------------------------------------
   This interface tracks a few words and variables in the image. These
   are:
@@ -1774,8 +1702,8 @@ CELL d_xt_for(char *Name, CELL Dictionary) {
 
 void update_rx() {
   Dictionary = memory[2];
-  interpret = d_xt_for("interpret", Dictionary);
-  NotFound = d_xt_for("err:notfound", Dictionary);
+  interpret = memory[5];
+  NotFound = memory[6];
 }
 
 /*=====================================================================*/

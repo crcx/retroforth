@@ -19,6 +19,11 @@
 
 ## VM
 
+- nga-c
+
+  - retro.c no longer does dictionary searches to find
+    needed resources in image
+
 - nga-nim
 
   - fix bug in VM_SH
