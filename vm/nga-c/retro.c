@@ -1896,7 +1896,7 @@ void inst_sh() {
   CELL y = TOS;
   CELL x = NOS;
   if (TOS < 0)
-    NOS = NOS << (TOS * -1);
+    NOS = NOS << (0 - TOS);
   else {
     if (x < 0 && y > 0)
       NOS = x >> y | ~(~0U >> y);
