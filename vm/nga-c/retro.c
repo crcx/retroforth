@@ -169,7 +169,7 @@ Handler IO_deviceHandlers[MAX_DEVICES];
 Handler IO_queryHandlers[MAX_DEVICES];
 
 /* Global Variables -------------------------------------------------- */
-CELL Compiler, Dictionary, NotFound, interpret;
+CELL Dictionary, NotFound, interpret;
 
 char string_data[8192];
 char **sys_argv;
@@ -1776,7 +1776,6 @@ void update_rx() {
   Dictionary = memory[2];
   interpret = d_xt_for("interpret", Dictionary);
   NotFound = d_xt_for("err:notfound", Dictionary);
-  Compiler = d_xt_for("Compiler", Compiler);
 }
 
 /*=====================================================================*/

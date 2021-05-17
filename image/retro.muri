@@ -135,6 +135,7 @@ Here's the initial memory map:
 | 3      | Heap                        |
 | 4      | RETRO version               |
 | 5      | Pointer to `interpret`      |
+| 6      | Pointer to `err:notfound`   |
 
 ~~~
 : Dictionary
@@ -146,8 +147,9 @@ d 1536
 : Version
 d 202107
 
-: point-to-interpret
+: references
 r interpret
+r err:notfound
 ~~~
 
 Both of these are pointers. `Dictionary` points to the most
