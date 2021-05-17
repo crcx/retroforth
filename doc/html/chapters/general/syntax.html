@@ -45,7 +45,7 @@
 </head><body>
 <p><span class="h1">Syntax</span>
 <br/><br/>
-RETRO has more syntax than a traditional Forth due to ideas
+Retro has more syntax than a traditional Forth due to ideas
 borrowed from ColorForth and some design decisions. This has
 some useful traits, and helps to make the language more
 consistent.
@@ -54,18 +54,18 @@ consistent.
 <br/><br/>
 Input is divided into a series of whitespace delimited tokens.
 Each of these is then processed individually. There are no
-parsing words in RETRO.
+parsing words in Retro.
 <br/><br/>
-Tokens may have a single character <strong>sigil</strong>, which RETRO will
+Tokens may have a single character <strong>sigil</strong>, which Retro will
 use to decide how to process the token.
 <br/><br/>
 <span class="h2">Sigils</span>
 <br/><br/>
 Sigils are single characters added to the start of a token
 to guide the compiler. The use of these is a major way in
-which RETRO differs from traditional Forth.
+which Retro differs from traditional Forth.
 <br/><br/>
-When a token is passed to <span class="tt">interpret</span>, RETRO first takes the
+When a token is passed to <span class="tt">interpret</span>, Retro first takes the
 initial character and looks to see if there is a word that
 matches this. If so, it will pass the rest of the token to
 that word to handle.
@@ -88,7 +88,7 @@ like:
 <tt class='indentedcode'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;no:&nbsp;&nbsp;compile&nbsp;the&nbsp;number&nbsp;as&nbsp;a&nbsp;literal</tt>
 <tt class='indentedcode'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;no:&nbsp;&nbsp;report&nbsp;an&nbsp;error&nbsp;("not&nbsp;found")</tt>
 <br/><br/>
-In RETRO, the interpret process is basically:
+In Retro, the interpret process is basically:
 <br/><br/>
 <tt class='indentedcode'>get&nbsp;token</tt>
 <tt class='indentedcode'>does&nbsp;the&nbsp;first&nbsp;character&nbsp;match&nbsp;a&nbsp;`sigil:`&nbsp;word?</tt>

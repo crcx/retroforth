@@ -45,7 +45,7 @@
 </head><body>
 <p><span class="h1">Internals: I/O</span>
 <br/><br/>
-RETRO provides three words for interacting with I/O. These are:
+Retro provides three words for interacting with I/O. These are:
 <br/><br/>
 <tt class='indentedcode'>io:enumerate&nbsp;&nbsp;&nbsp;&nbsp;returns&nbsp;the&nbsp;number&nbsp;of&nbsp;attached&nbsp;devices</tt>
 <tt class='indentedcode'>io:query&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;returns&nbsp;information&nbsp;about&nbsp;a&nbsp;device</tt>
@@ -71,7 +71,7 @@ In this case, some interactions can be defined:
 Setup the stack, push the device ID, and then use <span class="tt">io:invoke</span>
 to invoke the interaction.
 <br/><br/>
-A RETRO system requires one I/O device (a generic output for a
+A Retro system requires one I/O device (a generic output for a
 single character). This must be the first device, and must have
 a device ID of 0.
 <br/><br/>

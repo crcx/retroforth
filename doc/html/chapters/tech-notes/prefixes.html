@@ -45,9 +45,9 @@
 </head><body>
 <p><span class="h2">Sigils as a Language Element</span>
 <br/><br/>
-A big change in RETRO 12 was the elimination of the traditional
+A big change in Retro 12 was the elimination of the traditional
 parser from the language. This was a sacrifice due to the lack
-of an I/O model. RETRO has no way to know <strong>how</strong> input is given
+of an I/O model. Retro has no way to know <strong>how</strong> input is given
 to the <span class="tt">interpret</span> word, or whether anything else will ever be
 passed into it.
 <br/><br/>
@@ -55,10 +55,10 @@ And so <span class="tt">interpret</span> operates only on the current token. The
 language does not track what came before or attempt to guess at
 what might come in the future.
 <br/><br/>
-This leads into the sigils. RETRO 11 had a complicated system
+This leads into the sigils. Retro 11 had a complicated system
 for sigils, with different types of sigilss for words that
 parsed ahead (e.g., strings) and words that operated on the
-current token (e.g., <span class="tt">@</span>). RETRO 12 eliminates all of these in
+current token (e.g., <span class="tt">@</span>). Retro 12 eliminates all of these in
 favor of just having a single sigil model.
 <br/><br/>
 The first thing <span class="tt">interpret</span> does is look to see if the first
@@ -76,7 +76,7 @@ It also simplifies things. Anything that would normally parse
 becomes a sigil handler. So creating a new word? Use the <span class="tt">:</span>
 sigil. Strings? Use <span class="tt">'</span>. Pointers? Try <span class="tt">&amp;</span>. And so on. E.g.,
 <br/><br/>
-<tt class='indentedcode'>In&nbsp;ANS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;In&nbsp;RETRO</tt>
+<tt class='indentedcode'>In&nbsp;ANS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;In&nbsp;Retro</tt>
 <tt class='indentedcode'>:&nbsp;foo&nbsp;...&nbsp;;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;:foo&nbsp;...&nbsp;;</tt>
 <tt class='indentedcode'>'&nbsp;foo&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&amp;foo</tt>
 <tt class='indentedcode'>:&nbsp;bar&nbsp;...&nbsp;[']&nbsp;foo&nbsp;;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;:bar&nbsp;...&nbsp;&amp;foo&nbsp;;</tt>

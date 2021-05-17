@@ -43,23 +43,23 @@
     .hr { display: block; height: 2px; background: #000000; }
 </style>
 </head><body>
-<p><span class="h2">RETRO 11 (2011 - 2019): A Look Back</span>
+<p><span class="h2">Retro 11 (2011 - 2019): A Look Back</span>
 <br/><br/>
-So it's now been about five years since the last release of RETRO
+So it's now been about five years since the last release of Retro
 11. While I still see some people obtaining and using it, I've
-moved on to the twelth generation of RETRO. It's time for me to
-finally retire RETRO 11.
+moved on to the twelth generation of Retro. It's time for me to
+finally retire Retro 11.
 <br/><br/>
 As I prepare to do so, I thought I'd take a brief look back.
 <br/><br/>
-RETRO 11 began life in 2011. It grew out of RETRO 10, which was
-the first version of RETRO to not be written in x86 assembly
+Retro 11 began life in 2011. It grew out of Retro 10, which was
+the first version of Retro to not be written in x86 assembly
 language. For R10 and R11, I wrote a portable virtual machine
 (with numerous implementations) and the Forth dialect was kept
 in an image file which ran on the VM.
 <br/><br/>
-RETRO 10 worked, but was always a bit too sloppy and changed
-drastically between releases. The major goal of RETRO 11 was to
+Retro 10 worked, but was always a bit too sloppy and changed
+drastically between releases. The major goal of Retro 11 was to
 provide a stable base for a five year period. In retrospect,
 this was mostly achieved. Code from earlier releases normally
 needed only minor adjustments to run on later releases, though
@@ -80,7 +80,7 @@ had to slow down due to RSI problems. It was also the point
 which I started experiencing some problems with the metacompiler
 (as discussed previously).
 <br/><br/>
-RETRO 11 was flexible. All colon definitions were setup as hooks,
+Retro 11 was flexible. All colon definitions were setup as hooks,
 allowing new functionality to be layered in easily. This allowed
 the later releases to add things like vocabularies, search order,
 tab completion, and keyboard remapping. This all came at a cost
@@ -88,7 +88,7 @@ though: later things could use the hooks to alter behavior of
 existing words, so it was necessary to use a lot of caution to
 ensure that the layers didn't break the earlier code.
 <br/><br/>
-The biggest issue was the I/O model. RETRO 11 and the Ngaro VM
+The biggest issue was the I/O model. Retro 11 and the Ngaro VM
 assumed the existence of a console environment. All input was
 required to be input at the keyboard, and all output was to be
 shown on screen. This caused some problems. Including code from
@@ -99,8 +99,8 @@ keyboard and console complicated everything and I had to spend
 a considerable amount of effort to deal with battery performance
 resulting from the I/O polling and wait states.
 <br/><br/>
-But on the whole it worked well. I used RETRO 11.6 until I started
-work on RETRO 12 in late 2016, and continued running some tools
+But on the whole it worked well. I used Retro 11.6 until I started
+work on Retro 12 in late 2016, and continued running some tools
 written in R11 until the first quarter of last year.
 <br/><br/>
 The final image file was 23,137 cells (92,548 bytes). This was
@@ -108,7 +108,7 @@ bloated by keeping some documentation (stack comments and short
 descriptions) in the image, which started in 11.4. This contained
 269 words.
 <br/><br/>
-I used RETRO 11 for a wide variety of tasks. A small selection of
+I used Retro 11 for a wide variety of tasks. A small selection of
 things that were written includes:
 <br/><br/>
 &bull; a pastebin<br/>
@@ -119,7 +119,7 @@ things that were written includes:
 &bull; tool to automate creation of an SVCD from a set of photos<br/>
 &bull; tools to generate reports from data sets for my employer<br/>
 <br/><br/>
-In the end, I'm happy with how RETRO 11 turned out. I made some
+In the end, I'm happy with how Retro 11 turned out. I made some
 mistakes in embracing too much complexity, but despite this it
 was a successful system for many years.
 </p>

@@ -45,17 +45,17 @@
 </head><body>
 <p><span class="h2">The Path to Self Hosting</span>
 <br/><br/>
-RETRO is an image based Forth system running on a lightweight
+Retro is an image based Forth system running on a lightweight
 virtual machine. This is the story of how that image is made.
 <br/><br/>
-The first RETRO to use an image based approach was RETRO 10.
+The first Retro to use an image based approach was Retro 10.
 The earliest images were built using a compiler written in
 Toka, an earlier experimental stack language I had written.
 It didn't take long to want to drop the dependency on Toka,
-so I rewrote the image compiler in RETRO and then began
+so I rewrote the image compiler in Retro and then began
 development at a faster pace.
 <br/><br/>
-RETRO 11 was built using the last RETRO 10 image and an
+Retro 11 was built using the last Retro 10 image and an
 evolved version of the metacompiler. This worked well, but
 I eventually found it to be problematic.
 <br/><br/>
@@ -81,11 +81,11 @@ could be revectored, so the metacompiler had to ensure that
 it didn't rely on anything in the old image during the move.
 This caused a large number of issues over R11's life.
 <br/><br/>
-So on to RETRO 12. I decided that this would be different.
+So on to Retro 12. I decided that this would be different.
 First, the kernel would be assembly, with an external tool
 to generate the core image. The kernel is in <span class="tt">Rx.md</span> and the
 assembler is <span class="tt">Muri</span>. To load the standard library, I wrote a
-second tool, <span class="tt">retro-extend</span>. This separation has allowed me
+second tool, <span class="tt">Retro-extend</span>. This separation has allowed me
 many fewer headaches as I can make changes more easily and
 rebuild from scratch when necessary.
 <br/><br/>
@@ -96,7 +96,7 @@ There are a few parts to this.
 <br/><br/>
 <strong></strong>Unu<strong></strong>. I use a Markdown variation with fenced code blocks.
 The tool I wrote in C to extract these is called <span class="tt">unu</span>. For
-a self hosting RETRO, I rewrote this as a combinator that
+a self hosting Retro, I rewrote this as a combinator that
 reads in a file and runs another word against each line in the
 file. So I could display the code block contents by doing:
 <br/><br/>
@@ -105,7 +105,7 @@ file. So I could display the code block contents by doing:
 This made it easier to implement the other tools.
 <br/><br/>
 <strong></strong>Muri<strong></strong>. This is my assembler. It's minimalistic, fast, and
-works really well for my purposes. RETRO includes a runtime
+works really well for my purposes. Retro includes a runtime
 version of this (using <span class="tt">as{</span>, <span class="tt">}as</span>, <span class="tt">i</span>, <span class="tt">d</span>, and <span class="tt">r</span>), so
 all I needed for this was to write a few words to parse the
 lines and run the corresponding runtime words. As with the C
@@ -116,20 +116,20 @@ full image I needed a way to load in the standard library and
 I/O extensions.
 <br/><br/>
 This is handled by <strong></strong>retro-extend<strong></strong>. This is where it gets
-more complex. I implemented the Nga virtual machine in RETRO
+more complex. I implemented the Nga virtual machine in Retro
 to allow this to run the new image in isolation from the
 host image. The new ngaImage is loaded, the interpreter is
 located, and each token is passed to the interpreter. Once
 done, the new image is written to disk.
 <br/><br/>
 So at this point I'm pleased to say that I can now develop
-RETRO using only an existing copy of RETRO (VM+image) and
+Retro using only an existing copy of Retro (VM+image) and
 tools (unu, muri, retro-extend, and a line oriented text
-editor) written in RETRO.
+editor) written in Retro.
 <br/><br/>
 This project has delivered some additional side benefits.
 During the testing I was able to use it to identify a few
-bugs in the I/O extensions, and the Nga-in-RETRO will replace
+bugs in the I/O extensions, and the Nga-in-Retro will replace
 the older attempt at this in the debugger, allowing a safer
 testing environment.
 <br/><br/>
@@ -140,9 +140,9 @@ The extend process is <strong>slow</strong>. On my main development server
 minutes to complete loading the standard library, and a few
 additional depending on the I/O drivers selected.
 <br/><br/>
-Most of the performance issues come from running Nga-in-RETRO
+Most of the performance issues come from running Nga-in-Retro
 to isolate the new image from the host one. It'd be possible
-to do something a bit more clever (e.g., running a RETRO
+to do something a bit more clever (e.g., running a Retro
 instance using the new image via a subprocess and piping in
 the source, or doing relocations of the data), but this is
 less error prone and will work on all systems that I plan to

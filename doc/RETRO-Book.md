@@ -188,16 +188,15 @@ package into the tcc directory.
 
 ## Prepare Source
 
-Copy the `source/interfaces/retro-windows.c` and the
-`source/interfaces/retro-windows.c` to the directory you setup
-tcc into.
+Copy the `vm/nga-c/retro.c` and the `vm/nga-c/image.c` to
+the directory you setup tcc into.
 
 ## Build
 
 Building will require use of the command line. Assuming that
 tcc.exe is in the current directory along with the Retro sources:
 
-    tcc retro-windows.c -o retro.exe
+    tcc retro.c -o retro.exe
 
 # Building Alternative Systems
 

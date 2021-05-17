@@ -45,12 +45,12 @@
 </head><body>
 <p><span class="h1">Security Concerns</span>
 <br/><br/>
-The standard RETRO is not a good choice for applications
+The standard Retro is not a good choice for applications
 needing to be highly secure.
 <br/><br/>
 <span class="h2">Runtime Checks</span>
 <br/><br/>
-The RETRO system performs only minimal checks. It will not
+The Retro system performs only minimal checks. It will not
 load an image larger than the max set at build time. And
 stack over/underflow are checked for as code executes.
 <br/><br/>
@@ -62,7 +62,7 @@ quite easy to crash.
 The VM itself and the core code is self contained. Nga does
 not make use of malloc/free, and uses only standard system
 libraries. It's possible for buffer overruns within the image
-(overwriting Nga code), but the RETRO image shouldn't leak
+(overwriting Nga code), but the Retro image shouldn't leak
 into the C portions.
 <br/><br/>
 I/O presents a bigger issue. Anything involving I/O, especially
@@ -83,7 +83,7 @@ against attacks.
 <br/><br/>
 <span class="h2">Rationale</span>
 <br/><br/>
-RETRO is, primarily, a personal system. I'm running code I wrote
+Retro is, primarily, a personal system. I'm running code I wrote
 to solve problems I face. On the occasions where I run code sent
 to me by others, I read it carefully first and then run inside a
 sandboxed environment if I'm worried about anything in it.

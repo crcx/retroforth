@@ -45,7 +45,7 @@
 </head><body>
 <p><span class="h1">Internals: The Retro Image</span>
 <br/><br/>
-The actual RETRO language is stored as a memory image for Nga.
+The actual Retro language is stored as a memory image for Nga.
 <br/><br/>
 <span class="h2">Format</span>
 <br/><br/>
@@ -64,7 +64,7 @@ actual entry point.
 <br/><br/>
 This is followed by a pointer to the most recent dictionary
 header, a pointer to the next free address in memory, and
-then the RETRO version number.
+then the Retro version number.
 <br/><br/>
 <tt class='indentedcode'>|&nbsp;Offset&nbsp;|&nbsp;Contains&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
 <tt class='indentedcode'>|&nbsp;------&nbsp;|&nbsp;---------------------------&nbsp;|</tt>
@@ -72,7 +72,7 @@ then the RETRO version number.
 <tt class='indentedcode'>|&nbsp;1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;Pointer&nbsp;to&nbsp;main&nbsp;entry&nbsp;point&nbsp;|</tt>
 <tt class='indentedcode'>|&nbsp;2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;Dictionary&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
 <tt class='indentedcode'>|&nbsp;3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;Heap&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
-<tt class='indentedcode'>|&nbsp;4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;RETRO&nbsp;version&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;Retro&nbsp;version&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
 <br/><br/>
 The actual code starts after this header.
 <br/><br/>
@@ -86,7 +86,7 @@ Assuming an Nga built with 524287 cells of memory:
 <br/><br/>
 <tt class='indentedcode'>|&nbsp;RANGE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;CONTAINS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
 <tt class='indentedcode'>|&nbsp;---------------&nbsp;|&nbsp;----------------------------&nbsp;|</tt>
-<tt class='indentedcode'>|&nbsp;0&nbsp;-&nbsp;1024&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;RETRO&nbsp;Core&nbsp;kernel&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>|&nbsp;0&nbsp;-&nbsp;1024&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;Retro&nbsp;Core&nbsp;kernel&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
 <tt class='indentedcode'>|&nbsp;1025&nbsp;-&nbsp;1535&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;token&nbsp;input&nbsp;buffer&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
 <tt class='indentedcode'>|&nbsp;1536&nbsp;+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;start&nbsp;of&nbsp;heap&nbsp;space&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
 <tt class='indentedcode'>|&nbsp;...............&nbsp;|&nbsp;free&nbsp;memory&nbsp;for&nbsp;your&nbsp;use&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>

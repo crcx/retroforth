@@ -43,9 +43,9 @@
     .hr { display: block; height: 2px; background: #000000; }
 </style>
 </head><body>
-<p><span class="h1">Building RETRO on Windows</span>
+<p><span class="h1">Building Retro on Windows</span>
 <br/><br/>
-It is possible to build RETRO on Windows, though a few of the
+It is possible to build Retro on Windows, though a few of the
 extensions are not supported:
 <br/><br/>
 &bull; no <span class="tt">unix:</span> words<br/>
@@ -57,7 +57,7 @@ the Unix instructions).
 <br/><br/>
 <span class="h2">Setup Build Environment</span>
 <br/><br/>
-RETRO on Windows is built with TCC.
+Retro on Windows is built with TCC.
 <br/><br/>
 Go to http://download.savannah.gnu.org/releases/tinycc/
 <br/><br/>
@@ -67,15 +67,14 @@ package into the tcc directory.
 <br/><br/>
 <span class="h2">Prepare Source</span>
 <br/><br/>
-Copy the <span class="tt">source/interfaces/retro-windows.c</span> and the
-<span class="tt">source/interfaces/retro-windows.c</span> to the directory you setup
-tcc into.
+Copy the <span class="tt">vm/nga-c/retro.c</span> and the <span class="tt">vm/nga-c/image.c</span> to
+the directory you setup tcc into.
 <br/><br/>
 <span class="h2">Build</span>
 <br/><br/>
 Building will require use of the command line. Assuming that
-tcc.exe is in the current directory along with the RETRO sources:
+tcc.exe is in the current directory along with the Retro sources:
 <br/><br/>
-<tt class='indentedcode'>tcc&nbsp;retro-windows.c&nbsp;-o&nbsp;retro.exe</tt>
+<tt class='indentedcode'>tcc&nbsp;retro.c&nbsp;-o&nbsp;retro.exe</tt>
 </p>
 </body></html>
