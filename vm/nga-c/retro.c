@@ -185,7 +185,7 @@ void float_guard() {
     exit(1);
   }
   if (afsp < 0 || afsp > 255) {
-    printf("\nERROR (nga/float_guard): 	Alternate Float Stack Limits Exceeded!\n");
+    printf("\nERROR (nga/float_guard): Alternate Float Stack Limits Exceeded!\n");
     printf("At %lld, afsp = %lld\n", (long long)cpu.ip, (long long)afsp);
     exit(1);
   }
@@ -1919,20 +1919,15 @@ void inst_ha() {
 }
 
 void inst_ie() {
-  cpu.sp++;
-  TOS = devices;
+  stack_push(devices);
 }
 
 void inst_iq() {
-  CELL Device = TOS;
-  inst_dr();
-  IO_queryHandlers[Device]();
+  IO_queryHandlers[stack_pop()]();
 }
 
 void inst_ii() {
-  CELL Device = TOS;
-  inst_dr();
-  IO_deviceHandlers[Device]();
+  IO_deviceHandlers[stack_pop()]();
 }
 
 Handler instructions[] = {
