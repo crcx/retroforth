@@ -10,6 +10,9 @@
 ## Added
 
 - `if:` and `-if:`
+- `c:get` to retro.forth
+- `s:get` to retro.forth
+- `listen` to retro.forth
 
 ## Renamed
 
@@ -23,6 +26,10 @@
 
   - retro.c no longer does dictionary searches to find
     needed resources in image
+  - shift instruction no longer using an unneeded multiply
+    (Arland Childers)
+  - retro-repl.c now uses an external image
+  - removed barebones.c (overlaps w/new retro-repl.c)
 
 - nga-nim
 
@@ -34,6 +41,7 @@
 
 - add archive, archive-info, archive-extract
 - add delete-file
+- variables-and-formulas now in UTF8 (Marcus Antonius)
 
 ## Documentation
 

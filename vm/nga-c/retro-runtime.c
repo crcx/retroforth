@@ -109,7 +109,7 @@ CELL interpret;
   Embed The Image
   ---------------------------------------------------------------------*/
 
-#include "retro-image.c"
+#include "image.c"
 #include "bsd-strl.c"
 
 

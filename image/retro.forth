@@ -1786,6 +1786,38 @@ provide much more than I can do here.
 :FREE (-n) STRINGS #1025 - here - ;
 ~~~
 
+## Listener
+
+If a VM implementation provides both the character output and a
+generic "keyboard" input, the basic listener here can be used.
+
+~~~
+{{
+  :eol? (c-f)
+    [ ASCII:CR eq? ] [ ASCII:LF eq? ] [ ASCII:SPACE eq? ] tri or or ;
+
+  :valid? (s-sf)
+    dup s:length n:-zero? ;
+
+  :bs? (c-cf)
+    dup [ #8 eq? ] [ #127 eq? ] bi or ;
+
+  :check-bs (c-c)
+    bs? [ buffer:get buffer:get drop-pair ] if ;
+---reveal---
+  :c:get (-c) #1 io:scan-for io:invoke ;
+
+  :s:get (-s) [ #1025 buffer:set
+                [ c:get dup buffer:add check-bs eol? ] until
+                  buffer:start s:chop ] buffer:preserve ;
+
+  :listen (-)
+    repeat s:get valid? &interpret &drop choose again ;
+}}
+
+&listen #1 store
+~~~
+
 ## The End
 
 ## Legalities

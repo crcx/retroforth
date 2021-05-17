@@ -6,12 +6,16 @@ tasks:
 - build: |
     cd retroforth
     make
-- test: |
+- optional: |
     cd retroforth
-    ./bin/retro example/1D-Cellular-Automota.retro
-- check-missing: |
-    cd retroforth
-    ./bin/retro tools/glossary.retro missing
+    make bin/retro-repl
 - install: |
     cd retroforth
     sudo make install
+- test: |
+    cd retroforth
+    retro example/1D-Cellular-Automota.retro
+    retro example/sea-level-rise.retro
+- check-missing: |
+    cd retroforth
+    retro tools/glossary.retro missing
