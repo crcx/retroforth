@@ -5,7 +5,7 @@ From my mastodon feed:
     so i just saw this example given as a reason why
     concatenative languages tend to be called "write-only":
 
-    f x y z = y² + x�- |y|
+    f x y z = y¬≤ + x¬- |y|
 
     : f
       drop dup dup *
@@ -19,9 +19,9 @@ He ends up writing the following:
 
     lastly, nobody would ever write Forth like that anyway!
 
-    : ²+  dup * swap dup * + ;
-    : y²+x²-|y|  ( y x -- result )
-      tuck ²+ swap abs - ;
+    : ¬≤+  dup * swap dup * + ;
+    : y¬≤+x¬≤-|y|  ( y x -- result )
+      tuck ¬≤+ swap abs - ;
 
 Given a dislike of stack shufflers, a Retro implementation could be:
 
