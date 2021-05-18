@@ -30,6 +30,7 @@
     (Arland Childers)
   - retro-repl.c now uses an external image
   - removed barebones.c (overlaps w/new retro-repl.c)
+  - retro-runtime.c now based on standard retro.c
 
 - nga-nim
 
