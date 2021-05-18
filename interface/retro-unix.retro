@@ -15,15 +15,6 @@ at addresses 0 to 1023).
 :image:save (s-) #1000 io:scan-for io:invoke ;
 ~~~
 
-## Console Input
-
-The RRE interface provides a keyboard device. This exposes it
-via `c:get`.
-
-~~~
-:c:get (-c) #1 io:scan-for io:invoke ;
-~~~
-
 Now that I can read characters, it's time to support reading
 strings. I do this via two words. The first is `parse-until`.
 This will setup a temporary string as an input buffer, then

@@ -2,7 +2,7 @@
 
   This interface layer will create a new binary that
   bundles the RETRO virtual machine and image file.
-  
+
   The VM and image are embedded in this as ELF sections.
   This will extract them, compile code from a file into
   the image, then embed the image into the VM binary.
@@ -10,7 +10,7 @@
   Due to the way this works, it requires a Unix-like OS
   and the `objcopy` binary in the path.
 
-  Copyright (c) 2016 - 2020, Charles Childers
+  Copyright (c) 2016 - 2021, Charles Childers
 */
 
 
@@ -22,11 +22,36 @@
 #include <sys/stat.h>
 #include <limits.h>
 
-#include "config.h"
-#ifdef NUM_DEVICES
-#undef NUM_DEVICES
-#define NUM_DEVICES  1
+#ifndef BIT64
+#define CELL int32_t
+#define CELL_MIN INT_MIN + 1
+#define CELL_MAX INT_MAX - 1
+#else
+#define CELL int64_t
+#define CELL_MIN LLONG_MIN + 1
+#define CELL_MAX LLONG_MAX - 1
 #endif
+
+#ifndef IMAGE_SIZE
+#define IMAGE_SIZE   524288       /* Amount of RAM, in cells           */
+#endif
+
+#ifndef ADDRESSES
+#define ADDRESSES    256          /* Depth of address stack            */
+#endif
+
+#ifndef STACK_DEPTH
+#define STACK_DEPTH  256          /* Depth of data stack               */
+#endif
+
+#define TIB            1025       /* Location of TIB                   */
+
+#define D_OFFSET_LINK     0       /* Dictionary Format Info. Update if */
+#define D_OFFSET_XT       1       /* you change the dictionary fields. */
+#define D_OFFSET_CLASS    2
+#define D_OFFSET_NAME     3
+
+#define NUM_DEVICES       1       /* Set the number of I/O devices     */
 
 CELL sp, rp, ip;
 CELL data[STACK_DEPTH];
@@ -179,7 +204,7 @@ int main(int argc, char **argv) {
     printf("Missing arguments\n");
     exit(1);
   }
-  
+
   ngaPrepare();
   extract_runtime(argv[0]);
   extract_image(argv[0]);
