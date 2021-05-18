@@ -6,9 +6,12 @@ tasks:
 - build: |
     cd retroforth
     make
-- optional: |
+- repl: |
     cd retroforth
     make bin/retro-repl
+- compiler: |
+    cd retroforth
+    make bin/retro-compiler
 - install: |
     cd retroforth
     sudo make install
@@ -16,6 +19,11 @@ tasks:
     cd retroforth
     retro example/1D-Cellular-Automota.retro
     retro example/sea-level-rise.retro
+- test-compiler: |
+    cd retroforth
+    echo "~~~\n:hello 'hello_s:put_nl_;\n~~~" >hello.retro
+    ./bin/retro-compiler hello.retro hello
+    ./a.out
 - check-missing: |
     cd retroforth
     retro tools/glossary.retro missing

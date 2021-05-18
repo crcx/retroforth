@@ -152,7 +152,7 @@ bin/retro: vm/nga-c/image.c vm/nga-c/retro.c package/list.forth package/load-ext
 
 # optional targets
 
-bin/retro-compiler: bin/retro-extend vm/nga-c/retro-compiler.c vm/nga-c/retro-runtime.c vm/nga-c/bsd-strl.c vm/nga-c/config.h vm/nga-c/dev-clock.c vm/nga-c/dev-files.c vm/nga-c/dev-floatingpoint.c vm/nga-c/dev-image.c vm/nga-c/dev-rng.c vm/nga-c/dev-sockets.c vm/nga-c/dev-unix.c vm/nga-c/prototypes.h
+bin/retro-compiler: bin/retro-extend vm/nga-c/retro-compiler.c vm/nga-c/retro-runtime.c
 	cp ngaImage runtime.image
 	./bin/retro-extend runtime.image interface/scripting.retro interface/filesystem.retro interface/floatingpoint.retro interface/unix.retro interface/rng.retro interface/retro-unix.retro interface/clock.retro
 	cd vm/nga-c && $(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o ../../retro-runtime retro-runtime.c $(LIBM)
