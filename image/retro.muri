@@ -136,6 +136,8 @@ Here's the initial memory map:
 | 4      | RETRO version               |
 | 5      | Pointer to `interpret`      |
 | 6      | Pointer to `err:notfound`   |
+| 7      | Pointer to TIB              |
+| 8      | Pointer to End of TIB       |
 
 ~~~
 : Dictionary
@@ -150,6 +152,8 @@ d 202107
 : references
 r interpret
 r err:notfound
+r TIB
+d 1535
 ~~~
 
 Both of these are pointers. `Dictionary` points to the most
@@ -356,7 +360,7 @@ significant performance hit, so I'm leaving it this way.
 
     :choose
       &choice:false store &choice:true store
-      &choice:false + fetch call ;    
+      &choice:false + fetch call ;
 
 ~~~
 : choice:true
@@ -821,15 +825,26 @@ pretty easy to add them later, but it's not needed in the base
 kernel.
 
 ~~~
+: Base
+d 10
+
+: adjust
+i lisure..
+d 7
+
 : next
 i lica....
 r fetch-next
 i zr......
+i duligtli
+d 58
+r adjust
+i cc......
 i lisuswpu
 d 48
-i swlimuad
-d 10
-i poliju..
+i swlifemu
+r Base
+i adpoliju
 r next
 
 : check
@@ -1757,12 +1772,22 @@ r 0057
 r muri:r
 r class:word
 s r
-: 9999
+: 0059
 r 0058
+r Base
+r class:data
+s Base
+: 9999
+r 0059
 r err:notfound
 r class:word
 s err:notfound
 ~~~
+
+~~~
+: TIB
+~~~
+
 
 ## Appendix: Words, Stack Effects, and Usage
 
@@ -1825,6 +1850,7 @@ s err:notfound
 | d:lookup        | s-p       | Given a string, return the DT (or 0 if undefined) |
 | Version         | -a        | Variable; holds a version identifier              |
 | err:notfound    | -         | Handler for token not found errors                |
+| Base            | -a        | Variable; holds current numeric base              |
 
 ## Legalities
 

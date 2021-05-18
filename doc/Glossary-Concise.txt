@@ -157,6 +157,9 @@ Constant. Refers to specific ASCII code.
 ASCII:VT                 D: -n  A: -  F: -
 Constant. Refers to specific ASCII code.
 
+Base                     D: -a  A: -  F: -
+Variable. Holds the current numeric base.
+
 Compiler                 D: -a  A: -  F: -
 Variable. Holds the compiler state. If TRUE, the compiler is active. If FALSE, it is not.
 
@@ -327,6 +330,9 @@ Execute q1 against x and q2 against y.
 
 bi@                      D: xyq-?  A: -  F: -
 Execute q against x, then execute q against y.
+
+binary                   D: -  A: -  F: -
+Set `Base` to binary.
 
 buffer:add               D: n-  A: -  F: -
 Append a value to the current buffer.
@@ -564,6 +570,9 @@ Given a dictionary header, return the xt field.
 
 data                     D: -  A: -  F: -
 Change the class of the most recently defined word to `class:data`.
+
+decimal                  D: -  A: -  F: -
+Set `Base` to decimal.
 
 depth                    D: -n  A: -  F: -
 Return the number of items on the stack.
@@ -922,6 +931,9 @@ Compare n1 and n2. Return `TRUE` if n1 is greater than or equal to n2, or `FALSE
 here                     D: -a  A: -  F: -
 Return the next free address in memory.
 
+hex                      D: -  A: -  F: -
+Set `Base` to hexadecimal.
+
 hook                     D: -  A: -  F: -
 Add a hook point into the current word. This should only be used as the first word in a definition.
 
@@ -1059,6 +1071,9 @@ Display a newline.
 
 not                      D: n-m  A: -  F: -
 Perform a logical NOT operation.
+
+octal                    D: -  A: -  F: -
+Set `Base` to octal.
 
 or                       D: mn-o  A: -  F: -
 Perform a bitwise OR between the provided values.

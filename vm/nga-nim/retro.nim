@@ -45,7 +45,6 @@ proc go() =
   const IMAGE_SIZE = 524288           # number of cells in image
   const DSTACK_DEPTH = 32             # max depth for data stack
   const RSTACK_DEPTH   = 128          # max depth for address stack
-  const TIB = 1025                    # location of text input buffer
   const XT = 1                        # dictionary header offset for XT
 
   var ds: array[DSTACK_DEPTH, CELL]   # data stack values
@@ -111,10 +110,10 @@ proc go() =
     for word in input.split(' '):
       if word == "bye":
         return
-      inject(word, TIB)
+      inject(word, im[7])
       inc sp
       ds[sp] = ts
-      ts = TIB
+      ts = im[7]
       rp = 0
       var ip: UCELL = UCELL(im[XT+lookup("interpret")]) - 1
       var opcode : UCELL = 0

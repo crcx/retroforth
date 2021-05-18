@@ -6,6 +6,8 @@
 
 - address 5 is now a pointer to `interpret`
 - address 6 is now a pointor to `err:notfound`
+- address 7 now points to TIB
+- address 8 points to end of TIB
 
 ## Added
 
@@ -13,6 +15,11 @@
 - `c:get` to retro.forth
 - `s:get` to retro.forth
 - `listen` to retro.forth
+- added `Base`
+- added `decimal`
+- added `hex`
+- added `octal`
+- added `binary`
 
 ## Renamed
 
@@ -21,6 +28,10 @@
 ## Toolchain
 
 ## VM
+
+- all
+
+  - no longer hard code TIB address (pull from image instead)
 
 - nga-c
 

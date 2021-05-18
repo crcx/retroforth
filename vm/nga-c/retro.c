@@ -76,7 +76,7 @@
 #define STACK_DEPTH  256          /* Depth of data stack */
 #endif
 
-#define TIB          1025         /* Location of TIB                   */
+#define TIB memory[7]             /* Location of TIB                   */
 
 #define MAX_DEVICES      32
 #define MAX_OPEN_FILES   32

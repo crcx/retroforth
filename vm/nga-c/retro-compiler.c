@@ -44,7 +44,7 @@
 #define STACK_DEPTH  256          /* Depth of data stack               */
 #endif
 
-#define TIB            1025       /* Location of TIB                   */
+#define TIB memory[7]             /* Location of TIB                   */
 
 #define D_OFFSET_LINK     0       /* Dictionary Format Info. Update if */
 #define D_OFFSET_XT       1       /* you change the dictionary fields. */

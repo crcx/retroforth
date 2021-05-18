@@ -34,7 +34,7 @@ int r_strcmp(const char *s1, const char *s2) {
   altered to match your memory layout.
   ---------------------------------------------------------------------*/
 
-#define TIB            1025
+#define TIB memory[7]
 #define D_OFFSET_LINK     0
 #define D_OFFSET_XT       1
 #define D_OFFSET_CLASS    2

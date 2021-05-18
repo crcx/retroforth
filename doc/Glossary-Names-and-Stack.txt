@@ -51,6 +51,7 @@ ASCII:SUB                D: -n  A: -  F: -
 ASCII:SYN                D: -n  A: -  F: -
 ASCII:US                 D: -n  A: -  F: -
 ASCII:VT                 D: -n  A: -  F: -
+Base                     D: -a  A: -  F: -
 Compiler                 D: -a  A: -  F: -
 Dictionary               D: -a  A: -  F: -
 EOM                      D: -a  A: -  F: -
@@ -108,6 +109,7 @@ banner                   D: -  A: -  F: -
 bi                       D: xqq-?  A: -  F: -
 bi*                      D: xyqq-?  A: -  F: -
 bi@                      D: xyq-?  A: -  F: -
+binary                   D: -  A: -  F: -
 buffer:add               D: n-  A: -  F: -
 buffer:empty             D: -  A: -  F: -
 buffer:end               D: -a  A: -  F: -
@@ -187,6 +189,7 @@ d:words-beginning-with   D: s-  A: -  F: -
 d:words-with             D: s-  A: -  F: -
 d:xt                     D: d-a  A: -  F: -
 data                     D: -  A: -  F: -
+decimal                  D: -  A: -  F: -
 depth                    D: -n  A: -  F: -
 dip                      D: nq-n  A: -  F: -
 does                     D: q-  A: -  F: -
@@ -306,6 +309,7 @@ gopher:get               D: asns-n  A: -  F: -
 gt?                      D: nn-f  A: -  F: -
 gteq?                    D: nn-f  A: -  F: -
 here                     D: -a  A: -  F: -
+hex                      D: -  A: -  F: -
 hook                     D: -  A: -  F: -
 i                        D: s-  A: -  F: -
 if                       D: fq-  A: -  F: -
@@ -352,6 +356,7 @@ n:zero?                  D: n-f  A: -  F: -
 nip                      D: nm-m  A: -  F: -
 nl                       D: -  A: -  F: -
 not                      D: n-m  A: -  F: -
+octal                    D: -  A: -  F: -
 or                       D: mn-o  A: -  F: -
 over                     D: nm-nmn  A: -  F: -
 parse-until              D: q-s  A: -  F: -

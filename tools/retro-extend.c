@@ -29,7 +29,7 @@
    Retro language. If things change there, these will need to
    be adjusted to match. */
 
-#define TIB            1025
+#define TIB memory[7]
 #define D_OFFSET_LINK     0
 #define D_OFFSET_XT       1
 #define D_OFFSET_CLASS    2
@@ -265,7 +265,7 @@ void execute(CELL cell) {
   while (ip < IMAGE_SIZE) {
     opcode = memory[ip];
     if (ip == notfound) {
-      printf("%s ?\n", string_extract(1025));
+      printf("%s ?\n", string_extract(TIB));
     }
     if (ngaValidatePackedOpcodes(opcode) != 0) {
       ngaProcessPackedOpcodes(opcode);

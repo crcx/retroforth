@@ -1006,7 +1006,7 @@ RETRO provides string constants for several ranges of
 characters that are of some general interest.
 
 ~~~
-:s:DIGITS          (-s)  '0123456789 ;
+:s:DIGITS          (-s)  '0123456789ABCDEF ;
 :s:ASCII-LOWERCASE (-s)  'abcdefghijklmnopqrstuvwxyz ;
 :s:ASCII-UPPERCASE (-s)  'ABCDEFGHIJKLMNOPQRSTUVWXYZ ;
 :s:ASCII-LETTERS   (-s)
@@ -1118,21 +1118,6 @@ both leading and trailing spaces.
 :s:trim (s-s) s:trim-right s:trim-left ;
 ~~~
 
-
-Convert a decimal (base 10) number to a string.
-
-~~~
-{{
-  :correct (c-c)  dup $0 lt? [ $0 over - #2 * + ] if ; 
----reveal---
-  :n:to-string  (n-s)
-    [ here buffer:set dup n:abs
-      [ #10 /mod swap $0 + correct buffer:add dup n:-zero? ] while drop
-      n:negative? [ $- buffer:add ] if
-      buffer:start s:reverse ] buffer:preserve ;
-}}
-~~~
-
 Now replace the old sigil:' with this one that can optionally
 turn underscores into spaces.
 
@@ -1218,6 +1203,19 @@ returns an array containing pointers to each of them.
 ---reveal---
   :s:replace-all (sss-s)
     &Heap [ extract tokenize merge clean s:temp ] v:preserve ;
+}}
+~~~
+
+~~~
+{{
+  'String d:create   #12 allot
+  :check-sign (n-)   n:negative? [ $- buffer:add ] if ;
+  :n->digit   (n-c)  s:DIGITS + fetch ;
+  :convert    (n-)   [ @Base /mod swap n->digit buffer:add dup n:zero? ] until drop ;
+---reveal---
+  :n:to-string (n-s)
+    [ &String buffer:set dup n:abs convert check-sign ] buffer:preserve
+    &String s:reverse ;
 }}
 ~~~
 
@@ -1736,6 +1734,16 @@ original one.
 :unhook (a-) n:inc dup n:inc swap store ;
 ~~~
 
+## Numeric Bases
+
+~~~
+:decimal #10 !Base ;
+:binary  #2  !Base ;
+:octal   #8  !Base ;
+:hex     #16 !Base ;
+~~~
+
+
 ## I/O
 
 ~~~
@@ -1807,7 +1815,7 @@ generic "keyboard" input, the basic listener here can be used.
 ---reveal---
   :c:get (-c) #1 io:scan-for io:invoke ;
 
-  :s:get (-s) [ #1025 buffer:set
+  :s:get (-s) [ #7 fetch buffer:set
                 [ c:get dup buffer:add check-bs eol? ] until
                   buffer:start s:chop ] buffer:preserve ;
 

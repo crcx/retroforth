@@ -344,7 +344,7 @@ function execute(offset) {
     opcode = image[ip];
     if (ip == notfound) {
       document.getElementById('console').value +=
-        "err:notfound : " + string_extract(1024) + "\n";
+        "err:notfound : " + string_extract(image[7]) + "\n";
     }
     if (validatePackedOpcodes(opcode) != 0) {
       ngaProcessPackedOpcodes(opcode);
@@ -426,8 +426,8 @@ function d_xt_for(name) {
 function evaluate(s) {
   if (s.length == 0)
     return;
-  string_inject(s, 1024);
-  data.push(1024);
+  string_inject(s, image[7]);
+  data.push(image[7]);
   execute(interpret);
 }
 

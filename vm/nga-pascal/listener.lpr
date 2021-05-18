@@ -16,7 +16,7 @@ uses
 {$include 'nga.inc'}
 
 const
-  TIB       = 1471;
+  TIB       = 1100;
 
 //implementation
 

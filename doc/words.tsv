@@ -51,6 +51,7 @@ ASCII:SUB	-n	-	-	Constant. Refers to specific ASCII code.			class:data	{n/a}	{n/
 ASCII:SYN	-n	-	-	Constant. Refers to specific ASCII code.			class:data	{n/a}	{n/a}	ASCII	all	
 ASCII:US	-n	-	-	Constant. Refers to specific ASCII code.			class:data	{n/a}	{n/a}	ASCII	all	
 ASCII:VT	-n	-	-	Constant. Refers to specific ASCII code.			class:data	{n/a}	{n/a}	ASCII	all	
+Base	-a	-	-	Variable. Holds the current numeric base.			class:data	{n/a}	{n/a}	global	all	
 Compiler	-a	-	-	Variable. Holds the compiler state. If TRUE, the compiler is active. If FALSE, it is not.			class:data	{n/a}	{n/a}	global	all	
 Dictionary	-a	-	-	Variable. Holds a pointer to the most recent dictionary header.			class:data	{n/a}	{n/a}	global	all	
 EOM	-a	-	-	Constant. Returns the last addressable memory address.			class:word	{n/a}	{n/a}	global	all	
@@ -108,6 +109,7 @@ banner	-	-	-	Display a welcome message on startup.			class:word	{n/a}	{n/a}	glob
 bi	xqq-?	-	-	Execute q1 against x, then execute q2 against a copy of x.			class:word	    #100 [ #10 * ] [ #10 - ] bi	{n/a}	global	all	
 bi*	xyqq-?	-	-	Execute q1 against x and q2 against y.			class:word	    #10 #20 [ #2 * ] [ #10 / ] bi*	{n/a}	global	all	
 bi@	xyq-?	-	-	Execute q against x, then execute q against y.			class:word	    #10 #20 [ #3 * ] bi@	{n/a}	global	all	
+binary	-	-	-	Set `Base` to binary.			class:word	{n/a}	{n/a}	a	all	
 buffer:add	n-	-	-	Append a value to the current buffer.			class:word	{n/a}	{n/a}	buffer	all	
 buffer:empty	-	-	-	Reset the current buffer to an empty state.			class:word	{n/a}	{n/a}	buffer	all	
 buffer:end	-a	-	-	Return a pointer to the current end of the active buffer.			class:word	{n/a}	{n/a}	buffer	all	
@@ -187,6 +189,7 @@ d:words-beginning-with	s-	-	-	Display a list of all named items in the `Dictiona
 d:words-with	s-	-	-	Display a list of all named items in the `Dictionary` that contain the provided substring.			class:word	{n/a}	{n/a}	d	rre	
 d:xt	d-a	-	-	Given a dictionary header, return the xt field.			class:word	{n/a}	{n/a}	d	all	
 data	-	-	-	Change the class of the most recently defined word to `class:data`.			class:word	{n/a}	{n/a}	global	all	
+decimal	-	-	-	Set `Base` to decimal.			class:word	{n/a}	{n/a}	a	all	
 depth	-n	-	-	Return the number of items on the stack.			class:word	{n/a}	{n/a}	global	all	
 dip	nq-n	-	-	Temporarily remove n from the stack, execute the quotation, and then restore n to the stack.			class:word	{n/a}	{n/a}	global	all	
 does	q-	-	-	Attach an action to the most recently created word. This is used in a manner similar to CREATE/DOES> in traditional Forth.			class:word	{n/a}	{n/a}	global	all	
@@ -306,6 +309,7 @@ gopher:get	asns-n	-	-	Takes an address, a server, a port, and a selector. Fetch 
 gt?	nn-f	-	-	Compare n1 and n2. Return `TRUE` if n1 is greater than n2, or `FALSE` otherwise.			class:primitive	{n/a}	{n/a}	global	all	
 gteq?	nn-f	-	-	Compare n1 and n2. Return `TRUE` if n1 is greater than or equal to n2, or `FALSE` otherwise.			class:word	{n/a}	{n/a}	global	all	
 here	-a	-	-	Return the next free address in memory.			class:word	{n/a}	{n/a}	global	all	
+hex	-	-	-	Set `Base` to hexadecimal.			class:word	{n/a}	{n/a}	a	all	
 hook	-	-	-	Add a hook point into the current word. This should only be used as the first word in a definition.			class:macro	    :foo hook ;	{n/a}	global	global	
 i	s-	-	-	Assemble the instructions specified by the string into the current assembly scope.			class:word	{n/a}	{n/a}	global	all	
 if	fq-	-	-	Execute the quote if the flag is `TRUE`.			class:word	{n/a}	{n/a}	global	all	
@@ -352,6 +356,7 @@ n:zero?	n-f	-	-	Return `TRUE` if number is zero, or `FALSE` otherwise.			class:w
 nip	nm-m	-	-	Remove the second item from the stack.			class:word	{n/a}	{n/a}	global	all	
 nl	-	-	-	Display a newline.			class:word	{n/a}	{n/a}	global	all	
 not	n-m	-	-	Perform a logical NOT operation.			class:word	{n/a}	{n/a}	global	all	
+octal	-	-	-	Set `Base` to octal.			class:word	{n/a}	{n/a}	a	all	
 or	mn-o	-	-	Perform a bitwise OR between the provided values.			class:primitive	{n/a}	{n/a}	global	all	
 over	nm-nmn	-	-	Put a copy of n over m.			class:word	{n/a}	{n/a}	global	all	
 parse-until	q-s	-	-	Read input from stdin (via `c:get`) until the returned character is matched by the quote. Returns a string.			class:word	  :read-until-period (-s)\n    [ $. eq? ] parse-until ;	{n/a}	all	rre	

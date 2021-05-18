@@ -678,7 +678,7 @@ class Retro:
                 done = True
             else:
                 for token in line.split():
-                    self.inject_string(token, 1024)
+                    self.inject_string(token, self.memory[7])
                     self.stack.push(1024)
                     self.execute(self.Cached["interpreter"], self.Cached["not_found"])
 
@@ -694,7 +694,7 @@ class Retro:
                     in_block = not in_block
                 elif in_block:
                     for token in line.strip().split():
-                        self.inject_string(token, 1024)
+                        self.inject_string(token, self.memory[7])
                         self.stack.push(1024)
                         self.execute(
                             self.Cached["interpreter"], self.Cached["not_found"]

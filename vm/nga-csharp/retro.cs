@@ -382,8 +382,8 @@ public void executeFunction(int cell) {
         string input = Console.ReadLine();
         foreach (string word in input.Split(' ')) {
           if (word.Equals("bye")) Environment.Exit(0);
-          vm.ngaInjectString(word, 1025);
-          vm.pushData(1025);
+          vm.ngaInjectString(word, vm.memory[7));
+          vm.pushData(vm.memory[7]);
           vm.executeFunction(vm.memory[vm.d_lookup("interpret") + 1]);
         }
       }

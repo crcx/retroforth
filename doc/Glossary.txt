@@ -614,6 +614,17 @@ Constant. Refers to specific ASCII code.
 Class: class:data | Namespace: ASCII | Interface Layer: all
 ------------------------------------------------------------------------
 
+Base
+
+  Data:  -a
+  Addr:  -
+  Float: -
+
+Variable. Holds the current numeric base.
+
+Class: class:data | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
 Compiler
 
   Data:  -a
@@ -1269,6 +1280,17 @@ Example #1:
 
     #10 #20 [ #3 * ] bi@
 
+------------------------------------------------------------------------
+
+binary
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Set `Base` to binary.
+
+Class: class:word | Namespace: a | Interface Layer: all
 ------------------------------------------------------------------------
 
 buffer:add
@@ -2162,6 +2184,17 @@ data
 Change the class of the most recently defined word to `class:data`.
 
 Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+decimal
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Set `Base` to decimal.
+
+Class: class:word | Namespace: a | Interface Layer: all
 ------------------------------------------------------------------------
 
 depth
@@ -3554,6 +3587,17 @@ Return the next free address in memory.
 Class: class:word | Namespace: global | Interface Layer: all
 ------------------------------------------------------------------------
 
+hex
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Set `Base` to hexadecimal.
+
+Class: class:word | Namespace: a | Interface Layer: all
+------------------------------------------------------------------------
+
 hook
 
   Data:  -
@@ -4127,6 +4171,17 @@ not
 Perform a logical NOT operation.
 
 Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+octal
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Set `Base` to octal.
+
+Class: class:word | Namespace: a | Interface Layer: all
 ------------------------------------------------------------------------
 
 or
