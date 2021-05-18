@@ -602,9 +602,6 @@ r comma
 | call a function      | compile a call to a function  |
 
 ~~~
-: class:word:interpret
-i ju......
-
 : class:word:compile
 i lilica..
 d 2049
@@ -616,7 +613,7 @@ r comma
 i lifelili
 r Compiler
 r class:word:compile
-r class:word:interpret
+r class:macro
 i liju....
 r choose
 ~~~
@@ -633,7 +630,7 @@ correspond to Nga instructions.
 i lifelili
 r Compiler
 r comma:opcode
-r class:word:interpret
+r class:macro
 i liju....
 r choose
 ~~~
@@ -803,7 +800,7 @@ r Which
 
 ### Number Conversion
 
-This code converts a zero terminated string into a number. The 
+This code converts a zero terminated string into a number. The
 approach is very simple:
 
 * Store an internal multiplier value (-1 for negative, 1 for
@@ -1203,8 +1200,6 @@ i feju....
 d 0
 
 : interpret:sigil
-i ........
-i ........
 i lifezr..
 r sigil:handler
 i lifeliad
