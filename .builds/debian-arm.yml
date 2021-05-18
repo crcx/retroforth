@@ -1,5 +1,7 @@
 image: debian/unstable
 arch: arm64
+packages:
+- curl
 sources:
 - https://git.sr.ht/~crc_/retroforth
 tasks:
@@ -21,7 +23,7 @@ tasks:
     retro example/sea-level-rise.retro
 - test-compiler: |
     cd retroforth
-    echo "~~~\n:hello 'hello_s:put_nl_;\n~~~" >hello.retro
+    curl http://forth.works/share/17af8e4329d13fea01e7afcdf3c9aefd -o hello.retro
     ./bin/retro-compiler hello.retro hello
     ./a.out
 - check-missing: |
