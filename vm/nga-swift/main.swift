@@ -485,7 +485,7 @@ while !done {
     if code == "bye" {
         done = true
     } else {
-        injectString(code ?? "()", to: memory[7])
+        injectString(code ?? "()", to: Int(memory[7]))
         data.push(memory[7])
         execute(interpret)
     }
