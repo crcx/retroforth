@@ -1138,15 +1138,15 @@ character. Results are undefined if the character can not be
 located.
 
 ~~~
-:s:split (sc-ss)
+:s:split/char (sc-ss)
   dup-pair s:index-of nip dup-pair s:left &+ dip ;
 
-:s:split-on-string (ss-ss)
+:s:split/string (ss-ss)
   dup-pair s:index-of-string n:inc nip dup-pair s:left &+ dip ;
 
 :s:replace (sss-s)
   over s:length here store
-  [ s:split-on-string swap here fetch + ] dip s:prepend s:append ;
+  [ s:split/string swap here fetch + ] dip s:prepend s:append ;
 ~~~
 
 `s:tokenize` takes a string and a character to use as a
@@ -1183,7 +1183,7 @@ returns an array containing pointers to each of them.
   :s:tokenize-on-string (ss-s)
     #0 !TP
     [ dup &Needle s:copy s:append ] [ s:length !Len ] bi
-    [ &Needle s:split-on-string save next done? ] until
+    [ &Needle s:split/string save next done? ] until
     &Tokens @TP n:dec !Tokens ;
 }}
 ~~~
@@ -1653,7 +1653,7 @@ directly.
 
 ~~~
   :process-tokens (sn-)
-    [ (get_next_token ASCII:SPACE s:split ) swap
+    [ (get_next_token ASCII:SPACE s:split/char ) swap
       [ dup s:length n:-zero?
             &interpret &drop choose ] dip n:inc
     ] times interpret ;

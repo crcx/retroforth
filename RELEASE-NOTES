@@ -23,6 +23,15 @@
 
 ## Renamed
 
+- `s:split/string` replaces `s:split-on-string`
+- `s:split/char` replaces `s:split`
+
+## Deprecated
+
+- `s:split-on-string`
+- `s:split`
+
+
 ## I/O
 
 ## Toolchain

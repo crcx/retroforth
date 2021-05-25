@@ -412,6 +412,8 @@ s:right                  D: sn-s  A: -  F: -
 s:skip                   D: -  A: -  F: -
 s:split                  D: sc-ss  A: -  F: -
 s:split-on-string        D: ss-ss  A: -  F: -
+s:split/char             D: sc-ss  A: -  F: -
+s:split/string           D: ss-ss  A: -  F: -
 s:substr                 D: sfl-s  A: -  F: -
 s:temp                   D: s-s  A: -  F: -
 s:to-float               D: s-  A: -  F: -F
