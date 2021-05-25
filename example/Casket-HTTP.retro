@@ -83,7 +83,7 @@ the requested file from any query string that may be present.
 
 :check-for-params (-)
   &Requested $? s:contains-char?
-    [ &Requested $? s:split drop dup n:inc !GET-Query #0 swap store ] if ;
+    [ &Requested $? s:split/char drop dup n:inc !GET-Query #0 swap store ] if ;
 
 :filename (-s)
   check-for-params map-/-to-index ensure-leading-/

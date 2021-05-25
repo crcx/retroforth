@@ -71,7 +71,7 @@ This also takes a second string with the parameters to pass.
 'Request  var
 'Params   var
 
-:parse-url #7 + $/ s:split s:keep !Host s:keep !Request s:keep !Params ;
+:parse-url #7 + $/ s:split/char s:keep !Host s:keep !Request s:keep !Params ;
 ~~~
 
 Given that, making a request is simply:

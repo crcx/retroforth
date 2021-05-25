@@ -83,8 +83,8 @@ pointers in the variables.
 
 ~~~
 :parse-url (s-)
-  $: s:split s:keep !Server
-  $/ s:split n:inc s:to-number !Port
+  $: s:split/char s:keep !Server
+  $/ s:split/char n:inc s:to-number !Port
   s:keep !Selector ;
 
 

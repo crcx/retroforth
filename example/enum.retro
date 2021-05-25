@@ -33,7 +33,7 @@ increments the counter.
 :a:enum (a-)
   #0 swap
   [ dup $= s:contains-char?
-    [ nip $= s:split [ n:inc s:to-number ] dip ] if
+    [ nip $= s:split/char [ n:inc s:to-number ] dip ] if
     over &const dip n:inc
   ] a:for-each drop ;
 ~~~

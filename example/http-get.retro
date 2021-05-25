@@ -65,7 +65,7 @@ split on the first / character to separate the domain and requested file.
 'Host     var
 'Request  var
 
-:parse-url #7 + $/ s:split s:keep !Host s:keep !Request ;
+:parse-url #7 + $/ s:split/char s:keep !Host s:keep !Request ;
 ~~~
 
 Given that, making a request is simply:

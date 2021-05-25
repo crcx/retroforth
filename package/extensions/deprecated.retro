@@ -1,0 +1,5 @@
+~~~
+:s:split (sc-ss) s:split/char ;
+:s:split-on-string (ss-ss) s:split/string ;
+~~~
+

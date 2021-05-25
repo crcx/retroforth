@@ -153,7 +153,7 @@ a binary (type 9) file if I don't recognize the extension.
 
 ~~~
 :file-type
-  dup $. s:split drop
+  dup $. s:split/char drop
   '.forth [ $0 ] s:case
   '.md    [ $0 ] s:case
   '.txt   [ $0 ] s:case

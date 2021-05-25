@@ -45,7 +45,7 @@ flags:
   'POST                                flag
 generate-request pipe>
 
-'"response":" s:split-on-string drop #12 + s:chop s:chop s:keep 'SESSION s:const
+'"response":" s:split/string drop #12 + s:chop s:chop s:keep 'SESSION s:const
 ~~~
 
 Send a message using the session token.
