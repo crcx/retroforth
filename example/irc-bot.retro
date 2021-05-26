@@ -43,14 +43,14 @@ Possible future additions:
 
 Configuration
 
-I'm connecting to one of the plaintext ports on Freenode. I have
+I'm connecting to one of the plaintext ports on Libera. I have
 the server IP hard coded here, but the socket words do work with
 domain names.
 
 ~~~
 '/home/crc/retro-irc.image 'IMAGE s:const
 'retro-sandboxed           'VM s:const
-'193.10.255.100:6665       'SERVER s:const
+'51.161.82.214:6665        'SERVER s:const
 'retroforth-bot            'NICK s:const
 { '#retro '#forth '#retrotesting } 'CHANNELS const
 ~~~
@@ -98,7 +98,7 @@ single socket.
 ~~~
 
 Create a socket and connect to the IRC network. I'm using
-Freenode on a plain text port.
+Libera on a plain text port.
 
 ~~~
 SERVER connect
