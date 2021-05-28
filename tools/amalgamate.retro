@@ -1,0 +1,49 @@
+# Amalgamate
+
+The standard RETRO system is built using the Nga VM[1] and a
+copy of the image exported as a C source file[2]. I sometimes
+prefer to have these as a single file for easier sharing. This
+is a quick little tool to combine them.
+
+Output will be written to stdout.
+
+## References
+
+[1] vm/nga-c/retro.c
+[2] vm/nga-c/image.c
+
+## Code
+
+Include compilation instructions and enable i/o devices.
+
+~~~
+'/*_Build_with_`cc_-lm_-O2_retro-unix.c_-o_retro`_*/ s:put nl nl
+
+{ 'ENABLE\_FLOATS
+  'ENABLE\_FILES
+  'ENABLE\_UNIX
+  'ENABLE\_RNG
+  'ENABLE\_CLOCK
+  'ENABLE\_SCRIPTING
+} [ s:format '#define_%s s:format s:put nl ] a:for-each nl
+~~~
+
+Then extract and generate the single file source.
+
+~~~
+{{
+  :include-file
+    #10 + s:chop 'vm/nga-c/ s:prepend here swap file:slurp here s:put ; 
+
+  :source:line
+    dup '#include_" s:begins-with?
+    [ include-file ] [ s:put nl ] choose ;
+
+---reveal---
+
+  :amalgamate
+    'vm/nga-c/retro.c [ source:line ] file:for-each-line ;
+}}
+
+amalgamate
+~~~
