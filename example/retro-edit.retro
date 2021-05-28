@@ -45,7 +45,7 @@ The editor needs a max line length and max number of lines per
 file.
 
 ~~~
-#140 'cfg:MAX-LINE-LENGTH const
+#141 'cfg:MAX-LINE-LENGTH const
 #2001 'cfg:MAX-LINES const
 ~~~
 
@@ -262,7 +262,7 @@ existing lines down. When entering text with `e`, use a period on an
 otherwise blank line to return to the command processing mode.
 
 ~~~
-:cmd:i @Input $, s:split s:to-number ed:to-line [ n:inc ] dip s:copy ;
+:cmd:i @Input $, s:split/char s:to-number ed:to-line [ n:inc ] dip s:copy ;
 
 {{
   :add-space  dup ed:insert-line ;
@@ -364,7 +364,7 @@ Use `q` to quit the editor.
 
 :cmd::
   @Input dup s:length n:zero?
-  [ drop &Filename ] if unix:system ;
+  [ drop &Filename ] if 'retro_%s s:format unix:system ;
 ~~~
 
 ## Register The Commands
@@ -389,11 +389,11 @@ The final startup process is:
 ~~~
 
 ~~~
-SCRATCH &Filename s:copy s:empty !Input
-{ 'RETRO
-  'Ready.
-} [ s:put nl ] a:for-each
-erase-all load-file
+s:empty !Input erase-all
+
+script:arguments n:-zero? [ #0 script:get-argument ] [ SCRATCH ] choose
+&Filename s:copy
+load-file
 edit bye
 ~~~
 
