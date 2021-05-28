@@ -1497,7 +1497,7 @@ c:get
   Addr:  -
   Float: -
 
-Read a single keypress.
+Vectored. Read a single keypress.
 
 Class: class:word | Namespace: global | Interface Layer: rre
 ------------------------------------------------------------------------
@@ -1530,7 +1530,7 @@ c:put
   Addr:  -
   Float: -
 
-Display a single character.
+Vectored. Display a single character.
 
 Class: class:word | Namespace: global | Interface Layer: all
 ------------------------------------------------------------------------
@@ -2005,7 +2005,7 @@ d:add-header
   Addr:  -
   Float: -
 
-Create a header. Provide a string (s) for the name, a pointer to the class handler (a1) and a pointer to the word definition (a2) Generally this won't be used directly.
+Vectored. Create a header. Provide a string (s) for the name, a pointer to the class handler (a1) and a pointer to the word definition (a2) Generally this won't be used directly.
 
 Class: class:word | Namespace: d | Interface Layer: all
 ------------------------------------------------------------------------
@@ -2473,7 +2473,7 @@ err:notfound
   Addr:  -
   Float: -
 
-Error handler. Called when a word is not found by `interpret`.
+Vectored. Error handler. Called when a word is not found by `interpret`.
 
 Class: class:word | Namespace: err | Interface Layer: all
 ------------------------------------------------------------------------
@@ -3708,7 +3708,7 @@ interpret
   Addr:  -
   Float: -
 
-Interpret a single input token.
+Vectored. Interpret a single input token.
 
 Class: class:word | Namespace: global | Interface Layer: all
 

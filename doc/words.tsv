@@ -128,10 +128,10 @@ c:-vowel?	c-f	-	-	Return TRUE if character is not a vowel or FALSE otherwise.			
 c:-whitespace?	c-f	-	-	Return TRUE if character is not whitespace, or FALSE otherwise.			class:word	{n/a}	{n/a}	c	all	
 c:consonant?	c-f	-	-	Return TRUE if character is a consonant or FALSE otherwise.			class:word	{n/a}	{n/a}	c	all	
 c:digit?	c-f	-	-	Return TRUE if character is a numeric digit or FALSE otherwise.			class:word	{n/a}	{n/a}	c	all	
-c:get	-c	-	-	Read a single keypress.			class:word	{n/a}	{n/a}	global	rre	
+c:get	-c	-	-	Vectored. Read a single keypress.			class:word	{n/a}	{n/a}	global	rre	
 c:letter?	c-f	-	-	Return TRUE if character is an ASCII letter or FALSE otherwise.			class:word	{n/a}	{n/a}	c	all	
 c:lowercase?	c-f	-	-	Return TRUE if character is lowercase or FALSE otherwise.			class:word	{n/a}	{n/a}	c	all	
-c:put	c-	-	-	Display a single character.			class:word	{n/a}	{n/a}	global	all	
+c:put	c-	-	-	Vectored. Display a single character.			class:word	{n/a}	{n/a}	global	all	
 c:to-lower	c-c	-	-	Convert character to lowercase equivalent.			class:word	{n/a}	{n/a}	c	all	
 c:to-number	c-n	-	-	Convert an ASCII digit character into the corresponding decimal value			class:word	{n/a}	{n/a}	global	all	
 c:to-string	c-s	-	-	Convert character into a string.			class:word	{n/a}	{n/a}	c	all	
@@ -172,7 +172,7 @@ const	ns-	-	-	Create a constant returning the specified value.			class:word	{n/a
 copy	sdl-	-	-	Copy `l` cells from memory at `s` to the memory at `d`. These should not overlap.			class:word	{n/a}	{n/a}	global	all	
 curry	nq-q	-	-	Bind a value to a function and return a new quote that calls the bound action.			class:word	{n/a}	{n/a}	global	all	
 d	n-	-	-	Inline a numeric value to the current assembly segment.			class:word	{n/a}	{n/a}	global	all	
-d:add-header	saa-	-	-	Create a header. Provide a string (s) for the name, a pointer to the class handler (a1) and a pointer to the word definition (a2) Generally this won't be used directly.			class:word	{n/a}	{n/a}	d	all	
+d:add-header	saa-	-	-	Vectored. Create a header. Provide a string (s) for the name, a pointer to the class handler (a1) and a pointer to the word definition (a2) Generally this won't be used directly.			class:word	{n/a}	{n/a}	d	all	
 d:class	d-a	-	-	Given a dictionary header, return the class field.			class:word	{n/a}	{n/a}	d	all	
 d:create	s-	-	-	Create a new dictionary header named the specified string. The new header will point to `here` and have a class of `class:data`.			class:word	{n/a}	{n/a}	d	all	
 d:for-each	q-	-	-	Execute the specified quote once for each header in the dictionary. Before running the quote, this also pushes a pointer to the header onto the stack.			class:word	{n/a}	{n/a}	d	all	
@@ -214,7 +214,7 @@ e:put	e-	-	-	Display an encoded number.			class:word	{n/a}	{n/a}	e	rre
 e:to-f	e-	-	-n	Decode an encoded floating-point value.			class:word	{n/a}	{n/a}	e	rre	
 e:zero?	e-f	-	-	Return `TRUE` if the value is zero, or `FALSE` otherwise.			class:word	{n/a}	{n/a}	e	rre	
 eq?	nn-f	-	-	Compare two values for equality. Returns `TRUE` if they are equal or `FALSE` otherwise.			class:primitive	    #1 #2 eq?\n    $a $b eq?	{n/a}	global	all	
-err:notfound	-	-	-	Error handler. Called when a word is not found by `interpret`.			class:word	{n/a}	{n/a}	err	all	
+err:notfound	-	-	-	Vectored. Error handler. Called when a word is not found by `interpret`.			class:word	{n/a}	{n/a}	err	all	
 f:*	-	-	FF-F	Multiply two floating-point numbers, returning the result.			class:word	    .3.1415 .22 f:*	{n/a}	f	rre	
 f:+	-	-	FF-F	Add two floating-point numbers, returning the result.			class:word	    .3.1 .22 f:+	{n/a}	f	rre	
 f:-	-	-	FF-F	Subtract F2 from F1 returning the result.			class:word	    .22.3 .0.12 f:-	{n/a}	f	rre	
@@ -319,7 +319,7 @@ image:save	s-	-	-	Save the current system to a new image file.			class:word	{n/a
 immediate	-	-	-	Change the class of the most recently defined word to `class:macro`.			class:word	{n/a}	{n/a}	global	all	
 include	s-	-	-	Run the code in the specified file. 			class:word	{n/a}	{n/a}	global	rre	
 indexed-times	nq-	-	-	Run a quote the specified number of times, tracking the loop index in `I`. This is less efficient than `times`, so if the index is not needed, this should be avoided.			class:word	{n/a}	{n/a}	global	all	
-interpret	s-	-	-	Interpret a single input token.			class:word	    '#100 interpret\n    'words interpret	{n/a}	global	all	
+interpret	s-	-	-	Vectored. Interpret a single input token.			class:word	    '#100 interpret\n    'words interpret	{n/a}	global	all	
 io:enumerate	-n	-	-	Return the number of I/O devices.			class:word	{n/a}	{n/a}	io	all	
 io:invoke	n-	-	-	Invoke an interaction with an I/O device.			class:word	{n/a}	{n/a}	io	all	
 io:query	n-mN	-	-	Ask an I/O device to identify itself. Returns a version (m) and device ID (N).			class:word	{n/a}	{n/a}	io	all	

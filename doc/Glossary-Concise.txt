@@ -389,7 +389,7 @@ c:digit?                 D: c-f  A: -  F: -
 Return TRUE if character is a numeric digit or FALSE otherwise.
 
 c:get                    D: -c  A: -  F: -
-Read a single keypress.
+Vectored. Read a single keypress.
 
 c:letter?                D: c-f  A: -  F: -
 Return TRUE if character is an ASCII letter or FALSE otherwise.
@@ -398,7 +398,7 @@ c:lowercase?             D: c-f  A: -  F: -
 Return TRUE if character is lowercase or FALSE otherwise.
 
 c:put                    D: c-  A: -  F: -
-Display a single character.
+Vectored. Display a single character.
 
 c:to-lower               D: c-c  A: -  F: -
 Convert character to lowercase equivalent.
@@ -521,7 +521,7 @@ d                        D: n-  A: -  F: -
 Inline a numeric value to the current assembly segment.
 
 d:add-header             D: saa-  A: -  F: -
-Create a header. Provide a string (s) for the name, a pointer to the class handler (a1) and a pointer to the word definition (a2) Generally this won't be used directly.
+Vectored. Create a header. Provide a string (s) for the name, a pointer to the class handler (a1) and a pointer to the word definition (a2) Generally this won't be used directly.
 
 d:class                  D: d-a  A: -  F: -
 Given a dictionary header, return the class field.
@@ -647,7 +647,7 @@ eq?                      D: nn-f  A: -  F: -
 Compare two values for equality. Returns `TRUE` if they are equal or `FALSE` otherwise.
 
 err:notfound             D: -  A: -  F: -
-Error handler. Called when a word is not found by `interpret`.
+Vectored. Error handler. Called when a word is not found by `interpret`.
 
 f:*                      D: -  A: -  F: FF-F
 Multiply two floating-point numbers, returning the result.
@@ -962,7 +962,7 @@ indexed-times            D: nq-  A: -  F: -
 Run a quote the specified number of times, tracking the loop index in `I`. This is less efficient than `times`, so if the index is not needed, this should be avoided.
 
 interpret                D: s-  A: -  F: -
-Interpret a single input token.
+Vectored. Interpret a single input token.
 
 io:enumerate             D: -n  A: -  F: -
 Return the number of I/O devices.
