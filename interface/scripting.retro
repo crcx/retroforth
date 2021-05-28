@@ -3,9 +3,6 @@
 This is the scripting interface words for use with retro-unix
 or other interfaces providing device type 9 support.
 
-The initial words were provided in a `sys:` namespace. In 2020.10
-this is changing to `script:`, with the old names being deprecated.
-
 ## Rev. 0
 
 The initial version of this I/O device provides support for some

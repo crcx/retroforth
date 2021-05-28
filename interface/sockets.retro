@@ -84,7 +84,7 @@ and closes the socket.
 `socket:configure` is used before `socket:bind` to set some
 internal state. Takes the host name and port, both as strings.
 Does not return anything.
- 
+
 ~~~
 :socket:configure     (ss-)    #11 socket:operation ;
 ~~~

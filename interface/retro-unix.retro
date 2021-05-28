@@ -4,11 +4,10 @@ In this file I am implementing the interactive listener that
 RETRO will run when started with `-i`, `-i,c`, or `-i,fs`.
 
 The basic image has a space allocated for input at the end of
-the kernel. This is at address 1024 (the kernel space is fixed
-at addresses 0 to 1023).
+the kernel. A pointer to this is stored at address 7.
 
 ~~~
-#1024 'TIB const
+:TIB #7 fetch ;
 ~~~
 
 ~~~
