@@ -19,13 +19,13 @@ Include compilation instructions and enable i/o devices.
 ~~~
 '/*_Build_with_`cc_-lm_-O2_retro-unix.c_-o_retro`_*/ s:put nl nl
 
-{ 'ENABLE_FLOATS
-  'ENABLE_FILES
-  'ENABLE_UNIX
-  'ENABLE_RNG
-  'ENABLE_CLOCK
-  'ENABLE_SCRIPTING
-} [ '#define_%s s:format s:put nl ] a:for-each nl
+{ 'FLOATS
+  'FILES
+  'UNIX
+  'RNG
+  'CLOCK
+  'SCRIPTING
+} [ '#define_ENABLE\_%s s:format s:put nl ] a:for-each nl
 ~~~
 
 Then extract and generate the single file source.
