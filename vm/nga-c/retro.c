@@ -1621,6 +1621,7 @@ int main(int argc, char **argv) {
   /* Run the Listener (if interactive mode was set) */
   if (modes[FLAG_INTERACTIVE] == 1) {
     execute(0);
+    if (cpu.sp >= 1)  dump_stack();
   }
 }
 
