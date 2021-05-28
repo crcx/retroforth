@@ -1813,7 +1813,7 @@ generic "keyboard" input, the basic listener here can be used.
   :check-bs (c-c)
     bs? [ buffer:get buffer:get drop-pair ] if ;
 ---reveal---
-  :c:get (-c) #1 io:scan-for io:invoke ;
+  :c:get (-c) hook #1 io:scan-for io:invoke ;
 
   :s:get (-s) [ #7 fetch buffer:set
                 [ c:get dup buffer:add check-bs eol? ] until
