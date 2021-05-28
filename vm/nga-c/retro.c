@@ -1504,7 +1504,7 @@ void help(char *exename) {
 /* Main Entry Point ---------------------------------------------------*/
 enum flags {
   FLAG_HELP, FLAG_RUN_TESTS, FLAG_INCLUDE,
-  FLAG_INTERACTIVE, FLAG_RUN,
+  FLAG_INTERACTIVE,
 };
 
 int main(int argc, char **argv) {
@@ -1591,7 +1591,7 @@ int main(int argc, char **argv) {
     } else if (strcmp(argv[i], "-r") == 0) {
       i++;
       load_image(argv[i]);
-      modes[FLAG_RUN] = 1;
+      modes[FLAG_INTERACTIVE] = 1;
     } else if (strcmp(argv[i], "-t") == 0) {
       modes[FLAG_RUN_TESTS] = 1;
       run_tests = 1;
@@ -1619,7 +1619,7 @@ int main(int argc, char **argv) {
   }
 
   /* Run the Listener (if interactive mode was set) */
-  if (modes[FLAG_INTERACTIVE] == 1 || modes[FLAG_RUN == 1]) {
+  if (modes[FLAG_INTERACTIVE] == 1) {
     execute(0);
   }
 }
