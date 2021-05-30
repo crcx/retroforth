@@ -274,7 +274,6 @@ i re......
 
 : _zret
 i zr......
-i re......
 ~~~
 
 Though Nga allows for multiple instructions to be packed into a
@@ -349,18 +348,9 @@ The RETRO kernel provides three conditional forms:
     flag false-pointer -if
 
 `choose` is a conditional combinator which will execute one of
-two functions, depending on the state of a flag. I use a little
-hack here. I store the pointers into a jump table with two
-fields, and use the flag as the index. Defaults to the *false*
-entry, since a *true* flag is -1.
+two functions, depending on the state of a flag.
 
-Note that this requires that the flags be -1 (for TRUE) and 0
-(for FALSE). It's possible to make this more flexible, but at a
-significant performance hit, so I'm leaving it this way.
-
-    :choose
-      &choice:false store &choice:true store
-      &choice:false + fetch call ;
+This will treat 0 as false, and non-zero as true.
 
 ~~~
 : choice:true
