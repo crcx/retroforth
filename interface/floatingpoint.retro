@@ -78,8 +78,8 @@ Then a word to allow creation of floating point values via a
 :f:abs    (f:a-b)  f:dup f:negative? &f:negate if ;
 :f:put  (f:a-) f:to-string s:put ;
 
-:f:PI   (f:-F) .3.141592 ;
-:f:E    (f:-F) .2.718281 ;
+:f:PI   (f:-F) .3.141592654 ;
+:f:E    (f:-F) .2.718281828 ;
 :f:NAN  (f:-n) .0 .0 f:/ ;
 :f:INF  (f:-n) .1.0 .0 f:/ ;
 :f:-INF (f:-n) .-1.0 .0 f:/ ;
