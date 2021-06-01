@@ -1,0 +1,23 @@
+~~~
+: c1
+i lire....
+d 100
+
+: c2
+i lire....
+d 200
+
+: main
+i lilieqli
+d 100
+d 100
+r c1
+i cc......
+i lilieqli
+d 100
+d 200
+r c2
+i cc......
+i ha......
+~~~
+

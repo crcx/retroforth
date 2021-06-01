@@ -1,0 +1,29 @@
+#!/bin/sh
+
+echo "no"; retro-muri no.muri >/dev/null; retro -r ngaImage; rm -f ngaImage
+echo "li"; retro-muri li.muri >/dev/null; retro -r ngaImage; rm -f ngaImage
+echo "du"; retro-muri du.muri >/dev/null; retro -r ngaImage; rm -f ngaImage
+echo "dr"; retro-muri dr.muri >/dev/null; retro -r ngaImage; rm -f ngaImage
+echo "sw"; retro-muri sw.muri >/dev/null; retro -r ngaImage; rm -f ngaImage
+echo "pu"; retro-muri pu.muri >/dev/null; retro -r ngaImage; rm -f ngaImage
+echo "po"; retro-muri po.muri >/dev/null; retro -r ngaImage; rm -f ngaImage
+echo "ju"; retro-muri ju.muri >/dev/null; retro -r ngaImage; rm -f ngaImage
+echo "ca"; retro-muri ca.muri >/dev/null; retro -r ngaImage; rm -f ngaImage
+echo "cc"; retro-muri cc.muri >/dev/null; retro -r ngaImage; rm -f ngaImage
+echo "re"; retro-muri re.muri >/dev/null; retro -r ngaImage; rm -f ngaImage
+echo "eq"; retro-muri eq.muri >/dev/null; retro -r ngaImage; rm -f ngaImage
+echo "ne"; retro-muri ne.muri >/dev/null; retro -r ngaImage; rm -f ngaImage
+echo "lt"; retro-muri lt.muri >/dev/null; retro -r ngaImage; rm -f ngaImage
+echo "gt"; retro-muri gt.muri >/dev/null; retro -r ngaImage; rm -f ngaImage
+echo "fe"; retro-muri fe.muri >/dev/null; retro -r ngaImage; rm -f ngaImage
+echo "st"; retro-muri st.muri >/dev/null; retro -r ngaImage; rm -f ngaImage
+echo "ad"; retro-muri ad.muri >/dev/null; retro -r ngaImage; rm -f ngaImage
+echo "su"; retro-muri su.muri >/dev/null; retro -r ngaImage; rm -f ngaImage
+echo "mu"; retro-muri mu.muri >/dev/null; retro -r ngaImage; rm -f ngaImage
+echo "di"; retro-muri di.muri >/dev/null; retro -r ngaImage; rm -f ngaImage
+echo "an"; retro-muri an.muri >/dev/null; retro -r ngaImage; rm -f ngaImage
+echo "or"; retro-muri or.muri >/dev/null; retro -r ngaImage; rm -f ngaImage
+echo "xo"; retro-muri xo.muri >/dev/null; retro -r ngaImage; rm -f ngaImage
+echo "sh"; retro-muri sh.muri >/dev/null; retro -r ngaImage; rm -f ngaImage
+echo "zr"; retro-muri zr.muri >/dev/null; retro -r ngaImage; rm -f ngaImage
+echo "ha"; retro-muri ha.muri >/dev/null; retro -r ngaImage; rm -f ngaImage

@@ -34,6 +34,10 @@
 
 ## I/O
 
+- floating point
+
+  - increased precision of `f:E` and `f:PI` (Kiyoshi)
+
 ## Toolchain
 
 ## VM
@@ -51,6 +55,7 @@
   - retro-repl.c now uses an external image
   - removed barebones.c (overlaps w/new retro-repl.c)
   - retro-runtime.c now based on standard retro.c
+  - changed behavior of -t command line argument (Rick)
 
 - nga-nim
 
@@ -69,3 +74,7 @@
 - removed references to old command line arguments
 - removed reference to the no longer existing "ok" prompt
 - add a note that mentions that Retro does not display a prompt
+
+## Testing
+
+- add small test images for each instruction
