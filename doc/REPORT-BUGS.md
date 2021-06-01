@@ -5,7 +5,8 @@ message on Mastodon, or via email.
 
 **IRC**
 
-Join #retro on irc.libera.chat, irc.oftc.net, or irc.freenode.net.
+Join #retro on irc.libera.chat or irc.oftc.net.
+
 If you ask a question, please be patient. The channel has large
 idle times, but is logged (see forthworks.com/retro/irc-logs)
 and I generally try to answer questions in a reasonable time
