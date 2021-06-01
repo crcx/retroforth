@@ -1714,7 +1714,7 @@ few words provide a means of doing this in RETRO 12.
 
 To allow a word to be overridden, add a call to `hook` as
 the first word in the definition. This will compile a jump
-to the actual definition start. 
+to the actual definition start.
 
 ~~~
 :hook (-)  'liju.... i here n:inc , ; immediate

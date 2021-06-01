@@ -1484,7 +1484,7 @@ int arg_is(char *argv, char *t) {
 
 void help(char *exename) {
   printf("Scripting Usage: %s filename\n\n", exename);
-  printf("Interactive Usage: %s [-h] [-i] [-f filename] [-t]\n\n", exename);
+  printf("Interactive Usage: %s [-h] [-i] [-f filename] [-t filename]\n\n", exename);
   printf("Valid Arguments:\n\n");
   printf("  -h\n");
   printf("    Display this help text\n");
@@ -1496,24 +1496,19 @@ void help(char *exename) {
   printf("    Use the image in the specified file instead of the internal one\n");
   printf("  -r filename\n");
   printf("    Use the image in the specified file instead of the internal one and run the code in it\n");
-  printf("  -t\n");
-  printf("    Run tests (in ``` blocks) in any loaded files\n\n");
+  printf("  -t filename\n");
+  printf("    Run the contents of the specified file, including any tests (in ``` blocks)\n\n");
 }
 
 
 /* Main Entry Point ---------------------------------------------------*/
 enum flags {
-  FLAG_HELP, FLAG_RUN_TESTS, FLAG_INCLUDE,
-  FLAG_INTERACTIVE,
+  FLAG_HELP, FLAG_INTERACTIVE,
 };
 
 int main(int argc, char **argv) {
   int i;
   int modes[16];
-  char *files[16];
-  int fsp;
-
-  int run_tests;
 
   initialize();                           /* Initialize Nga & image    */
 
@@ -1564,15 +1559,9 @@ int main(int argc, char **argv) {
   for (i = 0; i < 16; i++)
     modes[i] = 0;
 
-  /* Clear startup files       */
-  for (i = 0; i < 16; i++)
-    files[i] = "\0";
-
-  fsp = 0;
-
-  run_tests = 0;
-
   if (argc <= 1) modes[FLAG_INTERACTIVE] = 1;
+
+  update_rx();
 
   /* Process Arguments */
   for (i = 1; i < argc; i++) {
@@ -1582,19 +1571,20 @@ int main(int argc, char **argv) {
     } else if (strcmp(argv[i], "-i") == 0) {
       modes[FLAG_INTERACTIVE] = 1;
     } else if (strcmp(argv[i], "-f") == 0) {
-      files[fsp] = argv[i + 1];
-      fsp++;
+      include_file(argv[i + 1], 0);
       i++;
     } else if (strcmp(argv[i], "-u") == 0) {
       i++;
       load_image(argv[i]);
+      update_rx();
     } else if (strcmp(argv[i], "-r") == 0) {
       i++;
       load_image(argv[i]);
       modes[FLAG_INTERACTIVE] = 1;
+      update_rx();
     } else if (strcmp(argv[i], "-t") == 0) {
-      modes[FLAG_RUN_TESTS] = 1;
-      run_tests = 1;
+      include_file(argv[i + 1], 1);
+      i++;
     } else  if (arg_is(argv[i], "--code-start") || arg_is(argv[i], "-cs")) {
       i++;
       strcpy(code_start, argv[i]);
@@ -1610,19 +1600,13 @@ int main(int argc, char **argv) {
     }
   }
 
-  update_rx();
-
-  /* Include Startup Files */
-  for (i = 0; i < fsp; i++) {
-    if (strcmp(files[i], "\0") != 0)
-      include_file(files[i], run_tests);
-  }
-
   /* Run the Listener (if interactive mode was set) */
   if (modes[FLAG_INTERACTIVE] == 1) {
     execute(0);
-    if (cpu.sp >= 1)  dump_stack();
   }
+
+  /* Dump Stack */
+  if (cpu.sp >= 1)  dump_stack();
 }
 
 
