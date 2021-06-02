@@ -1208,7 +1208,7 @@ returns an array containing pointers to each of them.
 
 ~~~
 {{
-  'String d:create   #12 allot
+  'String d:create   #65 allot
   :check-sign (n-)   n:negative? [ $- buffer:add ] if ;
   :n->digit   (n-c)  s:DIGITS + fetch ;
   :convert    (n-)   [ @Base /mod swap n->digit buffer:add dup n:zero? ] until drop ;
