@@ -74,7 +74,7 @@
 - removed references to old command line arguments
 - removed reference to the no longer existing "ok" prompt
 - add a note that mentions that Retro does not display a prompt
-
+- fixed typos (rick_carlino)
 ## Testing
 
 - add small test images for each instruction

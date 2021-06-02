@@ -12,7 +12,7 @@ $	-c	-	-	Return ASCII:NUL (0).			class:macro	{n/a}	{n/a}	global	all
 -if:	f-	-	-	Execute the remainder of the word or quotation if the flag is `FALSE`. If `TRUE`, exit the word. This should be used inside a definition only.			class:macro	{n/a}	{n/a}	global	all	
 -if;	fq-	-	-	Execute the quotation if the flag is `FALSE`. If false, also exit the word.			class:word	{n/a}	{n/a}	global	all	
 /	nm-q	-	-	Divide `n` by `m` and return the integer part of the quotient.			class:word	{n/a}	{n/a}	global	all	
-//	-	-	-	Ignore any tokens remaining on the current line. Works with files and the interactive "listener".			class:word	{n/a}	{n/a}	global	rre	
+//	-	-	-	"Ignore any tokens remaining on the current line. Works with files and the interactive ""listener""."			class:word	{n/a}	{n/a}	global	rre	
 /mod	nm-rq	-	-	Divide `n` by `m` and return the integer part of the quotient and remainder.			class:primitive	{n/a}	{n/a}	global	all	
 0;	n-n || n-	-	-	If `n` is zero, drop `n` and exit the current word. If non-zero, leave `n` alone and allow execution to continue.			class:macro	{n/a}	{n/a}	global	all	
 ;	-	-	-	End the current definition.			class:macro	{n/a}	{n/a}	global	all	
@@ -61,7 +61,7 @@ Heap	-a	-	-	Variable. Holds the address of the next available cell.			class:data
 I	-n	-	-	Access the loop index for the current loop. (For loops made using `indexed-times`)			class:word	{n/a}	{n/a}	global	all	
 J	-n	-	-	Access the parent loop index for the current loop. (For loops made using `indexed-times`)			class:word	{n/a}	{n/a}	global	all	
 K	-n	-	-	Access the grandparent loop index for the current loop. (For loops made using `indexed-times`)			class:word	{n/a}	{n/a}	global	all	
-NoEcho	-a	-	-	Variable. If TRUE, allow display of the "ok" prompt and startup banner.			class:word	{n/a}	{n/a}	global	rre	
+NoEcho	-a	-	-	"Variable. If TRUE, allow display of the ""ok"" prompt and startup banner."			class:word	{n/a}	{n/a}	global	rre	
 RewriteUnderscores	-a	-	-	Variable. When set to `TRUE`, Retro will replace underscores in strings with spaces. When `FALSE`, Retro does not.			class:data	{n/a}	{n/a}	global	all	
 STRINGS	-a	-	-	Return the address of the start of the temporary string pool. This can be altered by changing the values of `TempStrings` and `TempStringMax`.			class:word	{n/a}	{n/a}	global	all	
 ScopeList	-a	-	-	Variable. This holds some information used by `{{` and `}}`.			class:data	{n/a}	{n/a}	global	all	
@@ -325,7 +325,7 @@ io:invoke	n-	-	-	Invoke an interaction with an I/O device.			class:word	{n/a}	{n
 io:query	n-mN	-	-	Ask an I/O device to identify itself. Returns a version (m) and device ID (N).			class:word	{n/a}	{n/a}	io	all	
 io:scan-for	n-m	-	-	Scan the I/O devices for a device with a specified ID. Returns the device number, or -1 if not found.			class:word	{n/a}	{n/a}	io	all	
 io:unix-syscall	...n-	-	-	Trigger a Unix system call. This is not intended to be used directly.			class:word	{n/a}	{n/a}	io	rre	
-listen	-	-	-	Run interactive "listener" (a REPL).			class:word	{n/a}	{n/a}	global	rre	
+listen	-	-	-	"Run interactive ""listener"" (a REPL)."			class:word	{n/a}	{n/a}	global	rre	
 lt?	nn-f	-	-	Compare n1 and n2. Return `TRUE` if n1 is less than n2, or `FALSE` otherwise.			class:primitive	{n/a}	{n/a}	global	all	
 lteq?	nn-f	-	-	Compare n1 and n2. Return `TRUE` if n1 is less than or equal to n2, or `FALSE` otherwise.			class:word	{n/a}	{n/a}	global	all	
 mod	nm-o	-	-	Divide `n` by `m` and return the remainder.			class:word	{n/a}	{n/a}	global	all	
@@ -394,8 +394,8 @@ s:evaluate	s-?	-	-?	Evaluate string as if it was typed into the interpreter.			c
 s:filter	sq-s	-	-	Execute the quote once for each value in the string. If the quote returns `TRUE`, append the value into a new string. If `FALSE` the value will be discarded.			class:word	{n/a}	{n/a}	s	all	
 s:for-each	sq-	-	-	Execute the quote once for each value in the string.			class:word	{n/a}	{n/a}	s	all	
 s:format	...s-s	-	-	Construct a new string using the template passed and items from the stack.			class:word	{n/a}	{n/a}	s	all	
-s:get	-s	-	-	Read input from standard in (via `c:get`) until a CR or LF is encountered. Returns a strig.			class:word	{n/a}	{n/a}	all	rre	
-s:get-word	-s	-	-	Read input from standard in (via `c:get`) until a whitespace is encountered. Returns a strig.			class:word	{n/a}	{n/a}	all	rre	
+s:get	-s	-	-	Read input from standard in (via `c:get`) until a CR or LF is encountered. Returns a string.			class:word	{n/a}	{n/a}	all	rre	
+s:get-word	-s	-	-	Read input from standard in (via `c:get`) until a whitespace is encountered. Returns a string.			class:word	{n/a}	{n/a}	all	rre	
 s:hash	s-n	-	-	Calculate a hash value for a string. This uses the djb2 algorithm.			class:word	{n/a}	{n/a}	s	all	
 s:index-of	sc-n	-	-	Return the location of the first instance of the specified character in the string.			class:word	{n/a}	{n/a}	s	all	
 s:index-of-string	ss-n	-	-	Return the location of the first instance of the specified substring (s2) in the string (s1). Returns -1 if not found.			class:word	{n/a}	{n/a}	s	all	
@@ -411,9 +411,9 @@ s:reverse	s-s	-	-	Reverse the order of ASCII characters in a string.			class:wor
 s:right	sn-s	-	-	Return a new string containing the specified number of characters from the right side of the string.			class:word	{n/a}	{n/a}	s	all	
 s:skip	-	-	-	Internal helper function used to skip over a string in a definition.			class:word	{n/a}	{n/a}	s	all	
 s:split	sc-ss	-	-	Deprecated. Use `s:split/char` instead. Split a string on the first occurrence of the specified character.			class:word	{n/a}	{n/a}	s	all	
-s:split-on-string	ss-ss	-	-	Deprecated. Use `s:split/string` instead. Split a string on the first occurrence of the specified string. After the split, the top stack item will be the part of the string before the specified subsring, and the second item will be the rest of the original string.			class:word	  'Hello_Brave_World! 'Brave s:split-on-string s:put nl s:put nl	{n/a}	s	all	
+s:split-on-string	ss-ss	-	-	Deprecated. Use `s:split/string` instead. Split a string on the first occurrence of the specified string. After the split, the top stack item will be the part of the string before the specified substring, and the second item will be the rest of the original string.			class:word	  'Hello_Brave_World! 'Brave s:split-on-string s:put nl s:put nl	{n/a}	s	all	
 s:split/char	sc-ss	-	-	Split a string on the first occurrence of the specified character.			class:word	{n/a}	{n/a}	s	all	
-s:split/string	ss-ss	-	-	Split a string on the first occurrence of the specified string. After the split, the top stack item will be the part of the string before the specified subsring, and the second item will be the rest of the original string.			class:word	  'Hello_Brave_World! 'Brave s:split-on-string s:put nl s:put nl	{n/a}	s	all	
+s:split/string	ss-ss	-	-	Split a string on the first occurrence of the specified string. After the split, the top stack item will be the part of the string before the specified substring, and the second item will be the rest of the original string.			class:word	  'Hello_Brave_World! 'Brave s:split-on-string s:put nl s:put nl	{n/a}	s	all	
 s:substr	sfl-s	-	-	Extract a substring from the specified string. This will take the characters starting at `f` and extend `l` characters in length.			class:word	{n/a}	{n/a}	s	all	
 s:temp	s-s	-	-	Move a string into the temporary string buffers.			class:word	{n/a}	{n/a}	s	all	
 s:to-float	s-	-	-F	Convert a string representation into a floating-point value.			class:word	{n/a}	{n/a}	s	rre	

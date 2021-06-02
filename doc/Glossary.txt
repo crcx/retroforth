@@ -185,7 +185,7 @@ Class: class:word | Namespace: global | Interface Layer: all
   Addr:  -
   Float: -
 
-Ignore any tokens remaining on the current line. Works with files and the interactive "listener".
+"Ignore any tokens remaining on the current line. Works with files and the interactive ""listener""."
 
 Class: class:word | Namespace: global | Interface Layer: rre
 ------------------------------------------------------------------------
@@ -730,7 +730,7 @@ NoEcho
   Addr:  -
   Float: -
 
-Variable. If TRUE, allow display of the "ok" prompt and startup banner.
+"Variable. If TRUE, allow display of the ""ok"" prompt and startup banner."
 
 Class: class:word | Namespace: global | Interface Layer: rre
 ------------------------------------------------------------------------
@@ -3780,7 +3780,7 @@ listen
   Addr:  -
   Float: -
 
-Run interactive "listener" (a REPL).
+"Run interactive ""listener"" (a REPL)."
 
 Class: class:word | Namespace: global | Interface Layer: rre
 ------------------------------------------------------------------------
@@ -4614,7 +4614,7 @@ s:get
   Addr:  -
   Float: -
 
-Read input from standard in (via `c:get`) until a CR or LF is encountered. Returns a strig.
+Read input from standard in (via `c:get`) until a CR or LF is encountered. Returns a string.
 
 Class: class:word | Namespace: all | Interface Layer: rre
 ------------------------------------------------------------------------
@@ -4625,7 +4625,7 @@ s:get-word
   Addr:  -
   Float: -
 
-Read input from standard in (via `c:get`) until a whitespace is encountered. Returns a strig.
+Read input from standard in (via `c:get`) until a whitespace is encountered. Returns a string.
 
 Class: class:word | Namespace: all | Interface Layer: rre
 ------------------------------------------------------------------------
@@ -4801,7 +4801,7 @@ s:split-on-string
   Addr:  -
   Float: -
 
-Deprecated. Use `s:split/string` instead. Split a string on the first occurrence of the specified string. After the split, the top stack item will be the part of the string before the specified subsring, and the second item will be the rest of the original string.
+Deprecated. Use `s:split/string` instead. Split a string on the first occurrence of the specified string. After the split, the top stack item will be the part of the string before the specified substring, and the second item will be the rest of the original string.
 
 Class: class:word | Namespace: s | Interface Layer: all
 
@@ -4828,7 +4828,7 @@ s:split/string
   Addr:  -
   Float: -
 
-Split a string on the first occurrence of the specified string. After the split, the top stack item will be the part of the string before the specified subsring, and the second item will be the rest of the original string.
+Split a string on the first occurrence of the specified string. After the split, the top stack item will be the part of the string before the specified substring, and the second item will be the rest of the original string.
 
 Class: class:word | Namespace: s | Interface Layer: all
 
