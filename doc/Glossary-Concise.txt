@@ -1319,7 +1319,7 @@ sigil:$                  D: s-c  A: -  F: -
 Process token as an ASCII character.
 
 sigil:&                  D: s-a  A: -  F: -
-Return a pointer to a named item.
+Return a pointer to a named item. If name is not found, returns 0.
 
 sigil:'                  D: s-s  A: -  F: -
 Process token as a string.
