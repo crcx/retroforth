@@ -1021,12 +1021,19 @@ replaces both `'` and `[']`.
     :sigil:&  d:lookup d:xt fetch class:data ;
 
 ~~~
+: sigil:&:get-xt
+i lica....
+r d:xt
+i fere....
+
 : sigil:&
 i lica....
 r d:lookup
-i lica....
-r d:xt
-i feliju..
+i dulineli
+d 0
+r sigil:&:get-xt
+i cc......
+i liju....
 r class:data
 ~~~
 
