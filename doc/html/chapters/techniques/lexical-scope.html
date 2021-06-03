@@ -66,6 +66,15 @@ The headers between <span class="tt">{{</span> and <span class="tt">---reveal---
 the dictionary, leaving only the headers between <span class="tt">---reveal---</span>
 and <span class="tt">}}</span> exposed.
 <br/><br/>
+If you wish to hide all headers in a <span class="tt">{{</span> ... <span class="tt">}}</span> block, leave
+out the <span class="tt">---reveal---</span>.
+<br/><br/>
+<span class='codeblock'><span class="tt">```</span><br/><span class="tt">{{ </span><br/>
+<span class="tt">&nbsp;&nbsp;<span class='colon'>:a</span> <span class='num'>#3</span> <span class='imm'>;</span> </span><br/>
+<span class="tt">&nbsp;&nbsp;<span class='colon'>:</span> b a <span class='prim'>dup</span> <span class='prim'>*</span> <span class='imm'>;</span> </span><br/>
+<span class="tt">}} </span><br/>
+<span class="tt">```</span></span><br/><br/>
+<br/><br/>
 <span class="h2">Notes</span>
 <br/><br/>
 This only affects word visibility within the scoped area. As an
@@ -81,5 +90,8 @@ example:
 <span class="tt">```</span></span><br/><br/>
 In this, after <span class="tt">}}</span> closes the area, the <span class="tt">:a #2 ;</span> is hidden and
 the <span class="tt">s:evaluate</span> will find the <span class="tt">:a #1 ;</span> when <span class="tt">b</span> is run.
+<br/><br/>
+If you have a <span class="tt">---reveal---</span> with no definitions following, you
+will experience memory corruption.
 </p>
 </body></html>

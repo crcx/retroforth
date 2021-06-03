@@ -3072,6 +3072,17 @@ The headers between `{{` and `---reveal---` are then hidden from
 the dictionary, leaving only the headers between `---reveal---`
 and `}}` exposed.
 
+If you wish to hide all headers in a `{{` ... `}}` block, leave
+out the `---reveal---`.
+
+```
+{{
+  :a #3 ;
+  : b a dup * ;
+}}
+```
+
+
 ## Notes
 
 This only affects word visibility within the scoped area. As an
@@ -3089,6 +3100,9 @@ example:
 
 In this, after `}}` closes the area, the `:a #2 ;` is hidden and
 the `s:evaluate` will find the `:a #1 ;` when `b` is run.
+
+If you have a `---reveal---` with no definitions following, you
+will experience memory corruption.
 
 # The Stacks
 
