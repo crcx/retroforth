@@ -428,11 +428,11 @@ s:trim-right	s-s	-	-	Trim trailing whitespace from a string.			class:word	    '_
 script:abort-include	-	-	-	Discard remaining tokens on the current line being evaluated. This only works when including a file, not at the interpreter.			class:word	{n/a}	{n/a}	sys	rre	
 script:arguments	-n	-	-	Return the number of arguments passed to the program.			class:word	{n/a}	{n/a}	sys	rre	
 script:current-file	-s	-	-	Return the filename of the file being processed by the current `include`, or `/dev/stdin` if the input source is the terminal.			class:word	{n/a}	{n/a}	sys	rre	
-script:current-line	-n	-	-	Return the current line number of the file being processed by the current `include`, or `0` if the input source is the terminal. Line numbering starts at 1.			class:word	{n/a}	{n/a}	sys	rre	
-script:get-argument	n-s	-	-	Given an argument number, return the argument as a string.			class:word	{n/a}	{n/a}	sys	rre	
-script:ignore-to-eof	-	-	-	Discard remaining lines in the file currently being evaluated. This only works when including a file, not at the interpreter.			class:word	{n/a}	{n/a}	sys	rre	
-script:ignore-to-eol	-	-	-	Discard remaining tokens in the current line. This only works when including a file, not at the interpreter.			class:word	{n/a}	{n/a}	sys	rre	
-script:name	-s	-	-	Return the filename of the program being run.			class:word	{n/a}	{n/a}	sys	rre	
+script:current-line	-n	-	-	Return the current line number of the file being processed by the current `include`, or `0` if the input source is the terminal. Line numbering starts at 1.			class:macro	{n/a}	{n/a}	script	rre	
+script:get-argument	n-s	-	-	Given an argument number, return the argument as a string.			class:word	{n/a}	{n/a}	script	rre	
+script:ignore-to-eof	-	-	-	Discard remaining lines in the file currently being evaluated. This only works when including a file, not at the interpreter.			class:word	{n/a}	{n/a}	script	rre	
+script:ignore-to-eol	-	-	-	Discard remaining tokens in the current line. This only works when including a file, not at the interpreter.			class:word	{n/a}	{n/a}	script	rre	
+script:name	-s	-	-	Return the filename of the program being run.			class:word	{n/a}	{n/a}	script	rre	
 set-hook	aa-	-	-	Patch the hook point in a2 to point to a1.			class:word	    :foo hook ;\n    :bar #1 ;\n    &bar &foo set-hook	{n/a}	global	all	
 shift	mn-o	-	-	Peform a bitwise shift of m by n bits. If n is positive, shift right. If negative, the shift will be to the left.			class:primitive	{n/a}	{n/a}	global	all	
 sigil:!	ns-	-	-	Store a value into a variable.	Store a value into the named variable.	Compile the code to store a value into a named variable.	class:macro	{n/a}	{n/a}	sigil	all	

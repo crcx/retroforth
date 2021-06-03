@@ -5015,7 +5015,7 @@ script:current-line
 
 Return the current line number of the file being processed by the current `include`, or `0` if the input source is the terminal. Line numbering starts at 1.
 
-Class: class:word | Namespace: sys | Interface Layer: rre
+Class: class:macro | Namespace: script | Interface Layer: rre
 ------------------------------------------------------------------------
 
 script:get-argument
@@ -5026,7 +5026,7 @@ script:get-argument
 
 Given an argument number, return the argument as a string.
 
-Class: class:word | Namespace: sys | Interface Layer: rre
+Class: class:word | Namespace: script | Interface Layer: rre
 ------------------------------------------------------------------------
 
 script:ignore-to-eof
@@ -5037,7 +5037,7 @@ script:ignore-to-eof
 
 Discard remaining lines in the file currently being evaluated. This only works when including a file, not at the interpreter.
 
-Class: class:word | Namespace: sys | Interface Layer: rre
+Class: class:word | Namespace: script | Interface Layer: rre
 ------------------------------------------------------------------------
 
 script:ignore-to-eol
@@ -5048,7 +5048,7 @@ script:ignore-to-eol
 
 Discard remaining tokens in the current line. This only works when including a file, not at the interpreter.
 
-Class: class:word | Namespace: sys | Interface Layer: rre
+Class: class:word | Namespace: script | Interface Layer: rre
 ------------------------------------------------------------------------
 
 script:name
@@ -5059,7 +5059,7 @@ script:name
 
 Return the filename of the program being run.
 
-Class: class:word | Namespace: sys | Interface Layer: rre
+Class: class:word | Namespace: script | Interface Layer: rre
 ------------------------------------------------------------------------
 
 set-hook

@@ -42,7 +42,7 @@ Adds support for `abort`.
   :script:name (-s)          s:empty #3 script:operation ;
 
   :script:current-file (-s)  s:empty #4 script:operation ;
-  :script:current-line (-n)          #5 script:operation ;
+  :script:current-line (-n)          #5 script:operation class:data ; immediate
   :script:ignore-to-eol (-)          #6 script:operation ;
   :script:abort-include (-)          #7 script:operation ;
 

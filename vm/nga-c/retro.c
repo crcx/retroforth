@@ -1153,7 +1153,7 @@ void scripting_source() {
 }
 
 void scripting_line() {
-  stack_push(currentLine + 1);
+  stack_push(currentLine);
 }
 
 void scripting_ignore_to_eol() {
@@ -1312,6 +1312,14 @@ void read_token(FILE *file, char *token_buffer) {
 }
 
 
+void skip_indent(FILE *fp) {
+  int ch = getc(fp);
+  while (ch == ' ') {
+    ch = getc(fp);
+  }
+  ungetc(ch, fp);
+}
+
 /*---------------------------------------------------------------------
   Display the Stack Contents
   ---------------------------------------------------------------------*/
@@ -1412,7 +1420,7 @@ void include_file(char *fname, int run_tests) {
   cpu.rp = 0;
 
   current_source++;
-   strlcpy(scripting_sources[current_source], fname, 8192);
+  strlcpy(scripting_sources[current_source], fname, 8192);
 
   ignoreToEOF = 0;
 
@@ -1422,7 +1430,9 @@ void include_file(char *fname, int run_tests) {
 
     offset = ftell(fp);
     read_line(fp, line);
+    at++;
     fseek(fp, offset, SEEK_SET);
+    skip_indent(fp);
 
     tokens = count_tokens(line);
 
@@ -1443,9 +1453,9 @@ void include_file(char *fname, int run_tests) {
         }
       }
     }
-    if (ignoreToEOL == -1)
+    if (ignoreToEOL == -1) {
       read_line(fp, line);
-    at++;
+    }
   }
 
   current_source--;
