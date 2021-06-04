@@ -34,6 +34,7 @@
 ## Hooks
 
 - `d:create` is now a hook
+- `sigil::` is now a hook
 
 ## Performance
 

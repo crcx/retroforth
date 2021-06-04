@@ -442,7 +442,7 @@ sigil:&	s-a	-	-	Return a pointer to a named item. If name is not found, returns 
 sigil:'	s-s	-	-	Process token as a string.	Move string into temporary buffer. If `RewriteUnderscores` is `TRUE`, replace all instances of _ with space.	Move string into temporary buffer. If `RewriteUnderscores` is `TRUE`, replace all instances of _ with space. Then compile the string into the current definition.	class:macro	{n/a}	{n/a}	sigil	all	
 sigil:(	s-	-	-	Process token as a comment.	Discard the string.	Discard the string.	class:macro	{n/a}	{n/a}	sigil	all	
 sigil:.	s-	-	-F	Interpret time: convert string to a floating-point value. Compile time: convert string to a floating-point value and compile code to push this value to the float stack.			class:macro	{n/a}	{n/a}	sigil	rre	
-sigil::	s-	-	-	Process token as a new definition.	Create a header pointing to `here` with the provided string as the name. Sets class to `class:word`.		class:macro	{n/a}	{n/a}	sigil	all	
+sigil::	s-	-	-	Hook. Process token as a new definition.	Create a header pointing to `here` with the provided string as the name. Sets class to `class:word`.		class:macro	{n/a}	{n/a}	sigil	all	
 sigil:@	s-n	-	-	Fetch from a stored variable.	Fetch a value from a named variable.	Compile the code to fetch a value from a named variable into the current definition.	class:macro	{n/a}	{n/a}	sigil	all	
 sigil:\	s-	-	-	Process token as an instruction bundle.	Discard the string.	Assemble the opcodes in the string and use `,` to inline it into the current definition.	class:macro	{n/a}	{n/a}	sigil	all	
 sigil:^	s-	-	-	Process token as a function reference.	Discard the string.	Comma the XT of the word into the current definition.	class:macro	{n/a}	{n/a}	sigil	all	

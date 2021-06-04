@@ -978,6 +978,9 @@ r class:data
 
 ~~~
 : sigil::
+i liju....
+r (sigil::)
+: (sigil::)
 i lilifeli
 r class:word
 r Heap

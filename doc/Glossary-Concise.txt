@@ -527,7 +527,7 @@ d:class                  D: d-a  A: -  F: -
 Given a dictionary header, return the class field.
 
 d:create                 D: s-  A: -  F: -
-Create a new dictionary header named the specified string. The new header will point to `here` and have a class of `class:data`.
+Hook. Create a new dictionary header named the specified string. The new header will point to `here` and have a class of `class:data`.
 
 d:for-each               D: q-  A: -  F: -
 Execute the specified quote once for each header in the dictionary. Before running the quote, this also pushes a pointer to the header onto the stack.
@@ -1331,7 +1331,7 @@ sigil:.                  D: s-  A: -  F: -F
 Interpret time: convert string to a floating-point value. Compile time: convert string to a floating-point value and compile code to push this value to the float stack.
 
 sigil::                  D: s-  A: -  F: -
-Process token as a new definition.
+Hook. Process token as a new definition.
 
 sigil:@                  D: s-n  A: -  F: -
 Fetch from a stored variable.

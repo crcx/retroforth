@@ -2027,7 +2027,7 @@ d:create
   Addr:  -
   Float: -
 
-Create a new dictionary header named the specified string. The new header will point to `here` and have a class of `class:data`.
+Hook. Create a new dictionary header named the specified string. The new header will point to `here` and have a class of `class:data`.
 
 Class: class:word | Namespace: d | Interface Layer: all
 ------------------------------------------------------------------------
@@ -5210,7 +5210,7 @@ sigil::
   Addr:  -
   Float: -
 
-Process token as a new definition.
+Hook. Process token as a new definition.
 
 Interpret Time:
   Create a header pointing to `here` with the provided string as the name. Sets class to `class:word`.
