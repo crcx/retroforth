@@ -31,6 +31,14 @@
 - `s:split-on-string`
 - `s:split`
 
+## Hooks
+
+- `d:create` is now a hook
+
+## Performance
+
+- use inline assembly for `n:inc` and `n:dec`
+
 ## I/O
 
 - floating point

@@ -549,8 +549,8 @@ which I'll provide here.
 ~~~
 :if;   (qf-)  over &if  dip     0; pop drop-pair ;
 :-if;  (qf-)  over &-if dip not 0; pop drop-pair ;
-:if:   (f-)   #25 , #3 , ; immediate
-:-if:  (f-)   #1644289 , #-1 , #3 , ; immediate
+:if:   (f-)   (zr...... #25 , (dr...... #3 , ; immediate
+:-if:  (f-)   (lixozr.. #1644289 , #-1 , (dr...... #3 , ; immediate
 ~~~
 
 ## More Stack Shufflers.
@@ -591,8 +591,8 @@ so they can be inlined. Here's the high level forms:
 :n:max     (nn-n)  dup-pair gt? [ drop ] [ nip ] choose ;
 :n:abs     (n-n)   dup n:negative? &n:negate if ;
 :n:limit   (nlu-n) swap push n:min pop n:max ;
-:n:inc     (n-n)   #1 + ;
-:n:dec     (n-n)   #1 - ;
+:n:inc     (n-n)   \liadre.. `1 ;
+:n:dec     (n-n)   \lisure.. `1 ;
 :n:between? (nul-) rot [ rot rot n:limit ] sip eq? ;
 ~~~
 

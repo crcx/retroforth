@@ -174,7 +174,7 @@ curry	nq-q	-	-	Bind a value to a function and return a new quote that calls the 
 d	n-	-	-	Inline a numeric value to the current assembly segment.			class:word	{n/a}	{n/a}	global	all	
 d:add-header	saa-	-	-	Vectored. Create a header. Provide a string (s) for the name, a pointer to the class handler (a1) and a pointer to the word definition (a2) Generally this won't be used directly.			class:word	{n/a}	{n/a}	d	all	
 d:class	d-a	-	-	Given a dictionary header, return the class field.			class:word	{n/a}	{n/a}	d	all	
-d:create	s-	-	-	Create a new dictionary header named the specified string. The new header will point to `here` and have a class of `class:data`.			class:word	{n/a}	{n/a}	d	all	
+d:create	s-	-	-	Hook. Create a new dictionary header named the specified string. The new header will point to `here` and have a class of `class:data`.			class:word	{n/a}	{n/a}	d	all	
 d:for-each	q-	-	-	Execute the specified quote once for each header in the dictionary. Before running the quote, this also pushes a pointer to the header onto the stack.			class:word	{n/a}	{n/a}	d	all	
 d:last	-d	-	-	Return the most recent dictionary header.			class:word	{n/a}	{n/a}	d	all	
 d:last.class	-a	-	-	Return a pointer to the class field of the most recent dictionary header.			class:word	{n/a}	{n/a}	d	all	
