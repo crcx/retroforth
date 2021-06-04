@@ -38,7 +38,7 @@ Works imperfectly, but useful.
     [ drop SOURCE/RETRO ] [ d:name ] choose !FileName ;
   :count-lines   (-)   #1 !Line 
     (open @FileName file:open-for-reading !FileID !Size )
-    [ @FileID file:read-line word-name s:contains-string? 
+    [ @FileID file:read-line word-name s:contains/string? 
       dup [ &Line v:inc ] -if not (-eof? @FileID file:tell @Size lt? ) and ] 
     while (close @FileID file:close ) ;
   :pre           (a-f) word file ;
@@ -61,4 +61,3 @@ will not be found correctly..
 
 Also, words defined in Rx such as 
 `push`, `pop`, `drop`, `swap`, and `dup` are not found.
-

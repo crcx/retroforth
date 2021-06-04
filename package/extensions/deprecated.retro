@@ -1,5 +1,8 @@
 ~~~
 :s:split (sc-ss) s:split/char ;
 :s:split-on-string (ss-ss) s:split/string ;
+:s:contains-char? s:contains/char? ;
+:s:contains-string? s:contains/string? ;
+:a:contains-string? s:contains/string? ;
 ~~~
 

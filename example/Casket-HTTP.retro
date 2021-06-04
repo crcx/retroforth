@@ -82,7 +82,7 @@ the requested file from any query string that may be present.
     [ '/ &Requested s:append s:keep &Requested s:copy ] if ;
 
 :check-for-params (-)
-  &Requested $? s:contains-char?
+  &Requested $? s:contains/char?
     [ &Requested $? s:split/char drop dup n:inc !GET-Query #0 swap store ] if ;
 
 :filename (-s)

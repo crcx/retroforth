@@ -198,7 +198,7 @@ display a range of lines, use `p`, followed by a `first,last` line
 number pair.
 
 ~~~
-:pair?         @Input $, s:contains-char? ;
+:pair?         @Input $, s:contains/char? ;
 :get-limits    @Input $, s:tokenize [ s:to-number ed:constrain ] a:for-each ;
 :display-range over - n:inc [ dup ed:display-line n:inc ] times drop ;
 
@@ -211,7 +211,7 @@ The final display related command is `/`, which displays lines that contain
 the text following the `/`.
 
 ~~~
-:match? I ed:to-line @Input s:contains-string? ;
+:match? I ed:to-line @Input s:contains/string? ;
 
 :cmd:/ @Lines [ match? [ I ed:display-line ] if ] indexed-times ;
 ~~~

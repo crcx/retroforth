@@ -907,11 +907,11 @@ In higher level code:
   [ drop #-1 ] if ;
 ~~~
 
-`s:contains-char?` returns a flag indicating whether or not a
+`s:contains/char?` returns a flag indicating whether or not a
 given character is in a string.
 
 ~~~
-:s:contains-char? (sc-f) s:index-of #-1 -eq? ;
+:s:contains/char? (sc-f) s:index-of #-1 -eq? ;
 ~~~
 
 Hash (using DJB2)
@@ -925,7 +925,7 @@ on an implementation at http://www.cse.yorku.ca/~oz/hash.html
 :s:hash (s-n) #5381 swap [ \swlimuad `33 ] s:for-each ;
 ~~~
 
-`s:contains-string?` returns a flag indicating whether or not
+`s:contains/string?` returns a flag indicating whether or not
 a given substring is in a string.
 
 ~~~
@@ -949,7 +949,7 @@ a given substring is in a string.
   :next (-)
     &I v:inc ;
 ---reveal---
-  :s:contains-string? (ss-f)
+  :s:contains/string? (ss-f)
     !Tar !Src s:empty !Pad #0 !I #0 !F
     @Src s:length
     [ extract terminate compare next ] times
@@ -1099,9 +1099,9 @@ First are a bunch of words to help identify character values.
 :c:letter?      (c-f) &c:lowercase? &c:uppercase? bi or ;
 :c:digit?       (c-f) $0 $9 n:between? ;
 :c:visible?     (c-f) #32 #126 n:between? ;
-:c:vowel?       (c-f) 'aeiouAEIOU swap s:contains-char? ;
+:c:vowel?       (c-f) 'aeiouAEIOU swap s:contains/char? ;
 :c:consonant?   (c-f) dup c:letter? [ c:vowel? not ] [ drop FALSE ] choose ;
-:c:whitespace?  (c-f) s:WHITESPACE swap s:contains-char? ;
+:c:whitespace?  (c-f) s:WHITESPACE swap s:contains/char? ;
 ~~~
 
 And the inverse forms. (These are included for readability and
@@ -1476,7 +1476,7 @@ a `TRUE` flag for.
   here over - n:dec over store ;
 ~~~
 
-Next are `a:contains?` and `a:contains-string?` which
+Next are `a:contains?` and `a:contains/string?` which
 compare a given value to each item in the array and returns
 a flag.
 
@@ -1484,7 +1484,7 @@ a flag.
 :a:contains? (na-f)
   #0 swap [ swap push over eq? pop or ] a:for-each nip ;
 
-:a:contains-string? (na-f)
+:a:contains/string? (na-f)
   #0 swap [ swap push over s:eq? pop or ] a:for-each nip ;
 ~~~
 

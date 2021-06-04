@@ -62,7 +62,7 @@ any used space is recovered.
 {{
   :identify-classes (-a)
     here #0 ,
-    [ dup d:name 'class: s:contains-string?
+    [ dup d:name 'class: s:contains/string?
       &, &drop choose ] d:for-each
     here over - n:dec over store ;
 ---reveal---

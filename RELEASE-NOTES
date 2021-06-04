@@ -25,11 +25,17 @@
 
 - `s:split/string` replaces `s:split-on-string`
 - `s:split/char` replaces `s:split`
+- `s:contains/char?` replaces `s:contains-char?`
+- `s:contains/string?` replaces `s:contains-string?`
+- `a:contains/string?` replaces `a:contains-string?`
 
 ## Deprecated
 
 - `s:split-on-string`
 - `s:split`
+- `s:contains-char?`
+- `s:contains-string?`
+- `a:contains-string?`
 
 ## Hooks
 

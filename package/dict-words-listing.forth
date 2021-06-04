@@ -19,7 +19,7 @@ words that likely display something: `':put d:words-with`.
 :d:words-with (s-)
   here s:copy
   [ d:name dup here
-    (put-match s:contains-string? [ s:put sp ] [ drop ] choose )
+    (put-match s:contains/string? [ s:put sp ] [ drop ] choose )
   ] d:for-each ;
 ~~~
 
@@ -28,11 +28,11 @@ it does not care where in the name the substring is found. To
 deal with this, `d:words-beginning-with` is provided.
 
 ~~~
-{{ 
+{{
   :display-if-left (s-)
-    dup here s:begins-with? [ s:put sp ] [ drop ] choose ; 
----reveal--- 
+    dup here s:begins-with? [ s:put sp ] [ drop ] choose ;
+---reveal---
   :d:words-beginning-with (s-)
-    here s:copy [ d:name display-if-left ] d:for-each ; 
-}} 
+    here s:copy [ d:name display-if-left ] d:for-each ;
+}}
 ~~~

@@ -144,7 +144,7 @@ Then I look to see if it has a file extension.
 
 ~~~
 :has-extension? (s-sf)
-  dup $. s:contains-char? ;
+  dup $. s:contains/char? ;
 ~~~
 
 If there is an extension, it can be mapped to a type code.

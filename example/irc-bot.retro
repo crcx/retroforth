@@ -143,7 +143,7 @@ I pass it to `s:evaluate`, capturing and relaying the output.
   #128 allot
 
 :message?
-  here 'PRIVMSG s:contains-string? ;
+  here 'PRIVMSG s:contains/string? ;
 
 :channel
   here 'PRIVMSG s:split-on-string drop #8 + $: s:split nip s:chop &Channel s:copy ;

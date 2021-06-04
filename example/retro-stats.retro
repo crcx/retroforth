@@ -85,7 +85,7 @@ nl 'Classes: s:put nl nl
 
 :identify-classes (-a)
   here #0 ,
-  [ d:name dup 'class: s:contains-string?
+  [ d:name dup 'class: s:contains/string?
     &, &drop choose ] d:for-each
   here over - n:dec over store ;
 
@@ -109,7 +109,7 @@ nl 'Sigils: s:put nl nl
 
 :identify-sigils (-a)
   here #0 ,
-  [ d:name dup 'sigil: s:contains-string?
+  [ d:name dup 'sigil: s:contains/string?
     &, &drop choose ] d:for-each
   here over - n:dec over store ;
 

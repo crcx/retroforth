@@ -233,6 +233,9 @@ a:chop                   D: a-a  A: -  F: -
 Return a new array containing all but the last value in the source array.
 
 a:contains-string?       D: sa-f  A: -  F: -
+Deprecated. Use `a:contains/string?` instead. Return `TRUE` if the string value is in the array or `FALSE` otherwise.
+
+a:contains/string?       D: sa-f  A: -  F: -
 Return `TRUE` if the string value is in the array or `FALSE` otherwise.
 
 a:contains?              D: na-f  A: -  F: -
@@ -1157,9 +1160,15 @@ s:const                  D: ss-  A: -  F: -
 Create a constant named s2, returning a pointer to s1. This will use `s:keep` to preserve the original string.
 
 s:contains-char?         D: sc-f  A: -  F: -
-Return `TRUE` if the character is present in the string or `FALSE` otherwise.
+Deprecated. Use `s:contains/char?` instead. Return `TRUE` if the character is present in the string or `FALSE` otherwise.
 
 s:contains-string?       D: ss-f  A: -  F: -
+Deprecated. Use `s:contains/string?` instead. Return `TRUE` if the second string is present in the first string or `FALSE` otherwise.
+
+s:contains/char?         D: sc-f  A: -  F: -
+Return `TRUE` if the character is present in the string or `FALSE` otherwise.
+
+s:contains/string?       D: ss-f  A: -  F: -
 Return `TRUE` if the second string is present in the first string or `FALSE` otherwise.
 
 s:copy                   D: sa-  A: -  F: -

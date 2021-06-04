@@ -106,15 +106,15 @@ each one that proves valid.
 
 ~~~
 :valid?
-  [ [ 'byr: s:contains-string? ]
-    [ 'iyr: s:contains-string? ]
-    [ 'eyr: s:contains-string? ] tri and and ]
+  [ [ 'byr: s:contains/string? ]
+    [ 'iyr: s:contains/string? ]
+    [ 'eyr: s:contains/string? ] tri and and ]
 
-  [ [ 'hgt: s:contains-string? ]
-    [ 'hcl: s:contains-string? ]
-    [ 'ecl: s:contains-string? ] tri and and ]
+  [ [ 'hgt: s:contains/string? ]
+    [ 'hcl: s:contains/string? ]
+    [ 'ecl: s:contains/string? ] tri and and ]
 
-  [ 'pid: s:contains-string? ] tri and and ;
+  [ 'pid: s:contains/string? ] tri and and ;
 
 #0 &Passports [ valid? [ n:inc ] if ] a:for-each
 ~~~
@@ -209,9 +209,9 @@ Then I implement the checks for each field.
              [ height-metric? ] [ height-imperial? ] choose record-result ;
 :process-hcl [ fetch $# eq? ]
              [ s:length #7 eq? ]
-             [ [ 'abcdef0123456789 swap s:contains-char? ] s:filter s:length #6 eq? ] tri
+             [ [ 'abcdef0123456789 swap s:contains/char? ] s:filter s:length #6 eq? ] tri
              and and record-result ;
-:process-ecl EYE-COLORS a:contains-string?  record-result ;
+:process-ecl EYE-COLORS a:contains/string?  record-result ;
 :process-pid [ s:length #9 eq? ]
              [ [ c:digit? ] s:filter s:length #9 eq? ] bi and record-result ;
 ~~~

@@ -148,7 +148,7 @@ that provide a hint to the user about the content being linked.
    @Line [ '<tt> s:put s:put '</tt> s:put ] a:for-each nl ;
 
 :line
-  dup ASCII:HT s:contains-char?
+  dup ASCII:HT s:contains/char?
   [ fields  a:length #3 gteq? [ [ menu-entry ]
                                 [ plain-text ] choose ] if;
   [ s:putm ] tt ;
@@ -164,7 +164,7 @@ that provide a hint to the user about the content being linked.
   [ s:trim line ] a:for-each ;
 
 :process
-  &Buffer ASCII:HT s:contains-char? [ process:line ] if;
+  &Buffer ASCII:HT s:contains/char? [ process:line ] if;
   '<xmp> s:put &Buffer s:put '</xmp> s:put ;
 
 :eol ASCII:CR c:put ASCII:LF c:put ;

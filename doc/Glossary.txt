@@ -895,6 +895,17 @@ a:contains-string?
   Addr:  -
   Float: -
 
+Deprecated. Use `a:contains/string?` instead. Return `TRUE` if the string value is in the array or `FALSE` otherwise.
+
+Class: class:word | Namespace: a | Interface Layer: all
+------------------------------------------------------------------------
+
+a:contains/string?
+
+  Data:  sa-f
+  Addr:  -
+  Float: -
+
 Return `TRUE` if the string value is in the array or `FALSE` otherwise.
 
 Class: class:word | Namespace: a | Interface Layer: all
@@ -4498,12 +4509,34 @@ s:contains-char?
   Addr:  -
   Float: -
 
-Return `TRUE` if the character is present in the string or `FALSE` otherwise.
+Deprecated. Use `s:contains/char?` instead. Return `TRUE` if the character is present in the string or `FALSE` otherwise.
 
 Class: class:word | Namespace: s | Interface Layer: all
 ------------------------------------------------------------------------
 
 s:contains-string?
+
+  Data:  ss-f
+  Addr:  -
+  Float: -
+
+Deprecated. Use `s:contains/string?` instead. Return `TRUE` if the second string is present in the first string or `FALSE` otherwise.
+
+Class: class:word | Namespace: s | Interface Layer: all
+------------------------------------------------------------------------
+
+s:contains/char?
+
+  Data:  sc-f
+  Addr:  -
+  Float: -
+
+Return `TRUE` if the character is present in the string or `FALSE` otherwise.
+
+Class: class:word | Namespace: s | Interface Layer: all
+------------------------------------------------------------------------
+
+s:contains/string?
 
   Data:  ss-f
   Addr:  -

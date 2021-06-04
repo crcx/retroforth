@@ -283,7 +283,7 @@ before doing the checks.
   :record-name     !SourceLine field:name s:keep over &GlossaryNames + store ;
   :populate-names  #1 'doc/words.tsv [ record-name n:inc ] file:for-each-line
                    n:dec &GlossaryNames store ;
-  :in-set?         dup &GlossaryNames a:contains-string? ;
+  :in-set?         dup &GlossaryNames a:contains/string? ;
 ---reveal---
   :display-missing
     restrict-scope populate-names 

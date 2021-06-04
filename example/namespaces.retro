@@ -11,9 +11,9 @@ Three words will be exposed.
 'Namespaces d:create #513 allot
 
 {{
-  :has-namespace? dup $: s:contains-char? ;
+  :has-namespace? dup $: s:contains/char? ;
   :get-namespace  $: s:split nip ;
-  :known?  dup &Namespaces a:contains-string? ;
+  :known?  dup &Namespaces a:contains/string? ;
   :add     s:keep buffer:add &Namespaces v:inc ;
   :process get-namespace known? &drop &add choose ;
 ---reveal---

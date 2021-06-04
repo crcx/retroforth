@@ -117,7 +117,7 @@ hex conversion above.
 
 ~~~
 :decode (s-n)
-  dup &Instructions a:contains-string?
+  dup &Instructions a:contains/string?
   [ &Instructions swap a:index-of-string ]
   [ s:to-hex-number ] choose ;
 ~~~
