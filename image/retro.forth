@@ -30,13 +30,16 @@ The main namespaces are:
     | ---------- | ------------------ |
     | ASCII      | ASCII Constants    |
     | a          | arrays             |
+    | buffer     | LIFO buffer        |
     | c          | characters         |
+    | class      | class handlers     |
     | compile    | compiler functions |
     | d          | dictionary headers |
     | err        | error handlers     |
     | io         | i/o functions      |
     | n          | numbers            |
     | s          | strings            |
+    ! sigil      | sigil handlers     |
     | v          | variables          |
 
 This makes it very easy to identify related words, especially
@@ -84,15 +87,15 @@ The basic sigils are:
     | '      | strings                |
     | #      | numbers                |
     | $      | characters             |
-    | @      | variable get           |
-    | !      | variable set           |
+    | @      | get variable contents  |
+    | !      | set variable contents  |
     | \      | inline assembly        |
     | ^      | assembly references    |
     | |      | compiler macros        |
 
 ### Naming and Style Conventions
 
-* Names should start with their namespace (if appropriate)
+* Names be consistent across namespaces
 * Word names should be lowercase
 * Variable names should be Title case
 * Constants should be UPPERCASE
@@ -182,10 +185,37 @@ and `data` to tag data words.
 ~~~
 :immediate  (-)  &class:macro reclass ;
 :data       (-)  &class:data  reclass ;
+:primitive  (-)  &class:primitive reclass ;
 ~~~
 
+## Hooks
+
+In RETRO 11, nearly all definitions could be temporarily
+replaced by leaving space at the start for compiling in a
+jump. In the current RETRO I do not do this, though the
+technique is still useful, especially with I/O. These next
+few words provide a means of doing this in RETRO 12.
+
+To allow a word to be overridden, add a call to `hook` as
+the first word in the definition. This will compile a jump
+to the actual definition start.
+
 ~~~
-:primitive (-) &class:primitive reclass ;
+:hook (-)  #1793 , &Heap fetch #1 + , ; immediate
+~~~
+
+`set-hook` takes a pointer to the new word or quote and a
+pointer to the hook to replace. It alters the jump target.
+
+~~~
+:set-hook (aa-) #1 + store ;
+~~~
+
+The final word, `unhook`, resets the jump target to the
+original one.
+
+~~~
+:unhook (a-) #1 + dup #1 + swap store ;
 ~~~
 
 ## Visual Grouping
@@ -294,8 +324,8 @@ build other data structures without invoking the `:` compiler.
 
 ~~~
 :d:create (s-)
-  &class:data #0 d:add-header
-  here d:last d:xt store ;
+  hook &class:data #0 d:add-header
+       here d:last d:xt store ;
 ~~~
 
 And then the others are trivial.
@@ -1702,36 +1732,6 @@ of `Index` if you need more than this.
       [ repeat 0; \lisupudu `1 \puca.... \popo.... next again ] call
     drop done ;
 }}
-~~~
-
-## Hooks
-
-In RETRO 11, nearly all definitions could be temporarily
-replaced by leaving space at the start for compiling in a
-jump. In the current RETRO I do not do this, though the
-technique is still useful, especially with I/O. These next
-few words provide a means of doing this in RETRO 12.
-
-To allow a word to be overridden, add a call to `hook` as
-the first word in the definition. This will compile a jump
-to the actual definition start.
-
-~~~
-:hook (-)  'liju.... i here n:inc , ; immediate
-~~~
-
-`set-hook` takes a pointer to the new word or quote and a
-pointer to the hook to replace. It alters the jump target.
-
-~~~
-:set-hook (aa-) n:inc store ;
-~~~
-
-The final word, `unhook`, resets the jump target to the
-original one.
-
-~~~
-:unhook (a-) n:inc dup n:inc swap store ;
 ~~~
 
 ## Numeric Bases

@@ -40,7 +40,6 @@ CELL here;
 
 typedef void (*Handler)(char *);
 void unu(char *, int, Handler);
-size_t bsd_strlcat(char *dst, const char *src, size_t dsize);
 size_t bsd_strlcpy(char *dst, const char *src, size_t dsize);
 
 
