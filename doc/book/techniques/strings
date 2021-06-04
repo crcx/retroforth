@@ -52,10 +52,10 @@ this automatically.
 
 RETRO provides four words for searching within a string.
 
-* `s:contains-char?` 
-* `s:contains-string?`
-* `s:index-of`
-* `s:index-of-string`
+* `s:contains/char?`
+* `s:contains/string?`
+* `s:index/char`
+* `s:index/string`
 
 ## Comparisons
 

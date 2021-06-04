@@ -111,7 +111,7 @@ These are just simple accessor words to aid in overall readability.
 
 ~~~
 :get-mime-type (s-s)
-  [ $. s:index-of ] sip +
+  [ $. s:index/char ] sip +
   (textual_files)
     '.md    [ 'text/markdown            ] s:case
     '.htm   [ 'text/html                ] s:case

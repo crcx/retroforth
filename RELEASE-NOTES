@@ -28,6 +28,10 @@
 - `s:contains/char?` replaces `s:contains-char?`
 - `s:contains/string?` replaces `s:contains-string?`
 - `a:contains/string?` replaces `a:contains-string?`
+- `a:index` replaces `a:index-of`
+- `a:index/string` replaces `a:index-of-string`
+- `s:index/char` replaces `s:index-of`
+- `s:index/string` replaces `s:index-of-string`
 
 ## Deprecated
 
@@ -36,6 +40,10 @@
 - `s:contains-char?`
 - `s:contains-string?`
 - `a:contains-string?`
+- `a:index-of`
+- `a:index-of-string`
+- `s:index-of`
+- `s:index-of-string`
 
 ## Hooks
 

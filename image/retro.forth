@@ -878,12 +878,12 @@ a key part of building the other high-level string operations.
   ] call drop-pair ;
 ~~~
 
-Building on `s:for-each`, I am able to implement `s:index-of`, which
+Building on `s:for-each`, I am able to implement `s:index/char`, which
 finds the first instance of a character in a string.
 
 In higher level code:
 
-    :s:index-of (sc-n)
+    :s:index/char (sc-n)
       swap
       [ repeat
           fetch-next 0; swap
@@ -896,7 +896,7 @@ In higher level code:
       [ drop #-1 ] if ;
 
 ~~~
-:s:index-of (sc-n)
+:s:index/char (sc-n)
   swap
   [ repeat
       \duliadsw `1 \fezr.... \swpupudu
@@ -911,7 +911,7 @@ In higher level code:
 given character is in a string.
 
 ~~~
-:s:contains/char? (sc-f) s:index-of #-1 -eq? ;
+:s:contains/char? (sc-f) s:index/char #-1 -eq? ;
 ~~~
 
 Hash (using DJB2)
@@ -965,7 +965,7 @@ a given substring is in a string.
   :location rot rot [ [ swap [ over n:zero? and ] dip swap [ nip dup ] if ] dip ] dip ;
   :setup    s:empty !Str #0 rot rot &s:length &s:hash bi s:empty buffer:set [ over s:length ] dip swap ;
 ---reveal---
-  :s:index-of-string (ss-n)
+  :s:index/string (ss-n)
     over [ [ setup [ check location ] times ] buffer:preserve
            drop-pair drop ] dip - #2 - #-1 n:max ;
 }}
@@ -1169,10 +1169,10 @@ located.
 
 ~~~
 :s:split/char (sc-ss)
-  dup-pair s:index-of nip dup-pair s:left &+ dip ;
+  dup-pair s:index/char nip dup-pair s:left &+ dip ;
 
 :s:split/string (ss-ss)
-  dup-pair s:index-of-string n:inc nip dup-pair s:left &+ dip ;
+  dup-pair s:index/string n:inc nip dup-pair s:left &+ dip ;
 
 :s:replace (sss-s)
   over s:length here store
@@ -1537,8 +1537,8 @@ and return a new value.
   &swap dip a:for-each ;
 ~~~
 
-`a:index-of` and `a:index-of-string` build on these to return
-the offset of a value in the array, or -1 if the value wasn't
+`a:index` and `a:index/string` build on these to return the
+offset of a value in the array, or -1 if the value wasn't
 found.
 
 Specifically:
@@ -1557,9 +1557,9 @@ overall.
     #-1 swap #0
    [ TRUE eq? [ over #-1 eq? [ nip dup ] if ] if n:inc ] a:reduce drop ;
 ---reveal---
-  :a:index-of (an-n)
+  :a:index (an-n)
     &Heap [ &eq? curry a:map identify ] v:preserve ;
-  :a:index-of-string (as-n)
+  :a:index/string (as-n)
     &Heap [ &s:eq? curry a:map identify ] v:preserve ;
 }}
 ~~~

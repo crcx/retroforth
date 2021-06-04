@@ -88,13 +88,13 @@ and return a new value.
 
 ## Search
 
-RETRO provides `a:contains?` and `a:contains-string?`
+RETRO provides `a:contains?` and `a:contains/string?`
 to search an array for a value (either a number or string) and
 return either TRUE or FALSE.
 
 ```
 #100  { #1 #2 #3 } a:contains?
-'test { 'abc 'def 'test 'ghi } a:contains-string?
+'test { 'abc 'def 'test 'ghi } a:contains/string?
 ```
 
 ## Implementation

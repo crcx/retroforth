@@ -30,7 +30,7 @@ will allow for this.
     ~~~
     {{
       :fields        @Dictionary , (link) , (xt) , (class) ;
-      :invalid-name? dup ASCII:SPACE s:contains-char? ;
+      :invalid-name? dup ASCII:SPACE s:contains/char? ;
       :rewrite       [ ASCII:SPACE [ $_ ] case ] s:map ;
       :entry         here &call dip !Dictionary ;
       [ [ fields invalid-name? &rewrite if s, (name) ] entry ]

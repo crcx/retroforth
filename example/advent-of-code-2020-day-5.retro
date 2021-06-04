@@ -86,7 +86,7 @@ work with other bases.
   '0123456789ABCDEF 'DIGITS s:const
   'Number var
   'Mod    var
-  :convert    (c-)  &DIGITS swap s:index-of 
+  :convert    (c-)  &DIGITS swap s:index/char 
                     @Number @Base * + !Number ;
   :check-sign (s-s) dup fetch $- eq? 
                     [ #-1 !Mod n:inc ] [ #1 !Mod ] choose ;

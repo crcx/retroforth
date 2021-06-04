@@ -96,10 +96,10 @@ a look at the extension, and mapping this to a MIME type.
 ~~~
 :filename-w/o-path
   WEBROOT s:length &Host s:length + filename +
-  [ $/ s:index-of ] sip + ;
+  [ $/ s:index/char ] sip + ;
 
 :get-mime-type (-s)
-  filename-w/o-path [ $. s:index-of ] sip +
+  filename-w/o-path [ $. s:index/char ] sip +
   (fsp)
     '.fsp   [ 'application/fsp          ] s:case
   (textual_files)

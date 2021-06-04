@@ -105,7 +105,7 @@ conversion.
 ~~~
 '0123456789ABCDEF 'DIGITS s:const
 'Number var
-:convert    (c-)  &DIGITS swap s:index-of @Number #16 * + !Number ;
+:convert    (c-)  &DIGITS swap s:index/char @Number #16 * + !Number ;
 :check-sign (s-ns) dup fetch $- eq? [ #-1 swap n:inc ] [ #1 swap ] choose ;
 :s:to-hex-number (s-n)
   #0 !Number check-sign [ convert ] s:for-each @Number * ;
@@ -118,7 +118,7 @@ hex conversion above.
 ~~~
 :decode (s-n)
   dup &Instructions a:contains/string?
-  [ &Instructions swap a:index-of-string ]
+  [ &Instructions swap a:index/string ]
   [ s:to-hex-number ] choose ;
 ~~~
 

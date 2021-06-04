@@ -4,5 +4,10 @@
 :s:contains-char? s:contains/char? ;
 :s:contains-string? s:contains/string? ;
 :a:contains-string? s:contains/string? ;
+
+:a:index-of a:index ;
+:a:index-of-string a:index/string ;
+:s:index-of s:index/char ;
+:s:index-of s:index/string ;
 ~~~
 

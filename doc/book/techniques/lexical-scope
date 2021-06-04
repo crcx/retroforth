@@ -29,10 +29,9 @@ out the `---reveal---`.
 ```
 {{
   :a #3 ;
-  : b a dup * ;
+  :b a dup * ;
 }}
 ```
-
 
 ## Notes
 
@@ -52,5 +51,11 @@ example:
 In this, after `}}` closes the area, the `:a #2 ;` is hidden and
 the `s:evaluate` will find the `:a #1 ;` when `b` is run.
 
-If you have a `---reveal---` with no definitions following, you
-will experience memory corruption.
+## A Word of Warning
+
+Use of these words can result in a corrupt dictionary and system
+crashes. Specifically, use of `---reveal---` with an empty private
+or public section will result in dictionary corruption.
+
+If you don't need private words, don't put them in a scope. And if
+you don't need public words, don't include the `---reveal---`.

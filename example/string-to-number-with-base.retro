@@ -39,7 +39,7 @@ here is:
 {{
   'Number var
   'Mod    var
-  :convert    (c-)  &DIGITS swap s:index-of @Number @Base * + !Number ;
+  :convert    (c-)  &DIGITS swap s:index/char @Number @Base * + !Number ;
   :check-sign (s-s) dup fetch $- eq? [ #-1 !Mod n:inc ] [ #1 !Mod ] choose ;
 ---reveal---
   :s:to-number-with-base (s-n)

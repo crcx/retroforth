@@ -59,7 +59,7 @@ Determine the average length of a word name.
 And without the sigils...
 
 ~~~
-  #0 #0 [ d:name dup $: s:index-of n:inc + s:length + [ n:inc ] dip ] d:for-each swap /
+  #0 #0 [ d:name dup $: s:index/ n:inc + s:length + [ n:inc ] dip ] d:for-each swap /
   '__Average_name_without_namespace:_%n\n s:format s:put
 ~~~
 
