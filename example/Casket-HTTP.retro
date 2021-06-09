@@ -87,7 +87,8 @@ the requested file from any query string that may be present.
 
 :filename (-s)
   check-for-params map-/-to-index ensure-leading-/
-  &Requested &Host WEBROOT '%s/%s%s s:format ;
+  &Requested &Host WEBROOT '%s/%s%s s:format
+  dup '%s/index.html s:format file:exists? [ '%s/index.html s:format ] if ;
 ~~~
 
 Next, I need to determine the file type. I'll do this by taking
