@@ -1912,6 +1912,7 @@ void inst_zr() {
 
 void inst_ha() {
   cpu.ip = IMAGE_SIZE;
+  cpu.rp = 0;
 }
 
 void inst_ie() {
