@@ -83,6 +83,28 @@
 
 #include "image.c"
 
+
+typedef void (*Handler)(void);
+
+/* Issue 66 ----------- */
+struct Nga {
+  CELL sp, rp, ip;                /* Stack & instruction pointers     */
+  CELL data[STACK_DEPTH];         /* The data stack                   */
+  CELL address[ADDRESSES];        /* The address stack                */
+  CELL memory[IMAGE_SIZE];        /* RAM                              */
+  char code_start[33], code_end[33], test_start[33], test_end[33];
+  Handler DeviceHandlers[MAX_DEVICES];
+  Handler QueryHandlers[MAX_DEVICES];
+  Handler Bindings[1000];
+  char string_data[8192];
+  char **sys_argv;
+  int sys_argc;
+  char scripting_sources[64][8192];
+  int current_source;
+  int perform_abort;
+};
+
+
 /* Function Prototypes ----------------------------------------------- */
 CELL stack_pop();
 void stack_push(CELL value);
@@ -159,7 +181,6 @@ int devices;                      /* The number of I/O devices         */
 char code_start[33], code_end[33], test_start[33], test_end[33];
 
 /* Populate The I/O Device Tables ------------------------------------ */
-typedef void (*Handler)(void);
 Handler IO_deviceHandlers[MAX_DEVICES];
 Handler IO_queryHandlers[MAX_DEVICES];
 
