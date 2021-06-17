@@ -255,6 +255,7 @@ To erase the contents of a line, use `d` followed by the line number.
 
     | i | line,text  | replace contents of line with text              |
     | e | line       | insert text beginning at line, shifting down    |
+    | y | line,text  | append text to end of line                      |
 
 I provide two words for editing the text of the file. `i` replaces the
 text on a line with the provided text, and `e` insterts text, shifting
@@ -277,6 +278,14 @@ otherwise blank line to return to the command processing mode.
     [ @Prompt [ @Prompt call ] if
       add-space s:get [ store-line ] sip '. s:eq? ] until cleanup ;
 }}
+
+:cmd:y
+  @Input $, s:split/char
+  s:to-number ed:to-line [ [ n:inc ] dip s:prepend ] sip s:copy ;
+
+:cmd:Y
+  @Input $, s:split/char
+  s:to-number ed:to-line [ [ n:inc ] dip s:append ] sip s:copy ;
 ~~~
 
 Copy/paste
@@ -370,7 +379,7 @@ Use `q` to quit the editor.
 ## Register The Commands
 
 ~~~
-{ ',p#/axdiefwlqnN:*cu [ ] s:for-each }
+{ ',p#/axdieyYfwlqnN:*cu [ ] s:for-each }
 [ [ 'cmd:%c s:format d:lookup d:xt fetch ] sip ed:register-command ]
 a:for-each
 ~~~
