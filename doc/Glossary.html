@@ -659,14 +659,28 @@
 </div>
 <p>Create a new array with the characters in the source string.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>a</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
-<h2>a:index-of</h2>
+<h2>a:index</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> an-n<br>
 <b>Addr:</b> -<br>
 <b>Float:</b> -</p>
 </div>
 <p>Return the location of the first instance of the specified value in the array.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>a</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
+<h2>a:index-of</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> an-n<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Deprecated. Use `a:index` instead. Return the location of the first instance of the specified value in the array.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>a</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
 <h2>a:index-of-string</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> as-n<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Deprecated. Use `a:index/string` instead. Return the location of the first instance of the specified string in the array.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>a</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
+<h2>a:index/string</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> as-n<br>
 <b>Addr:</b> -<br>
 <b>Float:</b> -</p>
@@ -3029,9 +3043,23 @@
 <b>Addr:</b> -<br>
 <b>Float:</b> -</p>
 </div>
-<p>Return the location of the first instance of the specified character in the string.</p>
+<p>Deprecated. Use `s:index/char` instead. Return the location of the first instance of the specified character in the string.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>s</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
 <h2>s:index-of-string</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> ss-n<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Derpecated. Use `s:index/string` instead. Return the location of the first instance of the specified substring (s2) in the string (s1). Returns -1 if not found.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>s</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
+<h2>s:index/char</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> sc-n<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Return the location of the first instance of the specified character in the string.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>s</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
+<h2>s:index/string</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> ss-n<br>
 <b>Addr:</b> -<br>
 <b>Float:</b> -</p>
@@ -3809,6 +3837,17 @@
 </div>
 <p>Execute a process by running the application specified by s1. Pass s2, s3, and s4 as arguments.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>unix</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><hr/>
+<h2>unix:execute</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> s-<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Runs another application and return after execution is completed. This does not invoke the shell like `unix:system` and does not support globbing.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>unix</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><p><b>Example:</b> <br>
+<br>
+<xmp style='background:#f2f2f2'>  'ls_-lh_/etc unix:system</xmp>
+</p>
+<hr/>
 <h2>unix:exit</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> n-<br>
 <b>Addr:</b> -<br>

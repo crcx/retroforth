@@ -1026,7 +1026,7 @@ Create a new array with the characters in the source string.
 Class: class:word | Namespace: a | Interface Layer: all
 ------------------------------------------------------------------------
 
-a:index-of
+a:index
 
   Data:  an-n
   Addr:  -
@@ -1037,7 +1037,29 @@ Return the location of the first instance of the specified value in the array.
 Class: class:word | Namespace: a | Interface Layer: all
 ------------------------------------------------------------------------
 
+a:index-of
+
+  Data:  an-n
+  Addr:  -
+  Float: -
+
+Deprecated. Use `a:index` instead. Return the location of the first instance of the specified value in the array.
+
+Class: class:word | Namespace: a | Interface Layer: all
+------------------------------------------------------------------------
+
 a:index-of-string
+
+  Data:  as-n
+  Addr:  -
+  Float: -
+
+Deprecated. Use `a:index/string` instead. Return the location of the first instance of the specified string in the array.
+
+Class: class:word | Namespace: a | Interface Layer: all
+------------------------------------------------------------------------
+
+a:index/string
 
   Data:  as-n
   Addr:  -
@@ -4680,12 +4702,34 @@ s:index-of
   Addr:  -
   Float: -
 
-Return the location of the first instance of the specified character in the string.
+Deprecated. Use `s:index/char` instead. Return the location of the first instance of the specified character in the string.
 
 Class: class:word | Namespace: s | Interface Layer: all
 ------------------------------------------------------------------------
 
 s:index-of-string
+
+  Data:  ss-n
+  Addr:  -
+  Float: -
+
+Derpecated. Use `s:index/string` instead. Return the location of the first instance of the specified substring (s2) in the string (s1). Returns -1 if not found.
+
+Class: class:word | Namespace: s | Interface Layer: all
+------------------------------------------------------------------------
+
+s:index/char
+
+  Data:  sc-n
+  Addr:  -
+  Float: -
+
+Return the location of the first instance of the specified character in the string.
+
+Class: class:word | Namespace: s | Interface Layer: all
+------------------------------------------------------------------------
+
+s:index/string
 
   Data:  ss-n
   Addr:  -
@@ -5848,6 +5892,22 @@ unix:exec3
 Execute a process by running the application specified by s1. Pass s2, s3, and s4 as arguments.
 
 Class: class:word | Namespace: unix | Interface Layer: rre
+------------------------------------------------------------------------
+
+unix:execute
+
+  Data:  s-
+  Addr:  -
+  Float: -
+
+Runs another application and return after execution is completed. This does not invoke the shell like `unix:system` and does not support globbing.
+
+Class: class:word | Namespace: unix | Interface Layer: rre
+
+Example #1:
+
+  'ls_-lh_/etc unix:system
+
 ------------------------------------------------------------------------
 
 unix:exit

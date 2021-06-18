@@ -88,8 +88,10 @@ a:fetch                  D: an-n  A: -  F: -
 a:filter                 D: aq-b  A: -  F: -
 a:for-each               D: aq-  A: -  F: -
 a:from-string            D: s-a  A: -  F: -
+a:index                  D: an-n  A: -  F: -
 a:index-of               D: an-n  A: -  F: -
 a:index-of-string        D: as-n  A: -  F: -
+a:index/string           D: as-n  A: -  F: -
 a:left                   D: an-a  A: -  F: -
 a:length                 D: a-n  A: -  F: -
 a:make                   D: q-a  A: -  F: -
@@ -402,6 +404,8 @@ s:get-word               D: -s  A: -  F: -
 s:hash                   D: s-n  A: -  F: -
 s:index-of               D: sc-n  A: -  F: -
 s:index-of-string        D: ss-n  A: -  F: -
+s:index/char             D: sc-n  A: -  F: -
+s:index/string           D: ss-n  A: -  F: -
 s:keep                   D: s-s  A: -  F: -
 s:left                   D: sn-s  A: -  F: -
 s:length                 D: s-n  A: -  F: -
@@ -495,6 +499,7 @@ unix:exec0               D: s-  A: -  F: -
 unix:exec1               D: ss-  A: -  F: -
 unix:exec2               D: sss-  A: -  F: -
 unix:exec3               D: ssss-  A: -  F: -
+unix:execute             D: s-  A: -  F: -
 unix:exit                D: n-  A: -  F: -
 unix:for-each-file       D: q-  A: -  F: -
 unix:fork                D: -n  A: -  F: -

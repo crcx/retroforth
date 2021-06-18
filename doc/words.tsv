@@ -88,9 +88,9 @@ a:fetch	an-n	-	-	Fetch the value stored at the specified index in the specified 
 a:filter	aq-b	-	-	For each item in the initial array, run the specified quote. If the quote returns `TRUE`, copy the item into a new array. If `FALSE`, discard it. Returns a pointer to the new array.			class:word	{n/a}	{n/a}	a	all	
 a:for-each	aq-	-	-	Execute the quote once for each item in the array.			class:word	{n/a}	{n/a}	a	all	
 a:from-string	s-a	-	-	Create a new array with the characters in the source string.			class:word	{n/a}	{n/a}	a	all	
+a:index	an-n	-	-	Return the location of the first instance of the specified value in the array.			class:word	{n/a}	{n/a}	a	all	
 a:index-of	an-n	-	-	Deprecated. Use `a:index` instead. Return the location of the first instance of the specified value in the array.			class:word	{n/a}	{n/a}	a	all	
 a:index-of-string	as-n	-	-	Deprecated. Use `a:index/string` instead. Return the location of the first instance of the specified string in the array.			class:word	{n/a}	{n/a}	a	all	
-a:index	an-n	-	-	Return the location of the first instance of the specified value in the array.			class:word	{n/a}	{n/a}	a	all	
 a:index/string	as-n	-	-	Return the location of the first instance of the specified string in the array.			class:word	{n/a}	{n/a}	a	all	
 a:left	an-a	-	-	Return a new array containing the first `n` values from the source array.			class:word	{n/a}	{n/a}	a	all	
 a:length	a-n	-	-	Return the length of a array.			class:word	{n/a}	{n/a}	a	all	
@@ -499,6 +499,7 @@ unix:exec0	s-	-	-	Execute a process by running the application specified by s.		
 unix:exec1	ss-	-	-	Execute a process by running the application specified by s1. Pass s2 as an argument.			class:word	{n/a}	{n/a}	unix	rre	
 unix:exec2	sss-	-	-	Execute a process by running the application specified by s1. Pass s2 and s3 as arguments.			class:word	{n/a}	{n/a}	unix	rre	
 unix:exec3	ssss-	-	-	Execute a process by running the application specified by s1. Pass s2, s3, and s4 as arguments.			class:word	{n/a}	{n/a}	unix	rre	
+unix:execute	s-	-	-	Runs another application and return after execution is completed. This does not invoke the shell like `unix:system` and does not support globbing.			class:word	  'ls_-lh_/etc unix:system	{n/a}	unix	rre	
 unix:exit	n-	-	-	Exit the current process, returning the specified return code.			class:word	{n/a}	{n/a}	unix	rre	
 unix:for-each-file	q-	-	-	Run a quote once for each file or subdirectory in the current directory. The quote will receive the file name as a string and should consume this and return nothing on the stack.			class:word	{n/a}	{n/a}	unix	rre	
 unix:fork	-n	-	-	Fork the current process. Returns a PID.			class:word	{n/a}	{n/a}	unix	rre	

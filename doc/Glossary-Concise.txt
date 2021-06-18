@@ -268,10 +268,16 @@ Execute the quote once for each item in the array.
 a:from-string            D: s-a  A: -  F: -
 Create a new array with the characters in the source string.
 
-a:index-of               D: an-n  A: -  F: -
+a:index                  D: an-n  A: -  F: -
 Return the location of the first instance of the specified value in the array.
 
+a:index-of               D: an-n  A: -  F: -
+Deprecated. Use `a:index` instead. Return the location of the first instance of the specified value in the array.
+
 a:index-of-string        D: as-n  A: -  F: -
+Deprecated. Use `a:index/string` instead. Return the location of the first instance of the specified string in the array.
+
+a:index/string           D: as-n  A: -  F: -
 Return the location of the first instance of the specified string in the array.
 
 a:left                   D: an-a  A: -  F: -
@@ -1205,9 +1211,15 @@ s:hash                   D: s-n  A: -  F: -
 Calculate a hash value for a string. This uses the djb2 algorithm.
 
 s:index-of               D: sc-n  A: -  F: -
-Return the location of the first instance of the specified character in the string.
+Deprecated. Use `s:index/char` instead. Return the location of the first instance of the specified character in the string.
 
 s:index-of-string        D: ss-n  A: -  F: -
+Derpecated. Use `s:index/string` instead. Return the location of the first instance of the specified substring (s2) in the string (s1). Returns -1 if not found.
+
+s:index/char             D: sc-n  A: -  F: -
+Return the location of the first instance of the specified character in the string.
+
+s:index/string           D: ss-n  A: -  F: -
 Return the location of the first instance of the specified substring (s2) in the string (s1). Returns -1 if not found.
 
 s:keep                   D: s-s  A: -  F: -
@@ -1488,6 +1500,9 @@ Execute a process by running the application specified by s1. Pass s2 and s3 as 
 
 unix:exec3               D: ssss-  A: -  F: -
 Execute a process by running the application specified by s1. Pass s2, s3, and s4 as arguments.
+
+unix:execute             D: s-  A: -  F: -
+Runs another application and return after execution is completed. This does not invoke the shell like `unix:system` and does not support globbing.
 
 unix:exit                D: n-  A: -  F: -
 Exit the current process, returning the specified return code.

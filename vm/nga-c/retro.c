@@ -708,6 +708,42 @@ void unix_fork() {
   stack_push(fork());
 }
 
+void unix_run_external() {
+  char *line, *args[128];
+  int i, status;
+  pid_t pid;
+
+  char **argv = args;
+  line = string_extract(stack_pop());
+
+  for(i = 0; i < 128; i++)
+    args[i] = 0;
+
+  while (*line != '\0') {
+    while (*line == ' ' || *line == '\t' || *line == '\n')
+      *line++ = '\0';
+    *argv++ = line;
+    while (*line != '\0' && *line != ' ' && *line != '\t' && *line != '\n')
+      line++;
+  }
+
+  if ((pid = fork()) < 0) {
+    printf("*** ERROR: forking child process failed\n");
+    exit(1);
+  }
+  else if (pid == 0) {
+    int e = execvp(*args, args);
+    if (e < 0) {
+      printf("*** ERROR: exec failed with %d\n", e);
+      exit(1);
+    }
+  } else {
+  while (wait(&status) != pid)
+    ;
+  }
+}
+
+
 /*---------------------------------------------------------------------
   UNIX provides `execl` to execute a file, with various forms for
   arguments provided.
@@ -807,11 +843,11 @@ Handler UnixActions[] = {
   unix_system,    unix_fork,       unix_exec0,   unix_exec1,   unix_exec2,
   unix_exec3,     unix_exit,       unix_getpid,  unix_wait,    unix_kill,
   unix_open_pipe, unix_close_pipe, unix_write,   unix_chdir,   unix_getenv,
-  unix_putenv,    unix_sleep
+  unix_putenv,    unix_sleep,      unix_run_external
 };
 
 void query_unix() {
-  stack_push(2);
+  stack_push(3);
   stack_push(8);
 }
 

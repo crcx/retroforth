@@ -96,6 +96,11 @@ seconds.
 ~~~
 
 ~~~
+:unix:execute (s-) #17 io:unix-syscall ;
+~~~
+
+
+~~~
 (s-s)  :unix:pipe
          file:R unix:popen &file:read-line &unix:pclose bi ;
 ~~~
