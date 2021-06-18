@@ -3344,12 +3344,12 @@ As an example, with an implementation providing an output source,
 a block storage system, and keyboard:
 
     ie    will return `3` since there are three i/o devices
-    0 iq  will return 0 0, since the first device is a screen (0)
-          with a version of 0
+    0 iq  will return 0 0, since the first device is a screen
+          (device class 0, version of 0)
     1 iq  will return 1 3, since the second device is a block
-          storage (3), with a version of 1
+          storage (class 3), with a version of 1
     2 iq  will return 0 1, since the third device is a keyboard
-          (1), with a version of 0
+          (class 1), with a version of 0
 
 In this case, some interactions can be defined:
 
@@ -3361,12 +3361,12 @@ In this case, some interactions can be defined:
     i liiire..
     d 2
 
-Setup the stack, push the device ID to the stack, and then use
+Setup the stack, push the device handle to the stack, and then use
 `ii` to invoke the interaction.
 
 A Retro system requires one I/O device (a generic output for a
 single character). This must be the first device, and must have
-a device ID of 0.
+a device class of 0.
 
 All other devices are optional and can be specified in any order.
 
