@@ -3,7 +3,7 @@
 I/O devices on Nga are exposed via three instructions:
 
     ie  enumerate i/o devices
-    iq  query i/o device
+    iq  query i/o device for class and version
     ii  invoke i/o interaction
 
 All devices are registered with the VM. How this occurs is
@@ -21,13 +21,13 @@ can then query these by passing the device number to `iq`.
 ## Query Devices
 
 Use `iq` to query an attached device. This will return two values,
-a device identifer and a revision number.
+a device class and a revision number.
 
-The device identifier will be the top value on the stack.
+The device class will be the top value on the stack.
 
 ## Invoking a Device
 
-You can trigger an I/O operation by passing the device number to
+You can trigger an I/O operation by passing the device handle to
 the `ii` instruction.
 
 E.g., to display a character (ASCII code 98 in this case):
@@ -36,16 +36,16 @@ E.g., to display a character (ASCII code 98 in this case):
     d 98
     d 0
 
-Be sure to pass the device number, not the device identifier.
+Be sure to pass the device handle, not the device class.
 
-## Device Identifiers
+## Device Class
 
-Ultimately device identifiers are implementation-specific, but the
-most common system (Nga on Unix) provides or reserves the following:
+Ultimately devices are implementation-specific, but the
+standard system provides or reserves the following:
 
-     ID  | Device Type      | Notes                      |
+     ID  | Device Class     | Notes                      |
     -----+------------------+----------------------------+
-    0000 | Generic Output   | Always present as device 0 |
+    0000 | Generic Output   | Always present as handle 0 |
     0001 | Keyboard         |                            |
     0002 | Floating Point   |                            |
     0003 | Block Storage    | Raw, 1024 cell blocks      |
@@ -59,8 +59,8 @@ most common system (Nga on Unix) provides or reserves the following:
     1000 | Image Saving     |                            |
 
 It must be noted here that nothing forces devices to use these
-identifiers, and one must take care to use an Nga implementation
-that provides the devices they need.
+class identifiers, and one must take care to use an Nga
+implementation that provides the devices they need.
 
 ## Device Revisions
 
@@ -69,7 +69,7 @@ detection of this, the query functionality provides a revision number.
 Your code can use this to ensure that the device provided supports
 the level of functionality you need.
 
-## Nga/Retro-Unix Device Details
+## Device Class Details
 
 ### 0000: Generic Output
 
@@ -180,8 +180,8 @@ As an example, to add a device that has two functions, I might do:
     }
 
     void query_device() {
-      stack_push(0);    /* Revision  */
-      stack_push(1234); /* Device ID */
+      stack_push(0);    /* Revision     */
+      stack_push(1234); /* Device Class */
     }
 
 Then add pointers to `io_device` to `IO_deviceHandlers` and

@@ -12,23 +12,26 @@ a block storage system, and keyboard:
     io:enumerate    will return `3` since there are three
                     i/o devices
     #0 io:query     will return 0 0, since the first device
-                    is a screen (type 0) with a version of 0
+                    is a screen (device class 0) with a version
+                    of 0
     #1 io:query     will return 1 3, since the second device is
-                    block storage (type 3), with a version of 1
+                    block storage (device class 3), with a version
+                    of 1
     #2 io:query     will return 0 1, since the last device is a
-                    keyboard (type 1), with a version of 0
+                    keyboard (device class 1), with a version
+                    of 0
 
 In this case, some interactions can be defined:
 
     :c:put #0 io:invoke ;
     :c:get #2 io:invoke ;
 
-Setup the stack, push the device ID, and then use `io:invoke`
+Setup the stack, push the device handle, and then use `io:invoke`
 to invoke the interaction.
 
 A Retro system requires one I/O device (a generic output for a
 single character). This must be the first device, and must have
-a device ID of 0.
+a device class and handle of 0.
 
 All other devices are optional and can be specified in any
 order.

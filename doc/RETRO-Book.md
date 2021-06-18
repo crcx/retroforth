@@ -1296,13 +1296,13 @@ and return a new value.
 
 ## Search
 
-RETRO provides `a:contains?` and `a:contains-string?`
+RETRO provides `a:contains?` and `a:contains/string?`
 to search an array for a value (either a number or string) and
 return either TRUE or FALSE.
 
 ```
 #100  { #1 #2 #3 } a:contains?
-'test { 'abc 'def 'test 'ghi } a:contains-string?
+'test { 'abc 'def 'test 'ghi } a:contains/string?
 ```
 
 ## Implementation
@@ -2586,10 +2586,10 @@ this automatically.
 
 RETRO provides four words for searching within a string.
 
-* `s:contains-char?` 
-* `s:contains-string?`
-* `s:index-of`
-* `s:index-of-string`
+* `s:contains/char?`
+* `s:contains/string?`
+* `s:index/char`
+* `s:index/string`
 
 ## Comparisons
 
@@ -3078,10 +3078,9 @@ out the `---reveal---`.
 ```
 {{
   :a #3 ;
-  : b a dup * ;
+  :b a dup * ;
 }}
 ```
-
 
 ## Notes
 
@@ -3101,8 +3100,14 @@ example:
 In this, after `}}` closes the area, the `:a #2 ;` is hidden and
 the `s:evaluate` will find the `:a #1 ;` when `b` is run.
 
-If you have a `---reveal---` with no definitions following, you
-will experience memory corruption.
+## A Word of Warning
+
+Use of these words can result in a corrupt dictionary and system
+crashes. Specifically, use of `---reveal---` with an empty private
+or public section will result in dictionary corruption.
+
+If you don't need private words, don't put them in a scope. And if
+you don't need public words, don't include the `---reveal---`.
 
 # The Stacks
 
@@ -3414,23 +3419,26 @@ a block storage system, and keyboard:
     io:enumerate    will return `3` since there are three
                     i/o devices
     #0 io:query     will return 0 0, since the first device
-                    is a screen (type 0) with a version of 0
+                    is a screen (device class 0) with a version
+                    of 0
     #1 io:query     will return 1 3, since the second device is
-                    block storage (type 3), with a version of 1
+                    block storage (device class 3), with a version
+                    of 1
     #2 io:query     will return 0 1, since the last device is a
-                    keyboard (type 1), with a version of 0
+                    keyboard (device class 1), with a version
+                    of 0
 
 In this case, some interactions can be defined:
 
     :c:put #0 io:invoke ;
     :c:get #2 io:invoke ;
 
-Setup the stack, push the device ID, and then use `io:invoke`
+Setup the stack, push the device handle, and then use `io:invoke`
 to invoke the interaction.
 
 A Retro system requires one I/O device (a generic output for a
 single character). This must be the first device, and must have
-a device ID of 0.
+a device class and handle of 0.
 
 All other devices are optional and can be specified in any
 order.
@@ -3441,7 +3449,7 @@ order.
 I/O devices on Nga are exposed via three instructions:
 
     ie  enumerate i/o devices
-    iq  query i/o device
+    iq  query i/o device for class and version
     ii  invoke i/o interaction
 
 All devices are registered with the VM. How this occurs is
@@ -3459,13 +3467,13 @@ can then query these by passing the device number to `iq`.
 ## Query Devices
 
 Use `iq` to query an attached device. This will return two values,
-a device identifer and a revision number.
+a device class and a revision number.
 
-The device identifier will be the top value on the stack.
+The device class will be the top value on the stack.
 
 ## Invoking a Device
 
-You can trigger an I/O operation by passing the device number to
+You can trigger an I/O operation by passing the device handle to
 the `ii` instruction.
 
 E.g., to display a character (ASCII code 98 in this case):
@@ -3474,16 +3482,16 @@ E.g., to display a character (ASCII code 98 in this case):
     d 98
     d 0
 
-Be sure to pass the device number, not the device identifier.
+Be sure to pass the device handle, not the device class.
 
-## Device Identifiers
+## Device Class
 
-Ultimately device identifiers are implementation-specific, but the
-most common system (Nga on Unix) provides or reserves the following:
+Ultimately devices are implementation-specific, but the
+standard system provides or reserves the following:
 
-     ID  | Device Type      | Notes                      |
+     ID  | Device Class     | Notes                      |
     -----+------------------+----------------------------+
-    0000 | Generic Output   | Always present as device 0 |
+    0000 | Generic Output   | Always present as handle 0 |
     0001 | Keyboard         |                            |
     0002 | Floating Point   |                            |
     0003 | Block Storage    | Raw, 1024 cell blocks      |
@@ -3497,8 +3505,8 @@ most common system (Nga on Unix) provides or reserves the following:
     1000 | Image Saving     |                            |
 
 It must be noted here that nothing forces devices to use these
-identifiers, and one must take care to use an Nga implementation
-that provides the devices they need.
+class identifiers, and one must take care to use an Nga
+implementation that provides the devices they need.
 
 ## Device Revisions
 
@@ -3507,7 +3515,7 @@ detection of this, the query functionality provides a revision number.
 Your code can use this to ensure that the device provided supports
 the level of functionality you need.
 
-## Nga/Retro-Unix Device Details
+## Device Class Details
 
 ### 0000: Generic Output
 
@@ -3618,8 +3626,8 @@ As an example, to add a device that has two functions, I might do:
     }
 
     void query_device() {
-      stack_push(0);    /* Revision  */
-      stack_push(1234); /* Device ID */
+      stack_push(0);    /* Revision     */
+      stack_push(1234); /* Device Class */
     }
 
 Then add pointers to `io_device` to `IO_deviceHandlers` and
@@ -4464,7 +4472,7 @@ will allow for this.
     ~~~
     {{
       :fields        @Dictionary , (link) , (xt) , (class) ;
-      :invalid-name? dup ASCII:SPACE s:contains-char? ;
+      :invalid-name? dup ASCII:SPACE s:contains/char? ;
       :rewrite       [ ASCII:SPACE [ $_ ] case ] s:map ;
       :entry         here &call dip !Dictionary ;
       [ [ fields invalid-name? &rewrite if s, (name) ] entry ]
