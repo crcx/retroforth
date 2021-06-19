@@ -62,6 +62,8 @@
 
 ## Toolchain
 
+- fixed a bug in retro-document causing it to exclude sigils
+
 ## VM
 
 - all
@@ -79,6 +81,11 @@
   - retro-runtime.c now based on standard retro.c
   - changed behavior of -t command line argument (Rick)
   - fixed a bug in `script:current-line`
+
+- nga-c (non-libc)
+
+  - updated to base on latest repl
+  - now supports openbsd/amd64
 
 - nga-cxx
 
@@ -102,6 +109,7 @@
 - removed reference to the no longer existing "ok" prompt
 - add a note that mentions that Retro does not display a prompt
 - fixed typos (rick_carlino)
+- clarifications around device terminology
 
 ## Testing
 
