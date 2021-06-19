@@ -29,10 +29,10 @@ freebsd-amd64: common bsd-amd64
 	cc -m64 -c retro.c
 	ld -nostdlib -m elf_x86_64_fbsd bsd-amd64.o retro.o -o bin/retro
 
-openbsd-amd64: common bsd-amd64
+openbsd-amd64: common
 	cc -m64 -c retro.c
 	as openbsd.s -o openbsd.o
-	ld -nostdlib -no-pie -m elf_x86_64 openbsd.o bsd-amd64.o retro.o -o bin/retro
+	ld -nostdlib -no-pie -m elf_x86_64 openbsd.o retro.o -o bin/retro
 
 macos-amd64: common
 	cc -m64 -fno-pie -c retro.c
