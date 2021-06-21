@@ -146,17 +146,6 @@ Execute the quotation if the flag is `FALSE`.
 Class: class:word | Namespace: global | Interface Layer: all
 ------------------------------------------------------------------------
 
--if:
-
-  Data:  f-
-  Addr:  -
-  Float: -
-
-Execute the remainder of the word or quotation if the flag is `FALSE`. If `TRUE`, exit the word. This should be used inside a definition only.
-
-Class: class:macro | Namespace: global | Interface Layer: all
-------------------------------------------------------------------------
-
 -if;
 
   Data:  fq-
@@ -3570,6 +3559,17 @@ Trigger a floating-point operation. This is not intended to be used directly.
 Class: class:word | Namespace: float | Interface Layer: rre
 ------------------------------------------------------------------------
 
+forever
+
+  Data:  q-
+  Addr:  -
+  Float: -
+
+Run quotation in an endless loop.
+
+Class: class:word | Namespace: a | Interface Layer: all
+------------------------------------------------------------------------
+
 gopher:get
 
   Data:  asns-n
@@ -3667,17 +3667,6 @@ if
 Execute the quote if the flag is `TRUE`.
 
 Class: class:word | Namespace: global | Interface Layer: all
-------------------------------------------------------------------------
-
-if:
-
-  Data:  f-
-  Addr:  -
-  Float: -
-
-Execute the rest of the word or quotation if the flag is `TRUE`. If `FALSE`, exit the word. This should be used inside a definition only.
-
-Class: class:macro | Namespace: global | Interface Layer: all
 ------------------------------------------------------------------------
 
 if;

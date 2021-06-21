@@ -466,6 +466,12 @@ is manually translated to assembly and inlined for performance.
 :until (q-) [ repeat \dupuca.. \poswlixo `-1 0; drop again ] call drop ;
 ~~~
 
+`forever` provides an endless loop.
+
+~~~
+:forever (q-) repeat [ call ] sip again ;
+~~~
+
 The `times` combinator runs a quote (n) times.
 
 This is defined using inlined Nga machine code. It corresponds
@@ -549,8 +555,6 @@ which I'll provide here.
 ~~~
 :if;   (qf-)  over &if  dip     0; pop drop-pair ;
 :-if;  (qf-)  over &-if dip not 0; pop drop-pair ;
-:if:   (f-)   (zr...... #25 , (dr...... #3 , ; immediate
-:-if:  (f-)   (lixozr.. #1644289 , #-1 , (dr...... #3 , ; immediate
 ~~~
 
 ## More Stack Shufflers.

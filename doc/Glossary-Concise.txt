@@ -31,9 +31,6 @@ Compare two values for inequality. Returns `TRUE` if they are not equal or `FALS
 -if                      D: fq-  A: -  F: -
 Execute the quotation if the flag is `FALSE`.
 
--if:                     D: f-  A: -  F: -
-Execute the remainder of the word or quotation if the flag is `FALSE`. If `TRUE`, exit the word. This should be used inside a definition only.
-
 -if;                     D: fq-  A: -  F: -
 Execute the quotation if the flag is `FALSE`. If false, also exit the word.
 
@@ -928,6 +925,9 @@ Write a character to the file represented by the handle.
 float:operation          D: ...n-  A: -  F: -
 Trigger a floating-point operation. This is not intended to be used directly.
 
+forever                  D: q-  A: -  F: -
+Run quotation in an endless loop.
+
 gopher:get               D: asns-n  A: -  F: -
 Takes an address, a server, a port, and a selector. Fetch the resource and store it at address. Return the number of bytes received.
 
@@ -951,9 +951,6 @@ Assemble the instructions specified by the string into the current assembly scop
 
 if                       D: fq-  A: -  F: -
 Execute the quote if the flag is `TRUE`.
-
-if:                      D: f-  A: -  F: -
-Execute the rest of the word or quotation if the flag is `TRUE`. If `FALSE`, exit the word. This should be used inside a definition only.
 
 if;                      D: fq-  A: -  F: -
 Execute the quotation if the flag is `TRUE`. If true, also exit the word.

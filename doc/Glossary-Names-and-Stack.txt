@@ -9,7 +9,6 @@ $                        D: -c  A: -  F: -
 ---reveal---             D: -  A: -  F: -
 -eq?                     D: nn-f  A: -  F: -
 -if                      D: fq-  A: -  F: -
--if:                     D: f-  A: -  F: -
 -if;                     D: fq-  A: -  F: -
 /                        D: nm-q  A: -  F: -
 //                       D: -  A: -  F: -
@@ -308,6 +307,7 @@ file:spew                D: ss-  A: -  F: -
 file:tell                D: h-n  A: -  F: -
 file:write               D: ch-  A: -  F: -
 float:operation          D: ...n-  A: -  F: -
+forever                  D: q-  A: -  F: -
 gopher:get               D: asns-n  A: -  F: -
 gt?                      D: nn-f  A: -  F: -
 gteq?                    D: nn-f  A: -  F: -
@@ -316,7 +316,6 @@ hex                      D: -  A: -  F: -
 hook                     D: -  A: -  F: -
 i                        D: s-  A: -  F: -
 if                       D: fq-  A: -  F: -
-if:                      D: f-  A: -  F: -
 if;                      D: fq-  A: -  F: -
 image:save               D: s-  A: -  F: -
 immediate                D: -  A: -  F: -

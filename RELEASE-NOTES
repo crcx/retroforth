@@ -11,7 +11,6 @@
 
 ## Added
 
-- `if:` and `-if:`
 - `c:get` to retro.forth
 - `s:get` to retro.forth
 - `listen` to retro.forth
@@ -20,6 +19,7 @@
 - added `hex`
 - added `octal`
 - added `binary`
+- added `forever`
 
 ## Renamed
 
