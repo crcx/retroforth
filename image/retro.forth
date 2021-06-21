@@ -1823,6 +1823,8 @@ generic "keyboard" input, the basic listener here can be used.
                 [ c:get dup buffer:add check-bs eol? ] until
                   buffer:start s:chop ] buffer:preserve ;
 
+  :bye (-) \ha...... ;
+
   :listen (-)
     repeat s:get valid? &interpret &drop choose again ;
 }}

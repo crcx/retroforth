@@ -1411,7 +1411,7 @@ bye
 
 Exit Retro.
 
-Class: class:word | Namespace: global | Interface Layer: rre
+Class: class:word | Namespace: global | Interface Layer: all
 ------------------------------------------------------------------------
 
 c:-consonant?

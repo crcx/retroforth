@@ -120,7 +120,7 @@ buffer:preserve	q-	-	-	Save and restore the current buffer before and after exec
 buffer:set	a-	-	-	Assign a new buffer as the current one.			class:word	{n/a}	{n/a}	buffer	all	
 buffer:size	-n	-	-	Return the number of cells in the buffer.			class:word	{n/a}	{n/a}	buffer	all	
 buffer:start	-a	-	-	Return the start address of the current buffer.			class:word	{n/a}	{n/a}	buffer	all	
-bye	-	-	-	Exit Retro.			class:word	{n/a}	{n/a}	global	rre	
+bye	-	-	-	Exit Retro.			class:word	{n/a}	{n/a}	global	all	
 c:-consonant?	c-f	-	-	Return TRUE if character is a not consonant or FALSE otherwise.			class:word	{n/a}	{n/a}	c	all	
 c:-digit?	c-f	-	-	Return TRUE if character is a not numeric digit or FALSE otherwise.			class:word	{n/a}	{n/a}	c	all	
 c:-lowercase?	c-f	-	-	Return TRUE if character is not lowercase or FALSE otherwise.			class:word	{n/a}	{n/a}	c	all	

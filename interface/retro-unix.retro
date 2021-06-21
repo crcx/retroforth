@@ -57,8 +57,6 @@ startup flags passed.
 ~~~
 'NoEcho var
 
-:bye \ha...... ;
-
 {{
   'EOT var
   FALSE 'Ignoring var-n

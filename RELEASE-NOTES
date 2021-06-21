@@ -14,6 +14,7 @@
 - `c:get` to retro.forth
 - `s:get` to retro.forth
 - `listen` to retro.forth
+- `bye` to retro.forth
 - added `Base`
 - added `decimal`
 - added `hex`

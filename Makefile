@@ -18,7 +18,7 @@ all: build
 
 help:
 
-build: dirs toolchain ngaImage bin/retro bin/retro-describe
+build: dirs toolchain ngaImage bin/retro bin/retro-repl bin/retro-describe
 
 optional: build bin/retro-repl
 
