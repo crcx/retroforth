@@ -57,7 +57,7 @@ startup flags passed.
 ~~~
 'NoEcho var
 
-:bye #0 unix:exit ;
+:bye \ha...... ;
 
 {{
   'EOT var
@@ -70,9 +70,9 @@ startup flags passed.
                      [ ASCII:SPACE eq? ] tri or or ;
   (c-f)  :eol?       @EOT [ ASCII:CR eq? ] [ ASCII:LF eq? ] bi or ;
   (s-sf) :valid?     dup s:length n:strictly-positive? ;
-  (c-c)  :check-eof  dup [ #-1 eq? ] [ ASCII:EOT eq? ] bi or if: bye ;
+  (c-c)  :check-eof  dup [ #-1 eq? ] [ ASCII:EOT eq? ] bi or [ bye ] if ;
          :bs         buffer:get buffer:get drop-pair ;
-  (c-c)  :check-bs   dup [ ASCII:BS eq? ] [ ASCII:DEL eq? ] bi or if: bs ;
+  (c-c)  :check-bs   dup [ ASCII:BS eq? ] [ ASCII:DEL eq? ] bi or [ bs ] if ;
   (c-c)  :check      check-eof check-bs ;
   (-c)   :character  c:get dup buffer:add ;
   (q-)   :buffer     [ TIB buffer:set call buffer:start ] buffer:preserve ;
