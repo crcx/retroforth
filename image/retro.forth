@@ -445,13 +445,13 @@ Apply q to x, y, and z.
 
 Execute quote until quote returns a flag of 0. In high level code:
 
-  :while  (q-)
+  :while  (q(-f)-)
     [ repeat dup push call pop swap 0; drop again ] call drop ;
 
 This is manually translated to assembly and inlined for performance.
 
 ~~~
-:while  (q-) [ repeat \dupuca.. \poswzr.. drop again ] call drop ;
+:while  (q(-f)-) [ repeat \dupuca.. \poswzr.. drop again ] call drop ;
 ~~~
 
 Execute quote until quote returns a non-zero flag. As with `while`

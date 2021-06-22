@@ -10,9 +10,9 @@ $                        D: -c  A: -  F: -
 -eq?                     D: nn-f  A: -  F: -
 -if                      D: fq-  A: -  F: -
 -if;                     D: fq-  A: -  F: -
-/                        D: nm-q  A: -  F: -
+/                        D: nm-v  A: -  F: -
 //                       D: -  A: -  F: -
-/mod                     D: nm-rq  A: -  F: -
+/mod                     D: nm-rv  A: -  F: -
 0;                       D: n-n || n-  A: -  F: -
 ;                        D: -  A: -  F: -
 ?dup                     D: n-nn || n-n  A: -  F: -
@@ -454,7 +454,7 @@ sigil:\                  D: s-  A: -  F: -
 sigil:^                  D: s-  A: -  F: -
 sigil:`                  D: s-  A: -  F: -
 sigil:|                  D: s-  A: -  F: -
-sip                      D: nq-n  A: -  F: -
+sip                      D: nq(?n-?)-n  A: -  F: -
 socket:accept            D: n-nn  A: -  F: -
 socket:bind              D: sn-nn  A: -  F: -
 socket:close             D: n-  A: -  F: -
@@ -514,7 +514,7 @@ unix:sleep               D: n-  A: -  F: -
 unix:slurp-pipe          D: as-n  A: -  F: -
 unix:system              D: s-  A: -  F: -
 unix:wait                D: -n  A: -  F: -
-until                    D: q-  A: -  F: -
+until                    D: q(-f)-  A: -  F: -
 v:dec                    D: a-  A: -  F: -
 v:dec-by                 D: na-  A: -  F: -
 v:inc                    D: a-  A: -  F: -
@@ -526,7 +526,7 @@ v:preserve               D: aq-  A: -  F: -
 v:update                 D: aq-  A: -  F: -
 var                      D: s-  A: -  F: -
 var-n                    D: ns-  A: -  F: -
-while                    D: q-  A: -  F: -
+while                    D: q(-f)-  A: -  F: -
 xor                      D: mn-o  A: -  F: -
 {                        D: -  A: -  F: -
 {{                       D: -  A: -  F: -

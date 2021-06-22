@@ -10,9 +10,9 @@ $	-c	-	-	Return ASCII:NUL (0).			class:macro	{n/a}	{n/a}	global	all
 -eq?	nn-f	-	-	Compare two values for inequality. Returns `TRUE` if they are not equal or `FALSE` otherwise.			class:primitive	    #1 #2 -eq?\n    $a $b -eq?	{n/a}	global	all	
 -if	fq-	-	-	Execute the quotation if the flag is `FALSE`.			class:word	{n/a}	{n/a}	global	all	
 -if;	fq-	-	-	Execute the quotation if the flag is `FALSE`. If false, also exit the word.			class:word	{n/a}	{n/a}	global	all	
-/	nm-q	-	-	Divide `n` by `m` and return the integer part of the quotient.			class:word	{n/a}	{n/a}	global	all	
+/	nm-v	-	-	Divide `n` by `m` and return the integer part of the quotient.			class:word	{n/a}	{n/a}	global	all	
 //	-	-	-	"Ignore any tokens remaining on the current line. Works with files and the interactive ""listener""."			class:word	{n/a}	{n/a}	global	rre	
-/mod	nm-rq	-	-	Divide `n` by `m` and return the integer part of the quotient and remainder.			class:primitive	{n/a}	{n/a}	global	all	
+/mod	nm-rv	-	-	Divide `n` by `m` and return the integer part of the quotient and remainder.			class:primitive	{n/a}	{n/a}	global	all	
 0;	n-n || n-	-	-	If `n` is zero, drop `n` and exit the current word. If non-zero, leave `n` alone and allow execution to continue.			class:macro	{n/a}	{n/a}	global	all	
 ;	-	-	-	End the current definition.			class:macro	{n/a}	{n/a}	global	all	
 ?dup	n-nn || n-n	-	-	Duplicate top value on stack if not zero. If zero, do nothing.			class:word	    #1 ?dup\n    #0 ?dup	{n/a}	global	all	
@@ -454,7 +454,7 @@ sigil:\	s-	-	-	Process token as an instruction bundle.	Discard the string.	Assem
 sigil:^	s-	-	-	Process token as a function reference.	Discard the string.	Comma the XT of the word into the current definition.	class:macro	{n/a}	{n/a}	sigil	all	
 sigil:`	s-	-	-	Process token as a bytecode.	Discard the string.	Convert the string to a number and use `,` to inline it into the current definition.	class:macro	{n/a}	{n/a}	sigil	all	
 sigil:|	s-	-	-	POSTPONE equivalent.	Discard the string.	Convert the string to a number and use `,` to inline it into the current definition.	class:macro	{n/a}	{n/a}	sigil	all	
-sip	nq-n	-	-	Run quote. After execution completes, put a copy of n back on top of the stack.			class:word	{n/a}	{n/a}	global	all	
+sip	nq(?n-?)-n	-	-	Run quote. After execution completes, put a copy of n back on top of the stack.			class:word	{n/a}	{n/a}	global	all	
 socket:accept	n-nn	-	-	Begin accepting connections. Returns a new socket and an error code.			class:word	{n/a}	{n/a}	socket	rre	
 socket:bind	sn-nn	-	-	Bind a socket to a port. The port should be a string. Returns 0 if successful or -1 otherwise and an error code.			class:word	{n/a}	{n/a}	socket	rre	
 socket:close	n-	-	-	Close a socket.			class:word	{n/a}	{n/a}	socket	rre	
@@ -514,7 +514,7 @@ unix:sleep	n-	-	-	Sleep for the specified number of seconds.			class:word	{n/a}	
 unix:slurp-pipe	as-n	-	-	Open a pipe. Read all output from the pipe (until ASCII:NULL) and store in the specified buffer. Return the number of bytes read.			class:word	{n/a}	{n/a}	unix	rre	
 unix:system	s-	-	-	Runs another application using the system shell and returns after execution is completed.			class:word	  'ls_-lh_/etc unix:system	{n/a}	unix	rre	
 unix:wait	-n	-	-	Waits for a child process to complete. This maps to the wait() system call.			class:word	{n/a}	{n/a}	unix	rre	
-until	q-	-	-	Execute quote repeatedly while the quote returns a value of `FALSE`. The quote should return a flag of either `TRUE` or `FALSE`, though `until` will treat any non-zero value as `TRUE`.			class:word	    #10 [ dup n:put nl n:dec dup n:zero? ] until	{n/a}	global	all	
+until	q(-f)-	-	-	Execute quote repeatedly while the quote returns a value of `FALSE`. The quote should return a flag of either `TRUE` or `FALSE`, though `until` will treat any non-zero value as `TRUE`.			class:word	    #10 [ dup n:put nl n:dec dup n:zero? ] until	{n/a}	global	all	
 v:dec	a-	-	-	Decrement the value stored at the specified address by 1.			class:word	{n/a}	{n/a}	v	all	
 v:dec-by	na-	-	-	Decrement the value stored at the specified address by the specified value.			class:word	{n/a}	{n/a}	v	all	
 v:inc	a-	-	-	Increment the value stored at the specified address by 1.			class:word	{n/a}	{n/a}	v	all	
@@ -526,7 +526,7 @@ v:preserve	aq-	-	-	Make a copy of the value at the address, then run the quote. 
 v:update	aq-	-	-	Fetch a value from the specified address, then run the quotation with this value on the stack. Afterwards, store the returned value at the original address.			class:word	{n/a}	{n/a}	v	all	
 var	s-	-	-	Create a variable. The variable is initialized to 0.			class:word	    'Base var	{n/a}	global	all	
 var-n	ns-	-	-	Create a variable with the specified initial value.			class:word	    #10 'Base var-n\n	{n/a}	global	all	
-while	q-	-	-	Execute quote repeatedly while the quote returns a `TRUE` value. The quote should return a flag of either `TRUE` or `FALSE`, though `while` will treat any non-zero value as `TRUE`.			class:word	    #10 [ dup n:put nl n:dec dup n:-zero? ] while	{n/a}	global	all	
+while	q(-f)-	-	-	Execute quote repeatedly while the quote returns a `TRUE` value. The quote should return a flag of either `TRUE` or `FALSE`, though `while` will treat any non-zero value as `TRUE`.			class:word	    #10 [ dup n:put nl n:dec dup n:-zero? ] while	{n/a}	global	all	
 xor	mn-o	-	-	Perform a bitwise XOR operation.			class:primitive	{n/a}	{n/a}	global	all	
 {	-	-	-	Begin an array. This is intended to make creating arrays a bit cleaner than using a quotation and `a:counted-results`.			class:word	{n/a}	{n/a}	global	all	
 {{	-	-	-	Begin a lexically scoped area.			class:word	{n/a}	{n/a}	global	all	

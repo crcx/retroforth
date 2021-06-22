@@ -34,13 +34,13 @@ Execute the quotation if the flag is `FALSE`.
 -if;                     D: fq-  A: -  F: -
 Execute the quotation if the flag is `FALSE`. If false, also exit the word.
 
-/                        D: nm-q  A: -  F: -
+/                        D: nm-v  A: -  F: -
 Divide `n` by `m` and return the integer part of the quotient.
 
 //                       D: -  A: -  F: -
 "Ignore any tokens remaining on the current line. Works with files and the interactive ""listener""."
 
-/mod                     D: nm-rq  A: -  F: -
+/mod                     D: nm-rv  A: -  F: -
 Divide `n` by `m` and return the integer part of the quotient and remainder.
 
 0;                       D: n-n || n-  A: -  F: -
@@ -1366,7 +1366,7 @@ Process token as a bytecode.
 sigil:|                  D: s-  A: -  F: -
 POSTPONE equivalent.
 
-sip                      D: nq-n  A: -  F: -
+sip                      D: nq(?n-?)-n  A: -  F: -
 Run quote. After execution completes, put a copy of n back on top of the stack.
 
 socket:accept            D: n-nn  A: -  F: -
@@ -1546,7 +1546,7 @@ Runs another application using the system shell and returns after execution is c
 unix:wait                D: -n  A: -  F: -
 Waits for a child process to complete. This maps to the wait() system call.
 
-until                    D: q-  A: -  F: -
+until                    D: q(-f)-  A: -  F: -
 Execute quote repeatedly while the quote returns a value of `FALSE`. The quote should return a flag of either `TRUE` or `FALSE`, though `until` will treat any non-zero value as `TRUE`.
 
 v:dec                    D: a-  A: -  F: -
@@ -1582,7 +1582,7 @@ Create a variable. The variable is initialized to 0.
 var-n                    D: ns-  A: -  F: -
 Create a variable with the specified initial value.
 
-while                    D: q-  A: -  F: -
+while                    D: q(-f)-  A: -  F: -
 Execute quote repeatedly while the quote returns a `TRUE` value. The quote should return a flag of either `TRUE` or `FALSE`, though `while` will treat any non-zero value as `TRUE`.
 
 xor                      D: mn-o  A: -  F: -
