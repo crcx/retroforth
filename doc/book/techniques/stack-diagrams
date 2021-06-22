@@ -30,3 +30,12 @@ value. And after execution, a single value (m) will be left on
 the stack.
 
 Words with no stack effect have a comment of (-)
+
+For combinators (words consuming quotations), you can include
+a sub-comment indicating the expected stack effect of the
+quote. E.g.,
+
+    (q(-f)-)
+
+Indicates a word consuming a quote and returning nothing. The
+quote should return a flag.

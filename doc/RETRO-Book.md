@@ -1206,6 +1206,15 @@ the stack.
 
 Words with no stack effect have a comment of (-)
 
+For combinators (words consuming quotations), you can include
+a sub-comment indicating the expected stack effect of the
+quote. E.g.,
+
+    (q(-f)-)
+
+Indicates a word consuming a quote and returning nothing. The
+quote should return a flag.
+
 # Working With Arrays
 
 RETRO offers a number of words for operating on statically sized
