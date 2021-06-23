@@ -121,7 +121,7 @@ the description.
   :example1        field:ex1 '{n/a} s:eq? not 0; drop
                    field:ex1 s:format '\nExample_#1:\n\n%s\n\n s:putfmt ;
   :example2        field:ex2 '{n/a} s:eq? not 0; drop
-                   field:ex2 s:format '\nExample_#1:\n\n%s\n\n s:putfmt ;
+                   field:ex2 s:format '\nExample_#2:\n\n%s\n\n s:putfmt ;
 ---reveal---
   :display-result
     name
