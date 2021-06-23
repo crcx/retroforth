@@ -3645,6 +3645,11 @@ Example #1:
 
     :foo hook ;
 
+
+Example #2:
+
+    :bar hook (default_action: n:square n:put nl ;
+
 ------------------------------------------------------------------------
 
 i
@@ -4266,7 +4271,7 @@ Return the length of the string on the pasteboard.
 
 Class: class:word | Namespace: pb | Interface Layer: iOS
 
-Example #1:
+Example #2:
 
 pb
 

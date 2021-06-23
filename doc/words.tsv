@@ -313,7 +313,7 @@ gt?	nn-f	-	-	Compare n1 and n2. Return `TRUE` if n1 is greater than n2, or `FALS
 gteq?	nn-f	-	-	Compare n1 and n2. Return `TRUE` if n1 is greater than or equal to n2, or `FALSE` otherwise.			class:word	{n/a}	{n/a}	global	all	
 here	-a	-	-	Return the next free address in memory.			class:word	{n/a}	{n/a}	global	all	
 hex	-	-	-	Set `Base` to hexadecimal.			class:word	{n/a}	{n/a}	a	all	
-hook	-	-	-	Add a hook point into the current word. This should only be used as the first word in a definition.			class:macro	    :foo hook ;	{n/a}	global	global	
+hook	-	-	-	Add a hook point into the current word. This should only be used as the first word in a definition.			class:macro	    :foo hook ;	    :bar hook (default_action: n:square n:put nl ;	global	global	
 i	s-	-	-	Assemble the instructions specified by the string into the current assembly scope.			class:word	{n/a}	{n/a}	global	all	
 if	fq-	-	-	Execute the quote if the flag is `TRUE`.			class:word	{n/a}	{n/a}	global	all	
 if;	fq-	-	-	Execute the quotation if the flag is `TRUE`. If true, also exit the word.			class:word	{n/a}	{n/a}	global	all	
