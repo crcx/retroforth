@@ -289,12 +289,15 @@ void inst_iq() {
 }
 
 void inst_ii() {
+  int c;
   if (TOS == 0) {
     inst_dr();
     putc(stack_pop(), stdout);
   } else if (TOS == 1) {
+    c = getc(stdin);
+    if (c < 0) exit(0);
     inst_dr();
-    stack_push(getc(stdin));
+    stack_push(c);
   } else {
     inst_dr();
   }
