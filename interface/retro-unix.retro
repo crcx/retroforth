@@ -81,7 +81,7 @@ startup flags passed.
 ---reveal---
   ://    script:ignore-to-eol &Ignoring v:on ; immediate
   :banner  version 'RETRO_12_(%n.%n)\n s:format s:put
-           EOM here - here EOM '%n_Max,_%n_Used,_%n_Free\n s:format s:put ;
+           FREE EOM FREE - EOM '%n_Max,_%n_Used,_%n_Free\n s:format s:put ;
   :listen  @NoEcho [ banner ] -if repeat input process again ;
 }}
 
