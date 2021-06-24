@@ -11,18 +11,21 @@
 
 ## Added
 
-- `c:get` to retro.forth
-- `s:get` to retro.forth
-- `listen` to retro.forth
-- `bye` to retro.forth
-- added `Base`
-- added `decimal`
-- added `hex`
-- added `octal`
-- added `binary`
-- added `forever`
-- added `pack`
-- added `unpack`
+- `c:get`
+- `s:get`
+- `listen`
+- `bye`
+- `Base`
+- `decimal`
+- `hex`
+- `octal`
+- `binary`
+- `forever`
+- `pack`
+- `unpack`
+- `b:to-byte-address`
+- `b:fetch`
+- `b:store`
 
 ## Renamed
 

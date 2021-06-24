@@ -1245,6 +1245,44 @@ Perform a bitwise AND operation between the two provided values.
 Class: class:primitive | Namespace: global | Interface Layer: all
 ------------------------------------------------------------------------
 
+b:fetch
+
+  Data:  a-n
+  Addr:  -
+  Float: -
+
+Fetch the 8-bit value stored at the specified address. Addressing for this is in 8-bit units.
+
+Class: class:word | Namespace: global | Interface Layer: all
+
+Example #1:
+
+{n/a)
+
+------------------------------------------------------------------------
+
+b:store
+
+  Data:  na-
+  Addr:  -
+  Float: -
+
+Store an 8-bit value into the specified address. Addressing for this is in 8-bit units.
+
+Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+b:to-byte-address
+
+  Data:  a-a
+  Addr:  -
+  Float: -
+
+Tronslate a physical address to a byte address.
+
+Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
 banner
 
   Data:  -

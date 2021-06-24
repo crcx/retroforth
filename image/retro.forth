@@ -600,6 +600,80 @@ so they can be inlined. Here's the high level forms:
 :n:between? (nul-) rot [ rot rot n:limit ] sip eq? ;
 ~~~
 
+## Lexical Scope
+
+Now for something tricky: a system for lexical scoping.
+
+The dictionary is a simple linked list. RETRO allows for some
+control over what is visible using the `{{`, `---reveal---`,
+and `}}` words.
+
+As an example:
+
+    {{
+      :increment dup fetch n:inc swap store ;
+      :Value `0 ; data
+    ---reveal---
+      :next-number @Value &Value increment ;
+    }}
+
+Only the `next-number` function will remain visible once `}}`
+is executed.
+
+It's important to note that this only provides a *lexical*
+scope. Any variables are *global* (though the names may be
+hidden), so use `v:preserve` if you need reentrancy.
+
+~~~
+:ScopeList `0 `0 ;
+:{{            (-)
+  d:last dup &ScopeList store-next store ;
+:---reveal---  (-)
+   d:last &ScopeList n:inc store ;
+:}}            (-)
+  &ScopeList fetch-next swap fetch eq?
+  [ @ScopeList !Dictionary ]
+  [ @ScopeList
+    [ &Dictionary repeat
+        \fedufe.. &ScopeList n:inc \fenezr.. drop
+      again ] call store ] choose ;
+~~~
+
+## Byte Addressing
+
+~~~
+{{
+  :Byte ;
+
+  :byte-mask  (xn-b)
+    #255 swap #8 * dup
+    [ n:negate shift and ] dip shift ;
+
+  :replace
+    #0 [ [ [ [ drop @Byte ] dip ] dip ] dip ] case
+    #1 [ [ [ drop @Byte ] dip ] dip ] case
+    #2 [ [ drop @Byte ] dip ] case
+    #3 [ drop @Byte ] case
+    drop ;
+
+---reveal---
+
+  :b:to-byte-address (a-a) #4 * ;
+
+  :b:fetch (a-b)
+    #4 /mod swap
+    #4 /mod
+    rot + fetch swap byte-mask ;
+
+  :b:store (ba-)
+    swap !Byte
+    #4 /mod swap [ dup fetch unpack ] dip
+    replace pack swap store ;
+}}
+~~~
+
+## Variable Operations
+
 Some of the above, like `n:inc`, are useful with variables. But
 it's messy to execute sequences like:
 
@@ -677,45 +751,6 @@ to improve performance.
 :copy  (aan-)
   [ \puduliad `1 \swfepodu \liadpust `1 \po...... ] times
   drop-pair ;
-~~~
-
-## Lexical Scope
-
-Now for something tricky: a system for lexical scoping.
-
-The dictionary is a simple linked list. RETRO allows for some
-control over what is visible using the `{{`, `---reveal---`,
-and `}}` words.
-
-As an example:
-
-    {{
-      :increment dup fetch n:inc swap store ;
-      :Value `0 ; data
-    ---reveal---
-      :next-number @Value &Value increment ;
-    }}
-
-Only the `next-number` function will remain visible once `}}`
-is executed.
-
-It's important to note that this only provides a *lexical*
-scope. Any variables are *global* (though the names may be
-hidden), so use `v:preserve` if you need reentrancy.
-
-~~~
-:ScopeList `0 `0 ;
-:{{            (-)
-  d:last dup &ScopeList store-next store ;
-:---reveal---  (-)
-   d:last &ScopeList n:inc store ;
-:}}            (-)
-  &ScopeList fetch-next swap fetch eq?
-  [ @ScopeList !Dictionary ]
-  [ @ScopeList
-    [ &Dictionary repeat
-        \fedufe.. &ScopeList n:inc \fenezr.. drop
-      again ] call store ] choose ;
 ~~~
 
 ## Linear Buffers

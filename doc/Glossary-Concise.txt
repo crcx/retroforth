@@ -325,6 +325,15 @@ Allocate the specified number of cells from the `Heap`.
 and                      D: nm-o  A: -  F: -
 Perform a bitwise AND operation between the two provided values.
 
+b:fetch                  D: a-n  A: -  F: -
+Fetch the 8-bit value stored at the specified address. Addressing for this is in 8-bit units.
+
+b:store                  D: na-  A: -  F: -
+Store an 8-bit value into the specified address. Addressing for this is in 8-bit units.
+
+b:to-byte-address        D: a-a  A: -  F: -
+Tronslate a physical address to a byte address.
+
 banner                   D: -  A: -  F: -
 Display a welcome message on startup.
 

@@ -107,6 +107,9 @@ abort                    D: -  A: -  F: -
 again                    D: -  A: -  F: -
 allot                    D: n-  A: -  F: -
 and                      D: nm-o  A: -  F: -
+b:fetch                  D: a-n  A: -  F: -
+b:store                  D: na-  A: -  F: -
+b:to-byte-address        D: a-a  A: -  F: -
 banner                   D: -  A: -  F: -
 bi                       D: xqq-?  A: -  F: -
 bi*                      D: xyqq-?  A: -  F: -
