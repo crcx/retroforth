@@ -361,6 +361,7 @@ not                      D: n-m  A: -  F: -
 octal                    D: -  A: -  F: -
 or                       D: mn-o  A: -  F: -
 over                     D: nm-nmn  A: -  F: -
+pack                     D: nnnn-n  A: -  F: -
 parse-until              D: q-s  A: -  F: -
 pb:get                   D: a-  A: -  F: -
 pb:length                D: -n  A: -  F: -
@@ -514,6 +515,7 @@ unix:sleep               D: n-  A: -  F: -
 unix:slurp-pipe          D: as-n  A: -  F: -
 unix:system              D: s-  A: -  F: -
 unix:wait                D: -n  A: -  F: -
+unpack                   D: n-nnnn  A: -  F: -
 until                    D: q(-f)-  A: -  F: -
 v:dec                    D: a-  A: -  F: -
 v:dec-by                 D: na-  A: -  F: -

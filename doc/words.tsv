@@ -361,6 +361,7 @@ not	n-m	-	-	Perform a logical NOT operation.			class:word	{n/a}	{n/a}	global	all
 octal	-	-	-	Set `Base` to octal.			class:word	{n/a}	{n/a}	a	all	
 or	mn-o	-	-	Perform a bitwise OR between the provided values.			class:primitive	{n/a}	{n/a}	global	all	
 over	nm-nmn	-	-	Put a copy of n over m.			class:word	{n/a}	{n/a}	global	all	
+pack	nnnn-n	-	-	Pack four 8-bit values into a 32-bit value.			class:word	{n/a}	{n/a}	global	all	
 parse-until	q-s	-	-	Read input from stdin (via `c:get`) until the returned character is matched by the quote. Returns a string.			class:word	  :read-until-period (-s)\n    [ $. eq? ] parse-until ;	{n/a}	all	rre	
 pb:get	a-	-	-	Copy a string from the pasteboard to the specified address.			class:word	{n/a}	{n/a}	pb	iOS	{n/a}
 pb:length	-n	-	-	Return the length of the string on the pasteboard.			class:word	{n/a}	pb	pb	iOS	
@@ -514,6 +515,7 @@ unix:sleep	n-	-	-	Sleep for the specified number of seconds.			class:word	{n/a}	
 unix:slurp-pipe	as-n	-	-	Open a pipe. Read all output from the pipe (until ASCII:NULL) and store in the specified buffer. Return the number of bytes read.			class:word	{n/a}	{n/a}	unix	rre	
 unix:system	s-	-	-	Runs another application using the system shell and returns after execution is completed.			class:word	  'ls_-lh_/etc unix:system	{n/a}	unix	rre	
 unix:wait	-n	-	-	Waits for a child process to complete. This maps to the wait() system call.			class:word	{n/a}	{n/a}	unix	rre	
+unpack	n-nnnn	-	-	Unpack a 32-bit value into four 8-bit values.			class:word	{n/a}	{n/a}	global	all	
 until	q(-f)-	-	-	Execute quote repeatedly while the quote returns a value of `FALSE`. The quote should return a flag of either `TRUE` or `FALSE`, though `until` will treat any non-zero value as `TRUE`.			class:word	    #10 [ dup n:put nl n:dec dup n:zero? ] until	{n/a}	global	all	
 v:dec	a-	-	-	Decrement the value stored at the specified address by 1.			class:word	{n/a}	{n/a}	v	all	
 v:dec-by	na-	-	-	Decrement the value stored at the specified address by the specified value.			class:word	{n/a}	{n/a}	v	all	

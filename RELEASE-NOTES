@@ -21,6 +21,8 @@
 - added `octal`
 - added `binary`
 - added `forever`
+- added `pack`
+- added `unpack`
 
 ## Renamed
 
@@ -60,6 +62,10 @@
 - floating point
 
   - increased precision of `f:E` and `f:PI` (Kiyoshi)
+
+- retro-unix
+
+  - fixed reporting of free, used memory on startup banner
 
 ## Toolchain
 

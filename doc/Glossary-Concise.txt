@@ -1087,6 +1087,9 @@ Perform a bitwise OR between the provided values.
 over                     D: nm-nmn  A: -  F: -
 Put a copy of n over m.
 
+pack                     D: nnnn-n  A: -  F: -
+Pack four 8-bit values into a 32-bit value.
+
 parse-until              D: q-s  A: -  F: -
 Read input from stdin (via `c:get`) until the returned character is matched by the quote. Returns a string.
 
@@ -1545,6 +1548,9 @@ Runs another application using the system shell and returns after execution is c
 
 unix:wait                D: -n  A: -  F: -
 Waits for a child process to complete. This maps to the wait() system call.
+
+unpack                   D: n-nnnn  A: -  F: -
+Unpack a 32-bit value into four 8-bit values.
 
 until                    D: q(-f)-  A: -  F: -
 Execute quote repeatedly while the quote returns a value of `FALSE`. The quote should return a flag of either `TRUE` or `FALSE`, though `until` will treat any non-zero value as `TRUE`.

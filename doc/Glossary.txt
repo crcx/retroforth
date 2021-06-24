@@ -4233,6 +4233,17 @@ Put a copy of n over m.
 Class: class:word | Namespace: global | Interface Layer: all
 ------------------------------------------------------------------------
 
+pack
+
+  Data:  nnnn-n
+  Addr:  -
+  Float: -
+
+Pack four 8-bit values into a 32-bit value.
+
+Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
 parse-until
 
   Data:  q-s
@@ -6087,6 +6098,17 @@ unix:wait
 Waits for a child process to complete. This maps to the wait() system call.
 
 Class: class:word | Namespace: unix | Interface Layer: rre
+------------------------------------------------------------------------
+
+unpack
+
+  Data:  n-nnnn
+  Addr:  -
+  Float: -
+
+Unpack a 32-bit value into four 8-bit values.
+
+Class: class:word | Namespace: global | Interface Layer: all
 ------------------------------------------------------------------------
 
 until

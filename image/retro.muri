@@ -379,6 +379,46 @@ i cc......
 i re......
 ~~~
 
+# Packing and Unpacking Cells
+
+  :b:unpack (c-bbbb)
+    dup           #255 and swap
+    dup  #8 shift #255 and swap
+    dup #16 shift #255 and swap
+        #24 shift #255 and ;
+
+  :b:pack (bbbb-c)
+    #-24 shift   swap
+    #-16 shift + swap
+    #-8  shift + swap + ;
+
+~~~
+: unpack
+i duliansw
+d 255
+i dulishli
+d 8
+d 255
+i answ....
+i dulishli
+d 16
+d 255
+i answ....
+i lishlian
+d 24
+d 255
+i re......
+
+: pack
+i lishsw..
+d -24
+i lishadsw
+d -16
+i lishadsw
+d -8
+i adre....
+~~~
+
 ## Strings
 
 The kernel needs two basic string operations for dictionary
@@ -1766,8 +1806,18 @@ r 0058
 r Base
 r class:data
 s Base
-: 9999
+: 0060
 r 0059
+r pack
+r class:word
+s pack
+: 0061
+r 0060
+r unpack
+r class:word
+s unpack
+: 9999
+r 0061
 r err:notfound
 r class:word
 s err:notfound
