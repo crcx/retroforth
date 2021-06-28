@@ -1446,8 +1446,10 @@ void include_file(char *fname, int run_tests) {
   int tokens = 0;
   FILE *fp;                        /* Open the file. If not found,     */
   fp = fopen(fname, "r");          /* exit.                            */
-  if (fp == NULL)
-    return;
+  if (fp == NULL) {
+    printf("File `%s` not found. Exiting.\n", fname);
+    exit(1);
+  }
 
   arp = cpu.rp;
   aip = cpu.ip;
