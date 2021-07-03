@@ -1850,7 +1850,7 @@ generic "keyboard" input, the basic listener here can be used.
     dup [ #8 eq? ] [ #127 eq? ] bi or ;
 
   :check-bs (c-c)
-    bs? [ buffer:get buffer:get drop-pair ] if ;
+    bs? [ buffer:size #2 gteq? [ buffer:get drop ] if buffer:get drop ] if ;
 ---reveal---
   :c:get (-c) hook #1 io:scan-for io:invoke ;
 
