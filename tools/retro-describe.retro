@@ -67,9 +67,9 @@ simple code.
 
 ~~~
 {{
-  :skip (n-) [ ASCII:HT s:split drop n:inc ] times ;
+  :skip (n-) [ ASCII:HT s:split/char drop n:inc ] times ;
   :select   (n-s)
-    @SourceLine swap skip ASCII:HT s:split nip ;
+    @SourceLine swap skip ASCII:HT s:split/char nip ;
 
 ---reveal---
 
