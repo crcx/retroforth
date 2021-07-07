@@ -1854,14 +1854,14 @@ generic "keyboard" input, the basic listener here can be used.
 ---reveal---
   :c:get (-c) hook #1 io:scan-for io:invoke ;
 
-  :s:get (-s) [ #7 fetch buffer:set
-                [ c:get dup buffer:add check-bs eol? ] until
-                  buffer:start s:chop ] buffer:preserve ;
+  :s:get-word (-s) [ #7 fetch buffer:set
+                     [ c:get dup buffer:add check-bs eol? ] until
+                       buffer:start s:chop ] buffer:preserve ;
 
   :bye (-) \ha...... ;
 
   :listen (-)
-    repeat s:get valid? &interpret &drop choose again ;
+    repeat s:get-word valid? &interpret &drop choose again ;
 }}
 
 &listen #1 store

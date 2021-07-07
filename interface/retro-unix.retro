@@ -36,7 +36,9 @@ Using this, a simple `s:get` can be implemented very easily as
 a quote which looks for an end of line character.
 
 ~~~
-:s:get-word (-s) &c:whitespace? parse-until ;
+:s:get (-s) [ [ ASCII:CR eq? ]
+              [ ASCII:LF eq? ]
+              bi or ] parse-until ;
 ~~~
 
 ~~~
