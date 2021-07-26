@@ -1,8 +1,10 @@
-# RetroForth 2021.7 (In-Progress) Release Notes
+# RetroForth 2021.7 Release Notes
 
 ## Core Language
 
 ## Major Changes
+
+### Image Format
 
 - address 5 is now a pointer to `interpret`
 - address 6 is now a pointor to `err:notfound`
