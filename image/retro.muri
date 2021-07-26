@@ -1,4 +1,4 @@
-# RETRO Core 2021.7
+# RETRO Core 2021.10
 
 RETRO Core is  a minimal Forth implementation for the Nga
 virtual machine. Like Nga this is intended to be used within
@@ -147,7 +147,7 @@ r 9999
 d 1536
 
 : Version
-d 202107
+d 202110
 
 : references
 r interpret
