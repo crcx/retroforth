@@ -39,6 +39,13 @@
 #include <unistd.h>
 #endif
 
+#ifdef ENABLE_FFI
+#include <dlfcn.h>
+#endif
+
+#ifdef ENABLE_MULTICORE
+#endif
+
 #ifdef _WIN32
 #define NEEDS_STRL
 #endif
