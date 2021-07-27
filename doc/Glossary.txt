@@ -3647,6 +3647,33 @@ Compare n1 and n2. Return `TRUE` if n1 is greater than or equal to n2, or `FALSE
 Class: class:word | Namespace: global | Interface Layer: all
 ------------------------------------------------------------------------
 
+h:fetch
+
+  Data:  a-n
+  Addr:  -
+  Float: -
+
+Fetch the 16-bit value stored at the specified address. Addressing for this is in 8-bit units.
+
+Class: class:word | Namespace: global | Interface Layer: all
+
+Example #1:
+
+{n/a)
+
+------------------------------------------------------------------------
+
+h:store
+
+  Data:  na-
+  Addr:  -
+  Float: -
+
+Store an 16-bit value into the specified address. Addressing for this is in 8-bit units.
+
+Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
 here
 
   Data:  -a
@@ -6295,6 +6322,33 @@ Example #1:
     #10 'Base var-n
 
 
+------------------------------------------------------------------------
+
+w:fetch
+
+  Data:  a-n
+  Addr:  -
+  Float: -
+
+Fetch the 32-bit value stored at the specified address. Addressing for this is in 8-bit units. The address must be aligned on a four byte boundary.
+
+Class: class:word | Namespace: global | Interface Layer: all
+
+Example #1:
+
+{n/a)
+
+------------------------------------------------------------------------
+
+w:store
+
+  Data:  na-
+  Addr:  -
+  Float: -
+
+Store an 32-bit value into the specified address. Addressing for this is in 8-bit units. The address must be aligned on a four byte boundary.
+
+Class: class:word | Namespace: global | Interface Layer: all
 ------------------------------------------------------------------------
 
 while

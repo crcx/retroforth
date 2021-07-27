@@ -1,2 +1,7 @@
 # RetroForth 2021.10 (In Progress) Release Notes
 
+# Core Language
+
+- new words
+
+  h:fetch h:store w:fetch w:store

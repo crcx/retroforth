@@ -314,6 +314,8 @@ forever	q-	-	-	Run quotation in an endless loop.			class:word	{n/a}	{n/a}	a	all
 gopher:get	asns-n	-	-	Takes an address, a server, a port, and a selector. Fetch the resource and store it at address. Return the number of bytes received.			class:word	    here 'forthworks.com #70 '/ gopher:get\n    here s:put	{n/a}	gopher	ios	
 gt?	nn-f	-	-	Compare n1 and n2. Return `TRUE` if n1 is greater than n2, or `FALSE` otherwise.			class:primitive	{n/a}	{n/a}	global	all	
 gteq?	nn-f	-	-	Compare n1 and n2. Return `TRUE` if n1 is greater than or equal to n2, or `FALSE` otherwise.			class:word	{n/a}	{n/a}	global	all	
+h:fetch	a-n	-	-	Fetch the 16-bit value stored at the specified address. Addressing for this is in 8-bit units.			class:word	{n/a)	{n/a}	global	all	
+h:store	na-	-	-	Store an 16-bit value into the specified address. Addressing for this is in 8-bit units.			class:word	{n/a}	{n/a}	global	all	
 here	-a	-	-	Return the next free address in memory.			class:word	{n/a}	{n/a}	global	all	
 hex	-	-	-	Set `Base` to hexadecimal.			class:word	{n/a}	{n/a}	a	all	
 hook	-	-	-	Add a hook point into the current word. This should only be used as the first word in a definition.			class:macro	    :foo hook ;	    :bar hook (default_action: n:square n:put nl ;	global	global	
@@ -531,6 +533,8 @@ v:preserve	aq-	-	-	Make a copy of the value at the address, then run the quote. 
 v:update	aq-	-	-	Fetch a value from the specified address, then run the quotation with this value on the stack. Afterwards, store the returned value at the original address.			class:word	{n/a}	{n/a}	v	all	
 var	s-	-	-	Create a variable. The variable is initialized to 0.			class:word	    'Base var	{n/a}	global	all	
 var-n	ns-	-	-	Create a variable with the specified initial value.			class:word	    #10 'Base var-n\n	{n/a}	global	all	
+w:fetch	a-n	-	-	Fetch the 32-bit value stored at the specified address. Addressing for this is in 8-bit units. The address must be aligned on a four byte boundary.			class:word	{n/a)	{n/a}	global	all	
+w:store	na-	-	-	Store an 32-bit value into the specified address. Addressing for this is in 8-bit units. The address must be aligned on a four byte boundary.			class:word	{n/a}	{n/a}	global	all	
 while	q(-f)-	-	-	Execute quote repeatedly while the quote returns a `TRUE` value. The quote should return a flag of either `TRUE` or `FALSE`, though `while` will treat any non-zero value as `TRUE`.			class:word	    #10 [ dup n:put nl n:dec dup n:-zero? ] while	{n/a}	global	all	
 xor	mn-o	-	-	Perform a bitwise XOR operation.			class:primitive	{n/a}	{n/a}	global	all	
 {	-	-	-	Begin an array. This is intended to make creating arrays a bit cleaner than using a quotation and `a:counted-results`.			class:word	{n/a}	{n/a}	global	all	
