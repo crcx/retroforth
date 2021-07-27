@@ -23,6 +23,10 @@
 #include <sys/types.h>
 #include <time.h>
 
+#ifdef ENABLE_SIGNALS
+#include <signal.h>
+#endif
+
 #ifdef ENABLE_FLOATS
 #include <math.h>
 #endif
@@ -1555,6 +1559,15 @@ void help(char *exename) {
   printf("    Run the contents of the specified file, including any tests (in ``` blocks)\n\n");
 }
 
+/* Signal Handler -----------------------------------------------------*/
+
+#ifdef ENABLE_SIGNALS
+static void sig_handler(int _)
+{
+  printf("\nBreak on CTRL+C\n");
+  exit(1);
+}
+#endif
 
 /* Main Entry Point ---------------------------------------------------*/
 enum flags {
@@ -1564,6 +1577,10 @@ enum flags {
 int main(int argc, char **argv) {
   int i;
   int modes[16];
+
+#ifdef ENABLE_SIGNALS
+  signal(SIGINT, sig_handler);
+#endif
 
   initialize();                           /* Initialize Nga & image    */
 
