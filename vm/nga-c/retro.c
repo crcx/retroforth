@@ -48,6 +48,9 @@
 #endif
 
 #ifdef ENABLE_MULTICORE
+#define CORES 8
+#else
+#define CORES 1
 #endif
 
 #ifdef _WIN32
@@ -153,15 +156,17 @@ void inst_ie();  void inst_iq();  void inst_ii();
 /* Image, Stack, and VM variables ------------------------------------ */
 CELL memory[IMAGE_SIZE + 1];      /* The memory for the image          */
 
-#define TOS  cpu.data[cpu.sp]     /* Top item on stack                 */
-#define NOS  cpu.data[cpu.sp-1]   /* Second item on stack              */
-#define TORS cpu.address[cpu.rp]  /* Top item on address stack         */
+#define TOS  cpu[active].data[cpu[active].sp]     /* Top item on stack         */
+#define NOS  cpu[active].data[cpu[active].sp-1]   /* Second item on stack      */
+#define TORS cpu[active].address[cpu[active].rp]  /* Top item on address stack */
 
 struct NgaCore {
   CELL sp, rp, ip;                /* Stack & instruction pointers      */
   CELL data[STACK_DEPTH];         /* The data stack                    */
   CELL address[ADDRESSES];        /* The address stack                 */
-} cpu;
+} cpu[CORES];
+
+int active;                       /* Currently active processor        */
 
 int devices;                      /* The number of I/O devices         */
 
@@ -193,12 +198,12 @@ CELL fsp, afsp;
 void float_guard() {
   if (fsp < 0 || fsp > 255) {
     printf("\nERROR (nga/float_guard): Float Stack Limits Exceeded!\n");
-    printf("At %lld, fsp = %lld\n", (long long)cpu.ip, (long long)fsp);
+    printf("At %lld, fsp = %lld\n", (long long)cpu[active].ip, (long long)fsp);
     exit(1);
   }
   if (afsp < 0 || afsp > 255) {
     printf("\nERROR (nga/float_guard): Alternate Float Stack Limits Exceeded!\n");
-    printf("At %lld, afsp = %lld\n", (long long)cpu.ip, (long long)afsp);
+    printf("At %lld, afsp = %lld\n", (long long)cpu[active].ip, (long long)afsp);
     exit(1);
   }
 }
@@ -1218,9 +1223,9 @@ void scripting_abort() {
 }
 
 void carry_out_abort() {
-  cpu.ip = IMAGE_SIZE + 1;
-  cpu.rp = 0;
-  cpu.sp = 0;
+  cpu[active].ip = IMAGE_SIZE + 1;
+  cpu[active].rp = 0;
+  cpu[active].sp = 0;
 #ifdef ENABLE_FLOATS
   fsp = 0;
   afsp = 0;
@@ -1267,7 +1272,7 @@ void io_scripting() {
 void invalid_opcode(CELL opcode) {
   CELL a, i;
   printf("\nERROR (nga/execute): Invalid instruction!\n");
-  printf("At %lld, opcode %lld\n", (long long)cpu.ip, (long long)opcode);
+  printf("At %lld, opcode %lld\n", (long long)cpu[active].ip, (long long)opcode);
   printf("Instructions: ");
   a = opcode;
   for (i = 0; i < 4; i++) {
@@ -1281,38 +1286,38 @@ void invalid_opcode(CELL opcode) {
 void execute(CELL cell) {
   CELL token;
   CELL opcode;
-  if (cpu.rp == 0)
-    cpu.rp = 1;
-  cpu.ip = cell;
+  if (cpu[active].rp == 0)
+    cpu[active].rp = 1;
+  cpu[active].ip = cell;
   token = TIB;
-  while (cpu.ip < IMAGE_SIZE) {
+  while (cpu[active].ip < IMAGE_SIZE) {
     if (perform_abort == 0) {
-      if (cpu.ip == NotFound) {
+      if (cpu[active].ip == NotFound) {
         printf("\nERROR: Word Not Found: ");
         printf("`%s`\n\n", string_extract(token));
       }
-      if (cpu.ip == interpret) {
+      if (cpu[active].ip == interpret) {
         token = TOS;
       }
-      opcode = memory[cpu.ip];
+      opcode = memory[cpu[active].ip];
       if (validate_opcode_bundle(opcode) != 0) {
         process_opcode_bundle(opcode);
       } else {
         invalid_opcode(opcode);
       }
-      if (cpu.sp < 0 || cpu.sp > STACK_DEPTH) {
+      if (cpu[active].sp < 0 || cpu[active].sp > STACK_DEPTH) {
         printf("\nERROR (nga/execute): Stack Limits Exceeded!\n");
-        printf("At %lld, opcode %lld. sp = %lld\n", (long long)cpu.ip, (long long)opcode, (long long)cpu.sp);
+        printf("At %lld, opcode %lld. sp = %lld\n", (long long)cpu[active].ip, (long long)opcode, (long long)cpu[active].sp);
         exit(1);
       }
-      if (cpu.rp < 0 || cpu.rp > ADDRESSES) {
+      if (cpu[active].rp < 0 || cpu[active].rp > ADDRESSES) {
         printf("\nERROR (nga/execute): Address Stack Limits Exceeded!\n");
-        printf("At %lld, opcode %lld. rp = %lld\n", (long long)cpu.ip, (long long)opcode, (long long)cpu.rp);
+        printf("At %lld, opcode %lld. rp = %lld\n", (long long)cpu[active].ip, (long long)opcode, (long long)cpu[active].rp);
         exit(1);
       }
-      cpu.ip++;
-      if (cpu.rp == 0)
-        cpu.ip = IMAGE_SIZE;
+      cpu[active].ip++;
+      if (cpu[active].rp == 0)
+        cpu[active].ip = IMAGE_SIZE;
     } else {
       carry_out_abort();
     }
@@ -1373,13 +1378,13 @@ void skip_indent(FILE *fp) {
 
 void dump_stack() {
   CELL i;
-  if (cpu.sp == 0)  return;
+  if (cpu[active].sp == 0)  return;
   printf("\nStack: ");
-  for (i = 1; i <= cpu.sp; i++) {
-    if (i == cpu.sp)
-      printf("[ TOS: %lld ]", (long long)cpu.data[i]);
+  for (i = 1; i <= cpu[active].sp; i++) {
+    if (i == cpu[active].sp)
+      printf("[ TOS: %lld ]", (long long)cpu[active].data[i]);
     else
-      printf("%lld ", (long long)cpu.data[i]);
+      printf("%lld ", (long long)cpu[active].data[i]);
   }
   printf("\n");
 }
@@ -1462,11 +1467,11 @@ void include_file(char *fname, int run_tests) {
     exit(1);
   }
 
-  arp = cpu.rp;
-  aip = cpu.ip;
-  for(cpu.rp = 0; cpu.rp <= arp; cpu.rp++)
-    ReturnStack[cpu.rp] = cpu.address[cpu.rp];
-  cpu.rp = 0;
+  arp = cpu[active].rp;
+  aip = cpu[active].ip;
+  for(cpu[active].rp = 0; cpu[active].rp <= arp; cpu[active].rp++)
+    ReturnStack[cpu[active].rp] = cpu[active].address[cpu[active].rp];
+  cpu[active].rp = 0;
 
   current_source++;
   strlcpy(scripting_sources[current_source], fname, 8192);
@@ -1513,10 +1518,10 @@ void include_file(char *fname, int run_tests) {
   if (perform_abort == -1) {
     carry_out_abort();
   }
-  for(cpu.rp = 0; cpu.rp <= arp; cpu.rp++)
-    cpu.address[cpu.rp] = ReturnStack[cpu.rp];
-  cpu.rp = arp;
-  cpu.ip = aip;
+  for(cpu[active].rp = 0; cpu[active].rp <= arp; cpu[active].rp++)
+    cpu[active].address[cpu[active].rp] = ReturnStack[cpu[active].rp];
+  cpu[active].rp = arp;
+  cpu[active].ip = aip;
 }
 
 
@@ -1627,7 +1632,7 @@ int main(int argc, char **argv) {
   if (argc >= 2 && argv[1][0] != '-') {
     update_rx();
     include_file(argv[1], 0);             /* If no flags were passed,  */
-    if (cpu.sp >= 1)  dump_stack();       /* load the file specified,  */
+    if (cpu[active].sp >= 1)  dump_stack();       /* load the file specified,  */
     exit(0);                              /* and exit                  */
   }
 
@@ -1682,7 +1687,7 @@ int main(int argc, char **argv) {
   }
 
   /* Dump Stack */
-  if (cpu.sp >= 1)  dump_stack();
+  if (cpu[active].sp >= 1)  dump_stack();
 }
 
 
@@ -1699,13 +1704,13 @@ int main(int argc, char **argv) {
   ---------------------------------------------------------------------*/
 
 CELL stack_pop() {
-  cpu.sp--;
-  return cpu.data[cpu.sp + 1];
+  cpu[active].sp--;
+  return cpu[active].data[cpu[active].sp + 1];
 }
 
 void stack_push(CELL value) {
-  cpu.sp++;
-  cpu.data[cpu.sp] = value;
+  cpu[active].sp++;
+  cpu[active].data[cpu[active].sp] = value;
 }
 
 
@@ -1804,32 +1809,33 @@ CELL load_image(char *imageFile) {
 }
 
 void prepare_vm() {
-  cpu.ip = cpu.sp = cpu.rp = 0;
-  for (cpu.ip = 0; cpu.ip < IMAGE_SIZE; cpu.ip++)
-    memory[cpu.ip] = 0; /* NO - nop instruction */
-  for (cpu.ip = 0; cpu.ip < STACK_DEPTH; cpu.ip++)
-    cpu.data[cpu.ip] = 0;
-  for (cpu.ip = 0; cpu.ip < ADDRESSES; cpu.ip++)
-    cpu.address[cpu.ip] = 0;
+  active = 0;
+  cpu[active].ip = cpu[active].sp = cpu[active].rp = 0;
+  for (cpu[active].ip = 0; cpu[active].ip < IMAGE_SIZE; cpu[active].ip++)
+    memory[cpu[active].ip] = 0; /* NO - nop instruction */
+  for (cpu[active].ip = 0; cpu[active].ip < STACK_DEPTH; cpu[active].ip++)
+    cpu[active].data[cpu[active].ip] = 0;
+  for (cpu[active].ip = 0; cpu[active].ip < ADDRESSES; cpu[active].ip++)
+    cpu[active].address[cpu[active].ip] = 0;
 }
 
 void inst_no() {
 }
 
 void inst_li() {
-  cpu.sp++;
-  cpu.ip++;
-  TOS = memory[cpu.ip];
+  cpu[active].sp++;
+  cpu[active].ip++;
+  TOS = memory[cpu[active].ip];
 }
 
 void inst_du() {
-  cpu.sp++;
-  cpu.data[cpu.sp] = NOS;
+  cpu[active].sp++;
+  cpu[active].data[cpu[active].sp] = NOS;
 }
 
 void inst_dr() {
-  cpu.data[cpu.sp] = 0;
-  cpu.sp--;
+  cpu[active].data[cpu[active].sp] = 0;
+  cpu[active].sp--;
 }
 
 void inst_sw() {
@@ -1840,26 +1846,26 @@ void inst_sw() {
 }
 
 void inst_pu() {
-  cpu.rp++;
+  cpu[active].rp++;
   TORS = TOS;
   inst_dr();
 }
 
 void inst_po() {
-  cpu.sp++;
+  cpu[active].sp++;
   TOS = TORS;
-  cpu.rp--;
+  cpu[active].rp--;
 }
 
 void inst_ju() {
-  cpu.ip = TOS - 1;
+  cpu[active].ip = TOS - 1;
   inst_dr();
 }
 
 void inst_ca() {
-  cpu.rp++;
-  TORS = cpu.ip;
-  cpu.ip = TOS - 1;
+  cpu[active].rp++;
+  TORS = cpu[active].ip;
+  cpu[active].ip = TOS - 1;
   inst_dr();
 }
 
@@ -1868,15 +1874,15 @@ void inst_cc() {
   a = TOS; inst_dr();  /* Target */
   b = TOS; inst_dr();  /* Flag   */
   if (b != 0) {
-    cpu.rp++;
-    TORS = cpu.ip;
-    cpu.ip = a - 1;
+    cpu[active].rp++;
+    TORS = cpu[active].ip;
+    cpu[active].ip = a - 1;
   }
 }
 
 void inst_re() {
-  cpu.ip = TORS;
-  cpu.rp--;
+  cpu[active].ip = TORS;
+  cpu[active].rp--;
 }
 
 void inst_eq() {
@@ -1901,8 +1907,8 @@ void inst_gt() {
 
 void inst_fe() {
   switch (TOS) {
-    case -1: TOS = cpu.sp - 1; break;
-    case -2: TOS = cpu.rp; break;
+    case -1: TOS = cpu[active].sp - 1; break;
+    case -2: TOS = cpu[active].rp; break;
     case -3: TOS = IMAGE_SIZE; break;
     case -4: TOS = CELL_MIN; break;
     case -5: TOS = CELL_MAX; break;
@@ -1971,14 +1977,14 @@ void inst_sh() {
 void inst_zr() {
   if (TOS == 0) {
     inst_dr();
-    cpu.ip = TORS;
-    cpu.rp--;
+    cpu[active].ip = TORS;
+    cpu[active].rp--;
   }
 }
 
 void inst_ha() {
-  cpu.ip = IMAGE_SIZE;
-  cpu.rp = 0;
+  cpu[active].ip = IMAGE_SIZE;
+  cpu[active].rp = 0;
 }
 
 void inst_ie() {
