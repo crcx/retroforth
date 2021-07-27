@@ -1389,6 +1389,18 @@ void dump_stack() {
   printf("\n");
 }
 
+void dump_astack() {
+  CELL i;
+  if (cpu[active].rp == 0)  return;
+  printf("\nAddress Stack: ");
+  for (i = 1; i <= cpu[active].rp; i++) {
+    if (i == cpu[active].rp)
+      printf("[ TOS: %lld ]", (long long)cpu[active].address[i]);
+    else
+      printf("%lld ", (long long)cpu[active].address[i]);
+  }
+  printf("\n");
+}
 
 /*---------------------------------------------------------------------
   RRE is primarily intended to be used in a batch or scripting model.
@@ -1570,6 +1582,8 @@ void help(char *exename) {
 static void sig_handler(int _)
 {
   printf("\nCaught: %d\n", _);
+  dump_stack();
+  dump_astack();
   exit(1);
 }
 #endif
