@@ -1564,7 +1564,7 @@ void help(char *exename) {
 #ifdef ENABLE_SIGNALS
 static void sig_handler(int _)
 {
-  printf("\nBreak on CTRL+C\n");
+  printf("\nCaught: %d\n", _);
   exit(1);
 }
 #endif
@@ -1579,7 +1579,11 @@ int main(int argc, char **argv) {
   int modes[16];
 
 #ifdef ENABLE_SIGNALS
+  signal(SIGHUP, sig_handler);
   signal(SIGINT, sig_handler);
+  signal(SIGILL, sig_handler);
+  signal(SIGBUS, sig_handler);
+  signal(SIGFPE, sig_handler);
 #endif
 
   initialize();                           /* Initialize Nga & image    */
