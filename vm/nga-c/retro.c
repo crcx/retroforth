@@ -207,6 +207,7 @@ void init_core(CELL x) {
 
 void start_core(CELL x, CELL ip) {
   cpu[x].ip = ip;
+  cpu[x].rp = 1;
   cpu[x].active = -1;
 }
 
@@ -1376,7 +1377,7 @@ void execute(CELL cell) {
       }
       if (cpu[active].sp < 0 || cpu[active].sp > STACK_DEPTH) {
         printf("\nERROR (nga/execute): Stack Limits Exceeded!\n");
-        printf("At %lld, opcode %lld. sp = %lld\n", (long long)cpu[active].ip, (long long)opcode, (long long)cpu[active].sp);
+        printf("At %lld, opcode %lld. sp = %lld, core = %lld\n", (long long)cpu[active].ip, (long long)opcode, (long long)cpu[active].sp, (long long)active);
         exit(1);
       }
       if (cpu[active].rp < 0 || cpu[active].rp > ADDRESSES) {
@@ -1385,14 +1386,14 @@ void execute(CELL cell) {
         exit(1);
       }
       cpu[active].ip++;
+#ifdef ENABLE_MULTICORE
+      switch_core();
+#endif
       if (cpu[active].rp == 0)
         cpu[active].ip = IMAGE_SIZE;
     } else {
       carry_out_abort();
     }
-#ifdef MULTICORE
-    switch_core();
-#endif
   }
 }
 
@@ -1900,6 +1901,7 @@ CELL load_image(char *imageFile) {
 void prepare_vm() {
   active = 0;
   cpu[active].ip = cpu[active].sp = cpu[active].rp = 0;
+  cpu[active].active = -1;
   for (cpu[active].ip = 0; cpu[active].ip < IMAGE_SIZE; cpu[active].ip++)
     memory[cpu[active].ip] = 0; /* NO - nop instruction */
   for (cpu[active].ip = 0; cpu[active].ip < STACK_DEPTH; cpu[active].ip++)
