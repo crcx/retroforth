@@ -164,6 +164,9 @@ struct NgaCore {
   CELL sp, rp, ip, active;        /* Stack & instruction pointers      */
   CELL data[STACK_DEPTH];         /* The data stack                    */
   CELL address[ADDRESSES];        /* The address stack                 */
+#ifdef ENABLE_MULTICORE
+  CELL registers[24];
+#endif
 } cpu[CORES];
 
 int active;                       /* Currently active processor        */
@@ -199,6 +202,7 @@ void init_core(CELL x) {
   cpu[x].active = 0;
   for (y = 0; y < STACK_DEPTH; y++) { cpu[x].data[y] = 0; };
   for (y = 0; y < ADDRESSES; y++) { cpu[x].address[y] = 0; };
+  for (y = 0; y < 24; y++) { cpu[x].registers[y] = 0; };
 }
 
 void start_core(CELL x, CELL ip) {
@@ -238,6 +242,13 @@ void io_multicore() {
             break;
     case 4: y = stack_pop();
             resume_core(y);
+            break;
+    case 5: y = stack_pop();
+            stack_push(cpu[active].registers[y]);
+            break;
+    case 6: y = stack_pop();
+            z = stack_pop();
+            cpu[active].registers[y] = z;
             break;
   }
 }
