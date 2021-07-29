@@ -190,34 +190,61 @@ int current_source;
 int perform_abort;
 
 /* Multi Core Support ------------------------------------------------ */
-#ifdef MULTICORE
+#ifdef ENABLE_MULTICORE
 void init_core(CELL x) {
   int y;
-  core[x].sp = 0;
-  core[x].rp = 0;
-  core[x].ip = 0;
-  core[x].active = 0;
-  for (y = 0; y < STACK_DEPTH; y++) { core[x].data[y] = 0; };
-  for (y = 0; y < ADDRESSES; y++) { core[x].address[y] = 0; };
+  cpu[x].sp = 0;
+  cpu[x].rp = 0;
+  cpu[x].ip = 0;
+  cpu[x].active = 0;
+  for (y = 0; y < STACK_DEPTH; y++) { cpu[x].data[y] = 0; };
+  for (y = 0; y < ADDRESSES; y++) { cpu[x].address[y] = 0; };
 }
 
 void start_core(CELL x, CELL ip) {
-  core[x].ip = ip;
-  core[x].active = -1;
+  cpu[x].ip = ip;
+  cpu[x].active = -1;
 }
 
 void pause_core(CELL x) {
-  core[x].active = 0;
+  cpu[x].active = 0;
 }
 
 void resume_core(CELL x) {
-  core[x].active = -1;
+  cpu[x].active = -1;
 }
 
 void switch_core() {
   active += 1;
   if (active >= CORES) { active = 0; }
-  if (!core[active].active) { switch_core(); }
+  if (!cpu[active].active) { switch_core(); }
+}
+
+void io_multicore() {
+  int x, y, z;
+  x = stack_pop();
+  switch(x) {
+    case 0: y = stack_pop();
+            init_core(y);
+            break;
+    case 1: y = stack_pop();
+            z = stack_pop();
+            start_core(y, z);
+            break;
+    case 2: y = stack_pop();
+            pause_core(y);
+            break;
+    case 3: pause_core(active);
+            break;
+    case 4: y = stack_pop();
+            resume_core(y);
+            break;
+  }
+}
+
+void query_multicore() {
+  stack_push(0);
+  stack_push(8000);  /* device type 8000 */
 }
 #endif
 
@@ -1660,6 +1687,9 @@ int main(int argc, char **argv) {
 #endif
 #ifdef ENABLE_SOCKETS
   register_device(io_socket, query_socket);
+#endif
+#ifdef ENABLE_MULTICORE
+  register_device(io_multicore, query_multicore);
 #endif
 
   strcpy(code_start, "~~~");
