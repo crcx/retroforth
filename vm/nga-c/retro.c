@@ -161,7 +161,7 @@ CELL memory[IMAGE_SIZE + 1];      /* The memory for the image          */
 #define TORS cpu[active].address[cpu[active].rp]  /* Top item on address stack */
 
 struct NgaCore {
-  CELL sp, rp, ip;                /* Stack & instruction pointers      */
+  CELL sp, rp, ip, active;        /* Stack & instruction pointers      */
   CELL data[STACK_DEPTH];         /* The data stack                    */
   CELL address[ADDRESSES];        /* The address stack                 */
 } cpu[CORES];
@@ -189,6 +189,37 @@ char scripting_sources[64][8192];
 int current_source;
 int perform_abort;
 
+/* Multi Core Support ------------------------------------------------ */
+#ifdef MULTICORE
+void init_core(CELL x) {
+  int y;
+  core[x].sp = 0;
+  core[x].rp = 0;
+  core[x].ip = 0;
+  core[x].active = 0;
+  for (y = 0; y < STACK_DEPTH; y++) { core[x].data[y] = 0; };
+  for (y = 0; y < ADDRESSES; y++) { core[x].address[y] = 0; };
+}
+
+void start_core(CELL x, CELL ip) {
+  core[x].ip = ip;
+  core[x].active = -1;
+}
+
+void pause_core(CELL x) {
+  core[x].active = 0;
+}
+
+void resume_core(CELL x) {
+  core[x].active = -1;
+}
+
+void switch_core() {
+  active += 1;
+  if (active >= CORES) { active = 0; }
+  if (!core[active].active) { switch_core(); }
+}
+#endif
 
 /* Floating Point ---------------------------------------------------- */
 #ifdef ENABLE_FLOATS
@@ -1321,6 +1352,9 @@ void execute(CELL cell) {
     } else {
       carry_out_abort();
     }
+#ifdef MULTICORE
+    switch_core();
+#endif
   }
 }
 
