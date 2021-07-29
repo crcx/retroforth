@@ -260,7 +260,45 @@ void query_multicore() {
 }
 #endif
 
+
+
+/* External Functions ------------------------------------------------ */
+
+#ifdef ENABLE_FFI
+void *handles[32];
+int nlibs, nffi;
+
+void open_library() {
+  handles[nlibs] = dlopen(string_extract(stack_pop()), RTLD_LAZY);
+  stack_push(nlibs);
+  nlibs++;
+}
+
+void map_symbol() {
+  int h;
+  h = stack_pop();
+  char *s = string_extract(stack_pop());
+  dlsym(handles[h], s);
+  stack_push(nffi);
+  nffi++;
+}
+
+void io_ffi() {
+  switch (stack_pop()) {
+    case 0: open_library(); break;
+  }
+}
+
+void query_ffi() {
+  stack_push(0);
+  stack_push(8100);  /* device type 8100 */
+}
+#endif
+
+
+
 /* Floating Point ---------------------------------------------------- */
+
 #ifdef ENABLE_FLOATS
 double Floats[256], AFloats[256];
 CELL fsp, afsp;
@@ -1702,6 +1740,11 @@ int main(int argc, char **argv) {
 #endif
 #ifdef ENABLE_MULTICORE
   register_device(io_multicore, query_multicore);
+#endif
+#ifdef ENABLE_FFI
+  register_device(io_ffi, query_ffi);
+  nlibs = 0;
+  nffi = 0;
 #endif
 
   strcpy(code_start, "~~~");
