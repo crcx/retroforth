@@ -265,7 +265,10 @@ void query_multicore() {
 /* External Functions ------------------------------------------------ */
 
 #ifdef ENABLE_FFI
+typedef void (*External)(void *, void *, void *);
+
 void *handles[32];
+External funcs[32000];
 int nlibs, nffi;
 
 void open_library() {
@@ -278,14 +281,20 @@ void map_symbol() {
   int h;
   h = stack_pop();
   char *s = string_extract(stack_pop());
-  dlsym(handles[h], s);
+  funcs[nffi] = dlsym(handles[h], s);
   stack_push(nffi);
   nffi++;
+}
+
+void invoke() {
+  funcs[stack_pop()](stack_push, stack_pop, memory);
 }
 
 void io_ffi() {
   switch (stack_pop()) {
     case 0: open_library(); break;
+    case 1: map_symbol(); break;
+    case 2: invoke(); break;
   }
 }
 
