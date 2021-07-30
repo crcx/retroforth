@@ -5,3 +5,12 @@
 - new words
 
   h:fetch h:store w:fetch w:store
+
+# VM
+
+## nga-c: retro.c
+
+- added optional support for multiple virtual processor cores
+- added optional ffi
+- work on internal cleanups
+

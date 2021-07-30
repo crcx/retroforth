@@ -192,6 +192,35 @@ char scripting_sources[64][8192];
 int current_source;
 int perform_abort;
 
+struct NgaState {
+  /* System Memory */
+  CELL memory[IMAGE_SIZE + 1];
+
+  /* CPU Cores */
+  struct NgaCore cpu[CORES];
+  int active;
+
+  /* I/O Devices */
+  int devices;
+  Handler IO_deviceHandlers[MAX_DEVICES];
+  Handler IO_queryHandlers[MAX_DEVICES];
+
+  /* Interfacing */
+  CELL Dictionary, NotFound, interpret;
+  char string_data[8192];
+
+  /* Floating Point */
+  double Floats[256], AFloats[256];
+  CELL fsp, afsp;
+
+  /* Scripting */
+  char **sys_argv;
+  int sys_argc;
+  char scripting_sources[64][8192];
+  int current_source;
+  int perform_abort;
+};
+
 /* Multi Core Support ------------------------------------------------ */
 #ifdef ENABLE_MULTICORE
 void init_core(CELL x) {

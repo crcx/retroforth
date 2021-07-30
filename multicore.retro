@@ -15,10 +15,10 @@ Testing for multiple core support.
 ~~~
 'Done var
 
-:a [ @Done #100000 lt? 0; drop &Done v:inc $a c:put ] forever ;
+:a [ @Done #100000 gt? [ core:pause-current ] if &Done v:inc $a c:put ] forever ;
 :b [ $b c:put ] forever ;
 :c [ $c c:put ] forever ;
-:d [ $d c:put ] forever ;
+:d [ @Done #50000 gt? [ core:pause-current ] if $d c:put ] forever ;
 
 #1 core:init  &a #1 core:start
 #2 core:init  &b #2 core:start
