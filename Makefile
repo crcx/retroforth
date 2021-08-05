@@ -13,9 +13,19 @@ ENABLED += -DENABLE_UNIX
 ENABLED += -DENABLE_RNG
 ENABLED += -DENABLE_CLOCK
 ENABLED += -DENABLE_SCRIPTING
+# ENABLED += -DENABLE_SOCKETS
 ENABLED += -DENABLE_SIGNALS
 ENABLED += -DENABLE_MULTICORE
 ENABLED += -DENABLE_FFI
+
+DEVICES ?=
+DEVICES += interface/floatingpoint.retro
+DEVICES += interface/filesystem.retro
+DEVICES += interface/unix.retro
+DEVICES += interface/rng.retro
+DEVICES += interface/clock.retro
+DEVICES += interface/scripting.retro
+# DEVICES += interface/sockets.retro
 
 all: build
 
@@ -136,9 +146,9 @@ bin/retro-repl: vm/nga-c/repl.c vm/nga-c/image.c
 update-extensions: bin/retro
 	cd package/extensions && ../../bin/retro -f ../../tools/generate-extensions-list.retro >../load-extensions.retro
 
-vm/nga-c/image.c: ngaImage bin/retro-embedimage bin/retro-extend interface/filesystem.retro interface/floatingpoint.retro interface/unix.retro interface/rng.retro interface/sockets.retro interface/scripting.retro interface/retro-unix.retro interface/clock.retro
+vm/nga-c/image.c: ngaImage bin/retro-embedimage bin/retro-extend  interface/retro-unix.retro $(DEVICES)
 	cp ngaImage rre.image
-	./bin/retro-extend rre.image interface/filesystem.retro interface/floatingpoint.retro interface/unix.retro interface/rng.retro interface/sockets.retro interface/scripting.retro interface/clock.retro interface/retro-unix.retro 
+	./bin/retro-extend rre.image $(DEVICES) interface/retro-unix.retro 
 	./bin/retro-embedimage rre.image >vm/nga-c/image.c
 
 bin/retro: vm/nga-c/image.c vm/nga-c/retro.c package/list.forth package/load-extensions.retro
@@ -153,7 +163,7 @@ bin/retro: vm/nga-c/image.c vm/nga-c/retro.c package/list.forth package/load-ext
 
 bin/retro-compiler: bin/retro-extend vm/nga-c/retro-compiler.c vm/nga-c/retro-runtime.c
 	cp ngaImage runtime.image
-	./bin/retro-extend runtime.image interface/scripting.retro interface/filesystem.retro interface/floatingpoint.retro interface/unix.retro interface/rng.retro interface/retro-unix.retro interface/clock.retro
+	./bin/retro-extend runtime.image $(DEVICES) interface/retro-unix.retro
 	cd vm/nga-c && $(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o ../../retro-runtime retro-runtime.c $(LIBM)
 	cd vm/nga-c && $(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o ../../bin/retro-compiler retro-compiler.c
 	objcopy --add-section .ngaImage=runtime.image --set-section-flags .ngaImage=noload,readonly bin/retro-compiler

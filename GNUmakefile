@@ -7,6 +7,7 @@ EXAMPLESDIR ?= $(PREFIX)/share/examples/RETRO12
 MANDIR ?= $(PREFIX)/share/man/man1
 LIBM ?= -lm
 CFLAGS ?= -O2
+
 ENABLED ?=
 ENABLED += -DENABLE_FLOATS
 ENABLED += -DENABLE_FILES
@@ -14,8 +15,21 @@ ENABLED += -DENABLE_UNIX
 ENABLED += -DENABLE_RNG
 ENABLED += -DENABLE_CLOCK
 ENABLED += -DENABLE_SCRIPTING
-ENABLED += -DNEEDS_STRL
+# ENABLED += -DENABLE_SOCKETS
 ENABLED += -DENABLE_SIGNALS
+ENABLED += -DENABLE_MULTICORE
+ENABLED += -DENABLE_FFI
+
+ENABLED += -DNEEDS_STRL
+
+DEVICES ?=
+DEVICES += interface/floatingpoint.retro
+DEVICES += interface/filesystem.retro
+DEVICES += interface/unix.retro
+DEVICES += interface/rng.retro
+DEVICES += interface/clock.retro
+DEVICES += interface/scripting.retro
+# DEVICES += interface/sockets.retro
 
 all: build
 
@@ -137,9 +151,9 @@ bin/retro-repl: vm/nga-c/repl.c vm/nga-c/image.c
 update-extensions: bin/retro
 	cd package/extensions && ../../bin/retro -f ../../tools/generate-extensions-list.retro >../load-extensions.retro
 
-vm/nga-c/image.c: ngaImage bin/retro-embedimage bin/retro-extend interface/filesystem.retro interface/floatingpoint.retro interface/unix.retro interface/rng.retro interface/sockets.retro interface/scripting.retro interface/retro-unix.retro interface/clock.retro
+vm/nga-c/image.c: ngaImage bin/retro-embedimage bin/retro-extend $(DEVICES) interface/retro-unix.retro
 	cp ngaImage rre.image
-	./bin/retro-extend rre.image interface/filesystem.retro interface/floatingpoint.retro interface/unix.retro interface/rng.retro interface/sockets.retro interface/scripting.retro interface/clock.retro interface/retro-unix.retro 
+	./bin/retro-extend rre.image $(DEVICES) interface/retro-unix.retro 
 	./bin/retro-embedimage rre.image >vm/nga-c/image.c
 
 bin/retro: vm/nga-c/image.c vm/nga-c/retro.c package/list.forth package/load-extensions.retro
