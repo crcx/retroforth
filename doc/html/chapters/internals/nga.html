@@ -155,12 +155,12 @@ As an example, with an implementation providing an output source,
 a block storage system, and keyboard:
 <br/><br/>
 <tt class='indentedcode'>ie&nbsp;&nbsp;&nbsp;&nbsp;will&nbsp;return&nbsp;`3`&nbsp;since&nbsp;there&nbsp;are&nbsp;three&nbsp;i/o&nbsp;devices</tt>
-<tt class='indentedcode'>0&nbsp;iq&nbsp;&nbsp;will&nbsp;return&nbsp;0&nbsp;0,&nbsp;since&nbsp;the&nbsp;first&nbsp;device&nbsp;is&nbsp;a&nbsp;screen&nbsp;(0)</tt>
-<tt class='indentedcode'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with&nbsp;a&nbsp;version&nbsp;of&nbsp;0</tt>
+<tt class='indentedcode'>0&nbsp;iq&nbsp;&nbsp;will&nbsp;return&nbsp;0&nbsp;0,&nbsp;since&nbsp;the&nbsp;first&nbsp;device&nbsp;is&nbsp;a&nbsp;screen</tt>
+<tt class='indentedcode'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(device&nbsp;class&nbsp;0,&nbsp;version&nbsp;of&nbsp;0)</tt>
 <tt class='indentedcode'>1&nbsp;iq&nbsp;&nbsp;will&nbsp;return&nbsp;1&nbsp;3,&nbsp;since&nbsp;the&nbsp;second&nbsp;device&nbsp;is&nbsp;a&nbsp;block</tt>
-<tt class='indentedcode'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;storage&nbsp;(3),&nbsp;with&nbsp;a&nbsp;version&nbsp;of&nbsp;1</tt>
+<tt class='indentedcode'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;storage&nbsp;(class&nbsp;3),&nbsp;with&nbsp;a&nbsp;version&nbsp;of&nbsp;1</tt>
 <tt class='indentedcode'>2&nbsp;iq&nbsp;&nbsp;will&nbsp;return&nbsp;0&nbsp;1,&nbsp;since&nbsp;the&nbsp;third&nbsp;device&nbsp;is&nbsp;a&nbsp;keyboard</tt>
-<tt class='indentedcode'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(1),&nbsp;with&nbsp;a&nbsp;version&nbsp;of&nbsp;0</tt>
+<tt class='indentedcode'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(class&nbsp;1),&nbsp;with&nbsp;a&nbsp;version&nbsp;of&nbsp;0</tt>
 <br/><br/>
 In this case, some interactions can be defined:
 <br/><br/>
@@ -172,12 +172,12 @@ In this case, some interactions can be defined:
 <tt class='indentedcode'>i&nbsp;liiire..</tt>
 <tt class='indentedcode'>d&nbsp;2</tt>
 <br/><br/>
-Setup the stack, push the device ID to the stack, and then use
+Setup the stack, push the device handle to the stack, and then use
 <span class="tt">ii</span> to invoke the interaction.
 <br/><br/>
 A Retro system requires one I/O device (a generic output for a
 single character). This must be the first device, and must have
-a device ID of 0.
+a device class of 0.
 <br/><br/>
 All other devices are optional and can be specified in any order.
 <br/><br/>

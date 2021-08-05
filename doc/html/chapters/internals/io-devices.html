@@ -48,7 +48,7 @@
 I/O devices on Nga are exposed via three instructions:
 <br/><br/>
 <tt class='indentedcode'>ie&nbsp;&nbsp;enumerate&nbsp;i/o&nbsp;devices</tt>
-<tt class='indentedcode'>iq&nbsp;&nbsp;query&nbsp;i/o&nbsp;device</tt>
+<tt class='indentedcode'>iq&nbsp;&nbsp;query&nbsp;i/o&nbsp;device&nbsp;for&nbsp;class&nbsp;and&nbsp;version</tt>
 <tt class='indentedcode'>ii&nbsp;&nbsp;invoke&nbsp;i/o&nbsp;interaction</tt>
 <br/><br/>
 All devices are registered with the VM. How this occurs is
@@ -66,13 +66,13 @@ can then query these by passing the device number to <span class="tt">iq</span>.
 <span class="h2">Query Devices</span>
 <br/><br/>
 Use <span class="tt">iq</span> to query an attached device. This will return two values,
-a device identifer and a revision number.
+a device class and a revision number.
 <br/><br/>
-The device identifier will be the top value on the stack.
+The device class will be the top value on the stack.
 <br/><br/>
 <span class="h2">Invoking a Device</span>
 <br/><br/>
-You can trigger an I/O operation by passing the device number to
+You can trigger an I/O operation by passing the device handle to
 the <span class="tt">ii</span> instruction.
 <br/><br/>
 E.g., to display a character (ASCII code 98 in this case):
@@ -81,16 +81,16 @@ E.g., to display a character (ASCII code 98 in this case):
 <tt class='indentedcode'>d&nbsp;98</tt>
 <tt class='indentedcode'>d&nbsp;0</tt>
 <br/><br/>
-Be sure to pass the device number, not the device identifier.
+Be sure to pass the device handle, not the device class.
 <br/><br/>
-<span class="h2">Device Identifiers</span>
+<span class="h2">Device Class</span>
 <br/><br/>
-Ultimately device identifiers are implementation-specific, but the
-most common system (Nga on Unix) provides or reserves the following:
+Ultimately devices are implementation-specific, but the
+standard system provides or reserves the following:
 <br/><br/>
-<tt class='indentedcode'>&nbsp;ID&nbsp;&nbsp;|&nbsp;Device&nbsp;Type&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;Notes&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
+<tt class='indentedcode'>&nbsp;ID&nbsp;&nbsp;|&nbsp;Device&nbsp;Class&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;Notes&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
 <tt class='indentedcode'>-----+------------------+----------------------------+</tt>
-<tt class='indentedcode'>0000&nbsp;|&nbsp;Generic&nbsp;Output&nbsp;&nbsp;&nbsp;|&nbsp;Always&nbsp;present&nbsp;as&nbsp;device&nbsp;0&nbsp;|</tt>
+<tt class='indentedcode'>0000&nbsp;|&nbsp;Generic&nbsp;Output&nbsp;&nbsp;&nbsp;|&nbsp;Always&nbsp;present&nbsp;as&nbsp;handle&nbsp;0&nbsp;|</tt>
 <tt class='indentedcode'>0001&nbsp;|&nbsp;Keyboard&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
 <tt class='indentedcode'>0002&nbsp;|&nbsp;Floating&nbsp;Point&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
 <tt class='indentedcode'>0003&nbsp;|&nbsp;Block&nbsp;Storage&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;Raw,&nbsp;1024&nbsp;cell&nbsp;blocks&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
@@ -104,8 +104,8 @@ most common system (Nga on Unix) provides or reserves the following:
 <tt class='indentedcode'>1000&nbsp;|&nbsp;Image&nbsp;Saving&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
 <br/><br/>
 It must be noted here that nothing forces devices to use these
-identifiers, and one must take care to use an Nga implementation
-that provides the devices they need.
+class identifiers, and one must take care to use an Nga
+implementation that provides the devices they need.
 <br/><br/>
 <span class="h2">Device Revisions</span>
 <br/><br/>
@@ -114,7 +114,7 @@ detection of this, the query functionality provides a revision number.
 Your code can use this to ensure that the device provided supports
 the level of functionality you need.
 <br/><br/>
-<span class="h2">Nga/Retro-Unix Device Details</span>
+<span class="h2">Device Class Details</span>
 <br/><br/>
 <span class="h3">0000: Generic Output</span>
 <br/><br/>
@@ -225,8 +225,8 @@ As an example, to add a device that has two functions, I might do:
 <tt class='indentedcode'>}</tt>
 <br/><br/>
 <tt class='indentedcode'>void&nbsp;query_device()&nbsp;{</tt>
-<tt class='indentedcode'>&nbsp;&nbsp;stack_push(0);&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;Revision&nbsp;&nbsp;*/</tt>
-<tt class='indentedcode'>&nbsp;&nbsp;stack_push(1234);&nbsp;/*&nbsp;Device&nbsp;ID&nbsp;*/</tt>
+<tt class='indentedcode'>&nbsp;&nbsp;stack_push(0);&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;Revision&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*/</tt>
+<tt class='indentedcode'>&nbsp;&nbsp;stack_push(1234);&nbsp;/*&nbsp;Device&nbsp;Class&nbsp;*/</tt>
 <tt class='indentedcode'>}</tt>
 <br/><br/>
 Then add pointers to <span class="tt">io_device</span> to <span class="tt">IO_deviceHandlers</span> and

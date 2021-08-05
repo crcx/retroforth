@@ -92,10 +92,6 @@ For a standard 32-bit system:
 
 Run `make`
 
-For a 64-bit system:
-
-Run `make OPTIONS=-DBIT64`
-
 This will build the toolchain and then the main `retro`
 executable.
 
@@ -131,32 +127,12 @@ or:
 
 ## Platform Specific Notes
 
-In addition to the 64-bit build, it is possible to override the
-image size, address stack depth, and data stack depth by defining
-the appropriate elements.
-
-E.g., for a 64-bit build with:
-
-    4,000,000 cells of memory
-    4,000     item limit on data stack
-    500       item limit on address stack
-
-Run `make OPTIONS="-DBIT64 -DIMAGE_SIZE=4000000 -DSTACK_DEPTH=4000 -DADDRESSES=500"`
-
-
 ### Haiku
 
-To build on Haiku, you need to link with the *network* library.
+To build on Haiku, you may need to link with the *network* library.
 E.g.:
 
     make LDFLAGS=-lnetwork
-
-### Unix
-
-On Unix, you can optionally enable the sockets device (and thus the socket
-words) by building with `-DENABLE_SOCKETS`.
-
-    make OPTIONS="-DENABLE_SOCKETS"
 
 ## Issues
 
@@ -307,12 +283,93 @@ reveal the path to use:
 I've only tested building this using Microsoft's .NET tools.
 It should also build and run under Mono.
 
-# Advanced Builds
+# Customizing the Build
 
-## Custom Image
+While a simple `make` will suffice for building Retro, there
+are a number of ways to customize the build to your needs.
 
-For users of BSD, Linux, macOS, you can customize the image at
-build time.
+In this chapter, replace `Makefile` with `GNUmakefile` if you
+are using GNU Make (most Linux and macOS users will probably
+be using this).
+
+## I/O Devices
+
+Many of the I/O devices are optional. The most common ones are
+enabled by default in the Makefile. Look near the end of the top
+section for lines starting with `ENABLED`:
+
+    ENABLED ?=
+    ENABLED += -DENABLE_FLOATS
+    ENABLED += -DENABLE_FILES
+    ENABLED += -DENABLE_UNIX
+    ENABLED += -DENABLE_RNG
+    ENABLED += -DENABLE_CLOCK
+    ENABLED += -DENABLE_SCRIPTING
+    ENABLED += -DENABLE_SIGNALS
+    # ENABLED += -DENABLE_SOCKETS
+    # ENABLED += -DENABLE_MULTICORE
+    ENABLED += -DENABLE_FFI
+
+Lines starting with a `#` are commented out and will not be
+processed when building. Here you can easily enable or disable
+specific devices in the VM.
+
+You should also remove any disabled devices from the `DEVICES ?=`
+lines if you want to exclude the Forth part of them from the image.
+
+Note: on platforms (like Linux) that lack the `strl*` functions
+from libc, make sure the `ENABLED += -DNEEDS_STRL` is not commented
+out.
+
+If you want to build with sockets support, uncomment the
+`# ENABLED += -DENABLE_SOCKETS` and `DEVICES += interface/sockets.retro`
+lines before building.
+
+## Compiler Flags
+
+You may need or want to adjust the compiler flags. In the first
+section of the `Makefile`, look for `CFLAGS` and add/change as
+desired to override the defaults.
+
+## VM Tweaks
+
+### 64-Bit
+
+A standard Retro system uses a 32-bit word size. You can increase
+this to 64-bit though. For a one-off build:
+
+    make OPTIONS=-DBIT64
+
+### Stack Size
+
+You can alter the stack sizes by defining `STACK_DEPTH` and
+`ADDRESSES`. For a one-off build with a max stack depth of 4000
+items and 500 addresses on the return stack:
+
+    make OPTIONS="-DSTACK_DEPTH=4000 -DADDRESSES=500
+
+### Image Size
+
+You can also alter the image size. Again, for a one-off build:
+
+    make OPTIONS=-DIMAGE_SIZE=4000000
+
+Would build a system with a maximum image size of 4,000,000 cells.
+
+### Update the Makefile
+
+If you do any of these routinely, edit the Makefile to include them.
+
+    OPTIONS ?=
+    OPTIONS += -DBIT64
+    OPTIONS += -DSTACK_DEPTH=4000
+    OPTIONS += -DADDRESSES=500
+    OPTIONS += -DIMAGE_SIZE=4000000
+
+## Further Image Customization
+
+You can customize the image further by having the build process
+include your code in the image.
 
 In the top level directory is a `package` directory containing
 a file named `list.forth`. You can add files to compile into
@@ -320,7 +377,7 @@ your system by adding them to the `list.forth` and rebuilding.
 
 Example:
 
-If you have wanted to include the NumbersWithoutPrefixes.forth
+If you have wanted to include the `NumbersWithoutPrefixes.forth`
 example, add:
 
     ~~~
@@ -328,7 +385,14 @@ example, add:
     ~~~
 
 To the start of the `list.forth` file and then run `make` again.
-The newly built `bin/retro` will now include your additions.
+
+If you have an existing Retro build and want to have the system
+handle loading extensions with less manual intervention by putting
+the source files in `package/extensions` and running
+`make update-extensions`
+
+After rebuilding, the newly built `bin/retro` will now include
+your additions.
 
 # Starting Retro
 

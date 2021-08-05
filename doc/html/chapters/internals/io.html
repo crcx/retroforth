@@ -57,23 +57,26 @@ a block storage system, and keyboard:
 <tt class='indentedcode'>io:enumerate&nbsp;&nbsp;&nbsp;&nbsp;will&nbsp;return&nbsp;`3`&nbsp;since&nbsp;there&nbsp;are&nbsp;three</tt>
 <tt class='indentedcode'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;i/o&nbsp;devices</tt>
 <tt class='indentedcode'>#0&nbsp;io:query&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;will&nbsp;return&nbsp;0&nbsp;0,&nbsp;since&nbsp;the&nbsp;first&nbsp;device</tt>
-<tt class='indentedcode'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;is&nbsp;a&nbsp;screen&nbsp;(type&nbsp;0)&nbsp;with&nbsp;a&nbsp;version&nbsp;of&nbsp;0</tt>
+<tt class='indentedcode'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;is&nbsp;a&nbsp;screen&nbsp;(device&nbsp;class&nbsp;0)&nbsp;with&nbsp;a&nbsp;version</tt>
+<tt class='indentedcode'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;0</tt>
 <tt class='indentedcode'>#1&nbsp;io:query&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;will&nbsp;return&nbsp;1&nbsp;3,&nbsp;since&nbsp;the&nbsp;second&nbsp;device&nbsp;is</tt>
-<tt class='indentedcode'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;block&nbsp;storage&nbsp;(type&nbsp;3),&nbsp;with&nbsp;a&nbsp;version&nbsp;of&nbsp;1</tt>
+<tt class='indentedcode'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;block&nbsp;storage&nbsp;(device&nbsp;class&nbsp;3),&nbsp;with&nbsp;a&nbsp;version</tt>
+<tt class='indentedcode'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;1</tt>
 <tt class='indentedcode'>#2&nbsp;io:query&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;will&nbsp;return&nbsp;0&nbsp;1,&nbsp;since&nbsp;the&nbsp;last&nbsp;device&nbsp;is&nbsp;a</tt>
-<tt class='indentedcode'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;keyboard&nbsp;(type&nbsp;1),&nbsp;with&nbsp;a&nbsp;version&nbsp;of&nbsp;0</tt>
+<tt class='indentedcode'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;keyboard&nbsp;(device&nbsp;class&nbsp;1),&nbsp;with&nbsp;a&nbsp;version</tt>
+<tt class='indentedcode'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;of&nbsp;0</tt>
 <br/><br/>
 In this case, some interactions can be defined:
 <br/><br/>
 <tt class='indentedcode'>:c:put&nbsp;#0&nbsp;io:invoke&nbsp;;</tt>
 <tt class='indentedcode'>:c:get&nbsp;#2&nbsp;io:invoke&nbsp;;</tt>
 <br/><br/>
-Setup the stack, push the device ID, and then use <span class="tt">io:invoke</span>
+Setup the stack, push the device handle, and then use <span class="tt">io:invoke</span>
 to invoke the interaction.
 <br/><br/>
 A Retro system requires one I/O device (a generic output for a
 single character). This must be the first device, and must have
-a device ID of 0.
+a device class and handle of 0.
 <br/><br/>
 All other devices are optional and can be specified in any
 order.

@@ -75,7 +75,7 @@ will allow for this.
 <tt class='indentedcode'>~~~</tt>
 <tt class='indentedcode'>{{</tt>
 <tt class='indentedcode'>&nbsp;&nbsp;:fields&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@Dictionary&nbsp;,&nbsp;(link)&nbsp;,&nbsp;(xt)&nbsp;,&nbsp;(class)&nbsp;;</tt>
-<tt class='indentedcode'>&nbsp;&nbsp;:invalid-name?&nbsp;dup&nbsp;ASCII:SPACE&nbsp;s:contains-char?&nbsp;;</tt>
+<tt class='indentedcode'>&nbsp;&nbsp;:invalid-name?&nbsp;dup&nbsp;ASCII:SPACE&nbsp;s:contains/char?&nbsp;;</tt>
 <tt class='indentedcode'>&nbsp;&nbsp;:rewrite&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[&nbsp;ASCII:SPACE&nbsp;[&nbsp;$_&nbsp;]&nbsp;case&nbsp;]&nbsp;s:map&nbsp;;</tt>
 <tt class='indentedcode'>&nbsp;&nbsp;:entry&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;here&nbsp;&amp;call&nbsp;dip&nbsp;!Dictionary&nbsp;;</tt>
 <tt class='indentedcode'>&nbsp;&nbsp;[&nbsp;[&nbsp;fields&nbsp;invalid-name?&nbsp;&amp;rewrite&nbsp;if&nbsp;s,&nbsp;(name)&nbsp;]&nbsp;entry&nbsp;]</tt>

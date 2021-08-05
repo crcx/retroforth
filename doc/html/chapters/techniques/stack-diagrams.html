@@ -75,5 +75,14 @@ value. And after execution, a single value (m) will be left on
 the stack.
 <br/><br/>
 Words with no stack effect have a comment of (-)
+<br/><br/>
+For combinators (words consuming quotations), you can include
+a sub-comment indicating the expected stack effect of the
+quote. E.g.,
+<br/><br/>
+<tt class='indentedcode'>(q(-f)-)</tt>
+<br/><br/>
+Indicates a word consuming a quote and returning nothing. The
+quote should return a flag.
 </p>
 </body></html>

@@ -61,10 +61,6 @@ For a standard 32-bit system:
 <br/><br/>
 Run <span class="tt">make</span>
 <br/><br/>
-For a 64-bit system:
-<br/><br/>
-Run <span class="tt">make OPTIONS=-DBIT64</span>
-<br/><br/>
 This will build the toolchain and then the main <span class="tt">retro</span>
 executable.
 <br/><br/>
@@ -100,32 +96,12 @@ or:
 <br/><br/>
 <span class="h2">Platform Specific Notes</span>
 <br/><br/>
-In addition to the 64-bit build, it is possible to override the
-image size, address stack depth, and data stack depth by defining
-the appropriate elements.
-<br/><br/>
-E.g., for a 64-bit build with:
-<br/><br/>
-<tt class='indentedcode'>4,000,000&nbsp;cells&nbsp;of&nbsp;memory</tt>
-<tt class='indentedcode'>4,000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;item&nbsp;limit&nbsp;on&nbsp;data&nbsp;stack</tt>
-<tt class='indentedcode'>500&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;item&nbsp;limit&nbsp;on&nbsp;address&nbsp;stack</tt>
-<br/><br/>
-Run <span class="tt">make OPTIONS="-DBIT64 -DIMAGE_SIZE=4000000 -DSTACK_DEPTH=4000 -DADDRESSES=500"</span>
-<br/><br/>
-<br/><br/>
 <span class="h3">Haiku</span>
 <br/><br/>
-To build on Haiku, you need to link with the <strong>network</strong> library.
+To build on Haiku, you may need to link with the <strong>network</strong> library.
 E.g.:
 <br/><br/>
 <tt class='indentedcode'>make&nbsp;LDFLAGS=-lnetwork</tt>
-<br/><br/>
-<span class="h3">Unix</span>
-<br/><br/>
-On Unix, you can optionally enable the sockets device (and thus the socket
-words) by building with <span class="tt">-DENABLE_SOCKETS</span>.
-<br/><br/>
-<tt class='indentedcode'>make&nbsp;OPTIONS="-DENABLE_SOCKETS"</tt>
 <br/><br/>
 <span class="h2">Issues</span>
 <br/><br/>
