@@ -2191,6 +2191,17 @@ Given a dictionary header, return the name field.
 Class: class:word | Namespace: d | Interface Layer: all
 ------------------------------------------------------------------------
 
+d:source
+
+  Data:  d-a
+  Addr:  -
+  Float: -
+
+Given a dictionary header, return the source field.
+
+Class: class:word | Namespace: d | Interface Layer: all
+------------------------------------------------------------------------
+
 d:words
 
   Data:  -

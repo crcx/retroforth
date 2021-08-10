@@ -33,7 +33,7 @@
 #define D_OFFSET_LINK     0
 #define D_OFFSET_XT       1
 #define D_OFFSET_CLASS    2
-#define D_OFFSET_NAME     3
+#define D_OFFSET_NAME     4
 
 
 /* These settings can be overridden at compile time. */

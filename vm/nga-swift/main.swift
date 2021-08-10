@@ -469,7 +469,7 @@ loadImage()
 var i = memory[2]
 var interpret: Int = 0
 while i != 0 {
-    let name = extractString(at: Int(i + 3))
+    let name = extractString(at: Int(i + 4))
 //    print(name)
     if name == "interpret" {
         interpret = Int(memory[Int(i) + 1])

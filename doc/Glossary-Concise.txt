@@ -571,6 +571,9 @@ Lookup the specified address in the dictionary and return a pointer to its dicti
 d:name                   D: d-s  A: -  F: -
 Given a dictionary header, return the name field.
 
+d:source                 D: d-a  A: -  F: -
+Given a dictionary header, return the source field.
+
 d:words                  D: -  A: -  F: -
 Display a list of all named items in the `Dictionary`.
 

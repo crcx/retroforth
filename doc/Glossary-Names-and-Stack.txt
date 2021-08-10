@@ -189,6 +189,7 @@ d:link                   D: d-a  A: -  F: -
 d:lookup                 D: s-d  A: -  F: -
 d:lookup-xt              D: a-d  A: -  F: -
 d:name                   D: d-s  A: -  F: -
+d:source                 D: d-a  A: -  F: -
 d:words                  D: -  A: -  F: -
 d:words-beginning-with   D: s-  A: -  F: -
 d:words-with             D: s-  A: -  F: -

@@ -322,7 +322,7 @@ namespace Nga
       int i = memory[2]; // Dictionary
       string target;
       while (memory[i] != 0 && i != 0) {
-        target = rxGetString(i + 3);
+        target = rxGetString(i + 4);
         if (name.Equals(target)) {
           dt = i;
           i = 0;

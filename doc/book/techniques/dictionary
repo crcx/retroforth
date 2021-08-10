@@ -21,7 +21,8 @@ Each entry follows the following structure:
     0000     Link to Prior Header
     0001     Link to XT
     0002     Link to Class Handler
-    0003+    Word name (null terminated)
+    0003     Source Identifier
+    0004+    Word name (null terminated)
 
 RETRO provides words for accessing the fields in a portable
 manner. It's recommended to use these to allow for future

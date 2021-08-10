@@ -83,7 +83,7 @@ proc go() =
   proc lookup(name: string): CELL =
     var i = im[2]
     while im[i] != 0:
-      let target = extract(i + 3)
+      let target = extract(i + 4)
       if name == target:
         return i
       else:
