@@ -6,6 +6,7 @@ DOCSDIR ?= $(PREFIX)/share/doc/RETRO12
 EXAMPLESDIR ?= $(PREFIX)/share/examples/RETRO12
 MANDIR ?= $(PREFIX)/man/man1
 LIBM ?= -lm -g
+LIBDL ?=
 ENABLED ?=
 ENABLED += -DENABLE_FLOATS
 ENABLED += -DENABLE_FILES
@@ -26,6 +27,7 @@ DEVICES += interface/rng.retro
 DEVICES += interface/clock.retro
 DEVICES += interface/scripting.retro
 # DEVICES += interface/sockets.retro
+DEVICES += interface/sources.retro
 
 all: build
 
@@ -148,15 +150,15 @@ update-extensions: bin/retro
 
 vm/nga-c/image.c: ngaImage bin/retro-embedimage bin/retro-extend  interface/retro-unix.retro $(DEVICES)
 	cp ngaImage rre.image
-	./bin/retro-extend rre.image $(DEVICES) interface/retro-unix.retro 
+	./bin/retro-extend rre.image $(DEVICES) interface/retro-unix.retro
 	./bin/retro-embedimage rre.image >vm/nga-c/image.c
 
 bin/retro: vm/nga-c/image.c vm/nga-c/retro.c package/list.forth package/load-extensions.retro
-	cd vm/nga-c && $(CC) -DFAST $(OPTIONS) $(ENABLED) $(CFLAGS) $(LDFLAGS) -o ../../bin/retro retro.c $(LIBM)
+	cd vm/nga-c && $(CC) -DFAST $(OPTIONS) $(ENABLED) $(CFLAGS) $(LDFLAGS) -o ../../bin/retro retro.c $(LIBM) $(LIBDL)
 	cd package && ../bin/retro -u rre.image -f list.forth
 	./bin/retro-embedimage rre.image >vm/nga-c/image.c
 	rm rre.image
-	cd vm/nga-c && $(CC) -DFAST $(OPTIONS) $(ENABLED) $(CFLAGS) $(LDFLAGS) -o ../../bin/retro retro.c $(LIBM)
+	cd vm/nga-c && $(CC) -DFAST $(OPTIONS) $(ENABLED) $(CFLAGS) $(LDFLAGS) -o ../../bin/retro retro.c $(LIBM) $(LIBDL)
 
 
 # optional targets
@@ -164,7 +166,7 @@ bin/retro: vm/nga-c/image.c vm/nga-c/retro.c package/list.forth package/load-ext
 bin/retro-compiler: bin/retro-extend vm/nga-c/retro-compiler.c vm/nga-c/retro-runtime.c
 	cp ngaImage runtime.image
 	./bin/retro-extend runtime.image $(DEVICES) interface/retro-unix.retro
-	cd vm/nga-c && $(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o ../../retro-runtime retro-runtime.c $(LIBM)
+	cd vm/nga-c && $(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o ../../retro-runtime retro-runtime.c $(LIBM) $(LIBDL)
 	cd vm/nga-c && $(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o ../../bin/retro-compiler retro-compiler.c
 	objcopy --add-section .ngaImage=runtime.image --set-section-flags .ngaImage=noload,readonly bin/retro-compiler
 	objcopy --add-section .runtime=retro-runtime --set-section-flags .runtime=noload,readonly bin/retro-compiler
