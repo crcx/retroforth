@@ -1191,9 +1191,14 @@ a:to-string
   Addr:  -
   Float: -
 
-Create a new string from the provided array. This string will be stored in the temporal string buffers.
+Create a new string from the provided array of character values. This string will be stored in the temporal string buffers.
 
 Class: class:word | Namespace: a | Interface Layer: all
+
+Example #1:
+
+    { $h $e $l $l $o } a:to-string s:put nl
+
 ------------------------------------------------------------------------
 
 abort

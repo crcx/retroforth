@@ -311,7 +311,7 @@ a:th                     D: an-b  A: -  F: -
 Return the actual address of the `n`th item in the array.
 
 a:to-string              D: a-s  A: -  F: -
-Create a new string from the provided array. This string will be stored in the temporal string buffers.
+Create a new string from the provided array of character values. This string will be stored in the temporal string buffers.
 
 abort                    D: -  A: -  F: -
 Abort execution.
