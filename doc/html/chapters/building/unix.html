@@ -96,10 +96,17 @@ or:
 <br/><br/>
 <span class="h2">Platform Specific Notes</span>
 <br/><br/>
+<span class="h3">Linux</span>
+<br/><br/>
+To build on Linux, you need to link with <strong>libdl</strong> if using the optional
+FFI. To do this, edit the <span class="tt">GNUmakefile</span> and uncomment this before building:
+<br/><br/>
+<tt class='indentedcode'>#&nbsp;LIBDL&nbsp;+=&nbsp;-ldl</tt>
+<br/><br/>
 <span class="h3">Haiku</span>
 <br/><br/>
-To build on Haiku, you may need to link with the <strong>network</strong> library.
-E.g.:
+To build on Haiku, you need to link with the <strong>network</strong> library if using
+sockets. E.g.:
 <br/><br/>
 <tt class='indentedcode'>make&nbsp;LDFLAGS=-lnetwork</tt>
 <br/><br/>

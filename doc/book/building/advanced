@@ -36,6 +36,9 @@ Note: on platforms (like Linux) that lack the `strl*` functions
 from libc, make sure the `ENABLED += -DNEEDS_STRL` is not commented
 out.
 
+For the FFI, on Linux, you will need to link with `libdl`. Edit the
+`GNUmakefile` to uncomment the `# LIBDL += -ldl` line.
+
 If you want to build with sockets support, uncomment the
 `# ENABLED += -DENABLE_SOCKETS` and `DEVICES += interface/sockets.retro`
 lines before building.

@@ -51,10 +51,17 @@ or:
 
 ## Platform Specific Notes
 
+### Linux
+
+To build on Linux, you need to link with *libdl* if using the optional
+FFI. To do this, edit the `GNUmakefile` and uncomment this before building:
+
+    # LIBDL += -ldl
+
 ### Haiku
 
-To build on Haiku, you may need to link with the *network* library.
-E.g.:
+To build on Haiku, you need to link with the *network* library if using
+sockets. E.g.:
 
     make LDFLAGS=-lnetwork
 

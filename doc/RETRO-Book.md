@@ -127,10 +127,17 @@ or:
 
 ## Platform Specific Notes
 
+### Linux
+
+To build on Linux, you need to link with *libdl* if using the optional
+FFI. To do this, edit the `GNUmakefile` and uncomment this before building:
+
+    # LIBDL += -ldl
+
 ### Haiku
 
-To build on Haiku, you may need to link with the *network* library.
-E.g.:
+To build on Haiku, you need to link with the *network* library if using
+sockets. E.g.:
 
     make LDFLAGS=-lnetwork
 
@@ -320,6 +327,9 @@ lines if you want to exclude the Forth part of them from the image.
 Note: on platforms (like Linux) that lack the `strl*` functions
 from libc, make sure the `ENABLED += -DNEEDS_STRL` is not commented
 out.
+
+For the FFI, on Linux, you will need to link with `libdl`. Edit the
+`GNUmakefile` to uncomment the `# LIBDL += -ldl` line.
 
 If you want to build with sockets support, uncomment the
 `# ENABLED += -DENABLE_SOCKETS` and `DEVICES += interface/sockets.retro`
