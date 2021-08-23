@@ -89,3 +89,20 @@ startup flags passed.
 
 &listen #1 store
 ~~~
+
+## d:source
+
+~~~
+'interface/retro-unix.retro s:keep
+dup 'listen d:lookup d:source store
+dup 'banner d:lookup d:source store
+dup '// d:lookup d:source store
+dup 'NoEcho d:lookup d:source store
+dup 'clear d:lookup d:source store
+dup 's:get d:lookup d:source store
+dup 'parse-until d:lookup d:source store
+dup 'image:save d:lookup d:source store
+dup 'TIB d:lookup d:source store
+drop
+~~~
+

@@ -133,3 +133,34 @@ seconds.
     [ start &read until finish ] buffer:preserve ;
 }}
 ~~~
+
+## d:source
+
+~~~
+'interface/unix.retro s:keep
+dup 'unix:slurp-pipe d:lookup d:source store
+dup 'unix:for-each-file d:lookup d:source store
+dup 'unix:count-files-in-cwd d:lookup d:source store
+dup 'unix:get-cwd d:lookup d:source store
+dup 'unix:pipe d:lookup d:source store
+dup 'unix:execute d:lookup d:source store
+dup 'unix:sleep d:lookup d:source store
+dup 'unix:putenv d:lookup d:source store
+dup 'unix:getenv d:lookup d:source store
+dup 'unix:chdir d:lookup d:source store
+dup 'unix:pclose d:lookup d:source store
+dup 'unix:popen d:lookup d:source store
+dup 'unix:kill d:lookup d:source store
+dup 'unix:wait d:lookup d:source store
+dup 'unix:getpid d:lookup d:source store
+dup 'unix:exit d:lookup d:source store
+dup 'unix:exec3 d:lookup d:source store
+dup 'unix:exec2 d:lookup d:source store
+dup 'unix:exec1 d:lookup d:source store
+dup 'unix:exec0 d:lookup d:source store
+dup 'unix:fork d:lookup d:source store
+dup 'unix:system d:lookup d:source store
+dup 'io:unix-syscall d:lookup d:source store
+drop
+~~~
+

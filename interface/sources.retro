@@ -357,8 +357,3 @@ dup 'depth d:lookup d:source store
 dup 'EOM d:lookup d:source store
 drop
 ~~~
-
-## I/O Interfaces
-
-~~~
-~~~

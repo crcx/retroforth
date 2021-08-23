@@ -49,3 +49,20 @@ Adds support for `abort`.
   :abort (-) &Compiler v:off         #8 script:operation ;
 }}
 ~~~
+
+## d:source
+
+~~~
+'interface/scripting.retro s:keep
+dup 'abort d:lookup d:source store
+dup 'script:abort-include d:lookup d:source store
+dup 'script:ignore-to-eol d:lookup d:source store
+dup 'script:current-line d:lookup d:source store
+dup 'script:current-file d:lookup d:source store
+dup 'script:name d:lookup d:source store
+dup 'include d:lookup d:source store
+dup 'script:get-argument d:lookup d:source store
+dup 'script:arguments d:lookup d:source store
+drop
+~~~
+

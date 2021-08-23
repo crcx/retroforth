@@ -163,3 +163,33 @@ once for each line in a file. This makes some things trivial. E.g., a simple
 :file:spew (ss-)
   file:open-for-writing swap [ over file:write ] s:for-each file:close ;
 ~~~
+
+## d:source
+
+~~~
+'interface/filesystem.retro s:keep
+dup 'file:spew d:lookup d:source store
+dup 'file:slurp d:lookup d:source store
+dup 'file:for-each-line d:lookup d:source store
+dup 'file:read-line d:lookup d:source store
+dup 'file:open-for-writing d:lookup d:source store
+dup 'file:open-for-append d:lookup d:source store
+dup 'file:open-for-reading d:lookup d:source store
+dup 'file:exists? d:lookup d:source store
+dup 'file:flush d:lookup d:source store
+dup 'file:delete d:lookup d:source store
+dup 'file:size d:lookup d:source store
+dup 'file:seek d:lookup d:source store
+dup 'file:tell d:lookup d:source store
+dup 'file:write d:lookup d:source store
+dup 'file:read d:lookup d:source store
+dup 'file:close d:lookup d:source store
+dup 'file:open d:lookup d:source store
+dup 'file:R+ d:lookup d:source store
+dup 'file:A d:lookup d:source store
+dup 'file:W d:lookup d:source store
+dup 'file:R d:lookup d:source store
+dup 'file:operation d:lookup d:source store
+drop
+~~~
+

@@ -23,3 +23,25 @@ system clock.
 :clock:utc:minute (-n) #11 clock:operation ;
 :clock:utc:second (-n) #12 clock:operation ;
 ~~~
+
+## d:source
+
+~~~
+'interface/clock.retro s:keep
+dup 'clock:utc:second d:lookup d:source store
+dup 'clock:utc:minute d:lookup d:source store
+dup 'clock:utc:hour d:lookup d:source store
+dup 'clock:utc:year d:lookup d:source store
+dup 'clock:utc:month d:lookup d:source store
+dup 'clock:utc:day d:lookup d:source store
+dup 'clock:second d:lookup d:source store
+dup 'clock:minute d:lookup d:source store
+dup 'clock:hour d:lookup d:source store
+dup 'clock:year d:lookup d:source store
+dup 'clock:month d:lookup d:source store
+dup 'clock:day d:lookup d:source store
+dup 'clock:timestamp d:lookup d:source store
+dup 'clock:operation d:lookup d:source store
+drop
+~~~
+

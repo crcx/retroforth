@@ -206,3 +206,95 @@ Deal with special cases.
   e:-INF [ 'e:-INF s:put ] case
   e:to-f f:put ;
 ~~~
+
+## Populate d:source
+
+~~~
+'interface/floatingpoint.retro s:keep
+dup 'e:put d:lookup d:source store
+dup 'f:dump-astack d:lookup d:source store
+dup 'f:dump-stack d:lookup d:source store
+dup 'f:fetch d:lookup d:source store
+dup 'f:store d:lookup d:source store
+dup 'e:to-f d:lookup d:source store
+dup 'f:to-e d:lookup d:source store
+dup 'f:signed-square d:lookup d:source store
+dup 'f:signed-sqrt d:lookup d:source store
+dup 'f:E1 d:lookup d:source store
+dup 'e:clip d:lookup d:source store
+dup 'e:-inf? d:lookup d:source store
+dup 'e:inf? d:lookup d:source store
+dup 'e:nan? d:lookup d:source store
+dup 'e:zero? d:lookup d:source store
+dup 'e:min? d:lookup d:source store
+dup 'e:max? d:lookup d:source store
+dup 'e:n? d:lookup d:source store
+dup 'e:-INF d:lookup d:source store
+dup 'e:INF d:lookup d:source store
+dup 'e:NAN d:lookup d:source store
+dup 'e:MIN d:lookup d:source store
+dup 'e:MAX d:lookup d:source store
+dup 'f:sign d:lookup d:source store
+dup 'f:case d:lookup d:source store
+dup 'f:dec d:lookup d:source store
+dup 'f:inc d:lookup d:source store
+dup 'f:between? d:lookup d:source store
+dup 'f:limit d:lookup d:source store
+dup 'f:max d:lookup d:source store
+dup 'f:min d:lookup d:source store
+dup 'f:round d:lookup d:source store
+dup 'f:-inf? d:lookup d:source store
+dup 'f:inf? d:lookup d:source store
+dup 'f:nan? d:lookup d:source store
+dup 'f:-INF d:lookup d:source store
+dup 'f:INF d:lookup d:source store
+dup 'f:NAN d:lookup d:source store
+dup 'f:E d:lookup d:source store
+dup 'f:PI d:lookup d:source store
+dup 'f:put d:lookup d:source store
+dup 'f:abs d:lookup d:source store
+dup 'f:negate d:lookup d:source store
+dup 'f:negative? d:lookup d:source store
+dup 'f:positive? d:lookup d:source store
+dup 'f:square d:lookup d:source store
+dup 'sigil:. d:lookup d:source store
+dup 'f:rot d:lookup d:source store
+dup 'f:dup-pair d:lookup d:source store
+dup 'f:drop-pair d:lookup d:source store
+dup 'f:nip d:lookup d:source store
+dup 'f:tuck d:lookup d:source store
+dup 'f:over d:lookup d:source store
+dup 'f:adepth d:lookup d:source store
+dup 'f:pop d:lookup d:source store
+dup 'f:push d:lookup d:source store
+dup 'f:atan d:lookup d:source store
+dup 'f:acos d:lookup d:source store
+dup 'f:asin d:lookup d:source store
+dup 'f:tan d:lookup d:source store
+dup 'f:cos d:lookup d:source store
+dup 'f:sin d:lookup d:source store
+dup 'f:power d:lookup d:source store
+dup 'f:log d:lookup d:source store
+dup 'f:swap d:lookup d:source store
+dup 'f:drop d:lookup d:source store
+dup 'f:dup d:lookup d:source store
+dup 'f:depth d:lookup d:source store
+dup 'f:gt? d:lookup d:source store
+dup 'f:lt? d:lookup d:source store
+dup 'f:-eq? d:lookup d:source store
+dup 'f:eq? d:lookup d:source store
+dup 'f:sqrt d:lookup d:source store
+dup 'f:ceiling d:lookup d:source store
+dup 'f:floor d:lookup d:source store
+dup 'f:/ d:lookup d:source store
+dup 'f:* d:lookup d:source store
+dup 'f:- d:lookup d:source store
+dup 'f:+ d:lookup d:source store
+dup 'f:to-string d:lookup d:source store
+dup 'f:to-number d:lookup d:source store
+dup 's:to-float d:lookup d:source store
+dup 'n:to-float d:lookup d:source store
+dup 'float:operation d:lookup d:source store
+drop
+~~~
+
