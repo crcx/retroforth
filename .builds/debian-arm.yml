@@ -21,11 +21,11 @@ tasks:
     cd retroforth
     retro example/1D-Cellular-Automota.retro
     retro example/sea-level-rise.retro
-- test-compiler: |
-    cd retroforth
-    curl http://forth.works/share/17af8e4329d13fea01e7afcdf3c9aefd -o hello.retro
-    ./bin/retro-compiler hello.retro hello
-    ./a.out
+#- test-compiler: |
+#    cd retroforth
+#    curl http://forth.works/share/17af8e4329d13fea01e7afcdf3c9aefd -o hello.retro
+#    ./bin/retro-compiler hello.retro hello
+#    ./a.out
 - check-missing: |
     cd retroforth
     retro tools/glossary.retro missing

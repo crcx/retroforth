@@ -3,6 +3,12 @@
 This is a system for allowing you to easily add your own
 extensions to RETRO on Unix systems.
 
+~~~
+[ script:current-file s:keep [ &d:add-header #2 + call ] dip
+  d:last d:source store ] &d:add-header set-hook
+~~~
+
+
 There are two options:
 
 ## Manual Additions
