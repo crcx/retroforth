@@ -6,8 +6,13 @@ DOCSDIR ?= $(PREFIX)/share/doc/RETRO12
 EXAMPLESDIR ?= $(PREFIX)/share/examples/RETRO12
 MANDIR ?= $(PREFIX)/share/man/man1
 LIBM ?= -lm
+
 LIBDL ?=
-# LIBDL += -ldl
+UNAME_S := $(shell uname -s)
+ifeq ($(UNAME_S),Linux)
+  LIBDL += -ldl
+endif
+
 CFLAGS ?= -O2
 
 ENABLED ?=
