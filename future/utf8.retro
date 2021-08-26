@@ -1,0 +1,38 @@
+# UTF-8 Strings
+
+Strings in Retro have been C-style null terminated sequences of ASCII
+characters. I'm seeking to change this as I'd like to support Unicode
+(UTF-8) and to merge much of the string and array handling code.
+
+This will be an ongoing process.
+
+Temporary sigil.
+
+~~~
+:sigil:" (-a) a:from-string class:data ; immediate
+~~~
+
+Return the length (in utf8 characters or bytes) of a string.
+
+~~~
+:us:length (a-n)  #0 swap [ #192 and #128 -eq? + ] a:for-each n:abs ;
+:us:length/bytes (a-n)  a:length ;
+~~~
+
+Fetch a character from a string.
+
+~~~
+~~~
+
+Store a character into a string.
+
+~~~
+~~~
+
+Tests.
+
+```
+"((V⍳V)=⍳⍴V)/V←,V us:length n:put nl
+"((V⍳V)=⍳⍴V)/V←,V us:length/bytes n:put nl
+```
+
