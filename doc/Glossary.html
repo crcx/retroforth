@@ -3054,6 +3054,17 @@
 </div>
 <p>Evaluate string as if it was typed into the interpreter.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>s</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
+<h2>s:fetch</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> sn-n<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Fetch the character value stored at the specified index in the string.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>s</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><p><b>Example:</b> <br>
+<br>
+<xmp style='background:#f2f2f2'>    'abcdef #2 s:fetch</xmp>
+</p>
+<hr/>
 <h2>s:filter</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> sq-s<br>
 <b>Addr:</b> -<br>
@@ -3235,6 +3246,17 @@
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>s</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><p><b>Example:</b> <br>
 <br>
 <xmp style='background:#f2f2f2'>  'Hello_Brave_World! 'Brave s:split-on-string s:put nl s:put nl</xmp>
+</p>
+<hr/>
+<h2>s:store</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> csn-<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Store a character value into the string at the specified index.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>s</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><p><b>Example:</b> <br>
+<br>
+<xmp style='background:#f2f2f2'>    $z 'abcdef #1 s:store</xmp>
 </p>
 <hr/>
 <h2>s:substr</h2>

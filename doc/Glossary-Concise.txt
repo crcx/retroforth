@@ -1210,6 +1210,9 @@ Compare two strings for equality. Return `TRUE` if identical or `FALSE` if not.
 s:evaluate               D: s-?  A: -  F: -?
 Evaluate string as if it was typed into the interpreter.
 
+s:fetch                  D: sn-n  A: -  F: -
+Fetch the character value stored at the specified index in the string.
+
 s:filter                 D: sq-s  A: -  F: -
 Execute the quote once for each value in the string. If the quote returns `TRUE`, append the value into a new string. If `FALSE` the value will be discarded.
 
@@ -1284,6 +1287,9 @@ Split a string on the first occurrence of the specified character.
 
 s:split/string           D: ss-ss  A: -  F: -
 Split a string on the first occurrence of the specified string. After the split, the top stack item will be the part of the string before the specified substring, and the second item will be the rest of the original string.
+
+s:store                  D: csn-  A: -  F: -
+Store a character value into the string at the specified index.
 
 s:substr                 D: sfl-s  A: -  F: -
 Extract a substring from the specified string. This will take the characters starting at `f` and extend `l` characters in length.

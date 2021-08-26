@@ -4716,6 +4716,22 @@ Evaluate string as if it was typed into the interpreter.
 Class: class:word | Namespace: s | Interface Layer: all
 ------------------------------------------------------------------------
 
+s:fetch
+
+  Data:  sn-n
+  Addr:  -
+  Float: -
+
+Fetch the character value stored at the specified index in the string.
+
+Class: class:word | Namespace: s | Interface Layer: all
+
+Example #1:
+
+    'abcdef #2 s:fetch
+
+------------------------------------------------------------------------
+
 s:filter
 
   Data:  sq-s
@@ -4998,6 +5014,22 @@ Class: class:word | Namespace: s | Interface Layer: all
 Example #1:
 
   'Hello_Brave_World! 'Brave s:split-on-string s:put nl s:put nl
+
+------------------------------------------------------------------------
+
+s:store
+
+  Data:  csn-
+  Addr:  -
+  Float: -
+
+Store a character value into the string at the specified index.
+
+Class: class:word | Namespace: s | Interface Layer: all
+
+Example #1:
+
+    $z 'abcdef #1 s:store
 
 ------------------------------------------------------------------------
 

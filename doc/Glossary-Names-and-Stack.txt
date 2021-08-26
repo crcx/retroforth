@@ -402,6 +402,7 @@ s:empty                  D: -s  A: -  F: -
 s:ends-with?             D: ss-f  A: -  F: -
 s:eq?                    D: ss-f  A: -  F: -
 s:evaluate               D: s-?  A: -  F: -?
+s:fetch                  D: sn-n  A: -  F: -
 s:filter                 D: sq-s  A: -  F: -
 s:for-each               D: sq-  A: -  F: -
 s:format                 D: ...s-s  A: -  F: -
@@ -427,6 +428,7 @@ s:split                  D: sc-ss  A: -  F: -
 s:split-on-string        D: ss-ss  A: -  F: -
 s:split/char             D: sc-ss  A: -  F: -
 s:split/string           D: ss-ss  A: -  F: -
+s:store                  D: csn-  A: -  F: -
 s:substr                 D: sfl-s  A: -  F: -
 s:temp                   D: s-s  A: -  F: -
 s:to-float               D: s-  A: -  F: -F

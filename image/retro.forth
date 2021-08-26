@@ -889,6 +889,14 @@ handle conversion of _ into spaces.
 :sigil:' compiling? &s:keep &s:temp choose ; immediate
 ~~~
 
+`s:fetch` and `s:store` retrieve and update characters in
+a string.
+
+~~~
+:s:fetch (sn-c) + fetch ;
+:s:store (csn-) + store ;
+~~~
+
 `s:chop` removes the last character from a string.
 
 ~~~

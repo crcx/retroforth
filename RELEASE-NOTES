@@ -5,6 +5,7 @@
 - new words
 
   h:fetch h:store w:fetch w:store
+  s:fetch s:store
 
 - dictionary
 

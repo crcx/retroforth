@@ -402,6 +402,7 @@ s:empty	-s	-	-	Return an empty string.			class:word	{n/a}	{n/a}	s	all
 s:ends-with?	ss-f	-	-	Return `TRUE` if s1 ends with s2 or `FALSE` otherwise.			class:word	{n/a}	{n/a}	s	all	
 s:eq?	ss-f	-	-	Compare two strings for equality. Return `TRUE` if identical or `FALSE` if not.			class:word	    'hello 'again s:eq?\n    'test  'test  s:eq?	{n/a}	s	all	
 s:evaluate	s-?	-	-?	Evaluate string as if it was typed into the interpreter.			class:word	{n/a}	{n/a}	s	all	
+s:fetch	sn-n	-	-	Fetch the character value stored at the specified index in the string.			class:word	    'abcdef #2 s:fetch	{n/a}	s	all	
 s:filter	sq-s	-	-	Execute the quote once for each value in the string. If the quote returns `TRUE`, append the value into a new string. If `FALSE` the value will be discarded.			class:word	{n/a}	{n/a}	s	all	
 s:for-each	sq-	-	-	Execute the quote once for each value in the string.			class:word	{n/a}	{n/a}	s	all	
 s:format	...s-s	-	-	Construct a new string using the template passed and items from the stack.			class:word	{n/a}	{n/a}	s	all	
@@ -427,6 +428,7 @@ s:split	sc-ss	-	-	Deprecated. Use `s:split/char` instead. Split a string on the 
 s:split-on-string	ss-ss	-	-	Deprecated. Use `s:split/string` instead. Split a string on the first occurrence of the specified string. After the split, the top stack item will be the part of the string before the specified substring, and the second item will be the rest of the original string.			class:word	  'Hello_Brave_World! 'Brave s:split-on-string s:put nl s:put nl	{n/a}	s	all	
 s:split/char	sc-ss	-	-	Split a string on the first occurrence of the specified character.			class:word	{n/a}	{n/a}	s	all	
 s:split/string	ss-ss	-	-	Split a string on the first occurrence of the specified string. After the split, the top stack item will be the part of the string before the specified substring, and the second item will be the rest of the original string.			class:word	  'Hello_Brave_World! 'Brave s:split-on-string s:put nl s:put nl	{n/a}	s	all	
+s:store	csn-	-	-	Store a character value into the string at the specified index.			class:word	    $z 'abcdef #1 s:store	{n/a}	s	all	
 s:substr	sfl-s	-	-	Extract a substring from the specified string. This will take the characters starting at `f` and extend `l` characters in length.			class:word	{n/a}	{n/a}	s	all	
 s:temp	s-s	-	-	Move a string into the temporary string buffers.			class:word	{n/a}	{n/a}	s	all	
 s:to-float	s-	-	-F	Convert a string representation into a floating-point value.			class:word	{n/a}	{n/a}	s	rre	
