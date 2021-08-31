@@ -1,0 +1,11 @@
+~~~
+:io:core #8000 io:scan-for io:invoke ;
+
+:core:init  (n-)  #0 io:core ;
+:core:start (an-) #1 io:core ;
+:core:pause (n-)  #2 io:core ;
+:core:pause-current (-) #3 io:core ;
+:core:resume    (n-)  #4 io:core ;
+:core:read/reg  (n-v) #5 io:core ;
+:core:write/reg (vn-) #6 io:core ;
+~~~
