@@ -90,4 +90,7 @@ FILE-PATH 'gophermap s:append file:W file:open !FID
   'retro-document_%s_>%s%s.glossary s:format unix:system $. c:put ;
 ~~~
 
+~~~
 [ dir? &drop &glossary choose ] unix:for-each-file nl
+~~~
+
