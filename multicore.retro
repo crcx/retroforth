@@ -1,4 +1,4 @@
-Testing for multiple core support.
+# Multicore Support
 
 ~~~
 :core #8000 io:scan-for io:invoke ;
@@ -12,7 +12,7 @@ Testing for multiple core support.
 :core:wr    (vn-) #6 core ;
 ~~~
 
-~~~
+```
 'Done var
 
 :a [ @Done #100000 gt? [ core:pause-current ] if &Done v:inc $a c:put ] forever ;
@@ -26,4 +26,4 @@ Testing for multiple core support.
 #4 core:init  &d #4 core:start
 
 core:pause-current
-~~~
+```

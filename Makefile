@@ -1,3 +1,7 @@
+# Linux / macOS users: This Makefile is mainly intended for BSD
+#                      systems. You probably want to look at or
+#                      edit the GNUmakefile.
+# -------------------------------------------------------------
 VERSION ?= 2021.10
 KEYPAIR ?= 2021-10
 PREFIX ?= /usr/local
