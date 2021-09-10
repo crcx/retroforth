@@ -1,3 +1,15 @@
+# UTF-8 Characters
+
+UTF-8 allows for characters to be one to four bytes long. Since Retro
+is 32-bits internally, all characters can fit into a sincle entry on
+the stack. These words will be used to pack and unpack the character
+values.
+
+~~~
+:uc:pack (????n-c) ;
+:uc:unpack (c-????n) ;
+~~~
+
 # UTF-8 Strings
 
 Strings in Retro have been C-style null terminated sequences of ASCII
@@ -19,14 +31,20 @@ Return the length (in utf8 characters or bytes) of a string.
 :us:length/bytes (a-n)  a:length ;
 ~~~
 
+~~~
+~~~
+
+
 Fetch a character from a string.
 
 ~~~
+:us:fetch (an-c) ;
 ~~~
 
 Store a character into a string.
 
 ~~~
+:us:store (can-) ;
 ~~~
 
 Tests.
