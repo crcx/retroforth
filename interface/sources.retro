@@ -355,5 +355,14 @@ dup 'd:last.xt d:lookup d:source store
 dup 'd:last d:lookup d:source store
 dup 'depth d:lookup d:source store
 dup 'EOM d:lookup d:source store
+dup 's:store d:lookup d:source store
+dup 's:fetch d:lookup d:source store
+dup 'sigil:' d:lookup d:source store
+dup 'apply/3 d:lookup d:source store
+dup 'apply/2 d:lookup d:source store
+dup 'spread/3 d:lookup d:source store
+dup 'spread/2 d:lookup d:source store
+dup 'cleave/3 d:lookup d:source store
+dup 'cleave/2 d:lookup d:source store
 drop
 ~~~
