@@ -1,0 +1,11 @@
+#!/usr/bin/env retro
+
+This is a quick program to display the word names and header info
+for words with an empty `d:source` field.
+
+~~~
+:,name dup d:name s:put ;
+:,dt   dup n:put ;
+[ dup d:source fetch n:zero? [ ,dt tab ,name nl ] if drop ] d:for-each
+~~~
+
