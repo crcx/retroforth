@@ -149,7 +149,7 @@ class Retro:
         Dictionary = dict()
         header = self.memory[2]
         while header != 0:
-            named = self.extract_string(header + 3)
+            named = self.extract_string(header + 4)
             if not named in Dictionary:
                 Dictionary[named] = header
             header = self.memory[header]
@@ -162,7 +162,7 @@ class Retro:
         header = self.memory[2]
         Done = False
         while header != 0 and not Done:
-            if named == self.extract_string(header + 3):
+            if named == self.extract_string(header + 4):
                 self.Dictionary[named] = header
                 Done = True
             else:
@@ -679,7 +679,7 @@ class Retro:
             else:
                 for token in line.split():
                     self.inject_string(token, self.memory[7])
-                    self.stack.push(1024)
+                    self.stack.push(self.memory[7])
                     self.execute(self.Cached["interpreter"], self.Cached["not_found"])
 
     def run_file(self, file):
@@ -695,7 +695,7 @@ class Retro:
                 elif in_block:
                     for token in line.strip().split():
                         self.inject_string(token, self.memory[7])
-                        self.stack.push(1024)
+                        self.stack.push(self.memory[7])
                         self.execute(
                             self.Cached["interpreter"], self.Cached["not_found"]
                         )
