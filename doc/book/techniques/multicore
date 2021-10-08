@@ -1,0 +1,105 @@
+# Multiple Cores
+
+Nga has optional support for multiple virtual cores. These
+are not directly comparable to actual CPU cores, but do
+allow for a degree of multitasking.
+
+Cores share a single address space for RAM, but each gets
+its own data and address stacks, as well as 24 internal
+registers for private data storage. The floating point stack
+is shared across all cores.
+
+Execution is handled in a round-robin fashion. After an
+instruction bundle is processed, Nga will pass control to the
+next active core. Note that this means that execution will
+stall when an I/O operation is running.
+
+## Enabling
+
+To make use of the multicore support, edit the `Makefile` and
+uncomment the lines reading:
+
+    # ENABLED += -DENABLE_MULTICORE
+    # DEVICES += interface/multicore.retro
+
+And rebuild.
+
+## Scheduling
+
+Nga switches to the next active core after execution of an
+instruction bundle completes on the current core.
+
+## Initialization
+
+To initialize a core, pass the core identifier (0 through 7)
+to `core:init`. This will zero out its internal registers and
+set it to.
+
+Example:
+
+    #4 core:init
+
+## Starting a Core
+
+Initialization does not activate a core. To do this, you need
+to use `core:start`. Pass this the address of the word to
+run and the core number.
+
+Example:
+
+    :a [ $a c:put ] forever ;
+    &a #4 core:start
+
+## Pausing a Core
+
+Two words are provided for suspending a core. The first is
+`core:pause`. Pass this the core number to pause.
+
+Example:
+
+    #4 core:pause
+
+The second option is intended if you need the currently
+active core to pause. This word is `core:pause-current`.
+
+Example:
+
+    core:pause-current
+
+## Resuming a Core
+
+To reactive a core, use `core:resume`. This takes the core
+number to activate.
+
+Example:
+
+    #4 core:resume
+
+## Registers
+
+Each core has 24 internal memory spaces. You can read these
+with `core:rr` and modify them with `core:wr`. (These are
+used identically to `fetch` and `store`). Registers are
+numbered as 0 through 23.
+
+A core can not access the registers in another core.
+
+## Napia
+
+The implementation here is based on the multicore model used
+in Napia, the virtual machine being written for the Retro
+on smaller targets. Code written to work with this will be
+usable on Retro/Napia with minimal changes.
+
+The main differences are that under Nga, this is an optional
+extension, but in Napia, it is part of the standard system.
+
+## Other Notes
+
+On startup, execution occurs on core 0, with only core 0 being
+initialized.
+
+I/O is run on the currently active core. Since I/O is blocking,
+waiting for an interaction to occur will prevent other cores
+from running until the operation is complete.
+

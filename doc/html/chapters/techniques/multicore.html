@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title>.</title>
+<style type="text/css">
+
+    * { color: #000; background: #fff; max-width: 700px; }
+    tt, pre { background: #dedede; color: #111; font-family: monospace;
+             white-space: pre; display: block; width: 100%; }
+    .indentedcode { margin-left: 2em; margin-right: 2em; }
+    .codeblock {
+      background: #dedede; color: #111; font-family: monospace;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      padding: 7px;
+      display: block;
+    }
+
+    .indentedlist { margin-left: 2em; color: #000; }
+
+    span { white-space: pre; }
+    .text  { color: #000; white-space: pre; background: #dedede; }
+    .colon { color: #000; background: #dedede; }
+    .note  { color: #000; background: #dedede; }
+    .str   { color: #000; text-decoration: underline; background: #dedede; }
+    .num   { color: #000; background: #dedede; font-weight: bold; font-style: italic; }
+    .fnum  { color: #000; font-weight: bold; background: #dedede; }
+    .ptr   { color: #000; font-weight: bold; background: #dedede; }
+    .fetch { color: #000; font-style: italic; background: #dedede; }
+    .store { color: #000; font-style: italic; background: #dedede; }
+    .char  { color: #000; background: #dedede; }
+    .inst  { color: #000; background: #dedede; }
+    .defer { color: #000; background: #dedede; }
+    .imm   { color: #000; font-weight: bold; background: #dedede; }
+    .prim  { color: #000; font-weight: bolder; background: #dedede; }
+
+    .tt    { white-space: pre; font-family: monospace; background: #dedede; }
+
+    .h1, .h2, .h3, .h4 { white-space: normal; }
+    .h1 { font-size: 125%; }
+    .h2 { font-size: 120%; }
+    .h3 { font-size: 115%; }
+    .h4 { font-size: 110%; }
+    .hr { display: block; height: 2px; background: #000000; }
+</style>
+</head><body>
+<p><span class="h1">Multiple Cores</span>
+<br/><br/>
+Nga has optional support for multiple virtual cores. These
+are not directly comparable to actual CPU cores, but do
+allow for a degree of multitasking.
+<br/><br/>
+Cores share a single address space for RAM, but each gets
+its own data and address stacks, as well as 24 internal
+registers for private data storage. The floating point stack
+is shared across all cores.
+<br/><br/>
+Execution is handled in a round-robin fashion. After an
+instruction bundle is processed, Nga will pass control to the
+next active core. Note that this means that execution will
+stall when an I/O operation is running.
+<br/><br/>
+<span class="h2">Enabling</span>
+<br/><br/>
+To make use of the multicore support, edit the <span class="tt">Makefile</span> and
+uncomment the lines reading:
+<br/><br/>
+<tt class='indentedcode'>#&nbsp;ENABLED&nbsp;+=&nbsp;-DENABLE_MULTICORE</tt>
+<tt class='indentedcode'>#&nbsp;DEVICES&nbsp;+=&nbsp;interface/multicore.retro</tt>
+<br/><br/>
+And rebuild.
+<br/><br/>
+<span class="h2">Scheduling</span>
+<br/><br/>
+Nga switches to the next active core after execution of an
+instruction bundle completes on the current core.
+<br/><br/>
+<span class="h2">Initialization</span>
+<br/><br/>
+To initialize a core, pass the core identifier (0 through 7)
+to <span class="tt">core:init</span>. This will zero out its internal registers and
+set it to.
+<br/><br/>
+Example:
+<br/><br/>
+<tt class='indentedcode'>#4&nbsp;core:init</tt>
+<br/><br/>
+<span class="h2">Starting a Core</span>
+<br/><br/>
+Initialization does not activate a core. To do this, you need
+to use <span class="tt">core:start</span>. Pass this the address of the word to
+run and the core number.
+<br/><br/>
+Example:
+<br/><br/>
+<tt class='indentedcode'>:a&nbsp;[&nbsp;$a&nbsp;c:put&nbsp;]&nbsp;forever&nbsp;;</tt>
+<tt class='indentedcode'>&amp;a&nbsp;#4&nbsp;core:start</tt>
+<br/><br/>
+<span class="h2">Pausing a Core</span>
+<br/><br/>
+Two words are provided for suspending a core. The first is
+<span class="tt">core:pause</span>. Pass this the core number to pause.
+<br/><br/>
+Example:
+<br/><br/>
+<tt class='indentedcode'>#4&nbsp;core:pause</tt>
+<br/><br/>
+The second option is intended if you need the currently
+active core to pause. This word is <span class="tt">core:pause-current</span>.
+<br/><br/>
+Example:
+<br/><br/>
+<tt class='indentedcode'>core:pause-current</tt>
+<br/><br/>
+<span class="h2">Resuming a Core</span>
+<br/><br/>
+To reactive a core, use <span class="tt">core:resume</span>. This takes the core
+number to activate.
+<br/><br/>
+Example:
+<br/><br/>
+<tt class='indentedcode'>#4&nbsp;core:resume</tt>
+<br/><br/>
+<span class="h2">Registers</span>
+<br/><br/>
+Each core has 24 internal memory spaces. You can read these
+with <span class="tt">core:rr</span> and modify them with <span class="tt">core:wr</span>. (These are
+used identically to <span class="tt">fetch</span> and <span class="tt">store</span>). Registers are
+numbered as 0 through 23.
+<br/><br/>
+A core can not access the registers in another core.
+<br/><br/>
+<span class="h2">Napia</span>
+<br/><br/>
+The implementation here is based on the multicore model used
+in Napia, the virtual machine being written for the Retro
+on smaller targets. Code written to work with this will be
+usable on Retro/Napia with minimal changes.
+<br/><br/>
+The main differences are that under Nga, this is an optional
+extension, but in Napia, it is part of the standard system.
+<br/><br/>
+<span class="h2">Other Notes</span>
+<br/><br/>
+On startup, execution occurs on core 0, with only core 0 being
+initialized.
+<br/><br/>
+I/O is run on the currently active core. Since I/O is blocking,
+waiting for an interaction to occur will prevent other cores
+from running until the operation is complete.
+<br/><br/>
+</p>
+</body></html>
