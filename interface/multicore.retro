@@ -9,3 +9,16 @@
 :core:read/reg  (n-v) #5 io:core ;
 :core:write/reg (vn-) #6 io:core ;
 ~~~
+
+~~~
+'interface/multicore.retro s:keep
+dup 'io:core d:lookup d:source store
+dup 'core:init d:lookup d:source store
+dup 'core:start d:lookup d:source store
+dup 'core:pause d:lookup d:source store
+dup 'core:pause-current d:lookup d:source store
+dup 'core:resume d:lookup d:source store
+dup 'core:read/reg d:lookup d:source store
+dup 'core:write/reg d:lookup d:source store
+drop
+~~~
