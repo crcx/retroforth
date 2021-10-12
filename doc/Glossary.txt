@@ -2042,6 +2042,83 @@ Copy `l` cells from memory at `s` to the memory at `d`. These should not overlap
 Class: class:word | Namespace: global | Interface Layer: all
 ------------------------------------------------------------------------
 
+core:init
+
+  Data:  n-
+  Addr:  -
+  Float: -
+
+Clear the internal state of core `n`. This should be done prior to use of `core:start`, which activates processing on the core.
+
+Class: class:word | Namespace: core | Interface Layer: rre
+------------------------------------------------------------------------
+
+core:pause
+
+  Data:  n-
+  Addr:  -
+  Float: -
+
+Suspend processing on core `n`.
+
+Class: class:word | Namespace: core | Interface Layer: rre
+------------------------------------------------------------------------
+
+core:pause-current
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Suspend processing on the current core.
+
+Class: class:word | Namespace: core | Interface Layer: rre
+------------------------------------------------------------------------
+
+core:read/reg
+
+  Data:  n-v
+  Addr:  -
+  Float: -
+
+Read a value from register `n` on the current core.
+
+Class: class:word | Namespace: core | Interface Layer: rre
+------------------------------------------------------------------------
+
+core:resume
+
+  Data:  n-
+  Addr:  -
+  Float: -
+
+Resume processing on core `n` after a `core:pause` or `core:pause-current`.
+
+Class: class:word | Namespace: core | Interface Layer: rre
+------------------------------------------------------------------------
+
+core:start
+
+  Data:  an-
+  Addr:  -
+  Float: -
+
+Set the IP of core `n` to address `a` and begin processing on core `n`.
+
+Class: class:word | Namespace: core | Interface Layer: rre
+------------------------------------------------------------------------
+
+core:write/reg
+
+  Data:  vn-
+  Addr:  -
+  Float: -
+
+Write a value to register number `n` on the current core.
+
+Class: class:word | Namespace: core | Interface Layer: rre
+------------------------------------------------------------------------
+
 curry
 
   Data:  nq-q
@@ -3825,6 +3902,17 @@ Example #1:
     '#100 interpret
     'words interpret
 
+------------------------------------------------------------------------
+
+io:core
+
+  Data:  ...n-
+  Addr:  -
+  Float: -
+
+Trigger an I/O operation involving multicore support. Unix system call.
+
+Class: class:word | Namespace: io | Interface Layer: rre
 ------------------------------------------------------------------------
 
 io:enumerate

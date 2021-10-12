@@ -32,7 +32,7 @@ DEVICES += interface/clock.retro
 DEVICES += interface/scripting.retro
 # DEVICES += interface/sockets.retro
 DEVICES += interface/sources.retro
-# DEVICES += interface/multicore.retro
+DEVICES += interface/multicore.retro
 DEVICES += interface/deprecated.retro
 
 all: build

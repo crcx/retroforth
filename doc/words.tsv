@@ -175,6 +175,13 @@ compile:ret	-	-	-	Compile a return instruction into the current definition.			cl
 compiling?	-f	-	-	Return `TRUE` if compiler is on or `FALSE` otherwise.			class:word	{n/a}	{n/a}	global	all	
 const	ns-	-	-	Create a constant returning the specified value.			class:word	{n/a}	{n/a}	global	all	
 copy	sdl-	-	-	Copy `l` cells from memory at `s` to the memory at `d`. These should not overlap.			class:word	{n/a}	{n/a}	global	all	
+core:init	n-	-	-	Clear the internal state of core `n`. This should be done prior to use of `core:start`, which activates processing on the core.			class:word	{n/a}	{n/a}	core	rre	
+core:pause	n-	-	-	Suspend processing on core `n`.			class:word	{n/a}	{n/a}	core	rre	
+core:pause-current	-	-	-	Suspend processing on the current core.			class:word	{n/a}	{n/a}	core	rre	
+core:read/reg	n-v	-	-	Read a value from register `n` on the current core.			class:word	{n/a}	{n/a}	core	rre	
+core:resume	n-	-	-	Resume processing on core `n` after a `core:pause` or `core:pause-current`.			class:word	{n/a}	{n/a}	core	rre	
+core:start	an-	-	-	Set the IP of core `n` to address `a` and begin processing on core `n`.			class:word	{n/a}	{n/a}	core	rre	
+core:write/reg	vn-	-	-	Write a value to register number `n` on the current core.			class:word	{n/a}	{n/a}	core	rre	
 curry	nq-q	-	-	Bind a value to a function and return a new quote that calls the bound action.			class:word	{n/a}	{n/a}	global	all	
 d	n-	-	-	Inline a numeric value to the current assembly segment.			class:word	{n/a}	{n/a}	global	all	
 d:add-header	saa-	-	-	Vectored. Create a header. Provide a string (s) for the name, a pointer to the class handler (a1) and a pointer to the word definition (a2) Generally this won't be used directly.			class:word	{n/a}	{n/a}	d	all	
@@ -328,6 +335,7 @@ immediate	-	-	-	Change the class of the most recently defined word to `class:mac
 include	s-	-	-	Run the code in the specified file. 			class:word	{n/a}	{n/a}	global	rre	
 indexed-times	nq-	-	-	Run a quote the specified number of times, tracking the loop index in `I`. This is less efficient than `times`, so if the index is not needed, this should be avoided.			class:word	{n/a}	{n/a}	global	all	
 interpret	s-	-	-	Vectored. Interpret a single input token.			class:word	    '#100 interpret\n    'words interpret	{n/a}	global	all	
+io:core	...n-	-	-	Trigger an I/O operation involving multicore support. Unix system call.			class:word	{n/a}	{n/a}	io	rre	
 io:enumerate	-n	-	-	Return the number of I/O devices.			class:word	{n/a}	{n/a}	io	all	
 io:invoke	n-	-	-	Invoke an interaction with an I/O device.			class:word	{n/a}	{n/a}	io	all	
 io:query	n-mN	-	-	Ask an I/O device to identify itself. Returns a version (m) and device ID (N).			class:word	{n/a}	{n/a}	io	all	

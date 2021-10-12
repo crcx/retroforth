@@ -175,6 +175,13 @@ compile:ret              D: -  A: -  F: -
 compiling?               D: -f  A: -  F: -
 const                    D: ns-  A: -  F: -
 copy                     D: sdl-  A: -  F: -
+core:init                D: n-  A: -  F: -
+core:pause               D: n-  A: -  F: -
+core:pause-current       D: -  A: -  F: -
+core:read/reg            D: n-v  A: -  F: -
+core:resume              D: n-  A: -  F: -
+core:start               D: an-  A: -  F: -
+core:write/reg           D: vn-  A: -  F: -
 curry                    D: nq-q  A: -  F: -
 d                        D: n-  A: -  F: -
 d:add-header             D: saa-  A: -  F: -
@@ -328,6 +335,7 @@ immediate                D: -  A: -  F: -
 include                  D: s-  A: -  F: -
 indexed-times            D: nq-  A: -  F: -
 interpret                D: s-  A: -  F: -
+io:core                  D: ...n-  A: -  F: -
 io:enumerate             D: -n  A: -  F: -
 io:invoke                D: n-  A: -  F: -
 io:query                 D: n-mN  A: -  F: -

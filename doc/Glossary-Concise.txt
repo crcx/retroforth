@@ -529,6 +529,27 @@ Create a constant returning the specified value.
 copy                     D: sdl-  A: -  F: -
 Copy `l` cells from memory at `s` to the memory at `d`. These should not overlap.
 
+core:init                D: n-  A: -  F: -
+Clear the internal state of core `n`. This should be done prior to use of `core:start`, which activates processing on the core.
+
+core:pause               D: n-  A: -  F: -
+Suspend processing on core `n`.
+
+core:pause-current       D: -  A: -  F: -
+Suspend processing on the current core.
+
+core:read/reg            D: n-v  A: -  F: -
+Read a value from register `n` on the current core.
+
+core:resume              D: n-  A: -  F: -
+Resume processing on core `n` after a `core:pause` or `core:pause-current`.
+
+core:start               D: an-  A: -  F: -
+Set the IP of core `n` to address `a` and begin processing on core `n`.
+
+core:write/reg           D: vn-  A: -  F: -
+Write a value to register number `n` on the current core.
+
 curry                    D: nq-q  A: -  F: -
 Bind a value to a function and return a new quote that calls the bound action.
 
@@ -987,6 +1008,9 @@ Run a quote the specified number of times, tracking the loop index in `I`. This 
 
 interpret                D: s-  A: -  F: -
 Vectored. Interpret a single input token.
+
+io:core                  D: ...n-  A: -  F: -
+Trigger an I/O operation involving multicore support. Unix system call.
 
 io:enumerate             D: -n  A: -  F: -
 Return the number of I/O devices.
