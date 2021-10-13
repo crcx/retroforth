@@ -162,7 +162,7 @@ CELL memory[IMAGE_SIZE + 1];      /* The memory for the image          */
 #define TORS cpu[active].address[cpu[active].rp]  /* Top item on address stack */
 
 struct NgaCore {
-  CELL sp, rp, ip, active;        /* Stack & instruction pointers      */
+  CELL sp, rp, ip, active, u;     /* Stack & instruction pointers      */
   CELL data[STACK_DEPTH];         /* The data stack                    */
   CELL address[ADDRESSES];        /* The address stack                 */
 #ifdef ENABLE_MULTICORE
@@ -230,6 +230,7 @@ void init_core(CELL x) {
   cpu[x].rp = 0;
   cpu[x].ip = 0;
   cpu[x].active = 0;
+  cpu[x].u = 0;
   for (y = 0; y < STACK_DEPTH; y++) { cpu[x].data[y] = 0; };
   for (y = 0; y < ADDRESSES; y++) { cpu[x].address[y] = 0; };
   for (y = 0; y < 24; y++) { cpu[x].registers[y] = 0; };
