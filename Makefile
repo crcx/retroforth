@@ -22,6 +22,7 @@ ENABLED += -DENABLE_SCRIPTING
 ENABLED += -DENABLE_SIGNALS
 ENABLED += -DENABLE_MULTICORE
 ENABLED += -DENABLE_FFI
+ENABLED += -DENABLE_UNSIGNED
 
 DEVICES ?=
 DEVICES += interface/floatingpoint.retro
@@ -33,6 +34,7 @@ DEVICES += interface/scripting.retro
 # DEVICES += interface/sockets.retro
 DEVICES += interface/sources.retro
 DEVICES += interface/multicore.retro
+DEVICES += interface/unsigned.retro
 DEVICES += interface/deprecated.retro
 
 all: build

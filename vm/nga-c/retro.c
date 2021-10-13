@@ -114,6 +114,7 @@ void query_filesystem();    void io_filesystem();
 void io_clock();            void query_clock();
 void io_scripting();        void query_scripting();
 void io_rng();              void query_rng();
+void io_unsigned();         void query_unsigned();
 
 #ifdef ENABLE_UNIX
 void query_unix();          void io_unix();
@@ -1300,6 +1301,19 @@ void query_keyboard() {
 
 /*=====================================================================*/
 
+#ifdef ENABLE_UNSIGNED
+void io_unsigned() {
+  cpu[active].u = 1;
+}
+
+void query_unsigned() {
+  stack_push(0);
+  stack_push(8101);
+}
+#endif
+
+/*=====================================================================*/
+
 void io_image() {
   FILE *fp;
   char *f = string_extract(stack_pop());
@@ -1786,6 +1800,9 @@ int main(int argc, char **argv) {
   nlibs = 0;
   nffi = 0;
 #endif
+#ifdef ENABLE_UNSIGNED
+  register_device(io_unsigned, query_unsigned);
+#endif
 
   strcpy(code_start, "~~~");
   strcpy(code_end,   "~~~");
@@ -2062,6 +2079,7 @@ void inst_re() {
 void inst_eq() {
   if (cpu[active].u != 0) {
     NOS = ((unsigned)NOS == (unsigned)TOS) ? -1 : 0;
+    cpu[active].u = 0;
   } else {
     NOS = (NOS == TOS) ? -1 : 0;
   }
@@ -2071,6 +2089,7 @@ void inst_eq() {
 void inst_ne() {
   if (cpu[active].u != 0) {
     NOS = ((unsigned)NOS != (unsigned)TOS) ? -1 : 0;
+    cpu[active].u = 0;
   } else {
     NOS = (NOS != TOS) ? -1 : 0;
   }
@@ -2080,6 +2099,7 @@ void inst_ne() {
 void inst_lt() {
   if (cpu[active].u != 0) {
     NOS = ((unsigned)NOS < (unsigned)TOS) ? -1 : 0;
+    cpu[active].u = 0;
   } else {
     NOS = (NOS < TOS) ? -1 : 0;
   }
@@ -2089,6 +2109,7 @@ void inst_lt() {
 void inst_gt() {
   if (cpu[active].u != 0) {
     NOS = ((unsigned)NOS > (unsigned)TOS) ? -1 : 0;
+    cpu[active].u = 0;
   } else {
     NOS = (NOS > TOS) ? -1 : 0;
   }
@@ -2115,6 +2136,7 @@ void inst_st() {
 void inst_ad() {
   if (cpu[active].u != 0) {
     NOS = (unsigned)NOS + (unsigned)TOS;
+    cpu[active].u = 0;
   } else {
     NOS += TOS;
   }
@@ -2124,6 +2146,7 @@ void inst_ad() {
 void inst_su() {
   if (cpu[active].u != 0) {
     NOS = (unsigned)NOS - (unsigned)TOS;
+    cpu[active].u = 0;
   } else {
     NOS -= TOS;
   }
@@ -2133,6 +2156,7 @@ void inst_su() {
 void inst_mu() {
   if (cpu[active].u != 0) {
     NOS = (unsigned)NOS * (unsigned)TOS;
+    cpu[active].u = 0;
   } else {
     NOS *= TOS;
   }
@@ -2146,6 +2170,7 @@ void inst_di() {
   if (cpu[active].u != 0) {
     TOS = (unsigned)b / (unsigned)a;
     NOS = (unsigned)b % (unsigned)a;
+    cpu[active].u = 0;
   } else {
     TOS = b / a;
     NOS = b % a;
@@ -2174,10 +2199,8 @@ void inst_sh() {
     NOS = NOS << (0 - TOS);
   else {
     if (cpu[active].u != 0) {
-      if (x < 0 && y > 0)
-        NOS = (unsigned)x >> (unsigned)y | ~(~0U >> (unsigned)y);
-      else
-        NOS = (unsigned)x >> (unsigned)y;
+      NOS = (unsigned)x >> (unsigned)y;
+      cpu[active].u = 0;
     } else {
       if (x < 0 && y > 0)
         NOS = x >> y | ~(~0U >> y);
