@@ -1983,7 +1983,7 @@ CELL load_image(char *imageFile) {
 
 void prepare_vm() {
   active = 0;
-  cpu[active].ip = cpu[active].sp = cpu[active].rp = 0;
+  cpu[active].ip = cpu[active].sp = cpu[active].rp = cpu[active].u = 0;
   cpu[active].active = -1;
   for (cpu[active].ip = 0; cpu[active].ip < IMAGE_SIZE; cpu[active].ip++)
     memory[cpu[active].ip] = 0; /* NO - nop instruction */
@@ -2060,22 +2060,38 @@ void inst_re() {
 }
 
 void inst_eq() {
-  NOS = (NOS == TOS) ? -1 : 0;
+  if (cpu[active].u != 0) {
+    NOS = ((unsigned)NOS == (unsigned)TOS) ? -1 : 0;
+  } else {
+    NOS = (NOS == TOS) ? -1 : 0;
+  }
   inst_dr();
 }
 
 void inst_ne() {
-  NOS = (NOS != TOS) ? -1 : 0;
+  if (cpu[active].u != 0) {
+    NOS = ((unsigned)NOS != (unsigned)TOS) ? -1 : 0;
+  } else {
+    NOS = (NOS != TOS) ? -1 : 0;
+  }
   inst_dr();
 }
 
 void inst_lt() {
-  NOS = (NOS < TOS) ? -1 : 0;
+  if (cpu[active].u != 0) {
+    NOS = ((unsigned)NOS < (unsigned)TOS) ? -1 : 0;
+  } else {
+    NOS = (NOS < TOS) ? -1 : 0;
+  }
   inst_dr();
 }
 
 void inst_gt() {
-  NOS = (NOS > TOS) ? -1 : 0;
+  if (cpu[active].u != 0) {
+    NOS = ((unsigned)NOS > (unsigned)TOS) ? -1 : 0;
+  } else {
+    NOS = (NOS > TOS) ? -1 : 0;
+  }
   inst_dr();
 }
 
@@ -2097,17 +2113,29 @@ void inst_st() {
 }
 
 void inst_ad() {
-  NOS += TOS;
+  if (cpu[active].u != 0) {
+    NOS = (unsigned)NOS + (unsigned)TOS;
+  } else {
+    NOS += TOS;
+  }
   inst_dr();
 }
 
 void inst_su() {
-  NOS -= TOS;
+  if (cpu[active].u != 0) {
+    NOS = (unsigned)NOS - (unsigned)TOS;
+  } else {
+    NOS -= TOS;
+  }
   inst_dr();
 }
 
 void inst_mu() {
-  NOS *= TOS;
+  if (cpu[active].u != 0) {
+    NOS = (unsigned)NOS * (unsigned)TOS;
+  } else {
+    NOS *= TOS;
+  }
   inst_dr();
 }
 
@@ -2115,8 +2143,13 @@ void inst_di() {
   CELL a, b;
   a = TOS;
   b = NOS;
-  TOS = b / a;
-  NOS = b % a;
+  if (cpu[active].u != 0) {
+    TOS = (unsigned)b / (unsigned)a;
+    NOS = (unsigned)b % (unsigned)a;
+  } else {
+    TOS = b / a;
+    NOS = b % a;
+  }
 }
 
 void inst_an() {
@@ -2140,10 +2173,17 @@ void inst_sh() {
   if (TOS < 0)
     NOS = NOS << (0 - TOS);
   else {
-    if (x < 0 && y > 0)
-      NOS = x >> y | ~(~0U >> y);
-    else
-      NOS = x >> y;
+    if (cpu[active].u != 0) {
+      if (x < 0 && y > 0)
+        NOS = (unsigned)x >> (unsigned)y | ~(~0U >> (unsigned)y);
+      else
+        NOS = (unsigned)x >> (unsigned)y;
+    } else {
+      if (x < 0 && y > 0)
+        NOS = x >> y | ~(~0U >> y);
+      else
+        NOS = x >> y;
+    }
   }
   inst_dr();
 }
