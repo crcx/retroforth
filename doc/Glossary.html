@@ -38,6 +38,13 @@
     #-1 #100 *</xmp>
 </p>
 <hr/>
+<h2>*/mod</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> xyz-rv<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Multiply `x` by `y` and then divide by `z` and return the integer part of the quotient and remainder.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>global</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><hr/>
 <h2>+</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> nn-n<br>
 <b>Addr:</b> -<br>
@@ -4112,6 +4119,99 @@
 </div>
 <p>Unpack a 32-bit value into four 8-bit values.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>global</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
+<h2>unsigned:*</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> nn-n<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Multiply `n1` by `n2` and return the result.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>unsigned</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><p><b>Example:</b> <br>
+<br>
+<xmp style='background:#f2f2f2'>    #2 #6 unsigned:*
+    #-1 #100 unsigned:*</xmp>
+</p>
+<hr/>
+<h2>unsigned:*/mod</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> xyz-rv<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Multiply `x` by `y` and then divide by `z` and return the integer part of the quotient and remainder.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>global</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><hr/>
+<h2>unsigned:+</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> nn-n<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Add `n1` to `n2` and return the result.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>unsigned</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><p><b>Example:</b> <br>
+<br>
+<xmp style='background:#f2f2f2'>    #1 #2 unsigned:+ </xmp>
+</p>
+<hr/>
+<h2>unsigned:-</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> nn-n<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Subtract `n2` from `n1` and return the result.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>unsigned</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><p><b>Example:</b> <br>
+<br>
+<xmp style='background:#f2f2f2'>    #2 #1 unsigned:- </xmp>
+</p>
+<hr/>
+<h2>unsigned:-eq?</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> nn-f<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Compare two values for inequality. Returns `TRUE` if they are not equal or `FALSE` otherwise.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>unsigned</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><p><b>Example:</b> <br>
+<br>
+<xmp style='background:#f2f2f2'>    #1 #2 unsigned:-eq?
+    $a $b unsigned:-eq?</xmp>
+</p>
+<hr/>
+<h2>unsigned:/mod</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> nm-rv<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Divide `n` by `m` and return the integer part of the quotient and remainder.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>unsigned</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
+<h2>unsigned:eq?</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> nn-f<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Compare two values for equality. Returns `TRUE` if they are equal or `FALSE` otherwise.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>unsigned</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><p><b>Example:</b> <br>
+<br>
+<xmp style='background:#f2f2f2'>    #1 #2 unsigned:eq?
+    $a $b unsigned:eq?</xmp>
+</p>
+<hr/>
+<h2>unsigned:gt?</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> nn-f<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Compare n1 and n2. Return `TRUE` if n1 is greater than n2, or `FALSE` otherwise.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>unsigned</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
+<h2>unsigned:lt?</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> nn-f<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Compare n1 and n2. Return `TRUE` if n1 is less than n2, or `FALSE` otherwise.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>unsigned</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
+<h2>unsigned:shift</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> mn-o<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Peform a bitwise shift of m by n bits. If n is positive, shift right. If negative, the shift will be to the left.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>unsigned</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
 <h2>until</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> q(-f)-<br>
 <b>Addr:</b> -<br>

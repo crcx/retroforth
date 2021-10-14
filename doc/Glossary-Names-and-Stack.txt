@@ -3,6 +3,7 @@ $                        D: -c  A: -  F: -
 (                        D: -  A: -  F: -
 )                        D: -  A: -  F: -
 *                        D: nn-n  A: -  F: -
+*/mod                    D: xyz-rv  A: -  F: -
 +                        D: nn-n  A: -  F: -
 ,                        D: n-  A: -  F: -
 -                        D: nn-n  A: -  F: -
@@ -532,6 +533,16 @@ unix:slurp-pipe          D: as-n  A: -  F: -
 unix:system              D: s-  A: -  F: -
 unix:wait                D: -n  A: -  F: -
 unpack                   D: n-nnnn  A: -  F: -
+unsigned:*               D: nn-n  A: -  F: -
+unsigned:*/mod           D: xyz-rv  A: -  F: -
+unsigned:+               D: nn-n  A: -  F: -
+unsigned:-               D: nn-n  A: -  F: -
+unsigned:-eq?            D: nn-f  A: -  F: -
+unsigned:/mod            D: nm-rv  A: -  F: -
+unsigned:eq?             D: nn-f  A: -  F: -
+unsigned:gt?             D: nn-f  A: -  F: -
+unsigned:lt?             D: nn-f  A: -  F: -
+unsigned:shift           D: mn-o  A: -  F: -
 until                    D: q(-f)-  A: -  F: -
 v:dec                    D: a-  A: -  F: -
 v:dec-by                 D: na-  A: -  F: -

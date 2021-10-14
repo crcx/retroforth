@@ -3,6 +3,7 @@ $	-c	-	-	Return ASCII:NUL (0).			class:macro	{n/a}	{n/a}	global	all
 (	-	-	-	Provide a visual indication of a code group.			class:macro	{n/a}	{n/a}	sigil	all	
 )	-	-	-	Provide a visual indication of a code group.			class:macro	{n/a}	{n/a}	sigil	all	
 *	nn-n	-	-	Multiply `n1` by `n2` and return the result.			class:primitive	    #2 #6 *\n    #-1 #100 *	{n/a}	global	all	
+*/mod	xyz-rv	-	-	Multiply `x` by `y` and then divide by `z` and return the integer part of the quotient and remainder.			class:word	{n/a}	{n/a}	global	rre	
 +	nn-n	-	-	Add `n1` to `n2` and return the result.			class:primitive	    #1 #2 + 	{n/a}	global	all	
 ,	n-	-	-	Store the specified value into the memory at `here` and increment `Heap` by 1.			class:word	    $a , $b , $c , #0 ,	{n/a}	global	all	
 -	nn-n	-	-	Subtract `n2` from `n1` and return the result.			class:primitive	    #2 #1 - 	{n/a}	global	all	
@@ -532,6 +533,16 @@ unix:slurp-pipe	as-n	-	-	Open a pipe. Read all output from the pipe (until ASCII
 unix:system	s-	-	-	Runs another application using the system shell and returns after execution is completed.			class:word	  'ls_-lh_/etc unix:system	{n/a}	unix	rre	
 unix:wait	-n	-	-	Waits for a child process to complete. This maps to the wait() system call.			class:word	{n/a}	{n/a}	unix	rre	
 unpack	n-nnnn	-	-	Unpack a 32-bit value into four 8-bit values.			class:word	{n/a}	{n/a}	global	all	
+unsigned:*	nn-n	-	-	Multiply `n1` by `n2` and return the result.			class:word	    #2 #6 unsigned:*\n    #-1 #100 unsigned:*	{n/a}	unsigned	all	
+unsigned:*/mod	xyz-rv	-	-	Multiply `x` by `y` and then divide by `z` and return the integer part of the quotient and remainder.			class:word	{n/a}	{n/a}	global	rre	
+unsigned:+	nn-n	-	-	Add `n1` to `n2` and return the result.			class:word	    #1 #2 unsigned:+ 	{n/a}	unsigned	all	
+unsigned:-	nn-n	-	-	Subtract `n2` from `n1` and return the result.			class:word	    #2 #1 unsigned:- 	{n/a}	unsigned	all	
+unsigned:-eq?	nn-f	-	-	Compare two values for inequality. Returns `TRUE` if they are not equal or `FALSE` otherwise.			class:word	    #1 #2 unsigned:-eq?\n    $a $b unsigned:-eq?	{n/a}	unsigned	all	
+unsigned:/mod	nm-rv	-	-	Divide `n` by `m` and return the integer part of the quotient and remainder.			class:word	{n/a}	{n/a}	unsigned	all	
+unsigned:eq?	nn-f	-	-	Compare two values for equality. Returns `TRUE` if they are equal or `FALSE` otherwise.			class:word	    #1 #2 unsigned:eq?\n    $a $b unsigned:eq?	{n/a}	unsigned	all	
+unsigned:gt?	nn-f	-	-	Compare n1 and n2. Return `TRUE` if n1 is greater than n2, or `FALSE` otherwise.			class:word	{n/a}	{n/a}	unsigned	all	
+unsigned:lt?	nn-f	-	-	Compare n1 and n2. Return `TRUE` if n1 is less than n2, or `FALSE` otherwise.			class:word	{n/a}	{n/a}	unsigned	all	
+unsigned:shift	mn-o	-	-	Peform a bitwise shift of m by n bits. If n is positive, shift right. If negative, the shift will be to the left.			class:word	{n/a}	{n/a}	unsigned	all	
 until	q(-f)-	-	-	Execute quote repeatedly while the quote returns a value of `FALSE`. The quote should return a flag of either `TRUE` or `FALSE`, though `until` will treat any non-zero value as `TRUE`.			class:word	    #10 [ dup n:put nl n:dec dup n:zero? ] until	{n/a}	global	all	
 v:dec	a-	-	-	Decrement the value stored at the specified address by 1.			class:word	{n/a}	{n/a}	v	all	
 v:dec-by	na-	-	-	Decrement the value stored at the specified address by the specified value.			class:word	{n/a}	{n/a}	v	all	
