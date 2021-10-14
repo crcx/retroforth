@@ -10,6 +10,23 @@
 :unsigned:lt? (nn-f) #0 #8101 io:scan-for io:invoke \lt...... ;
 :unsigned:gt? (nn-f) #0 #8101 io:scan-for io:invoke \gt...... ;
 :unsigned:shift (nn-n) #0 #8101 io:scan-for io:invoke \sh...... ;
-:unsigned:*/mod (nnn-n) #1 #0 #8101 io:scan-for dup io:invoke io:invoke ;
-:*/mod (nnn-n) #1 #8101 io:scan-for io:invoke ;
+:unsigned:*/mod (nnn-nn) #1 #0 #8101 io:scan-for dup io:invoke io:invoke ;
+:*/mod (nnn-nn) #1 #8101 io:scan-for io:invoke ;
 ~~~
+
+~~~
+'interface/unsigned.retro s:keep
+dup 'unsigned:+ d:lookup d:source store
+dup 'unsigned:- d:lookup d:source store
+dup 'unsigned:* d:lookup d:source store
+dup 'unsigned:/mod d:lookup d:source store
+dup 'unsigned:eq? d:lookup d:source store
+dup 'unsigned:-eq? d:lookup d:source store
+dup 'unsigned:lt? d:lookup d:source store
+dup 'unsigned:gt? d:lookup d:source store
+dup 'unsigned:shift d:lookup d:source store
+dup 'unsigned:*/mod d:lookup d:source store
+dup '*/mod d:lookup d:source store
+drop
+~~~
+
