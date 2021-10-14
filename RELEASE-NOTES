@@ -17,6 +17,7 @@
 
 - added optional support for multiple virtual processor cores
 - added optional ffi
+- added optional support for unsigned numeric operations
 - work on internal cleanups
 - better error messages when socket device not present
 

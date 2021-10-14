@@ -1303,7 +1303,28 @@ void query_keyboard() {
 
 #ifdef ENABLE_UNSIGNED
 void io_unsigned() {
-  cpu[active].u = 1;
+  int x, y, z;
+  long c;
+  switch (stack_pop()) {
+    case 0: cpu[active].u = 1; break;
+    case 1:
+      c = 0;
+      z = stack_pop();
+      y = stack_pop();
+      x = stack_pop();
+      if (cpu[active].u != 0) {
+        c = (unsigned)x * (unsigned)y;
+        stack_push((unsigned)c % (unsigned)z);
+        stack_push((unsigned)c / (unsigned)z);
+      }
+      else {
+        c = x * y;
+        stack_push(c % z);
+        stack_push(c / z);
+      }
+      cpu[active].u = 0;
+      break;
+  }
 }
 
 void query_unsigned() {

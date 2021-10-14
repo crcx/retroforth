@@ -1,13 +1,15 @@
 # Unsigned Numbers
 
 ~~~
-:unsigned:+ (nn-n) #8101 io:scan-for io:invoke \ad...... ;
-:unsigned:- (nn-n) #8101 io:scan-for io:invoke \su...... ;
-:unsigned:* (nn-n) #8101 io:scan-for io:invoke \mu...... ;
-:unsigned:/mod (nn-nn) #8101 io:scan-for io:invoke \di...... ;
-:unsigned:eq? (nn-f) #8101 io:scan-for io:invoke \eq...... ;
-:unsigned:-eq? (nn-f) #8101 io:scan-for io:invoke \ne...... ;
-:unsigned:lt? (nn-f) #8101 io:scan-for io:invoke \lt...... ;
-:unsigned:gt? (nn-f) #8101 io:scan-for io:invoke \gt...... ;
-:unsigned:shift (nn-n) #8101 io:scan-for io:invoke \sh...... ;
+:unsigned:+ (nn-n) #0 #8101 io:scan-for io:invoke \ad...... ;
+:unsigned:- (nn-n) #0 #8101 io:scan-for io:invoke \su...... ;
+:unsigned:* (nn-n) #0 #8101 io:scan-for io:invoke \mu...... ;
+:unsigned:/mod (nn-nn) #0 #8101 io:scan-for io:invoke \di...... ;
+:unsigned:eq? (nn-f) #0 #8101 io:scan-for io:invoke \eq...... ;
+:unsigned:-eq? (nn-f) #0 #8101 io:scan-for io:invoke \ne...... ;
+:unsigned:lt? (nn-f) #0 #8101 io:scan-for io:invoke \lt...... ;
+:unsigned:gt? (nn-f) #0 #8101 io:scan-for io:invoke \gt...... ;
+:unsigned:shift (nn-n) #0 #8101 io:scan-for io:invoke \sh...... ;
+:unsigned:*/mod (nnn-n) #1 #0 #8101 io:scan-for dup io:invoke io:invoke ;
+:*/mod (nnn-n) #1 #8101 io:scan-for io:invoke ;
 ~~~
