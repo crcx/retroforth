@@ -702,6 +702,16 @@ addresses must be aligned on a four byte boundary.
 :w:store (na-) #4 / store ;
 ~~~
 
+~~~
+:w:fetch-next (a-an) dup #4 + swap w:fetch ;
+:h:fetch-next (a-an) dup #2 + swap h:fetch ;
+:b:fetch-next (a-an) dup #1 + swap b:fetch ;
+
+:w:store-next (na-a) dup #4 + &w:store dip ;
+:h:store-next (na-a) dup #2 + &h:store dip ;
+:b:store-next (na-a) dup #1 + &b:store dip ;
+~~~
+
 
 ## Variable Operations
 

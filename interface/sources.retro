@@ -263,6 +263,12 @@ dup 'v:dec d:lookup d:source store
 dup 'v:inc d:lookup d:source store
 dup 'v:dec-by d:lookup d:source store
 dup 'v:inc-by d:lookup d:source store
+dup 'w:store-next d:lookup d:source store
+dup 'w:fetch-next d:lookup d:source store
+dup 'h:store-next d:lookup d:source store
+dup 'h:fetch-next d:lookup d:source store
+dup 'b:store-next d:lookup d:source store
+dup 'b:fetch-next d:lookup d:source store
 dup 'w:store d:lookup d:source store
 dup 'w:fetch d:lookup d:source store
 dup 'h:store d:lookup d:source store

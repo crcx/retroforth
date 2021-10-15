@@ -331,8 +331,14 @@ Perform a bitwise AND operation between the two provided values.
 b:fetch                  D: a-n  A: -  F: -
 Fetch the 8-bit value stored at the specified address. Addressing for this is in 8-bit units.
 
+b:fetch-next             D: a-an  A: -  F: -
+Fetch the value stored at the specified address. Returns the next address and the value.
+
 b:store                  D: na-  A: -  F: -
 Store an 8-bit value into the specified address. Addressing for this is in 8-bit units.
+
+b:store-next             D: na-a  A: -  F: -
+Store a value into the specified address and return the next address.
 
 b:to-byte-address        D: a-a  A: -  F: -
 Tronslate a physical address to a byte address.
@@ -976,8 +982,14 @@ Compare n1 and n2. Return `TRUE` if n1 is greater than or equal to n2, or `FALSE
 h:fetch                  D: a-n  A: -  F: -
 Fetch the 16-bit value stored at the specified address. Addressing for this is in 8-bit units.
 
+h:fetch-next             D: a-an  A: -  F: -
+Fetch the value stored at the specified address. Returns the next address and the value.
+
 h:store                  D: na-  A: -  F: -
 Store an 16-bit value into the specified address. Addressing for this is in 8-bit units.
+
+h:store-next             D: na-a  A: -  F: -
+Store a value into the specified address and return the next address.
 
 here                     D: -a  A: -  F: -
 Return the next free address in memory.
@@ -1672,8 +1684,14 @@ Create a variable with the specified initial value.
 w:fetch                  D: a-n  A: -  F: -
 Fetch the 32-bit value stored at the specified address. Addressing for this is in 8-bit units. The address must be aligned on a four byte boundary.
 
+w:fetch-next             D: a-an  A: -  F: -
+Fetch the value stored at the specified address. Returns the next address and the value.
+
 w:store                  D: na-  A: -  F: -
 Store an 32-bit value into the specified address. Addressing for this is in 8-bit units. The address must be aligned on a four byte boundary.
+
+w:store-next             D: na-a  A: -  F: -
+Store a value into the specified address and return the next address.
 
 while                    D: q(-f)-  A: -  F: -
 Execute quote repeatedly while the quote returns a `TRUE` value. The quote should return a flag of either `TRUE` or `FALSE`, though `while` will treat any non-zero value as `TRUE`.

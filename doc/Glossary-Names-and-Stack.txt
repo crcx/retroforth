@@ -109,7 +109,9 @@ again                    D: -  A: -  F: -
 allot                    D: n-  A: -  F: -
 and                      D: nm-o  A: -  F: -
 b:fetch                  D: a-n  A: -  F: -
+b:fetch-next             D: a-an  A: -  F: -
 b:store                  D: na-  A: -  F: -
+b:store-next             D: na-a  A: -  F: -
 b:to-byte-address        D: a-a  A: -  F: -
 banner                   D: -  A: -  F: -
 bi                       D: xqq-?  A: -  F: -
@@ -324,7 +326,9 @@ gopher:get               D: asns-n  A: -  F: -
 gt?                      D: nn-f  A: -  F: -
 gteq?                    D: nn-f  A: -  F: -
 h:fetch                  D: a-n  A: -  F: -
+h:fetch-next             D: a-an  A: -  F: -
 h:store                  D: na-  A: -  F: -
+h:store-next             D: na-a  A: -  F: -
 here                     D: -a  A: -  F: -
 hex                      D: -  A: -  F: -
 hook                     D: -  A: -  F: -
@@ -556,7 +560,9 @@ v:update                 D: aq-  A: -  F: -
 var                      D: s-  A: -  F: -
 var-n                    D: ns-  A: -  F: -
 w:fetch                  D: a-n  A: -  F: -
+w:fetch-next             D: a-an  A: -  F: -
 w:store                  D: na-  A: -  F: -
+w:store-next             D: na-a  A: -  F: -
 while                    D: q(-f)-  A: -  F: -
 xor                      D: mn-o  A: -  F: -
 {                        D: -  A: -  F: -

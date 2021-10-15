@@ -1277,6 +1277,17 @@ Example #1:
 
 ------------------------------------------------------------------------
 
+b:fetch-next
+
+  Data:  a-an
+  Addr:  -
+  Float: -
+
+Fetch the value stored at the specified address. Returns the next address and the value.
+
+Class: class:word | Namespace: b | Interface Layer: all
+------------------------------------------------------------------------
+
 b:store
 
   Data:  na-
@@ -1286,6 +1297,17 @@ b:store
 Store an 8-bit value into the specified address. Addressing for this is in 8-bit units.
 
 Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+b:store-next
+
+  Data:  na-a
+  Addr:  -
+  Float: -
+
+Store a value into the specified address and return the next address.
+
+Class: class:word | Namespace: b | Interface Layer: all
 ------------------------------------------------------------------------
 
 b:to-byte-address
@@ -3767,6 +3789,17 @@ Example #1:
 
 ------------------------------------------------------------------------
 
+h:fetch-next
+
+  Data:  a-an
+  Addr:  -
+  Float: -
+
+Fetch the value stored at the specified address. Returns the next address and the value.
+
+Class: class:word | Namespace: h | Interface Layer: all
+------------------------------------------------------------------------
+
 h:store
 
   Data:  na-
@@ -3776,6 +3809,17 @@ h:store
 Store an 16-bit value into the specified address. Addressing for this is in 8-bit units.
 
 Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+h:store-next
+
+  Data:  na-a
+  Addr:  -
+  Float: -
+
+Store a value into the specified address and return the next address.
+
+Class: class:word | Namespace: h | Interface Layer: all
 ------------------------------------------------------------------------
 
 here
@@ -6625,6 +6669,17 @@ Example #1:
 
 ------------------------------------------------------------------------
 
+w:fetch-next
+
+  Data:  a-an
+  Addr:  -
+  Float: -
+
+Fetch the value stored at the specified address. Returns the next address and the value.
+
+Class: class:word | Namespace: w | Interface Layer: all
+------------------------------------------------------------------------
+
 w:store
 
   Data:  na-
@@ -6634,6 +6689,17 @@ w:store
 Store an 32-bit value into the specified address. Addressing for this is in 8-bit units. The address must be aligned on a four byte boundary.
 
 Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+w:store-next
+
+  Data:  na-a
+  Addr:  -
+  Float: -
+
+Store a value into the specified address and return the next address.
+
+Class: class:word | Namespace: w | Interface Layer: all
 ------------------------------------------------------------------------
 
 while
