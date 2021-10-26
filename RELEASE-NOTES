@@ -1,4 +1,4 @@
-# RetroForth 2021.10 (In Progress) Release Notes
+# RetroForth 2021.11 (In Progress) Release Notes
 
 # Core Language
 
@@ -24,8 +24,21 @@
 - work on internal cleanups
 - better error messages when socket device not present
 
+## nga-rust
+
+- new implementation from bitmapper
+
 # Documentation
 
 - Updated Build instructions for Linux (re: FFI support & libdl)
 - Updated the description & example for `a:to-string`
-- d:source field now populated for all standard words
+- `d:source` field now populated for all standard words
+- fixed stack comment for `a:store`
+
+# Other
+
+- moved deprecated words to `interface/` instead of `package/extensions`
+- added a tool to identify words missing `d:source` data
+- start work on proper utf8 string support
+- nga/unix: catch some signals for debugging purposes
+
