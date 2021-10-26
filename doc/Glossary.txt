@@ -1171,7 +1171,7 @@ Class: class:word | Namespace: a | Interface Layer: all
 
 a:store
 
-  Data:  vna-
+  Data:  van-
   Addr:  -
   Float: -
 

@@ -101,7 +101,7 @@ a:prepend	aa-a	-	-	Return a new array consisting of the values in a2 followed by
 a:reduce	pnq-n	-	-	Takes an array, a starting value, and a quote. This will apply the quote to each item in the array; the quote should consume two values and return one.			class:word	{n/a}	{n/a}	a	all	
 a:reverse	a-b	-	-	Reverse the order of items in a array. This will return a new array.			class:word	{n/a}	{n/a}	a	all	
 a:right	an-a	-	-	Return a new array containing the specified number of values from the right side of the array.			class:word	{n/a}	{n/a}	a	all	
-a:store	vna-	-	-	Store a value into the array at the specified index.			class:word	    #3 { #0 #1 #2 } #1 a:store	{n/a}	a	all	
+a:store	van-	-	-	Store a value into the array at the specified index.			class:word	    #3 { #0 #1 #2 } #1 a:store	{n/a}	a	all	
 a:th	an-b	-	-	Return the actual address of the `n`th item in the array.			class:word	{n/a}	{n/a}	a	all	
 a:to-string	a-s	-	-	Create a new string from the provided array of character values. This string will be stored in the temporal string buffers.			class:word	    { $h $e $l $l $o } a:to-string s:put nl	{n/a}	a	all	
 abort	-	-	-	Abort execution.			class:macro	{n/a}	{n/a}	global	rre	

@@ -101,7 +101,7 @@ a:prepend                D: aa-a  A: -  F: -
 a:reduce                 D: pnq-n  A: -  F: -
 a:reverse                D: a-b  A: -  F: -
 a:right                  D: an-a  A: -  F: -
-a:store                  D: vna-  A: -  F: -
+a:store                  D: van-  A: -  F: -
 a:th                     D: an-b  A: -  F: -
 a:to-string              D: a-s  A: -  F: -
 abort                    D: -  A: -  F: -

@@ -307,7 +307,7 @@ Reverse the order of items in a array. This will return a new array.
 a:right                  D: an-a  A: -  F: -
 Return a new array containing the specified number of values from the right side of the array.
 
-a:store                  D: vna-  A: -  F: -
+a:store                  D: van-  A: -  F: -
 Store a value into the array at the specified index.
 
 a:th                     D: an-b  A: -  F: -
