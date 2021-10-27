@@ -1487,7 +1487,7 @@ and a count. It then creates an array with the provided data.
 
 ~~~
 :a:counted-results (q-a)
-  call here [ dup , &, times ] dip ;
+  call here [ dup , here swap [ store-next ] times drop ] dip ;
 ~~~
 
 The second, `a:from-string`, creates a new string with the
