@@ -1526,7 +1526,7 @@ additional combinators.
 ~~~
 :a:for-each (aq-)
   swap fetch-next &swap dip
-  [ push fetch-next \swpodupu \swpuca.. \popo.... ] times drop-pair ;
+  [ push a:(fetch-next) \swpodupu \swpuca.. \popo.... ] times drop-pair ;
 ~~~
 
 With this I can easily define `a:dup` to make a copy of an
