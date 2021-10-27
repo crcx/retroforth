@@ -15,7 +15,7 @@ Words marked with a (-) are partially updated.
 [x]   a:size/half
 [x]   a:size/word
 [x]   a:length
-[-]   a:counted-results
+[x]   a:counted-results
 [ ]   a:from-string
 [x]   a:for-each
 [ ]   a:dup

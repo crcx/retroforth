@@ -1508,7 +1508,7 @@ and a count. It then creates an array with the provided data.
 
 ~~~
 :a:counted-results (q-a)
-  call here [ dup , here swap [ store-next ] times drop ] dip ;
+  call here [ [ , ] [ here swap [ a:(store-next) ] times drop ] [ allot ] tri ] dip ;
 ~~~
 
 The second, `a:from-string`, creates a new string with the
@@ -1534,7 +1534,7 @@ array.
 
 ~~~
 :a:dup (a-a)
-  here [ dup fetch ,  &, a:for-each ] dip ;
+  here [ dup fetch , &, a:for-each ] dip ;
 ~~~
 
 A closely related word is `a:copy`, which copies an array
