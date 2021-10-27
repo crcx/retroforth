@@ -1481,6 +1481,27 @@ we wrap this as `a:length`:
 :a:length (a-n) fetch ;
 ~~~
 
+~~~
+'a:Accessors d:create
+  #0 , (fetch)
+  #0 , (store)
+  #0 , (fetch-next)
+  #0 , (store-next)
+
+:a:(fetch) &a:Accessors #0 + fetch call ;
+:a:(store) &a:Accessors #1 + fetch call ;
+:a:(fetch-next) &a:Accessors #2 + fetch call ;
+:a:(store-next) &a:Accessors #3 + fetch call ;
+
+:a:size/native
+  &store-next &fetch-next &store &fetch &a:Accessors store-next store-next store ;
+:a:size/half
+  &h:store-next &h:fetch-next &h:store &h:fetch &a:Accessors store-next store-next store ;
+:a:size/byte
+  &b:store-next &b:fetch-next &b:store &b:fetch &a:Accessors store-next store-next store ;
+~~~
+
+
 The first couple of words are used to create arrays. The first,
 `a:counted-results` executes a quote which returns values
 and a count. It then creates an array with the provided data.

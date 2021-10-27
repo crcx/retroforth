@@ -1,0 +1,45 @@
+# Progress on the Array Words
+
+Words marked complete (x) have either been rewritten to be
+size-flexible, or will work w/o rewrite once the underlying
+words have been updated.
+
+Words marked with a (-) are partially updated.
+
+[x]   a:Accessors
+[x]   a:(fetch)
+[x]   a:(store)
+[x]   a:(fetch-next)
+[x]   a:(store-next)
+[x]   a:size/byte
+[x]   a:size/half
+[x]   a:size/word
+[x]   a:length
+[-]   a:counted-results
+[ ]   a:from-string
+[ ]   a:for-each
+[ ]   a:dup
+[ ]   a:copy
+[ ]   a:to-string
+[ ]   a:append
+[ ]   a:prepend
+[ ]   a:chop
+[ ]   a:filter
+[ ]   a:contains?
+[ ]   a:contains/string?
+[ ]   a:map
+[ ]   a:reverse
+[ ]   a:th
+[ ]   a:fetch
+[ ]   a:store
+[x]   a:reduce
+[x]   a:index
+[x]   a:index/string
+[x]   a:make
+[ ]   a:left
+[ ]   a:right
+[ ]   a:middle
+[ ]   a:eq?
+[x]   a:-eq?
+[x]   a:begins-with?
+[x]   a:ends-with?
