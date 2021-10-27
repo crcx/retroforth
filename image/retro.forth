@@ -1483,10 +1483,10 @@ we wrap this as `a:length`:
 
 ~~~
 'a:Accessors d:create
-  #0 , (fetch)
-  #0 , (store)
-  #0 , (fetch-next)
-  #0 , (store-next)
+  &fetch      , (fetch)
+  &store      , (store)
+  &fetch-next , (fetch-next)
+  &store-next , (store-next)
 
 :a:(fetch) &a:Accessors #0 + fetch call ;
 :a:(store) &a:Accessors #1 + fetch call ;
