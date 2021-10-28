@@ -1534,7 +1534,9 @@ array.
 
 ~~~
 :a:dup (a-a)
-  here [ dup fetch , &, a:for-each ] dip ;
+  here [ [ fetch , ]
+         [ fetch allot ]
+         [ here swap [ swap a:(store-next) ] a:for-each drop ] tri ] dip ;
 ~~~
 
 A closely related word is `a:copy`, which copies an array

@@ -18,7 +18,7 @@ Words marked with a (-) are partially updated.
 [x]   a:counted-results
 [ ]   a:from-string
 [x]   a:for-each
-[ ]   a:dup
+[x]   a:dup
 [ ]   a:copy
 [ ]   a:to-string
 [ ]   a:append
