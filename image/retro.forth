@@ -1547,12 +1547,13 @@ from one location to another.
   &Heap [ !Heap dup a:length , &, a:for-each ] v:preserve ;
 ~~~
 
-`a:dup` is used to implement `a:to-string`, the reverse of
-`a:from-string`.
+`a:to-string` converts an array into a string. The array is
+assumed to contain only valid character codes.
 
 ~~~
 :a:to-string (a-s)
-  &Heap [ a:dup #0 , n:inc ] v:preserve s:temp ;
+  [ s:empty buffer:set [ buffer:add ] a:for-each buffer:start ]
+  buffer:preserve ;
 ~~~
 
 I then define `a:append` and `a:prepend` to combine arrays.

@@ -20,13 +20,13 @@ Words marked with a (-) are partially updated.
 [x]   a:for-each
 [x]   a:dup
 [ ]   a:copy
-[ ]   a:to-string
+[x]   a:to-string
 [ ]   a:append
 [ ]   a:prepend
 [ ]   a:chop
 [ ]   a:filter
-[ ]   a:contains?
-[ ]   a:contains/string?
+[x]   a:contains?
+[x]   a:contains/string?
 [ ]   a:map
 [ ]   a:reverse
 [ ]   a:th
