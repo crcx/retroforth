@@ -86,11 +86,6 @@ void read_token(FILE *file, char *token_buffer, int echo);
    Retro language. If things change there, these will need to
    be adjusted to match. */
 
-#define D_OFFSET_LINK     0
-#define D_OFFSET_XT       1
-#define D_OFFSET_CLASS    2
-#define D_OFFSET_NAME     3
-
 extern CELL Dictionary, Heap, Compiler;
 extern CELL notfound;
 

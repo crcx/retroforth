@@ -178,6 +178,7 @@ int devices;                      /* The number of I/O devices         */
 
 /* Markers for code & test blocks ------------------------------------ */
 char code_start[33], code_end[33], test_start[33], test_end[33];
+int codeBlocks;
 
 /* Populate The I/O Device Tables ------------------------------------ */
 typedef void (*Handler)(void);
@@ -1648,6 +1649,7 @@ int count_tokens(char *line) {
 
 void include_file(char *fname, int run_tests) {
   int inBlock = 0;                 /* Tracks status of in/out of block */
+  int priorBlocks = 0;
   char source[64 * 1024];          /* Token buffer [about 64K]         */
   char line[64 * 1024];            /* Line buffer [about 64K]          */
   char fence[33];                  /* Used with `fence_boundary()`     */
@@ -1664,6 +1666,9 @@ void include_file(char *fname, int run_tests) {
     printf("File `%s` not found. Exiting.\n", fname);
     exit(1);
   }
+
+  priorBlocks = codeBlocks;
+  codeBlocks = 0;
 
   arp = cpu[active].rp;
   aip = cpu[active].ip;
@@ -1693,10 +1698,12 @@ void include_file(char *fname, int run_tests) {
       read_token(fp, source);
       strlcpy(fence, source, 32); /* Copy the first three characters  */
       if (fence_boundary(fence, run_tests) == -1) {
-        if (inBlock == 0)
+        if (inBlock == 0) {
           inBlock = 1;
-        else
+          codeBlocks++;
+        } else {
           inBlock = 0;
+        }
       } else {
         if (inBlock == 1) {
           currentLine = at;
@@ -1720,6 +1727,11 @@ void include_file(char *fname, int run_tests) {
     cpu[active].address[cpu[active].rp] = ReturnStack[cpu[active].rp];
   cpu[active].rp = arp;
   cpu[active].ip = aip;
+
+  if (codeBlocks == 0)
+    printf("warning: no code blocks found!\n");
+
+  codeBlocks = priorBlocks;
 }
 
 
@@ -1839,6 +1851,7 @@ int main(int argc, char **argv) {
   strlcpy(scripting_sources[0], "/dev/stdin", 8192);
   ignoreToEOL = 0;
   ignoreToEOF = 0;
+  codeBlocks = 0;
 
   if (argc >= 2 && argv[1][0] != '-') {
     update_rx();
