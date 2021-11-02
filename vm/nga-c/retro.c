@@ -1731,8 +1731,8 @@ void include_file(char *fname, int run_tests) {
   if (codeBlocks == 0) {
     printf("warning: no code blocks found!\n");
     printf("         filename: %s\n", fname);
-    printf("         see http://forth.works/share/f6b106a370683fd91bbafd1e804de645\n");
-    printf("         for a brief summary of the unu code format used by retro\n");
+    printf("         see http://unu.retroforth.org for a brief summary of\n");
+    printf("         the unu code format used by retro\n");
 
   }
   codeBlocks = priorBlocks;
