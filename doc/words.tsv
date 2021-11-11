@@ -61,7 +61,7 @@ Heap	-a	-	-	Variable. Holds the address of the next available cell.			class:data
 I	-n	-	-	Access the loop index for the current loop. (For loops made using `indexed-times`)			class:word	{n/a}	{n/a}	global	all	
 J	-n	-	-	Access the parent loop index for the current loop. (For loops made using `indexed-times`)			class:word	{n/a}	{n/a}	global	all	
 K	-n	-	-	Access the grandparent loop index for the current loop. (For loops made using `indexed-times`)			class:word	{n/a}	{n/a}	global	all	
-NoEcho	-a	-	-	"Variable. If TRUE, allow display of the ""ok"" prompt and startup banner."			class:word	{n/a}	{n/a}	global	rre	
+NoEcho	-a	-	-	Deprecated. Variable. If TRUE, allow display of the startup banner when running listen.			class:word	{n/a}	{n/a}	global	rre	
 RewriteUnderscores	-a	-	-	Variable. When set to `TRUE`, Retro will replace underscores in strings with spaces. When `FALSE`, Retro does not.			class:data	{n/a}	{n/a}	global	all	
 STRINGS	-a	-	-	Return the address of the start of the temporary string pool. This can be altered by changing the values of `TempStrings` and `TempStringMax`.			class:word	{n/a}	{n/a}	global	all	
 ScopeList	-a	-	-	Variable. This holds some information used by `{{` and `}}`.			class:data	{n/a}	{n/a}	global	all	

@@ -2,6 +2,10 @@
 
 # Core Language
 
+- deprecated
+
+  NoEcho
+
 - new words
 
   h:fetch h:store w:fetch w:store
@@ -41,4 +45,3 @@
 - added a tool to identify words missing `d:source` data
 - start work on proper utf8 string support
 - nga/unix: catch some signals for debugging purposes
-

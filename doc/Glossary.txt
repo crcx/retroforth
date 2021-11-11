@@ -730,7 +730,7 @@ NoEcho
   Addr:  -
   Float: -
 
-"Variable. If TRUE, allow display of the ""ok"" prompt and startup banner."
+Deprecated. Variable. If TRUE, allow display of the startup banner when running listen.
 
 Class: class:word | Namespace: global | Interface Layer: rre
 ------------------------------------------------------------------------

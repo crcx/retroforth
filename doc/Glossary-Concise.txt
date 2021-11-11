@@ -188,7 +188,7 @@ K                        D: -n  A: -  F: -
 Access the grandparent loop index for the current loop. (For loops made using `indexed-times`)
 
 NoEcho                   D: -a  A: -  F: -
-"Variable. If TRUE, allow display of the ""ok"" prompt and startup banner."
+Deprecated. Variable. If TRUE, allow display of the startup banner when running listen.
 
 RewriteUnderscores       D: -a  A: -  F: -
 Variable. When set to `TRUE`, Retro will replace underscores in strings with spaces. When `FALSE`, Retro does not.
