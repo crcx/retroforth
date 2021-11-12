@@ -31,21 +31,6 @@ and providing a more flexible base to build on.
 
 # The Code
 
-The RETRO image has a 512 cell buffer between the kernel and the
-high level code. This is used for the Text Input Buffer, or TIB.
-
-    +------------------+
-    | kernel           | 0-1023
-    | input buffer     | 1024-1536
-    | standard library | 1537+
-    | ...              |
-    | system buffers   | EOM - ???
-    +------------------+
-
-~~~
-#1024 'TIB const
-~~~
-
 The listener needs to determine what to treat as the end of the
 token. I define `end-of-token?` for this.
 
@@ -124,7 +109,7 @@ And with these, I can quickly implement the `new-listener`.
 ~~~
 {{
   :guard   (-)  buffer:end TIB lt? [ TIB buffer:set ] if ;
-  :c:get   (-c) as{ 'liii.... i #1 d }as dup buffer:add ;
+  :c:get   (-c) \liii.... `1 dup buffer:add ;
   :s:get   (-s) [ TIB buffer:set
                   [ guard c:get special-keys check end-of-token? ] until
                   buffer:start s:chop ] buffer:preserve ;
