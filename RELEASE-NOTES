@@ -1,4 +1,4 @@
-# RetroForth 2021.11 (In Progress) Release Notes
+# RetroForth 2021.11 Release Notes
 
 # Core Language
 
@@ -23,10 +23,11 @@
 ## nga-c: retro.c
 
 - added optional support for multiple virtual processor cores
-- added optional ffi
+- started work on an optional ffi
 - added optional support for unsigned numeric operations
-- work on internal cleanups
+- internal cleanups
 - better error messages when socket device not present
+- display warning when no code blocks are found in a source file
 
 ## nga-rust
 
@@ -45,3 +46,7 @@
 - added a tool to identify words missing `d:source` data
 - start work on proper utf8 string support
 - nga/unix: catch some signals for debugging purposes
+- fix bugs in examplse
+
+  - retro-stats
+  - alternate-listener
