@@ -1481,34 +1481,13 @@ we wrap this as `a:length`:
 :a:length (a-n) fetch ;
 ~~~
 
-~~~
-'a:Accessors d:create
-  &fetch      , (fetch)
-  &store      , (store)
-  &fetch-next , (fetch-next)
-  &store-next , (store-next)
-
-:a:(fetch) &a:Accessors #0 + fetch call ;
-:a:(store) &a:Accessors #1 + fetch call ;
-:a:(fetch-next) &a:Accessors #2 + fetch call ;
-:a:(store-next) &a:Accessors #3 + fetch call ;
-
-:a:size/native
-  &store-next &fetch-next &store &fetch &a:Accessors store-next store-next store ;
-:a:size/half
-  &h:store-next &h:fetch-next &h:store &h:fetch &a:Accessors store-next store-next store ;
-:a:size/byte
-  &b:store-next &b:fetch-next &b:store &b:fetch &a:Accessors store-next store-next store ;
-~~~
-
-
 The first couple of words are used to create arrays. The first,
 `a:counted-results` executes a quote which returns values
 and a count. It then creates an array with the provided data.
 
 ~~~
 :a:counted-results (q-a)
-  call here [ [ , ] [ here swap [ a:(store-next) ] times drop ] [ allot ] tri ] dip ;
+  call here [ dup , &, times ] dip ;
 ~~~
 
 The second, `a:from-string`, creates a new string with the
@@ -1526,7 +1505,7 @@ additional combinators.
 ~~~
 :a:for-each (aq-)
   swap fetch-next &swap dip
-  [ push a:(fetch-next) \swpodupu \swpuca.. \popo.... ] times drop-pair ;
+  [ push fetch-next \swpodupu \swpuca.. \popo.... ] times drop-pair ;
 ~~~
 
 With this I can easily define `a:dup` to make a copy of an
@@ -1534,9 +1513,7 @@ array.
 
 ~~~
 :a:dup (a-a)
-  here [ [ fetch , ]
-         [ fetch allot ]
-         [ here swap [ swap a:(store-next) ] a:for-each drop ] tri ] dip ;
+  here [ dup fetch ,  &, a:for-each ] dip ;
 ~~~
 
 A closely related word is `a:copy`, which copies an array
@@ -1552,8 +1529,7 @@ assumed to contain only valid character codes.
 
 ~~~
 :a:to-string (a-s)
-  [ s:empty buffer:set [ buffer:add ] a:for-each buffer:start ]
-  buffer:preserve ;
+  &Heap [ a:dup #0 , n:inc ] v:preserve s:temp ;
 ~~~
 
 I then define `a:append` and `a:prepend` to combine arrays.
