@@ -441,18 +441,6 @@ Apply q to x, y, and z.
 :tri@ dup dup tri* ;
 ~~~
 
-Alternative Names
-
-~~~
-:cleave/2 bi ;
-:cleave/3 tri ;
-:spread/2 bi* ;
-:spread/3 tri* ;
-:apply/2 bi@ ;
-:apply/3 tri@ ;
-~~~
-
-
 ### Combinators: Control
 
 Execute quote until quote returns a flag of 0. In high level code:
