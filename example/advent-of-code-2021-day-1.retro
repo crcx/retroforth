@@ -1,0 +1,52 @@
+# Part 1
+
+This is a pretty easy problem.
+
+Using the `file:for-each-line` to iterate over each line,
+I increment a variable for each increase. I also leave the
+most recently read value on the stack for the next comparison.
+
+The variable is initialized to -1. My initial comparison
+value is 0, so the first data from the file will be greater
+than this. Using an initial -1 value ensures that the needed
+adjustment is factored in.
+
+~~~
+#-1 'Increased var-n
+
+:process (ns-n) s:to-number tuck lt? [ &Increased v:inc ] if ;
+#0 'day1.input [ process ] file:for-each-line drop
+
+@Increased n:put nl
+~~~
+
+# Part 2
+
+The introduction of a three value sliding window makes this
+a little trickier. I chose to use only a single accumulator
+variable, keeping the values for the window and the latest
+sum on the stack.
+
+I use `reorder` to update the stack orderings when adjusting
+the values for the sliding window and when moving the newest
+sum to the bottom.
+
+I'm using the same trick with a negative starting value
+(-3 in this case) for my count, to allow for the initial
+non-existant entries of zero.
+
+
+~~~
+#-3 'Increased var-n
+
+:slide   'abcde 'cdeacde reorder ;
+:sum     + + ;
+:check   [ lt? [ &Increased v:inc ] if ] sip ;
+:update  'abcd 'dabc reorder ;
+:process s:to-number slide sum check update ;
+
+#0 #0 #0 #0 'day1.input [ process ] file:for-each-line
+drop-pair drop-pair
+
+@Increased n:put nl
+~~~
