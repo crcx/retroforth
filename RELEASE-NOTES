@@ -1,52 +1,19 @@
-# RetroForth 2021.11 Release Notes
-
+# RetroForth 2022.1 Release Notes
+ 
 # Core Language
 
 - deprecated
 
-  NoEcho
-
 - new words
 
-  h:fetch h:store w:fetch w:store
-  w:fetch-next w:store-next
-  h:fetch-next h:store-next
-  b:fetch-next b:store-next
-  s:fetch s:store
-
 - dictionary
-
-  added d:source field
 
 # VM
 
 ## nga-c: retro.c
 
-- added optional support for multiple virtual processor cores
-- started work on an optional ffi
-- added optional support for unsigned numeric operations
-- internal cleanups
-- better error messages when socket device not present
-- display warning when no code blocks are found in a source file
-
-## nga-rust
-
-- new implementation from bitmapper
+- recognize TAB as whitespace when including files
 
 # Documentation
 
-- Updated Build instructions for Linux (re: FFI support & libdl)
-- Updated the description & example for `a:to-string`
-- `d:source` field now populated for all standard words
-- fixed stack comment for `a:store`
-
 # Other
-
-- moved deprecated words to `interface/` instead of `package/extensions`
-- added a tool to identify words missing `d:source` data
-- start work on proper utf8 string support
-- nga/unix: catch some signals for debugging purposes
-- fix bugs in examplse
-
-  - retro-stats
-  - alternate-listener

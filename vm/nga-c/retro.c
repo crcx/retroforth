@@ -1533,7 +1533,7 @@ void evaluate(char *s) {
   ---------------------------------------------------------------------*/
 
 int not_eol(int c) {
-  return (c != 10) && (c != 13) && (c != 32) && (c != EOF) && (c != 0);
+  return (c != 9) && (c != 10) && (c != 13) && (c != 32) && (c != EOF) && (c != 0);
 }
 
 void read_token(FILE *file, char *token_buffer) {
