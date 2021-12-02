@@ -1,0 +1,42 @@
+As with day 1, the first part of this is easy. I'm "parsing"
+the input data by using `s:tokenize` and then unpacking the
+two element array. Convert the numeric part to a number, then
+a simple set of `s:case`s to process things.
+
+~~~
+:a:unpack [ ] a:for-each ;
+:parse    ASCII:SPACE s:tokenize a:unpack s:to-number swap ;
+
+:process
+  parse
+  'forward [ + ] s:case
+  'down    [ swap [ + ] dip ] s:case
+  'up      [ swap [ - ] dip ] s:case
+  drop-pair ;
+
+(depth,horizontal)
+#0 #0 'day2.input [ process ] file:for-each-line
+* n:put nl
+~~~
+
+The second half is modestly more difficult. As I'm minimizing
+any use of variables, this is a little messier than I'd prefer,
+but it's still pretty straightforward.
+
+I'm reusing the "parsing" part from the first half.
+
+My stack values are:  aim depth horizontal
+
+~~~
+:process
+  parse
+  'forward [ [ + ] [ 'abcd 'acbda reorder * + swap ] bi ] s:case
+  'down    [ [ rot ] dip + rot rot ] s:case
+  'up      [ [ rot ] dip - rot rot ] s:case
+  drop-pair ;
+
+(aim,depth,horizontal)
+#0 #0 #0 'day2.input [ process ] file:for-each-line
+
+* n:put nl drop (discard_the_aim_field)
+~~~

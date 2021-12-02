@@ -1,0 +1,11 @@
+Select will discard one of two values based on a passed
+flag.
+
+~~~
+:select (abf-) &drop &nip choose ;
+~~~
+
+```
+#100 #200 TRUE select n:put nl
+#100 #200 FALSE select n:put nl
+```
