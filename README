@@ -24,13 +24,13 @@ Binaries will be placed in the `bin` directory.
 
 The primary executable is `retro`. This is used for running the
 examples and the Atua (gopher) & Casket (http) servers that
-power forthworks.com.
+power retroforth.org.
 
 The `retro` executable embeds the image into the binary, making
 it trivial to copy and deploy.
 
 This interface layer also extends the language with many new
-words and vocabularies, adds scripting, file i/o, floating point,
+words and vocabularies, adds scripting, files, floating point,
 and more.
 
 The `retro` executable can handle a variety of command line
@@ -78,12 +78,17 @@ and Pascal. These are not as well tested or as feature complete
 as the main implementations, but are provided for your use if
 the standard implementations will not suffice.
 
+## Learn More
+
+Visit http(s)://retroforth.org to learn more and follow along
+with development.
+
 ## Patreon
 
 I have a Patreon at https://www.patreon.com/_crc for those that
 want to financially support development. All funds raised via
-Pateron are put into development related expenses (server expenses,
-app store fees, hardware).
+Pateron are put into development related expenses (server
+expenses, app store fees, hardware).
 
 Thanks go out to my current and past patrons:
 
@@ -92,3 +97,6 @@ Thanks go out to my current and past patrons:
 - Rick Carlino
 - Scott McCallum
 - Bartels Jon Randy
+- Nuno
+- Eli
+- Brad S
