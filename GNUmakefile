@@ -100,7 +100,7 @@ install-data:
 
 install-docs:
 	install -m 755 -d -- $(DESTDIR)$(DOCSDIR)
-	install -c -m 644 README $(DESTDIR)$(DOCSDIR)/README
+	install -c -m 644 README.md $(DESTDIR)$(DOCSDIR)/README.md
 	install -c -m 644 RELEASE-NOTES $(DESTDIR)$(DOCSDIR)/RELEASE-NOTES
 	install -c -m 644 doc/RETRO-Book.md $(DESTDIR)$(DOCSDIR)/RETRO-Book.md
 	install -c -m 644 doc/words.tsv $(DESTDIR)$(DOCSDIR)/words.tsv
