@@ -1628,13 +1628,17 @@ using a variable for the flag/offset value, but it's pretty clean
 overall.
 
 ~~~
+:a:index (an-i)
+  push push #-1 #0 pop pop swap
+  [ over eq? [ [ over #-1 eq? [ nip dup ] if ] dip ] if
+    [ n:inc ] dip ]
+  a:for-each drop-pair ;
+
 {{
   :identify
     #-1 swap #0
    [ TRUE eq? [ over #-1 eq? [ nip dup ] if ] if n:inc ] a:reduce drop ;
 ---reveal---
-  :a:index (an-n)
-    &Heap [ &eq? curry a:map identify ] v:preserve ;
   :a:index/string (as-n)
     &Heap [ &s:eq? curry a:map identify ] v:preserve ;
 }}

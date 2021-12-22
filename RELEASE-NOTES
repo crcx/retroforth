@@ -1,5 +1,5 @@
 # RetroForth 2022.1 Release Notes
- 
+
 # Core Language
 
 - deprecated
@@ -8,14 +8,18 @@
 
 - dictionary
 
+- arrays
+
+  - a:index no longer need to construct a new word to locate
+    the index (backport from retro/napia)
+
 # VM
 
 ## nga-c: retro.c
 
 - recognize TAB as whitespace when including files
 
-# Documentation
-
+# Documentatio
 
 # Other
 
