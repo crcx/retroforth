@@ -691,6 +691,7 @@ below.
 | xt     | link to start of the function      | d:xt     |
 | class  | link to the class handler function | d:class  |
 | source | source identifier                  | d:source |
+| hash   | hash of the word name              | d:hash   |
 | name   | zero terminated string             | d:name   |
 
 The initial dictionary is constructed at the end of this file.
@@ -749,9 +750,13 @@ d 2
 i liadre..
 d 3
 
-: d:name
+: d:hash
 i liadre..
 d 4
+
+: d:name
+i liadre..
+d 5
 ~~~
 
 A traditional Forth has `create` to make a new dictionary entry
@@ -779,6 +784,9 @@ r comma
 i lica....
 r comma
 i lica....
+r comma
+i lilica..
+d 0
 r comma
 i lilica..
 d 0
@@ -1523,11 +1531,13 @@ d 0
 r _dup
 r class:primitive
 d 0
+d 0
 s dup
 : 0001
 r 0000
 r _drop
 r class:primitive
+d 0
 d 0
 s drop
 : 0002
@@ -1535,11 +1545,13 @@ r 0001
 r _swap
 r class:primitive
 d 0
+d 0
 s swap
 : 0003
 r 0002
 r _call
 r class:primitive
+d 0
 d 0
 s call
 : 0004
@@ -1547,11 +1559,13 @@ r 0003
 r _eq
 r class:primitive
 d 0
+d 0
 s eq?
 : 0005
 r 0004
 r _neq
 r class:primitive
+d 0
 d 0
 s -eq?
 : 0006
@@ -1559,11 +1573,13 @@ r 0005
 r _lt
 r class:primitive
 d 0
+d 0
 s lt?
 : 0007
 r 0006
 r _gt
 r class:primitive
+d 0
 d 0
 s gt?
 : 0008
@@ -1571,11 +1587,13 @@ r 0007
 r _fetch
 r class:primitive
 d 0
+d 0
 s fetch
 : 0009
 r 0008
 r _store
 r class:primitive
+d 0
 d 0
 s store
 : 0010
@@ -1583,11 +1601,13 @@ r 0009
 r _add
 r class:primitive
 d 0
+d 0
 s +
 : 0011
 r 0010
 r _sub
 r class:primitive
+d 0
 d 0
 s -
 : 0012
@@ -1595,11 +1615,13 @@ r 0011
 r _mul
 r class:primitive
 d 0
+d 0
 s *
 : 0013
 r 0012
 r _divmod
 r class:primitive
+d 0
 d 0
 s /mod
 : 0014
@@ -1607,11 +1629,13 @@ r 0013
 r _and
 r class:primitive
 d 0
+d 0
 s and
 : 0015
 r 0014
 r _or
 r class:primitive
+d 0
 d 0
 s or
 : 0016
@@ -1619,11 +1643,13 @@ r 0015
 r _xor
 r class:primitive
 d 0
+d 0
 s xor
 : 0017
 r 0016
 r _shift
 r class:primitive
+d 0
 d 0
 s shift
 : 0018
@@ -1631,11 +1657,13 @@ r 0017
 r push
 r class:macro
 d 0
+d 0
 s push
 : 0019
 r 0018
 r pop
 r class:macro
+d 0
 d 0
 s pop
 : 0020
@@ -1643,11 +1671,13 @@ r 0019
 r 0;
 r class:macro
 d 0
+d 0
 s 0;
 : 0021
 r 0020
 r fetch-next
 r class:word
+d 0
 d 0
 s fetch-next
 : 0022
@@ -1655,11 +1685,13 @@ r 0021
 r store-next
 r class:word
 d 0
+d 0
 s store-next
 : 0023
 r 0022
 r s:to-number
 r class:word
+d 0
 d 0
 s s:to-number
 : 0024
@@ -1667,11 +1699,13 @@ r 0023
 r s:eq
 r class:word
 d 0
+d 0
 s s:eq?
 : 0025
 r 0024
 r s:length
 r class:word
+d 0
 d 0
 s s:length
 : 0026
@@ -1679,11 +1713,13 @@ r 0025
 r choose
 r class:word
 d 0
+d 0
 s choose
 : 0027
 r 0026
 r if
 r class:primitive
+d 0
 d 0
 s if
 : 0028
@@ -1691,11 +1727,13 @@ r 0027
 r -if
 r class:word
 d 0
+d 0
 s -if
 : 0029
 r 0028
 r sigil:(
 r class:macro
+d 0
 d 0
 s sigil:(
 : 0030
@@ -1703,11 +1741,13 @@ r 0029
 r Compiler
 r class:data
 d 0
+d 0
 s Compiler
 : 0031
 r 0030
 r Heap
 r class:data
+d 0
 d 0
 s Heap
 : 0032
@@ -1715,11 +1755,13 @@ r 0031
 r comma
 r class:word
 d 0
+d 0
 s ,
 : 0033
 r 0032
 r comma:string
 r class:word
+d 0
 d 0
 s s,
 : 0034
@@ -1727,11 +1769,13 @@ r 0033
 r ;
 r class:macro
 d 0
+d 0
 s ;
 : 0035
 r 0034
 r [
 r class:macro
+d 0
 d 0
 s [
 : 0036
@@ -1739,11 +1783,13 @@ r 0035
 r ]
 r class:macro
 d 0
+d 0
 s ]
 : 0037
 r 0036
 r Dictionary
 r class:data
+d 0
 d 0
 s Dictionary
 : 0038
@@ -1751,11 +1797,13 @@ r 0037
 r d:link
 r class:word
 d 0
+d 0
 s d:link
 : 0039
 r 0038
 r d:xt
 r class:word
+d 0
 d 0
 s d:xt
 : 0040
@@ -1763,11 +1811,13 @@ r 0039
 r d:class
 r class:word
 d 0
+d 0
 s d:class
 : 0041
 r 0040
 r d:name
 r class:word
+d 0
 d 0
 s d:name
 : 0042
@@ -1775,11 +1825,13 @@ r 0041
 r class:word
 r class:word
 d 0
+d 0
 s class:word
 : 0043
 r 0042
 r class:macro
 r class:word
+d 0
 d 0
 s class:macro
 : 0044
@@ -1787,11 +1839,13 @@ r 0043
 r class:data
 r class:word
 d 0
+d 0
 s class:data
 : 0045
 r 0044
 r d:add-header
 r class:word
+d 0
 d 0
 s d:add-header
 : 0046
@@ -1799,11 +1853,13 @@ r 0045
 r sigil:#
 r class:macro
 d 0
+d 0
 s sigil:#
 : 0047
 r 0046
 r sigil::
 r class:macro
+d 0
 d 0
 s sigil::
 : 0048
@@ -1811,11 +1867,13 @@ r 0047
 r sigil:&
 r class:macro
 d 0
+d 0
 s sigil:&
 : 0049
 r 0048
 r sigil:$
 r class:macro
+d 0
 d 0
 s sigil:$
 : 0050
@@ -1823,11 +1881,13 @@ r 0049
 r repeat
 r class:macro
 d 0
+d 0
 s repeat
 : 0051
 r 0050
 r again
 r class:macro
+d 0
 d 0
 s again
 : 0052
@@ -1835,11 +1895,13 @@ r 0051
 r interpret
 r class:word
 d 0
+d 0
 s interpret
 : 0053
 r 0052
 r d:lookup
 r class:word
+d 0
 d 0
 s d:lookup
 : 0054
@@ -1847,17 +1909,20 @@ r 0053
 r class:primitive
 r class:word
 d 0
+d 0
 s class:primitive
 : 0055
 r 0054
 r Version
 r class:data
 d 0
+d 0
 s Version
 : 0056
 r 0055
 r muri:i
 r class:word
+d 0
 d 0
 s i
 : 0057
@@ -1871,11 +1936,13 @@ r 0057
 r muri:r
 r class:word
 d 0
+d 0
 s r
 : 0059
 r 0058
 r Base
 r class:data
+d 0
 d 0
 s Base
 : 0060
@@ -1883,11 +1950,13 @@ r 0059
 r pack
 r class:word
 d 0
+d 0
 s pack
 : 0061
 r 0060
 r unpack
 r class:word
+d 0
 d 0
 s unpack
 : 0062
@@ -1895,11 +1964,13 @@ r 0061
 r d:source
 r class:word
 d 0
+d 0
 s d:source
 : 9999
 r 0062
 r err:notfound
 r class:word
+d 0
 d 0
 s err:notfound
 ~~~
