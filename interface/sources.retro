@@ -3,77 +3,6 @@
 This populates the `d:source` field of the dictionary with the filenames
 each of the provided words are found in.
 
-## Kernel
-
-~~~
-'retro.muri s:keep
-dup 'err:notfound d:lookup d:source store
-dup 'd:source d:lookup d:source store
-dup 'unpack d:lookup d:source store
-dup 'pack d:lookup d:source store
-dup 'Base d:lookup d:source store
-dup 'r d:lookup d:source store
-dup 'd d:lookup d:source store
-dup 'i d:lookup d:source store
-dup 'Version d:lookup d:source store
-dup 'class:primitive d:lookup d:source store
-dup 'd:lookup d:lookup d:source store
-dup 'interpret d:lookup d:source store
-dup 'again d:lookup d:source store
-dup 'repeat d:lookup d:source store
-dup 'sigil:$ d:lookup d:source store
-dup 'sigil:& d:lookup d:source store
-dup 'sigil:: d:lookup d:source store
-dup 'sigil:# d:lookup d:source store
-dup 'd:add-header d:lookup d:source store
-dup 'class:data d:lookup d:source store
-dup 'class:macro d:lookup d:source store
-dup 'class:word d:lookup d:source store
-dup 'd:name d:lookup d:source store
-dup 'd:class d:lookup d:source store
-dup 'd:xt d:lookup d:source store
-dup 'd:link d:lookup d:source store
-dup 'Dictionary d:lookup d:source store
-dup '] d:lookup d:source store
-dup '[ d:lookup d:source store
-dup '; d:lookup d:source store
-dup 's, d:lookup d:source store
-dup ', d:lookup d:source store
-dup 'Heap d:lookup d:source store
-dup 'Compiler d:lookup d:source store
-dup 'sigil:( d:lookup d:source store
-dup '-if d:lookup d:source store
-dup 'if d:lookup d:source store
-dup 'choose d:lookup d:source store
-dup 's:length d:lookup d:source store
-dup 's:eq? d:lookup d:source store
-dup 's:to-number d:lookup d:source store
-dup 'store-next d:lookup d:source store
-dup 'fetch-next d:lookup d:source store
-dup '0; d:lookup d:source store
-dup 'pop d:lookup d:source store
-dup 'push d:lookup d:source store
-dup 'shift d:lookup d:source store
-dup 'xor d:lookup d:source store
-dup 'or d:lookup d:source store
-dup 'and d:lookup d:source store
-dup '/mod d:lookup d:source store
-dup '* d:lookup d:source store
-dup '- d:lookup d:source store
-dup '+ d:lookup d:source store
-dup 'store d:lookup d:source store
-dup 'fetch d:lookup d:source store
-dup 'gt? d:lookup d:source store
-dup 'lt? d:lookup d:source store
-dup '-eq? d:lookup d:source store
-dup 'eq? d:lookup d:source store
-dup 'call d:lookup d:source store
-dup 'swap d:lookup d:source store
-dup 'drop d:lookup d:source store
-dup 'dup d:lookup d:source store
-drop
-~~~
-
 ## Standard Library
 
 ~~~
@@ -364,11 +293,5 @@ dup 'EOM d:lookup d:source store
 dup 's:store d:lookup d:source store
 dup 's:fetch d:lookup d:source store
 dup 'sigil:' d:lookup d:source store
-dup 'apply/3 d:lookup d:source store
-dup 'apply/2 d:lookup d:source store
-dup 'spread/3 d:lookup d:source store
-dup 'spread/2 d:lookup d:source store
-dup 'cleave/3 d:lookup d:source store
-dup 'cleave/2 d:lookup d:source store
 drop
 ~~~
