@@ -1,11 +1,32 @@
+# This is the Makefile for Linux, macOS, and other systems
+# using GNU Make. For BSD users, look at the Makefile instead.
+# -------------------------------------------------------------
+
+# These are used when building and signing a release.
+
 VERSION ?= 2022.1
 KEYPAIR ?= 2022-01
+
+# -------------------------------------------------------------
+
+# Installation targets
+
 PREFIX ?= /usr/local
 DATADIR ?= $(PREFIX)/share/RETRO12
 DOCSDIR ?= $(PREFIX)/share/doc/RETRO12
 EXAMPLESDIR ?= $(PREFIX)/share/examples/RETRO12
 MANDIR ?= $(PREFIX)/share/man/man1
+
+# -------------------------------------------------------------
+
+# Flags for adding in libraries we need to link to.
+
+# If not using floating point, you can remove the `-lm` from
+# LIBM.
+
 LIBM ?= -lm
+
+# You can comment out this if not enabling the FFI.
 
 LIBDL ?=
 UNAME_S := $(shell uname -s)
@@ -14,6 +35,17 @@ ifeq ($(UNAME_S),Linux)
 endif
 
 CFLAGS ?= -O2
+
+# -------------------------------------------------------------
+
+# The I/O devices can be enabled or disabled. Comment or
+# uncomment the corresponding ENABLED and DEVICES lines and
+# then run `make`. Of particular note here, sockets support
+# is disabled by default and you may wish to enable it.
+#
+# Don't uncomment the line with -DNEEDS_STRL. I use the BSD
+# strl* functions and provide a copy of them when needed. GNU
+# libc does not include these.
 
 ENABLED ?=
 ENABLED += -DENABLE_FLOATS
@@ -39,9 +71,11 @@ DEVICES += interface/clock.retro
 DEVICES += interface/scripting.retro
 # DEVICES += interface/sockets.retro
 DEVICES += interface/sources.retro
-# DEVICES += interface/multicore.retro
+DEVICES += interface/multicore.retro
 DEVICES += interface/deprecated.retro
 DEVICES += interface/unsigned.retro
+
+# -------------------------------------------------------------
 
 all: build
 

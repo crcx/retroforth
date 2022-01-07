@@ -1,16 +1,39 @@
-# Linux / macOS users: This Makefile is mainly intended for BSD
-#                      systems. You probably want to look at or
-#                      edit the GNUmakefile.
+# This is the Makefile for BSD systems. If using GNU Make (e.g.
+# on Linux or macOS), look at the GNUmakefile instead.
 # -------------------------------------------------------------
+
+# These are used when building and signing a release.
+
 VERSION ?= 2022.1
 KEYPAIR ?= 2022-01
+
+# -------------------------------------------------------------
+
+# Installation targets
+
 PREFIX ?= /usr/local
 DATADIR ?= $(PREFIX)/share/RETRO12
 DOCSDIR ?= $(PREFIX)/share/doc/RETRO12
 EXAMPLESDIR ?= $(PREFIX)/share/examples/RETRO12
 MANDIR ?= $(PREFIX)/man/man1
-LIBM ?= -lm -g
+
+# -------------------------------------------------------------
+
+# Flags for adding in libraries we need to link to.
+
+# If not using floating point, you can remove the `-lm` from
+# LIBM.
+
+LIBM ?= -lm
 LIBDL ?=
+
+# -------------------------------------------------------------
+
+# The I/O devices can be enabled or disabled. Comment or
+# uncomment the corresponding ENABLED and DEVICES lines and
+# then run `make`. Of particular note here, sockets support
+# is disabled by default and you may wish to enable it.
+
 ENABLED ?=
 ENABLED += -DENABLE_FLOATS
 ENABLED += -DENABLE_FILES
@@ -36,6 +59,8 @@ DEVICES += interface/sources.retro
 DEVICES += interface/multicore.retro
 DEVICES += interface/unsigned.retro
 DEVICES += interface/deprecated.retro
+
+# -------------------------------------------------------------
 
 all: build
 
@@ -204,7 +229,6 @@ doc/Glossary-Concise.txt: bin/retro sorted
 
 doc/Glossary-Names-and-Stack.txt: bin/retro sorted
 	./bin/retro tools/glossary.retro export concise-stack >doc/Glossary-Names-and-Stack.txt
-
 
 
 # other targets
