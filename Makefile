@@ -2,8 +2,8 @@
 #                      systems. You probably want to look at or
 #                      edit the GNUmakefile.
 # -------------------------------------------------------------
-VERSION ?= 2021.11
-KEYPAIR ?= 2021-11
+VERSION ?= 2022.1
+KEYPAIR ?= 2022-01
 PREFIX ?= /usr/local
 DATADIR ?= $(PREFIX)/share/RETRO12
 DOCSDIR ?= $(PREFIX)/share/doc/RETRO12
