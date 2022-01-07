@@ -9,8 +9,9 @@ that it is fairly low level.
 :socket:operation
   #7 io:scan-for
   dup n:negative? [ drop 'Error:_device_(0007)_not_found s:put nl
-                         'Try_rebuilding_with: s:put nl
-                         'make_OPTIONS="-DENABLE\_SOCKETS" s:format
+                         'See_https://retroforth.org/support/2022.1/SOCKETS.md
+                         s:put nl
+                         'for_instructions_on_enabling_sockets.
                          s:put nl ] if;
   io:invoke ;
 ~~~
