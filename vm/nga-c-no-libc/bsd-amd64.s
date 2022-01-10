@@ -15,7 +15,10 @@
 
 .p2align 8
 _start:
-  jmp    main
+  call    main
+  movl   $0x0,%edi
+  movq   $0x1,%rax
+  syscall
 
 putchar:
   mov    %rdi,%rax

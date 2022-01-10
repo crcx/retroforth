@@ -10,8 +10,7 @@
 
    This file contains a minimal implementation of the virtual machine.
 
-
-   Copyright (c) 2008 - 2021, Charles Childers
+   Copyright (c) 2008 - 2022, Charles Childers
    Copyright (c) 2009 - 2010, Luke Parrish
    Copyright (c) 2010,        Marc Simpson
    Copyright (c) 2010,        Jay Skeer
@@ -79,7 +78,6 @@ int main(int argc, char **argv) {
     memory[i] = ngaImage[i];
 
   execute(0);
-  return 0;
 }
 
 void prepare_vm() {
