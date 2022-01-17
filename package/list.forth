@@ -3,9 +3,22 @@
 This is a system for allowing you to easily add your own
 extensions to RETRO on Unix systems.
 
+The first extension uses the scripting interface to get source
+data for words, and record this as part of the header.
+
 ~~~
-[ script:current-file s:keep [ &d:add-header #2 + call ] dip
-  d:last d:source store ] &d:add-header set-hook
+{{
+  'Sources d:create #128 allot
+  :known? (s-sf) dup &Sources a:contains/string? ;
+  :index  (s-s)  &Sources swap a:index/string
+                 &Sources swap a:fetch ;
+  :record (s-s)  s:keep dup &Sources v:inc
+                 @Sources &Sources + store ;
+
+  [ script:current-file known? [ index ] [ record ] choose
+    [ &d:add-header #2 + call ] dip
+    d:last d:source store ] &d:add-header set-hook
+}}
 ~~~
 
 
