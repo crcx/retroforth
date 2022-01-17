@@ -1,0 +1,43 @@
+This is a list of things I'm either working on, or am planning
+to work on. There may be some notes mixed in.
+
+----------------------------------------------------------------
+
+Dictionary
+
+- avoid duplication of `d:source` strings
+- add `d:hash` field (compatible w/ retro/napia)
+- add `d:source-line` field
+- use `d:hash` when looking up words
+
+----------------------------------------------------------------
+
+FFI
+
+- all significant global state in a structure
+- foreign functions will receive a pointer to this and can
+  read/modify as needed
+
+----------------------------------------------------------------
+
+Debugger
+
+----------------------------------------------------------------
+
+Retro/Napia Compatibility
+
+- full compatibility is not possible, but both should be similar
+  when practical
+- add non-symbolic names for some words:
+  n:add n:sub n:mul n:div n:mod n:divmod
+
+----------------------------------------------------------------
+
+Unicode Strings
+
+- finish implementing byte arrays (port from retro/napia)
+- implement reliable code to find a utf8 character inside the
+  array
+- use this to implement s:fetch, s:store
+
+----------------------------------------------------------------
