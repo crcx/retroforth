@@ -58,6 +58,7 @@ DEVICES += interface/scripting.retro
 DEVICES += interface/sources.retro
 DEVICES += interface/multicore.retro
 DEVICES += interface/unsigned.retro
+DEVICES += interface/retro-napia.retro
 DEVICES += interface/deprecated.retro
 
 # -------------------------------------------------------------

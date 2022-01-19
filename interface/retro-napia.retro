@@ -1,0 +1,20 @@
+
+~~~
+:n:add + ;
+:n:sub - ;
+:n:mul * ;
+:n:div / ;
+:n:mod mod ;
+:n:divmod /mod ;
+~~~
+
+~~~
+'retro-napia.retro
+dup 'n:add d:lookup d:source store
+dup 'n:sub d:lookup d:source store
+dup 'n:mul d:lookup d:source store
+dup 'n:div d:lookup d:source store
+dup 'n:mod d:lookup d:source store
+dup 'n:divmod d:lookup d:source store
+drop
+~~~

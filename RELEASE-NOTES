@@ -6,6 +6,13 @@
 
 - new words
 
+  - n:add
+  - n:sub
+  - n:mul
+  - n:div
+  - n:mod
+  - n:divmod
+
 - dictionary
 
 - arrays
@@ -19,9 +26,12 @@
 
 - recognize TAB as whitespace when including files
 
-# Documentatio
+# Documentation
 
 # Other
+
+- d:source data on retro-unix now avoids duplicating the
+  source filename
 
 # Examples
 

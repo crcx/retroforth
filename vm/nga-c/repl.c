@@ -1,17 +1,19 @@
-/* RETRO is a clean, elegant, and pragmatic dialect of Forth. It provides
-   a simple alternative for those willing to make a break from legacy
-   systems.
+/* RETRO is a clean, elegant, and pragmatic dialect of Forth.
+   It provides a simple alternative for those willing to make a
+   break from legacy systems.
 
-   The language draws influences from many sources including traditional
-   Forth systems, cmForth, colorForth, Factor, and Parable. It was
-   designed to be easy to grasp and adapt to specific uses.
+   The language draws influences from many sources including
+   traditional Forth systems, cmForth, colorForth, Factor, and
+   Parable. It was designed to be easy to grasp and adapt to
+   specific uses.
 
-   The basic language is very portable and runs on a tiny virtual machine.
+   The basic language is very portable and runs on a tiny
+   virtual machine.
 
-   This file contains a minimal implementation of the virtual machine.
+   This file contains a minimal implementation of the virtual
+   machine.
 
-
-   Copyright (c) 2008 - 2021, Charles Childers
+   Copyright (c) 2008 - 2022, Charles Childers
    Copyright (c) 2009 - 2010, Luke Parrish
    Copyright (c) 2010,        Marc Simpson
    Copyright (c) 2010,        Jay Skeer
@@ -25,13 +27,27 @@
 #include <stdint.h>
 #include <limits.h>
 
+#ifndef BIT64
 #define CELL int32_t
 #define CELL_MIN INT_MIN + 1
 #define CELL_MAX INT_MAX - 1
+#else
+#define CELL int64_t
+#define CELL_MIN LLONG_MIN + 1
+#define CELL_MAX LLONG_MAX - 1
+#endif
 
-#define IMAGE_SIZE   524288       /* Amount of RAM.          */
-#define ADDRESSES    128          /* Max address stack depth */
-#define STACK_DEPTH   32          /* Max data stack depth    */
+#ifndef IMAGE_SIZE
+#define IMAGE_SIZE   524288       /* Amount of RAM, in cells */
+#endif
+
+#ifndef ADDRESSES
+#define ADDRESSES    256          /* Depth of address stack */
+#endif
+
+#ifndef STACK_DEPTH
+#define STACK_DEPTH  256          /* Depth of data stack */
+#endif
 
 CELL sp, rp, ip;                  /* Stack and instruction pointers */
 CELL data[STACK_DEPTH];           /* The data stack          */
