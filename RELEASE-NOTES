@@ -15,6 +15,9 @@
 
 - dictionary
 
+  - initial work towards adding supporting a d:hash field
+    for faster dictionary lookups
+
 - arrays
 
   - a:index no longer need to construct a new word to locate
@@ -22,23 +25,37 @@
 
 # VM
 
-## nga-c: retro.c
+## nga-c
 
-- recognize TAB as whitespace when including files
+- retro.c
 
-## nga-c: repl.c
+  - recognize TAB as whitespace when including files
 
-- fix compiler warnings when using compiler defines to alter
-  settings
+- repl.c
+
+  - fix compiler warnings when using compiler defines to alter
+    settings
+
+- retro-compiler.c
+
+  - fix issue causing segfaults when compiling
 
 # Documentation
+
+- some clarifications around building with socket support
+- added comments to Makefiles to help clarify configuration
+  possibilities
 
 # Other
 
 - d:source data on retro-unix now avoids duplicating the
   source filename
+- fixed issue with d:source data for words in retro.forth
 
 # Examples
 
 - advent of code, 2021 (day 1, 2)
 - select.retro
+- fixed bug in defstruct.retro causing loss of structure name
+  in some cases
+
