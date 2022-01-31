@@ -1,12 +1,22 @@
+# Retro/Napia Words
+
+This adds support for some words from Retro/Napia. It's intended
+to aid in portability between the systems.
+
+The basic math operations are given non-symbolic names and
+placed in the `n:` namespace. (In Retro/Napia, these are the
+standard names for these).
 
 ~~~
-:n:add + ;
-:n:sub - ;
-:n:mul * ;
-:n:div / ;
-:n:mod mod ;
+:n:add    + ;
+:n:sub    - ;
+:n:mul    * ;
+:n:div    / ;
+:n:mod    mod ;
 :n:divmod /mod ;
 ~~~
+
+Provide source data.
 
 ~~~
 'retro-napia.retro

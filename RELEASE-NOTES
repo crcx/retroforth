@@ -26,6 +26,11 @@
 
 - recognize TAB as whitespace when including files
 
+## nga-c: repl.c
+
+- fix compiler warnings when using compiler defines to alter
+  settings
+
 # Documentation
 
 # Other

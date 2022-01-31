@@ -105,4 +105,3 @@ dup 'image:save d:lookup d:source store
 dup 'TIB d:lookup d:source store
 drop
 ~~~
-
