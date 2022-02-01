@@ -6,3 +6,8 @@ Put extensions into this directory and run:
 Any extensions here will be placed in a file named
 `package/load-extensions.retro` for compilation into the
 embedded image.
+
+I am including a fence here to silence a compile time warning.
+
+~~~
+~~~
