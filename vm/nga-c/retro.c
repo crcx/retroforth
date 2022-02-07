@@ -139,6 +139,10 @@ struct NgaState {
   int current_source;
   int perform_abort;
 
+  CELL currentLine;
+  CELL ignoreToEOL;
+  CELL ignoreToEOF;
+
   char code_start[256], code_end[256];
   char test_start[256], test_end[256];
   int codeBlocks;
@@ -207,14 +211,6 @@ void inst_ie(NgaState *);  void inst_iq(NgaState *);  void inst_ii(NgaState *);
 #define TORS vm->cpu[vm->active].address[vm->cpu[vm->active].rp]
 
 /* Global Variables -------------------------------------------------- */
-CELL Dictionary, NotFound, interpret;
-
-char string_data[8192];
-char **sys_argv;
-int sys_argc;
-char scripting_sources[64][8192];
-int current_source;
-int perform_abort;
 
 /* Multi Core Support ------------------------------------------------ */
 #ifdef ENABLE_MULTICORE
@@ -402,8 +398,8 @@ void float_from_string(NgaState *vm) {
   I pass it off to `snprintf()` to deal with.
   ---------------------------------------------------------------------*/
 void float_to_string(NgaState *vm) {
-    snprintf(string_data, 8192, "%f", float_pop(vm));
-    string_inject(vm, string_data, stack_pop(vm));
+    snprintf(vm->string_data, 8192, "%f", float_pop(vm));
+    string_inject(vm, vm->string_data, stack_pop(vm));
 }
 
 
@@ -1349,19 +1345,15 @@ void query_image(NgaState *vm) {
   Scripting Support
   ---------------------------------------------------------------------*/
 
-CELL currentLine;
-CELL ignoreToEOL;
-CELL ignoreToEOF;
-
 void scripting_arg(NgaState *vm) {
   CELL a, b;
   a = stack_pop(vm);
   b = stack_pop(vm);
-  stack_push(vm, string_inject(vm, sys_argv[a + 2], b));
+  stack_push(vm, string_inject(vm, vm->sys_argv[a + 2], b));
 }
 
 void scripting_arg_count(NgaState *vm) {
-  stack_push(vm, sys_argc - 2);
+  stack_push(vm, vm->sys_argc - 2);
 }
 
 void scripting_include(NgaState *vm) {
@@ -1369,30 +1361,30 @@ void scripting_include(NgaState *vm) {
 }
 
 void scripting_name(NgaState *vm) {
-  stack_push(vm, string_inject(vm, sys_argv[1], stack_pop(vm)));
+  stack_push(vm, string_inject(vm, vm->sys_argv[1], stack_pop(vm)));
 }
 
 /* addeded in scripting i/o device, revision 1 */
 void scripting_source(NgaState *vm) {
-  stack_push(vm, string_inject(vm, scripting_sources[current_source], stack_pop(vm)));
+  stack_push(vm, string_inject(vm, vm->scripting_sources[vm->current_source], stack_pop(vm)));
 }
 
 void scripting_line(NgaState *vm) {
-  stack_push(vm, currentLine);
+  stack_push(vm, vm->currentLine);
 }
 
 void scripting_ignore_to_eol(NgaState *vm) {
-  ignoreToEOL = -1;
+  vm->ignoreToEOL = -1;
 }
 
 void scripting_ignore_to_eof(NgaState *vm) {
-  ignoreToEOF = -1;
+  vm->ignoreToEOF = -1;
 }
 
 void scripting_abort(NgaState *vm) {
   scripting_ignore_to_eol(vm);
   scripting_ignore_to_eof(vm);
-  perform_abort = -1;
+  vm->perform_abort = -1;
 }
 
 void carry_out_abort(NgaState *vm) {
@@ -1404,13 +1396,13 @@ void carry_out_abort(NgaState *vm) {
   vm->afsp = 0;
 #endif
 
-  if (current_source > 0) {
+  if (vm->current_source > 0) {
     scripting_abort(vm);
     return;
   }
 
-  perform_abort = 0;
-  current_source = 0;
+  vm->perform_abort = 0;
+  vm->current_source = 0;
 }
 
 Handler ScriptingActions[] = {
@@ -1464,12 +1456,12 @@ void execute(NgaState *vm, CELL cell) {
   vm->cpu[vm->active].ip = cell;
   token = TIB;
   while (vm->cpu[vm->active].ip < IMAGE_SIZE) {
-    if (perform_abort == 0) {
-      if (vm->cpu[vm->active].ip == NotFound) {
+    if (vm->perform_abort == 0) {
+      if (vm->cpu[vm->active].ip == vm->NotFound) {
         printf("\nERROR: Word Not Found: ");
         printf("`%s`\n\n", string_extract(vm, token));
       }
-      if (vm->cpu[vm->active].ip == interpret) {
+      if (vm->cpu[vm->active].ip == vm->interpret) {
         token = TOS;
       }
       opcode = vm->memory[vm->cpu[vm->active].ip];
@@ -1511,7 +1503,7 @@ void evaluate(NgaState *vm, char *s) {
   if (strlen(s) == 0)  return;
   string_inject(vm, s, TIB);
   stack_push(vm, TIB);
-  execute(vm, interpret);
+  execute(vm, vm->interpret);
 }
 
 
@@ -1665,14 +1657,14 @@ void include_file(NgaState *vm, char *fname, int run_tests) {
     ReturnStack[vm->cpu[vm->active].rp] = vm->cpu[vm->active].address[vm->cpu[vm->active].rp];
   vm->cpu[vm->active].rp = 0;
 
-  current_source++;
-  strlcpy(scripting_sources[current_source], fname, 8192);
+  vm->current_source++;
+  strlcpy(vm->scripting_sources[vm->current_source], fname, 8192);
 
-  ignoreToEOF = 0;
+  vm->ignoreToEOF = 0;
 
-  while (!feof(fp) && (ignoreToEOF == 0)) { /* Loop through the file   */
+  while (!feof(fp) && (vm->ignoreToEOF == 0)) { /* Loop through the file   */
 
-    ignoreToEOL = 0;
+    vm->ignoreToEOL = 0;
 
     offset = ftell(fp);
     read_line(vm, fp, line);
@@ -1682,7 +1674,7 @@ void include_file(NgaState *vm, char *fname, int run_tests) {
 
     tokens = count_tokens(line);
 
-    while (tokens > 0 && ignoreToEOL == 0) {
+    while (tokens > 0 && vm->ignoreToEOL == 0) {
       tokens--;
       read_token(fp, source);
       strlcpy(fence, source, 32); /* Copy the first three characters  */
@@ -1695,21 +1687,21 @@ void include_file(NgaState *vm, char *fname, int run_tests) {
         }
       } else {
         if (inBlock == 1) {
-          currentLine = at;
+          vm->currentLine = at;
           evaluate(vm, source);
-          currentLine = at;
+          vm->currentLine = at;
         }
       }
     }
-    if (ignoreToEOL == -1) {
+    if (vm->ignoreToEOL == -1) {
       read_line(vm, fp, line);
     }
   }
 
-  current_source--;
-  ignoreToEOF = 0;
+  vm->current_source--;
+  vm->ignoreToEOF = 0;
   fclose(fp);
-  if (perform_abort == -1) {
+  if (vm->perform_abort == -1) {
     carry_out_abort(vm);
   }
   for(vm->cpu[vm->active].rp = 0; vm->cpu[vm->active].rp <= arp; vm->cpu[vm->active].rp++)
@@ -1835,21 +1827,24 @@ int main(int argc, char **argv) {
   strcpy(vm->test_end,   "```");
 
   /* Setup variables related to the scripting device */
-  currentLine = 0;                        /* Current Line # for script */
-  current_source = 0;                     /* Current file being run    */
-  perform_abort = 0;                      /* Carry out abort procedure */
-  sys_argc = argc;                        /* Point the global argc and */
-  sys_argv = argv;                        /* argv to the actual ones   */
-  strlcpy(scripting_sources[0], "/dev/stdin", 8192);
-  ignoreToEOL = 0;
-  ignoreToEOF = 0;
+  vm->currentLine = 0;           /* Current Line # for script */
+  vm->current_source = 0;        /* Current file being run    */
+  vm->perform_abort = 0;         /* Carry out abort procedure */
+  vm->sys_argc = argc;           /* Point the global argc and */
+  vm->sys_argv = argv;           /* argv to the actual ones   */
+  strlcpy(vm->scripting_sources[0], "/dev/stdin", 8192);
+  vm->ignoreToEOL = 0;
+  vm->ignoreToEOF = 0;
   vm->codeBlocks = 0;
 
   if (argc >= 2 && argv[1][0] != '-') {
     update_rx(vm);
-    include_file(vm, argv[1], 0);             /* If no flags were passed,  */
-    if (vm->cpu[vm->active].sp >= 1)  dump_stack(vm);       /* load the file specified,  */
-    exit(0);                              /* and exit                  */
+    include_file(vm, argv[1], 0);
+    /* If no flags were passed,  */
+    /* load the file specified,  */
+    /* and exit                  */
+    if (vm->cpu[vm->active].sp >= 1)  dump_stack(vm);
+    exit(0);
   }
 
   /* Clear startup modes       */
@@ -1967,9 +1962,9 @@ char *string_extract(NgaState *vm, CELL at) {
   CELL starting = at;
   CELL i = 0;
   while(vm->memory[starting] && i < 8192)
-    string_data[i++] = (char)vm->memory[starting++];
-  string_data[i] = 0;
-  return (char *)string_data;
+    vm->string_data[i++] = (char)vm->memory[starting++];
+  vm->string_data[i] = 0;
+  return (char *)vm->string_data;
 }
 
 /*---------------------------------------------------------------------
@@ -1986,9 +1981,9 @@ char *string_extract(NgaState *vm, CELL at) {
   ---------------------------------------------------------------------*/
 
 void update_rx(NgaState *vm) {
-  Dictionary = vm->memory[2];
-  interpret = vm->memory[5];
-  NotFound = vm->memory[6];
+  vm->Dictionary = vm->memory[2];
+  vm->interpret = vm->memory[5];
+  vm->NotFound = vm->memory[6];
 }
 
 /*=====================================================================*/
