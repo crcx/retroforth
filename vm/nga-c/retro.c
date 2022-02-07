@@ -341,18 +341,15 @@ void query_ffi(NgaState *vm) {
 /* Floating Point ---------------------------------------------------- */
 
 #ifdef ENABLE_FLOATS
-double Floats[256], AFloats[256];
-CELL fsp, afsp;
-
 void float_guard(NgaState *vm) {
-  if (fsp < 0 || fsp > 255) {
+  if (vm->fsp < 0 || vm->fsp > 255) {
     printf("\nERROR (nga/float_guard): Float Stack Limits Exceeded!\n");
-    printf("At %lld, fsp = %lld\n", (long long)vm->cpu[vm->active].ip, (long long)fsp);
+    printf("At %lld, fsp = %lld\n", (long long)vm->cpu[vm->active].ip, (long long)vm->fsp);
     exit(1);
   }
-  if (afsp < 0 || afsp > 255) {
+  if (vm->afsp < 0 || vm->afsp > 255) {
     printf("\nERROR (nga/float_guard): Alternate Float Stack Limits Exceeded!\n");
-    printf("At %lld, afsp = %lld\n", (long long)vm->cpu[vm->active].ip, (long long)afsp);
+    printf("At %lld, afsp = %lld\n", (long long)vm->cpu[vm->active].ip, (long long)vm->afsp);
     exit(1);
   }
 }
@@ -363,26 +360,26 @@ void float_guard(NgaState *vm) {
   ---------------------------------------------------------------------*/
 
 void float_push(NgaState *vm, double value) {
-  fsp++;
+  vm->fsp++;
   float_guard(vm);
-  Floats[fsp] = value;
+  vm->Floats[vm->fsp] = value;
 }
 
 double float_pop(NgaState *vm) {
-  fsp--;
+  vm->fsp--;
   float_guard(vm);
-  return Floats[fsp + 1];
+  return vm->Floats[vm->fsp + 1];
 }
 
 void float_to_alt(NgaState *vm) {
-  afsp++;
+  vm->afsp++;
   float_guard(vm);
-  AFloats[afsp] = float_pop(vm);
+  vm->AFloats[vm->afsp] = float_pop(vm);
 }
 
 void float_from_alt(NgaState *vm) {
-  float_push(vm, AFloats[afsp]);
-  afsp--;
+  float_push(vm, vm->AFloats[vm->afsp]);
+  vm->afsp--;
   float_guard(vm);
 }
 
@@ -502,11 +499,11 @@ void float_gt(NgaState *vm) {
 }
 
 void float_depth(NgaState *vm) {
-  stack_push(vm, fsp);
+  stack_push(vm, vm->fsp);
 }
 
 void float_adepth(NgaState *vm) {
-  stack_push(vm, afsp);
+  stack_push(vm, vm->afsp);
 }
 
 void float_dup(NgaState *vm) {
@@ -1410,8 +1407,8 @@ void carry_out_abort(NgaState *vm) {
   vm->cpu[vm->active].rp = 0;
   vm->cpu[vm->active].sp = 0;
 #ifdef ENABLE_FLOATS
-  fsp = 0;
-  afsp = 0;
+  vm->fsp = 0;
+  vm->afsp = 0;
 #endif
 
   if (current_source > 0) {
