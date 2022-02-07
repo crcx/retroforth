@@ -91,7 +91,7 @@
 #define STACK_DEPTH  256          /* Depth of data stack */
 #endif
 
-#define TIB memory[7]             /* Location of TIB                   */
+#define TIB vm->memory[7]         /* Location of TIB                   */
 
 #define MAX_DEVICES      32
 #define MAX_OPEN_FILES   32
@@ -142,11 +142,11 @@ struct NgaState {
 
 /* Function Prototypes ----------------------------------------------- */
 CELL stack_pop();
-void stack_push(CELL value);
-CELL string_inject(char *str, CELL buffer);
-char *string_extract(CELL at);
-void update_rx();
-void include_file(NgaState *, char *fname, int run_tests);
+void stack_push(CELL);
+CELL string_inject(NgaState *, char *, CELL);
+char *string_extract(NgaState *, CELL);
+void update_rx(NgaState *);
+void include_file(NgaState *, char *, int);
 
 void register_device(void *handler, void *query);
 
@@ -172,8 +172,8 @@ void io_socket(NgaState *);           void query_socket(NgaState *);
 
 void io_image(NgaState *);            void query_image(NgaState *);
 
-void load_embedded_image();
-CELL load_image();
+void load_embedded_image(NgaState *);
+CELL load_image(NgaState *, char *);
 void prepare_vm();
 void process_opcode_bundle(NgaState *vm, CELL opcode);
 int validate_opcode_bundle(CELL opcode);
@@ -198,8 +198,6 @@ void inst_ie(NgaState *);  void inst_iq(NgaState *);  void inst_ii(NgaState *);
 
 
 /* Image, Stack, and VM variables ------------------------------------ */
-CELL memory[IMAGE_SIZE + 1];      /* The memory for the image          */
-
 #define TOS  cpu[active].data[cpu[active].sp]     /* Top item on stack         */
 #define NOS  cpu[active].data[cpu[active].sp-1]   /* Second item on stack      */
 #define TORS cpu[active].address[cpu[active].rp]  /* Top item on address stack */
@@ -307,30 +305,30 @@ void *handles[32];
 External funcs[32000];
 int nlibs, nffi;
 
-void open_library() {
-  handles[nlibs] = dlopen(string_extract(stack_pop()), RTLD_LAZY);
+void open_library(NgaState *vm) {
+  handles[nlibs] = dlopen(string_extract(vm, stack_pop()), RTLD_LAZY);
   stack_push(nlibs);
   nlibs++;
 }
 
-void map_symbol() {
+void map_symbol(NgaState *vm) {
   int h;
   h = stack_pop();
-  char *s = string_extract(stack_pop());
+  char *s = string_extract(vm, stack_pop());
   funcs[nffi] = dlsym(handles[h], s);
   stack_push(nffi);
   nffi++;
 }
 
-void invoke() {
-  funcs[stack_pop()](stack_push, stack_pop, memory);
+void invoke(NgaState *vm) {
+  funcs[stack_pop()](stack_push, stack_pop, vm->memory);
 }
 
 void io_ffi(NgaState *vm) {
   switch (stack_pop()) {
-    case 0: open_library(); break;
-    case 1: map_symbol(); break;
-    case 2: invoke(); break;
+    case 0: open_library(vm); break;
+    case 1: map_symbol(vm); break;
+    case 2: invoke(vm); break;
   }
 }
 
@@ -406,8 +404,8 @@ void float_from_number() {
   I cheat: using `atof()` takes care of the details, so I don't have
   to.
   ---------------------------------------------------------------------*/
-void float_from_string() {
-    float_push(atof(string_extract(stack_pop())));
+void float_from_string(NgaState *vm) {
+    float_push(atof(string_extract(vm, stack_pop())));
 }
 
 
@@ -415,9 +413,9 @@ void float_from_string() {
   Converting a floating point into a string is slightly more work. Here
   I pass it off to `snprintf()` to deal with.
   ---------------------------------------------------------------------*/
-void float_to_string() {
+void float_to_string(NgaState *vm) {
     snprintf(string_data, 8192, "%f", float_pop());
-    string_inject(string_data, stack_pop());
+    string_inject(vm, string_data, stack_pop());
 }
 
 
@@ -640,13 +638,13 @@ CELL files_get_handle() {
   into the `OpenFileHandles` array).
   ---------------------------------------------------------------------*/
 
-void file_open() {
+void file_open(NgaState *vm) {
   CELL slot, mode, name;
   char *request;
   slot = files_get_handle();
   mode = stack_pop();
   name = stack_pop();
-  request = string_extract(name);
+  request = string_extract(vm, name);
   if (slot > 0) {
     if (mode == 0)  OpenFileHandles[slot] = fopen(request, "rb");
     if (mode == 1)  OpenFileHandles[slot] = fopen(request, "w");
@@ -778,10 +776,10 @@ void file_get_size() {
   from the stack.
   ---------------------------------------------------------------------*/
 
-void file_delete() {
+void file_delete(NgaState *vm) {
   char *request;
   CELL name = stack_pop();
-  request = string_extract(name);
+  request = string_extract(vm, name);
   unlink(request);
 }
 
@@ -843,13 +841,13 @@ void io_filesystem(NgaState *vm) {
   process.
   ---------------------------------------------------------------------*/
 
-void unix_open_pipe() {
+void unix_open_pipe(NgaState *vm) {
   CELL slot, mode, name;
   char *request;
   slot = files_get_handle();
   mode = stack_pop();
   name = stack_pop();
-  request = string_extract(name);
+  request = string_extract(vm, name);
   if (slot > 0) {
     if (mode == 0)  OpenFileHandles[slot] = popen(request, "r");
     if (mode == 1)  OpenFileHandles[slot] = popen(request, "w");
@@ -868,22 +866,22 @@ void unix_close_pipe() {
   stack_pop();
 }
 
-void unix_system() {
+void unix_system(NgaState *vm) {
   int ignore = 0;
-  ignore = system(string_extract(stack_pop()));
+  ignore = system(string_extract(vm, stack_pop()));
 }
 
 void unix_fork() {
   stack_push(fork());
 }
 
-void unix_run_external() {
+void unix_run_external(NgaState *vm) {
   char *line, *args[128];
   int i, status;
   pid_t pid;
 
   char **argv = args;
-  line = string_extract(stack_pop());
+  line = string_extract(vm, stack_pop());
 
   for(i = 0; i < 128; i++)
     args[i] = 0;
@@ -923,39 +921,39 @@ void unix_run_external() {
   fails.
   ---------------------------------------------------------------------*/
 
-void unix_exec0() {
+void unix_exec0(NgaState *vm) {
   char path[1025];
-  strlcpy(path, string_extract(stack_pop()), 1024);
+  strlcpy(path, string_extract(vm, stack_pop()), 1024);
   execl(path, path, (char *)0);
   stack_push(errno);
 }
 
-void unix_exec1() {
+void unix_exec1(NgaState *vm) {
   char path[1025];
   char arg0[1025];
-  strlcpy(arg0, string_extract(stack_pop()), 1024);
-  strlcpy(path, string_extract(stack_pop()), 1024);
+  strlcpy(arg0, string_extract(vm, stack_pop()), 1024);
+  strlcpy(path, string_extract(vm, stack_pop()), 1024);
   execl(path, path, arg0, (char *)0);
   stack_push(errno);
 }
 
-void unix_exec2() {
+void unix_exec2(NgaState *vm) {
   char path[1025];
   char arg0[1025], arg1[1025];
-  strlcpy(arg1, string_extract(stack_pop()), 1024);
-  strlcpy(arg0, string_extract(stack_pop()), 1024);
-  strlcpy(path, string_extract(stack_pop()), 1024);
+  strlcpy(arg1, string_extract(vm, stack_pop()), 1024);
+  strlcpy(arg0, string_extract(vm, stack_pop()), 1024);
+  strlcpy(path, string_extract(vm, stack_pop()), 1024);
   execl(path, path, arg0, arg1, (char *)0);
   stack_push(errno);
 }
 
-void unix_exec3() {
+void unix_exec3(NgaState *vm) {
   char path[1025];
   char arg0[1025], arg1[1025], arg2[1025];
-  strlcpy(arg2, string_extract(stack_pop()), 1024);
-  strlcpy(arg1, string_extract(stack_pop()), 1024);
-  strlcpy(arg0, string_extract(stack_pop()), 1024);
-  strlcpy(path, string_extract(stack_pop()), 1024);
+  strlcpy(arg2, string_extract(vm, stack_pop()), 1024);
+  strlcpy(arg1, string_extract(vm, stack_pop()), 1024);
+  strlcpy(arg0, string_extract(vm, stack_pop()), 1024);
+  strlcpy(path, string_extract(vm, stack_pop()), 1024);
   execl(path, path, arg0, arg1, arg2, (char *)0);
   stack_push(errno);
 }
@@ -979,32 +977,32 @@ void unix_kill() {
   kill(stack_pop(), a);
 }
 
-void unix_write() {
+void unix_write(NgaState *vm) {
   CELL a, b, c;
   ssize_t ignore;
   c = stack_pop();
   b = stack_pop();
   a = stack_pop();
-  ignore = write(fileno(OpenFileHandles[c]), string_extract(a), b);
+  ignore = write(fileno(OpenFileHandles[c]), string_extract(vm, a), b);
 }
 
-void unix_chdir() {
+void unix_chdir(NgaState *vm) {
   int ignore;
-  ignore = chdir(string_extract(stack_pop()));
+  ignore = chdir(string_extract(vm, stack_pop()));
 }
 
-void unix_getenv() {
+void unix_getenv(NgaState *vm) {
   CELL a, b;
   a = stack_pop();
   b = stack_pop();
-  string_inject(getenv(string_extract(b)), a);
+  string_inject(vm, getenv(string_extract(vm, b)), a);
 }
 
-void unix_putenv() {
-  putenv(string_extract(stack_pop()));
+void unix_putenv(NgaState *vm) {
+  putenv(string_extract(vm, stack_pop()));
 }
 
-void unix_sleep() {
+void unix_sleep(NgaState *vm) {
   sleep(stack_pop());
 }
 
@@ -1149,25 +1147,25 @@ struct sockaddr_in Sockets[16];
 
 struct addrinfo hints, *res;
 
-void socket_getaddrinfo() {
+void socket_getaddrinfo(NgaState *vm) {
   char host[1025], port[6];
-  strlcpy(port, string_extract(stack_pop()), 5);
-  strlcpy(host, string_extract(stack_pop()), 1024);
+  strlcpy(port, string_extract(vm, stack_pop()), 5);
+  strlcpy(host, string_extract(vm, stack_pop()), 1024);
   getaddrinfo(host, port, &hints, &res);
 }
 
-void socket_get_host() {
+void socket_get_host(NgaState *vm) {
   struct hostent *hp;
   struct in_addr **addr_list;
 
-  hp = gethostbyname(string_extract(stack_pop()));
+  hp = gethostbyname(string_extract(vm, stack_pop()));
   if (hp == NULL) {
-    memory[stack_pop()] = 0;
+    vm->memory[stack_pop()] = 0;
     return;
   }
 
   addr_list = (struct in_addr **)hp->h_addr_list;
-  string_inject(inet_ntoa(*addr_list[0]), stack_pop());
+  string_inject(vm, inet_ntoa(*addr_list[0]), stack_pop());
 }
 
 void socket_create() {
@@ -1182,7 +1180,7 @@ void socket_create() {
   }
 }
 
-void socket_bind() {
+void socket_bind(NgaState *vm) {
   int sock, port;
   memset(&hints, 0, sizeof hints);
   hints.ai_family = AF_UNSPEC;
@@ -1192,7 +1190,7 @@ void socket_bind() {
   sock = stack_pop();
   port = stack_pop();
 
-  getaddrinfo(NULL, string_extract(port), &hints, &res);
+  getaddrinfo(NULL, string_extract(vm, port), &hints, &res);
   stack_push((CELL) bind(SocketID[sock], res->ai_addr, res->ai_addrlen));
   stack_push(errno);
 }
@@ -1226,9 +1224,9 @@ void socket_connect() {
   stack_push(errno);
 }
 
-void socket_send() {
+void socket_send(NgaState *vm) {
   int sock = stack_pop();
-  char *buf = string_extract(stack_pop());
+  char *buf = string_extract(vm, stack_pop());
   stack_push(send(SocketID[sock], buf, strlen(buf), 0));
   stack_push(errno);
 }
@@ -1236,14 +1234,14 @@ void socket_send() {
 void socket_sendto() {
 }
 
-void socket_recv() {
+void socket_recv(NgaState *vm) {
   char buf[8193];
   int sock = stack_pop();
   int limit = stack_pop();
   int dest = stack_pop();
   int len = recv(SocketID[sock], buf, limit, 0);
   if (len > 0)  buf[len] = '\0';
-  if (len > 0)  string_inject(buf, dest);
+  if (len > 0)  string_inject(vm, buf, dest);
   stack_push(len);
   stack_push(errno);
 }
@@ -1341,12 +1339,12 @@ void query_unsigned(NgaState *vm) {
 
 void io_image(NgaState *vm) {
   FILE *fp;
-  char *f = string_extract(stack_pop());
+  char *f = string_extract(vm, stack_pop());
   if ((fp = fopen(f, "wb")) == NULL) {
     printf("\nERROR (nga/io_image): Unable to save the image: %s!\n", f);
     exit(2);
   }
-  fwrite(&memory, sizeof(CELL), memory[3] + 1, fp);
+  fwrite(vm->memory, sizeof(CELL), vm->memory[3] + 1, fp);
   fclose(fp);
 }
 
@@ -1367,11 +1365,11 @@ CELL currentLine;
 CELL ignoreToEOL;
 CELL ignoreToEOF;
 
-void scripting_arg() {
+void scripting_arg(NgaState *vm) {
   CELL a, b;
   a = stack_pop();
   b = stack_pop();
-  stack_push(string_inject(sys_argv[a + 2], b));
+  stack_push(string_inject(vm, sys_argv[a + 2], b));
 }
 
 void scripting_arg_count() {
@@ -1379,16 +1377,16 @@ void scripting_arg_count() {
 }
 
 void scripting_include(NgaState *vm) {
-  include_file(vm, string_extract(stack_pop()), 0);
+  include_file(vm, string_extract(vm, stack_pop()), 0);
 }
 
-void scripting_name() {
-  stack_push(string_inject(sys_argv[1], stack_pop()));
+void scripting_name(NgaState *vm) {
+  stack_push(string_inject(vm, sys_argv[1], stack_pop()));
 }
 
 /* addeded in scripting i/o device, revision 1 */
-void scripting_source() {
-  stack_push(string_inject(scripting_sources[current_source], stack_pop()));
+void scripting_source(NgaState *vm) {
+  stack_push(string_inject(vm, scripting_sources[current_source], stack_pop()));
 }
 
 void scripting_line() {
@@ -1481,12 +1479,12 @@ void execute(NgaState *vm, CELL cell) {
     if (perform_abort == 0) {
       if (cpu[active].ip == NotFound) {
         printf("\nERROR: Word Not Found: ");
-        printf("`%s`\n\n", string_extract(token));
+        printf("`%s`\n\n", string_extract(vm, token));
       }
       if (cpu[active].ip == interpret) {
         token = TOS;
       }
-      opcode = memory[cpu[active].ip];
+      opcode = vm->memory[cpu[active].ip];
       if (validate_opcode_bundle(opcode) != 0) {
         process_opcode_bundle(vm, opcode);
       } else {
@@ -1523,7 +1521,7 @@ void execute(NgaState *vm, CELL cell) {
 
 void evaluate(NgaState *vm, char *s) {
   if (strlen(s) == 0)  return;
-  string_inject(s, TIB);
+  string_inject(vm, s, TIB);
   stack_push(TIB);
   execute(vm, interpret);
 }
@@ -1747,9 +1745,9 @@ void include_file(NgaState *vm, char *fname, int run_tests) {
   `image.c`) to memory.
   ---------------------------------------------------------------------*/
 
-void initialize() {
+void initialize(NgaState *vm) {
   prepare_vm();
-  load_embedded_image();
+  load_embedded_image(vm);
 }
 
 
@@ -1811,7 +1809,7 @@ int main(int argc, char **argv) {
   signal(SIGFPE, sig_handler);
 #endif
 
-  initialize();                           /* Initialize Nga & image    */
+  initialize(vm);               /* Initialize Nga & image    */
 
   register_device(io_output, query_output);
   register_device(io_keyboard, query_keyboard);
@@ -1862,7 +1860,7 @@ int main(int argc, char **argv) {
   codeBlocks = 0;
 
   if (argc >= 2 && argv[1][0] != '-') {
-    update_rx();
+    update_rx(vm);
     include_file(vm, argv[1], 0);             /* If no flags were passed,  */
     if (cpu[active].sp >= 1)  dump_stack();       /* load the file specified,  */
     exit(0);                              /* and exit                  */
@@ -1874,7 +1872,7 @@ int main(int argc, char **argv) {
 
   if (argc <= 1) modes[FLAG_INTERACTIVE] = 1;
 
-  update_rx();
+  update_rx(vm);
 
   /* Process Arguments */
   for (i = 1; i < argc; i++) {
@@ -1888,13 +1886,13 @@ int main(int argc, char **argv) {
       i++;
     } else if (strcmp(argv[i], "-u") == 0) {
       i++;
-      load_image(argv[i]);
-      update_rx();
+      load_image(vm, argv[i]);
+      update_rx(vm);
     } else if (strcmp(argv[i], "-r") == 0) {
       i++;
-      load_image(argv[i]);
+      load_image(vm, argv[i]);
       modes[FLAG_INTERACTIVE] = 1;
-      update_rx();
+      update_rx(vm);
     } else if (strcmp(argv[i], "-t") == 0) {
       include_file(vm, argv[i + 1], 1);
       i++;
@@ -1955,17 +1953,17 @@ void stack_push(CELL value) {
   that the NULL terminator is added.
   ---------------------------------------------------------------------*/
 
-CELL string_inject(char *str, CELL buffer) {
+CELL string_inject(NgaState *vm, char *str, CELL buffer) {
   CELL m, i;
   if (!str) {
-    memory[buffer] = 0;
+    vm->memory[buffer] = 0;
     return 0;
   }
   m = strlen(str);
   i = 0;
   while (m > 0) {
-    memory[buffer + i] = (CELL)str[i];
-    memory[buffer + i + 1] = 0;
+    vm->memory[buffer + i] = (CELL)str[i];
+    vm->memory[buffer + i + 1] = 0;
     m--; i++;
   }
   return buffer;
@@ -1979,11 +1977,11 @@ CELL string_inject(char *str, CELL buffer) {
   `malloc()`.
   ---------------------------------------------------------------------*/
 
-char *string_extract(CELL at) {
+char *string_extract(NgaState *vm, CELL at) {
   CELL starting = at;
   CELL i = 0;
-  while(memory[starting] && i < 8192)
-    string_data[i++] = (char)memory[starting++];
+  while(vm->memory[starting] && i < 8192)
+    string_data[i++] = (char)vm->memory[starting++];
   string_data[i] = 0;
   return (char *)string_data;
 }
@@ -2001,10 +1999,10 @@ char *string_extract(CELL at) {
   or interpreter.
   ---------------------------------------------------------------------*/
 
-void update_rx() {
-  Dictionary = memory[2];
-  interpret = memory[5];
-  NotFound = memory[6];
+void update_rx(NgaState *vm) {
+  Dictionary = vm->memory[2];
+  interpret = vm->memory[5];
+  NotFound = vm->memory[6];
 }
 
 /*=====================================================================*/
@@ -2015,13 +2013,15 @@ void register_device(void *handler, void *query) {
   devices++;
 }
 
-void load_embedded_image() {
+void load_embedded_image(NgaState *vm) {
   int i;
+  printf("Load image...\t");
   for (i = 0; i < ngaImageCells; i++)
-    memory[i] = ngaImage[i];
+    vm->memory[i] = ngaImage[i];
+  printf("Completed\n");
 }
 
-CELL load_image(char *imageFile) {
+CELL load_image(NgaState *vm, char *imageFile) {
   FILE *fp;
   CELL imageSize = 0;
   long fileLen;
@@ -2036,18 +2036,18 @@ CELL load_image(char *imageFile) {
     }
     rewind(fp);
     /* Read the file into memory */
-    imageSize = fread(&memory, sizeof(CELL), fileLen, fp);
+    imageSize = fread(vm->memory, sizeof(CELL), fileLen, fp);
     fclose(fp);
   }
   return imageSize;
 }
 
-void prepare_vm() {
+void prepare_vm(NgaState *vm) {
   active = 0;
   cpu[active].ip = cpu[active].sp = cpu[active].rp = cpu[active].u = 0;
   cpu[active].active = -1;
   for (cpu[active].ip = 0; cpu[active].ip < IMAGE_SIZE; cpu[active].ip++)
-    memory[cpu[active].ip] = 0; /* NO - nop instruction */
+    vm->memory[cpu[active].ip] = 0; /* NO - nop instruction */
   for (cpu[active].ip = 0; cpu[active].ip < STACK_DEPTH; cpu[active].ip++)
     cpu[active].data[cpu[active].ip] = 0;
   for (cpu[active].ip = 0; cpu[active].ip < ADDRESSES; cpu[active].ip++)
@@ -2060,7 +2060,7 @@ void inst_no(NgaState *vm) {
 void inst_li(NgaState *vm) {
   cpu[active].sp++;
   cpu[active].ip++;
-  TOS = memory[cpu[active].ip];
+  TOS = vm->memory[cpu[active].ip];
 }
 
 void inst_du(NgaState *vm) {
@@ -2167,12 +2167,12 @@ void inst_fe(NgaState *vm) {
     case -3: TOS = IMAGE_SIZE; break;
     case -4: TOS = CELL_MIN; break;
     case -5: TOS = CELL_MAX; break;
-    default: TOS = memory[TOS]; break;
+    default: TOS = vm->memory[TOS]; break;
   }
 }
 
 void inst_st(NgaState *vm) {
-  memory[TOS] = NOS;
+  vm->memory[TOS] = NOS;
   inst_dr(vm);
   inst_dr(vm);
 }
