@@ -146,6 +146,8 @@ struct NgaState {
   char code_start[256], code_end[256];
   char test_start[256], test_end[256];
   int codeBlocks;
+
+  FILE *OpenFileHandles[MAX_OPEN_FILES];
 };
 
 /* Function Prototypes ----------------------------------------------- */
@@ -586,17 +588,15 @@ void io_floatingpoint(NgaState *vm) {
   its representation of the file.
   ---------------------------------------------------------------------*/
 
-FILE *OpenFileHandles[MAX_OPEN_FILES];
-
 /*---------------------------------------------------------------------
   `files_get_handle()` returns a file handle, or 0 if there are no
   available handle slots in the array.
   ---------------------------------------------------------------------*/
 
-CELL files_get_handle() {
+CELL files_get_handle(NgaState *vm) {
   CELL i;
   for(i = 1; i < MAX_OPEN_FILES; i++)
-    if (OpenFileHandles[i] == 0)
+    if (vm->OpenFileHandles[i] == 0)
       return i;
   return 0;
 }
@@ -625,18 +625,18 @@ CELL files_get_handle() {
 void file_open(NgaState *vm) {
   CELL slot, mode, name;
   char *request;
-  slot = files_get_handle();
+  slot = files_get_handle(vm);
   mode = stack_pop(vm);
   name = stack_pop(vm);
   request = string_extract(vm, name);
   if (slot > 0) {
-    if (mode == 0)  OpenFileHandles[slot] = fopen(request, "rb");
-    if (mode == 1)  OpenFileHandles[slot] = fopen(request, "w");
-    if (mode == 2)  OpenFileHandles[slot] = fopen(request, "a");
-    if (mode == 3)  OpenFileHandles[slot] = fopen(request, "rb+");
+    if (mode == 0)  vm->OpenFileHandles[slot] = fopen(request, "rb");
+    if (mode == 1)  vm->OpenFileHandles[slot] = fopen(request, "w");
+    if (mode == 2)  vm->OpenFileHandles[slot] = fopen(request, "a");
+    if (mode == 3)  vm->OpenFileHandles[slot] = fopen(request, "rb+");
   }
-  if (OpenFileHandles[slot] == NULL) {
-    OpenFileHandles[slot] = 0;
+  if (vm->OpenFileHandles[slot] == NULL) {
+    vm->OpenFileHandles[slot] = 0;
     slot = 0;
   }
   stack_push(vm, slot);
@@ -651,12 +651,12 @@ void file_open(NgaState *vm) {
 void file_read(NgaState *vm) {
   CELL c;
   CELL slot = stack_pop(vm);
-  if (slot <= 0 || slot > MAX_OPEN_FILES || OpenFileHandles[slot] == 0) {
+  if (slot <= 0 || slot > MAX_OPEN_FILES || vm->OpenFileHandles[slot] == 0) {
     printf("\nERROR (nga/file_read): Invalid file handle\n");
     exit(1);
   }
-  c = fgetc(OpenFileHandles[slot]);
-  stack_push(vm, feof(OpenFileHandles[slot]) ? 0 : c);
+  c = fgetc(vm->OpenFileHandles[slot]);
+  stack_push(vm, feof(vm->OpenFileHandles[slot]) ? 0 : c);
 }
 
 
@@ -669,12 +669,12 @@ void file_read(NgaState *vm) {
 void file_write(NgaState *vm) {
   CELL slot, c, r;
   slot = stack_pop(vm);
-  if (slot <= 0 || slot > MAX_OPEN_FILES || OpenFileHandles[slot] == 0) {
+  if (slot <= 0 || slot > MAX_OPEN_FILES || vm->OpenFileHandles[slot] == 0) {
     printf("\nERROR (nga/file_write): Invalid file handle\n");
     exit(1);
   }
   c = stack_pop(vm);
-  r = fputc(c, OpenFileHandles[slot]);
+  r = fputc(c, vm->OpenFileHandles[slot]);
 }
 
 
@@ -685,12 +685,12 @@ void file_write(NgaState *vm) {
 
 void file_close(NgaState *vm) {
   CELL slot = stack_pop(vm);
-  if (slot <= 0 || slot > MAX_OPEN_FILES || OpenFileHandles[slot] == 0) {
+  if (slot <= 0 || slot > MAX_OPEN_FILES || vm->OpenFileHandles[slot] == 0) {
     printf("\nERROR (nga/file_close): Invalid file handle\n");
     exit(1);
   }
-  fclose(OpenFileHandles[slot]);
-  OpenFileHandles[slot] = 0;
+  fclose(vm->OpenFileHandles[slot]);
+  vm->OpenFileHandles[slot] = 0;
 }
 
 
@@ -701,11 +701,11 @@ void file_close(NgaState *vm) {
 
 void file_get_position(NgaState *vm) {
   CELL slot = stack_pop(vm);
-  if (slot <= 0 || slot > MAX_OPEN_FILES || OpenFileHandles[slot] == 0) {
+  if (slot <= 0 || slot > MAX_OPEN_FILES || vm->OpenFileHandles[slot] == 0) {
     printf("\nERROR (nga/file_get_position): Invalid file handle\n");
     exit(1);
   }
-  stack_push(vm, (CELL) ftell(OpenFileHandles[slot]));
+  stack_push(vm, (CELL) ftell(vm->OpenFileHandles[slot]));
 }
 
 
@@ -719,11 +719,11 @@ void file_set_position(NgaState *vm) {
   CELL slot, pos;
   slot = stack_pop(vm);
   pos  = stack_pop(vm);
-  if (slot <= 0 || slot > MAX_OPEN_FILES || OpenFileHandles[slot] == 0) {
+  if (slot <= 0 || slot > MAX_OPEN_FILES || vm->OpenFileHandles[slot] == 0) {
     printf("\nERROR (nga/file_set_position): Invalid file handle\n");
     exit(1);
   }
-  fseek(OpenFileHandles[slot], pos, SEEK_SET);
+  fseek(vm->OpenFileHandles[slot], pos, SEEK_SET);
 }
 
 
@@ -737,16 +737,16 @@ void file_get_size(NgaState *vm) {
   CELL slot, current, r, size;
   struct stat buffer;
   slot = stack_pop(vm);
-  if (slot <= 0 || slot > MAX_OPEN_FILES || OpenFileHandles[slot] == 0) {
+  if (slot <= 0 || slot > MAX_OPEN_FILES || vm->OpenFileHandles[slot] == 0) {
     printf("\nERROR (nga/file_get_size): Invalid file handle\n");
     exit(1);
   }
-  fstat(fileno(OpenFileHandles[slot]), &buffer);
+  fstat(fileno(vm->OpenFileHandles[slot]), &buffer);
   if (!S_ISDIR(buffer.st_mode)) {
-    current = ftell(OpenFileHandles[slot]);
-    r = fseek(OpenFileHandles[slot], 0, SEEK_END);
-    size = ftell(OpenFileHandles[slot]);
-    fseek(OpenFileHandles[slot], current, SEEK_SET);
+    current = ftell(vm->OpenFileHandles[slot]);
+    r = fseek(vm->OpenFileHandles[slot], 0, SEEK_END);
+    size = ftell(vm->OpenFileHandles[slot]);
+    fseek(vm->OpenFileHandles[slot], current, SEEK_SET);
   } else {
     r = -1;
     size = 0;
@@ -776,11 +776,11 @@ void file_delete(NgaState *vm) {
 void file_flush(NgaState *vm) {
   CELL slot;
   slot = stack_pop(vm);
-  if (slot <= 0 || slot > MAX_OPEN_FILES || OpenFileHandles[slot] == 0) {
+  if (slot <= 0 || slot > MAX_OPEN_FILES || vm->OpenFileHandles[slot] == 0) {
     printf("\nERROR (nga/file_flush): Invalid file handle\n");
     exit(1);
   }
-  fflush(OpenFileHandles[slot]);
+  fflush(vm->OpenFileHandles[slot]);
 }
 
 Handler FileActions[10] = {
@@ -828,25 +828,25 @@ void io_filesystem(NgaState *vm) {
 void unix_open_pipe(NgaState *vm) {
   CELL slot, mode, name;
   char *request;
-  slot = files_get_handle();
+  slot = files_get_handle(vm);
   mode = stack_pop(vm);
   name = stack_pop(vm);
   request = string_extract(vm, name);
   if (slot > 0) {
-    if (mode == 0)  OpenFileHandles[slot] = popen(request, "r");
-    if (mode == 1)  OpenFileHandles[slot] = popen(request, "w");
-    if (mode == 3)  OpenFileHandles[slot] = popen(request, "r+");
+    if (mode == 0)  vm->OpenFileHandles[slot] = popen(request, "r");
+    if (mode == 1)  vm->OpenFileHandles[slot] = popen(request, "w");
+    if (mode == 3)  vm->OpenFileHandles[slot] = popen(request, "r+");
   }
-  if (OpenFileHandles[slot] == NULL) {
-    OpenFileHandles[slot] = 0;
+  if (vm->OpenFileHandles[slot] == NULL) {
+    vm->OpenFileHandles[slot] = 0;
     slot = 0;
   }
   stack_push(vm, slot);
 }
 
 void unix_close_pipe(NgaState *vm) {
-  pclose(OpenFileHandles[TOS]);
-  OpenFileHandles[TOS] = 0;
+  pclose(vm->OpenFileHandles[TOS]);
+  vm->OpenFileHandles[TOS] = 0;
   stack_pop(vm);
 }
 
@@ -967,7 +967,7 @@ void unix_write(NgaState *vm) {
   c = stack_pop(vm);
   b = stack_pop(vm);
   a = stack_pop(vm);
-  ignore = write(fileno(OpenFileHandles[c]), string_extract(vm, a), b);
+  ignore = write(fileno(vm->OpenFileHandles[c]), string_extract(vm, a), b);
 }
 
 void unix_chdir(NgaState *vm) {
