@@ -138,6 +138,10 @@ struct NgaState {
   char scripting_sources[64][8192];
   int current_source;
   int perform_abort;
+
+  char code_start[256], code_end[256];
+  char test_start[256], test_end[256];
+  int codeBlocks;
 };
 
 /* Function Prototypes ----------------------------------------------- */
@@ -148,7 +152,7 @@ char *string_extract(NgaState *, CELL);
 void update_rx(NgaState *);
 void include_file(NgaState *, char *, int);
 
-void register_device(void *handler, void *query);
+void register_device(NgaState *, void *, void *);
 
 void io_output(NgaState *);           void query_output(NgaState *);
 void io_keyboard(NgaState *);         void query_keyboard(NgaState *);
@@ -201,17 +205,6 @@ void inst_ie(NgaState *);  void inst_iq(NgaState *);  void inst_ii(NgaState *);
 #define TOS  vm->cpu[vm->active].data[vm->cpu[vm->active].sp]
 #define NOS  vm->cpu[vm->active].data[vm->cpu[vm->active].sp-1]
 #define TORS vm->cpu[vm->active].address[vm->cpu[vm->active].rp]
-
-int devices;                      /* The number of I/O devices         */
-
-
-/* Markers for code & test blocks ------------------------------------ */
-char code_start[33], code_end[33], test_start[33], test_end[33];
-int codeBlocks;
-
-/* Populate The I/O Device Tables ------------------------------------ */
-Handler IO_deviceHandlers[MAX_DEVICES];
-Handler IO_queryHandlers[MAX_DEVICES];
 
 /* Global Variables -------------------------------------------------- */
 CELL Dictionary, NotFound, interpret;
@@ -1609,13 +1602,13 @@ void dump_astack(NgaState *vm) {
    This will check code blocks in all cases, and test blocks
    if tests_enabled is set to a non-zero value. */
 
-int fence_boundary(char *buffer, int tests_enabled) {
+int fence_boundary(NgaState *vm, char *buffer, int tests_enabled) {
   int flag = 1;
-  if (strcmp(buffer, code_start) == 0) { flag = -1; }
-  if (strcmp(buffer, code_end) == 0)   { flag = -1; }
+  if (strcmp(buffer, vm->code_start) == 0) { flag = -1; }
+  if (strcmp(buffer, vm->code_end) == 0)   { flag = -1; }
   if (tests_enabled == 0) { return flag; }
-  if (strcmp(buffer, test_start) == 0) { flag = -1; }
-  if (strcmp(buffer, test_end) == 0)   { flag = -1; }
+  if (strcmp(buffer, vm->test_start) == 0) { flag = -1; }
+  if (strcmp(buffer, vm->test_end) == 0)   { flag = -1; }
   return flag;
 }
 
@@ -1663,8 +1656,8 @@ void include_file(NgaState *vm, char *fname, int run_tests) {
     exit(1);
   }
 
-  priorBlocks = codeBlocks;
-  codeBlocks = 0;
+  priorBlocks = vm->codeBlocks;
+  vm->codeBlocks = 0;
 
   arp = vm->cpu[vm->active].rp;
   aip = vm->cpu[vm->active].ip;
@@ -1693,10 +1686,10 @@ void include_file(NgaState *vm, char *fname, int run_tests) {
       tokens--;
       read_token(fp, source);
       strlcpy(fence, source, 32); /* Copy the first three characters  */
-      if (fence_boundary(fence, run_tests) == -1) {
+      if (fence_boundary(vm, fence, run_tests) == -1) {
         if (inBlock == 0) {
           inBlock = 1;
-          codeBlocks++;
+          vm->codeBlocks++;
         } else {
           inBlock = 0;
         }
@@ -1724,14 +1717,14 @@ void include_file(NgaState *vm, char *fname, int run_tests) {
   vm->cpu[vm->active].rp = arp;
   vm->cpu[vm->active].ip = aip;
 
-  if (codeBlocks == 0) {
+  if (vm->codeBlocks == 0) {
     printf("warning: no code blocks found!\n");
     printf("         filename: %s\n", fname);
     printf("         see http://unu.retroforth.org for a brief summary of\n");
     printf("         the unu code format used by retro\n");
 
   }
-  codeBlocks = priorBlocks;
+  vm->codeBlocks = priorBlocks;
 }
 
 
@@ -1804,42 +1797,42 @@ int main(int argc, char **argv) {
 
   initialize(vm);               /* Initialize Nga & image    */
 
-  register_device(io_output, query_output);
-  register_device(io_keyboard, query_keyboard);
-  register_device(io_filesystem, query_filesystem);
-  register_device(io_image, query_image);
+  register_device(vm, io_output, query_output);
+  register_device(vm, io_keyboard, query_keyboard);
+  register_device(vm, io_filesystem, query_filesystem);
+  register_device(vm, io_image, query_image);
 #ifdef ENABLE_FLOATS
-  register_device(io_floatingpoint, query_floatingpoint);
+  register_device(vm, io_floatingpoint, query_floatingpoint);
 #endif
 #ifdef ENABLE_UNIX
-  register_device(io_unix, query_unix);
+  register_device(vm, io_unix, query_unix);
 #endif
 #ifdef ENABLE_CLOCK
-  register_device(io_clock, query_clock);
+  register_device(vm, io_clock, query_clock);
 #endif
-  register_device(io_scripting, query_scripting);
+  register_device(vm, io_scripting, query_scripting);
 #ifdef ENABLE_RNG
-  register_device(io_rng, query_rng);
+  register_device(vm, io_rng, query_rng);
 #endif
 #ifdef ENABLE_SOCKETS
-  register_device(io_socket, query_socket);
+  register_device(vm, io_socket, query_socket);
 #endif
 #ifdef ENABLE_MULTICORE
-  register_device(io_multicore, query_multicore);
+  register_device(vm, io_multicore, query_multicore);
 #endif
 #ifdef ENABLE_FFI
-  register_device(io_ffi, query_ffi);
+  register_device(vm, io_ffi, query_ffi);
   nlibs = 0;
   nffi = 0;
 #endif
 #ifdef ENABLE_UNSIGNED
-  register_device(io_unsigned, query_unsigned);
+  register_device(vm, io_unsigned, query_unsigned);
 #endif
 
-  strcpy(code_start, "~~~");
-  strcpy(code_end,   "~~~");
-  strcpy(test_start, "```");
-  strcpy(test_end,   "```");
+  strcpy(vm->code_start, "~~~");
+  strcpy(vm->code_end,   "~~~");
+  strcpy(vm->test_start, "```");
+  strcpy(vm->test_end,   "```");
 
   /* Setup variables related to the scripting device */
   currentLine = 0;                        /* Current Line # for script */
@@ -1850,7 +1843,7 @@ int main(int argc, char **argv) {
   strlcpy(scripting_sources[0], "/dev/stdin", 8192);
   ignoreToEOL = 0;
   ignoreToEOF = 0;
-  codeBlocks = 0;
+  vm->codeBlocks = 0;
 
   if (argc >= 2 && argv[1][0] != '-') {
     update_rx(vm);
@@ -1891,16 +1884,16 @@ int main(int argc, char **argv) {
       i++;
     } else  if (arg_is(argv[i], "--code-start") || arg_is(argv[i], "-cs")) {
       i++;
-      strcpy(code_start, argv[i]);
+      strcpy(vm->code_start, argv[i]);
     } else if (arg_is(argv[i], "--code-end") || arg_is(argv[i], "-ce")) {
       i++;
-      strcpy(code_end, argv[i]);
+      strcpy(vm->code_end, argv[i]);
     } else if (arg_is(argv[i], "--test-start") || arg_is(argv[i], "-ts")) {
       i++;
-      strcpy(test_start, argv[i]);
+      strcpy(vm->test_start, argv[i]);
     } else if (arg_is(argv[i], "--test-end") || arg_is(argv[i], "-te")) {
       i++;
-      strcpy(test_end, argv[i]);
+      strcpy(vm->test_end, argv[i]);
     }
   }
 
@@ -2000,10 +1993,10 @@ void update_rx(NgaState *vm) {
 
 /*=====================================================================*/
 
-void register_device(void *handler, void *query) {
-  IO_deviceHandlers[devices] = handler;
-  IO_queryHandlers[devices] = query;
-  devices++;
+void register_device(NgaState *vm, void *handler, void *query) {
+  vm->IO_deviceHandlers[vm->devices] = handler;
+  vm->IO_queryHandlers[vm->devices] = query;
+  vm->devices++;
 }
 
 void load_embedded_image(NgaState *vm) {
@@ -2260,15 +2253,15 @@ void inst_ha(NgaState *vm) {
 }
 
 void inst_ie(NgaState *vm) {
-  stack_push(vm, devices);
+  stack_push(vm, vm->devices);
 }
 
 void inst_iq(NgaState *vm) {
-  IO_queryHandlers[stack_pop(vm)](vm);
+  vm->IO_queryHandlers[stack_pop(vm)](vm);
 }
 
 void inst_ii(NgaState *vm) {
-  IO_deviceHandlers[stack_pop(vm)](vm);
+  vm->IO_deviceHandlers[stack_pop(vm)](vm);
 }
 
 Handler instructions[] = {
