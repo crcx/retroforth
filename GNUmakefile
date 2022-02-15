@@ -57,7 +57,7 @@ ENABLED += -DENABLE_SCRIPTING
 # ENABLED += -DENABLE_SOCKETS
 ENABLED += -DENABLE_SIGNALS
 ENABLED += -DENABLE_MULTICORE
-# ENABLED += -DENABLE_FFI
+ENABLED += -DENABLE_FFI
 ENABLED += -DENABLE_UNSIGNED
 
 ENABLED += -DNEEDS_STRL
@@ -72,9 +72,10 @@ DEVICES += interface/scripting.retro
 # DEVICES += interface/sockets.retro
 DEVICES += interface/sources.retro
 DEVICES += interface/multicore.retro
+DEVICES += interface/unsigned.retro
+DEVICES += interface/ffi.retro
 DEVICES += interface/retro-napia.retro
 DEVICES += interface/deprecated.retro
-DEVICES += interface/unsigned.retro
 
 # -------------------------------------------------------------
 

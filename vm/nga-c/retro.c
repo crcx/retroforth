@@ -103,11 +103,15 @@ typedef struct NgaState NgaState;
 typedef void (*Handler)(NgaState *);
 
 struct NgaCore {
-  CELL sp, rp, ip, active, u;     /* Stack & instruction pointers      */
-  CELL data[STACK_DEPTH];         /* The data stack                    */
-  CELL address[ADDRESSES];        /* The address stack                 */
+  CELL sp, rp, ip;              /* Stack & instruction pointers */
+  CELL active;                  /* Is core active?              */
+  CELL u;                       /* Should next operation be     */
+                                /* unsigned?                    */
+  CELL data[STACK_DEPTH];       /* The data stack               */
+  CELL address[ADDRESSES];      /* The address stack            */
+
 #ifdef ENABLE_MULTICORE
-  CELL registers[24];
+  CELL registers[24];           /* Internal Registers           */
 #endif
 };
 
@@ -124,13 +128,13 @@ struct NgaState {
   Handler IO_deviceHandlers[MAX_DEVICES];
   Handler IO_queryHandlers[MAX_DEVICES];
 
-  /* Interfacing */
-  CELL Dictionary, NotFound, interpret;
+  CELL Dictionary, NotFound, interpret;    /* Interfacing     */
   char string_data[8192];
 
-  /* Floating Point */
-  double Floats[256], AFloats[256];
+#ifdef ENABLE_FLOATS
+  double Floats[256], AFloats[256];        /* Floating Point */
   CELL fsp, afsp;
+#endif
 
   /* Scripting */
   char **sys_argv;
@@ -140,15 +144,16 @@ struct NgaState {
   int perform_abort;
 
   CELL currentLine;
-  CELL ignoreToEOL;
-  CELL ignoreToEOF;
+  CELL ignoreToEOL, ignoreToEOF;
 
+  /* Configuration of code & test fences for Unu */
   char code_start[256], code_end[256];
   char test_start[256], test_end[256];
   int codeBlocks;
 
   FILE *OpenFileHandles[MAX_OPEN_FILES];
 };
+
 
 /* Function Prototypes ----------------------------------------------- */
 CELL stack_pop(NgaState *);
@@ -160,27 +165,27 @@ void include_file(NgaState *, char *, int);
 
 void register_device(NgaState *, void *, void *);
 
-void io_output(NgaState *);           void query_output(NgaState *);
-void io_keyboard(NgaState *);         void query_keyboard(NgaState *);
-void query_filesystem(NgaState *);    void io_filesystem(NgaState *);
-void io_clock(NgaState *);            void query_clock(NgaState *);
-void io_scripting(NgaState *);        void query_scripting(NgaState *);
-void io_rng(NgaState *);              void query_rng(NgaState *);
-void io_unsigned(NgaState *);         void query_unsigned(NgaState *);
+void io_output(NgaState *);         void query_output(NgaState *);
+void io_keyboard(NgaState *);       void query_keyboard(NgaState *);
+void query_filesystem(NgaState *);  void io_filesystem(NgaState *);
+void io_clock(NgaState *);          void query_clock(NgaState *);
+void io_scripting(NgaState *);      void query_scripting(NgaState *);
+void io_rng(NgaState *);            void query_rng(NgaState *);
+void io_unsigned(NgaState *);       void query_unsigned(NgaState *);
 
 #ifdef ENABLE_UNIX
-void query_unix(NgaState *);          void io_unix(NgaState *);
+void query_unix(NgaState *);        void io_unix(NgaState *);
 #endif
 
 #ifdef ENABLE_FLOATS
-void io_floatingpoint(NgaState *);    void query_floatingpoint(NgaState *);
+void io_floatingpoint(NgaState *);  void query_floatingpoint(NgaState *);
 #endif
 
 #ifdef ENABLE_SOCKETS
-void io_socket(NgaState *);           void query_socket(NgaState *);
+void io_socket(NgaState *);         void query_socket(NgaState *);
 #endif
 
-void io_image(NgaState *);            void query_image(NgaState *);
+void io_image(NgaState *);          void query_image(NgaState *);
 
 void load_embedded_image(NgaState *);
 CELL load_image(NgaState *, char *);
@@ -195,16 +200,21 @@ size_t strlcpy(char *dst, const char *src, size_t dsize);
 
 void prepare_vm();
 
-void inst_no(NgaState *);  void inst_li(NgaState *);  void inst_du(NgaState *);
-void inst_dr(NgaState *);  void inst_sw(NgaState *);  void inst_pu(NgaState *);
-void inst_po(NgaState *);  void inst_ju(NgaState *);  void inst_ca(NgaState *);
-void inst_cc(NgaState *);  void inst_re(NgaState *);  void inst_eq(NgaState *);
-void inst_ne(NgaState *);  void inst_lt(NgaState *);  void inst_gt(NgaState *);
-void inst_fe(NgaState *);  void inst_st(NgaState *);  void inst_ad(NgaState *);
-void inst_su(NgaState *);  void inst_mu(NgaState *);  void inst_di(NgaState *);
-void inst_an(NgaState *);  void inst_or(NgaState *);  void inst_xo(NgaState *);
-void inst_sh(NgaState *);  void inst_zr(NgaState *);  void inst_ha(NgaState *);
-void inst_ie(NgaState *);  void inst_iq(NgaState *);  void inst_ii(NgaState *);
+void inst_no(NgaState *);  void inst_li(NgaState *);
+void inst_du(NgaState *);  void inst_dr(NgaState *);
+void inst_sw(NgaState *);  void inst_pu(NgaState *);
+void inst_po(NgaState *);  void inst_ju(NgaState *);
+void inst_ca(NgaState *);  void inst_cc(NgaState *);
+void inst_re(NgaState *);  void inst_eq(NgaState *);
+void inst_ne(NgaState *);  void inst_lt(NgaState *);
+void inst_gt(NgaState *);  void inst_fe(NgaState *);
+void inst_st(NgaState *);  void inst_ad(NgaState *);
+void inst_su(NgaState *);  void inst_mu(NgaState *);
+void inst_di(NgaState *);  void inst_an(NgaState *);
+void inst_or(NgaState *);  void inst_xo(NgaState *);
+void inst_sh(NgaState *);  void inst_zr(NgaState *);
+void inst_ha(NgaState *);  void inst_ie(NgaState *);
+void inst_iq(NgaState *);  void inst_ii(NgaState *);
 
 
 /* Image, Stack, and VM variables ------------------------------------ */
@@ -288,7 +298,7 @@ void query_multicore(NgaState *vm) {
 /* External Functions ------------------------------------------------ */
 
 #ifdef ENABLE_FFI
-typedef void (*External)(void *, void *, void *);
+typedef void (*External)(void *);
 
 void *handles[32];
 External funcs[32000];
@@ -310,7 +320,7 @@ void map_symbol(NgaState *vm) {
 }
 
 void invoke(NgaState *vm) {
-  funcs[stack_pop(vm)](stack_push, stack_pop, vm->memory);
+  funcs[stack_pop(vm)](vm);
 }
 
 void io_ffi(NgaState *vm) {

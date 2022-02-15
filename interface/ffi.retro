@@ -1,0 +1,37 @@
+# FFI
+
+ 326 void io_ffi(NgaState *vm) {
+ 327   switch (stack_pop(vm)) {
+ 328     case 0: open_library(vm); break;
+ 329     case 1: map_symbol(vm); break;
+ 330     case 2: invoke(vm); break;
+ 331   }
+ 332 }
+ 333
+ 334 void query_ffi(NgaState *vm) {
+ 335   stack_push(vm, 0);
+ 336   stack_push(vm, 8100);  /* device type 8100 */
+ 337 }
+ 338 #endif
+
+~~~
+:ffi:operation (n-?)
+  #8100 io:scan-for
+    dup n:negative? [ drop 'Error:_device_(0010)_not_found s:put nl ] if;
+    io:invoke ;
+
+:ffi:open (s-n)
+  #0 ffi:operation ;
+
+:ffi:map-sym (sn-n)
+  #1 ffi:operation ;
+
+:ffi:invoke (n-)
+  #2 ffi:operation ;
+
+'interface/ffi.retro s:keep
+dup 'ffi:operation d:lookup d:source store
+dup 'ffi:map-sym d:lookup d:source store
+dup 'ffi:invoke d:lookup d:source store
+drop
+~~~
