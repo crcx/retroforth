@@ -1263,25 +1263,7 @@ returns an array containing pointers to each of them.
     #0 !TP
     [ dup &Needle s:copy s:append ] [ s:length !Len ] bi
     [ &Needle s:split/string save next done? ] until
-    &Tokens @TP n:dec !Tokens ;
-}}
-~~~
-
-~~~
-{{
-  :for-each (aq-)
-    swap fetch-next &swap dip
-    [ push fetch-next \swpodupu \swpuca.. \popo.... ] times drop-pair ;
-  :substitute STRINGS #129 - ;
-  :extract  substitute s:copy ;
-  :tokenize s:tokenize-on-string s:empty ;
-  :combine  substitute s:append s:append ;
-  :merge    swap &combine for-each nip ;
-  :find-end dup s:length substitute s:length - over + ;
-  :clean    find-end #0 swap store ;
----reveal---
-  :s:replace-all (sss-s)
-    &Heap [ extract tokenize merge clean s:temp ] v:preserve ;
+    &Tokens @TP n:dec !Tokens nip ;
 }}
 ~~~
 
@@ -1692,6 +1674,20 @@ different array.
 
 :a:ends-with? (aa-f)
   &Heap [ dup a:length &swap dip a:right a:eq? ] v:preserve ;
+~~~
+
+~~~
+{{
+  'Substitute d:create #128 allot
+  :extract  &Substitute s:copy ;
+  :combine  &Substitute s:append s:append ;
+  :find-end dup s:length &Substitute s:length - over + ;
+  :clean    find-end #0 swap store ;
+---reveal---
+  :s:replace-all (sss-s)
+    &Heap [ extract s:tokenize-on-string s:empty swap
+            [ combine ] a:for-each clean ] v:preserve ;
+}}
 ~~~
 
 ## Evaluating Source
