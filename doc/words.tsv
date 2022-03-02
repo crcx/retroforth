@@ -112,7 +112,7 @@ b:fetch	a-n	-	-	Fetch the 8-bit value stored at the specified address. Addressin
 b:fetch-next	a-an	-	-	Fetch the value stored at the specified address. Returns the next address and the value.			class:word	{n/a}	{n/a}	b	all	
 b:store	na-	-	-	Store an 8-bit value into the specified address. Addressing for this is in 8-bit units.			class:word	{n/a}	{n/a}	global	all	
 b:store-next	na-a	-	-	Store a value into the specified address and return the next address.			class:word	{n/a}	{n/a}	b	all	
-b:to-byte-address	a-a	-	-	Tronslate a physical address to a byte address.			class:word	{n/a}	{n/a}	global	all	
+b:to-byte-address	a-a	-	-	Translate a physical address to a byte address.			class:word	{n/a}	{n/a}	global	all	
 banner	-	-	-	Display a welcome message on startup.			class:word	{n/a}	{n/a}	global	rre	{n/a}
 bi	xqq-?	-	-	Execute q1 against x, then execute q2 against a copy of x.			class:word	    #100 [ #10 * ] [ #10 - ] bi	{n/a}	global	all	
 bi*	xyqq-?	-	-	Execute q1 against x and q2 against y.			class:word	    #10 #20 [ #2 * ] [ #10 / ] bi*	{n/a}	global	all	

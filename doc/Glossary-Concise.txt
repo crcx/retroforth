@@ -341,7 +341,7 @@ b:store-next             D: na-a  A: -  F: -
 Store a value into the specified address and return the next address.
 
 b:to-byte-address        D: a-a  A: -  F: -
-Tronslate a physical address to a byte address.
+Translate a physical address to a byte address.
 
 banner                   D: -  A: -  F: -
 Display a welcome message on startup.

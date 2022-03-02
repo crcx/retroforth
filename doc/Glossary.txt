@@ -1316,7 +1316,7 @@ b:to-byte-address
   Addr:  -
   Float: -
 
-Tronslate a physical address to a byte address.
+Translate a physical address to a byte address.
 
 Class: class:word | Namespace: global | Interface Layer: all
 ------------------------------------------------------------------------
