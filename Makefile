@@ -165,9 +165,9 @@ bin/retro-unu: tools/retro-unu.c
 
 # basic image target
 
-ngaImage: image/retro.muri image/retro.forth bin/retro-muri bin/retro-extend
+ngaImage: image/retro.muri image/retro.forth image/build.retro bin/retro-muri bin/retro-extend
 	./bin/retro-muri image/retro.muri
-	./bin/retro-extend ngaImage image/retro.forth
+	./bin/retro-extend ngaImage image/retro.forth image/build.retro
 
 
 
@@ -250,3 +250,5 @@ release: clean build glossary
 test: bin/retro
 	./bin/retro tests/test-core.forth
 
+update: bin/retro image/retro.forth image/retro.muri
+	./bin/retro tools/update-build.retro > image/build.retro

@@ -614,6 +614,17 @@ Constant. Refers to specific ASCII code.
 Class: class:data | Namespace: ASCII | Interface Layer: all
 ------------------------------------------------------------------------
 
+BUILD
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Constant. Return a build identifier. Use along with version to identify an image.
+
+Class: class:data | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
 Base
 
   Data:  -a

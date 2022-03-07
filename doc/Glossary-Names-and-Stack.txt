@@ -51,6 +51,7 @@ ASCII:SUB                D: -n  A: -  F: -
 ASCII:SYN                D: -n  A: -  F: -
 ASCII:US                 D: -n  A: -  F: -
 ASCII:VT                 D: -n  A: -  F: -
+BUILD                    D: -n  A: -  F: -
 Base                     D: -a  A: -  F: -
 Compiler                 D: -a  A: -  F: -
 Dictionary               D: -a  A: -  F: -

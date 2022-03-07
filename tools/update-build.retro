@@ -1,0 +1,3 @@
+~~~
+BUILD n:inc '~~~\n#%n_'BUILD_const\n~~~\n s:format s:put bye
+~~~
