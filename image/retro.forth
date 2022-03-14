@@ -973,14 +973,9 @@ In higher level code:
 
 ~~~
 :s:index/char (sc-n)
-  swap
-  [ repeat
-      \duliadsw `1 \fezr.... \swpupudu
-      \poswnepo \swzr.... drop
-    again ]
-  [ - n:dec nip ]
-  [ s:length over eq? ] tri
-  [ drop #-1 ] if ;
+  [ [ #-1 #0 ] dip ] dip swap
+  [ over eq? [ [ [ drop ] dip dup ] dip ] if &n:inc dip ]
+  s:for-each drop-pair ;
 ~~~
 
 `s:contains/char?` returns a flag indicating whether or not a
