@@ -82,10 +82,7 @@ simple code.
 
 ~~~
 {{
-  :skip (n-) [ ASCII:HT s:split drop n:inc ] times ;
-  :select   (n-s)
-    @SourceLine swap skip ASCII:HT s:split nip ;
-
+  :select @SourceLine ASCII:HT s:tokenize swap a:fetch ;
 ---reveal---
 
   #0 { 'name        'dstack     'astack     'fstack
