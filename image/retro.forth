@@ -1011,7 +1011,33 @@ a given substring is in a string.
   :s:index/string (ss-n)
     over [ setup [ check location ] times
          drop-pair drop ] dip - #2 - #-1 n:max ;
-  :s:contains/string? (ss-f) s:index/string #-1 -eq? ;
+}}
+
+{{
+  'Src var
+  'Tar var
+  'Pad var
+  'I   var
+  'F   var
+  'At  var
+
+  :terminate (-)
+    #0 @Pad @Tar s:length + store ;
+
+  :extract (-)
+    @Src @I + @Pad @Tar s:length copy ;
+
+  :compare (-)
+    @Pad @Tar s:eq? @F or !F @F [ @I !At ] -if ;
+
+  :next (-)
+    &I v:inc ;
+---reveal---
+  :s:contains/string? (ss-f)
+    !Tar !Src s:empty !Pad #0 !I #0 !F
+    @Src s:length
+    [ extract terminate compare next ] times
+    @F ;
 }}
 ~~~
 
