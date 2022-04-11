@@ -16,12 +16,12 @@ Prepare to listen for connections.
 #3 @Sock socket:listen drop-pair
 ~~~
 
-Serve the user some data. This will repeat 5 times, then end.
+Serve the user some data.
 
 ~~~
-#5 [ @Sock socket:accept (discard_error_code: drop )
+[ @Sock socket:accept (discard_error_code: drop )
      'Hello_from_RETRO\n s:format swap [ socket:send drop-pair ] sip socket:close
-   ] times
+   ] forever
 ~~~
 
 Clean up.
