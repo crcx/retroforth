@@ -75,14 +75,14 @@ a maxmimum number of bytes to read, and a socket id. It returns
 the number of bytes received and an error code.
 
 ~~~
-:socket:recv          (ann-nn) #8 socket:operation ;
+:socket:recv          (ann-nn) #7 socket:operation ;
 ~~~
 
 `socket:close` is a wrapper over close(2). It takes a socket id
 and closes the socket.
 
 ~~~
-:socket:close         (n-)     #10 socket:operation ;
+:socket:close         (n-)     #8 socket:operation ;
 ~~~
 
 `socket:configure` is used before `socket:bind` to set some
@@ -90,5 +90,5 @@ internal state. Takes the host name and port, both as strings.
 Does not return anything.
 
 ~~~
-:socket:configure     (ss-)    #11 socket:operation ;
+:socket:configure     (ss-)    #9 socket:operation ;
 ~~~

@@ -1239,9 +1239,6 @@ void socket_send(NgaState *vm) {
   stack_push(vm, errno);
 }
 
-void socket_sendto(NgaState *vm) {
-}
-
 void socket_recv(NgaState *vm) {
   char buf[8193];
   int sock = stack_pop(vm);
@@ -1254,9 +1251,6 @@ void socket_recv(NgaState *vm) {
   stack_push(vm, errno);
 }
 
-void socket_recvfrom(NgaState *vm) {
-}
-
 void socket_close(NgaState *vm) {
   int sock = stack_pop(vm);
   close(SocketID[sock]);
@@ -1267,8 +1261,7 @@ Handler SocketActions[] = {
   socket_get_host,
   socket_create, socket_bind,    socket_listen,
   socket_accept, socket_connect, socket_send,
-  socket_sendto, socket_recv,    socket_recvfrom,
-  socket_close, socket_getaddrinfo
+  socket_recv,   socket_close,   socket_getaddrinfo
 };
 
 void io_socket(NgaState *vm) {
