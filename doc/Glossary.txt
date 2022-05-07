@@ -6664,6 +6664,23 @@ Example #1:
 
 ------------------------------------------------------------------------
 
+var-s
+
+  Data:  ss-
+  Addr:  -
+  Float: -
+
+Create a variable with the specified initial value.
+
+Class: class:word | Namespace: global | Interface Layer: all
+
+Example #1:
+
+    'Test 'Word var-s
+
+
+------------------------------------------------------------------------
+
 w:fetch
 
   Data:  a-n

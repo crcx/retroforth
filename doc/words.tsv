@@ -560,6 +560,7 @@ v:preserve	aq-	-	-	Make a copy of the value at the address, then run the quote. 
 v:update	aq-	-	-	Fetch a value from the specified address, then run the quotation with this value on the stack. Afterwards, store the returned value at the original address.			class:word	{n/a}	{n/a}	v	all	
 var	s-	-	-	Create a variable. The variable is initialized to 0.			class:word	    'Base var	{n/a}	global	all	
 var-n	ns-	-	-	Create a variable with the specified initial value.			class:word	    #10 'Base var-n\n	{n/a}	global	all	
+var-s	ss-	-	-	Create a variable with the specified initial value.			class:word	    'Test 'Word var-s\n	{n/a}	global	all	
 w:fetch	a-n	-	-	Fetch the 32-bit value stored at the specified address. Addressing for this is in 8-bit units. The address must be aligned on a four byte boundary.			class:word	{n/a)	{n/a}	global	all	
 w:fetch-next	a-an	-	-	Fetch the value stored at the specified address. Returns the next address and the value.			class:word	{n/a}	{n/a}	w	all	
 w:store	na-	-	-	Store an 32-bit value into the specified address. Addressing for this is in 8-bit units. The address must be aligned on a four byte boundary.			class:word	{n/a}	{n/a}	global	all	

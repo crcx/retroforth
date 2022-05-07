@@ -560,6 +560,7 @@ v:preserve               D: aq-  A: -  F: -
 v:update                 D: aq-  A: -  F: -
 var                      D: s-  A: -  F: -
 var-n                    D: ns-  A: -  F: -
+var-s                    D: ss-  A: -  F: -
 w:fetch                  D: a-n  A: -  F: -
 w:fetch-next             D: a-an  A: -  F: -
 w:store                  D: na-  A: -  F: -

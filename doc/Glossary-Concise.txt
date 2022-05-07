@@ -1684,6 +1684,9 @@ Create a variable. The variable is initialized to 0.
 var-n                    D: ns-  A: -  F: -
 Create a variable with the specified initial value.
 
+var-s                    D: ss-  A: -  F: -
+Create a variable with the specified initial value.
+
 w:fetch                  D: a-n  A: -  F: -
 Fetch the 32-bit value stored at the specified address. Addressing for this is in 8-bit units. The address must be aligned on a four byte boundary.
 

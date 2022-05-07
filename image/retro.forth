@@ -1813,6 +1813,10 @@ of `Index` if you need more than this.
 :hex     #16 !Base ;
 ~~~
 
+~~~
+:var-s (ss-) &s:keep dip var-n ;
+~~~
+
 
 ## I/O
 
