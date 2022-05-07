@@ -1974,8 +1974,15 @@ r class:word
 r source-file
 d 0
 s d:source
-: 9999
+: 0063
 r 0062
+r d:hash
+r class:word
+r source-file
+d 0
+s d:hash
+: 9999
+r 0063
 r err:notfound
 r class:word
 r source-file
