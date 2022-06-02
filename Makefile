@@ -60,6 +60,7 @@ DEVICES += interface/multicore.retro
 DEVICES += interface/ffi.retro
 DEVICES += interface/unsigned.retro
 DEVICES += interface/retro-napia.retro
+DEVICES += interface/block.retro
 DEVICES += interface/deprecated.retro
 
 # -------------------------------------------------------------
