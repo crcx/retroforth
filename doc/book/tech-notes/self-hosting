@@ -38,10 +38,10 @@ This caused a large number of issues over R11's life.
 
 So on to Retro 12. I decided that this would be different.
 First, the kernel would be assembly, with an external tool
-to generate the core image. The kernel is in `Rx.md` and the
-assembler is `Muri`. To load the standard library, I wrote a
-second tool, `Retro-extend`. This separation has allowed me
-many fewer headaches as I can make changes more easily and
+to generate the core image. The kernel is in `image/retro.muri`
+and the assembler is `Muri`. To load the standard library, I
+wrote a second tool, `Retro-extend`. This separation has allowed
+me many fewer headaches as I can make changes more easily and
 rebuild from scratch when necessary.
 
 But I miss self-hosting. So last fall I decided to resolve

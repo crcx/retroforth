@@ -43,12 +43,10 @@
     .hr { display: block; height: 2px; background: #000000; }
 </style>
 </head><body>
-<p><span class="h1">Using Combinators</span>
-<br/><br/>
+<p><br/><br/>
 A combinator is a function that consumes functions as input.
 They are used heavily by the RETRO system.
 <br/><br/>
-<span class="h2">Types of Combinators</span>
 <br/><br/>
 Combinators are divided into three primary types: compositional,
 execution flow, and data flow.
@@ -74,7 +72,6 @@ the latest value. So:
 <span class="tt"><span class='prim'>dup</span> <span class='prim'>call</span> n:put </span><br/>
 <span class="tt"><span class='prim'>dup</span> <span class='prim'>call</span> n:put </span><br/>
 <span class="tt">```</span></span><br/><br/>
-<span class="h2">Execution Flow</span>
 <br/><br/>
 Combinators of this type execute other functions.
 <br/><br/>
@@ -154,7 +151,6 @@ access to the loop index (via <span class="tt">I</span>) and parent loop indexes
 <br/><br/>
 <span class='codeblock'><span class="tt">```</span><br/><span class="tt"><span class='num'>#10</span> <span class='imm'>[</span> I n:put sp <span class='imm'>]</span> indexed-times </span><br/>
 <span class="tt">```</span></span><br/><br/>
-<span class="h2">Data Flow</span>
 <br/><br/>
 These combinators exist to simplify stack usage in various
 circumstances.

@@ -43,15 +43,13 @@
     .hr { display: block; height: 2px; background: #000000; }
 </style>
 </head><body>
-<p><span class="h1">Working With Files</span>
-<br/><br/>
+<p><br/><br/>
 On Unix and Windows systems RETRO provides a set of words for
 working with files. As a pragmatic choice these are mostly
 modeled after the file functions in libc.
 <br/><br/>
 The file words are in the <span class="tt">file:</span> namespace.
 <br/><br/>
-<span class="h2">File Access Modes</span>
 <br/><br/>
 You can open a file for various operations. The functionality
 allowed depends on the file access mode. Valid modes in RETRO
@@ -62,7 +60,6 @@ are:
 <tt class='indentedcode'>file:R+&nbsp;&nbsp;&nbsp;Open&nbsp;for&nbsp;reading&nbsp;and&nbsp;writing</tt>
 <tt class='indentedcode'>file:W&nbsp;&nbsp;&nbsp;&nbsp;Open&nbsp;for&nbsp;writing</tt>
 <br/><br/>
-<span class="h2">Opening A File</span>
 <br/><br/>
 To open a file, pass the file name and a file mode to <span class="tt">file:open</span>.
 <br/><br/>
@@ -93,13 +90,11 @@ To open a file for append operations:
 As with <span class="tt">file:open-for-reading</span>, this returns both the size of
 the file and the file handle.
 <br/><br/>
-<span class="h2">Closing A File</span>
 <br/><br/>
 To close a file, pass the file handle to <span class="tt">file:close</span>.
 <br/><br/>
 <tt class='indentedcode'>'/etc/motd&nbsp;file:A&nbsp;file:open&nbsp;file:close</tt>
 <br/><br/>
-<span class="h2">Reading From A File</span>
 <br/><br/>
 To read a byte from an open file, pass the file handle to the
 <span class="tt">file:read</span> word.
@@ -116,7 +111,6 @@ text to a safe place if you aren't using it quickly or if
 the length of the line is bigger than the size of a temporary
 string.
 <br/><br/>
-<span class="h2">Writing To A File</span>
 <br/><br/>
 To write a byte to a file, pass it and the file handle to
 <span class="tt">file:write</span>.
@@ -130,13 +124,11 @@ To write a byte to a file, pass it and the file handle to
 Though cells are 32 or 64 bits in size, only the byte value will
 be written to the file.
 <br/><br/>
-<span class="h2">Deleting Files</span>
 <br/><br/>
 You can delete a file by passing the file name to <span class="tt">file:delete</span>.
 <br/><br/>
 <tt class='indentedcode'>/tmp/test&nbsp;file:delete</tt>
 <br/><br/>
-<span class="h2">Check For File Existance</span>
 <br/><br/>
 Use <span class="tt">file:exists?</span> to detect the existance of a file. Pass it a
 file name and it will return <span class="tt">TRUE</span> if existing or <span class="tt">FALSE</span> if
@@ -146,14 +138,12 @@ it does not.
 <br/><br/>
 This will also return <span class="tt">TRUE</span> if the filename is a directory.
 <br/><br/>
-<span class="h2">Flush Caches</span>
 <br/><br/>
 Use <span class="tt">file:flush</span> to flush the system caches for a file. Pass a
 file handle to this.
 <br/><br/>
 <tt class='indentedcode'>@FID&nbsp;file:flush</tt>
 <br/><br/>
-<span class="h2">Seek A Position Within A File</span>
 <br/><br/>
 You can use <span class="tt">file:seek</span> to move the internal file pointer
 for a given file. Pass this the new location and a file.
@@ -163,7 +153,6 @@ for a given file. Pass this the new location and a file.
 The location for the file pointer is a fixed offset from the
 start of the file, not a relative offset.
 <br/><br/>
-<span class="h2">Get The Current Position Within A File</span>
 <br/><br/>
 To find the current value of the file pointer within a file
 just pass the file handle to <span class="tt">file:tell</span>.
@@ -173,7 +162,6 @@ just pass the file handle to <span class="tt">file:tell</span>.
 This returns a number that is the number of bytes into the file
 that the file pointer is currently at.
 <br/><br/>
-<span class="h2">Determine The Size Of A File</span>
 <br/><br/>
 Use <span class="tt">file:size</span> to return the size of a file. Pass this a file
 handle and it will return the size of a file, or 0 if empty. If
@@ -181,7 +169,6 @@ the file is a directory, it returns -1.
 <br/><br/>
 <tt class='indentedcode'>@FID&nbsp;file:size</tt>
 <br/><br/>
-<span class="h2">Reading An Entire File</span>
 <br/><br/>
 If you want to read an entire file into memory you can use
 <span class="tt">file:slurp</span>. This takes the starting address of a memory
@@ -192,7 +179,6 @@ region and the name of the file.
 Take care that the memory buffer is large enough for the file
 being read or you will run into problems.
 <br/><br/>
-<span class="h2">Writing A String To A File</span>
 <br/><br/>
 If you have a string that you want to write to a file, replacing
 any existing contents, you can use <span class="tt">file:spew</span>. This takes the
@@ -200,7 +186,6 @@ string to write and a file name.
 <br/><br/>
 <tt class='indentedcode'>'hello_world&nbsp;'/tmp/test.txt&nbsp;file:spew</tt>
 <br/><br/>
-<span class="h2">Iterating Over A File, Line By Line</span>
 <br/><br/>
 You can easily iterate over each line in a file using the word
 <span class="tt">file:for-each-line</span>. This will take a file name and a quote,

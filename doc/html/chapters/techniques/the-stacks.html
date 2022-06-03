@@ -43,8 +43,7 @@
     .hr { display: block; height: 2px; background: #000000; }
 </style>
 </head><body>
-<p><span class="h1">The Stacks</span>
-<br/><br/>
+<p><br/><br/>
 The stacks are a defining feature of Forth. They are are used
 to pass data between words and to track return addresses for
 function calls.
@@ -52,14 +51,12 @@ function calls.
 RETRO always has two stacks, and optionally (if built with
 floating point support) a third.
 <br/><br/>
-<span class="h2">Data Stack</span>
 <br/><br/>
 This is the primary stack. Values are placed here, passed to
 words which consume them and then return results. When I
 refer to "the stack", this is the one I mean. Learning to use
 the stack is a crucial part to making effective use of RETRO.
 <br/><br/>
-<span class="h3">Placing Values On The Stack</span>
 <br/><br/>
 Values can be placed on the stack directly.
 <br/><br/>
@@ -70,7 +67,6 @@ Values can be placed on the stack directly.
 <tt class='indentedcode'>|&nbsp;`'hello_world`&nbsp;|&nbsp;Push&nbsp;a&nbsp;pointer&nbsp;to&nbsp;a&nbsp;string&nbsp;to&nbsp;the&nbsp;stack&nbsp;&nbsp;|</tt>
 <tt class='indentedcode'>|&nbsp;`&amp;fetch`&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;Push&nbsp;the&nbsp;address&nbsp;of&nbsp;`fetch`&nbsp;to&nbsp;the&nbsp;stack&nbsp;|</tt>
 <br/><br/>
-<span class="h3">Reordering The Stack</span>
 <br/><br/>
 RETRO provides a number of <strong>shufflers</strong> for reordering items
 on the stack.
@@ -113,19 +109,15 @@ states:
 <br/><br/>
 <tt class='indentedcode'>'abcd&nbsp;'dcba&nbsp;reorder</tt>
 <br/><br/>
-<span class="h3">Resetting The Stack</span>
 <br/><br/>
 If you need to quickly empty the stack, use <span class="tt">reset</span>.
 <br/><br/>
-<span class="h3">Get The Stack Depth</span>
 <br/><br/>
 To find out how many items are on the stack, use <span class="tt">depth</span>.
 <br/><br/>
-<span class="h3">Displaying The Stack</span>
 <br/><br/>
 You can display the stack by running <span class="tt">dump-stack</span>.
 <br/><br/>
-<span class="h3">Data Flow Combinators</span>
 <br/><br/>
 RETRO provides <strong>combinators</strong> for working with data order on
 the stack. These are covered in a later chapter and are worth
@@ -137,14 +129,12 @@ structured means of working.
 The stack is <strong>not</strong> an array in addressable memory. Don't try
 to treat it like one.
 <br/><br/>
-<span class="h2">Address Stack</span>
 <br/><br/>
 This stack primarily holds return addresses for function calls.
 You normally won't need to directly interact with this stack,
 but you can use <span class="tt">push</span> and <span class="tt">pop</span> to move values between the
 data stack and this.
 <br/><br/>
-<span class="h2">Floating Point Stack</span>
 <br/><br/>
 If you are using a build with floating point support a third
 stack will be present. Floating point values are kept and

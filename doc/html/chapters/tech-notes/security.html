@@ -43,12 +43,10 @@
     .hr { display: block; height: 2px; background: #000000; }
 </style>
 </head><body>
-<p><span class="h1">Security Concerns</span>
-<br/><br/>
+<p><br/><br/>
 The standard Retro is not a good choice for applications
 needing to be highly secure.
 <br/><br/>
-<span class="h2">Runtime Checks</span>
 <br/><br/>
 The Retro system performs only minimal checks. It will not
 load an image larger than the max set at build time. And
@@ -68,7 +66,6 @@ into the C portions.
 I/O presents a bigger issue. Anything involving I/O, especially
 with the <span class="tt">unix:</span> words, may be a vector for attacks.
 <br/><br/>
-<span class="h2">Future Direction</span>
 <br/><br/>
 I'm not planning to add anything to the <strong>image</strong> side as, for me,
 the performance hit due to added checks is bigger than the

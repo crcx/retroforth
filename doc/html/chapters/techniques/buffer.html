@@ -43,8 +43,7 @@
     .hr { display: block; height: 2px; background: #000000; }
 </style>
 </head><body>
-<p><span class="h1">Working With a Buffer</span>
-<br/><br/>
+<p><br/><br/>
 RETRO provides words for operating on a linear memory area.
 This can be useful in building strings or custom data
 structures.
@@ -71,7 +70,6 @@ Only one buffer can be active at a time. RETRO provides a
 <span class="tt">buffer:preserve</span> combinator to allow using a second one
 before returning to the prior one.
 <br/><br/>
-<span class="h2">Set The Active Buffer</span>
 <br/><br/>
 To set a buffer as the active one use <span class="tt">buffer:set</span>. This takes
 an address.
@@ -79,19 +77,16 @@ an address.
 The buffer will be assumed to be empty. The initial value will
 be set to ASCII:NULL.
 <br/><br/>
-<span class="h2">Add Value</span>
 <br/><br/>
 Use <span class="tt">buffer:add</span> to append a value to the buffer. This takes
 a single value and will also add an ASCII:NULL after the end
 of the buffer.
 <br/><br/>
-<span class="h2">Fetch Last Value</span>
 <br/><br/>
 To return the last value in the buffer you can use <span class="tt">buffer:get</span>.
 This removes the value and sets an ASCII:NULL in the memory
 location the returned value occupied.
 <br/><br/>
-<span class="h2">Get Data About The Buffer</span>
 <br/><br/>
 RETRO provides <span class="tt">buffer:start</span> to get the initial address in
 the buffer, <span class="tt">buffer:end</span> to get the last address (ignoring the

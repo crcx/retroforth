@@ -43,8 +43,7 @@
     .hr { display: block; height: 2px; background: #000000; }
 </style>
 </head><body>
-<p><span class="h2">The Path to Self Hosting</span>
-<br/><br/>
+<p><br/><br/>
 Retro is an image based Forth system running on a lightweight
 virtual machine. This is the story of how that image is made.
 <br/><br/>
@@ -83,10 +82,10 @@ This caused a large number of issues over R11's life.
 <br/><br/>
 So on to Retro 12. I decided that this would be different.
 First, the kernel would be assembly, with an external tool
-to generate the core image. The kernel is in <span class="tt">Rx.md</span> and the
-assembler is <span class="tt">Muri</span>. To load the standard library, I wrote a
-second tool, <span class="tt">Retro-extend</span>. This separation has allowed me
-many fewer headaches as I can make changes more easily and
+to generate the core image. The kernel is in <span class="tt">image/retro.muri</span>
+and the assembler is <span class="tt">Muri</span>. To load the standard library, I
+wrote a second tool, <span class="tt">Retro-extend</span>. This separation has allowed
+me many fewer headaches as I can make changes more easily and
 rebuild from scratch when necessary.
 <br/><br/>
 But I miss self-hosting. So last fall I decided to resolve

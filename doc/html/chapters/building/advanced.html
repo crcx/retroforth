@@ -43,8 +43,7 @@
     .hr { display: block; height: 2px; background: #000000; }
 </style>
 </head><body>
-<p><span class="h1">Customizing the Build</span>
-<br/><br/>
+<p><br/><br/>
 While a simple <span class="tt">make</span> will suffice for building Retro, there
 are a number of ways to customize the build to your needs.
 <br/><br/>
@@ -52,7 +51,6 @@ In this chapter, replace <span class="tt">Makefile</span> with <span class="tt">
 are using GNU Make (most Linux and macOS users will probably
 be using this).
 <br/><br/>
-<span class="h2">I/O Devices</span>
 <br/><br/>
 Many of the I/O devices are optional. The most common ones are
 enabled by default in the Makefile. Look near the end of the top
@@ -88,13 +86,11 @@ If you want to build with sockets support, uncomment the
 <span class="tt"># ENABLED += -DENABLE_SOCKETS</span> and <span class="tt">DEVICES += interface/sockets.retro</span>
 lines before building.
 <br/><br/>
-<span class="h2">Compiler Flags</span>
 <br/><br/>
 You may need or want to adjust the compiler flags. In the first
 section of the <span class="tt">Makefile</span>, look for <span class="tt">CFLAGS</span> and add/change as
 desired to override the defaults.
 <br/><br/>
-<span class="h2">VM Tweaks</span>
 <br/><br/>
 <span class="h3">64-Bit</span>
 <br/><br/>
@@ -103,7 +99,6 @@ this to 64-bit though. For a one-off build:
 <br/><br/>
 <tt class='indentedcode'>make&nbsp;OPTIONS=-DBIT64</tt>
 <br/><br/>
-<span class="h3">Stack Size</span>
 <br/><br/>
 You can alter the stack sizes by defining <span class="tt">STACK_DEPTH</span> and
 <span class="tt">ADDRESSES</span>. For a one-off build with a max stack depth of 4000
@@ -111,7 +106,6 @@ items and 500 addresses on the return stack:
 <br/><br/>
 <tt class='indentedcode'>make&nbsp;OPTIONS="-DSTACK_DEPTH=4000&nbsp;-DADDRESSES=500</tt>
 <br/><br/>
-<span class="h3">Image Size</span>
 <br/><br/>
 You can also alter the image size. Again, for a one-off build:
 <br/><br/>
@@ -119,7 +113,6 @@ You can also alter the image size. Again, for a one-off build:
 <br/><br/>
 Would build a system with a maximum image size of 4,000,000 cells.
 <br/><br/>
-<span class="h3">Update the Makefile</span>
 <br/><br/>
 If you do any of these routinely, edit the Makefile to include them.
 <br/><br/>
@@ -129,7 +122,6 @@ If you do any of these routinely, edit the Makefile to include them.
 <tt class='indentedcode'>OPTIONS&nbsp;+=&nbsp;-DADDRESSES=500</tt>
 <tt class='indentedcode'>OPTIONS&nbsp;+=&nbsp;-DIMAGE_SIZE=4000000</tt>
 <br/><br/>
-<span class="h2">Further Image Customization</span>
 <br/><br/>
 You can customize the image further by having the build process
 include your code in the image.
