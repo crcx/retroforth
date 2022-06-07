@@ -261,7 +261,7 @@ void update_rx() {
 /* The `execute` function runs a word in the Retro image. */
 
 void execute(CELL cell) {
-  CELL opcode;
+  CELL opcode, a, i;
   rp = 1;
   ip = cell;
   while (ip < IMAGE_SIZE) {
@@ -272,7 +272,15 @@ void execute(CELL cell) {
     if (ngaValidatePackedOpcodes(opcode) != 0) {
       ngaProcessPackedOpcodes(opcode);
     } else {
-      printf("Invalid instruction!\n");
+      printf("\nERROR: Invalid instruction!\n");
+      printf("At %lld, opcode %lld\n", (long long)ip, (long long)opcode);
+      printf("Instructions: ");
+      a = opcode;
+      for (i = 0; i < 4; i++) {
+        printf("%lldd ", (long long)a & 0xFF);
+        a = a >> 8;
+      }
+      printf("\n");
       exit(1);
     }
     ip++;
