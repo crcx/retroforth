@@ -73,7 +73,7 @@ contents.
 ~~~
 
 I next define words to access each field. This involves helpers
-to skip over fields I'm not intersted in, a word to return a 
+to skip over fields I'm not intersted in, a word to return a
 specific field, and the top level wrappers over these.
 
 Rather than manually enter each of the field accessors, I am
@@ -254,7 +254,10 @@ There are five primary roles:
   :matched? (-f) field:name TARGET s:eq? ;
 ---reveal---
   :find-and-display-entry
-   'doc/words.tsv [ s:keep !SourceLine matched? [ display-result ] if ] file:for-each-line ;
+   'doc/words.tsv
+   [ &Heap
+     [ s:keep !SourceLine matched? [ display-result ] if ] v:preserve
+   ] file:for-each-line ;
 }}
 ~~~
 
@@ -491,15 +494,15 @@ a separator bar between each entry.
   :horizontal-line #72 [ $- c:put ] times nl nl ;
   :export-glossary
     'doc/words.tsv
-    [ s:keep !SourceLine display-result horizontal-line ] file:for-each-line ;
+    [ &Heap [ s:keep !SourceLine display-result horizontal-line ] v:preserve ] file:for-each-line ;
 
   :export-concise
     'doc/words.tsv
-    [ s:keep !SourceLine display-concise-result ] file:for-each-line ;
+    [ &Heap [ s:keep !SourceLine display-concise-result ] v:preserve ] file:for-each-line ;
 
   :export-concise-stack
     'doc/words.tsv
-    [ s:keep !SourceLine display-concise-result<stack-only> ] file:for-each-line ;
+    [ &Heap [ s:keep !SourceLine display-concise-result<stack-only> ] v:preserve ] file:for-each-line ;
 
 ~~~
 
@@ -507,8 +510,8 @@ a separator bar between each entry.
 
 ~~~
   :export-html
-    'doc/words.tsv [ s:keep !SourceLine
-                     display-result<HTML> '<hr/> s:put nl ] file:for-each-line ;
+    'doc/words.tsv [ &Heap [ s:keep !SourceLine
+                       display-result<HTML> '<hr/> s:put nl ] v:preserve ] file:for-each-line ;
 ~~~
 
 #### TSV
