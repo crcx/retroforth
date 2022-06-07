@@ -1818,6 +1818,15 @@ of `Index` if you need more than this.
 ~~~
 
 
+## Recursion
+
+`tail-recurse` follows a semicolon, and changes a call right
+before the semicolon to a jump.
+
+~~~
+:tail-recurse (-) #1793 here #3 - store ;
+~~~
+
 ## I/O
 
 ~~~

@@ -494,6 +494,7 @@ store                    D: na-  A: -  F: -
 store-next               D: na-a  A: -  F: -
 swap                     D: nm-mn  A: -  F: -
 tab                      D: -  A: -  F: -
+tail-recurse             D: -  A: -  F: -
 times                    D: nq-  A: -  F: -
 tri                      D: xqqq-?  A: -  F: -
 tri*                     D: xyzqqq-?  A: -  F: -

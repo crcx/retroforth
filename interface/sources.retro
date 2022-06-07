@@ -24,6 +24,7 @@ dup 'io:scan-for d:lookup d:source store
 dup 'io:invoke d:lookup d:source store
 dup 'io:query d:lookup d:source store
 dup 'io:enumerate d:lookup d:source store
+dup 'tail-recurse d:lookup d:source store
 dup 'hex d:lookup d:source store
 dup 'octal d:lookup d:source store
 dup 'binary d:lookup d:source store

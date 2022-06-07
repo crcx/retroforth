@@ -5851,6 +5851,17 @@ Display a tab (`ASCII:HT`)
 Class: class:word | Namespace: global | Interface Layer: all
 ------------------------------------------------------------------------
 
+tail-recurse
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Convert a call before the semicolon to a jump.
+
+Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
 times
 
   Data:  nq-
