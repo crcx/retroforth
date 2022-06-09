@@ -18,15 +18,12 @@ The exposed word set is compact:
   :seek  (n-) #4096 n:mul @Blocks file:seek ;
   :read  (-n) #4 [ @Blocks file:read ] times pack ;
   :store (an-a) swap store-next ;
-  :write (n-) unpack #4 [ @Blocks file:write ] times ;
+  :write (n-) unpack 'abcd 'bcda reorder #4 [ dup n:put sp @Blocks file:write ] times ;
 ---reveal---
   :block:set-file (s-) s:keep !BlockFile ;
   :block:read (na-)
     file:R open swap seek #1024 [ read store ] times drop close ;
+  :block:write (na-)
+    file:R+ open swap seek #1024 [ fetch-next write ] times drop close ;
 }}
 ~~~
-
-
-'ilo.blocks block:set-file
-#10 here block:read
-here s:put nl
