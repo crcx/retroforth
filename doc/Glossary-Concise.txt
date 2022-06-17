@@ -161,7 +161,7 @@ BUILD                    D: -n  A: -  F: -
 Constant. Return a build identifier. Use along with version to identify an image.
 
 Base                     D: -a  A: -  F: -
-Variable. Holds the current numeric base.
+Variable. Holds the current numeric base. Base must be in the range of 2-16.
 
 Compiler                 D: -a  A: -  F: -
 Variable. Holds the compiler state. If TRUE, the compiler is active. If FALSE, it is not.

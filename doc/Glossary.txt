@@ -631,7 +631,7 @@ Base
   Addr:  -
   Float: -
 
-Variable. Holds the current numeric base.
+Variable. Holds the current numeric base. Base must be in the range of 2-16.
 
 Class: class:data | Namespace: global | Interface Layer: all
 ------------------------------------------------------------------------
