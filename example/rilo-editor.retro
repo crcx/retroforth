@@ -1,0 +1,159 @@
+This is a port of the RetroForth/ilo block editor to
+RetroForth/nga. Much of this will be the same as the original
+implementation, but there are some differences.
+
+Retro/nga provides three words for interfacing with a block
+store:
+
+  block:set-file (s-)
+  block:read     (na-)
+  block:write    (na-)
+
+This begins by using these to implement the `block:load` and
+`block:save`. The initial block store is set to `ilo.blocks`.
+
+~~~
+'ilo.blocks block:set-file
+
+:block:load block:read ;
+:block:save block:write ;
+~~~
+
+In Retro/ilo, the memory is constrained to 65,536 cells, with a
+defined memory map. Since Retro/nga does not do this, the block
+buffer is allocated inline.
+
+~~~
+#0 , 'block:buffer d:create #1025 allot
+~~~
+
+Variables to track the current block and the number of blocks
+are provided. Alter the `Blocks` count to match your actual
+data store limits.
+
+~~~
+'Block var
+#128 'Blocks var-n
+~~~
+
+`e:line` displays a line from the block buffer.
+
+~~~
+:e:line (n-)
+  #64 n:mul block:buffer n:add
+  #64 [ fetch-next c:put ] times drop nl ;
+~~~
+
+
+:e:for-each-line (q-)
+  #16 [ block:buffer I #64 n:mul #64 s:middle swap &call sip ]
+  indexed-times drop ;
+
+~~~
+{{
+  :sep sp sp sp #6 [ '+----5---- s:put ] times '+--- s:put nl ;
+  :l/n  I dup #10 lt? &sp if n:put sp ;
+  :line l/n I e:line ;
+  :lines #16 &line indexed-times ;
+  :block# 'Editing_# s:put @Block n:put
+          '_of_ s:put @Blocks n:dec n:put nl ;
+---reveal---
+  :list* nl #16 [ I e:line ] indexed-times ;
+  :list# nl lines ;
+  :list  nl sep lines sep block# ;
+}}
+~~~
+
+
+~~~
+&list 'e:Display var-n
+{{
+  :constrain @Block #0 #4095 n:limit !Block ;
+---reveal---
+  :set  &Block store constrain ;
+  :save &Block fetch block:buffer block:save ;
+  :load &Block fetch block:buffer block:load ;
+  :next &Block v:inc constrain load ;
+  :prev &Block v:dec constrain load ;
+  :new  block:buffer #1024 [ #32 swap store-next ] times drop ;
+  :edit set load @e:Display call ;
+}}
+~~~
+
+{{
+  :bs?     dup #8 eq? ;
+  :handle  bs? [ drop #-1 allot ] &comma choose ;
+  :process dup #10 eq? [ drop #-1 ] [ handle #0 ] choose ;
+---reveal---
+  :s:get/line
+    #0 here store
+    here [ #0 comma [ c:get process ] until ] sip
+    here over n:sub n:dec over !Free swap store drop
+    here s:temp ;
+}}
+
+:e:to-line #64 n:mul block:buffer n:add ;
+:e:erase/line
+  e:to-line #32 swap #64 [ dup-pair store n:inc ] times
+  drop-pair ;
+:e:replace &e:to-line dip [ over store n:inc ] s:for-each drop ;
+:e:replace-at [ &e:to-line dip n:add ] dip
+            [ over store n:inc ] s:for-each drop ;
+
+:e:insert dup e:erase/line s:get/line e:replace ;
+:e:insert-at s:get/line e:replace-at ;
+
+:0 #0 e:insert ;
+:1 #1 e:insert ;
+:2 #2 e:insert ;
+:3 #3 e:insert ;
+:4 #4 e:insert ;
+:5 #5 e:insert ;
+:6 #6 e:insert ;
+:7 #7 e:insert ;
+:8 #8 e:insert ;
+:9 #9 e:insert ;
+:10 #10 e:insert ;
+:11 #11 e:insert ;
+:12 #12 e:insert ;
+:13 #13 e:insert ;
+:14 #14 e:insert ;
+:15 #15 e:insert ;
+
+~~~
+:run #1024 block:buffer n:dec &store &s:evaluate bi ;
+
+:use (block) set load run ;
+
+:using (first,last)
+  over n:sub swap set load run [ next run ] times ;
+~~~
+
+
+~~~
+{{
+  :setup  #64 block:buffer n:dec store ;
+  :has-description? block:buffer fetch #32 -eq? ;
+  :display  [ I n:put tab #0 e:line ] if ;
+  :describe I set load has-description? display ;
+  :save &Block fetch ;
+  :restore &Block store load ;
+---reveal---
+  :titles save setup @Blocks &describe indexed-times restore ;
+}}
+~~~
+
+{{
+  'Hash var
+  :reset  #64 block:buffer n:dec store ;
+  :actual block:buffer n:dec dup #32 s:index/c s:left ;
+  :code?  block:buffer fetch $( eq? ;
+---reveal---
+  :needs (s-)
+    @Hash [ @Block swap
+      s:hash !Hash
+      @Blocks [ I set load reset code?
+                     [ actual s:hash @Hash eq?
+                       &run if ] if ] indexed-times
+      !Block load ] dip !Hash ;
+}}
