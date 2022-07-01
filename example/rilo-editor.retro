@@ -80,18 +80,7 @@ data store limits.
 }}
 ~~~
 
-{{
-  :bs?     dup #8 eq? ;
-  :handle  bs? [ drop #-1 allot ] &comma choose ;
-  :process dup #10 eq? [ drop #-1 ] [ handle #0 ] choose ;
----reveal---
-  :s:get/line
-    #0 here store
-    here [ #0 comma [ c:get process ] until ] sip
-    here over n:sub n:dec over !Free swap store drop
-    here s:temp ;
-}}
-
+~~~
 :e:to-line #64 n:mul block:buffer n:add ;
 :e:erase/line
   e:to-line #32 swap #64 [ dup-pair store n:inc ] times
@@ -100,8 +89,8 @@ data store limits.
 :e:replace-at [ &e:to-line dip n:add ] dip
             [ over store n:inc ] s:for-each drop ;
 
-:e:insert dup e:erase/line s:get/line e:replace ;
-:e:insert-at s:get/line e:replace-at ;
+:e:insert dup e:erase/line s:get e:replace ;
+:e:insert-at s:get e:replace-at ;
 
 :0 #0 e:insert ;
 :1 #1 e:insert ;
@@ -119,9 +108,10 @@ data store limits.
 :13 #13 e:insert ;
 :14 #14 e:insert ;
 :15 #15 e:insert ;
+~~~
 
 ~~~
-:run #1024 block:buffer n:dec &store &s:evaluate bi ;
+:run &block:buffer s:evaluate ;
 
 :use (block) set load run ;
 
@@ -129,6 +119,10 @@ data store limits.
   over n:sub swap set load run [ next run ] times ;
 ~~~
 
+
+`titles` iterates through the blocks, displaying the title
+(first line) of any block that does not start with a blank
+space.
 
 ~~~
 {{
