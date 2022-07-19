@@ -294,5 +294,7 @@ dup 'EOM d:lookup d:source store
 dup 's:store d:lookup d:source store
 dup 's:fetch d:lookup d:source store
 dup 'sigil:' d:lookup d:source store
+dup 'd:rehash d:lookup d:source store
+dup 'd:Hash-Function d:lookup d:source store
 drop
 ~~~
