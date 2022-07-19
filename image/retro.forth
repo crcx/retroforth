@@ -1911,6 +1911,25 @@ generic "keyboard" input, the basic listener here can be used.
 &listen #1 store
 ~~~
 
+## Dictionary Hashing
+
+In the future, we will be making use of hashes to help improve
+the performance of dictionary lookups. The following words can
+be used to update the hashes.
+
+In RetroForth/ilo, the hashes are used exclusively. We can't do
+that here; keeping name data is needed for some introspection
+tasks, and since Nga allows for 64-bit cells, can't guarantee
+the constraints will be met. So we'll be bootstrapping using
+the names, and patching in the hashes later.
+
+~~~
+&s:hash 'd:Hash-Function var-n
+
+:d:rehash (-)
+  [ [ d:name @d:Hash-Function call ] sip d:hash store ] d:for-each ;
+~~~
+
 ## The End
 
 ## Legalities

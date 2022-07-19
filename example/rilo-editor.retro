@@ -111,7 +111,7 @@ data store limits.
 ~~~
 
 ~~~
-:run &block:buffer s:evaluate ;
+:run &block:buffer ;
 
 :use (block) set load run ;
 
