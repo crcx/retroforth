@@ -39,19 +39,25 @@ All other devices are optional and can be specified in any order.
 
 # Device Types
 
- ID  | Device Type      | Notes                      |
------+------------------+----------------------------+
-0000 | Generic Output   | Always present as device 0 |
-0001 | Keyboard         |                            |
-0002 | Floating Point   |                            |
-0003 | Block Storage    | Raw, 1024 cell blocks      |
-0004 | Filesystem       | Unix-style Files           |
-0005 | Clock            |                            |
-0006 |                  |                            |
-0007 | Network: Sockets |                            |
-0008 | Syscalls: Unix   |                            |
-0009 | Scripting Hooks  |                            |
-0010 | Random Number    |                            |
++------+------------------+-------------------------------+
+| ID   | Device Type      | Notes                         |
++======+==================+===============================+
+| 0000 | Generic Output   | Always present as device 0    |
+| 0001 | Keyboard         |                               |
+| 0002 | Floating Point   |                               |
+| 0003 | Block Storage    | Raw, 1024 cell blocks         |
+| 0004 | Filesystem       | Unix-style Files              |
+| 0005 | Clock            |                               |
+| 0006 |                  |                               |
+| 0007 | Network: Sockets |                               |
+| 0008 | Syscalls: Unix   |                               |
+| 0009 | Scripting Hooks  |                               |
+| 0010 | Random Number    |                               |
+| 1000 | Image Writer     | Saving the image to disk      |
+| 8000 | Multicore        | Extensions for multiple cores |
+| 8100 | FFI              | Extensions for FFI            |
+| 8101 | Unsigned         | Extensions for unsigned maths |
++------+------------------+-------------------------------+
 
 # Device Details
 
