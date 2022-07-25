@@ -23,8 +23,13 @@ In Retro/ilo, the memory is constrained to 65,536 cells, with a
 defined memory map. Since Retro/nga does not do this, the block
 buffer is allocated inline.
 
+Additionally, under Retro/ilo, the cell preceeding the block
+buffer is used as a count. I allocate two extra cells and patch
+the block buffer starting address manually.
+
 ~~~
-#0 , 'block:buffer d:create #1025 allot
+'block:buffer d:create #1026 allot
+&block:buffer n:inc @Dictionary d:xt store
 ~~~
 
 Variables to track the current block and the number of blocks
@@ -64,11 +69,24 @@ data store limits.
 }}
 ~~~
 
+The next several words are for navigating through and saving
+blocks.
+
+    +------+----+----------------------------------------------+
+    | Word |    | Description                                  |
+    +======+====+==============================================+
+    | set  | n- | Set the current block to 'n'                 |
+    | load |    | (Re)load the current block                   |
+    | next |    | Load the next block                          |
+    | prev |    | Load the previous block                      |
+    | new  |    | Erase the contents of the block buffer       |
+    | edit | n- | Set the current block to 'n', load & list it |
+    +------+----+----------------------------------------------+
 
 ~~~
 &list 'e:Display var-n
 {{
-  :constrain @Block #0 #4095 n:limit !Block ;
+  :constrain @Block #0 @Blocks n:dec n:limit !Block ;
 ---reveal---
   :set  &Block store constrain ;
   :save &Block fetch block:buffer block:save ;
@@ -110,6 +128,12 @@ data store limits.
 :15 #15 e:insert ;
 ~~~
 
+To run the code in the block buffer, execute `run`.
+
+This makes use of `s:evaluate` from Retro/ilo, where strings
+are arrays. In the future, Retro/nga will have native support
+for strings-as-arrays, and then this can be simplified.
+
 ~~~
 {{
   'max-length var
@@ -139,7 +163,16 @@ data store limits.
 ---reveal---
   :run &block:buffer n:dec #1024 over store s:evaluate ;
 }}
+~~~
 
+    +-------+-----+--------------------------------------------+
+    | Word  |     | Description                                |
+    +=======+=====+============================================+
+    | use   | n-  | Load and run the code in block "n"         |
+    | using | fl- | Load and run the code in blocks "f" to "l" |
+    +-------+-----+--------------------------------------------+
+
+~~~
 :use (block) set load run ;
 
 :using (first,last)
@@ -163,6 +196,22 @@ space.
   :titles save setup @Blocks &describe indexed-times restore ;
 }}
 ~~~
+
+`needs` takes a string with a block identifier and loads/runs
+code in any block matching this. Example:
+
+    '(doubles) needs
+
+Would load any blocks containing "(doubles)" as the initial
+token in their index line. Tokens after the first one are
+ignored. So the above would match:
+
+    (doubles) (constants)
+    (doubles) (variables)
+
+but not:
+
+    (singles) (constants)
 
 ~~~
 {{
