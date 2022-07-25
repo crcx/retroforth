@@ -164,10 +164,11 @@ space.
 }}
 ~~~
 
+~~~
 {{
   'Hash var
   :reset  #64 block:buffer n:dec store ;
-  :actual block:buffer n:dec dup #32 s:index/c s:left ;
+  :actual block:buffer n:dec dup #32 a:index a:left a:to-string ;
   :code?  block:buffer fetch $( eq? ;
 ---reveal---
   :needs (s-)
@@ -178,3 +179,4 @@ space.
                        &run if ] if ] indexed-times
       !Block load ] dip !Hash ;
 }}
+~~~
