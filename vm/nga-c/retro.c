@@ -190,6 +190,10 @@ void io_floatingpoint(NgaState *);  void query_floatingpoint(NgaState *);
 void io_socket(NgaState *);         void query_socket(NgaState *);
 #endif
 
+#ifdef ENABLE_MALLOC
+void io_malloc(NgaState *);         void query_malloc(NgaState *);
+#endif
+
 void io_image(NgaState *);          void query_image(NgaState *);
 
 void load_embedded_image(NgaState *);
@@ -228,6 +232,66 @@ void inst_iq(NgaState *);  void inst_ii(NgaState *);
 #define TORS vm->cpu[vm->active].address[vm->cpu[vm->active].rp]
 
 /* Global Variables -------------------------------------------------- */
+
+/* Dynamic Memory / `malloc` support --------------------------------- */
+#ifdef ENABLE_MALLOC
+typedef union {
+  void* val;
+  struct {
+    CELL msw;
+    CELL lsw;
+  };
+} double_cell;
+
+void malloc_allocate(NgaState *vm) {
+  // TODO: Conditionally compile based on host word size?
+  double_cell addr = { .val = malloc(stack_pop(vm)) };
+  stack_push(vm, addr.msw);
+  stack_push(vm, addr.lsw);
+}
+
+void malloc_free(NgaState *vm) {
+  double_cell addr;
+  addr.lsw = stack_pop(vm);
+  addr.msw = stack_pop(vm);
+  free(addr.val);
+}
+
+void malloc_store(NgaState *vm) {
+  CELL value = stack_pop(vm);
+  double_cell addr;
+  addr.lsw = stack_pop(vm);
+  addr.msw = stack_pop(vm);
+  *(CELL *) addr.val = value;
+}
+
+void malloc_fetch(NgaState *vm) {
+  double_cell addr;
+  addr.lsw = stack_pop(vm);
+  addr.msw = stack_pop(vm);
+  CELL value = *(CELL *)addr.val;
+  stack_push(vm, value);
+}
+
+// TODO: realloc() support
+// void malloc_realloc(NgaState *vm) { }
+
+void query_malloc(NgaState *vm) {
+  stack_push(vm, 0);
+  stack_push(vm, 15);
+}
+
+void io_malloc(NgaState *vm) {
+  int i = stack_pop(vm);
+  switch (i) {
+    case 0: malloc_allocate(vm); return;
+    case 1: malloc_free(vm); return;
+    case 2: malloc_store(vm); return;
+    case 3: malloc_fetch(vm); return;
+  }
+  stack_push(vm, -1);
+}
+#endif
 
 /* Multi Core Support ------------------------------------------------ */
 #ifdef ENABLE_MULTICORE
@@ -1815,6 +1879,9 @@ int main(int argc, char **argv) {
 #endif
 #ifdef ENABLE_UNIX
   register_device(vm, io_unix, query_unix);
+#endif
+#ifdef ENABLE_MALLOC
+  register_device(vm, io_malloc, query_malloc);
 #endif
 #ifdef ENABLE_CLOCK
   register_device(vm, io_clock, query_clock);

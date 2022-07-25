@@ -42,6 +42,7 @@ Portions of the code derive from RETRO 11, which was:
     Copyright (c) 2011,        Remy Moueza
     Copyright (c) 2012,        John M Harrison
     Copyright (c) 2012,        Todd Thomas
+    Copyright (c) 2022,        Rick Carlino
 
 The Free Pascal implementation in vm/nga-pascal is:
 

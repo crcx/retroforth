@@ -1,0 +1,13 @@
+~~~
+:double:var (nns-)
+  d:create swap , , ;
+
+:double:fetch (a-nn)
+  fetch-next swap fetch ;
+
+:double:store (nna-)
+  &swap dip store-next store ;
+
+:double:const (nns-)
+  double:var &double:fetch does ;
+~~~

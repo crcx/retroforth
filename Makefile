@@ -46,6 +46,7 @@ ENABLED += -DENABLE_SIGNALS
 ENABLED += -DENABLE_MULTICORE
 ENABLED += -DENABLE_FFI
 ENABLED += -DENABLE_UNSIGNED
+ENABLED += -DENABLE_MALLOC
 
 DEVICES ?=
 DEVICES += interface/floatingpoint.retro
@@ -62,6 +63,8 @@ DEVICES += interface/unsigned.retro
 DEVICES += interface/retro-napia.retro
 DEVICES += interface/block.retro
 DEVICES += interface/deprecated.retro
+DEVICES += interface/double.retro
+DEVICES += interface/malloc.retro
 
 # -------------------------------------------------------------
 
