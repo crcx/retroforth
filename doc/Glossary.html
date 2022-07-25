@@ -2669,6 +2669,17 @@
 </xmp>
 </p>
 <hr/>
+<h2>n:add</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> nn-n<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Add `n1` to `n2` and return the result.</p>
+<table><tr><td><b>Class:</b> </td><td>class:primitive</td></tr><tr><td><b>Namespace:</b> </td><td>global</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><p><b>Example:</b> <br>
+<br>
+<xmp style='background:#f2f2f2'>    #1 #2 + </xmp>
+</p>
+<hr/>
 <h2>n:between?</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> nlu-f<br>
 <b>Addr:</b> -<br>
@@ -2692,6 +2703,20 @@
 <xmp style='background:#f2f2f2'>    #100 n:dec</xmp>
 </p>
 <hr/>
+<h2>n:div</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> nm-v<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Divide `n` by `m` and return the integer part of the quotient.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>global</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
+<h2>n:divmod</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> nm-rv<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Divide `n` by `m` and return the integer part of the quotient and remainder.</p>
+<table><tr><td><b>Class:</b> </td><td>class:primitive</td></tr><tr><td><b>Namespace:</b> </td><td>global</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
 <h2>n:even?</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> n-f<br>
 <b>Addr:</b> -<br>
@@ -2749,6 +2774,25 @@
 <br>
 <xmp style='background:#f2f2f2'>    #1 #7 n:min
     #-8 #-10 n:min</xmp>
+</p>
+<hr/>
+<h2>n:mod</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> nm-o<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Divide `n` by `m` and return the remainder.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>global</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
+<h2>n:mul</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> nn-n<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Multiply `n1` by `n2` and return the result.</p>
+<table><tr><td><b>Class:</b> </td><td>class:primitive</td></tr><tr><td><b>Namespace:</b> </td><td>global</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><p><b>Example:</b> <br>
+<br>
+<xmp style='background:#f2f2f2'>    #2 #6 *
+    #-1 #100 *</xmp>
 </p>
 <hr/>
 <h2>n:negate</h2>
@@ -2830,6 +2874,17 @@
 </div>
 <p>Return TRUE if number is greater than zero or FALSE if it is zero or less.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>n</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
+<h2>n:sub</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> nn-n<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Subtract `n2` from `n1` and return the result.</p>
+<table><tr><td><b>Class:</b> </td><td>class:primitive</td></tr><tr><td><b>Namespace:</b> </td><td>global</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><p><b>Example:</b> <br>
+<br>
+<xmp style='background:#f2f2f2'>    #2 #1 - </xmp>
+</p>
+<hr/>
 <h2>n:to-float</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> n-<br>
 <b>Addr:</b> -<br>

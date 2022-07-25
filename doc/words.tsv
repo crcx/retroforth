@@ -355,13 +355,18 @@ n:-zero?	n-f	-	-	Return `TRUE` if number is not zero, or `FALSE` otherwise.			cl
 n:MAX	-n	-	-	Return the maximum value that will fit in a cell.			class:word	{n/a}	{n/a}	n	all	
 n:MIN	-n	-	-	Return the minimum value that will fit in a cell.			class:word	{n/a}	{n/a}	n	all	
 n:abs	n-n	-	-	Return the absolute value of a number.			class:word	    #10 n:abs\n    #-10 n:abs\n	{n/a}	n	all	
+n:add	nn-n	-	-	Add `n1` to `n2` and return the result.			class:primitive	    #1 #2 + 	{n/a}	global	all	
 n:between?	nlu-f	-	-	Return TRUE if number is between the lower (l) and upper (u) bounds. If not, return FALSE. This is inclusive of the limits.			class:word	    #3 #1 #100 n:between?\n    $q $a $b   n:between?	{n/a}	n	all	
 n:dec	n-m	-	-	Decrement n by one.			class:word	    #100 n:dec	{n/a}	n	all	
+n:div	nm-v	-	-	Divide `n` by `m` and return the integer part of the quotient.			class:word	{n/a}	{n/a}	global	all	
+n:divmod	nm-rv	-	-	Divide `n` by `m` and return the integer part of the quotient and remainder.			class:primitive	{n/a}	{n/a}	global	all	
 n:even?	n-f	-	-	Return `TRUE` if number is even, or `FALSE` if not.			class:word	    #12 n:even?\n    #11 n:even?	{n/a}	n	all	
 n:inc	n-m	-	-	Increment n by one.			class:word	    #100 n:inc	{n/a}	n	all	
 n:limit	nlu-m	-	-	Return n if it is within the lower (l) and upper (u) bounds. If outside the bounds, return the closes boundary value.			class:word	    #-10 #5 #8 n:limit\n    #10  #1 #15 n:limit	{n/a}	n	all	
 n:max	mn-o	-	-	Return the greater of two values.			class:word	    #1 #7 n:max\n    #-8 #-10 n:max	{n/a}	n	all	
 n:min	mn-o	-	-	Return the lesser of two values.			class:word	    #1 #7 n:min\n    #-8 #-10 n:min	{n/a}	n	all	
+n:mod	nm-o	-	-	Divide `n` by `m` and return the remainder.			class:word	{n/a}	{n/a}	global	all	
+n:mul	nn-n	-	-	Multiply `n1` by `n2` and return the result.			class:primitive	    #2 #6 *\n    #-1 #100 *	{n/a}	global	all	
 n:negate	n-n	-	-	Invert the sign of a number.			class:word	    #10 n:negate\n    #-10 n:negate	{n/a}	n	rre	
 n:negative?	n-f	-	-	Return `TRUE` if number is negative, or `FALSE` if not.			class:word	{n/a}	{n/a}	n	all	
 n:odd?	n-f	-	-	Return `TRUE` if number is odd, or `FALSE` if not.			class:word	{n/a}	{n/a}	n	all	
@@ -372,6 +377,7 @@ n:random	-n	-	-	Return a random number.			class:word	    n:random n:put	{n/a}	n	
 n:sqrt	n-m	-	-	Return the square root of a number.			class:word	{n/a}	{n/a}	n	all	
 n:square	n-m	-	-	Return the square of a number.			class:word	{n/a}	{n/a}	n	all	
 n:strictly-positive?	n-f	-	-	Return TRUE if number is greater than zero or FALSE if it is zero or less.			class:word	{n/a}	{n/a}	n	all	
+n:sub	nn-n	-	-	Subtract `n2` from `n1` and return the result.			class:primitive	    #2 #1 - 	{n/a}	global	all	
 n:to-float	n-	-	-F	Convert a number into a floating-point value.			class:word	{n/a}	{n/a}	n	rre	
 n:to-string	n-s	-	-	Convert a number into a string.			class:word	{n/a}	{n/a}	n	all	
 n:zero?	n-f	-	-	Return `TRUE` if number is zero, or `FALSE` otherwise.			class:word	{n/a}	{n/a}	n	all	

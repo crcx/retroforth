@@ -1069,11 +1069,20 @@ Return the minimum value that will fit in a cell.
 n:abs                    D: n-n  A: -  F: -
 Return the absolute value of a number.
 
+n:add                    D: nn-n  A: -  F: -
+Add `n1` to `n2` and return the result.
+
 n:between?               D: nlu-f  A: -  F: -
 Return TRUE if number is between the lower (l) and upper (u) bounds. If not, return FALSE. This is inclusive of the limits.
 
 n:dec                    D: n-m  A: -  F: -
 Decrement n by one.
+
+n:div                    D: nm-v  A: -  F: -
+Divide `n` by `m` and return the integer part of the quotient.
+
+n:divmod                 D: nm-rv  A: -  F: -
+Divide `n` by `m` and return the integer part of the quotient and remainder.
 
 n:even?                  D: n-f  A: -  F: -
 Return `TRUE` if number is even, or `FALSE` if not.
@@ -1089,6 +1098,12 @@ Return the greater of two values.
 
 n:min                    D: mn-o  A: -  F: -
 Return the lesser of two values.
+
+n:mod                    D: nm-o  A: -  F: -
+Divide `n` by `m` and return the remainder.
+
+n:mul                    D: nn-n  A: -  F: -
+Multiply `n1` by `n2` and return the result.
 
 n:negate                 D: n-n  A: -  F: -
 Invert the sign of a number.
@@ -1119,6 +1134,9 @@ Return the square of a number.
 
 n:strictly-positive?     D: n-f  A: -  F: -
 Return TRUE if number is greater than zero or FALSE if it is zero or less.
+
+n:sub                    D: nn-n  A: -  F: -
+Subtract `n2` from `n1` and return the result.
 
 n:to-float               D: n-  A: -  F: -F
 Convert a number into a floating-point value.

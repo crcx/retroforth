@@ -355,13 +355,18 @@ n:-zero?                 D: n-f  A: -  F: -
 n:MAX                    D: -n  A: -  F: -
 n:MIN                    D: -n  A: -  F: -
 n:abs                    D: n-n  A: -  F: -
+n:add                    D: nn-n  A: -  F: -
 n:between?               D: nlu-f  A: -  F: -
 n:dec                    D: n-m  A: -  F: -
+n:div                    D: nm-v  A: -  F: -
+n:divmod                 D: nm-rv  A: -  F: -
 n:even?                  D: n-f  A: -  F: -
 n:inc                    D: n-m  A: -  F: -
 n:limit                  D: nlu-m  A: -  F: -
 n:max                    D: mn-o  A: -  F: -
 n:min                    D: mn-o  A: -  F: -
+n:mod                    D: nm-o  A: -  F: -
+n:mul                    D: nn-n  A: -  F: -
 n:negate                 D: n-n  A: -  F: -
 n:negative?              D: n-f  A: -  F: -
 n:odd?                   D: n-f  A: -  F: -
@@ -372,6 +377,7 @@ n:random                 D: -n  A: -  F: -
 n:sqrt                   D: n-m  A: -  F: -
 n:square                 D: n-m  A: -  F: -
 n:strictly-positive?     D: n-f  A: -  F: -
+n:sub                    D: nn-n  A: -  F: -
 n:to-float               D: n-  A: -  F: -F
 n:to-string              D: n-s  A: -  F: -
 n:zero?                  D: n-f  A: -  F: -
