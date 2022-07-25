@@ -111,7 +111,34 @@ data store limits.
 ~~~
 
 ~~~
-:run &block:buffer ;
+{{
+  'max-length var
+  'source     var
+  'index      var
+  'token d:create #65 allot
+
+  :eoi? &index &max-length &fetch bi@ gt? ;
+  :eow? &token fetch &token n:add fetch
+        [ #32 eq? ] [ #0 eq? ] bi or ;
+  :set-input
+    #0 &index store
+    [ &source store ] [ a:length &max-length store ] bi ;
+  :get-char
+    &source fetch &index fetch a:fetch
+    &token v:inc &index v:inc
+    &token fetch &token n:add store ;
+  :parse-word
+    #0 &token store
+    [ get-char eow? eoi? or ] until
+    &token dup v:dec ;
+  :count-words #1 swap [ #32 eq? &n:inc if ] a:for-each ;
+  :valid? dup a:length n:-zero? ;
+  :s:evaluate
+    &set-input &count-words bi
+    [ parse-word valid? [ a:to-string interpret ] &drop choose ] times ;
+---reveal---
+  :run &block:buffer n:dec #1024 over store s:evaluate ;
+}}
 
 :use (block) set load run ;
 
