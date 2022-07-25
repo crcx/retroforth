@@ -18,7 +18,7 @@ The exposed word set is compact:
   :seek  (n-) #4096 n:mul @Blocks file:seek ;
   :read  (-n) #4 [ @Blocks file:read ] times pack ;
   :store (an-a) swap store-next ;
-  :write (n-) unpack 'abcd 'bcda reorder #4 [ dup n:put sp @Blocks file:write ] times ;
+  :write (n-) unpack 'abcd 'bcda reorder #4 [ @Blocks file:write ] times ;
 ---reveal---
   :block:set-file (s-) s:keep !BlockFile ;
   :block:read (na-)
