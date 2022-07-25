@@ -2185,6 +2185,17 @@ Inline a numeric value to the current assembly segment.
 Class: class:word | Namespace: global | Interface Layer: all
 ------------------------------------------------------------------------
 
+d:Hash-Function
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Variable. Holds a pointer tho the function for calculating dictionary hashes.
+
+Class: class:data | Namespace: d | Interface Layer: all
+------------------------------------------------------------------------
+
 d:add-header
 
   Data:  saa-
@@ -2225,6 +2236,17 @@ d:for-each
   Float: -
 
 Execute the specified quote once for each header in the dictionary. Before running the quote, this also pushes a pointer to the header onto the stack.
+
+Class: class:word | Namespace: d | Interface Layer: all
+------------------------------------------------------------------------
+
+d:hash
+
+  Data:  d-a
+  Addr:  -
+  Float: -
+
+Given a dictionary header, return the hash field.
 
 Class: class:word | Namespace: d | Interface Layer: all
 ------------------------------------------------------------------------
@@ -2313,6 +2335,17 @@ d:name
   Float: -
 
 Given a dictionary header, return the name field.
+
+Class: class:word | Namespace: d | Interface Layer: all
+------------------------------------------------------------------------
+
+d:rehash
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Update the hashes for all visible words in the dictionary.
 
 Class: class:word | Namespace: d | Interface Layer: all
 ------------------------------------------------------------------------

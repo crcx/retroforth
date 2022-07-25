@@ -188,10 +188,12 @@ core:start	an-	-	-	Set the IP of core `n` to address `a` and begin processing on
 core:write/reg	vn-	-	-	Write a value to register number `n` on the current core.			class:word	{n/a}	{n/a}	core	rre	
 curry	nq-q	-	-	Bind a value to a function and return a new quote that calls the bound action.			class:word	{n/a}	{n/a}	global	all	
 d	n-	-	-	Inline a numeric value to the current assembly segment.			class:word	{n/a}	{n/a}	global	all	
+d:Hash-Function	-	-	-	Variable. Holds a pointer tho the function for calculating dictionary hashes.			class:data	{n/a}	{n/a}	d	all	
 d:add-header	saa-	-	-	Vectored. Create a header. Provide a string (s) for the name, a pointer to the class handler (a1) and a pointer to the word definition (a2) Generally this won't be used directly.			class:word	{n/a}	{n/a}	d	all	
 d:class	d-a	-	-	Given a dictionary header, return the class field.			class:word	{n/a}	{n/a}	d	all	
 d:create	s-	-	-	Hook. Create a new dictionary header named the specified string. The new header will point to `here` and have a class of `class:data`.			class:word	{n/a}	{n/a}	d	all	
 d:for-each	q-	-	-	Execute the specified quote once for each header in the dictionary. Before running the quote, this also pushes a pointer to the header onto the stack.			class:word	{n/a}	{n/a}	d	all	
+d:hash	d-a	-	-	Given a dictionary header, return the hash field.			class:word	{n/a}	{n/a}	d	all	
 d:last	-d	-	-	Return the most recent dictionary header.			class:word	{n/a}	{n/a}	d	all	
 d:last.class	-a	-	-	Return a pointer to the class field of the most recent dictionary header.			class:word	{n/a}	{n/a}	d	all	
 d:last.name	-s	-	-	Return a pointer to the name field of the most recent dictionary header.			class:word	{n/a}	{n/a}	d	all	
@@ -200,6 +202,7 @@ d:link	d-a	-	-	Given a dictionary header, return the link field.			class:word	{n
 d:lookup	s-d	-	-	Lookup the specified name in the dictionary and return a pointer to its dictionary header. This returns zero if the word is not found. This also sets an internal variable ('which' in retro.muri) to the header address.			class:word	{n/a}	{n/a}	d	all	
 d:lookup-xt	a-d	-	-	Lookup the specified address in the dictionary and return a pointer to its dictionary header. This returns zero if the word is not found.			class:word	{n/a}	{n/a}	d	all	
 d:name	d-s	-	-	Given a dictionary header, return the name field.			class:word	{n/a}	{n/a}	d	all	
+d:rehash	-	-	-	Update the hashes for all visible words in the dictionary.			class:word	{n/a}	{n/a}	d	all	
 d:source	d-a	-	-	Given a dictionary header, return the source field.			class:word	{n/a}	{n/a}	d	all	
 d:words	-	-	-	Display a list of all named items in the `Dictionary`.			class:word	{n/a}	{n/a}	d	rre	
 d:words-beginning-with	s-	-	-	Display a list of all named items in the `Dictionary` that begin with the provided substring.			class:word	{n/a}	{n/a}	d	rre	

@@ -188,10 +188,12 @@ core:start               D: an-  A: -  F: -
 core:write/reg           D: vn-  A: -  F: -
 curry                    D: nq-q  A: -  F: -
 d                        D: n-  A: -  F: -
+d:Hash-Function          D: -  A: -  F: -
 d:add-header             D: saa-  A: -  F: -
 d:class                  D: d-a  A: -  F: -
 d:create                 D: s-  A: -  F: -
 d:for-each               D: q-  A: -  F: -
+d:hash                   D: d-a  A: -  F: -
 d:last                   D: -d  A: -  F: -
 d:last.class             D: -a  A: -  F: -
 d:last.name              D: -s  A: -  F: -
@@ -200,6 +202,7 @@ d:link                   D: d-a  A: -  F: -
 d:lookup                 D: s-d  A: -  F: -
 d:lookup-xt              D: a-d  A: -  F: -
 d:name                   D: d-s  A: -  F: -
+d:rehash                 D: -  A: -  F: -
 d:source                 D: d-a  A: -  F: -
 d:words                  D: -  A: -  F: -
 d:words-beginning-with   D: s-  A: -  F: -

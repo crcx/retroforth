@@ -568,6 +568,9 @@ Bind a value to a function and return a new quote that calls the bound action.
 d                        D: n-  A: -  F: -
 Inline a numeric value to the current assembly segment.
 
+d:Hash-Function          D: -  A: -  F: -
+Variable. Holds a pointer tho the function for calculating dictionary hashes.
+
 d:add-header             D: saa-  A: -  F: -
 Vectored. Create a header. Provide a string (s) for the name, a pointer to the class handler (a1) and a pointer to the word definition (a2) Generally this won't be used directly.
 
@@ -579,6 +582,9 @@ Hook. Create a new dictionary header named the specified string. The new header 
 
 d:for-each               D: q-  A: -  F: -
 Execute the specified quote once for each header in the dictionary. Before running the quote, this also pushes a pointer to the header onto the stack.
+
+d:hash                   D: d-a  A: -  F: -
+Given a dictionary header, return the hash field.
 
 d:last                   D: -d  A: -  F: -
 Return the most recent dictionary header.
@@ -603,6 +609,9 @@ Lookup the specified address in the dictionary and return a pointer to its dicti
 
 d:name                   D: d-s  A: -  F: -
 Given a dictionary header, return the name field.
+
+d:rehash                 D: -  A: -  F: -
+Update the hashes for all visible words in the dictionary.
 
 d:source                 D: d-a  A: -  F: -
 Given a dictionary header, return the source field.

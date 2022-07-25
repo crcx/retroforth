@@ -1411,6 +1411,13 @@
 </div>
 <p>Inline a numeric value to the current assembly segment.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>global</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
+<h2>d:Hash-Function</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> -<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Variable. Holds a pointer tho the function for calculating dictionary hashes.</p>
+<table><tr><td><b>Class:</b> </td><td>class:data</td></tr><tr><td><b>Namespace:</b> </td><td>d</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
 <h2>d:add-header</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> saa-<br>
 <b>Addr:</b> -<br>
@@ -1438,6 +1445,13 @@
 <b>Float:</b> -</p>
 </div>
 <p>Execute the specified quote once for each header in the dictionary. Before running the quote, this also pushes a pointer to the header onto the stack.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>d</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
+<h2>d:hash</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> d-a<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Given a dictionary header, return the hash field.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>d</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
 <h2>d:last</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> -d<br>
@@ -1494,6 +1508,13 @@
 <b>Float:</b> -</p>
 </div>
 <p>Given a dictionary header, return the name field.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>d</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
+<h2>d:rehash</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> -<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Update the hashes for all visible words in the dictionary.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>d</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
 <h2>d:source</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> d-a<br>
