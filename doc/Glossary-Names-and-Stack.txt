@@ -213,6 +213,10 @@ decimal                  D: -  A: -  F: -
 depth                    D: -n  A: -  F: -
 dip                      D: nq-n  A: -  F: -
 does                     D: q-  A: -  F: -
+double:const             D: nns-  A: -  F: -
+double:fetch             D: a-n  A: -  F: -
+double:store             D: nna-  A: -  F: -
+double:var               D: nns-  A: -  F: -
 drop                     D: n-  A: -  F: -
 drop-pair                D: nn-  A: -  F: -
 dump-stack               D: -  A: -  F: -

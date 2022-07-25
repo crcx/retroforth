@@ -2460,6 +2460,50 @@ Attach an action to the most recently created word. This is used in a manner sim
 Class: class:word | Namespace: global | Interface Layer: all
 ------------------------------------------------------------------------
 
+double:const
+
+  Data:  nns-
+  Addr:  -
+  Float: -
+
+Create a constant returning the specified double cell value.
+
+Class: class:word | Namespace: double | Interface Layer: all
+------------------------------------------------------------------------
+
+double:fetch
+
+  Data:  a-n
+  Addr:  -
+  Float: -
+
+Fetch the double cell values stored in the double cell variable at a.
+
+Class: class:word | Namespace: double | Interface Layer: all
+------------------------------------------------------------------------
+
+double:store
+
+  Data:  nna-
+  Addr:  -
+  Float: -
+
+Store the double cell values on the stack in the double cell variable at a.
+
+Class: class:word | Namespace: double | Interface Layer: all
+------------------------------------------------------------------------
+
+double:var
+
+  Data:  nns-
+  Addr:  -
+  Float: -
+
+Create a variable for holding the specified double cell value.
+
+Class: class:word | Namespace: double | Interface Layer: all
+------------------------------------------------------------------------
+
 drop
 
   Data:  n-

@@ -213,6 +213,10 @@ decimal	-	-	-	Set `Base` to decimal.			class:word	{n/a}	{n/a}	a	all
 depth	-n	-	-	Return the number of items on the stack.			class:word	{n/a}	{n/a}	global	all	
 dip	nq-n	-	-	Temporarily remove n from the stack, execute the quotation, and then restore n to the stack.			class:word	{n/a}	{n/a}	global	all	
 does	q-	-	-	Attach an action to the most recently created word. This is used in a manner similar to CREATE/DOES> in traditional Forth.			class:word	{n/a}	{n/a}	global	all	
+double:const	nns-	-	-	Create a constant returning the specified double cell value.			class:word	{n/a}	{n/a}	double	all	
+double:fetch	a-n	-	-	Fetch the double cell values stored in the double cell variable at a.			class:word	{n/a}	{n/a}	double	all	
+double:store	nna-	-	-	Store the double cell values on the stack in the double cell variable at a.			class:word	{n/a}	{n/a}	double	all	
+double:var	nns-	-	-	Create a variable for holding the specified double cell value.			class:word	{n/a}	{n/a}	double	all	
 drop	n-	-	-	Discard the top value on the stack.			class:primitive	{n/a}	{n/a}	global	all	
 drop-pair	nn-	-	-	Remove top two items on the stack.			class:word	{n/a}	{n/a}	global	all	
 dump-stack	-	-	-	Display the items on the data stack.			class:word	{n/a}	{n/a}	global	all	

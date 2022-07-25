@@ -643,6 +643,18 @@ Temporarily remove n from the stack, execute the quotation, and then restore n t
 does                     D: q-  A: -  F: -
 Attach an action to the most recently created word. This is used in a manner similar to CREATE/DOES> in traditional Forth.
 
+double:const             D: nns-  A: -  F: -
+Create a constant returning the specified double cell value.
+
+double:fetch             D: a-n  A: -  F: -
+Fetch the double cell values stored in the double cell variable at a.
+
+double:store             D: nna-  A: -  F: -
+Store the double cell values on the stack in the double cell variable at a.
+
+double:var               D: nns-  A: -  F: -
+Create a variable for holding the specified double cell value.
+
 drop                     D: n-  A: -  F: -
 Discard the top value on the stack.
 
