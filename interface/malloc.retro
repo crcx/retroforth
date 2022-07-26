@@ -1,0 +1,21 @@
+# Malloc
+
+~~~
+
+{{
+  :mem:invoke #15 io:scan-for io:invoke ;
+  #0              'ALLOC  const
+  #1              'FREE   const
+  #2              'STORE  const
+  #3              'FETCH  const
+
+---reveal---
+
+  :mem:alloc (n--aa) ALLOC mem:invoke ;
+  :mem:set   (an--)  STORE mem:invoke ;
+  :mem:get   (a--n)  FETCH mem:invoke ;
+  :mem:free  (aa--)  FREE  mem:invoke ;
+
+}}
+
+~~~

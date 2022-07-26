@@ -2,6 +2,18 @@
 
 # Core Language
 
+- new words
+
+  - n:add
+  - n:sub
+  - n:mul
+  - n:div
+  - n:divmod
+  - n:mod
+  - d:hash
+  - d:rehash
+  - d:Hash-Function
+
 # VM
 
 ## nga-c
@@ -10,6 +22,7 @@
 
   - global state now in a struct
   - minimal, functional FFI
+  - malloc/free support (from Rick C)
 
 # Documentation
 
@@ -17,3 +30,10 @@
 
 # Examples
 
+- port of retroforth/ilo block editor
+
+----------------------------------------------------------------
+Important notes:
+
+- future releases will use 64-bit cells by default
+----------------------------------------------------------------

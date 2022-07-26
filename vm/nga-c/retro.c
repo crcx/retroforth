@@ -24,11 +24,6 @@
 #include <time.h>
 #include <unistd.h>
 
-#ifdef ENABLE_TERMINAL
-#include "linenoise.h"
-#include "linenoise.c"
-#endif
-
 #ifdef ENABLE_SIGNALS
 #include <signal.h>
 #endif
@@ -878,15 +873,6 @@ void query_filesystem(NgaState *vm) {
 void io_filesystem(NgaState *vm) {
   FileActions[stack_pop(vm)](vm);
 }
-
-
-#ifdef ENABLE_TERMINAL
-void query_terminal(NgaState *vm) {
-}
-
-void io_termina(NgaState *vm) {
-}
-#endif
 
 
 #ifdef ENABLE_UNIX
