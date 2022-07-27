@@ -1,0 +1,73 @@
+# Allocator Tests
+
+## Test Setup / Helpers
+
+```
+hex
+:print        s:put nl ;
+:n:print      n:put nl ;
+:double:print n:put n:put nl ;
+```
+
+## Test 1: `mem:alloc`
+
+Attempt to allocate 32 bytes of memory and assign it to the const `region1`:
+
+```
+'===TEST1:_mem:alloc print
+'Allocating... print
+#32 mem:alloc
+'Storing_to_`region1`... print
+'region1 double:const
+'New_memory_region_allocated_at print
+region1 double:print
+'===OK print nl nl
+```
+
+## Test 2: `mem:set`
+
+```
+'===TEST2:_mem:set print
+'Creating_a_random_value... print
+n:random
+'Storing_to_`random-value`... print
+'random-value const
+'New_random_value_is: print
+random-value n:print
+'Storing_value_to_`region1`... print
+region1 random-value mem:set
+'===OK print nl nl
+```
+
+## Test 3: `mem:get`
+
+```
+'===TEST3:_mem:get print
+'Expect_ s:put 'to_contain_ s:put random-value n:put nl
+'Actual_value:_____ s:put region1 mem:get n:put nl
+'===OK print nl nl
+```
+
+## Test 4: `mem:resize`
+
+```
+'===TEST4:_mem:resize print
+'Resizing_`region1`_to_64_bytes... print
+region1 #64 mem:resize
+'Storing_to_`region2`... print
+'region2 double:const
+'New_region_address:_ s:put region2 double:print
+'Old_region_address:_ s:put region1 double:print
+'===OK print nl nl
+```
+
+## Test 5: Read/Write to resized region
+
+```
+'Region2_contains: print
+region2 mem:get n:put nl
+'Should_equal: print
+random-value n:print nl
+```
+
+## Test 5: `mem:free`
