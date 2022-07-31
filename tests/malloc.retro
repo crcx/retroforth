@@ -36,6 +36,7 @@ n:random
 random-value n:print
 'Storing_value_to_`region1`... print
 region1 random-value mem:set
+region1 #8 + random-value mem:set
 '===OK print nl nl
 ```
 
@@ -45,6 +46,9 @@ region1 random-value mem:set
 '===TEST3:_mem:get print
 'Expect_ s:put 'to_contain_ s:put random-value n:put nl
 'Actual_value:_____ s:put region1 mem:get n:put nl
+'Calculating_memory_offset_should_not_segfault...
+region1 #8 + mem:get
+'Contents_of_(region1_+_1)_=_ s:put n:put nl
 '===OK print nl nl
 ```
 
