@@ -241,29 +241,29 @@ typedef union {
 void malloc_allocate(NgaState *vm) {
   // TODO: Conditionally compile based on host word size?
   double_cell addr = { .val = malloc(stack_pop(vm)) };
-  stack_push(vm, addr.msw);
   stack_push(vm, addr.lsw);
+  stack_push(vm, addr.msw);
 }
 
 void malloc_free(NgaState *vm) {
   double_cell addr;
-  addr.lsw = stack_pop(vm);
   addr.msw = stack_pop(vm);
+  addr.lsw = stack_pop(vm);
   free(addr.val);
 }
 
 void malloc_store(NgaState *vm) {
   CELL value = stack_pop(vm);
   double_cell addr;
-  addr.lsw = stack_pop(vm);
   addr.msw = stack_pop(vm);
+  addr.lsw = stack_pop(vm);
   *(CELL *) addr.val = value;
 }
 
 void malloc_fetch(NgaState *vm) {
   double_cell addr;
-  addr.lsw = stack_pop(vm);
   addr.msw = stack_pop(vm);
+  addr.lsw = stack_pop(vm);
   CELL value = *(CELL *)addr.val;
   stack_push(vm, value);
 }
@@ -271,13 +271,13 @@ void malloc_fetch(NgaState *vm) {
 void malloc_realloc(NgaState *vm) {
   CELL bytes = stack_pop(vm);
   double_cell addr1;
-  addr1.lsw = stack_pop(vm);
   addr1.msw = stack_pop(vm);
+  addr1.lsw = stack_pop(vm);
 
   double_cell addr2;
   addr2.val = realloc(addr1.val, bytes);
-  stack_push(vm, addr2.msw);
   stack_push(vm, addr2.lsw);
+  stack_push(vm, addr2.msw);
 }
 
 void query_malloc(NgaState *vm) {
