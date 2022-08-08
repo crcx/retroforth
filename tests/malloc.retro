@@ -24,10 +24,10 @@ region1 double:print
 '===OK print nl nl
 ```
 
-## Test 2: `mem:set`
+## Test 2: `mem:store`
 
 ```
-'===TEST2:_mem:set print
+'===TEST2:_mem:store print
 'Creating_a_random_value... print
 n:random
 'Storing_to_`random-value`... print
@@ -35,19 +35,19 @@ n:random
 'New_random_value_is: print
 random-value n:print
 'Storing_value_to_`region1`... print
-region1 random-value mem:set
-region1 #8 + random-value mem:set
+region1 random-value mem:store
+region1 #8 + random-value mem:store
 '===OK print nl nl
 ```
 
-## Test 3: `mem:get`
+## Test 3: `mem:fetch`
 
 ```
-'===TEST3:_mem:get print
+'===TEST3:_mem:fetch print
 'Expect_ s:put 'to_contain_ s:put random-value n:put nl
-'Actual_value:_____ s:put region1 mem:get n:put nl
+'Actual_value:_____ s:put region1 mem:fetch n:put nl
 'Calculating_memory_offset_should_not_segfault...
-region1 #8 + mem:get
+region1 #8 + mem:fetch
 'Contents_of_(region1_+_1)_=_ s:put n:put nl
 '===OK print nl nl
 ```
@@ -69,7 +69,7 @@ region1 #64 mem:resize
 
 ```
 'Region2_contains: print
-region2 mem:get n:put nl
+region2 mem:fetch n:put nl
 'Should_equal: print
 random-value n:print nl
 ```

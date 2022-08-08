@@ -14,8 +14,8 @@
 ---reveal---
 
   :mem:alloc  (n--aa) ALLOC  mem:invoke ;
-  :mem:set    (an--)  STORE  mem:invoke ;
-  :mem:get    (a--n)  FETCH  mem:invoke ;
+  :mem:store  (an--)  STORE  mem:invoke ;
+  :mem:fetch  (a--n)  FETCH  mem:invoke ;
   :mem:free   (aa--)  FREE   mem:invoke ;
   :mem:resize (aan--) RESIZE mem:invoke ;
 }}
