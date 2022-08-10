@@ -238,6 +238,25 @@ typedef union {
   };
 } double_cell;
 
+void double_add(NgaState *vm) {
+  double_cell a;
+  double_cell b;
+  double_cell c;
+  b.msw = stack_pop(vm);
+  b.lsw = stack_pop(vm);
+  a.msw = stack_pop(vm);
+  a.lsw = stack_pop(vm);
+}
+
+void double_sub(NgaState *vm) {
+}
+
+void double_mul(NgaState *vm) {
+}
+
+void double_divmod(NgaState *vm) {
+}
+
 void malloc_allocate(NgaState *vm) {
   // TODO: Conditionally compile based on host word size?
   double_cell addr = { .val = malloc(stack_pop(vm)) };
