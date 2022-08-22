@@ -119,6 +119,9 @@ bi                       D: xqq-?  A: -  F: -
 bi*                      D: xyqq-?  A: -  F: -
 bi@                      D: xyq-?  A: -  F: -
 binary                   D: -  A: -  F: -
+block:read               D: an-  A: -  F: -
+block:set-file           D: s-  A: -  F: -
+block:write              D: an-  A: -  F: -
 buffer:add               D: n-  A: -  F: -
 buffer:empty             D: -  A: -  F: -
 buffer:end               D: -a  A: -  F: -
@@ -363,6 +366,7 @@ mem:cell+                D: nnn-n  A: -  F: -
 mem:fetch                D: nn-n  A: -  F: -
 mem:fetch-double         D: nn-n  A: -  F: -
 mem:free                 D: nn-  A: -  F: -
+mem:resize               D: mmn-  A: -  F: -
 mem:store                D: xnn-  A: -  F: -
 mod                      D: nm-o  A: -  F: -
 n:-zero?                 D: n-f  A: -  F: -

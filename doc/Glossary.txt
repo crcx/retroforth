@@ -1402,6 +1402,39 @@ Set `Base` to binary.
 Class: class:word | Namespace: a | Interface Layer: all
 ------------------------------------------------------------------------
 
+block:read
+
+  Data:  an-
+  Addr:  -
+  Float: -
+
+Read 1024 cells from block n in the block storage into memory at address a.
+
+Class: class:word | Namespace: block | Interface Layer: rre
+------------------------------------------------------------------------
+
+block:set-file
+
+  Data:  s-
+  Addr:  -
+  Float: -
+
+Set the file name of the block storage device.
+
+Class: class:word | Namespace: block | Interface Layer: rre
+------------------------------------------------------------------------
+
+block:write
+
+  Data:  an-
+  Addr:  -
+  Float: -
+
+Save the 1024 cells at address a to block n in the block storage.
+
+Class: class:word | Namespace: block | Interface Layer: rre
+------------------------------------------------------------------------
+
 buffer:add
 
   Data:  n-
@@ -4208,6 +4241,17 @@ mem:free
   Float: -
 
 Fre a malloc'd region of memory. Pass a double cell pointer to the memory to free.
+
+Class: class:word | Namespace: mem | Interface Layer: rre
+------------------------------------------------------------------------
+
+mem:resize
+
+  Data:  mmn-
+  Addr:  -
+  Float: -
+
+Resize a malloc'd memory area.
 
 Class: class:word | Namespace: mem | Interface Layer: rre
 ------------------------------------------------------------------------

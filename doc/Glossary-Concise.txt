@@ -361,6 +361,15 @@ Execute q against x, then execute q against y.
 binary                   D: -  A: -  F: -
 Set `Base` to binary.
 
+block:read               D: an-  A: -  F: -
+Read 1024 cells from block n in the block storage into memory at address a.
+
+block:set-file           D: s-  A: -  F: -
+Set the file name of the block storage device.
+
+block:write              D: an-  A: -  F: -
+Save the 1024 cells at address a to block n in the block storage.
+
 buffer:add               D: n-  A: -  F: -
 Append a value to the current buffer.
 
@@ -1092,6 +1101,9 @@ Fetch a double cell value from a malloc memory region.
 
 mem:free                 D: nn-  A: -  F: -
 Fre a malloc'd region of memory. Pass a double cell pointer to the memory to free.
+
+mem:resize               D: mmn-  A: -  F: -
+Resize a malloc'd memory area.
 
 mem:store                D: xnn-  A: -  F: -
 Store a value into a malloc'd memory region. Uses a double cell pointer for the address.
