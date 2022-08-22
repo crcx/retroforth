@@ -310,6 +310,10 @@ f:to-string              D: -s  A: -  F: F-
 f:tuck                   D: -  A: -  F: FG-GFG
 fetch                    D: a-n  A: -  F: -
 fetch-next               D: a-an  A: -  F: -
+ffi:invoke               D: n-  A: -  F: -
+ffi:map-sym              D: sn-n  A: -  F: -
+ffi:open                 D: s-n  A: -  F: -
+ffi:operation            D: n-?  A: -  F: -
 file:A                   D: -n  A: -  F: -
 file:R                   D: -n  A: -  F: -
 file:R+                  D: -n  A: -  F: -

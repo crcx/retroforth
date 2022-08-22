@@ -934,6 +934,18 @@ Fetch the value stored at the specified address.
 fetch-next               D: a-an  A: -  F: -
 Fetch the value stored at the specified address. Returns the next address and the value.
 
+ffi:invoke               D: n-  A: -  F: -
+Invoke an FFI function. Set the stack as needed, and pass the FFI handle to this.
+
+ffi:map-sym              D: sn-n  A: -  F: -
+Map in a symbol from a shared library or object file. Returns an FFI handle.
+
+ffi:open                 D: s-n  A: -  F: -
+Open a shared library or object file.
+
+ffi:operation            D: n-?  A: -  F: -
+Trigger an i/o operation using the FFI device.
+
 file:A                   D: -n  A: -  F: -
 Constant for opening a file in APPEND mode.
 

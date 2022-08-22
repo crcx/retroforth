@@ -310,6 +310,10 @@ f:to-string	-s	-	F-	Convert a floating-point value into a string.			class:word	{
 f:tuck	-	-	FG-GFG	Tuck a copy of the top floating-point value under the second one.			class:word	{n/a}	{n/a}	f	rre	
 fetch	a-n	-	-	Fetch the value stored at the specified address.			class:primitive	    &Version fetch	{n/a}	global	all	
 fetch-next	a-an	-	-	Fetch the value stored at the specified address. Returns the next address and the value.			class:word	{n/a}	{n/a}	global	all	
+ffi:invoke	n-	-	-	Invoke an FFI function. Set the stack as needed, and pass the FFI handle to this.			class:wrd	{n/a}	{n/a}	ffi	rre	
+ffi:map-sym	sn-n	-	-	Map in a symbol from a shared library or object file. Returns an FFI handle.			class:word	{n/a}	{n/a}	ffi	rre	
+ffi:open	s-n	-	-	Open a shared library or object file.			class:word	{n/a}	{n/a}	ffi	rre	
+ffi:operation	n-?	-	-	Trigger an i/o operation using the FFI device.			class:word	{n/a}	{n/a}	ffi	rre	
 file:A	-n	-	-	Constant for opening a file in APPEND mode.			class:data	{n/a}	{n/a}	file	rre	
 file:R	-n	-	-	Constant for opening a file in READ mode.			class:data	{n/a}	{n/a}	file	rre	
 file:R+	-n	-	-	Constant for opening a file in READ & WRITE mode.			class:data	{n/a}	{n/a}	file	rre	

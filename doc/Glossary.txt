@@ -3597,6 +3597,50 @@ Fetch the value stored at the specified address. Returns the next address and th
 Class: class:word | Namespace: global | Interface Layer: all
 ------------------------------------------------------------------------
 
+ffi:invoke
+
+  Data:  n-
+  Addr:  -
+  Float: -
+
+Invoke an FFI function. Set the stack as needed, and pass the FFI handle to this.
+
+Class: class:wrd | Namespace: ffi | Interface Layer: rre
+------------------------------------------------------------------------
+
+ffi:map-sym
+
+  Data:  sn-n
+  Addr:  -
+  Float: -
+
+Map in a symbol from a shared library or object file. Returns an FFI handle.
+
+Class: class:word | Namespace: ffi | Interface Layer: rre
+------------------------------------------------------------------------
+
+ffi:open
+
+  Data:  s-n
+  Addr:  -
+  Float: -
+
+Open a shared library or object file.
+
+Class: class:word | Namespace: ffi | Interface Layer: rre
+------------------------------------------------------------------------
+
+ffi:operation
+
+  Data:  n-?
+  Addr:  -
+  Float: -
+
+Trigger an i/o operation using the FFI device.
+
+Class: class:word | Namespace: ffi | Interface Layer: rre
+------------------------------------------------------------------------
+
 file:A
 
   Data:  -n

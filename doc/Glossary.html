@@ -2322,6 +2322,34 @@
 </div>
 <p>Fetch the value stored at the specified address. Returns the next address and the value.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>global</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
+<h2>ffi:invoke</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> n-<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Invoke an FFI function. Set the stack as needed, and pass the FFI handle to this.</p>
+<table><tr><td><b>Class:</b> </td><td>class:wrd</td></tr><tr><td><b>Namespace:</b> </td><td>ffi</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><hr/>
+<h2>ffi:map-sym</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> sn-n<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Map in a symbol from a shared library or object file. Returns an FFI handle.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>ffi</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><hr/>
+<h2>ffi:open</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> s-n<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Open a shared library or object file.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>ffi</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><hr/>
+<h2>ffi:operation</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> n-?<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Trigger an i/o operation using the FFI device.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>ffi</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><hr/>
 <h2>file:A</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> -n<br>
 <b>Addr:</b> -<br>
