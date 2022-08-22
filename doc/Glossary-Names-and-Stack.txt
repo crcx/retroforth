@@ -216,6 +216,7 @@ does                     D: q-  A: -  F: -
 double:const             D: nns-  A: -  F: -
 double:fetch             D: a-n  A: -  F: -
 double:store             D: nna-  A: -  F: -
+double:swap              D: nnmm-mmnn  A: -  F: -
 double:var               D: nns-  A: -  F: -
 drop                     D: n-  A: -  F: -
 drop-pair                D: nn-  A: -  F: -
@@ -357,8 +358,12 @@ io:unix-syscall          D: ...n-  A: -  F: -
 listen                   D: -  A: -  F: -
 lt?                      D: nn-f  A: -  F: -
 lteq?                    D: nn-f  A: -  F: -
+mem:alloc                D: n-nn  A: -  F: -
 mem:cell+                D: nnn-n  A: -  F: -
+mem:fetch                D: nn-n  A: -  F: -
 mem:fetch-double         D: nn-n  A: -  F: -
+mem:free                 D: nn-  A: -  F: -
+mem:store                D: xnn-  A: -  F: -
 mod                      D: nm-o  A: -  F: -
 n:-zero?                 D: n-f  A: -  F: -
 n:MAX                    D: -n  A: -  F: -

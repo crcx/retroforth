@@ -652,6 +652,9 @@ Fetch the double cell values stored in the double cell variable at a.
 double:store             D: nna-  A: -  F: -
 Store the double cell values on the stack in the double cell variable at a.
 
+double:swap              D: nnmm-mmnn  A: -  F: -
+Swap double cell value on stack.
+
 double:var               D: nns-  A: -  F: -
 Create a variable for holding the specified double cell value.
 
@@ -1075,11 +1078,23 @@ Compare n1 and n2. Return `TRUE` if n1 is less than n2, or `FALSE` otherwise.
 lteq?                    D: nn-f  A: -  F: -
 Compare n1 and n2. Return `TRUE` if n1 is less than or equal to n2, or `FALSE` otherwise.
 
+mem:alloc                D: n-nn  A: -  F: -
+Use malloc to allocate memory. Returns a double cell pointer to this memory.
+
 mem:cell+                D: nnn-n  A: -  F: -
 Return address of next cell. Uses a double cell pointer on the stack.
 
+mem:fetch                D: nn-n  A: -  F: -
+Fetch value from malloc'd memory region. Address is a double cell value.
+
 mem:fetch-double         D: nn-n  A: -  F: -
 Fetch a double cell value from a malloc memory region.
+
+mem:free                 D: nn-  A: -  F: -
+Fre a malloc'd region of memory. Pass a double cell pointer to the memory to free.
+
+mem:store                D: xnn-  A: -  F: -
+Store a value into a malloc'd memory region. Uses a double cell pointer for the address.
 
 mod                      D: nm-o  A: -  F: -
 Divide `n` by `m` and return the remainder.

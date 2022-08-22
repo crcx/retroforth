@@ -1592,28 +1592,35 @@
 <b>Float:</b> -</p>
 </div>
 <p>Create a constant returning the specified double cell value.</p>
-<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>double</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>double</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><hr/>
 <h2>double:fetch</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> a-n<br>
 <b>Addr:</b> -<br>
 <b>Float:</b> -</p>
 </div>
 <p>Fetch the double cell values stored in the double cell variable at a.</p>
-<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>double</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>double</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><hr/>
 <h2>double:store</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> nna-<br>
 <b>Addr:</b> -<br>
 <b>Float:</b> -</p>
 </div>
 <p>Store the double cell values on the stack in the double cell variable at a.</p>
-<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>double</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>double</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><hr/>
+<h2>double:swap</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> nnmm-mmnn<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Swap double cell value on stack.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>double</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><hr/>
 <h2>double:var</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> nns-<br>
 <b>Addr:</b> -<br>
 <b>Float:</b> -</p>
 </div>
 <p>Create a variable for holding the specified double cell value.</p>
-<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>double</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>double</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><hr/>
 <h2>drop</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> n-<br>
 <b>Addr:</b> -<br>
@@ -2677,6 +2684,13 @@
 </div>
 <p>Compare n1 and n2. Return `TRUE` if n1 is less than or equal to n2, or `FALSE` otherwise.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>global</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
+<h2>mem:alloc</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> n-nn<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Use malloc to allocate memory. Returns a double cell pointer to this memory.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>mem</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><hr/>
 <h2>mem:cell+</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> nnn-n<br>
 <b>Addr:</b> -<br>
@@ -2684,12 +2698,33 @@
 </div>
 <p>Return address of next cell. Uses a double cell pointer on the stack.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>mem</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><hr/>
+<h2>mem:fetch</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> nn-n<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Fetch value from malloc'd memory region. Address is a double cell value.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>mem</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><hr/>
 <h2>mem:fetch-double</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> nn-n<br>
 <b>Addr:</b> -<br>
 <b>Float:</b> -</p>
 </div>
 <p>Fetch a double cell value from a malloc memory region.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>mem</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><hr/>
+<h2>mem:free</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> nn-<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Fre a malloc'd region of memory. Pass a double cell pointer to the memory to free.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>mem</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><hr/>
+<h2>mem:store</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> xnn-<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Store a value into a malloc'd memory region. Uses a double cell pointer for the address.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>mem</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><hr/>
 <h2>mod</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> nm-o<br>

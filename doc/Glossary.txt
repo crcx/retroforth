@@ -2468,7 +2468,7 @@ double:const
 
 Create a constant returning the specified double cell value.
 
-Class: class:word | Namespace: double | Interface Layer: all
+Class: class:word | Namespace: double | Interface Layer: rre
 ------------------------------------------------------------------------
 
 double:fetch
@@ -2479,7 +2479,7 @@ double:fetch
 
 Fetch the double cell values stored in the double cell variable at a.
 
-Class: class:word | Namespace: double | Interface Layer: all
+Class: class:word | Namespace: double | Interface Layer: rre
 ------------------------------------------------------------------------
 
 double:store
@@ -2490,7 +2490,18 @@ double:store
 
 Store the double cell values on the stack in the double cell variable at a.
 
-Class: class:word | Namespace: double | Interface Layer: all
+Class: class:word | Namespace: double | Interface Layer: rre
+------------------------------------------------------------------------
+
+double:swap
+
+  Data:  nnmm-mmnn
+  Addr:  -
+  Float: -
+
+Swap double cell value on stack.
+
+Class: class:word | Namespace: double | Interface Layer: rre
 ------------------------------------------------------------------------
 
 double:var
@@ -2501,7 +2512,7 @@ double:var
 
 Create a variable for holding the specified double cell value.
 
-Class: class:word | Namespace: double | Interface Layer: all
+Class: class:word | Namespace: double | Interface Layer: rre
 ------------------------------------------------------------------------
 
 drop
@@ -4146,6 +4157,17 @@ Compare n1 and n2. Return `TRUE` if n1 is less than or equal to n2, or `FALSE` o
 Class: class:word | Namespace: global | Interface Layer: all
 ------------------------------------------------------------------------
 
+mem:alloc
+
+  Data:  n-nn
+  Addr:  -
+  Float: -
+
+Use malloc to allocate memory. Returns a double cell pointer to this memory.
+
+Class: class:word | Namespace: mem | Interface Layer: rre
+------------------------------------------------------------------------
+
 mem:cell+
 
   Data:  nnn-n
@@ -4157,6 +4179,17 @@ Return address of next cell. Uses a double cell pointer on the stack.
 Class: class:word | Namespace: mem | Interface Layer: rre
 ------------------------------------------------------------------------
 
+mem:fetch
+
+  Data:  nn-n
+  Addr:  -
+  Float: -
+
+Fetch value from malloc'd memory region. Address is a double cell value.
+
+Class: class:word | Namespace: mem | Interface Layer: rre
+------------------------------------------------------------------------
+
 mem:fetch-double
 
   Data:  nn-n
@@ -4164,6 +4197,28 @@ mem:fetch-double
   Float: -
 
 Fetch a double cell value from a malloc memory region.
+
+Class: class:word | Namespace: mem | Interface Layer: rre
+------------------------------------------------------------------------
+
+mem:free
+
+  Data:  nn-
+  Addr:  -
+  Float: -
+
+Fre a malloc'd region of memory. Pass a double cell pointer to the memory to free.
+
+Class: class:word | Namespace: mem | Interface Layer: rre
+------------------------------------------------------------------------
+
+mem:store
+
+  Data:  xnn-
+  Addr:  -
+  Float: -
+
+Store a value into a malloc'd memory region. Uses a double cell pointer for the address.
 
 Class: class:word | Namespace: mem | Interface Layer: rre
 ------------------------------------------------------------------------

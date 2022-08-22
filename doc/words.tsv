@@ -213,10 +213,11 @@ decimal	-	-	-	Set `Base` to decimal.			class:word	{n/a}	{n/a}	a	all
 depth	-n	-	-	Return the number of items on the stack.			class:word	{n/a}	{n/a}	global	all	
 dip	nq-n	-	-	Temporarily remove n from the stack, execute the quotation, and then restore n to the stack.			class:word	{n/a}	{n/a}	global	all	
 does	q-	-	-	Attach an action to the most recently created word. This is used in a manner similar to CREATE/DOES> in traditional Forth.			class:word	{n/a}	{n/a}	global	all	
-double:const	nns-	-	-	Create a constant returning the specified double cell value.			class:word	{n/a}	{n/a}	double	all	
-double:fetch	a-n	-	-	Fetch the double cell values stored in the double cell variable at a.			class:word	{n/a}	{n/a}	double	all	
-double:store	nna-	-	-	Store the double cell values on the stack in the double cell variable at a.			class:word	{n/a}	{n/a}	double	all	
-double:var	nns-	-	-	Create a variable for holding the specified double cell value.			class:word	{n/a}	{n/a}	double	all	
+double:const	nns-	-	-	Create a constant returning the specified double cell value.			class:word	{n/a}	{n/a}	double	rre	
+double:fetch	a-n	-	-	Fetch the double cell values stored in the double cell variable at a.			class:word	{n/a}	{n/a}	double	rre	
+double:store	nna-	-	-	Store the double cell values on the stack in the double cell variable at a.			class:word	{n/a}	{n/a}	double	rre	
+double:swap	nnmm-mmnn	-	-	Swap double cell value on stack.			class:word	{n/a}	{n/a}	double	rre	
+double:var	nns-	-	-	Create a variable for holding the specified double cell value.			class:word	{n/a}	{n/a}	double	rre	
 drop	n-	-	-	Discard the top value on the stack.			class:primitive	{n/a}	{n/a}	global	all	
 drop-pair	nn-	-	-	Remove top two items on the stack.			class:word	{n/a}	{n/a}	global	all	
 dump-stack	-	-	-	Display the items on the data stack.			class:word	{n/a}	{n/a}	global	all	
@@ -357,8 +358,12 @@ io:unix-syscall	...n-	-	-	Trigger a Unix system call. This is not intended to be
 listen	-	-	-	"Run interactive ""listener"" (a REPL)."			class:word	{n/a}	{n/a}	global	rre	
 lt?	nn-f	-	-	Compare n1 and n2. Return `TRUE` if n1 is less than n2, or `FALSE` otherwise.			class:primitive	{n/a}	{n/a}	global	all	
 lteq?	nn-f	-	-	Compare n1 and n2. Return `TRUE` if n1 is less than or equal to n2, or `FALSE` otherwise.			class:word	{n/a}	{n/a}	global	all	
+mem:alloc	n-nn	-	-	Use malloc to allocate memory. Returns a double cell pointer to this memory.			class:word	{n/a}	{n/a}	mem	rre	
 mem:cell+	nnn-n	-	-	Return address of next cell. Uses a double cell pointer on the stack.			class:word	{n/a}	{n/a}	mem	rre	
+mem:fetch	nn-n	-	-	Fetch value from malloc'd memory region. Address is a double cell value.			class:word	{n/a}	{n/a}	mem	rre	
 mem:fetch-double	nn-n	-	-	Fetch a double cell value from a malloc memory region.			class:word	{n/a}	{n/a}	mem	rre	
+mem:free	nn-	-	-	Fre a malloc'd region of memory. Pass a double cell pointer to the memory to free.			class:word	{n/a}	{n/a}	mem	rre	
+mem:store	xnn-	-	-	Store a value into a malloc'd memory region. Uses a double cell pointer for the address.			class:word	{n/a}	{n/a}	mem	rre	
 mod	nm-o	-	-	Divide `n` by `m` and return the remainder.			class:word	{n/a}	{n/a}	global	all	
 n:-zero?	n-f	-	-	Return `TRUE` if number is not zero, or `FALSE` otherwise.			class:word	{n/a}	{n/a}	n	all	
 n:MAX	-n	-	-	Return the maximum value that will fit in a cell.			class:word	{n/a}	{n/a}	n	all	
