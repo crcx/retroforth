@@ -20,4 +20,7 @@
   :mem:resize (aan--) RESIZE mem:invoke ;
 }}
 
+:mem:cell+ (nnn-n) #4 * + ;
+:mem:fetch-double (n-nn)
+  dup-pair #1 mem:cell+ fetch push mem:fetch pop ;
 ~~~

@@ -10,4 +10,7 @@
 
 :double:const (nns-)
   double:var &double:fetch does ;
+
+:double:swap (nnmm-mmnn)
+  rot push rot pop ;
 ~~~
