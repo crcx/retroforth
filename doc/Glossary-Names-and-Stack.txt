@@ -357,6 +357,8 @@ io:unix-syscall          D: ...n-  A: -  F: -
 listen                   D: -  A: -  F: -
 lt?                      D: nn-f  A: -  F: -
 lteq?                    D: nn-f  A: -  F: -
+mem:cell+                D: nnn-n  A: -  F: -
+mem:fetch-double         D: nn-n  A: -  F: -
 mod                      D: nm-o  A: -  F: -
 n:-zero?                 D: n-f  A: -  F: -
 n:MAX                    D: -n  A: -  F: -

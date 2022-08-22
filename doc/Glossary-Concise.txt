@@ -1075,6 +1075,12 @@ Compare n1 and n2. Return `TRUE` if n1 is less than n2, or `FALSE` otherwise.
 lteq?                    D: nn-f  A: -  F: -
 Compare n1 and n2. Return `TRUE` if n1 is less than or equal to n2, or `FALSE` otherwise.
 
+mem:cell+                D: nnn-n  A: -  F: -
+Return address of next cell. Uses a double cell pointer on the stack.
+
+mem:fetch-double         D: nn-n  A: -  F: -
+Fetch a double cell value from a malloc memory region.
+
 mod                      D: nm-o  A: -  F: -
 Divide `n` by `m` and return the remainder.
 

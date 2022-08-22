@@ -357,6 +357,8 @@ io:unix-syscall	...n-	-	-	Trigger a Unix system call. This is not intended to be
 listen	-	-	-	"Run interactive ""listener"" (a REPL)."			class:word	{n/a}	{n/a}	global	rre	
 lt?	nn-f	-	-	Compare n1 and n2. Return `TRUE` if n1 is less than n2, or `FALSE` otherwise.			class:primitive	{n/a}	{n/a}	global	all	
 lteq?	nn-f	-	-	Compare n1 and n2. Return `TRUE` if n1 is less than or equal to n2, or `FALSE` otherwise.			class:word	{n/a}	{n/a}	global	all	
+mem:cell+	nnn-n	-	-	Return address of next cell. Uses a double cell pointer on the stack.			class:word	{n/a}	{n/a}	mem	rre	
+mem:fetch-double	nn-n	-	-	Fetch a double cell value from a malloc memory region.			class:word	{n/a}	{n/a}	mem	rre	
 mod	nm-o	-	-	Divide `n` by `m` and return the remainder.			class:word	{n/a}	{n/a}	global	all	
 n:-zero?	n-f	-	-	Return `TRUE` if number is not zero, or `FALSE` otherwise.			class:word	{n/a}	{n/a}	n	all	
 n:MAX	-n	-	-	Return the maximum value that will fit in a cell.			class:word	{n/a}	{n/a}	n	all	
