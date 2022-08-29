@@ -1,8 +1,31 @@
-# RetroForth 2022.7 Release Notes
+# RetroForth 2022.8 Release Notes
 
-# Core Language
+----------------------------------------------------------------
 
-- new words
+# Major Changes
+
+* added malloc device (Rick Carlino)
+* added limited double: vocabulary (Rick Carlino)
+* added ffi device
+* in c implementation, state now tracked in a struct instead
+  of global variables
+* fixed compile time warning about missing code blocks
+* added a BUILD constant
+* fixed bugs in retro-describe(1)
+* fixed glossary html export
+* added block: vocabulary
+* new example: port of retroforth/ilo block editor
+* corrected filename reference in documentation (reported by
+  Martin Hohmann-Marriott)
+* addded tail-recurse
+* added missing glossary entries
+* started work on adding name hashes to dictionary
+
+----------------------------------------------------------------
+
+# Other
+
+* addded new words:
 
   - n:add
   - n:sub
@@ -14,26 +37,6 @@
   - d:rehash
   - d:Hash-Function
 
-# VM
+* added a port of retroforth/ilo block editor
 
-## nga-c
-
-- retro.c
-
-  - global state now in a struct
-  - minimal, functional FFI
-  - malloc/free support (from Rick C)
-
-# Documentation
-
-# Other
-
-# Examples
-
-- port of retroforth/ilo block editor
-
-----------------------------------------------------------------
-Important notes:
-
-- future releases will use 64-bit cells by default
 ----------------------------------------------------------------
