@@ -1,42 +1,13 @@
-# RetroForth 2022.8 Release Notes
+          _              __            _   _        __
+ _ __ ___| |_ _ __ ___  / _| ___  _ __| |_| |__    / / __   __ _  __ _
+| '__/ _ \ __| '__/ _ \| |_ / _ \| '__| __| '_ \  / / '_ \ / _` |/ _` |
+| | |  __/ |_| | | (_) |  _| (_) | |  | |_| | | |/ /| | | | (_| | (_| |
+|_|  \___|\__|_|  \___/|_|  \___/|_|   \__|_| |_/_/ |_| |_|\__, |\__,_|
+                                                           |___/
+# RetroForth 2023.1 Release Notes
 
 ----------------------------------------------------------------
 
-# Major Changes
-
-* added malloc device (Rick Carlino)
-* added limited double: vocabulary (Rick Carlino)
-* added ffi device
-* in c implementation, state now tracked in a struct instead
-  of global variables
-* fixed compile time warning about missing code blocks
-* added a BUILD constant
-* fixed bugs in retro-describe(1)
-* fixed glossary html export
-* added block: vocabulary
-* new example: port of retroforth/ilo block editor
-* corrected filename reference in documentation (reported by
-  Martin Hohmann-Marriott)
-* addded tail-recurse
-* added missing glossary entries
-* started work on adding name hashes to dictionary
-
-----------------------------------------------------------------
-
-# Other
-
-* addded new words:
-
-  - n:add
-  - n:sub
-  - n:mul
-  - n:div
-  - n:divmod
-  - n:mod
-  - d:hash
-  - d:rehash
-  - d:Hash-Function
-
-* added a port of retroforth/ilo block editor
+* no longer display warning on files with only test blocks (#87)
 
 ----------------------------------------------------------------

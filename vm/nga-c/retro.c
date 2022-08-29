@@ -1694,6 +1694,9 @@ int fence_boundary(NgaState *vm, char *buffer, int tests_enabled) {
   int flag = 1;
   if (strcmp(buffer, vm->code_start) == 0) { flag = -1; }
   if (strcmp(buffer, vm->code_end) == 0)   { flag = -1; }
+  if (strcmp(buffer, vm->test_start) == 0) {
+    if (vm->codeBlocks == 0) { vm->codeBlocks++; }
+  }
   if (tests_enabled == 0) { return flag; }
   if (strcmp(buffer, vm->test_start) == 0) { flag = -1; }
   if (strcmp(buffer, vm->test_end) == 0)   { flag = -1; }
@@ -1806,7 +1809,7 @@ void include_file(NgaState *vm, char *fname, int run_tests) {
   vm->cpu[vm->active].ip = aip;
 
   if (vm->codeBlocks == 0) {
-    printf("warning: no code blocks found!\n");
+    printf("warning: no code or test blocks found!\n");
     printf("         filename: %s\n", fname);
     printf("         see http://unu.retroforth.org for a brief summary of\n");
     printf("         the unu code format used by retro\n");
