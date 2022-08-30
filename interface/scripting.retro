@@ -27,6 +27,10 @@ introspection and control of the `include` process.
 
 Adds support for `abort`.
 
+## Rev. 3
+
+Adds support for obtaining current source line text
+
 # The Code
 
 ~~~
@@ -47,6 +51,8 @@ Adds support for `abort`.
   :script:abort-include (-)          #7 script:operation ;
 
   :abort (-) &Compiler v:off         #8 script:operation ;
+
+  :script:current-line-text (-s) s:empty [ #9 script:operation ] sip ;
 }}
 ~~~
 

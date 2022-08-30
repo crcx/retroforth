@@ -486,6 +486,7 @@ script:abort-include	-	-	-	Discard remaining tokens on the current line being ev
 script:arguments	-n	-	-	Return the number of arguments passed to the program.			class:word	{n/a}	{n/a}	sys	rre	
 script:current-file	-s	-	-	Return the filename of the file being processed by the current `include`, or `/dev/stdin` if the input source is the terminal.			class:word	{n/a}	{n/a}	sys	rre	
 script:current-line	-n	-	-	Return the current line number of the file being processed by the current `include`, or `0` if the input source is the terminal. Line numbering starts at 1.			class:macro	{n/a}	{n/a}	script	rre	
+script:current-line-text	-s	-	-	Return the text of the current line being processed by the current `include`.			class:macro	{n/a}	{n/a}	script	rre	
 script:get-argument	n-s	-	-	Given an argument number, return the argument as a string.			class:word	{n/a}	{n/a}	script	rre	
 script:ignore-to-eof	-	-	-	Discard remaining lines in the file currently being evaluated. This only works when including a file, not at the interpreter.			class:word	{n/a}	{n/a}	script	rre	
 script:ignore-to-eol	-	-	-	Discard remaining tokens in the current line. This only works when including a file, not at the interpreter.			class:word	{n/a}	{n/a}	script	rre	

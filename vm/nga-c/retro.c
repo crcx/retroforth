@@ -140,6 +140,7 @@ struct NgaState {
   char **sys_argv;
   int sys_argc;
   char scripting_sources[64][8192];
+  char line[4096];
   int current_source;
   int perform_abort;
 
@@ -1501,12 +1502,17 @@ void carry_out_abort(NgaState *vm) {
   vm->current_source = 0;
 }
 
+void scripting_line_text(NgaState *vm) {
+  CELL target = stack_pop(vm);
+  string_inject(vm, vm->line, target);
+}
+
 Handler ScriptingActions[] = {
   scripting_arg_count,     scripting_arg,
   scripting_include,       scripting_name,
   scripting_source,        scripting_line,
   scripting_ignore_to_eol, scripting_ignore_to_eof,
-  scripting_abort
+  scripting_abort,         scripting_line_text
 };
 
 void query_scripting(NgaState *vm) {
@@ -1711,6 +1717,7 @@ int fence_boundary(NgaState *vm, char *buffer, int tests_enabled) {
 void read_line(NgaState *vm, FILE *file, char *token_buffer) {
   int ch = getc(file);
   int count = 0;
+  token_buffer[0] = '\0';
   while ((ch != 10) && (ch != 13) && (ch != EOF) && (ch != 0)) {
     token_buffer[count++] = ch;
     ch = getc(file);
@@ -1731,7 +1738,6 @@ void include_file(NgaState *vm, char *fname, int run_tests) {
   int inBlock = 0;                 /* Tracks status of in/out of block */
   int priorBlocks = 0;
   char source[64 * 1024];          /* Token buffer [about 64K]         */
-  char line[64 * 1024];            /* Line buffer [about 64K]          */
   char fence[33];                  /* Used with `fence_boundary()`     */
 
   CELL ReturnStack[ADDRESSES];
@@ -1766,12 +1772,12 @@ void include_file(NgaState *vm, char *fname, int run_tests) {
     vm->ignoreToEOL = 0;
 
     offset = ftell(fp);
-    read_line(vm, fp, line);
+    read_line(vm, fp, vm->line);
     at++;
     fseek(fp, offset, SEEK_SET);
     skip_indent(fp);
 
-    tokens = count_tokens(line);
+    tokens = count_tokens(vm->line);
 
     while (tokens > 0 && vm->ignoreToEOL == 0) {
       tokens--;
@@ -1793,7 +1799,7 @@ void include_file(NgaState *vm, char *fname, int run_tests) {
       }
     }
     if (vm->ignoreToEOL == -1) {
-      read_line(vm, fp, line);
+      read_line(vm, fp, vm->line);
     }
   }
 

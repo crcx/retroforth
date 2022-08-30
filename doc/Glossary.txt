@@ -5691,6 +5691,17 @@ Return the current line number of the file being processed by the current `inclu
 Class: class:macro | Namespace: script | Interface Layer: rre
 ------------------------------------------------------------------------
 
+script:current-line-text
+
+  Data:  -s
+  Addr:  -
+  Float: -
+
+Return the text of the current line being processed by the current `include`.
+
+Class: class:macro | Namespace: script | Interface Layer: rre
+------------------------------------------------------------------------
+
 script:get-argument
 
   Data:  n-s
