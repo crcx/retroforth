@@ -13,4 +13,7 @@
 
 :double:swap (nnmm-mmnn)
   rot push rot pop ;
+
+:double:dip (mnq-mn) rot rot push push call pop pop ;
+:double:sip (mnq-mn) &dup-pair dip double:dip ;
 ~~~

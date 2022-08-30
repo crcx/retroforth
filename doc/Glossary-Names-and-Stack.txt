@@ -217,7 +217,9 @@ depth                     D: -n  A: -  F: -
 dip                       D: nq-n  A: -  F: -
 does                      D: q-  A: -  F: -
 double:const              D: nns-  A: -  F: -
+double:dip                D: mnq-mn  A: -  F: -
 double:fetch              D: a-n  A: -  F: -
+double:sip                D: mnq(?n-?)-mn  A: -  F: -
 double:store              D: nna-  A: -  F: -
 double:swap               D: nnmm-mmnn  A: -  F: -
 double:var                D: nns-  A: -  F: -

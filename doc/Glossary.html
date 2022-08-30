@@ -1614,6 +1614,13 @@
 </div>
 <p>Create a constant returning the specified double cell value.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>double</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><hr/>
+<h2>double:dip</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> mnq-mn<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Temporarily remove m and n from the stack, execute the quotation, and then restore m and n to the stack.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>global</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
 <h2>double:fetch</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> a-n<br>
 <b>Addr:</b> -<br>
@@ -1621,6 +1628,13 @@
 </div>
 <p>Fetch the double cell values stored in the double cell variable at a.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>double</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><hr/>
+<h2>double:sip</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> mnq(?n-?)-mn<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Run quote. After execution completes, put a copy of m and n back on top of the stack.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>global</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
 <h2>double:store</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> nna-<br>
 <b>Addr:</b> -<br>

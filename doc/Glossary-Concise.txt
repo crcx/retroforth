@@ -655,8 +655,14 @@ Attach an action to the most recently created word. This is used in a manner sim
 double:const              D: nns-  A: -  F: -
 Create a constant returning the specified double cell value.
 
+double:dip                D: mnq-mn  A: -  F: -
+Temporarily remove m and n from the stack, execute the quotation, and then restore m and n to the stack.
+
 double:fetch              D: a-n  A: -  F: -
 Fetch the double cell values stored in the double cell variable at a.
+
+double:sip                D: mnq(?n-?)-mn  A: -  F: -
+Run quote. After execution completes, put a copy of m and n back on top of the stack.
 
 double:store              D: nna-  A: -  F: -
 Store the double cell values on the stack in the double cell variable at a.

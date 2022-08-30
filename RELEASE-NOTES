@@ -10,5 +10,7 @@
 
 * no longer display warning on files with only test blocks (#87)
 * added `script:current-line-text` (#85)
+* added `double:dip`
+* added `double:sip`
 
 ----------------------------------------------------------------

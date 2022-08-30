@@ -2504,6 +2504,17 @@ Create a constant returning the specified double cell value.
 Class: class:word | Namespace: double | Interface Layer: rre
 ------------------------------------------------------------------------
 
+double:dip
+
+  Data:  mnq-mn
+  Addr:  -
+  Float: -
+
+Temporarily remove m and n from the stack, execute the quotation, and then restore m and n to the stack.
+
+Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
 double:fetch
 
   Data:  a-n
@@ -2513,6 +2524,17 @@ double:fetch
 Fetch the double cell values stored in the double cell variable at a.
 
 Class: class:word | Namespace: double | Interface Layer: rre
+------------------------------------------------------------------------
+
+double:sip
+
+  Data:  mnq(?n-?)-mn
+  Addr:  -
+  Float: -
+
+Run quote. After execution completes, put a copy of m and n back on top of the stack.
+
+Class: class:word | Namespace: global | Interface Layer: all
 ------------------------------------------------------------------------
 
 double:store
