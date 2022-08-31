@@ -1,10 +1,10 @@
-# Retro/Napia Words
+# Retro/ilo & Retro/napia Words
 
-This adds support for some words from Retro/Napia. It's intended
+This adds support for some words from Retro/ilo. It's intended
 to aid in portability between the systems.
 
 The basic math operations are given non-symbolic names and
-placed in the `n:` namespace. (In Retro/Napia, these are the
+placed in the `n:` namespace. (In Retro/ilo, these are the
 standard names for these).
 
 ~~~
@@ -14,6 +14,9 @@ standard names for these).
 :n:div    / ;
 :n:mod    mod ;
 :n:divmod /mod ;
+
+:comma  , ;
+:gc &Heap swap v:preserve ;
 ~~~
 
 Provide source data.

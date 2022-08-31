@@ -1,0 +1,52 @@
+~~~
+:aa:make (...n-a) here [ dup comma &comma times ] dip ;
+
+:aa:map
+  swap [ fetch-next [ [ fetch over call ] sip
+                      &store sip n:inc ] times
+         drop-pair ] sip ;
+
+:as:map aa:map ;
+
+:aa:middle (afl-a)
+  here [ dup comma [ n:inc n:add ] dip
+         here swap copy ] dip dup &Free store s:temp ;
+
+:aa:left  (an-a) #0 swap aa:middle ;
+:aa:right (an-a) over s:length over n:sub swap aa:middle ;
+
+:as:left aa:left ;
+:as:right aa:right ;
+:as:middle aa:middle ;
+
+{{
+  'Count var
+  :prepare  #0 &Count store ;
+  :reserve  swap #0 comma ;
+  :patch    here over n:sub n:dec over store ;
+  :cleanup  dup s:temp swap &Free store ;
+  :match?   over eq? ;
+  :record   &Count fetch comma ;
+  :iterate  [ match? &record if &Count v:inc ] a:for-each ;
+---reveal---
+  :aa:indices (av-a)
+    prepare here [ reserve iterate drop ] dip patch cleanup ;
+}}
+
+:aa:index (av-n) [ aa:indices #0 a:fetch ] gc ;
+
+:aa:contains? (an-f)
+  swap #0 swap [ swap [ over eq? ] dip or ] a:for-each nip ;
+
+:as:contains? aa:contains? ;
+
+:aa:filter (aq-)
+  [ over &call dip swap &comma &drop choose ] curry
+  here [ over fetch comma a:for-each ] dip
+  here over n:sub n:dec over store ;
+
+:as:filter aa:filter ;
+
+:aa:first (a-n) #0 a:fetch ;
+:aa:last  (a-n) dup a:length n:dec a:fetch ;
+~~~
