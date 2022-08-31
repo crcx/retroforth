@@ -38,6 +38,9 @@ CFLAGS ?= -O2
 
 # -------------------------------------------------------------
 
+OPTIONS ?=
+OPTIONS += -DBIT64
+
 # The I/O devices can be enabled or disabled. Comment or
 # uncomment the corresponding ENABLED and DEVICES lines and
 # then run `make`. Of particular note here, sockets support
