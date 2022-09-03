@@ -72,7 +72,7 @@ DEVICES += interface/malloc.retro
 
 # -------------------------------------------------------------
 
-all: build
+all: clean build
 
 help:
 
