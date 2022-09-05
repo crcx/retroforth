@@ -187,7 +187,9 @@ void io_socket(NgaState *);         void query_socket(NgaState *);
 #endif
 
 #ifdef ENABLE_MALLOC
+#ifdef BIT64
 void io_malloc(NgaState *);         void query_malloc(NgaState *);
+#endif
 #endif
 
 void io_image(NgaState *);          void query_image(NgaState *);
@@ -231,6 +233,7 @@ void inst_iq(NgaState *);  void inst_ii(NgaState *);
 
 /* Dynamic Memory / `malloc` support --------------------------------- */
 #ifdef ENABLE_MALLOC
+#ifdef BIT64
 typedef union {
   void* val;
   struct {
@@ -259,45 +262,32 @@ void double_divmod(NgaState *vm) {
 }
 
 void malloc_allocate(NgaState *vm) {
-  // TODO: Conditionally compile based on host word size?
-  double_cell addr = { .val = malloc(stack_pop(vm)) };
-  stack_push(vm, addr.lsw);
-  stack_push(vm, addr.msw);
+  stack_push(vm, (CELL)malloc(stack_pop(vm)));
 }
 
 void malloc_free(NgaState *vm) {
-  double_cell addr;
-  addr.msw = stack_pop(vm);
-  addr.lsw = stack_pop(vm);
-  free(addr.val);
+  free((CELL*)stack_pop(vm));
 }
 
 void malloc_store(NgaState *vm) {
   CELL value = stack_pop(vm);
   double_cell addr;
-  addr.msw = stack_pop(vm);
-  addr.lsw = stack_pop(vm);
-  *(CELL *) addr.val = value;
+  *(CELL *) stack_pop(vm) = value;
 }
 
 void malloc_fetch(NgaState *vm) {
   double_cell addr;
-  addr.msw = stack_pop(vm);
-  addr.lsw = stack_pop(vm);
-  CELL value = *(CELL *)addr.val;
+  CELL value = *(CELL *)stack_pop(vm);
   stack_push(vm, value);
 }
 
 void malloc_realloc(NgaState *vm) {
   CELL bytes = stack_pop(vm);
-  double_cell addr1;
-  addr1.msw = stack_pop(vm);
-  addr1.lsw = stack_pop(vm);
-
-  double_cell addr2;
-  addr2.val = realloc(addr1.val, bytes);
-  stack_push(vm, addr2.lsw);
-  stack_push(vm, addr2.msw);
+  CELL* addr1;
+  addr1 = (CELL*)stack_pop(vm);
+  CELL* addr2;
+  addr2 = (CELL*)realloc(addr1, bytes);
+  stack_push(vm, (CELL)addr2);
 }
 
 void query_malloc(NgaState *vm) {
@@ -316,6 +306,7 @@ void io_malloc(NgaState *vm) {
   }
   stack_push(vm, -1);
 }
+#endif
 #endif
 
 /* Multi Core Support ------------------------------------------------ */
@@ -1905,7 +1896,9 @@ int main(int argc, char **argv) {
   register_device(vm, io_unix, query_unix);
 #endif
 #ifdef ENABLE_MALLOC
+#ifdef BIT64
   register_device(vm, io_malloc, query_malloc);
+#endif
 #endif
 #ifdef ENABLE_CLOCK
   register_device(vm, io_clock, query_clock);

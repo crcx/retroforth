@@ -1105,25 +1105,25 @@ Compare n1 and n2. Return `TRUE` if n1 is less than n2, or `FALSE` otherwise.
 lteq?                     D: nn-f  A: -  F: -
 Compare n1 and n2. Return `TRUE` if n1 is less than or equal to n2, or `FALSE` otherwise.
 
-mem:alloc                 D: n-nn  A: -  F: -
+mem:alloc                 D: n-n  A: -  F: -
 Use malloc to allocate memory. Returns a double cell pointer to this memory.
 
-mem:cell+                 D: nnn-n  A: -  F: -
+mem:cell+                 D: nn-n  A: -  F: -
 Return address of next cell. Uses a double cell pointer on the stack.
 
 mem:fetch                 D: nn-n  A: -  F: -
 Fetch value from malloc'd memory region. Address is a double cell value.
 
-mem:fetch-double          D: nn-n  A: -  F: -
+mem:fetch-double          D: nn-nn  A: -  F: -
 Fetch a double cell value from a malloc memory region.
 
-mem:free                  D: nn-  A: -  F: -
+mem:free                  D: n-  A: -  F: -
 Fre a malloc'd region of memory. Pass a double cell pointer to the memory to free.
 
-mem:resize                D: mmn-  A: -  F: -
+mem:resize                D: mn-  A: -  F: -
 Resize a malloc'd memory area.
 
-mem:store                 D: xnn-  A: -  F: -
+mem:store                 D: xn-  A: -  F: -
 Store a value into a malloc'd memory region. Uses a double cell pointer for the address.
 
 mod                       D: nm-o  A: -  F: -
