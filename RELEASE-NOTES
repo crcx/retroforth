@@ -13,5 +13,7 @@
 * added `double:dip`
 * added `double:sip`
 * default build is now 64-bit
+* mem: now uses single cells (rick c)
+* mem: now requires 64-bit (rick c)
 
 ----------------------------------------------------------------
