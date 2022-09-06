@@ -59,10 +59,118 @@
 
 :as:filter aa:filter ;
 
+:aa:length fetch ;
+:as:length fetch ;
+
+:aa:th n:inc n:add ;
+:as:th n:inc n:add ;
+:aa:fetch aa:th fetch ;
+:as:fetch as:th fetch ;
+:aa:store aa:th store ;
+:as:store as:th store ;
+
 :aa:first (a-n) #0 a:fetch ;
-:aa:last  (a-n) dup a:length n:dec a:fetch ;
+:aa:last  (a-n) dup aa:length n:dec aa:fetch ;
 
 :as:first aa:first ;
 :as:last aa:last ;
 :as:index/c aa:index ;
+
+
+:aa:dup a:dup ;
+:as:dup a:dup ;
+:aa:last aa:last ;
+:as:temp aa:dup ;
+
+:as:trim-right (s-s)
+  as:temp [ dup v:dec [ as:last #32 lteq? ] sip swap ] while
+  dup v:inc ;
+
+{{
+  'Start var
+  'End var
+  'Len var
+  :find-end dup as:length dup !Len over n:add n:inc !End n:inc ;
+  :new-size @Start over swap n:sub @Len swap n:sub ;
+  :patch    over store ;
+---reveal---
+  :as:trim-left (s-s)
+    as:dup dup #0 as:fetch #32 eq?
+    [ dup !Start find-end
+      [ fetch-next #32 -eq? over @End -eq? and ] while
+      new-size patch ] if ;
+}}
+
+:as:trim (s-s) as:trim-left as:trim-right ;
+
+:sigil:" (s-a) here [ dup s:length comma &comma s:for-each ] dip ; immediate
 ~~~
+
+  a:append        aa-a    Create a new array with the contents of a1
+  a:behead        a-a     Remove first item from an array
+  a:chop  a-a     Remove last item from an array
+* a:contains?     an-f    True if array contains n. False otherwise
+  a:copy  sd-     Copy array from s to d
+  a:dup   a-a     Make a copy of an array
+  a:eq?   aa-f    Compare two arrays for equality
+  a:-eq?  aa-f    Compare two arrays for inequality
+* a:fetch an-v    Fetch value stored at index n in array
+  a:filter        aq-a    Run q once for each value in a. If it returns
+  a:first a-n     Return the first value in an array
+  a:for-each      aq-     Run q once for each value in the array. Pushes
+  a:hash  a-n     Return the hash of an array
+* a:indices       av-a    Return array of indices for v in source array
+* a:index av-n    Return first index of n in a
+  a:last  a-n     Return the last value in an array
+* a:left  an-a    Return left n values from array
+* a:length        a-n     Return the length of an array
+* a:make  ...n-a  Create a new permanent array from the provided values
+  a:make/temp     ...n-a  Create a new temporary array from the
+* a:map   aq-a    Run q once for each value in the array. Takes the
+* a:middle        afl-a   Return new array from f to l, inclusive
+  a:prepend       aa-a    Create a new array with the contents of a2
+  a:reduce        anq-n   Takes an array, a starting value, and a quote.
+  a:reverse       a-a     Reverse the order of items in an array
+* a:right an-a    Return right n values from array
+* a:store van-    Store value v into array at index n
+  a:temp  a-a     Make a copy of the array in the temporary string/array
+* a:th    an-p    Return the address of a specific index into the array
+
+
+  s:append        ss-s    Append s2 to s1, returning new temporary string
+  s:behead        s-s     Remove first item from a string
+  s:chop  s-s     Remove last item from a string
+* s:contains?     sc-f    True if string contains c. False otherwise
+  s:copy  sd-     Copy string s to memory at d
+  s:dup   s-s     Make a copy of string
+  s:eq?   ss-f    Compare two strings for equality
+  s:-eq?  ss-f    Compare two strings for inequality
+  s:evaluate      s-?     Interpret each token in a string
+* s:fetch sn-c    Return character at index n in the string
+* s:filter        sq-s    Run q once for each value in s If it returns
+  s:first s-c     Return the first character in a string
+  s:for-each      sq-     Run q once for each character in s. Pushes
+  s:get/line      '-s     Read a line of input until enter is
+  s:get/token     -s      Read a string from the keyboard ending when
+  s:hash  s-n     Return the hash of the string
+* s:index/c       sc-f    True if string contains c, false otherwise
+  s:keep  s-s     Move string to here, allocating space and returning
+  s:last  s-c     Return the last character in a string
+* s:left  sn-s    Return left n characters of string
+* s:length        s-n     Return the length of a string
+* s:middle        sfl-s   Return substring from f to l, inclusive
+  s:pool  -p      Return the starting address of the temporary string/array
+  s:prepend       ss-s    Create a new string with the contents of s2
+  s:put   s-      Display a string
+  s:reverse       s-s     Reverse the order of values in the string.
+  s:rewrite       s-s     Replace underscores in string with spaces
+* s:right sn-s    Return right n characters of string
+* s:store csn-    Store character into string at index n
+  s:temp  s-s     Put a copy of a string in the temporary buffers.
+* s:th    sn-a    Given a string and index, return the address
+  s:to-lower      s-s     Make all characters in string lowercase
+  s:to-n  s-n     Convert a string to a number
+  s:to-upper      s-s     Make all characters in a string uppercase
+* s:trim  s-s     Trim both leading and trailing whitespace from a string
+* s:trim-right    s-s     Trim trailing whitespace from a string
+* s:trim-left     s-s     Trim leading whitespace from a string
