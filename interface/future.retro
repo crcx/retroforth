@@ -1,4 +1,16 @@
 ~~~
+:gc (q-) &Heap swap v:preserve ;
+
+'NextArray var
+'Arrays d:create
+  #513 #12 n:mul allot
+
+
+:aa:temp (a-a) @NextArray dup #12 [ drop #0 dup !NextArray ] if
+               #513 n:mul &Arrays n:add over a:length n:inc copy
+               @NextArray #513 n:mul &Arrays n:add
+               &NextArray v:inc ;
+
 :aa:make (...n-a) here [ dup comma &comma times ] dip ;
 
 :aa:map
@@ -49,4 +61,8 @@
 
 :aa:first (a-n) #0 a:fetch ;
 :aa:last  (a-n) dup a:length n:dec a:fetch ;
+
+:as:first aa:first ;
+:as:last aa:last ;
+:as:index/c aa:index ;
 ~~~
