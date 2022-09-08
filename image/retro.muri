@@ -156,7 +156,9 @@ r interpret
 r err:notfound
 r TIB
 d 1535
+: HashFunction
 d 0
+: RehashFunction
 d 0
 ~~~
 
@@ -799,8 +801,11 @@ d 0
 r comma
 i lica....
 r comma:string
-i polistre
+i polist..
 r Dictionary
+i lifezr..
+r RehashFunction
+i ju......
 ~~~
 
 RETRO doesn't provide a traditional create as it's designed to
