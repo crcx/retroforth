@@ -1928,6 +1928,8 @@ the names, and patching in the hashes later.
 
 :d:rehash (-)
   [ [ d:name @d:Hash-Function call ] sip d:hash store ] d:for-each ;
+
+&d:rehash #10 store
 ~~~
 
 ## The End
