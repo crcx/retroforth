@@ -138,6 +138,8 @@ Here's the initial memory map:
 | 6      | Pointer to `err:notfound`   |
 | 7      | Pointer to TIB              |
 | 8      | Pointer to End of TIB       |
+| 9      | Dictionary Hash Function    |
+| 10     | Dictionary Rehash Function  |
 
 ~~~
 : Dictionary
@@ -154,6 +156,8 @@ r interpret
 r err:notfound
 r TIB
 d 1535
+d 0
+d 0
 ~~~
 
 Both of these are pointers. `Dictionary` points to the most
