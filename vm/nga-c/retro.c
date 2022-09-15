@@ -136,6 +136,10 @@ struct NgaState {
   CELL fsp, afsp;
 #endif
 
+#ifdef ENABLE_BLOCKS
+  char BlockFile[1025];
+#endif
+
   /* Scripting */
   char **sys_argv;
   int sys_argc;
@@ -190,6 +194,10 @@ void io_socket(NgaState *);         void query_socket(NgaState *);
 #ifdef BIT64
 void io_malloc(NgaState *);         void query_malloc(NgaState *);
 #endif
+#endif
+
+#ifdef ENABLE_BLOCKS
+void io_blocks(NgaState *);         void query_blocks(NgaState *);
 #endif
 
 void io_image(NgaState *);          void query_image(NgaState *);
@@ -307,6 +315,33 @@ void io_malloc(NgaState *vm) {
   stack_push(vm, -1);
 }
 #endif
+#endif
+
+/* Block Storage -------------------------------------------- */
+#ifdef ENABLE_BLOCKS
+void io_blocks(NgaState *vm) {
+  CELL op = stack_pop(vm);
+  CELL buffer = stack_pop(vm);
+  CELL block = stack_pop(vm);
+
+  if (op == 0) {
+    int fp = open(vm->BlockFile, O_RDONLY, 0666);
+    lseek(fp, 4096 * block, SEEK_SET);
+    read(fp, vm->memory + buffer, 4096);
+    close(fp);
+  }
+
+  if (op == 1) {
+    int fp = open(vm->BlockFile, O_WRONLY, 0666);
+    lseek(fp, 4096 * block, SEEK_SET);
+    write(fp, vm->memory + buffer, 4096);
+    close(fp);
+  }
+
+}
+
+void query_blocks(NgaState *) {
+}
 #endif
 
 /* Multi Core Support ------------------------------------------------ */
