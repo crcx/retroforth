@@ -1,6 +1,9 @@
-The related ilo & napia virtual machines make use of blocks
-for data storage. This implements a set of words for interacting
-with the blocks from within RetroForth/Nga.
+Blocks allow for a simple storage subsystem. In the smaller ilo
+and napia based systems, they are mandatory and are the primary
+means of data and code storage
+
+Under RetroForth/nga, this is optional, but is enabled by
+default.
 
 The exposed word set is compact:
 
@@ -10,20 +13,10 @@ The exposed word set is compact:
 
 ~~~
 {{
-  'Blocks var
-  'BlockFile var
-
-  :open  (n-) @BlockFile swap file:open !Blocks ;
-  :close (-)  @Blocks file:close ;
-  :seek  (n-) #4096 n:mul @Blocks file:seek ;
-  :read  (-n) #4 [ @Blocks file:read ] times pack ;
-  :store (an-a) swap store-next ;
-  :write (n-) unpack 'abcd 'bcda reorder #4 [ @Blocks file:write ] times ;
+  :block:invoke #3 io:scan-for io:invoke ;
 ---reveal---
-  :block:set-file (s-) s:keep !BlockFile ;
-  :block:read (na-)
-    file:R open swap seek #1024 [ read store ] times drop close ;
-  :block:write (na-)
-    file:R+ open swap seek #1024 [ fetch-next write ] times drop close ;
+  :block:read (na-) #0 block:invoke ;
+  :block:write (na-) #1 block:invoke ;
+  :block:set-file (s-) #2 block:invoke ;
 }}
 ~~~

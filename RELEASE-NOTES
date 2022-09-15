@@ -15,5 +15,6 @@
 * default build is now 64-bit
 * mem: now uses single cells (rick c)
 * mem: now requires 64-bit (rick c)
+* block: words now use block storage device
 
 ----------------------------------------------------------------
