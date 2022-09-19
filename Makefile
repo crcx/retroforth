@@ -74,6 +74,9 @@ DEVICES += interface/malloc.retro
 # -------------------------------------------------------------
 
 GLOSSARY ?= ./bin/retro tools/glossary.retro
+ASSEMBLE ?= ./bin/retro-muri
+EXTEND ?= ./bin/retro-extend
+EXPORT ?= ./bin/retro-embedimage
 
 # -------------------------------------------------------------
 
@@ -162,36 +165,37 @@ bin/retro-describe: tools/retro-describe.retro doc/words.tsv
 	chmod +x bin/retro-describe
 
 bin/retro-embedimage: tools/retro-embedimage.c
-	$(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o $@ tools/retro-embedimage.c
+	$(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o $@ $>
 
 bin/retro-extend: tools/retro-extend.c
-	$(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o $@  tools/retro-extend.c
+	$(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o $@ $>
 
 bin/retro-muri: tools/retro-muri.c
-	$(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o $@ tools/retro-muri.c
+	$(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o $@ $>
 
 bin/retro-unu: tools/retro-unu.c
-	$(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o $@ tools/retro-unu.c
+	$(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o $@ $>
 
 # Image --------------------------------------------------------
 
-ngaImage: image/retro.muri image/retro.forth image/build.retro bin/retro-muri bin/retro-extend
-	./bin/retro-muri image/retro.muri
-	./bin/retro-extend ngaImage image/retro.forth image/build.retro
+ngaImage: toolchain image/retro.muri image/retro.forth image/build.retro
+	$(ASSEMBLE) image/retro.muri
+	$(EXTEND) ngaImage image/retro.forth image/build.retro
+
 # Executables --------------------------------------------------
 
 bin/retro-repl: vm/nga-c/repl.c vm/nga-c/image.c
-	cd vm/nga-c && $(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o ../../bin/retro-repl repl.c
+	$(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o $@ $>
 
 # retro on unix
 
 update-extensions: bin/retro
 	cd package/extensions && ../../bin/retro -f ../../tools/generate-extensions-list.retro >../load-extensions.retro
 
-vm/nga-c/image.c: ngaImage bin/retro-embedimage bin/retro-extend  interface/retro-unix.retro $(DEVICES)
+vm/nga-c/image.c: toolchain ngaImage interface/retro-unix.retro $(DEVICES)
 	cp ngaImage rre.image
-	./bin/retro-extend rre.image $(DEVICES) interface/retro-unix.retro
-	./bin/retro-embedimage rre.image >vm/nga-c/image.c
+	$(EXTEND) rre.image $(DEVICES) interface/retro-unix.retro
+	$(EXPORT) rre.image >vm/nga-c/image.c
 
 bin/retro: vm/nga-c/image.c vm/nga-c/retro.c package/list.forth package/load-extensions.retro
 	cd vm/nga-c && $(CC) -DFAST $(OPTIONS) $(ENABLED) $(CFLAGS) $(LDFLAGS) -o ../../bin/retro retro.c $(LIBM) $(LIBDL)
@@ -203,9 +207,9 @@ bin/retro: vm/nga-c/image.c vm/nga-c/retro.c package/list.forth package/load-ext
 
 # optional targets
 
-bin/retro-compiler: bin/retro-extend vm/nga-c/retro-compiler.c vm/nga-c/retro-runtime.c
+bin/retro-compiler: toolchain vm/nga-c/retro-compiler.c vm/nga-c/retro-runtime.c
 	cp ngaImage runtime.image
-	./bin/retro-extend runtime.image $(DEVICES) interface/retro-unix.retro
+	$(EXTEND) runtime.image $(DEVICES) interface/retro-unix.retro
 	cd vm/nga-c && $(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o ../../retro-runtime retro-runtime.c $(LIBM) $(LIBDL)
 	cd vm/nga-c && $(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o ../../bin/retro-compiler retro-compiler.c
 	objcopy --add-section .ngaImage=runtime.image --set-section-flags .ngaImage=noload,readonly bin/retro-compiler
