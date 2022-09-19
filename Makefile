@@ -73,6 +73,10 @@ DEVICES += interface/malloc.retro
 
 # -------------------------------------------------------------
 
+GLOSSARY ?= ./bin/retro tools/glossary.retro
+
+# -------------------------------------------------------------
+
 all: clean build
 
 help:
@@ -150,12 +154,11 @@ install-manpages:
 	install -c -m 644 man/retro-tags.1 $(MANDIR)/retro-tags.1
 	install -c -m 644 man/retro-locate.1 $(MANDIR)/retro-locate.1
 
-
-
-# toolchain targets
+# Toolchain ----------------------------------------------------
 
 bin/retro-describe: tools/retro-describe.retro doc/words.tsv
-	cat tools/retro-describe.retro doc/words.tsv >bin/retro-describe
+	cat tools/retro-describe.retro > bin/retro-describe
+	cat doc/words.tsv >> bin/retro-describe
 	chmod +x bin/retro-describe
 
 bin/retro-embedimage: tools/retro-embedimage.c
@@ -170,22 +173,15 @@ bin/retro-muri: tools/retro-muri.c
 bin/retro-unu: tools/retro-unu.c
 	$(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o $@ tools/retro-unu.c
 
-
-
-# basic image target
+# Image --------------------------------------------------------
 
 ngaImage: image/retro.muri image/retro.forth image/build.retro bin/retro-muri bin/retro-extend
 	./bin/retro-muri image/retro.muri
 	./bin/retro-extend ngaImage image/retro.forth image/build.retro
-
-
-
-# minimal system
+# Executables --------------------------------------------------
 
 bin/retro-repl: vm/nga-c/repl.c vm/nga-c/image.c
 	cd vm/nga-c && $(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o ../../bin/retro-repl repl.c
-
-
 
 # retro on unix
 
@@ -219,9 +215,7 @@ bin/retro-compiler: bin/retro-extend vm/nga-c/retro-compiler.c vm/nga-c/retro-ru
 image-js: bin/retro
 	./bin/retro example/retro-generate-image-js.retro >vm/nga-js/image.js
 
-
-
-# documentation targets
+# Documentation ------------------------------------------------
 
 glossary: doc/Glossary.txt doc/Glossary.html doc/Glossary-Concise.txt doc/Glossary-Names-and-Stack.txt doc/words.tsv
 
@@ -230,19 +224,18 @@ sorted: doc/words.tsv
 	mv sorted.tsv doc/words.tsv
 
 doc/Glossary.txt: bin/retro sorted
-	./bin/retro tools/glossary.retro export glossary >doc/Glossary.txt
+	$(GLOSSARY) export glossary >doc/Glossary.txt
 
 doc/Glossary.html: bin/retro sorted
-	./bin/retro tools/glossary.retro export html >doc/Glossary.html
+	$(GLOSSARY) export html >doc/Glossary.html
 
 doc/Glossary-Concise.txt: bin/retro sorted
-	./bin/retro tools/glossary.retro export concise >doc/Glossary-Concise.txt
+	$(GLOSSARY) export concise >doc/Glossary-Concise.txt
 
 doc/Glossary-Names-and-Stack.txt: bin/retro sorted
-	./bin/retro tools/glossary.retro export concise-stack >doc/Glossary-Names-and-Stack.txt
+	$(GLOSSARY) export concise-stack >doc/Glossary-Names-and-Stack.txt
 
-
-# other targets
+# Other Targets ------------------------------------------------
 
 release: clean build glossary
 	fossil tarball tip R12.tar.gz
