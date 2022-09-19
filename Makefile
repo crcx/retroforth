@@ -77,6 +77,7 @@ GLOSSARY ?= ./bin/retro tools/glossary.retro
 ASSEMBLE ?= ./bin/retro-muri
 EXTEND ?= ./bin/retro-extend
 EXPORT ?= ./bin/retro-embedimage
+RETRO ?= ./bin/retro
 
 # -------------------------------------------------------------
 
@@ -84,15 +85,13 @@ all: clean build
 
 help:
 
-build: dirs toolchain ngaImage bin/retro bin/retro-repl bin/retro-describe
+build: dirs toolchain ngaImage binaries
 
-optional: build bin/retro-repl
+binaries: bin/retro bin/retro-repl bin/retro-describe
 
 toolchain: dirs bin/retro-embedimage bin/retro-extend bin/retro-muri bin/retro-unu
 
 image: vm/nga-c/image.c
-
-repl: bin/retro-repl
 
 dirs:
 	mkdir -p bin
@@ -200,7 +199,7 @@ vm/nga-c/image.c: toolchain ngaImage interface/retro-unix.retro $(DEVICES)
 bin/retro: vm/nga-c/image.c vm/nga-c/retro.c package/list.forth package/load-extensions.retro
 	cd vm/nga-c && $(CC) -DFAST $(OPTIONS) $(ENABLED) $(CFLAGS) $(LDFLAGS) -o ../../bin/retro retro.c $(LIBM) $(LIBDL)
 	cd package && ../bin/retro -u rre.image -f list.forth
-	./bin/retro-embedimage rre.image >vm/nga-c/image.c
+	$(EXPORT) rre.image >vm/nga-c/image.c
 	rm rre.image
 	cd vm/nga-c && $(CC) -DFAST $(OPTIONS) $(ENABLED) $(CFLAGS) $(LDFLAGS) -o ../../bin/retro retro.c $(LIBM) $(LIBDL)
 
