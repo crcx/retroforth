@@ -119,9 +119,9 @@ bi	xqq-?	-	-	Execute q1 against x, then execute q2 against a copy of x.			class:
 bi*	xyqq-?	-	-	Execute q1 against x and q2 against y.			class:word	    #10 #20 [ #2 * ] [ #10 / ] bi*	{n/a}	global	all	
 bi@	xyq-?	-	-	Execute q against x, then execute q against y.			class:word	    #10 #20 [ #3 * ] bi@	{n/a}	global	all	
 binary	-	-	-	Set `Base` to binary.			class:word	{n/a}	{n/a}	a	all	
-block:read	an-	-	-	Read 1024 cells from block n in the block storage into memory at address a.			class:word	{n/a}	{n/a}	block	rre	
+block:read	na-	-	-	Read 1024 cells from block n in the block storage into memory at address a.			class:word	{n/a}	{n/a}	block	rre	
 block:set-file	s-	-	-	Set the file name of the block storage device.			class:word	{n/a}	{n/a}	block	rre	
-block:write	an-	-	-	Save the 1024 cells at address a to block n in the block storage.			class:word	{n/a}	{n/a}	block	rre	
+block:write	na-	-	-	Save the 1024 cells at address a to block n in the block storage.			class:word	{n/a}	{n/a}	block	rre	
 buffer:add	n-	-	-	Append a value to the current buffer.			class:word	{n/a}	{n/a}	buffer	all	
 buffer:empty	-	-	-	Reset the current buffer to an empty state.			class:word	{n/a}	{n/a}	buffer	all	
 buffer:end	-a	-	-	Return a pointer to the current end of the active buffer.			class:word	{n/a}	{n/a}	buffer	all	

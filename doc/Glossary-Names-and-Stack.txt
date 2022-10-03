@@ -119,9 +119,9 @@ bi                        D: xqq-?  A: -  F: -
 bi*                       D: xyqq-?  A: -  F: -
 bi@                       D: xyq-?  A: -  F: -
 binary                    D: -  A: -  F: -
-block:read                D: an-  A: -  F: -
+block:read                D: na-  A: -  F: -
 block:set-file            D: s-  A: -  F: -
-block:write               D: an-  A: -  F: -
+block:write               D: na-  A: -  F: -
 buffer:add                D: n-  A: -  F: -
 buffer:empty              D: -  A: -  F: -
 buffer:end                D: -a  A: -  F: -

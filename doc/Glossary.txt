@@ -1404,7 +1404,7 @@ Class: class:word | Namespace: a | Interface Layer: all
 
 block:read
 
-  Data:  an-
+  Data:  na-
   Addr:  -
   Float: -
 
@@ -1426,7 +1426,7 @@ Class: class:word | Namespace: block | Interface Layer: rre
 
 block:write
 
-  Data:  an-
+  Data:  na-
   Addr:  -
   Float: -
 
