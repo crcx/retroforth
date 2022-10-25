@@ -1,3 +1,16 @@
+# New Words
+
+This contains a variety of words from my more recent systems.
+
+Notes:
+
+`aa:` is a new set of array words. These will be replacing the
+existing set in the future.
+
+`as:` is a new set of string words. These will be replacing the
+existing set in the future. (In the current system, strings are
+null terminated. The `as` strings are length-prefixed instead.)
+
 ~~~
 :gc (q-) &Heap swap v:preserve ;
 
@@ -104,6 +117,26 @@
 :as:trim (s-s) as:trim-left as:trim-right ;
 
 :sigil:" (s-a) here [ dup s:length comma &comma s:for-each ] dip ; immediate
+
+:aa:for-each (aq-) a:for-each ;
+:as:for-each (sq-) a:for-each ;
+
+:aa:hash (a-n) #5381 swap [ swap #33 n:mul n:add ] aa:for-each ;
+:as:hash (s-n) aa:hash ;
+
+:aa:eq? (aa-f) aa:hash swap aa:hash eq? ;
+:aa:-eq? (aa-f) aa:hash swap aa:hash -eq? ;
+:as:eq? (ss-f) aa:eq? ;
+:as:-eq? (ss-f) aa:-eq? ;
+
+:aa:dup here [ dup aa:length comma &comma a:for-each ] dip ;
+:as:dup aa:dup ;
+
+:as:temp ;
+:as:keep ;
+
+:as:to-upper (s-s) [ as:dup &c:to-upper as:map as:temp ] gc ;
+:as:to-lower (s-s) [ as:dup &c:to-lower as:map as:temp ] gc ;
 ~~~
 
   a:append        aa-a    Create a new array with the contents of a1
@@ -111,14 +144,14 @@
   a:chop  a-a     Remove last item from an array
 * a:contains?     an-f    True if array contains n. False otherwise
   a:copy  sd-     Copy array from s to d
-  a:dup   a-a     Make a copy of an array
-  a:eq?   aa-f    Compare two arrays for equality
-  a:-eq?  aa-f    Compare two arrays for inequality
+* a:dup   a-a     Make a copy of an array
+* a:eq?   aa-f    Compare two arrays for equality
+* a:-eq?  aa-f    Compare two arrays for inequality
 * a:fetch an-v    Fetch value stored at index n in array
   a:filter        aq-a    Run q once for each value in a. If it returns
   a:first a-n     Return the first value in an array
-  a:for-each      aq-     Run q once for each value in the array. Pushes
-  a:hash  a-n     Return the hash of an array
+* a:for-each      aq-     Run q once for each value in the array. Pushes
+* a:hash  a-n     Return the hash of an array
 * a:indices       av-a    Return array of indices for v in source array
 * a:index av-n    Return first index of n in a
   a:last  a-n     Return the last value in an array
@@ -142,9 +175,9 @@
   s:chop  s-s     Remove last item from a string
 * s:contains?     sc-f    True if string contains c. False otherwise
   s:copy  sd-     Copy string s to memory at d
-  s:dup   s-s     Make a copy of string
-  s:eq?   ss-f    Compare two strings for equality
-  s:-eq?  ss-f    Compare two strings for inequality
+* s:dup   s-s     Make a copy of string
+* s:eq?   ss-f    Compare two strings for equality
+* s:-eq?  ss-f    Compare two strings for inequality
   s:evaluate      s-?     Interpret each token in a string
 * s:fetch sn-c    Return character at index n in the string
 * s:filter        sq-s    Run q once for each value in s If it returns
@@ -152,7 +185,7 @@
   s:for-each      sq-     Run q once for each character in s. Pushes
   s:get/line      '-s     Read a line of input until enter is
   s:get/token     -s      Read a string from the keyboard ending when
-  s:hash  s-n     Return the hash of the string
+* s:hash  s-n     Return the hash of the string
 * s:index/c       sc-f    True if string contains c, false otherwise
   s:keep  s-s     Move string to here, allocating space and returning
   s:last  s-c     Return the last character in a string
@@ -168,9 +201,10 @@
 * s:store csn-    Store character into string at index n
   s:temp  s-s     Put a copy of a string in the temporary buffers.
 * s:th    sn-a    Given a string and index, return the address
-  s:to-lower      s-s     Make all characters in string lowercase
+* s:to-lower      s-s     Make all characters in string lowercase
   s:to-n  s-n     Convert a string to a number
-  s:to-upper      s-s     Make all characters in a string uppercase
+* s:to-upper      s-s     Make all characters in a string uppercase
 * s:trim  s-s     Trim both leading and trailing whitespace from a string
 * s:trim-right    s-s     Trim trailing whitespace from a string
 * s:trim-left     s-s     Trim leading whitespace from a string
+
