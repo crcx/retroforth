@@ -33,16 +33,9 @@ null terminated. The `as` strings are length-prefixed instead.)
 
 :as:map aa:map ;
 
-:aa:middle (afl-a)
-  here [ dup comma [ n:inc n:add ] dip
-         here swap copy ] dip dup &Free store s:temp ;
-
-:aa:left  (an-a) #0 swap aa:middle ;
-:aa:right (an-a) over s:length over n:sub swap aa:middle ;
-
-:as:left aa:left ;
-:as:right aa:right ;
-:as:middle aa:middle ;
+:as:left a:left ;
+:as:right a:right ;
+:as:middle a:middle ;
 
 {{
   'Count var
@@ -72,7 +65,6 @@ null terminated. The `as` strings are length-prefixed instead.)
 
 :as:filter aa:filter ;
 
-:aa:length fetch ;
 :as:length fetch ;
 
 :aa:th n:inc n:add ;
@@ -83,7 +75,7 @@ null terminated. The `as` strings are length-prefixed instead.)
 :as:store as:th store ;
 
 :aa:first (a-n) #0 a:fetch ;
-:aa:last  (a-n) dup aa:length n:dec aa:fetch ;
+:aa:last  (a-n) dup a:length n:dec aa:fetch ;
 
 :as:first aa:first ;
 :as:last aa:last ;
@@ -129,7 +121,7 @@ null terminated. The `as` strings are length-prefixed instead.)
 :as:eq? (ss-f) aa:eq? ;
 :as:-eq? (ss-f) aa:-eq? ;
 
-:aa:dup here [ dup aa:length comma &comma a:for-each ] dip ;
+:aa:dup here [ dup a:length comma &comma a:for-each ] dip ;
 :as:dup aa:dup ;
 
 :as:temp ;

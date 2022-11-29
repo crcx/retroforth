@@ -1427,6 +1427,10 @@ dictionary header by the `d:xt` field.
            [ swap &nip dip ] &drop choose ] d:for-each drop ;
 ~~~
 
+~~~
+:gc (q-) &Heap swap v:preserve ;
+~~~
+
 ## Arrays
 
 RETRO provides words for statically sized arrays. They are
@@ -1444,6 +1448,19 @@ we wrap this as `a:length`:
 ~~~
 :a:length (a-n) fetch ;
 ~~~
+
+To extract portions of an array, I provide `a:left`, `a:right`,
+and `a:middle`.
+
+~~~
+:a:middle (afl-a)
+  here [ dup , [ n:inc + ] dip
+         here swap copy ] dip ;
+
+:a:left  (an-a) #0 swap a:middle ;
+:a:right (an-a) over a:length over - swap a:middle ;
+~~~
+
 
 The first couple of words are used to create arrays. The first,
 `a:counted-results` executes a quote which returns values
@@ -1630,31 +1647,6 @@ I'm defining a new `a:make` which wraps these.
 
 :{ (-)  |[ |depth |[ ; immediate
 :} (-a) |] |dip |depth |swap |- |n:dec |] |a:make ; immediate
-~~~
-
-To extract portions of an array, I provide `a:left`, `a:right`,
-and `a:middle`.
-
-~~~
-{{
-  :bounds? (an-anf) over a:length over lt? ;
-  :copy    (a-a)    fetch-next , ;
-  :to-end  (a-a)    dup a:length + n:inc ;
----reveal---
-  :a:left  (an-a)
-    bounds? [ drop-pair #-1 ] if;
-    here over , [ &n:inc dip &copy times drop ] dip ;
-
-  :a:right (an-a)
-    bounds? [ drop-pair #-1 ] if;
-    here over , [ swap to-end over - swap &copy times drop ] dip ;
-
-  :a:middle (afl-a)
-    &over dip swap over (abc-abcac
-    bounds? [ drop-pair drop #-1 ] if; drop-pair
-    dup-pair swap - n:inc
-    here over , [ nip [ + n:inc ] dip &copy times drop ] dip ;
-}}
 ~~~
 
 For comparing arrays, use `a:eq?`. This is written in assembly
