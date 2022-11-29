@@ -12,16 +12,13 @@ existing set in the future. (In the current system, strings are
 null terminated. The `as` strings are length-prefixed instead.)
 
 ~~~
-:gc (q-) &Heap swap v:preserve ;
-
 'NextArray var
-'Arrays d:create
-  #513 #12 n:mul allot
+:arrays FREE #513 #12 n:mul n:sub ;
 
 
 :aa:temp (a-a) @NextArray dup #12 [ drop #0 dup !NextArray ] if
-               #513 n:mul &Arrays n:add over a:length n:inc copy
-               @NextArray #513 n:mul &Arrays n:add
+               #513 n:mul arrays n:add over a:length n:inc copy
+               @NextArray #513 n:mul arrays n:add
                &NextArray v:inc ;
 
 :aa:make (...n-a) here [ dup comma &comma times ] dip ;
