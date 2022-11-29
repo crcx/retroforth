@@ -55,21 +55,13 @@ null terminated. The `as` strings are length-prefixed instead.)
 
 :as:contains? aa:contains? ;
 
-:aa:filter (aq-)
-  [ over &call dip swap &comma &drop choose ] curry
-  here [ over fetch comma a:for-each ] dip
-  here over n:sub n:dec over store ;
-
-:as:filter aa:filter ;
+:as:filter a:filter ;
 
 :as:length fetch ;
 
-:aa:th n:inc n:add ;
 :as:th n:inc n:add ;
-:aa:fetch aa:th fetch ;
-:as:fetch as:th fetch ;
-:aa:store aa:th store ;
-:as:store as:th store ;
+:as:store a:th store ;
+:as:fetch s:th fetch ;
 
 :aa:first (a-n) #0 a:fetch ;
 :aa:last  (a-n) dup a:length n:dec aa:fetch ;
@@ -79,9 +71,8 @@ null terminated. The `as` strings are length-prefixed instead.)
 :as:index/c aa:index ;
 
 
-:aa:dup a:dup ;
 :as:dup a:dup ;
-:aa:last aa:last ;
+:as:last aa:last ;
 :as:temp aa:dup ;
 
 :as:trim-right (s-s)
@@ -107,10 +98,9 @@ null terminated. The `as` strings are length-prefixed instead.)
 
 :sigil:" (s-a) here [ dup s:length comma &comma s:for-each ] dip ; immediate
 
-:aa:for-each (aq-) a:for-each ;
 :as:for-each (sq-) a:for-each ;
 
-:aa:hash (a-n) #5381 swap [ swap #33 n:mul n:add ] aa:for-each ;
+:aa:hash (a-n) #5381 swap [ swap #33 n:mul n:add ] a:for-each ;
 :as:hash (s-n) aa:hash ;
 
 :aa:eq? (aa-f) aa:hash swap aa:hash eq? ;
