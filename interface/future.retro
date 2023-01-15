@@ -61,10 +61,10 @@ null terminated. The `as` strings are length-prefixed instead.)
 
 :as:th n:inc n:add ;
 :as:store a:th store ;
-:as:fetch s:th fetch ;
+:as:fetch as:th fetch ;
 
 :aa:first (a-n) #0 a:fetch ;
-:aa:last  (a-n) dup a:length n:dec aa:fetch ;
+:aa:last  (a-n) dup a:length n:dec a:fetch ;
 
 :as:first aa:first ;
 :as:last aa:last ;
@@ -73,7 +73,7 @@ null terminated. The `as` strings are length-prefixed instead.)
 
 :as:dup a:dup ;
 :as:last aa:last ;
-:as:temp aa:dup ;
+:as:temp a:dup ;
 
 :as:trim-right (s-s)
   as:temp [ dup v:dec [ as:last #32 lteq? ] sip swap ] while
@@ -108,8 +108,8 @@ null terminated. The `as` strings are length-prefixed instead.)
 :as:eq? (ss-f) aa:eq? ;
 :as:-eq? (ss-f) aa:-eq? ;
 
-:aa:dup here [ dup a:length comma &comma a:for-each ] dip ;
-:as:dup aa:dup ;
+:a:dup here [ dup a:length comma &comma a:for-each ] dip ;
+:as:dup a:dup ;
 
 :as:temp ;
 :as:keep ;

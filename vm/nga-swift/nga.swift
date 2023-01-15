@@ -6,17 +6,7 @@
 //  stack processor that's capable of hosting
 //  RETRO or other environments.
 //
-//  This is a reimplementation in Swift. I've
-//  held off doing this until now, but as I
-//  plan to continue using Apple computers and
-//  iPads, it's becoming clear that they see
-//  this as the future, and it'll become more
-//  difficult to justify holding out on
-//  Objective-C going forward.
-//
-//  So here we go...
-//
-//  Copyright 2020, Charles Childers
+//  Copyright, Charles Childers
 //
 
 import Foundation
@@ -28,9 +18,10 @@ let CELLMAX = Int64.max - 1
 let CELLMIN = Int64.min
 
 // Notes:
-//   While Nga is designed as a 32-bit system,
+//   While Nga was designed as a 32-bit system,
 //   this implementation is 64-bit internally
-//   to allow greater numeric range.
+//   to allow greater numeric range. This follows
+//   with recent changes to the other Nga variants.
 
 // I'm adding some extensions to existing types
 // for easier access to individual characters
@@ -112,6 +103,26 @@ var memory = [Int64](repeating: 0, count: imageSize + 1024)
 
 var data = Stack()
 var address = Stack()
+
+// image loader
+
+func loadImage() {
+    let fileURL = URL(fileURLWithPath: "ngaImage")
+    let data = NSData(contentsOf: fileURL)!
+    var i: Int = 0
+    while (i < (data.count / 8)) {
+        memory[i] = getInt64FromData(data: data, offset: i)
+        i += 1
+    }
+}
+
+func getInt64FromData(data: NSData, offset: Int) -> Int64 {
+    let raw = NSRange(location: offset * 8, length: 8)
+    var i = [Int64](repeating: 0, count: 1)
+    data.getBytes(&i, range: raw)
+    return Int64(i[0])
+}
+
 
 // Now, I implement the instructions. Each gets
 // a dedicated function.
@@ -217,19 +228,19 @@ func inst_st() {
 func inst_ad() {
     let tos = data.pop()
     let nos = data.pop()
-    data.push(nos + tos)
+    data.push(nos &+ tos)
 }
 
 func inst_su() {
     let tos = data.pop()
     let nos = data.pop()
-    data.push(nos - tos)
+    data.push(nos &- tos)
 }
 
 func inst_mu() {
     let tos = data.pop()
     let nos = data.pop()
-    data.push(nos * tos)
+    data.push(nos &* tos)
 }
 
 func inst_di() {
@@ -296,7 +307,8 @@ func inst_iq() {
 
 func inst_ii() {
     data.drop()
-    let v = UnicodeScalar(Int(data.pop())) ?? UnicodeScalar(32)
+    let c = Int(data.pop())
+    let v = UnicodeScalar(c) ?? UnicodeScalar(32)
     print(Character(v!), terminator: "")
 }
 
@@ -390,7 +402,7 @@ func ngaValidatePackedOpcodes(_ opcode: Int64) -> Bool {
 // This will process an opcode bundle
 
 func ngaProcessPackedOpcodes(_ opcode: Int64) {
-    for inst in Int32(opcode).bytes {
+    for inst in Int64(opcode).bytes {
         ngaProcessOpcode(opcode: Int64(inst))
     }
 }
@@ -398,12 +410,14 @@ func ngaProcessPackedOpcodes(_ opcode: Int64) {
 // For debugging purposes
 
 func dump() {
+    print("----------------------------")
     for i in 0 ... data.depth() {
         if i == data.depth() {
-            print("TOS")
+            print("TOS", terminator: " ")
         }
         print(Int(data.item(i)))
     }
+    print("----------------------------")
 }
 
 // Interfacing
@@ -465,29 +479,21 @@ func process() {
 
 loadImage()
 
-// Display the dictionary
-var i = memory[2]
-var interpret: Int = 0
-while i != 0 {
-    let name = extractString(at: Int(i + 4))
-//    print(name)
-    if name == "interpret" {
-        interpret = Int(memory[Int(i) + 1])
-    }
-    i = memory[Int(i)]
-}
-
+let interpret: Int = Int(memory[5])
 
 var done = false
 print("RETRO (using nga.swift)")
 while !done {
-    let code = readLine()
+    let code = readLine() ?? "()"
     if code == "bye" {
         done = true
     } else {
-        injectString(code ?? "()", to: Int(memory[7]))
+      let tokens = code.components(separatedBy: " ")
+      for token in tokens {
+        injectString(token, to: Int(memory[7]))
         data.push(memory[7])
         execute(interpret)
+      }
     }
 }
 dump()
