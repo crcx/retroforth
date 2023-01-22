@@ -213,8 +213,6 @@ size_t strlcat(char *dst, const char *src, size_t dsize);
 size_t strlcpy(char *dst, const char *src, size_t dsize);
 #endif
 
-void prepare_vm();
-
 void inst_no(NgaState *);  void inst_li(NgaState *);
 void inst_du(NgaState *);  void inst_dr(NgaState *);
 void inst_sw(NgaState *);  void inst_pu(NgaState *);
