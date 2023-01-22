@@ -4,17 +4,19 @@
 | | |  __/ |_| | | (_) |  _| (_) | |  | |_| | | |
 |_|  \___|\__|_|  \___/|_|  \___/|_|   \__|_| |_|
                                           for nga
-# RetroForth/nga 2023.1 Release Notes
+# RetroForth/nga 2023.2 Release Notes
 
 ----------------------------------------------------------------
 
 * no longer display warning on files with only test blocks (#87)
 * added `script:current-line-text` (#85)
+* fixed incorrect function prototype (vm/nga-c/retro.c)
 * added `double:dip`
 * added `double:sip`
 * default build is now 64-bit
 * mem: now uses single cells (rick c)
 * mem: now requires 64-bit (rick c)
 * block: words now use block storage device
+* fll: vocabulary added (arland)
 
 ----------------------------------------------------------------

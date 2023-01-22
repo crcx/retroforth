@@ -53,6 +53,7 @@ ENABLED += -DENABLE_MALLOC
 ENABLED += -DENABLE_BLOCKS
 
 DEVICES ?=
+DEVICES += interface/ll.retro
 DEVICES += interface/floatingpoint.retro
 DEVICES += interface/filesystem.retro
 DEVICES += interface/unix.retro

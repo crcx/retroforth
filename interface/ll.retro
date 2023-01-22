@@ -1,0 +1,122 @@
+# Forward Linked Lists
+
+(c) Arland Childers
+
+~~~
+:comma , ;
+~~~
+
+The basic building block of our lists is a *cons cell*. This is
+a tuple with two values. The first of these is the *car*, and
+the second is the *cdr*. (Naming of these comes from LISP, and
+some very old computer processors)
+
+In memory a cons cell with two values (1, 2) would look like:
+
+    +---+-----+
+    | 1 | car |
+    +---+-----+
+    | 2 | cdr |
+    +---+-----+
+
+We provide `cons` to make a cons cell, `car` to get a pointer to
+the first element, and `cdr` to get a pointer to the second.
+
+We also provide `car@` and `car!` to read or modify the car
+value, and `cdr@` and `cdr!` for doing the same to the cdr.
+
+~~~
+:cons (car,cdr-ptr) here [ swap comma comma ] dip ;
+:car (cons-ptr) ;
+:cdr (cons-ptr) n:inc ;
+
+:car@ (cons-value) car fetch ;
+:car! (value,cons-) car store ;
+:cdr@ (cons-value) cdr fetch ;
+:cdr! (value,cons-) cdr store ;
+~~~
+
+With this out of the way, we turn to lists. A list, in this
+model, is a series of cons cells. We are working with forward
+linked lists, so each cons cell points to the next one in the
+chain. (Back linked lists, or doubly linked lists, are not
+implemented at this time). A list of values 1, 2, and 3 would
+look like:
+
+
+    +---+---+    +---+---+    +---+---+
+    | 1 | =====> | 2 | =====> | 3 | =====> END
+    +---+---+    +---+---+    +---+---+
+
+`END` is an empty word that we use to denote the end of a list.
+We'll compare the contents of the CDR field to this to determine
+if we've reached the end. This could equally well be zero, but
+we decided it was better for readability to have a named element.
+
+~~~
+:END (-) ;
+~~~
+
+Creation of a list begins with `fll:create`. This takes in a
+value, and creates a cons cell with the value, and a pointer
+to END in the cdr.
+
+~~~
+:fll:create (v-p) &END cons ;
+~~~
+
+Many operations will need to access the end of the list. We have
+`fll:to-end` to seek this. It'll walk through the list, returning
+a pointer to the final cons cell.
+
+~~~
+{{
+  'r var
+---reveal---
+  :fll:to-end (p-p)
+    dup !r [ cdr@ dup &END -eq? dup
+    [ over !r ] [ nip ] choose ] while @r ;
+}}
+~~~
+
+~~~
+:fll:append/value (pv-) &END cons swap fll:to-end cdr! ;
+~~~
+
+~~~
+:fll:to-index (pn-p) [ cdr@ ] times ;
+~~~
+
+~~~
+:fll:del
+  dup-pair n:dec fll:to-index [ n:inc fll:to-index ] dip cdr! ;
+~~~
+
+~~~
+{{
+  'Action var
+---reveal---
+  :fll:for-each (aq-)
+    !Action [ [ car@ @Action call ] sip cdr@ dup &END -eq? ]
+    while drop ;
+}}
+~~~
+
+~~~
+:fll:length (p-n) #0 swap [ drop n:inc ] fll:for-each n:dec ;
+~~~
+
+~~~
+:fll:drop dup fll:length n:dec fll:to-index &END swap cdr! ;
+~~~
+
+~~~
+{{
+  'i var
+---reveal---
+  :fll:inject (piv-)
+    fll:create !i dup-pair n:dec fll:to-index
+    &fll:to-index dip @i swap cdr! @i cdr! ;
+  :fll:put (a-) [ n:put sp ] fll:for-each ;
+}}
+~~~
