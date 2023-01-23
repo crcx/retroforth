@@ -69,6 +69,7 @@ ENABLED += -DNEEDS_STRL
 
 DEVICES ?=
 DEVICES += interface/ll.retro
+DEVICES += interface/dedup.retro
 DEVICES += interface/floatingpoint.retro
 DEVICES += interface/filesystem.retro
 DEVICES += interface/unix.retro
