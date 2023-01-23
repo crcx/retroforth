@@ -79,18 +79,31 @@ a pointer to the final cons cell.
 }}
 ~~~
 
+Appening a value is simple. Create a new cons with the value in
+the car and a pointer to END in the cdr. Find the end of the
+list, and update the cdr to point to the new cons.
+
 ~~~
 :fll:append/value (pv-) &END cons swap fll:to-end cdr! ;
 ~~~
+
+Given a specific node in the list, follow the cdr chain until
+the node number is reached. Starts at zero.
+
+An issue with this: it does not currently check the length to
+make sure that the index is valid.
 
 ~~~
 :fll:to-index (pn-p) [ cdr@ ] times ;
 ~~~
 
+
 ~~~
 :fll:del
   dup-pair n:dec fll:to-index [ n:inc fll:to-index ] dip cdr! ;
 ~~~
+
+The `fll:for-each` runs a quote once for each value in a list.
 
 ~~~
 {{
@@ -102,13 +115,21 @@ a pointer to the final cons cell.
 }}
 ~~~
 
+To obtain the length of a list (in number of cons) use
+`fll:length`.
+
 ~~~
 :fll:length (p-n) #0 swap [ drop n:inc ] fll:for-each n:dec ;
 ~~~
 
+`fll:drop` removes the a specified cons from a list.
+
 ~~~
 :fll:drop dup fll:length n:dec fll:to-index &END swap cdr! ;
 ~~~
+
+`fll:inject` adds a new cons to a list, inserting at a specified
+point.
 
 ~~~
 {{
