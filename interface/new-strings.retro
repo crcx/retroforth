@@ -1,0 +1,73 @@
+# New Words
+
+This contains a variety of words from my more recent systems.
+
+Notes:
+
+`as:` is a new set of string words. These will be replacing the
+existing set in the future. (In the current system, strings are
+null terminated. The `as` strings are length-prefixed instead.)
+
+~~~
+:as:map aa:map ;
+
+:as:left a:left ;
+:as:right a:right ;
+:as:middle a:middle ;
+
+:as:contains? aa:contains? ;
+
+:as:filter a:filter ;
+
+:as:length fetch ;
+
+:as:th n:inc n:add ;
+:as:store a:th store ;
+:as:fetch as:th fetch ;
+
+:as:first aa:first ;
+:as:last aa:last ;
+:as:index/c aa:index ;
+
+:as:dup a:dup ;
+:as:last aa:last ;
+:as:temp a:dup ;
+
+:as:trim-right (s-s)
+  as:temp [ dup v:dec [ as:last #32 lteq? ] sip swap ] while
+  dup v:inc ;
+
+{{
+  'Start var
+  'End var
+  'Len var
+  :find-end dup as:length dup !Len over n:add n:inc !End n:inc ;
+  :new-size @Start over swap n:sub @Len swap n:sub ;
+  :patch    over store ;
+---reveal---
+  :as:trim-left (s-s)
+    as:dup dup #0 as:fetch #32 eq?
+    [ dup !Start find-end
+      [ fetch-next #32 -eq? over @End -eq? and ] while
+      new-size patch ] if ;
+}}
+
+:as:trim (s-s) as:trim-left as:trim-right ;
+
+:sigil:" (s-a) here [ dup s:length comma &comma s:for-each ] dip ; immediate
+
+:as:for-each (sq-) a:for-each ;
+
+:as:hash (s-n) aa:hash ;
+
+:as:eq? (ss-f) aa:eq? ;
+:as:-eq? (ss-f) aa:-eq? ;
+
+:as:dup a:dup ;
+
+:as:temp ;
+:as:keep ;
+
+:as:to-upper (s-s) [ as:dup &c:to-upper as:map as:temp ] gc ;
+:as:to-lower (s-s) [ as:dup &c:to-lower as:map as:temp ] gc ;
+~~~

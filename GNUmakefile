@@ -83,6 +83,7 @@ DEVICES += interface/unsigned.retro
 DEVICES += interface/ffi.retro
 DEVICES += interface/retro-napia.retro
 DEVICES += interface/future.retro
+# DEVICES += interface/new-strings.retro
 DEVICES += interface/block.retro
 DEVICES += interface/deprecated.retro
 DEVICES += interface/double.retro
