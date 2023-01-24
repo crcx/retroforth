@@ -29,8 +29,9 @@
 :ffi:invoke (n-)
   #2 ffi:operation ;
 
-'interface/ffi.retro s:keep
+'interface/ffi.retro s:dedup
 dup 'ffi:operation d:lookup d:source store
+dup 'ffi:open d:lookup d:source store
 dup 'ffi:map-sym d:lookup d:source store
 dup 'ffi:invoke d:lookup d:source store
 drop
