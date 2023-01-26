@@ -1787,6 +1787,39 @@ Call a function.
 Class: class:primitive | Namespace: global | Interface Layer: all
 ------------------------------------------------------------------------
 
+car
+
+  Data:  a-a
+  Addr:  -
+  Float: -
+
+Return a pointer to the car of cons a.
+
+Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+car!
+
+  Data:  na-
+  Addr:  -
+  Float: -
+
+Store n into the car of cons a.
+
+Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+car@
+
+  Data:  a-n
+  Addr:  -
+  Float: -
+
+Return the contents of the car of cons a.
+
+Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
 case
 
   Data:  nmq- || nmq-n
@@ -1794,6 +1827,39 @@ case
   Float: -
 
 If `n` is equal to `m`, drop both and execute the specified quote before exiting the calling word. If not equal, leave `n` on the stack and let execution continue.
+
+Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+cdr
+
+  Data:  a-a
+  Addr:  -
+  Float: -
+
+Return a pointer to the cdr of cons a.
+
+Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+cdr!
+
+  Data:  na-
+  Addr:  -
+  Float: -
+
+Store n into the cdr of cons a.
+
+Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+cdr@
+
+  Data:  a-n
+  Addr:  -
+  Float: -
+
+Return the contents of the cdr of cons a.
 
 Class: class:word | Namespace: global | Interface Layer: all
 ------------------------------------------------------------------------
@@ -2093,6 +2159,17 @@ compiling?
   Float: -
 
 Return `TRUE` if compiler is on or `FALSE` otherwise.
+
+Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+cons
+
+  Data:  xy-a
+  Addr:  -
+  Float: -
+
+Create a new cons cell with a car of x and a cdr of y.
 
 Class: class:word | Namespace: global | Interface Layer: all
 ------------------------------------------------------------------------

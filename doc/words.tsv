@@ -154,7 +154,13 @@ c:visible?	c-f	-	-	Return TRUE if character is printable or FALSE otherwise.			c
 c:vowel?	c-f	-	-	Return TRUE if character is a vowel or FALSE otherwise.			class:word	{n/a}	{n/a}	c	all	
 c:whitespace?	c-f	-	-	Return TRUE if character is whitespace, or FALSE otherwise.			class:word	{n/a}	{n/a}	c	all	
 call	a-	-	-	Call a function.			class:primitive	{n/a}	{n/a}	global	all	
+car	a-a	-	-	Return a pointer to the car of cons a.			class:word	{n/a}	{n/a}	global	all	
+car!	na-	-	-	Store n into the car of cons a.			class:word	{n/a}	{n/a}	global	all	
+car@	a-n	-	-	Return the contents of the car of cons a.			class:word	{n/a}	{n/a}	global	all	
 case	nmq- || nmq-n	-	-	If `n` is equal to `m`, drop both and execute the specified quote before exiting the calling word. If not equal, leave `n` on the stack and let execution continue.			class:word	{n/a}	{n/a}	global	all	
+cdr	a-a	-	-	Return a pointer to the cdr of cons a.			class:word	{n/a}	{n/a}	global	all	
+cdr!	na-	-	-	Store n into the cdr of cons a.			class:word	{n/a}	{n/a}	global	all	
+cdr@	a-n	-	-	Return the contents of the cdr of cons a.			class:word	{n/a}	{n/a}	global	all	
 choose	fqq-	-	-	Execute q1 if the flag is true (-1) or q2 if the flag is false (0). Only these flags are valid when using `choose`; passing other values as flags will result in memory corruption.			class:word	{n/a}	{n/a}	global	all	
 class:data	n- || n-n	-	-	Class handler for data structures.	Keep the address or value on the stack.	Compile the value or address as a literal into the current definition.	class:word	{n/a}	{n/a}	class	all	
 class:macro	a-	-	-	Class handler for compiler macros (immediate words)	Execute the function at the provided address.	Execute the function at the provided address.	class:word	{n/a}	{n/a}	class	all	
@@ -180,6 +186,7 @@ compile:jump	a-	-	-	Compile a jump to the specified address into the current def
 compile:lit	n-	-	-	Compile the code to push a number to the stack into the current definition.			class:word	{n/a}	{n/a}	compile	all	
 compile:ret	-	-	-	Compile a return instruction into the current definition.			class:word	{n/a}	{n/a}	compile	all	
 compiling?	-f	-	-	Return `TRUE` if compiler is on or `FALSE` otherwise.			class:word	{n/a}	{n/a}	global	all	
+cons	xy-a	-	-	Create a new cons cell with a car of x and a cdr of y.			class:word	{n/a}	{n/a}	global	all	
 const	ns-	-	-	Create a constant returning the specified value.			class:word	{n/a}	{n/a}	global	all	
 copy	sdl-	-	-	Copy `l` cells from memory at `s` to the memory at `d`. These should not overlap.			class:word	{n/a}	{n/a}	global	all	
 core:init	n-	-	-	Clear the internal state of core `n`. This should be done prior to use of `core:start`, which activates processing on the core.			class:word	{n/a}	{n/a}	core	rre	

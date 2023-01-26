@@ -1149,12 +1149,54 @@
 </div>
 <p>Call a function.</p>
 <table><tr><td><b>Class:</b> </td><td>class:primitive</td></tr><tr><td><b>Namespace:</b> </td><td>global</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
+<h2>car</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> a-a<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Return a pointer to the car of cons a.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>global</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
+<h2>car!</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> na-<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Store n into the car of cons a.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>global</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
+<h2>car@</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> a-n<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Return the contents of the car of cons a.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>global</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
 <h2>case</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> nmq- || nmq-n<br>
 <b>Addr:</b> -<br>
 <b>Float:</b> -</p>
 </div>
 <p>If `n` is equal to `m`, drop both and execute the specified quote before exiting the calling word. If not equal, leave `n` on the stack and let execution continue.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>global</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
+<h2>cdr</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> a-a<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Return a pointer to the cdr of cons a.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>global</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
+<h2>cdr!</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> na-<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Store n into the cdr of cons a.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>global</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
+<h2>cdr@</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> a-n<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Return the contents of the cdr of cons a.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>global</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
 <h2>choose</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> fqq-<br>
@@ -1354,6 +1396,13 @@
 <b>Float:</b> -</p>
 </div>
 <p>Return `TRUE` if compiler is on or `FALSE` otherwise.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>global</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
+<h2>cons</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> xy-a<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Create a new cons cell with a car of x and a cdr of y.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>global</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
 <h2>const</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> ns-<br>

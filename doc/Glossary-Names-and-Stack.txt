@@ -154,7 +154,13 @@ c:visible?                D: c-f  A: -  F: -
 c:vowel?                  D: c-f  A: -  F: -
 c:whitespace?             D: c-f  A: -  F: -
 call                      D: a-  A: -  F: -
+car                       D: a-a  A: -  F: -
+car!                      D: na-  A: -  F: -
+car@                      D: a-n  A: -  F: -
 case                      D: nmq- || nmq-n  A: -  F: -
+cdr                       D: a-a  A: -  F: -
+cdr!                      D: na-  A: -  F: -
+cdr@                      D: a-n  A: -  F: -
 choose                    D: fqq-  A: -  F: -
 class:data                D: n- || n-n  A: -  F: -
 class:macro               D: a-  A: -  F: -
@@ -180,6 +186,7 @@ compile:jump              D: a-  A: -  F: -
 compile:lit               D: n-  A: -  F: -
 compile:ret               D: -  A: -  F: -
 compiling?                D: -f  A: -  F: -
+cons                      D: xy-a  A: -  F: -
 const                     D: ns-  A: -  F: -
 copy                      D: sdl-  A: -  F: -
 core:init                 D: n-  A: -  F: -

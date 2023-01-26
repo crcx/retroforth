@@ -466,8 +466,26 @@ Return TRUE if character is whitespace, or FALSE otherwise.
 call                      D: a-  A: -  F: -
 Call a function.
 
+car                       D: a-a  A: -  F: -
+Return a pointer to the car of cons a.
+
+car!                      D: na-  A: -  F: -
+Store n into the car of cons a.
+
+car@                      D: a-n  A: -  F: -
+Return the contents of the car of cons a.
+
 case                      D: nmq- || nmq-n  A: -  F: -
 If `n` is equal to `m`, drop both and execute the specified quote before exiting the calling word. If not equal, leave `n` on the stack and let execution continue.
+
+cdr                       D: a-a  A: -  F: -
+Return a pointer to the cdr of cons a.
+
+cdr!                      D: na-  A: -  F: -
+Store n into the cdr of cons a.
+
+cdr@                      D: a-n  A: -  F: -
+Return the contents of the cdr of cons a.
 
 choose                    D: fqq-  A: -  F: -
 Execute q1 if the flag is true (-1) or q2 if the flag is false (0). Only these flags are valid when using `choose`; passing other values as flags will result in memory corruption.
@@ -543,6 +561,9 @@ Compile a return instruction into the current definition.
 
 compiling?                D: -f  A: -  F: -
 Return `TRUE` if compiler is on or `FALSE` otherwise.
+
+cons                      D: xy-a  A: -  F: -
+Create a new cons cell with a car of x and a cdr of y.
 
 const                     D: ns-  A: -  F: -
 Create a constant returning the specified value.
