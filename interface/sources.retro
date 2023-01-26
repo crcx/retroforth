@@ -6,7 +6,7 @@ each of the provided words are found in.
 ## Standard Library
 
 ~~~
-'retro.forth s:keep
+'retro.forth s:dedup
 dup 'listen d:lookup d:source store
 dup 'bye d:lookup d:source store
 dup 's:get-word d:lookup d:source store

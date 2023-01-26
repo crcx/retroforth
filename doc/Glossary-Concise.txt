@@ -547,6 +547,9 @@ Return the current year in UTC.
 clock:year                D: -n  A: -  F: -
 Return the current year.
 
+comma                     D: n-  A: -  F: -
+Store the specified value into the memory at `here` and increment `Heap` by 1. Identical to `,`, this is provided for compatibility with the RetroForth on ilo and napia.
+
 compile:call              D: a-  A: -  F: -
 Compile a call to the specified address into the current definition.
 
@@ -1044,6 +1047,9 @@ Trigger a floating-point operation. This is not intended to be used directly.
 
 forever                   D: q-  A: -  F: -
 Run quotation in an endless loop.
+
+gc                        D: a-  A: -  F: -
+Save value of `Heap`, run the function provided, then restore `Heap`.
 
 gopher:get                D: asns-n  A: -  F: -
 Takes an address, a server, a port, and a selector. Fetch the resource and store it at address. Return the number of bytes received.

@@ -181,6 +181,7 @@ clock:utc:month	-n	-	-	Return the current month in UTC.			class:word	{n/a}	{n/a}
 clock:utc:second	-n	-	-	Return the current second in UTC.			class:word	{n/a}	{n/a}	clock	iOS, rre	
 clock:utc:year	-n	-	-	Return the current year in UTC.			class:word	{n/a}	{n/a}	clock	iOS, rre	
 clock:year	-n	-	-	Return the current year.			class:word	{n/a}	{n/a}	clock	iOS, rre	
+comma	n-	-	-	Store the specified value into the memory at `here` and increment `Heap` by 1. Identical to `,`, this is provided for compatibility with the RetroForth on ilo and napia.			class:word	    $a , $b , $c , #0 ,	{n/a}	global	all	
 compile:call	a-	-	-	Compile a call to the specified address into the current definition.			class:word	{n/a}	{n/a}	compile	all	
 compile:jump	a-	-	-	Compile a jump to the specified address into the current definition.			class:word	{n/a}	{n/a}	compile	all	
 compile:lit	n-	-	-	Compile the code to push a number to the stack into the current definition.			class:word	{n/a}	{n/a}	compile	all	
@@ -347,6 +348,7 @@ file:tell	h-n	-	-	Given a file handle, return the current offset in the file.			
 file:write	ch-	-	-	Write a character to the file represented by the handle.			class:word	{n/a}	{n/a}	file	rre	
 float:operation	...n-	-	-	Trigger a floating-point operation. This is not intended to be used directly.			class:word	{n/a}	{n/a}	float	rre	
 forever	q-	-	-	Run quotation in an endless loop.			class:word	{n/a}	{n/a}	a	all	
+gc	a-	-	-	Save value of `Heap`, run the function provided, then restore `Heap`.			class:word	{n/a}	{n/a}	global	all	
 gopher:get	asns-n	-	-	Takes an address, a server, a port, and a selector. Fetch the resource and store it at address. Return the number of bytes received.			class:word	    here 'forthworks.com #70 '/ gopher:get\n    here s:put	{n/a}	gopher	ios	
 gt?	nn-f	-	-	Compare n1 and n2. Return `TRUE` if n1 is greater than n2, or `FALSE` otherwise.			class:primitive	{n/a}	{n/a}	global	all	
 gteq?	nn-f	-	-	Compare n1 and n2. Return `TRUE` if n1 is greater than or equal to n2, or `FALSE` otherwise.			class:word	{n/a}	{n/a}	global	all	

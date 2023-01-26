@@ -15,7 +15,7 @@
 ~~~
 
 ~~~
-'interface/unsigned.retro s:keep
+'interface/unsigned.retro s:dedup
 dup 'unsigned:+ d:lookup d:source store
 dup 'unsigned:- d:lookup d:source store
 dup 'unsigned:* d:lookup d:source store

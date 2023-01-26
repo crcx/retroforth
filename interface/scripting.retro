@@ -59,7 +59,7 @@ Adds support for obtaining current source line text
 ## d:source
 
 ~~~
-'interface/scripting.retro s:keep
+'interface/scripting.retro s:dedup
 dup 'abort d:lookup d:source store
 dup 'script:abort-include d:lookup d:source store
 dup 'script:ignore-to-eol d:lookup d:source store

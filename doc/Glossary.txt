@@ -2108,6 +2108,22 @@ Return the current year.
 Class: class:word | Namespace: clock | Interface Layer: iOS, rre
 ------------------------------------------------------------------------
 
+comma
+
+  Data:  n-
+  Addr:  -
+  Float: -
+
+Store the specified value into the memory at `here` and increment `Heap` by 1. Identical to `,`, this is provided for compatibility with the RetroForth on ilo and napia.
+
+Class: class:word | Namespace: global | Interface Layer: all
+
+Example #1:
+
+    $a , $b , $c , #0 ,
+
+------------------------------------------------------------------------
+
 compile:call
 
   Data:  a-
@@ -4007,6 +4023,17 @@ forever
 Run quotation in an endless loop.
 
 Class: class:word | Namespace: a | Interface Layer: all
+------------------------------------------------------------------------
+
+gc
+
+  Data:  a-
+  Addr:  -
+  Float: -
+
+Save value of `Heap`, run the function provided, then restore `Heap`.
+
+Class: class:word | Namespace: global | Interface Layer: all
 ------------------------------------------------------------------------
 
 gopher:get

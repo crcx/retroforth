@@ -11,7 +11,7 @@
 ~~~
 
 ~~~
-'interface/multicore.retro s:keep
+'interface/multicore.retro s:dedup
 dup 'io:core d:lookup d:source store
 dup 'core:init d:lookup d:source store
 dup 'core:start d:lookup d:source store

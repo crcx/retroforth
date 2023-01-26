@@ -27,7 +27,7 @@ system clock.
 ## d:source
 
 ~~~
-'interface/clock.retro s:keep
+'interface/clock.retro s:dedup
 dup 'clock:utc:second d:lookup d:source store
 dup 'clock:utc:minute d:lookup d:source store
 dup 'clock:utc:hour d:lookup d:source store
@@ -44,4 +44,3 @@ dup 'clock:timestamp d:lookup d:source store
 dup 'clock:operation d:lookup d:source store
 drop
 ~~~
-

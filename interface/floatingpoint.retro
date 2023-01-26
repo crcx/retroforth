@@ -210,7 +210,7 @@ Deal with special cases.
 ## Populate d:source
 
 ~~~
-'interface/floatingpoint.retro s:keep
+'interface/floatingpoint.retro s:dedup
 dup 'e:put d:lookup d:source store
 dup 'f:dump-astack d:lookup d:source store
 dup 'f:dump-stack d:lookup d:source store

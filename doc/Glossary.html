@@ -1362,6 +1362,17 @@
 </div>
 <p>Return the current year.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>clock</td></tr><tr><td><b>Interface Layer:</b> </td><td>iOS, rre</td></tr></table><hr/>
+<h2>comma</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> n-<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Store the specified value into the memory at `here` and increment `Heap` by 1. Identical to `,`, this is provided for compatibility with the RetroForth on ilo and napia.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>global</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><p><b>Example:</b> <br>
+<br>
+<xmp style='background:#f2f2f2'>    $a , $b , $c , #0 ,</xmp>
+</p>
+<hr/>
 <h2>compile:call</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> a-<br>
 <b>Addr:</b> -<br>
@@ -2585,6 +2596,13 @@
 </div>
 <p>Run quotation in an endless loop.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>a</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
+<h2>gc</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> a-<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Save value of `Heap`, run the function provided, then restore `Heap`.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>global</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
 <h2>gopher:get</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> asns-n<br>
 <b>Addr:</b> -<br>
