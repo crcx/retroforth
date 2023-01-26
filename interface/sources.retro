@@ -6,295 +6,299 @@ each of the provided words are found in.
 ## Standard Library
 
 ~~~
+:d:set-source (ss-) &s:dedup dip d:lookup d:source store ;
+~~~
+
+~~~
 'retro.forth s:dedup
-dup 'listen d:lookup d:source store
-dup 'bye d:lookup d:source store
-dup 's:get-word d:lookup d:source store
-dup 'c:get d:lookup d:source store
-dup 'FREE d:lookup d:source store
-dup 'dump-stack d:lookup d:source store
-dup 'reset d:lookup d:source store
-dup 'n:put d:lookup d:source store
-dup 's:put d:lookup d:source store
-dup 'tab d:lookup d:source store
-dup 'sp d:lookup d:source store
-dup 'nl d:lookup d:source store
-dup 'c:put d:lookup d:source store
-dup 'io:scan-for d:lookup d:source store
-dup 'io:invoke d:lookup d:source store
-dup 'io:query d:lookup d:source store
-dup 'io:enumerate d:lookup d:source store
-dup 'tail-recurse d:lookup d:source store
-dup 'hex d:lookup d:source store
-dup 'octal d:lookup d:source store
-dup 'binary d:lookup d:source store
-dup 'decimal d:lookup d:source store
-dup 'indexed-times d:lookup d:source store
-dup 'K d:lookup d:source store
-dup 'J d:lookup d:source store
-dup 'I d:lookup d:source store
-dup 's:evaluate d:lookup d:source store
-dup 'a:ends-with? d:lookup d:source store
-dup 'a:begins-with? d:lookup d:source store
-dup 'a:-eq? d:lookup d:source store
-dup 'a:eq? d:lookup d:source store
-dup 'a:middle d:lookup d:source store
-dup 'a:right d:lookup d:source store
-dup 'a:left d:lookup d:source store
-dup '} d:lookup d:source store
-dup '{ d:lookup d:source store
-dup 'a:make d:lookup d:source store
-dup 'a:index/string d:lookup d:source store
-dup 'a:index d:lookup d:source store
-dup 'a:reduce d:lookup d:source store
-dup 'a:store d:lookup d:source store
-dup 'a:fetch d:lookup d:source store
-dup 'a:th d:lookup d:source store
-dup 'a:reverse d:lookup d:source store
-dup 'a:map d:lookup d:source store
-dup 'a:contains/string? d:lookup d:source store
-dup 'a:contains? d:lookup d:source store
-dup 'a:filter d:lookup d:source store
-dup 'a:chop d:lookup d:source store
-dup 'a:prepend d:lookup d:source store
-dup 'a:append d:lookup d:source store
-dup 'a:to-string d:lookup d:source store
-dup 'a:copy d:lookup d:source store
-dup 'a:dup d:lookup d:source store
-dup 'a:for-each d:lookup d:source store
-dup 'a:from-string d:lookup d:source store
-dup 'a:counted-results d:lookup d:source store
-dup 'a:length d:lookup d:source store
-dup 'd:lookup-xt d:lookup d:source store
-dup 'd:for-each d:lookup d:source store
-dup 'does d:lookup d:source store
-dup 'curry d:lookup d:source store
-dup 'reorder d:lookup d:source store
-dup 's:const d:lookup d:source store
-dup 's:format d:lookup d:source store
-dup 'n:to-string d:lookup d:source store
-dup 's:replace-all d:lookup d:source store
-dup 's:tokenize-on-string d:lookup d:source store
-dup 's:tokenize d:lookup d:source store
-dup 's:replace d:lookup d:source store
-dup 's:split/string d:lookup d:source store
-dup 's:split/char d:lookup d:source store
-dup 'sigil:' d:lookup d:source store
-dup 'RewriteUnderscores d:lookup d:source store
-dup 's:trim d:lookup d:source store
-dup 's:trim-right d:lookup d:source store
-dup 's:trim-left d:lookup d:source store
-dup 's:to-lower d:lookup d:source store
-dup 's:to-upper d:lookup d:source store
-dup 'c:to-number d:lookup d:source store
-dup 'c:toggle-case d:lookup d:source store
-dup 'c:to-string d:lookup d:source store
-dup 'c:to-lower d:lookup d:source store
-dup 'c:to-upper d:lookup d:source store
-dup 'c:-consonant? d:lookup d:source store
-dup 'c:-vowel? d:lookup d:source store
-dup 'c:-visible? d:lookup d:source store
-dup 'c:-whitespace? d:lookup d:source store
-dup 'c:-digit? d:lookup d:source store
-dup 'c:-uppercase? d:lookup d:source store
-dup 'c:-lowercase? d:lookup d:source store
-dup 'c:whitespace? d:lookup d:source store
-dup 'c:consonant? d:lookup d:source store
-dup 'c:vowel? d:lookup d:source store
-dup 'c:visible? d:lookup d:source store
-dup 'c:digit? d:lookup d:source store
-dup 'c:letter? d:lookup d:source store
-dup 'c:uppercase? d:lookup d:source store
-dup 'c:lowercase? d:lookup d:source store
-dup 'ASCII:US d:lookup d:source store
-dup 'ASCII:RS d:lookup d:source store
-dup 'ASCII:GS d:lookup d:source store
-dup 'ASCII:FS d:lookup d:source store
-dup 'ASCII:SUB d:lookup d:source store
-dup 'ASCII:EM d:lookup d:source store
-dup 'ASCII:CAN d:lookup d:source store
-dup 'ASCII:ETB d:lookup d:source store
-dup 'ASCII:SYN d:lookup d:source store
-dup 'ASCII:NAK d:lookup d:source store
-dup 'ASCII:DC4 d:lookup d:source store
-dup 'ASCII:DC3 d:lookup d:source store
-dup 'ASCII:DC2 d:lookup d:source store
-dup 'ASCII:DC1 d:lookup d:source store
-dup 'ASCII:DLE d:lookup d:source store
-dup 'ASCII:SI d:lookup d:source store
-dup 'ASCII:SO d:lookup d:source store
-dup 'ASCII:BEL d:lookup d:source store
-dup 'ASCII:ACK d:lookup d:source store
-dup 'ASCII:ENQ d:lookup d:source store
-dup 'ASCII:EOT d:lookup d:source store
-dup 'ASCII:ETX d:lookup d:source store
-dup 'ASCII:STX d:lookup d:source store
-dup 'ASCII:SOH d:lookup d:source store
-dup 'ASCII:DEL d:lookup d:source store
-dup 'ASCII:SPACE d:lookup d:source store
-dup 'ASCII:CR d:lookup d:source store
-dup 'ASCII:FF d:lookup d:source store
-dup 'ASCII:VT d:lookup d:source store
-dup 'ASCII:LF d:lookup d:source store
-dup 'ASCII:HT d:lookup d:source store
-dup 'ASCII:BS d:lookup d:source store
-dup 'ASCII:ESC d:lookup d:source store
-dup 'ASCII:NUL d:lookup d:source store
-dup '$ d:lookup d:source store
-dup '' d:lookup d:source store
-dup 's:WHITESPACE d:lookup d:source store
-dup 's:PUNCTUATION d:lookup d:source store
-dup 's:ASCII-LETTERS d:lookup d:source store
-dup 's:ASCII-UPPERCASE d:lookup d:source store
-dup 's:ASCII-LOWERCASE d:lookup d:source store
-dup 's:DIGITS d:lookup d:source store
-dup 's:copy d:lookup d:source store
-dup 's:ends-with? d:lookup d:source store
-dup 's:begins-with? d:lookup d:source store
-dup 's:left d:lookup d:source store
-dup 's:right d:lookup d:source store
-dup 's:substr d:lookup d:source store
-dup 's:map d:lookup d:source store
-dup 's:filter d:lookup d:source store
-dup 's:index/string d:lookup d:source store
-dup 's:contains/string? d:lookup d:source store
-dup 's:hash d:lookup d:source store
-dup 's:contains/char? d:lookup d:source store
-dup 's:index/char d:lookup d:source store
-dup 's:for-each d:lookup d:source store
-dup 's:append d:lookup d:source store
-dup 's:prepend d:lookup d:source store
-dup 's:reverse d:lookup d:source store
-dup 's:chop d:lookup d:source store
-dup 'sigil:' d:lookup d:source store
-dup 's:keep d:lookup d:source store
-dup 's:skip d:lookup d:source store
-dup 's:empty d:lookup d:source store
-dup 's:temp d:lookup d:source store
-dup 'STRINGS d:lookup d:source store
-dup 'TempStringMax d:lookup d:source store
-dup 'TempStrings d:lookup d:source store
-dup 'buffer:preserve d:lookup d:source store
-dup 'buffer:set d:lookup d:source store
-dup 'buffer:size d:lookup d:source store
-dup 'buffer:empty d:lookup d:source store
-dup 'buffer:get d:lookup d:source store
-dup 'buffer:add d:lookup d:source store
-dup 'buffer:end d:lookup d:source store
-dup 'buffer:start d:lookup d:source store
-dup 'copy d:lookup d:source store
-dup 'v:update d:lookup d:source store
-dup 'v:preserve d:lookup d:source store
-dup 'allot d:lookup d:source store
-dup 'v:off d:lookup d:source store
-dup 'v:on d:lookup d:source store
-dup 'v:limit d:lookup d:source store
-dup 'v:dec d:lookup d:source store
-dup 'v:inc d:lookup d:source store
-dup 'v:dec-by d:lookup d:source store
-dup 'v:inc-by d:lookup d:source store
-dup 'w:store-next d:lookup d:source store
-dup 'w:fetch-next d:lookup d:source store
-dup 'h:store-next d:lookup d:source store
-dup 'h:fetch-next d:lookup d:source store
-dup 'b:store-next d:lookup d:source store
-dup 'b:fetch-next d:lookup d:source store
-dup 'w:store d:lookup d:source store
-dup 'w:fetch d:lookup d:source store
-dup 'h:store d:lookup d:source store
-dup 'h:fetch d:lookup d:source store
-dup 'b:store d:lookup d:source store
-dup 'b:fetch d:lookup d:source store
-dup 'b:to-byte-address d:lookup d:source store
-dup '}} d:lookup d:source store
-dup '---reveal--- d:lookup d:source store
-dup '{{ d:lookup d:source store
-dup 'ScopeList d:lookup d:source store
-dup 'n:between? d:lookup d:source store
-dup 'n:dec d:lookup d:source store
-dup 'n:inc d:lookup d:source store
-dup 'n:limit d:lookup d:source store
-dup 'n:abs d:lookup d:source store
-dup 'n:max d:lookup d:source store
-dup 'n:min d:lookup d:source store
-dup 'n:sqrt d:lookup d:source store
-dup 'n:square d:lookup d:source store
-dup 'n:negate d:lookup d:source store
-dup 'n:pow d:lookup d:source store
-dup 'mod d:lookup d:source store
-dup '/ d:lookup d:source store
-dup 'rot d:lookup d:source store
-dup '-if; d:lookup d:source store
-dup 'if; d:lookup d:source store
-dup 'n:odd? d:lookup d:source store
-dup 'n:even? d:lookup d:source store
-dup 'n:strictly-positive? d:lookup d:source store
-dup 'n:positive? d:lookup d:source store
-dup 'n:negative? d:lookup d:source store
-dup 'n:-zero? d:lookup d:source store
-dup 'n:zero? d:lookup d:source store
-dup 'n:MIN d:lookup d:source store
-dup 'n:MAX d:lookup d:source store
-dup 'gteq? d:lookup d:source store
-dup 'lteq? d:lookup d:source store
-dup 'not d:lookup d:source store
-dup 's:case d:lookup d:source store
-dup 'case d:lookup d:source store
-dup 'FALSE d:lookup d:source store
-dup 'TRUE d:lookup d:source store
-dup 'sigil:| d:lookup d:source store
-dup 'times d:lookup d:source store
-dup 'forever d:lookup d:source store
-dup 'until d:lookup d:source store
-dup 'while d:lookup d:source store
-dup 'tri@ d:lookup d:source store
-dup 'tri* d:lookup d:source store
-dup 'tri d:lookup d:source store
-dup 'bi@ d:lookup d:source store
-dup 'bi* d:lookup d:source store
-dup 'bi d:lookup d:source store
-dup 'sip d:lookup d:source store
-dup 'dip d:lookup d:source store
-dup 'dup-pair d:lookup d:source store
-dup '?dup d:lookup d:source store
-dup 'drop-pair d:lookup d:source store
-dup 'nip d:lookup d:source store
-dup 'over d:lookup d:source store
-dup 'tuck d:lookup d:source store
-dup 'const d:lookup d:source store
-dup 'var d:lookup d:source store
-dup 'var-n d:lookup d:source store
-dup 'd:create d:lookup d:source store
-dup 'sigil:! d:lookup d:source store
-dup 'sigil:@ d:lookup d:source store
-dup 'here d:lookup d:source store
-dup 'sigil:^ d:lookup d:source store
-dup 'sigil:\ d:lookup d:source store
-dup 'sigil:` d:lookup d:source store
-dup 'compiling? d:lookup d:source store
-dup 'compile:ret d:lookup d:source store
-dup 'compile:call d:lookup d:source store
-dup 'compile:jump d:lookup d:source store
-dup 'compile:lit d:lookup d:source store
-dup ') d:lookup d:source store
-dup '( d:lookup d:source store
-dup 'unhook d:lookup d:source store
-dup 'set-hook d:lookup d:source store
-dup 'hook d:lookup d:source store
-dup 'primitive d:lookup d:source store
-dup 'data d:lookup d:source store
-dup 'immediate d:lookup d:source store
-dup 'reclass d:lookup d:source store
-dup 'd:last.name d:lookup d:source store
-dup 'd:last.class d:lookup d:source store
-dup 'd:last.xt d:lookup d:source store
-dup 'd:last d:lookup d:source store
-dup 'depth d:lookup d:source store
-dup 'EOM d:lookup d:source store
-dup 's:store d:lookup d:source store
-dup 's:fetch d:lookup d:source store
-dup 'sigil:' d:lookup d:source store
-dup 'd:rehash d:lookup d:source store
-dup 'd:Hash-Function d:lookup d:source store
+dup 'listen d:set-source
+dup 'bye d:set-source
+dup 's:get-word d:set-source
+dup 'c:get d:set-source
+dup 'FREE d:set-source
+dup 'dump-stack d:set-source
+dup 'reset d:set-source
+dup 'n:put d:set-source
+dup 's:put d:set-source
+dup 'tab d:set-source
+dup 'sp d:set-source
+dup 'nl d:set-source
+dup 'c:put d:set-source
+dup 'io:scan-for d:set-source
+dup 'io:invoke d:set-source
+dup 'io:query d:set-source
+dup 'io:enumerate d:set-source
+dup 'tail-recurse d:set-source
+dup 'hex d:set-source
+dup 'octal d:set-source
+dup 'binary d:set-source
+dup 'decimal d:set-source
+dup 'indexed-times d:set-source
+dup 'K d:set-source
+dup 'J d:set-source
+dup 'I d:set-source
+dup 's:evaluate d:set-source
+dup 'a:ends-with? d:set-source
+dup 'a:begins-with? d:set-source
+dup 'a:-eq? d:set-source
+dup 'a:eq? d:set-source
+dup 'a:middle d:set-source
+dup 'a:right d:set-source
+dup 'a:left d:set-source
+dup '} d:set-source
+dup '{ d:set-source
+dup 'a:make d:set-source
+dup 'a:index/string d:set-source
+dup 'a:index d:set-source
+dup 'a:reduce d:set-source
+dup 'a:store d:set-source
+dup 'a:fetch d:set-source
+dup 'a:th d:set-source
+dup 'a:reverse d:set-source
+dup 'a:map d:set-source
+dup 'a:contains/string? d:set-source
+dup 'a:contains? d:set-source
+dup 'a:filter d:set-source
+dup 'a:chop d:set-source
+dup 'a:prepend d:set-source
+dup 'a:append d:set-source
+dup 'a:to-string d:set-source
+dup 'a:copy d:set-source
+dup 'a:dup d:set-source
+dup 'a:for-each d:set-source
+dup 'a:from-string d:set-source
+dup 'a:counted-results d:set-source
+dup 'a:length d:set-source
+dup 'd:lookup-xt d:set-source
+dup 'd:for-each d:set-source
+dup 'does d:set-source
+dup 'curry d:set-source
+dup 'reorder d:set-source
+dup 's:const d:set-source
+dup 's:format d:set-source
+dup 'n:to-string d:set-source
+dup 's:replace-all d:set-source
+dup 's:tokenize-on-string d:set-source
+dup 's:tokenize d:set-source
+dup 's:replace d:set-source
+dup 's:split/string d:set-source
+dup 's:split/char d:set-source
+dup 'sigil:' d:set-source
+dup 'RewriteUnderscores d:set-source
+dup 's:trim d:set-source
+dup 's:trim-right d:set-source
+dup 's:trim-left d:set-source
+dup 's:to-lower d:set-source
+dup 's:to-upper d:set-source
+dup 'c:to-number d:set-source
+dup 'c:toggle-case d:set-source
+dup 'c:to-string d:set-source
+dup 'c:to-lower d:set-source
+dup 'c:to-upper d:set-source
+dup 'c:-consonant? d:set-source
+dup 'c:-vowel? d:set-source
+dup 'c:-visible? d:set-source
+dup 'c:-whitespace? d:set-source
+dup 'c:-digit? d:set-source
+dup 'c:-uppercase? d:set-source
+dup 'c:-lowercase? d:set-source
+dup 'c:whitespace? d:set-source
+dup 'c:consonant? d:set-source
+dup 'c:vowel? d:set-source
+dup 'c:visible? d:set-source
+dup 'c:digit? d:set-source
+dup 'c:letter? d:set-source
+dup 'c:uppercase? d:set-source
+dup 'c:lowercase? d:set-source
+dup 'ASCII:US d:set-source
+dup 'ASCII:RS d:set-source
+dup 'ASCII:GS d:set-source
+dup 'ASCII:FS d:set-source
+dup 'ASCII:SUB d:set-source
+dup 'ASCII:EM d:set-source
+dup 'ASCII:CAN d:set-source
+dup 'ASCII:ETB d:set-source
+dup 'ASCII:SYN d:set-source
+dup 'ASCII:NAK d:set-source
+dup 'ASCII:DC4 d:set-source
+dup 'ASCII:DC3 d:set-source
+dup 'ASCII:DC2 d:set-source
+dup 'ASCII:DC1 d:set-source
+dup 'ASCII:DLE d:set-source
+dup 'ASCII:SI d:set-source
+dup 'ASCII:SO d:set-source
+dup 'ASCII:BEL d:set-source
+dup 'ASCII:ACK d:set-source
+dup 'ASCII:ENQ d:set-source
+dup 'ASCII:EOT d:set-source
+dup 'ASCII:ETX d:set-source
+dup 'ASCII:STX d:set-source
+dup 'ASCII:SOH d:set-source
+dup 'ASCII:DEL d:set-source
+dup 'ASCII:SPACE d:set-source
+dup 'ASCII:CR d:set-source
+dup 'ASCII:FF d:set-source
+dup 'ASCII:VT d:set-source
+dup 'ASCII:LF d:set-source
+dup 'ASCII:HT d:set-source
+dup 'ASCII:BS d:set-source
+dup 'ASCII:ESC d:set-source
+dup 'ASCII:NUL d:set-source
+dup '$ d:set-source
+dup '' d:set-source
+dup 's:WHITESPACE d:set-source
+dup 's:PUNCTUATION d:set-source
+dup 's:ASCII-LETTERS d:set-source
+dup 's:ASCII-UPPERCASE d:set-source
+dup 's:ASCII-LOWERCASE d:set-source
+dup 's:DIGITS d:set-source
+dup 's:copy d:set-source
+dup 's:ends-with? d:set-source
+dup 's:begins-with? d:set-source
+dup 's:left d:set-source
+dup 's:right d:set-source
+dup 's:substr d:set-source
+dup 's:map d:set-source
+dup 's:filter d:set-source
+dup 's:index/string d:set-source
+dup 's:contains/string? d:set-source
+dup 's:hash d:set-source
+dup 's:contains/char? d:set-source
+dup 's:index/char d:set-source
+dup 's:for-each d:set-source
+dup 's:append d:set-source
+dup 's:prepend d:set-source
+dup 's:reverse d:set-source
+dup 's:chop d:set-source
+dup 'sigil:' d:set-source
+dup 's:keep d:set-source
+dup 's:skip d:set-source
+dup 's:empty d:set-source
+dup 's:temp d:set-source
+dup 'STRINGS d:set-source
+dup 'TempStringMax d:set-source
+dup 'TempStrings d:set-source
+dup 'buffer:preserve d:set-source
+dup 'buffer:set d:set-source
+dup 'buffer:size d:set-source
+dup 'buffer:empty d:set-source
+dup 'buffer:get d:set-source
+dup 'buffer:add d:set-source
+dup 'buffer:end d:set-source
+dup 'buffer:start d:set-source
+dup 'copy d:set-source
+dup 'v:update d:set-source
+dup 'v:preserve d:set-source
+dup 'allot d:set-source
+dup 'v:off d:set-source
+dup 'v:on d:set-source
+dup 'v:limit d:set-source
+dup 'v:dec d:set-source
+dup 'v:inc d:set-source
+dup 'v:dec-by d:set-source
+dup 'v:inc-by d:set-source
+dup 'w:store-next d:set-source
+dup 'w:fetch-next d:set-source
+dup 'h:store-next d:set-source
+dup 'h:fetch-next d:set-source
+dup 'b:store-next d:set-source
+dup 'b:fetch-next d:set-source
+dup 'w:store d:set-source
+dup 'w:fetch d:set-source
+dup 'h:store d:set-source
+dup 'h:fetch d:set-source
+dup 'b:store d:set-source
+dup 'b:fetch d:set-source
+dup 'b:to-byte-address d:set-source
+dup '}} d:set-source
+dup '---reveal--- d:set-source
+dup '{{ d:set-source
+dup 'ScopeList d:set-source
+dup 'n:between? d:set-source
+dup 'n:dec d:set-source
+dup 'n:inc d:set-source
+dup 'n:limit d:set-source
+dup 'n:abs d:set-source
+dup 'n:max d:set-source
+dup 'n:min d:set-source
+dup 'n:sqrt d:set-source
+dup 'n:square d:set-source
+dup 'n:negate d:set-source
+dup 'n:pow d:set-source
+dup 'mod d:set-source
+dup '/ d:set-source
+dup 'rot d:set-source
+dup '-if; d:set-source
+dup 'if; d:set-source
+dup 'n:odd? d:set-source
+dup 'n:even? d:set-source
+dup 'n:strictly-positive? d:set-source
+dup 'n:positive? d:set-source
+dup 'n:negative? d:set-source
+dup 'n:-zero? d:set-source
+dup 'n:zero? d:set-source
+dup 'n:MIN d:set-source
+dup 'n:MAX d:set-source
+dup 'gteq? d:set-source
+dup 'lteq? d:set-source
+dup 'not d:set-source
+dup 's:case d:set-source
+dup 'case d:set-source
+dup 'FALSE d:set-source
+dup 'TRUE d:set-source
+dup 'sigil:| d:set-source
+dup 'times d:set-source
+dup 'forever d:set-source
+dup 'until d:set-source
+dup 'while d:set-source
+dup 'tri@ d:set-source
+dup 'tri* d:set-source
+dup 'tri d:set-source
+dup 'bi@ d:set-source
+dup 'bi* d:set-source
+dup 'bi d:set-source
+dup 'sip d:set-source
+dup 'dip d:set-source
+dup 'dup-pair d:set-source
+dup '?dup d:set-source
+dup 'drop-pair d:set-source
+dup 'nip d:set-source
+dup 'over d:set-source
+dup 'tuck d:set-source
+dup 'const d:set-source
+dup 'var d:set-source
+dup 'var-n d:set-source
+dup 'd:create d:set-source
+dup 'sigil:! d:set-source
+dup 'sigil:@ d:set-source
+dup 'here d:set-source
+dup 'sigil:^ d:set-source
+dup 'sigil:\ d:set-source
+dup 'sigil:` d:set-source
+dup 'compiling? d:set-source
+dup 'compile:ret d:set-source
+dup 'compile:call d:set-source
+dup 'compile:jump d:set-source
+dup 'compile:lit d:set-source
+dup ') d:set-source
+dup '( d:set-source
+dup 'unhook d:set-source
+dup 'set-hook d:set-source
+dup 'hook d:set-source
+dup 'primitive d:set-source
+dup 'data d:set-source
+dup 'immediate d:set-source
+dup 'reclass d:set-source
+dup 'd:last.name d:set-source
+dup 'd:last.class d:set-source
+dup 'd:last.xt d:set-source
+dup 'd:last d:set-source
+dup 'depth d:set-source
+dup 'EOM d:set-source
+dup 's:store d:set-source
+dup 's:fetch d:set-source
+dup 'sigil:' d:set-source
+dup 'd:rehash d:set-source
+dup 'd:Hash-Function d:set-source
 drop
 ~~~

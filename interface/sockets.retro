@@ -92,3 +92,21 @@ Does not return anything.
 ~~~
 :socket:configure     (ss-)    #9 socket:operation ;
 ~~~
+
+# Source Data
+
+~~~
+'interface/sockets.retro
+dup 'socket:configure d:set-source
+dup 'socket:close d:set-source
+dup 'socket:recv d:set-source
+dup 'socket:send d:set-source
+dup 'socket:connect d:set-source
+dup 'socket:accept d:set-source
+dup 'socket:listen d:set-source
+dup 'socket:bind d:set-source
+dup 'socket:create d:set-source
+dup 'socket:gethostbyname d:set-source
+dup 'socket:operation d:set-source
+drop
+~~~

@@ -8,4 +8,3 @@ for words with an empty `d:source` field.
 :,dt   dup n:put ;
 [ dup d:source fetch n:zero? [ ,dt tab ,name nl ] if drop ] d:for-each
 ~~~
-
