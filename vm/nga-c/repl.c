@@ -38,7 +38,7 @@
 #endif
 
 #ifndef IMAGE_SIZE
-#define IMAGE_SIZE   524288       /* Amount of RAM, in cells */
+#define IMAGE_SIZE   65536       /* Amount of RAM, in cells */
 #endif
 
 #ifndef ADDRESSES

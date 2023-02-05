@@ -17,7 +17,9 @@ data for words, and record this as part of the header.
 
   [ script:current-file known? [ index ] [ record ] choose
     [ &d:add-header #2 + call ] dip
-    d:last d:source store ] &d:add-header set-hook
+    d:last d:source store
+    d:last d:name @d:Hash-Function call d:last d:hash store
+  ] &d:add-header set-hook
 }}
 ~~~
 
