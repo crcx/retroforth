@@ -2137,6 +2137,7 @@ void update_rx(NgaState *vm) {
   vm->Dictionary = vm->memory[2];
   vm->interpret = vm->memory[5];
   vm->NotFound = vm->memory[6];
+  if (vm->memory[10] != 0) { execute(vm, vm->memory[10]); }
 }
 
 /*=====================================================================*/

@@ -54,3 +54,11 @@ existing set in the future.
 
 :a:dup here [ dup a:length comma &comma a:for-each ] dip ;
 ~~~
+
+~~~
+:d:use-hashes
+  &eq? &d:lookup #5 - store
+  [ d:hash fetch ] &d:lookup #8 - store
+  #2049 &d:lookup store
+  &s:hash &d:lookup n:inc store ;
+~~~

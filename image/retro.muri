@@ -846,6 +846,8 @@ i feliju..
 r find_next
 
 : d:lookup
+i ........
+i ........
 i listlica
 r Needle
 r find
