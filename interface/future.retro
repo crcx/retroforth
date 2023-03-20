@@ -21,7 +21,6 @@ existing set in the future.
 :aa:first (a-n) #0 a:fetch ;
 :aa:last  (a-n) dup a:length n:dec a:fetch ;
 
-
 :a:dup here [ dup a:length comma &comma a:for-each ] dip ;
 ~~~
 

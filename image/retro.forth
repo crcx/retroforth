@@ -1518,6 +1518,7 @@ I then define `a:append` and `a:prepend` to combine arrays.
 ~~~
 :a:append (aa-a)
   dup-pair &fetch bi@ + here [ , [ &, a:for-each ] bi@ ] dip ;
+
 :a:prepend (aa-a)
   swap a:append ;
 ~~~
@@ -1567,8 +1568,12 @@ Example:
 
 ~~~
 :a:map (aq-a)
-  [ call , ] curry
-  here [ over fetch , a:for-each ] dip ;
+  swap [ fetch-next [ [ fetch over call ] sip
+                      &store sip n:inc ] times
+         drop-pair ] sip ;
+
+:a:first (a-n) #0 a:fetch ;
+:a:last  (a-n) dup a:length n:dec a:fetch ;
 ~~~
 
 You can use `a:reverse` to make a copy of an array with the
