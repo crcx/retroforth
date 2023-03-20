@@ -4,9 +4,9 @@
 | | |  __/ |_| | | (_) |  _| (_) | |  | |_| | | |
 |_|  \___|\__|_|  \___/|_|  \___/|_|   \__|_| |_|
                                           for nga
-# RetroForth/nga 2023.2 Release Notes
+# RetroForth/nga 2023.3 Release Notes
 
-----------------------------------------------------------------
+================================================================
 
 * no longer display warning on files with only test blocks (#87)
 * added `script:current-line-text` (#85)
@@ -18,5 +18,9 @@
 * mem: now requires 64-bit (rick c)
 * block: words now use block storage device
 * fll: vocabulary added (arland)
+* added string deduplication (`s:dedup`)
+* added new `a:` words: `a:first`, `a:last`, `a:temp`, `a:hash`,
+                        `a:indices`, `a:indices/string`
+* optional use of hashed dictionary name lookups
 
-----------------------------------------------------------------
+================================================================

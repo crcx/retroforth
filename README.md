@@ -126,4 +126,6 @@ Thanks go out to my current and past patrons:
 - Eli
 - Brad S
 - Tobias Ammann
+- oneearedrabbit
+- Octavio Turra
 
