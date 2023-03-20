@@ -1571,9 +1571,6 @@ Example:
   swap [ fetch-next [ [ fetch over call ] sip
                       &store sip n:inc ] times
          drop-pair ] sip ;
-
-:a:first (a-n) #0 a:fetch ;
-:a:last  (a-n) dup a:length n:dec a:fetch ;
 ~~~
 
 You can use `a:reverse` to make a copy of an array with the
@@ -1601,6 +1598,11 @@ readability.
 :a:store (van-) a:th store ;
 ~~~
 
+~~~
+:a:first (a-n) #0 a:fetch ;
+:a:last  (a-n) dup a:length n:dec a:fetch ;
+~~~
+
 `a:reduce` takes an array, a starting value, and a quote. It
 executes the quote once for each item in the array, passing the
 item and the value to the quote. The quote should consume both
@@ -1614,13 +1616,15 @@ and return a new value.
 ~~~
 :FREE (-n) STRINGS #1025 - #513 #12 * - here - ;
 
-'NextArray var
-:arrays STRINGS #1025 - #513 #12 * - ;
-
-:a:temp (a-a) @NextArray dup #12 eq? [ drop #0 dup !NextArray ] if
-              #513 * arrays + over a:length n:inc copy
-              @NextArray #513 * arrays +
-              &NextArray v:inc ;
+{{
+  'NextArray var
+  :arrays STRINGS #1025 - #513 #12 * - ;
+---reveal---
+  :a:temp (a-a) @NextArray dup #12 eq? [ drop #0 dup !NextArray ] if
+                #513 * arrays + over a:length n:inc copy
+                @NextArray #513 * arrays +
+                &NextArray v:inc ;
+}}
 
 {{
   'Count var
