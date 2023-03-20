@@ -47,7 +47,10 @@ dup 'a:right d:set-source
 dup 'a:left d:set-source
 dup '} d:set-source
 dup '{ d:set-source
+dup 'arrays d:set-source
+dup 'a:temp d:set-source
 dup 'a:make d:set-source
+dup 'a:indices d:set-source
 dup 'a:index/string d:set-source
 dup 'a:index d:set-source
 dup 'a:reduce d:set-source

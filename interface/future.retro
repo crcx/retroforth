@@ -8,37 +8,12 @@ Notes:
 existing set in the future.
 
 ~~~
-'NextArray var
-:arrays FREE #513 #12 n:mul n:sub ;
-
-
-:aa:temp (a-a) @NextArray dup #12 [ drop #0 dup !NextArray ] if
-               #513 n:mul arrays n:add over a:length n:inc copy
-               @NextArray #513 n:mul arrays n:add
-               &NextArray v:inc ;
-
 :aa:make (...n-a) here [ dup comma &comma times ] dip ;
 
 :aa:map
   swap [ fetch-next [ [ fetch over call ] sip
                       &store sip n:inc ] times
          drop-pair ] sip ;
-
-{{
-  'Count var
-  :prepare  #0 &Count store ;
-  :reserve  swap #0 comma ;
-  :patch    here over n:sub n:dec over store ;
-  :cleanup  dup s:temp swap &Free store ;
-  :match?   over eq? ;
-  :record   &Count fetch comma ;
-  :iterate  [ match? &record if &Count v:inc ] a:for-each ;
----reveal---
-  :aa:indices (av-a)
-    prepare here [ reserve iterate drop ] dip patch cleanup ;
-}}
-
-:aa:index (av-n) [ aa:indices #0 a:fetch ] gc ;
 
 :aa:contains? (an-f)
   swap #0 swap [ swap [ over eq? ] dip or ] a:for-each nip ;

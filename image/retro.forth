@@ -1606,6 +1606,38 @@ and return a new value.
   &swap dip a:for-each ;
 ~~~
 
+~~~
+:FREE (-n) STRINGS #1025 - #513 #12 * - here - ;
+
+'NextArray var
+:arrays STRINGS #1025 - #513 #12 * - ;
+
+:a:temp (a-a) @NextArray dup #12 eq? [ drop #0 dup !NextArray ] if
+              #513 * arrays + over a:length n:inc copy
+              @NextArray #513 * arrays +
+              &NextArray v:inc ;
+
+{{
+  'Count var
+  :prepare  #0 &Count store ;
+  :reserve  swap #0 , ;
+  :patch    here over - n:dec over store ;
+  :cleanup  dup a:temp swap &Heap store ;
+  :record   @Count , ;
+  (numbers)
+  :match?   over eq? ;
+  :iterate/n [ match? &record if &Count v:inc ] a:for-each ;
+  (strings)
+  :match?   over s:eq? ;
+  :iterate/s [ match? &record if &Count v:inc ] a:for-each ;
+---reveal---
+  :a:indices (av-a)
+    prepare here [ reserve iterate/n drop ] dip patch cleanup ;
+  :a:indices/string (as-a)
+    prepare here [ reserve iterate/s drop ] dip patch cleanup ;
+}}
+~~~
+
 `a:index` and `a:index/string` build on these to return the
 offset of a value in the array, or -1 if the value wasn't
 found.
@@ -1621,20 +1653,8 @@ using a variable for the flag/offset value, but it's pretty clean
 overall.
 
 ~~~
-:a:index (an-i)
-  push push #-1 #0 pop pop swap
-  [ over eq? [ [ over #-1 eq? [ nip dup ] if ] dip ] if
-    [ n:inc ] dip ]
-  a:for-each drop-pair ;
-
-{{
-  :identify
-    #-1 swap #0
-   [ TRUE eq? [ over #-1 eq? [ nip dup ] if ] if n:inc ] a:reduce drop ;
----reveal---
-  :a:index/string (as-n)
-    &Heap [ &s:eq? curry a:map identify ] v:preserve ;
-}}
+:a:index (av-n) [ a:indices #0 a:fetch ] gc ;
+:a:index/string (as-n) [ a:indices/string #0 a:fetch ] gc ;
 ~~~
 
 When making an array, I often want the values in the original
@@ -1863,10 +1883,6 @@ provide much more than I can do here.
 ~~~
 :reset      (...-) repeat depth 0; drop-pair again ;
 :dump-stack (-)  depth 0; \drpulica ^dump-stack \podulica ^n:put sp ;
-~~~
-
-~~~
-:FREE (-n) STRINGS #1025 - here - ;
 ~~~
 
 ## Listener
