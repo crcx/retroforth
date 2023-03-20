@@ -221,6 +221,8 @@ d:lookup-xt	a-d	-	-	Lookup the specified address in the dictionary and return a 
 d:name	d-s	-	-	Given a dictionary header, return the name field.			class:word	{n/a}	{n/a}	d	all	
 d:rehash	-	-	-	Update the hashes for all visible words in the dictionary.			class:word	{n/a}	{n/a}	d	all	
 d:source	d-a	-	-	Given a dictionary header, return the source field.			class:word	{n/a}	{n/a}	d	all	
+d:use-hashes	-	-	-	Change dictionary search to use hashed name comparions.			class:word	{n/a}	{n/a}	d	all	
+d:use-strings	-	-	-	Change dictionary search to use full name comparions.			class:word	{n/a}	{n/a}	d	all	
 d:words	-	-	-	Display a list of all named items in the `Dictionary`.			class:word	{n/a}	{n/a}	d	rre	
 d:words-beginning-with	s-	-	-	Display a list of all named items in the `Dictionary` that begin with the provided substring.			class:word	{n/a}	{n/a}	d	rre	
 d:words-with	s-	-	-	Display a list of all named items in the `Dictionary` that contain the provided substring.			class:word	{n/a}	{n/a}	d	rre	

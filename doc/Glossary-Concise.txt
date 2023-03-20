@@ -667,6 +667,12 @@ Update the hashes for all visible words in the dictionary.
 d:source                  D: d-a  A: -  F: -
 Given a dictionary header, return the source field.
 
+d:use-hashes              D: -  A: -  F: -
+Change dictionary search to use hashed name comparions.
+
+d:use-strings             D: -  A: -  F: -
+Change dictionary search to use full name comparions.
+
 d:words                   D: -  A: -  F: -
 Display a list of all named items in the `Dictionary`.
 

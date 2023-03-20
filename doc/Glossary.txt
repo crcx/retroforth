@@ -2553,6 +2553,28 @@ Given a dictionary header, return the source field.
 Class: class:word | Namespace: d | Interface Layer: all
 ------------------------------------------------------------------------
 
+d:use-hashes
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Change dictionary search to use hashed name comparions.
+
+Class: class:word | Namespace: d | Interface Layer: all
+------------------------------------------------------------------------
+
+d:use-strings
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Change dictionary search to use full name comparions.
+
+Class: class:word | Namespace: d | Interface Layer: all
+------------------------------------------------------------------------
+
 d:words
 
   Data:  -
