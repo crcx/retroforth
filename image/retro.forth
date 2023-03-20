@@ -1669,32 +1669,12 @@ I'm defining a new `a:make` which wraps these.
 :} (-a) |] |dip |depth |swap |- |n:dec |] |a:make ; immediate
 ~~~
 
-For comparing arrays, use `a:eq?`. This is written in assembly
-to aid in performance and reduce size.
+For comparing arrays, use `a:eq?` or `a:-eq?`.
 
 ~~~
-{{
-  'Flag var
-  :compare    \dufepusw \dufepoeq ;
-  :length     \dufere.. ;
-  :next       \liadswli `1 `1 \adre.... ;
-  :not-equal  \podrdrdr \lire...... `0 ;
-  :loop       repeat
-                \pulica.. ^next
-                \lica.... ^compare
-                \lifeanli ^Flag ^Flag \st......
-                \polisuzr `1
-              again ;
----reveal---
-  :a:eq? (aa-f)
-    \lilist.. `-1 ^Flag
-    \lica.... ^compare
-    \lixolicc `-1 ^not-equal
-    \lica.... ^length
-    \lica.... ^loop
-    \drdrlife ^Flag ;
-  :a:-eq? (aa-f) a:eq? not ;
-}}
+:a:hash (a-n) #5381 swap [ swap #33 * + ] a:for-each ;
+:a:eq? (aa-f) a:hash swap a:hash eq? ;
+:a:-eq? (aa-f) a:hash swap a:hash -eq? ;
 ~~~
 
 Building on these, I implement `a:begins-with?` and `a:ends-with?`

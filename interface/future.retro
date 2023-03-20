@@ -22,11 +22,6 @@ existing set in the future.
 :aa:last  (a-n) dup a:length n:dec a:fetch ;
 
 
-:aa:hash (a-n) #5381 swap [ swap #33 n:mul n:add ] a:for-each ;
-
-:aa:eq? (aa-f) aa:hash swap aa:hash eq? ;
-:aa:-eq? (aa-f) aa:hash swap aa:hash -eq? ;
-
 :a:dup here [ dup a:length comma &comma a:for-each ] dip ;
 ~~~
 
