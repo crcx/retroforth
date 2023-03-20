@@ -97,10 +97,10 @@ a:index-of-string	as-n	-	-	Deprecated. Use `a:index/string` instead. Return the 
 a:index/string	as-n	-	-	Return the location of the first instance of the specified string in the array.			class:word	{n/a}	{n/a}	a	all	
 a:indices	av-a	-	-	Return a new array with the indices the specified value was found at in the original array.			class:word	{n/a}	{n/a}	a	all	
 a:indices/string	as-a	-	-	Return a new array with the indices of the specified string in the original array.			class:word	{n/a}	{n/a}	a	all	
-a:last	a-n	-	-	Return the se
+a:last	a-n	-	-	Return a new array containing the first `n` values from the source array.			class:word	{n/a}	{n/a}	a	all	
 a:left	an-a	-	-	Return a new array containing the first `n` values from the source array.			class:word	{n/a}	{n/a}	a	all	
 a:length	a-n	-	-	Return the length of a array.			class:word	{n/a}	{n/a}	a	all	
-a:make	q-a	-	-	Execute quote. Return a new array containing the values the quote leaves on the stack. This is identical to doing `a:counted-results a:reverse`			class:word	{n/a}	{n/a}	a	all	
+a:make	q-a	-	-	Execute quote. Return a new array containing the values the quote leaves on the stack. This is identical to doing `a:counted-results			class:word	{n/a}	{n/a}	a	all	
 a:map	aq-b	-	-	Execute quote once for each item in the array. Constructs a new array from the value returned by the quote.			class:word	{n/a}	{n/a}	a	all	
 a:middle	afl-a	-	-	Extract a new array from the middle of the specified array. This will take the values starting at `f` and extend to the `l` last value.			class:word	{n/a}	{n/a}	a	all	
 a:prepend	aa-a	-	-	Return a new array consisting of the values in a2 followed by the values in a1.			class:word	{n/a}	{n/a}	a	all	
@@ -379,7 +379,6 @@ io:invoke	n-	-	-	Invoke an interaction with an I/O device.			class:word	{n/a}	{n
 io:query	n-mN	-	-	Ask an I/O device to identify itself. Returns a version (m) and device ID (N).			class:word	{n/a}	{n/a}	io	all	
 io:scan-for	n-m	-	-	Scan the I/O devices for a device with a specified ID. Returns the device number, or -1 if not found.			class:word	{n/a}	{n/a}	io	all	
 io:unix-syscall	...n-	-	-	Trigger a Unix system call. This is not intended to be used directly.			class:word	{n/a}	{n/a}	io	rre	
-last value in the array.			class:word	{n/a}	{n/a}	a	all	
 listen	-	-	-	"Run interactive ""listener"" (a REPL)."			class:word	{n/a}	{n/a}	global	rre	
 lt?	nn-f	-	-	Compare n1 and n2. Return `TRUE` if n1 is less than n2, or `FALSE` otherwise.			class:primitive	{n/a}	{n/a}	global	all	
 lteq?	nn-f	-	-	Compare n1 and n2. Return `TRUE` if n1 is less than or equal to n2, or `FALSE` otherwise.			class:word	{n/a}	{n/a}	global	all	

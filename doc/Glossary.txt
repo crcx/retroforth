@@ -1131,48 +1131,9 @@ a:last
   Addr:  -
   Float: -
 
-Return the se
+Return a new array containing the first `n` values from the source array.
 
-Compile Time:
-  
-
-Class: 
-mqBÿ=‚:‚‰‰ | Namespace: 
-
-
-
-
-
-
-
-
-
-
-
-
-A@ | Interface Layer: 
-
-
-
-
-A@
-
-Example #1:
-
-cc
-
-
-
-Example #2:
-
-
-
-
-
-
-
-A@
-
+Class: class:word | Namespace: a | Interface Layer: all
 ------------------------------------------------------------------------
 
 a:left
@@ -1203,7 +1164,7 @@ a:make
   Addr:  -
   Float: -
 
-Execute quote. Return a new array containing the values the quote leaves on the stack. This is identical to doing `a:counted-results a:reverse`
+Execute quote. Return a new array containing the values the quote leaves on the stack. This is identical to doing `a:counted-results
 
 Class: class:word | Namespace: a | Interface Layer: all
 ------------------------------------------------------------------------
@@ -4430,39 +4391,6 @@ io:unix-syscall
 Trigger a Unix system call. This is not intended to be used directly.
 
 Class: class:word | Namespace: io | Interface Layer: rre
-------------------------------------------------------------------------
-
-last value in the array.
-
-  Data:  
-  Addr:  
-  Float: class:word
-
-{n/a}
-
-Interpret Time:
-  {n/a}
-
-Compile Time:
-  a
-
-Class: all | Namespace: 
-
-
-
-
-
-A@ | Interface Layer: 
-
-Example #1:
-
-
-
-
-Example #2:
-
-ll
-
 ------------------------------------------------------------------------
 
 listen

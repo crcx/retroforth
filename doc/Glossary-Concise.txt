@@ -296,7 +296,7 @@ a:indices/string          D: as-a  A: -  F: -
 Return a new array with the indices of the specified string in the original array.
 
 a:last                    D: a-n  A: -  F: -
-Return the se
+Return a new array containing the first `n` values from the source array.
 
 a:left                    D: an-a  A: -  F: -
 Return a new array containing the first `n` values from the source array.
@@ -305,7 +305,7 @@ a:length                  D: a-n  A: -  F: -
 Return the length of a array.
 
 a:make                    D: q-a  A: -  F: -
-Execute quote. Return a new array containing the values the quote leaves on the stack. This is identical to doing `a:counted-results a:reverse`
+Execute quote. Return a new array containing the values the quote leaves on the stack. This is identical to doing `a:counted-results
 
 a:map                     D: aq-b  A: -  F: -
 Execute quote once for each item in the array. Constructs a new array from the value returned by the quote.
@@ -1140,9 +1140,6 @@ Scan the I/O devices for a device with a specified ID. Returns the device number
 
 io:unix-syscall           D: ...n-  A: -  F: -
 Trigger a Unix system call. This is not intended to be used directly.
-
-last value in the array.  D:   A:   F: class:word
-{n/a}
 
 listen                    D: -  A: -  F: -
 "Run interactive ""listener"" (a REPL)."

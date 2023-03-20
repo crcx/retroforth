@@ -379,7 +379,6 @@ io:invoke                 D: n-  A: -  F: -
 io:query                  D: n-mN  A: -  F: -
 io:scan-for               D: n-m  A: -  F: -
 io:unix-syscall           D: ...n-  A: -  F: -
-last value in the array.  D:   A:   F: class:word
 listen                    D: -  A: -  F: -
 lt?                       D: nn-f  A: -  F: -
 lteq?                     D: nn-f  A: -  F: -
