@@ -1,28 +1,8 @@
 # New Words
 
-This contains a variety of words from my more recent systems.
+This contains a variety of words from my more recent systems
+and things that will be standard in the future.
 
-Notes:
-
-`aa:` is a new set of array words. These will be replacing the
-existing set in the future.
-
-~~~
-:aa:make (...n-a) here [ dup comma &comma times ] dip ;
-
-:aa:map
-  swap [ fetch-next [ [ fetch over call ] sip
-                      &store sip n:inc ] times
-         drop-pair ] sip ;
-
-:aa:contains? (an-f)
-  swap #0 swap [ swap [ over eq? ] dip or ] a:for-each nip ;
-
-:aa:first (a-n) #0 a:fetch ;
-:aa:last  (a-n) dup a:length n:dec a:fetch ;
-
-:a:dup here [ dup a:length comma &comma a:for-each ] dip ;
-~~~
 
 ~~~
 :d:use-hashes

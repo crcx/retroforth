@@ -1015,6 +1015,17 @@ For each item in the initial array, run the specified quote. If the quote return
 Class: class:word | Namespace: a | Interface Layer: all
 ------------------------------------------------------------------------
 
+a:first
+
+  Data:  a-n
+  Addr:  -
+  Float: -
+
+Return the first value in the array.
+
+Class: class:word | Namespace: a | Interface Layer: all
+------------------------------------------------------------------------
+
 a:for-each
 
   Data:  aq-
@@ -1033,6 +1044,17 @@ a:from-string
   Float: -
 
 Create a new array with the characters in the source string.
+
+Class: class:word | Namespace: a | Interface Layer: all
+------------------------------------------------------------------------
+
+a:hash
+
+  Data:  a-n
+  Addr:  -
+  Float: -
+
+Calculate a hash value for a given array.
 
 Class: class:word | Namespace: a | Interface Layer: all
 ------------------------------------------------------------------------
@@ -1079,6 +1101,78 @@ a:index/string
 Return the location of the first instance of the specified string in the array.
 
 Class: class:word | Namespace: a | Interface Layer: all
+------------------------------------------------------------------------
+
+a:indices
+
+  Data:  av-a
+  Addr:  -
+  Float: -
+
+Return a new array with the indices the specified value was found at in the original array.
+
+Class: class:word | Namespace: a | Interface Layer: all
+------------------------------------------------------------------------
+
+a:indices/string
+
+  Data:  as-a
+  Addr:  -
+  Float: -
+
+Return a new array with the indices of the specified string in the original array.
+
+Class: class:word | Namespace: a | Interface Layer: all
+------------------------------------------------------------------------
+
+a:last
+
+  Data:  a-n
+  Addr:  -
+  Float: -
+
+Return the se
+
+Compile Time:
+  
+
+Class: 
+mqBÿ=‚:‚‰‰ | Namespace: 
+
+
+
+
+
+
+
+
+
+
+
+
+A@ | Interface Layer: 
+
+
+
+
+A@
+
+Example #1:
+
+cc
+
+
+
+Example #2:
+
+
+
+
+
+
+
+A@
+
 ------------------------------------------------------------------------
 
 a:left
@@ -1194,6 +1288,17 @@ Example #1:
 
     #3 { #0 #1 #2 } #1 a:store
 
+------------------------------------------------------------------------
+
+a:temp
+
+  Data:  a-a
+  Addr:  -
+  Float: -
+
+Make a copy of the array in a rotating set of temporary buffers.
+
+Class: class:word | Namespace: a | Interface Layer: all
 ------------------------------------------------------------------------
 
 a:th
@@ -4325,6 +4430,39 @@ io:unix-syscall
 Trigger a Unix system call. This is not intended to be used directly.
 
 Class: class:word | Namespace: io | Interface Layer: rre
+------------------------------------------------------------------------
+
+last value in the array.
+
+  Data:  
+  Addr:  
+  Float: class:word
+
+{n/a}
+
+Interpret Time:
+  {n/a}
+
+Compile Time:
+  a
+
+Class: all | Namespace: 
+
+
+
+
+
+A@ | Interface Layer: 
+
+Example #1:
+
+
+
+
+Example #2:
+
+ll
+
 ------------------------------------------------------------------------
 
 listen

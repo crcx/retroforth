@@ -265,11 +265,17 @@ Fetch the value stored at the specified index in the specified array.
 a:filter                  D: aq-b  A: -  F: -
 For each item in the initial array, run the specified quote. If the quote returns `TRUE`, copy the item into a new array. If `FALSE`, discard it. Returns a pointer to the new array.
 
+a:first                   D: a-n  A: -  F: -
+Return the first value in the array.
+
 a:for-each                D: aq-  A: -  F: -
 Execute the quote once for each item in the array.
 
 a:from-string             D: s-a  A: -  F: -
 Create a new array with the characters in the source string.
+
+a:hash                    D: a-n  A: -  F: -
+Calculate a hash value for a given array.
 
 a:index                   D: an-n  A: -  F: -
 Return the location of the first instance of the specified value in the array.
@@ -282,6 +288,15 @@ Deprecated. Use `a:index/string` instead. Return the location of the first insta
 
 a:index/string            D: as-n  A: -  F: -
 Return the location of the first instance of the specified string in the array.
+
+a:indices                 D: av-a  A: -  F: -
+Return a new array with the indices the specified value was found at in the original array.
+
+a:indices/string          D: as-a  A: -  F: -
+Return a new array with the indices of the specified string in the original array.
+
+a:last                    D: a-n  A: -  F: -
+Return the se
 
 a:left                    D: an-a  A: -  F: -
 Return a new array containing the first `n` values from the source array.
@@ -312,6 +327,9 @@ Return a new array containing the specified number of values from the right side
 
 a:store                   D: van-  A: -  F: -
 Store a value into the array at the specified index.
+
+a:temp                    D: a-a  A: -  F: -
+Make a copy of the array in a rotating set of temporary buffers.
 
 a:th                      D: an-b  A: -  F: -
 Return the actual address of the `n`th item in the array.
@@ -1122,6 +1140,9 @@ Scan the I/O devices for a device with a specified ID. Returns the device number
 
 io:unix-syscall           D: ...n-  A: -  F: -
 Trigger a Unix system call. This is not intended to be used directly.
+
+last value in the array.  D:   A:   F: class:word
+{n/a}
 
 listen                    D: -  A: -  F: -
 "Run interactive ""listener"" (a REPL)."

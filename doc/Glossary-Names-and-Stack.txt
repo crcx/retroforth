@@ -87,12 +87,17 @@ a:ends-with?              D: aa-f  A: -  F: -
 a:eq?                     D: aa-f  A: -  F: -
 a:fetch                   D: an-n  A: -  F: -
 a:filter                  D: aq-b  A: -  F: -
+a:first                   D: a-n  A: -  F: -
 a:for-each                D: aq-  A: -  F: -
 a:from-string             D: s-a  A: -  F: -
+a:hash                    D: a-n  A: -  F: -
 a:index                   D: an-n  A: -  F: -
 a:index-of                D: an-n  A: -  F: -
 a:index-of-string         D: as-n  A: -  F: -
 a:index/string            D: as-n  A: -  F: -
+a:indices                 D: av-a  A: -  F: -
+a:indices/string          D: as-a  A: -  F: -
+a:last                    D: a-n  A: -  F: -
 a:left                    D: an-a  A: -  F: -
 a:length                  D: a-n  A: -  F: -
 a:make                    D: q-a  A: -  F: -
@@ -103,6 +108,7 @@ a:reduce                  D: pnq-n  A: -  F: -
 a:reverse                 D: a-b  A: -  F: -
 a:right                   D: an-a  A: -  F: -
 a:store                   D: van-  A: -  F: -
+a:temp                    D: a-a  A: -  F: -
 a:th                      D: an-b  A: -  F: -
 a:to-string               D: a-s  A: -  F: -
 abort                     D: -  A: -  F: -
@@ -373,6 +379,7 @@ io:invoke                 D: n-  A: -  F: -
 io:query                  D: n-mN  A: -  F: -
 io:scan-for               D: n-m  A: -  F: -
 io:unix-syscall           D: ...n-  A: -  F: -
+last value in the array.  D:   A:   F: class:word
 listen                    D: -  A: -  F: -
 lt?                       D: nn-f  A: -  F: -
 lteq?                     D: nn-f  A: -  F: -

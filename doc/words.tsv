@@ -87,12 +87,17 @@ a:ends-with?	aa-f	-	-	Return `TRUE` if a1 ends with a2 or `FALSE` otherwise.			c
 a:eq?	aa-f	-	-	Compare all values in the array. Return `TRUE` if all values are equal or `FALSE` otherwise. This assumes the array contains only numeric values.			class:word	{n/a}	{n/a}	a	all	
 a:fetch	an-n	-	-	Fetch the value stored at the specified index in the specified array.			class:word	    { #0 #1 #3 } #2 a:fetch	{n/a}	a	all	
 a:filter	aq-b	-	-	For each item in the initial array, run the specified quote. If the quote returns `TRUE`, copy the item into a new array. If `FALSE`, discard it. Returns a pointer to the new array.			class:word	{n/a}	{n/a}	a	all	
+a:first	a-n	-	-	Return the first value in the array.			class:word	{n/a}	{n/a}	a	all	
 a:for-each	aq-	-	-	Execute the quote once for each item in the array.			class:word	{n/a}	{n/a}	a	all	
 a:from-string	s-a	-	-	Create a new array with the characters in the source string.			class:word	{n/a}	{n/a}	a	all	
+a:hash	a-n	-	-	Calculate a hash value for a given array.			class:word	{n/a}	{n/a}	a	all	
 a:index	an-n	-	-	Return the location of the first instance of the specified value in the array.			class:word	{n/a}	{n/a}	a	all	
 a:index-of	an-n	-	-	Deprecated. Use `a:index` instead. Return the location of the first instance of the specified value in the array.			class:word	{n/a}	{n/a}	a	all	
 a:index-of-string	as-n	-	-	Deprecated. Use `a:index/string` instead. Return the location of the first instance of the specified string in the array.			class:word	{n/a}	{n/a}	a	all	
 a:index/string	as-n	-	-	Return the location of the first instance of the specified string in the array.			class:word	{n/a}	{n/a}	a	all	
+a:indices	av-a	-	-	Return a new array with the indices the specified value was found at in the original array.			class:word	{n/a}	{n/a}	a	all	
+a:indices/string	as-a	-	-	Return a new array with the indices of the specified string in the original array.			class:word	{n/a}	{n/a}	a	all	
+a:last	a-n	-	-	Return the se
 a:left	an-a	-	-	Return a new array containing the first `n` values from the source array.			class:word	{n/a}	{n/a}	a	all	
 a:length	a-n	-	-	Return the length of a array.			class:word	{n/a}	{n/a}	a	all	
 a:make	q-a	-	-	Execute quote. Return a new array containing the values the quote leaves on the stack. This is identical to doing `a:counted-results a:reverse`			class:word	{n/a}	{n/a}	a	all	
@@ -103,6 +108,7 @@ a:reduce	pnq-n	-	-	Takes an array, a starting value, and a quote. This will appl
 a:reverse	a-b	-	-	Reverse the order of items in a array. This will return a new array.			class:word	{n/a}	{n/a}	a	all	
 a:right	an-a	-	-	Return a new array containing the specified number of values from the right side of the array.			class:word	{n/a}	{n/a}	a	all	
 a:store	van-	-	-	Store a value into the array at the specified index.			class:word	    #3 { #0 #1 #2 } #1 a:store	{n/a}	a	all	
+a:temp	a-a	-	-	Make a copy of the array in a rotating set of temporary buffers.			class:word	{n/a}	{n/a}	a	all	
 a:th	an-b	-	-	Return the actual address of the `n`th item in the array.			class:word	{n/a}	{n/a}	a	all	
 a:to-string	a-s	-	-	Create a new string from the provided array of character values. This string will be stored in the temporal string buffers.			class:word	    { $h $e $l $l $o } a:to-string s:put nl	{n/a}	a	all	
 abort	-	-	-	Abort execution.			class:macro	{n/a}	{n/a}	global	rre	
@@ -373,6 +379,7 @@ io:invoke	n-	-	-	Invoke an interaction with an I/O device.			class:word	{n/a}	{n
 io:query	n-mN	-	-	Ask an I/O device to identify itself. Returns a version (m) and device ID (N).			class:word	{n/a}	{n/a}	io	all	
 io:scan-for	n-m	-	-	Scan the I/O devices for a device with a specified ID. Returns the device number, or -1 if not found.			class:word	{n/a}	{n/a}	io	all	
 io:unix-syscall	...n-	-	-	Trigger a Unix system call. This is not intended to be used directly.			class:word	{n/a}	{n/a}	io	rre	
+last value in the array.			class:word	{n/a}	{n/a}	a	all	
 listen	-	-	-	"Run interactive ""listener"" (a REPL)."			class:word	{n/a}	{n/a}	global	rre	
 lt?	nn-f	-	-	Compare n1 and n2. Return `TRUE` if n1 is less than n2, or `FALSE` otherwise.			class:primitive	{n/a}	{n/a}	global	all	
 lteq?	nn-f	-	-	Compare n1 and n2. Return `TRUE` if n1 is less than or equal to n2, or `FALSE` otherwise.			class:word	{n/a}	{n/a}	global	all	

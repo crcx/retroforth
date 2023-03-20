@@ -652,6 +652,13 @@
 </div>
 <p>For each item in the initial array, run the specified quote. If the quote returns `TRUE`, copy the item into a new array. If `FALSE`, discard it. Returns a pointer to the new array.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>a</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
+<h2>a:first</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> a-n<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Return the first value in the array.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>a</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
 <h2>a:for-each</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> aq-<br>
 <b>Addr:</b> -<br>
@@ -665,6 +672,13 @@
 <b>Float:</b> -</p>
 </div>
 <p>Create a new array with the characters in the source string.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>a</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
+<h2>a:hash</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> a-n<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Calculate a hash value for a given array.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>a</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
 <h2>a:index</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> an-n<br>
@@ -694,6 +708,64 @@
 </div>
 <p>Return the location of the first instance of the specified string in the array.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>a</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
+<h2>a:indices</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> av-a<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Return a new array with the indices the specified value was found at in the original array.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>a</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
+<h2>a:indices/string</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> as-a<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Return a new array with the indices of the specified string in the original array.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>a</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
+<h2>a:last</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> a-n<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Return the se</p>
+<p>Compile Time:
+  </p>
+
+<table><tr><td><b>Class:</b> </td><td>
+mqBÿ=‚:‚‰‰</td></tr><tr><td><b>Namespace:</b> </td><td>
+
+
+
+
+
+
+
+
+
+
+
+
+A@</td></tr><tr><td><b>Interface Layer:</b> </td><td>
+
+
+
+
+A@</td></tr></table><p><b>Example:</b> <br>
+<br>
+<xmp style='background:#f2f2f2'>cc
+</xmp>
+</p>
+<p><b>Example:</b> <br>
+<br>
+<xmp style='background:#f2f2f2'>
+
+
+
+
+
+A@</xmp>
+</p>
+<hr/>
 <h2>a:left</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> an-a<br>
 <b>Addr:</b> -<br>
@@ -768,6 +840,13 @@
 <xmp style='background:#f2f2f2'>    #3 { #0 #1 #2 } #1 a:store</xmp>
 </p>
 <hr/>
+<h2>a:temp</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> a-a<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Make a copy of the array in a rotating set of temporary buffers.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>a</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
 <h2>a:th</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> an-b<br>
 <b>Addr:</b> -<br>
@@ -2793,6 +2872,33 @@
 </div>
 <p>Trigger a Unix system call. This is not intended to be used directly.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>io</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><hr/>
+<h2>last value in the array.</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> <br>
+<b>Addr:</b> <br>
+<b>Float:</b> class:word</p>
+</div>
+<p>{n/a}</p>
+<p>Interpret Time:
+  {n/a}</p>
+
+<p>Compile Time:
+  a</p>
+
+<table><tr><td><b>Class:</b> </td><td>all</td></tr><tr><td><b>Namespace:</b> </td><td>
+
+
+
+
+
+A@</td></tr><tr><td><b>Interface Layer:</b> </td><td></td></tr></table><p><b>Example:</b> <br>
+<br>
+<xmp style='background:#f2f2f2'></xmp>
+</p>
+<p><b>Example:</b> <br>
+<br>
+<xmp style='background:#f2f2f2'>ll</xmp>
+</p>
+<hr/>
 <h2>listen</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> -<br>
 <b>Addr:</b> -<br>
