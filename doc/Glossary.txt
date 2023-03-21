@@ -5490,6 +5490,61 @@ Copy a string (s) to a destination (a). This will include the terminator charact
 Class: class:word | Namespace: s | Interface Layer: all
 ------------------------------------------------------------------------
 
+s:dedup
+
+  Data:  s-s
+  Addr:  -
+  Float: -
+
+Return a deduplicated version of the string.
+
+Class: class:word | Namespace: s | Interface Layer: rre
+------------------------------------------------------------------------
+
+s:dedup.data
+
+  Data:  -a
+  Addr:  -
+  Float: -
+
+Variable. Holds a pointer to the deduplication list.
+
+Class: class:word | Namespace: s | Interface Layer: rre
+------------------------------------------------------------------------
+
+s:dedup.defined?
+
+  Data:  s-f
+  Addr:  -
+  Float: -
+
+Check to see if a string is in the deduplication list.
+
+Class: class:word | Namespace: s | Interface Layer: rre
+------------------------------------------------------------------------
+
+s:dedup.find
+
+  Data:  s-s
+  Addr:  -
+  Float: -
+
+Return a pointer to a deduplicated copy of a string. If the string is not in the deduplication list, this will cause errors.
+
+Class: class:word | Namespace: s | Interface Layer: rre
+------------------------------------------------------------------------
+
+s:dedup.register
+
+  Data:  s-
+  Addr:  -
+  Float: -
+
+Add a string to the deduplication list.
+
+Class: class:word | Namespace: s | Interface Layer: rre
+------------------------------------------------------------------------
+
 s:empty
 
   Data:  -s
@@ -5991,6 +6046,17 @@ Example #1:
 
     '__hello__ s:trim-right
 
+------------------------------------------------------------------------
+
+s:unique?
+
+  Data:  s-f
+  Addr:  -
+  Float: -
+
+Alias for `s:dedup.defined?`.
+
+Class: class:word | Namespace: s | Interface Layer: rre
 ------------------------------------------------------------------------
 
 script:abort-include

@@ -1417,6 +1417,21 @@ Return `TRUE` if the second string is present in the first string or `FALSE` oth
 s:copy                    D: sa-  A: -  F: -
 Copy a string (s) to a destination (a). This will include the terminator character when copying.
 
+s:dedup                   D: s-s  A: -  F: -
+Return a deduplicated version of the string.
+
+s:dedup.data              D: -a  A: -  F: -
+Variable. Holds a pointer to the deduplication list.
+
+s:dedup.defined?          D: s-f  A: -  F: -
+Check to see if a string is in the deduplication list.
+
+s:dedup.find              D: s-s  A: -  F: -
+Return a pointer to a deduplicated copy of a string. If the string is not in the deduplication list, this will cause errors.
+
+s:dedup.register          D: s-  A: -  F: -
+Add a string to the deduplication list.
+
 s:empty                   D: -s  A: -  F: -
 Return an empty string.
 
@@ -1542,6 +1557,9 @@ Trim leading whitespace from a string.
 
 s:trim-right              D: s-s  A: -  F: -
 Trim trailing whitespace from a string.
+
+s:unique?                 D: s-f  A: -  F: -
+Alias for `s:dedup.defined?`.
 
 script:abort-include      D: -  A: -  F: -
 Discard remaining tokens on the current line being evaluated. This only works when including a file, not at the interpreter.

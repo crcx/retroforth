@@ -471,6 +471,11 @@ s:contains-string?        D: ss-f  A: -  F: -
 s:contains/char?          D: sc-f  A: -  F: -
 s:contains/string?        D: ss-f  A: -  F: -
 s:copy                    D: sa-  A: -  F: -
+s:dedup                   D: s-s  A: -  F: -
+s:dedup.data              D: -a  A: -  F: -
+s:dedup.defined?          D: s-f  A: -  F: -
+s:dedup.find              D: s-s  A: -  F: -
+s:dedup.register          D: s-  A: -  F: -
 s:empty                   D: -s  A: -  F: -
 s:ends-with?              D: ss-f  A: -  F: -
 s:eq?                     D: ss-f  A: -  F: -
@@ -513,6 +518,7 @@ s:tokenize-on-string      D: ss-a  A: -  F: -
 s:trim                    D: s-s  A: -  F: -
 s:trim-left               D: s-s  A: -  F: -
 s:trim-right              D: s-s  A: -  F: -
+s:unique?                 D: s-f  A: -  F: -
 script:abort-include      D: -  A: -  F: -
 script:arguments          D: -n  A: -  F: -
 script:current-file       D: -s  A: -  F: -

@@ -3549,6 +3549,41 @@
 </div>
 <p>Copy a string (s) to a destination (a). This will include the terminator character when copying.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>s</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
+<h2>s:dedup</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> s-s<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Return a deduplicated version of the string.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>s</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><hr/>
+<h2>s:dedup.data</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> -a<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Variable. Holds a pointer to the deduplication list.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>s</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><hr/>
+<h2>s:dedup.defined?</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> s-f<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Check to see if a string is in the deduplication list.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>s</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><hr/>
+<h2>s:dedup.find</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> s-s<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Return a pointer to a deduplicated copy of a string. If the string is not in the deduplication list, this will cause errors.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>s</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><hr/>
+<h2>s:dedup.register</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> s-<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Add a string to the deduplication list.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>s</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><hr/>
 <h2>s:empty</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> -s<br>
 <b>Addr:</b> -<br>
@@ -3876,6 +3911,13 @@
 <xmp style='background:#f2f2f2'>    '__hello__ s:trim-right</xmp>
 </p>
 <hr/>
+<h2>s:unique?</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> s-f<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Alias for `s:dedup.defined?`.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>s</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><hr/>
 <h2>script:abort-include</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> -<br>
 <b>Addr:</b> -<br>

@@ -471,6 +471,11 @@ s:contains-string?	ss-f	-	-	Deprecated. Use `s:contains/string?` instead. Return
 s:contains/char?	sc-f	-	-	Return `TRUE` if the character is present in the string or `FALSE` otherwise.			class:word	{n/a}	{n/a}	s	all	
 s:contains/string?	ss-f	-	-	Return `TRUE` if the second string is present in the first string or `FALSE` otherwise.			class:word	{n/a}	{n/a}	s	all	
 s:copy	sa-	-	-	Copy a string (s) to a destination (a). This will include the terminator character when copying.			class:word	{n/a}	{n/a}	s	all	
+s:dedup	s-s	-	-	Return a deduplicated version of the string.			class:word	{n/a}	{n/a}	s	rre	
+s:dedup.data	-a	-	-	Variable. Holds a pointer to the deduplication list.			class:word	{n/a}	{n/a}	s	rre	
+s:dedup.defined?	s-f	-	-	Check to see if a string is in the deduplication list.			class:word	{n/a}	{n/a}	s	rre	
+s:dedup.find	s-s	-	-	Return a pointer to a deduplicated copy of a string. If the string is not in the deduplication list, this will cause errors.			class:word	{n/a}	{n/a}	s	rre	
+s:dedup.register	s-	-	-	Add a string to the deduplication list.			class:word	{n/a}	{n/a}	s	rre	
 s:empty	-s	-	-	Return an empty string.			class:word	{n/a}	{n/a}	s	all	
 s:ends-with?	ss-f	-	-	Return `TRUE` if s1 ends with s2 or `FALSE` otherwise.			class:word	{n/a}	{n/a}	s	all	
 s:eq?	ss-f	-	-	Compare two strings for equality. Return `TRUE` if identical or `FALSE` if not.			class:word	    'hello 'again s:eq?\n    'test  'test  s:eq?	{n/a}	s	all	
@@ -513,6 +518,7 @@ s:tokenize-on-string	ss-a	-	-	Takes a string (s1) and a substring (s2)  use as a
 s:trim	s-s	-	-	Trim leading and trailing whitespace from a string.			class:word	    '__hello__ s:trim	{n/a}	s	all	
 s:trim-left	s-s	-	-	Trim leading whitespace from a string.			class:word	    '__hello__ s:trim-left	{n/a}	s	all	
 s:trim-right	s-s	-	-	Trim trailing whitespace from a string.			class:word	    '__hello__ s:trim-right	{n/a}	s	all	
+s:unique?	s-f	-	-	Alias for `s:dedup.defined?`.			class:word	{n/a}	{n/a}	s	rre	
 script:abort-include	-	-	-	Discard remaining tokens on the current line being evaluated. This only works when including a file, not at the interpreter.			class:word	{n/a}	{n/a}	sys	rre	
 script:arguments	-n	-	-	Return the number of arguments passed to the program.			class:word	{n/a}	{n/a}	sys	rre	
 script:current-file	-s	-	-	Return the filename of the file being processed by the current `include`, or `/dev/stdin` if the input source is the terminal.			class:word	{n/a}	{n/a}	sys	rre	
