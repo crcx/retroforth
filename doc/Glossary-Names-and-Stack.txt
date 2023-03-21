@@ -55,6 +55,7 @@ BUILD                     D: -n  A: -  F: -
 Base                      D: -a  A: -  F: -
 Compiler                  D: -a  A: -  F: -
 Dictionary                D: -a  A: -  F: -
+END                       D: -  A: -  F: -
 EOM                       D: -a  A: -  F: -
 FALSE                     D: -n  A: -  F: -
 FREE                      D: -n  A: -  F: -
@@ -354,6 +355,16 @@ file:slurp                D: as-  A: -  F: -
 file:spew                 D: ss-  A: -  F: -
 file:tell                 D: h-n  A: -  F: -
 file:write                D: ch-  A: -  F: -
+fll:append/value          D: pv-  A: -  F: -
+fll:create                D: v-p  A: -  F: -
+fll:del                   D: pn-  A: -  F: -
+fll:drop                  D: p-  A: -  F: -
+fll:for-each              D: pq-  A: -  F: -
+fll:inject                D: pnv-  A: -  F: -
+fll:length                D: p-n  A: -  F: -
+fll:put                   D: p-  A: -  F: -
+fll:to-end                D: p-p  A: -  F: -
+fll:to-index              D: pn-p  A: -  F: -
 float:operation           D: ...n-  A: -  F: -
 forever                   D: q-  A: -  F: -
 gc                        D: a-  A: -  F: -

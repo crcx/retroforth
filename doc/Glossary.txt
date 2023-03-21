@@ -658,6 +658,17 @@ Variable. Holds a pointer to the most recent dictionary header.
 Class: class:data | Namespace: global | Interface Layer: all
 ------------------------------------------------------------------------
 
+END
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Used to denote the end of a linked list. The last cons will have the cdr point to this address.
+
+Class: class:word | Namespace: rre | Interface Layer: all
+------------------------------------------------------------------------
+
 EOM
 
   Data:  -a
@@ -4089,6 +4100,116 @@ file:write
 Write a character to the file represented by the handle.
 
 Class: class:word | Namespace: file | Interface Layer: rre
+------------------------------------------------------------------------
+
+fll:append/value
+
+  Data:  pv-
+  Addr:  -
+  Float: -
+
+Append a cons cell to a list.
+
+Class: class:word | Namespace: rre | Interface Layer: all
+------------------------------------------------------------------------
+
+fll:create
+
+  Data:  v-p
+  Addr:  -
+  Float: -
+
+Create a new list wit the given value as the car of the first node.
+
+Class: class:word | Namespace: rre | Interface Layer: all
+------------------------------------------------------------------------
+
+fll:del
+
+  Data:  pn-
+  Addr:  -
+  Float: -
+
+Remove the specified cons from a list.
+
+Class: class:word | Namespace: rre | Interface Layer: all
+------------------------------------------------------------------------
+
+fll:drop
+
+  Data:  p-
+  Addr:  -
+  Float: -
+
+Remove the last cons from a list.
+
+Class: class:word | Namespace: rre | Interface Layer: all
+------------------------------------------------------------------------
+
+fll:for-each
+
+  Data:  pq-
+  Addr:  -
+  Float: -
+
+Run a quotation against each value in a list.
+
+Class: class:word | Namespace: rre | Interface Layer: all
+------------------------------------------------------------------------
+
+fll:inject
+
+  Data:  pnv-
+  Addr:  -
+  Float: -
+
+Insert a new cons (v) into the list (p), at the specified index (n).
+
+Class: class:word | Namespace: rre | Interface Layer: all
+------------------------------------------------------------------------
+
+fll:length
+
+  Data:  p-n
+  Addr:  -
+  Float: -
+
+Return the length of a list.
+
+Class: class:word | Namespace: rre | Interface Layer: all
+------------------------------------------------------------------------
+
+fll:put
+
+  Data:  p-
+  Addr:  -
+  Float: -
+
+Display the (as numbers) values in a list.
+
+Class: class:word | Namespace: rre | Interface Layer: all
+------------------------------------------------------------------------
+
+fll:to-end
+
+  Data:  p-p
+  Addr:  -
+  Float: -
+
+Given a pointer to a list, return a pointer to the last cons cell.
+
+Class: class:word | Namespace: rre | Interface Layer: all
+------------------------------------------------------------------------
+
+fll:to-index
+
+  Data:  pn-p
+  Addr:  -
+  Float: -
+
+Given a node number, return a pointer to the cons cell in the list.
+
+Class: class:word | Namespace: rre | Interface Layer: all
 ------------------------------------------------------------------------
 
 float:operation

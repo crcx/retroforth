@@ -424,6 +424,13 @@
 </div>
 <p>Variable. Holds a pointer to the most recent dictionary header.</p>
 <table><tr><td><b>Class:</b> </td><td>class:data</td></tr><tr><td><b>Namespace:</b> </td><td>global</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
+<h2>END</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> -<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Used to denote the end of a linked list. The last cons will have the cdr point to this address.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>rre</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
 <h2>EOM</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> -a<br>
 <b>Addr:</b> -<br>
@@ -2638,6 +2645,76 @@
 </div>
 <p>Write a character to the file represented by the handle.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>file</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><hr/>
+<h2>fll:append/value</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> pv-<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Append a cons cell to a list.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>rre</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
+<h2>fll:create</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> v-p<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Create a new list wit the given value as the car of the first node.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>rre</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
+<h2>fll:del</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> pn-<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Remove the specified cons from a list.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>rre</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
+<h2>fll:drop</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> p-<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Remove the last cons from a list.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>rre</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
+<h2>fll:for-each</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> pq-<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Run a quotation against each value in a list.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>rre</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
+<h2>fll:inject</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> pnv-<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Insert a new cons (v) into the list (p), at the specified index (n).</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>rre</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
+<h2>fll:length</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> p-n<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Return the length of a list.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>rre</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
+<h2>fll:put</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> p-<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Display the (as numbers) values in a list.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>rre</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
+<h2>fll:to-end</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> p-p<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Given a pointer to a list, return a pointer to the last cons cell.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>rre</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
+<h2>fll:to-index</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> pn-p<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Given a node number, return a pointer to the cons cell in the list.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>rre</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
 <h2>float:operation</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> ...n-<br>
 <b>Addr:</b> -<br>

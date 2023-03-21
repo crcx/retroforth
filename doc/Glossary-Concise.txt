@@ -169,6 +169,9 @@ Variable. Holds the compiler state. If TRUE, the compiler is active. If FALSE, i
 Dictionary                D: -a  A: -  F: -
 Variable. Holds a pointer to the most recent dictionary header.
 
+END                       D: -  A: -  F: -
+Used to denote the end of a linked list. The last cons will have the cdr point to this address.
+
 EOM                       D: -a  A: -  F: -
 Constant. Returns the last addressable memory address.
 
@@ -1065,6 +1068,36 @@ Given a file handle, return the current offset in the file.
 
 file:write                D: ch-  A: -  F: -
 Write a character to the file represented by the handle.
+
+fll:append/value          D: pv-  A: -  F: -
+Append a cons cell to a list.
+
+fll:create                D: v-p  A: -  F: -
+Create a new list wit the given value as the car of the first node.
+
+fll:del                   D: pn-  A: -  F: -
+Remove the specified cons from a list.
+
+fll:drop                  D: p-  A: -  F: -
+Remove the last cons from a list.
+
+fll:for-each              D: pq-  A: -  F: -
+Run a quotation against each value in a list.
+
+fll:inject                D: pnv-  A: -  F: -
+Insert a new cons (v) into the list (p), at the specified index (n).
+
+fll:length                D: p-n  A: -  F: -
+Return the length of a list.
+
+fll:put                   D: p-  A: -  F: -
+Display the (as numbers) values in a list.
+
+fll:to-end                D: p-p  A: -  F: -
+Given a pointer to a list, return a pointer to the last cons cell.
+
+fll:to-index              D: pn-p  A: -  F: -
+Given a node number, return a pointer to the cons cell in the list.
 
 float:operation           D: ...n-  A: -  F: -
 Trigger a floating-point operation. This is not intended to be used directly.

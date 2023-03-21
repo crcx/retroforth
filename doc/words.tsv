@@ -55,6 +55,7 @@ BUILD	-n	-	-	Constant. Return a build identifier. Use along with version to iden
 Base	-a	-	-	Variable. Holds the current numeric base. Base must be in the range of 2-16.			class:data	{n/a}	{n/a}	global	all	
 Compiler	-a	-	-	Variable. Holds the compiler state. If TRUE, the compiler is active. If FALSE, it is not.			class:data	{n/a}	{n/a}	global	all	
 Dictionary	-a	-	-	Variable. Holds a pointer to the most recent dictionary header.			class:data	{n/a}	{n/a}	global	all	
+END	-	-	-	Used to denote the end of a linked list. The last cons will have the cdr point to this address.			class:word	{n/a}	{n/a}	rre	all	
 EOM	-a	-	-	Constant. Returns the last addressable memory address.			class:word	{n/a}	{n/a}	global	all	
 FALSE	-n	-	-	Returns `0`, the value used to indicate a FALSE result.			class:word	{n/a}	{n/a}	global	all	
 FREE	-n	-	-	Returns the number of cells available to your application. This is the amount of memory, less the already consumed portion and buffers mapped for Retro's internal use.			class:word	{n/a}	{n/a}	global	all	
@@ -354,6 +355,16 @@ file:slurp	as-	-	-	Given an address and a file name, read the file contents into
 file:spew	ss-	-	-	Given a string (s1) and a file name (s2), write the string into the file, replacing any existing content.			class:word	{n/a}	{n/a}	file	rre	
 file:tell	h-n	-	-	Given a file handle, return the current offset in the file.			class:word	{n/a}	{n/a}	file	rre	
 file:write	ch-	-	-	Write a character to the file represented by the handle.			class:word	{n/a}	{n/a}	file	rre	
+fll:append/value	pv-	-	-	Append a cons cell to a list.			class:word	{n/a}	{n/a}	rre	all	
+fll:create	v-p	-	-	Create a new list wit the given value as the car of the first node.			class:word	{n/a}	{n/a}	rre	all	
+fll:del	pn-	-	-	Remove the specified cons from a list.			class:word	{n/a}	{n/a}	rre	all	
+fll:drop	p-	-	-	Remove the last cons from a list.			class:word	{n/a}	{n/a}	rre	all	
+fll:for-each	pq-	-	-	Run a quotation against each value in a list.			class:word	{n/a}	{n/a}	rre	all	
+fll:inject	pnv-	-	-	Insert a new cons (v) into the list (p), at the specified index (n).			class:word	{n/a}	{n/a}	rre	all	
+fll:length	p-n	-	-	Return the length of a list.			class:word	{n/a}	{n/a}	rre	all	
+fll:put	p-	-	-	Display the (as numbers) values in a list.			class:word	{n/a}	{n/a}	rre	all	
+fll:to-end	p-p	-	-	Given a pointer to a list, return a pointer to the last cons cell.			class:word	{n/a}	{n/a}	rre	all	
+fll:to-index	pn-p	-	-	Given a node number, return a pointer to the cons cell in the list.			class:word	{n/a}	{n/a}	rre	all	
 float:operation	...n-	-	-	Trigger a floating-point operation. This is not intended to be used directly.			class:word	{n/a}	{n/a}	float	rre	
 forever	q-	-	-	Run quotation in an endless loop.			class:word	{n/a}	{n/a}	a	all	
 gc	a-	-	-	Save value of `Heap`, run the function provided, then restore `Heap`.			class:word	{n/a}	{n/a}	global	all	
