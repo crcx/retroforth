@@ -221,6 +221,7 @@ d:lookup                  D: s-d  A: -  F: -
 d:lookup-xt               D: a-d  A: -  F: -
 d:name                    D: d-s  A: -  F: -
 d:rehash                  D: -  A: -  F: -
+d:set-source              D: ss-  A: -  F: -
 d:source                  D: d-a  A: -  F: -
 d:use-hashes              D: -  A: -  F: -
 d:use-strings             D: -  A: -  F: -

@@ -221,6 +221,7 @@ d:lookup	s-d	-	-	Lookup the specified name in the dictionary and return a pointe
 d:lookup-xt	a-d	-	-	Lookup the specified address in the dictionary and return a pointer to its dictionary header. This returns zero if the word is not found.			class:word	{n/a}	{n/a}	d	all	
 d:name	d-s	-	-	Given a dictionary header, return the name field.			class:word	{n/a}	{n/a}	d	all	
 d:rehash	-	-	-	Update the hashes for all visible words in the dictionary.			class:word	{n/a}	{n/a}	d	all	
+d:set-source	ss-	-	-	Set the `d:source` field of the header for the named word (s2) to string (s1). The string will not be duplicated.			class:word	{n/a}	{n/a}	d	rre	
 d:source	d-a	-	-	Given a dictionary header, return the source field.			class:word	{n/a}	{n/a}	d	all	
 d:use-hashes	-	-	-	Change dictionary search to use hashed name comparions.			class:word	{n/a}	{n/a}	d	all	
 d:use-strings	-	-	-	Change dictionary search to use full name comparions.			class:word	{n/a}	{n/a}	d	all	

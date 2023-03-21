@@ -667,6 +667,9 @@ Given a dictionary header, return the name field.
 d:rehash                  D: -  A: -  F: -
 Update the hashes for all visible words in the dictionary.
 
+d:set-source              D: ss-  A: -  F: -
+Set the `d:source` field of the header for the named word (s2) to string (s1). The string will not be duplicated.
+
 d:source                  D: d-a  A: -  F: -
 Given a dictionary header, return the source field.
 
