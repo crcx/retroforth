@@ -1213,6 +1213,9 @@ Resize a malloc'd memory area.
 mem:store                 D: xnn-  A: -  F: -
 Store a value into a malloc'd memory region. Uses a double cell pointer for the address.
 
+mem:store-double          D: xxnn-  A: -  F: -
+Store a double value into a malloc'd memory region. Uses a double cell pointer for the address.
+
 mod                       D: nm-o  A: -  F: -
 Divide `n` by `m` and return the remainder.
 

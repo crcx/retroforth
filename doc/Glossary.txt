@@ -4657,6 +4657,17 @@ Store a value into a malloc'd memory region. Uses a double cell pointer for the 
 Class: class:word | Namespace: mem | Interface Layer: rre
 ------------------------------------------------------------------------
 
+mem:store-double
+
+  Data:  xxnn-
+  Addr:  -
+  Float: -
+
+Store a double value into a malloc'd memory region. Uses a double cell pointer for the address.
+
+Class: class:word | Namespace: mem | Interface Layer: rre
+------------------------------------------------------------------------
+
 mod
 
   Data:  nm-o

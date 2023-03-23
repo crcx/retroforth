@@ -403,6 +403,7 @@ mem:fetch-double          D: nn-n  A: -  F: -
 mem:free                  D: nn-  A: -  F: -
 mem:resize                D: mmn-  A: -  F: -
 mem:store                 D: xnn-  A: -  F: -
+mem:store-double          D: xxnn-  A: -  F: -
 mod                       D: nm-o  A: -  F: -
 n:-zero?                  D: n-f  A: -  F: -
 n:MAX                     D: -n  A: -  F: -

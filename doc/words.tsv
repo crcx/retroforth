@@ -403,6 +403,7 @@ mem:fetch-double	nn-n	-	-	Fetch a double cell value from a malloc memory region.
 mem:free	nn-	-	-	Fre a malloc'd region of memory. Pass a double cell pointer to the memory to free.			class:word	{n/a}	{n/a}	mem	rre	
 mem:resize	mmn-	-	-	Resize a malloc'd memory area.			class:word	{n/a}	{n/a}	mem	rre	
 mem:store	xnn-	-	-	Store a value into a malloc'd memory region. Uses a double cell pointer for the address.			class:word	{n/a}	{n/a}	mem	rre	
+mem:store-double	xxnn-	-	-	Store a double value into a malloc'd memory region. Uses a double cell pointer for the address.			class:word	{n/a}	{n/a}	mem	rre	
 mod	nm-o	-	-	Divide `n` by `m` and return the remainder.			class:word	{n/a}	{n/a}	global	all	
 n:-zero?	n-f	-	-	Return `TRUE` if number is not zero, or `FALSE` otherwise.			class:word	{n/a}	{n/a}	n	all	
 n:MAX	-n	-	-	Return the maximum value that will fit in a cell.			class:word	{n/a}	{n/a}	n	all	
