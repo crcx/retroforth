@@ -1,6 +1,0 @@
-~~~
-'./test.so ffi:open 'test const
-'fortytwo test ffi:map-sym '42 const
-42 ffi:invoke
-n:put nl bye
-~~~
