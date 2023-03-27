@@ -4,8 +4,8 @@
 
 # These are used when building and signing a release.
 
-VERSION ?= 2023.1
-KEYPAIR ?= 2023-01
+VERSION ?= 2023.3
+KEYPAIR ?= 2023-03
 
 # -------------------------------------------------------------
 
@@ -77,13 +77,12 @@ DEVICES += interface/unix.retro
 DEVICES += interface/rng.retro
 DEVICES += interface/clock.retro
 DEVICES += interface/scripting.retro
-# DEVICES += interface/sockets.retro
+DEVICES += interface/sockets.retro
 DEVICES += interface/multicore.retro
 DEVICES += interface/unsigned.retro
 DEVICES += interface/ffi.retro
 DEVICES += interface/retro-napia.retro
 DEVICES += interface/future.retro
-# DEVICES += interface/new-strings.retro
 DEVICES += interface/block.retro
 DEVICES += interface/deprecated.retro
 DEVICES += interface/double.retro

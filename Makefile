@@ -4,8 +4,8 @@
 
 # These are used when building and signing a release.
 
-VERSION ?= 2023.1
-KEYPAIR ?= 2023-01
+VERSION ?= 2023.3
+KEYPAIR ?= 2023-03
 
 # -------------------------------------------------------------
 
@@ -44,7 +44,7 @@ ENABLED += -DENABLE_UNIX
 ENABLED += -DENABLE_RNG
 ENABLED += -DENABLE_CLOCK
 ENABLED += -DENABLE_SCRIPTING
-ENABLED += -DENABLE_SOCKETS
+#ENABLED += -DENABLE_SOCKETS
 ENABLED += -DENABLE_SIGNALS
 ENABLED += -DENABLE_MULTICORE
 ENABLED += -DENABLE_FFI
@@ -68,7 +68,6 @@ DEVICES += interface/ffi.retro
 DEVICES += interface/unsigned.retro
 DEVICES += interface/retro-napia.retro
 DEVICES += interface/future.retro
-# DEVICES += interface/new-strings.retro
 DEVICES += interface/block.retro
 DEVICES += interface/deprecated.retro
 DEVICES += interface/double.retro
