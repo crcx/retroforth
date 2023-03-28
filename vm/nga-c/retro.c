@@ -237,6 +237,25 @@ void inst_iq(NgaState *);  void inst_ii(NgaState *);
 
 /* Global Variables -------------------------------------------------- */
 
+void guard(NgaState *vm, int n, int m, int diff) {
+  if (vm->cpu[vm->active].sp < n) {
+    vm->cpu[vm->active].sp = 0;
+    return;
+  }
+  if (((vm->cpu[vm->active].sp + m) - n) > (STACK_DEPTH - 1)) {
+    vm->cpu[vm->active].sp = 0;
+    return;
+  }
+  if (diff) {
+    if (vm->cpu[vm->active].rp + diff < 0) {
+      return;
+    }
+    if (vm->cpu[vm->active].rp + diff > (ADDRESSES - 1)) {
+      return;
+    }
+  }
+}
+
 /* Dynamic Memory / `malloc` support --------------------------------- */
 #ifdef ENABLE_MALLOC
 #ifdef BIT64
