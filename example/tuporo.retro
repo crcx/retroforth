@@ -170,7 +170,7 @@ server as there is no means provided of restricting writes using it.
 ~~~
 :set-block (-)
   &Selector #3 +
-  $/ s:split s:to-number swap n:inc s:chop swap block:set ;
+  $/ s:split/char s:to-number swap n:inc s:chop swap block:set ;
 ~~~
 
 And `handle-block` uses `display-block` to return a formatted text block

@@ -9,6 +9,7 @@
 ================================================================
 
 * nga-c: split device code into separate source files
+* removed words deprecated in 2022.8
 
 ================================================================
 

@@ -193,9 +193,6 @@ Access the parent loop index for the current loop. (For loops made using `indexe
 K                         D: -n  A: -  F: -
 Access the grandparent loop index for the current loop. (For loops made using `indexed-times`)
 
-NoEcho                    D: -a  A: -  F: -
-Deprecated. Variable. If TRUE, allow display of the startup banner when running listen.
-
 RewriteUnderscores        D: -a  A: -  F: -
 Variable. When set to `TRUE`, Retro will replace underscores in strings with spaces. When `FALSE`, Retro does not.
 
@@ -238,9 +235,6 @@ Return `TRUE` if a1 begins with a2 or `FALSE` otherwise.
 a:chop                    D: a-a  A: -  F: -
 Return a new array containing all but the last value in the source array.
 
-a:contains-string?        D: sa-f  A: -  F: -
-Deprecated. Use `a:contains/string?` instead. Return `TRUE` if the string value is in the array or `FALSE` otherwise.
-
 a:contains/string?        D: sa-f  A: -  F: -
 Return `TRUE` if the string value is in the array or `FALSE` otherwise.
 
@@ -282,12 +276,6 @@ Calculate a hash value for a given array.
 
 a:index                   D: an-n  A: -  F: -
 Return the location of the first instance of the specified value in the array.
-
-a:index-of                D: an-n  A: -  F: -
-Deprecated. Use `a:index` instead. Return the location of the first instance of the specified value in the array.
-
-a:index-of-string         D: as-n  A: -  F: -
-Deprecated. Use `a:index/string` instead. Return the location of the first instance of the specified string in the array.
 
 a:index/string            D: as-n  A: -  F: -
 Return the location of the first instance of the specified string in the array.
@@ -1405,12 +1393,6 @@ Remove the last character from a string. Returns a new string.
 s:const                   D: ss-  A: -  F: -
 Create a constant named s2, returning a pointer to s1. This will use `s:keep` to preserve the original string.
 
-s:contains-char?          D: sc-f  A: -  F: -
-Deprecated. Use `s:contains/char?` instead. Return `TRUE` if the character is present in the string or `FALSE` otherwise.
-
-s:contains-string?        D: ss-f  A: -  F: -
-Deprecated. Use `s:contains/string?` instead. Return `TRUE` if the second string is present in the first string or `FALSE` otherwise.
-
 s:contains/char?          D: sc-f  A: -  F: -
 Return `TRUE` if the character is present in the string or `FALSE` otherwise.
 
@@ -1468,12 +1450,6 @@ Read input from standard in (via `c:get`) until a whitespace is encountered. Ret
 s:hash                    D: s-n  A: -  F: -
 Calculate a hash value for a string. This uses the djb2 algorithm.
 
-s:index-of                D: sc-n  A: -  F: -
-Deprecated. Use `s:index/char` instead. Return the location of the first instance of the specified character in the string.
-
-s:index-of-string         D: ss-n  A: -  F: -
-Derpecated. Use `s:index/string` instead. Return the location of the first instance of the specified substring (s2) in the string (s1). Returns -1 if not found.
-
 s:index/char              D: sc-n  A: -  F: -
 Return the location of the first instance of the specified character in the string.
 
@@ -1512,12 +1488,6 @@ Return a new string containing the specified number of characters from the right
 
 s:skip                    D: -  A: -  F: -
 Internal helper function used to skip over a string in a definition.
-
-s:split                   D: sc-ss  A: -  F: -
-Deprecated. Use `s:split/char` instead. Split a string on the first occurrence of the specified character.
-
-s:split-on-string         D: ss-ss  A: -  F: -
-Deprecated. Use `s:split/string` instead. Split a string on the first occurrence of the specified string. After the split, the top stack item will be the part of the string before the specified substring, and the second item will be the rest of the original string.
 
 s:split/char              D: sc-ss  A: -  F: -
 Split a string on the first occurrence of the specified character.

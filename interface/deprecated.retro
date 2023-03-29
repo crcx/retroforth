@@ -1,16 +1,3 @@
-These are planned to be removed in 2021.10. Please update
-your sources to use the newer names.
-
-~~~
-:s:split (sc-ss) s:split/char ;
-:s:split-on-string (ss-ss) s:split/string ;
-:s:contains-char? s:contains/char? ;
-:s:contains-string? s:contains/string? ;
-:a:contains-string? a:contains/string? ;
-
-:a:index-of a:index ;
-:a:index-of-string a:index/string ;
-:s:index-of s:index/char ;
-:s:index-of-string s:index/string ;
 ~~~
 
+~~~

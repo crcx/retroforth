@@ -746,17 +746,6 @@ Access the grandparent loop index for the current loop. (For loops made using `i
 Class: class:word | Namespace: global | Interface Layer: all
 ------------------------------------------------------------------------
 
-NoEcho
-
-  Data:  -a
-  Addr:  -
-  Float: -
-
-Deprecated. Variable. If TRUE, allow display of the startup banner when running listen.
-
-Class: class:word | Namespace: global | Interface Layer: rre
-------------------------------------------------------------------------
-
 RewriteUnderscores
 
   Data:  -a
@@ -907,17 +896,6 @@ a:chop
   Float: -
 
 Return a new array containing all but the last value in the source array.
-
-Class: class:word | Namespace: a | Interface Layer: all
-------------------------------------------------------------------------
-
-a:contains-string?
-
-  Data:  sa-f
-  Addr:  -
-  Float: -
-
-Deprecated. Use `a:contains/string?` instead. Return `TRUE` if the string value is in the array or `FALSE` otherwise.
 
 Class: class:word | Namespace: a | Interface Layer: all
 ------------------------------------------------------------------------
@@ -1077,28 +1055,6 @@ a:index
   Float: -
 
 Return the location of the first instance of the specified value in the array.
-
-Class: class:word | Namespace: a | Interface Layer: all
-------------------------------------------------------------------------
-
-a:index-of
-
-  Data:  an-n
-  Addr:  -
-  Float: -
-
-Deprecated. Use `a:index` instead. Return the location of the first instance of the specified value in the array.
-
-Class: class:word | Namespace: a | Interface Layer: all
-------------------------------------------------------------------------
-
-a:index-of-string
-
-  Data:  as-n
-  Addr:  -
-  Float: -
-
-Deprecated. Use `a:index/string` instead. Return the location of the first instance of the specified string in the array.
 
 Class: class:word | Namespace: a | Interface Layer: all
 ------------------------------------------------------------------------
@@ -5446,28 +5402,6 @@ Create a constant named s2, returning a pointer to s1. This will use `s:keep` to
 Class: class:word | Namespace: s | Interface Layer: all
 ------------------------------------------------------------------------
 
-s:contains-char?
-
-  Data:  sc-f
-  Addr:  -
-  Float: -
-
-Deprecated. Use `s:contains/char?` instead. Return `TRUE` if the character is present in the string or `FALSE` otherwise.
-
-Class: class:word | Namespace: s | Interface Layer: all
-------------------------------------------------------------------------
-
-s:contains-string?
-
-  Data:  ss-f
-  Addr:  -
-  Float: -
-
-Deprecated. Use `s:contains/string?` instead. Return `TRUE` if the second string is present in the first string or `FALSE` otherwise.
-
-Class: class:word | Namespace: s | Interface Layer: all
-------------------------------------------------------------------------
-
 s:contains/char?
 
   Data:  sc-f
@@ -5688,28 +5622,6 @@ Calculate a hash value for a string. This uses the djb2 algorithm.
 Class: class:word | Namespace: s | Interface Layer: all
 ------------------------------------------------------------------------
 
-s:index-of
-
-  Data:  sc-n
-  Addr:  -
-  Float: -
-
-Deprecated. Use `s:index/char` instead. Return the location of the first instance of the specified character in the string.
-
-Class: class:word | Namespace: s | Interface Layer: all
-------------------------------------------------------------------------
-
-s:index-of-string
-
-  Data:  ss-n
-  Addr:  -
-  Float: -
-
-Derpecated. Use `s:index/string` instead. Return the location of the first instance of the specified substring (s2) in the string (s1). Returns -1 if not found.
-
-Class: class:word | Namespace: s | Interface Layer: all
-------------------------------------------------------------------------
-
 s:index/char
 
   Data:  sc-n
@@ -5851,33 +5763,6 @@ s:skip
 Internal helper function used to skip over a string in a definition.
 
 Class: class:word | Namespace: s | Interface Layer: all
-------------------------------------------------------------------------
-
-s:split
-
-  Data:  sc-ss
-  Addr:  -
-  Float: -
-
-Deprecated. Use `s:split/char` instead. Split a string on the first occurrence of the specified character.
-
-Class: class:word | Namespace: s | Interface Layer: all
-------------------------------------------------------------------------
-
-s:split-on-string
-
-  Data:  ss-ss
-  Addr:  -
-  Float: -
-
-Deprecated. Use `s:split/string` instead. Split a string on the first occurrence of the specified string. After the split, the top stack item will be the part of the string before the specified substring, and the second item will be the rest of the original string.
-
-Class: class:word | Namespace: s | Interface Layer: all
-
-Example #1:
-
-  'Hello_Brave_World! 'Brave s:split-on-string s:put nl s:put nl
-
 ------------------------------------------------------------------------
 
 s:split/char

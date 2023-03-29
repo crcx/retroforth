@@ -78,9 +78,9 @@ DEVICES += interface/final.retro
 
 GLOSSARY ?= ./bin/retro tools/glossary.retro
 ASSEMBLE ?= ./bin/retro-muri
-EXTEND ?= ./bin/retro-extend
-EXPORT ?= ./bin/retro-embedimage
-RETRO ?= ./bin/retro
+EXTEND   ?= ./bin/retro-extend
+EXPORT   ?= ./bin/retro-embedimage
+RETRO    ?= ./bin/retro
 
 # -------------------------------------------------------------
 

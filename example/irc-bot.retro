@@ -75,7 +75,7 @@ single socket.
 
 :connect (s-)
   socket:create !Sock
-  $: s:split swap n:inc socket:configure
+  $: s:split/char swap n:inc socket:configure
   @Sock socket:connect drop ;
 
 :s:transmit @Sock socket:send drop-pair ;
@@ -146,7 +146,7 @@ I pass it to `s:evaluate`, capturing and relaying the output.
   here 'PRIVMSG s:contains/string? ;
 
 :channel
-  here 'PRIVMSG s:split-on-string drop #8 + $: s:split nip s:chop &Channel s:copy ;
+  here 'PRIVMSG s:split/string drop #8 + $: s:split/char nip s:chop &Channel s:copy ;
 
 :transmit
   'PRIVMSG_ s:transmit
@@ -190,7 +190,7 @@ I pass it to `s:evaluate`, capturing and relaying the output.
   run-code document drop dump-stack nl ;
 
 :process
-  here 'PRIVMSG s:split-on-string drop $: s:split drop n:inc dup s:put nl
+  here 'PRIVMSG s:split/string drop $: s:split/char drop n:inc dup s:put nl
   command ;
 ~~~
 

@@ -63,7 +63,6 @@ Heap	-a	-	-	Variable. Holds the address of the next available cell.			class:data
 I	-n	-	-	Access the loop index for the current loop. (For loops made using `indexed-times`)			class:word	{n/a}	{n/a}	global	all	
 J	-n	-	-	Access the parent loop index for the current loop. (For loops made using `indexed-times`)			class:word	{n/a}	{n/a}	global	all	
 K	-n	-	-	Access the grandparent loop index for the current loop. (For loops made using `indexed-times`)			class:word	{n/a}	{n/a}	global	all	
-NoEcho	-a	-	-	Deprecated. Variable. If TRUE, allow display of the startup banner when running listen.			class:word	{n/a}	{n/a}	global	rre	
 RewriteUnderscores	-a	-	-	Variable. When set to `TRUE`, Retro will replace underscores in strings with spaces. When `FALSE`, Retro does not.			class:data	{n/a}	{n/a}	global	all	
 STRINGS	-a	-	-	Return the address of the start of the temporary string pool. This can be altered by changing the values of `TempStrings` and `TempStringMax`.			class:word	{n/a}	{n/a}	global	all	
 ScopeList	-a	-	-	Variable. This holds some information used by `{{` and `}}`.			class:data	{n/a}	{n/a}	global	all	
@@ -78,7 +77,6 @@ a:-eq?	aa-f	-	-	Compare all values in the array. Return `FALSE` if all values ar
 a:append	aa-a	-	-	Return a new array consisting of the values in a1 followed by the values in a2.			class:word	{n/a}	{n/a}	a	all	
 a:begins-with?	aa-f	-	-	Return `TRUE` if a1 begins with a2 or `FALSE` otherwise.			class:word	{n/a}	{n/a}	a	all	
 a:chop	a-a	-	-	Return a new array containing all but the last value in the source array.			class:word	{n/a}	{n/a}	a	all	
-a:contains-string?	sa-f	-	-	Deprecated. Use `a:contains/string?` instead. Return `TRUE` if the string value is in the array or `FALSE` otherwise.			class:word	{n/a}	{n/a}	a	all	
 a:contains/string?	sa-f	-	-	Return `TRUE` if the string value is in the array or `FALSE` otherwise.			class:word	{n/a}	{n/a}	a	all	
 a:contains?	na-f	-	-	Return `TRUE` if the value is in the array or `FALSE` otherwise.			class:word	{n/a}	{n/a}	a	all	
 a:copy	aa-	-	-	Copy an array (a1) to a destination (a2).			class:word	{n/a}	{n/a}	a	all	
@@ -93,8 +91,6 @@ a:for-each	aq-	-	-	Execute the quote once for each item in the array.			class:wo
 a:from-string	s-a	-	-	Create a new array with the characters in the source string.			class:word	{n/a}	{n/a}	a	all	
 a:hash	a-n	-	-	Calculate a hash value for a given array.			class:word	{n/a}	{n/a}	a	all	
 a:index	an-n	-	-	Return the location of the first instance of the specified value in the array.			class:word	{n/a}	{n/a}	a	all	
-a:index-of	an-n	-	-	Deprecated. Use `a:index` instead. Return the location of the first instance of the specified value in the array.			class:word	{n/a}	{n/a}	a	all	
-a:index-of-string	as-n	-	-	Deprecated. Use `a:index/string` instead. Return the location of the first instance of the specified string in the array.			class:word	{n/a}	{n/a}	a	all	
 a:index/string	as-n	-	-	Return the location of the first instance of the specified string in the array.			class:word	{n/a}	{n/a}	a	all	
 a:indices	av-a	-	-	Return a new array with the indices the specified value was found at in the original array.			class:word	{n/a}	{n/a}	a	all	
 a:indices/string	as-a	-	-	Return a new array with the indices of the specified string in the original array.			class:word	{n/a}	{n/a}	a	all	
@@ -467,8 +463,6 @@ s:begins-with?	ss-f	-	-	Return `TRUE` if s1 begins with s2 or `FALSE` otherwise.
 s:case	sSq- || sSq-s	-	-	If the `s` matches `S`, discard `s` and run the quote before exiting the caller. If they do not match, discard the quote and leave `s` on the stack.			class:word	{n/a}	{n/a}	s	all	
 s:chop	s-s	-	-	Remove the last character from a string. Returns a new string.			class:word	{n/a}	{n/a}	s	all	
 s:const	ss-	-	-	Create a constant named s2, returning a pointer to s1. This will use `s:keep` to preserve the original string.			class:word	{n/a}	{n/a}	s	all	
-s:contains-char?	sc-f	-	-	Deprecated. Use `s:contains/char?` instead. Return `TRUE` if the character is present in the string or `FALSE` otherwise.			class:word	{n/a}	{n/a}	s	all	
-s:contains-string?	ss-f	-	-	Deprecated. Use `s:contains/string?` instead. Return `TRUE` if the second string is present in the first string or `FALSE` otherwise.			class:word	{n/a}	{n/a}	s	all	
 s:contains/char?	sc-f	-	-	Return `TRUE` if the character is present in the string or `FALSE` otherwise.			class:word	{n/a}	{n/a}	s	all	
 s:contains/string?	ss-f	-	-	Return `TRUE` if the second string is present in the first string or `FALSE` otherwise.			class:word	{n/a}	{n/a}	s	all	
 s:copy	sa-	-	-	Copy a string (s) to a destination (a). This will include the terminator character when copying.			class:word	{n/a}	{n/a}	s	all	
@@ -488,8 +482,6 @@ s:format	...s-s	-	-	Construct a new string using the template passed and items f
 s:get	-s	-	-	Read input from standard in (via `c:get`) until a CR or LF is encountered. Returns a string.			class:word	{n/a}	{n/a}	all	rre	
 s:get-word	-s	-	-	Read input from standard in (via `c:get`) until a whitespace is encountered. Returns a string.			class:word	{n/a}	{n/a}	all	rre	
 s:hash	s-n	-	-	Calculate a hash value for a string. This uses the djb2 algorithm.			class:word	{n/a}	{n/a}	s	all	
-s:index-of	sc-n	-	-	Deprecated. Use `s:index/char` instead. Return the location of the first instance of the specified character in the string.			class:word	{n/a}	{n/a}	s	all	
-s:index-of-string	ss-n	-	-	Derpecated. Use `s:index/string` instead. Return the location of the first instance of the specified substring (s2) in the string (s1). Returns -1 if not found.			class:word	{n/a}	{n/a}	s	all	
 s:index/char	sc-n	-	-	Return the location of the first instance of the specified character in the string.			class:word	{n/a}	{n/a}	s	all	
 s:index/string	ss-n	-	-	Return the location of the first instance of the specified substring (s2) in the string (s1). Returns -1 if not found.			class:word	{n/a}	{n/a}	s	all	
 s:keep	s-s	-	-	Store a string into the heap and return a pointer to the start of it.			class:word	{n/a}	{n/a}	s	all	
@@ -503,8 +495,6 @@ s:replace-all	sss-s	-	-	Replace all instances of s2 in s1 with s3.			class:word	
 s:reverse	s-s	-	-	Reverse the order of ASCII characters in a string.			class:word	{n/a}	{n/a}	s	all	
 s:right	sn-s	-	-	Return a new string containing the specified number of characters from the right side of the string.			class:word	{n/a}	{n/a}	s	all	
 s:skip	-	-	-	Internal helper function used to skip over a string in a definition.			class:word	{n/a}	{n/a}	s	all	
-s:split	sc-ss	-	-	Deprecated. Use `s:split/char` instead. Split a string on the first occurrence of the specified character.			class:word	{n/a}	{n/a}	s	all	
-s:split-on-string	ss-ss	-	-	Deprecated. Use `s:split/string` instead. Split a string on the first occurrence of the specified string. After the split, the top stack item will be the part of the string before the specified substring, and the second item will be the rest of the original string.			class:word	  'Hello_Brave_World! 'Brave s:split-on-string s:put nl s:put nl	{n/a}	s	all	
 s:split/char	sc-ss	-	-	Split a string on the first occurrence of the specified character.			class:word	{n/a}	{n/a}	s	all	
 s:split/string	ss-ss	-	-	Split a string on the first occurrence of the specified string. After the split, the top stack item will be the part of the string before the specified substring, and the second item will be the rest of the original string.			class:word	  'Hello_Brave_World! 'Brave s:split-on-string s:put nl s:put nl	{n/a}	s	all	
 s:store	csn-	-	-	Store a character value into the string at the specified index.			class:word	    $z 'abcdef #1 s:store	{n/a}	s	all	

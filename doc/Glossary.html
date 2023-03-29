@@ -480,13 +480,6 @@
 </div>
 <p>Access the grandparent loop index for the current loop. (For loops made using `indexed-times`)</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>global</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
-<h2>NoEcho</h2>
-<div style='margin-left: 1em;'><p><b>Data:</b> -a<br>
-<b>Addr:</b> -<br>
-<b>Float:</b> -</p>
-</div>
-<p>Deprecated. Variable. If TRUE, allow display of the startup banner when running listen.</p>
-<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>global</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><hr/>
 <h2>RewriteUnderscores</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> -a<br>
 <b>Addr:</b> -<br>
@@ -584,13 +577,6 @@
 <b>Float:</b> -</p>
 </div>
 <p>Return a new array containing all but the last value in the source array.</p>
-<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>a</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
-<h2>a:contains-string?</h2>
-<div style='margin-left: 1em;'><p><b>Data:</b> sa-f<br>
-<b>Addr:</b> -<br>
-<b>Float:</b> -</p>
-</div>
-<p>Deprecated. Use `a:contains/string?` instead. Return `TRUE` if the string value is in the array or `FALSE` otherwise.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>a</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
 <h2>a:contains/string?</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> sa-f<br>
@@ -693,20 +679,6 @@
 <b>Float:</b> -</p>
 </div>
 <p>Return the location of the first instance of the specified value in the array.</p>
-<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>a</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
-<h2>a:index-of</h2>
-<div style='margin-left: 1em;'><p><b>Data:</b> an-n<br>
-<b>Addr:</b> -<br>
-<b>Float:</b> -</p>
-</div>
-<p>Deprecated. Use `a:index` instead. Return the location of the first instance of the specified value in the array.</p>
-<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>a</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
-<h2>a:index-of-string</h2>
-<div style='margin-left: 1em;'><p><b>Data:</b> as-n<br>
-<b>Addr:</b> -<br>
-<b>Float:</b> -</p>
-</div>
-<p>Deprecated. Use `a:index/string` instead. Return the location of the first instance of the specified string in the array.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>a</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
 <h2>a:index/string</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> as-n<br>
@@ -3521,20 +3493,6 @@
 </div>
 <p>Create a constant named s2, returning a pointer to s1. This will use `s:keep` to preserve the original string.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>s</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
-<h2>s:contains-char?</h2>
-<div style='margin-left: 1em;'><p><b>Data:</b> sc-f<br>
-<b>Addr:</b> -<br>
-<b>Float:</b> -</p>
-</div>
-<p>Deprecated. Use `s:contains/char?` instead. Return `TRUE` if the character is present in the string or `FALSE` otherwise.</p>
-<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>s</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
-<h2>s:contains-string?</h2>
-<div style='margin-left: 1em;'><p><b>Data:</b> ss-f<br>
-<b>Addr:</b> -<br>
-<b>Float:</b> -</p>
-</div>
-<p>Deprecated. Use `s:contains/string?` instead. Return `TRUE` if the second string is present in the first string or `FALSE` otherwise.</p>
-<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>s</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
 <h2>s:contains/char?</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> sc-f<br>
 <b>Addr:</b> -<br>
@@ -3677,20 +3635,6 @@
 </div>
 <p>Calculate a hash value for a string. This uses the djb2 algorithm.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>s</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
-<h2>s:index-of</h2>
-<div style='margin-left: 1em;'><p><b>Data:</b> sc-n<br>
-<b>Addr:</b> -<br>
-<b>Float:</b> -</p>
-</div>
-<p>Deprecated. Use `s:index/char` instead. Return the location of the first instance of the specified character in the string.</p>
-<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>s</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
-<h2>s:index-of-string</h2>
-<div style='margin-left: 1em;'><p><b>Data:</b> ss-n<br>
-<b>Addr:</b> -<br>
-<b>Float:</b> -</p>
-</div>
-<p>Derpecated. Use `s:index/string` instead. Return the location of the first instance of the specified substring (s2) in the string (s1). Returns -1 if not found.</p>
-<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>s</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
 <h2>s:index/char</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> sc-n<br>
 <b>Addr:</b> -<br>
@@ -3782,24 +3726,6 @@
 </div>
 <p>Internal helper function used to skip over a string in a definition.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>s</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
-<h2>s:split</h2>
-<div style='margin-left: 1em;'><p><b>Data:</b> sc-ss<br>
-<b>Addr:</b> -<br>
-<b>Float:</b> -</p>
-</div>
-<p>Deprecated. Use `s:split/char` instead. Split a string on the first occurrence of the specified character.</p>
-<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>s</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
-<h2>s:split-on-string</h2>
-<div style='margin-left: 1em;'><p><b>Data:</b> ss-ss<br>
-<b>Addr:</b> -<br>
-<b>Float:</b> -</p>
-</div>
-<p>Deprecated. Use `s:split/string` instead. Split a string on the first occurrence of the specified string. After the split, the top stack item will be the part of the string before the specified substring, and the second item will be the rest of the original string.</p>
-<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>s</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><p><b>Example:</b> <br>
-<br>
-<xmp style='background:#f2f2f2'>  'Hello_Brave_World! 'Brave s:split-on-string s:put nl s:put nl</xmp>
-</p>
-<hr/>
 <h2>s:split/char</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> sc-ss<br>
 <b>Addr:</b> -<br>
