@@ -219,10 +219,12 @@ void inst_iq(NgaState *);  void inst_ii(NgaState *);
 
 void guard(NgaState *vm, int n, int m, int diff) {
   if (vm->cpu[vm->active].sp < n) {
+    printf("E: Data Stack Underflow");
     vm->cpu[vm->active].sp = 0;
     return;
   }
   if (((vm->cpu[vm->active].sp + m) - n) > (STACK_DEPTH - 1)) {
+    printf("E: Data Stack Overflow");
     vm->cpu[vm->active].sp = 0;
     return;
   }
@@ -1111,25 +1113,30 @@ void prepare_vm(NgaState *vm) {
 }
 
 void inst_no(NgaState *vm) {
+  guard(vm, 0, 0, 0);
 }
 
 void inst_li(NgaState *vm) {
+  guard(vm, 0, 1, 0);
   vm->cpu[vm->active].sp++;
   vm->cpu[vm->active].ip++;
   TOS = vm->memory[vm->cpu[vm->active].ip];
 }
 
 void inst_du(NgaState *vm) {
+  guard(vm, 1, 2, 0);
   vm->cpu[vm->active].sp++;
   vm->cpu[vm->active].data[vm->cpu[vm->active].sp] = NOS;
 }
 
 void inst_dr(NgaState *vm) {
+  guard(vm, 1, 0, 0);
   vm->cpu[vm->active].data[vm->cpu[vm->active].sp] = 0;
   vm->cpu[vm->active].sp--;
 }
 
 void inst_sw(NgaState *vm) {
+  guard(vm, 2, 2, 0);
   CELL a;
   a = TOS;
   TOS = NOS;
@@ -1137,23 +1144,27 @@ void inst_sw(NgaState *vm) {
 }
 
 void inst_pu(NgaState *vm) {
+  guard(vm, 1, 0, 1);
   vm->cpu[vm->active].rp++;
   TORS = TOS;
   inst_dr(vm);
 }
 
 void inst_po(NgaState *vm) {
+  guard(vm, 0, 1, -1);
   vm->cpu[vm->active].sp++;
   TOS = TORS;
   vm->cpu[vm->active].rp--;
 }
 
 void inst_ju(NgaState *vm) {
+  guard(vm, 1, 0, 0);
   vm->cpu[vm->active].ip = TOS - 1;
   inst_dr(vm);
 }
 
 void inst_ca(NgaState *vm) {
+  guard(vm, 1, 0, 1);
   vm->cpu[vm->active].rp++;
   TORS = vm->cpu[vm->active].ip;
   vm->cpu[vm->active].ip = TOS - 1;
@@ -1161,6 +1172,7 @@ void inst_ca(NgaState *vm) {
 }
 
 void inst_cc(NgaState *vm) {
+  guard(vm, 2, 0, 1);
   CELL a, b;
   a = TOS; inst_dr(vm);  /* Target */
   b = TOS; inst_dr(vm);  /* Flag   */
@@ -1172,11 +1184,13 @@ void inst_cc(NgaState *vm) {
 }
 
 void inst_re(NgaState *vm) {
+  guard(vm, 0, 0, -1);
   vm->cpu[vm->active].ip = TORS;
   vm->cpu[vm->active].rp--;
 }
 
 void inst_eq(NgaState *vm) {
+  guard(vm, 2, 1, 0);
   if (vm->cpu[vm->active].u != 0) {
     NOS = ((unsigned)NOS == (unsigned)TOS) ? -1 : 0;
     vm->cpu[vm->active].u = 0;
@@ -1187,6 +1201,7 @@ void inst_eq(NgaState *vm) {
 }
 
 void inst_ne(NgaState *vm) {
+  guard(vm, 2, 1, 0);
   if (vm->cpu[vm->active].u != 0) {
     NOS = ((unsigned)NOS != (unsigned)TOS) ? -1 : 0;
     vm->cpu[vm->active].u = 0;
@@ -1197,6 +1212,7 @@ void inst_ne(NgaState *vm) {
 }
 
 void inst_lt(NgaState *vm) {
+  guard(vm, 2, 1, 0);
   if (vm->cpu[vm->active].u != 0) {
     NOS = ((unsigned)NOS < (unsigned)TOS) ? -1 : 0;
     vm->cpu[vm->active].u = 0;
@@ -1207,6 +1223,7 @@ void inst_lt(NgaState *vm) {
 }
 
 void inst_gt(NgaState *vm) {
+  guard(vm, 2, 1, 0);
   if (vm->cpu[vm->active].u != 0) {
     NOS = ((unsigned)NOS > (unsigned)TOS) ? -1 : 0;
     vm->cpu[vm->active].u = 0;
@@ -1217,6 +1234,7 @@ void inst_gt(NgaState *vm) {
 }
 
 void inst_fe(NgaState *vm) {
+  guard(vm, 1, 1, 0);
   switch (TOS) {
     case -1: TOS = vm->cpu[vm->active].sp - 1; break;
     case -2: TOS = vm->cpu[vm->active].rp; break;
@@ -1228,12 +1246,14 @@ void inst_fe(NgaState *vm) {
 }
 
 void inst_st(NgaState *vm) {
+  guard(vm, 2, 0, 0);
   vm->memory[TOS] = NOS;
   inst_dr(vm);
   inst_dr(vm);
 }
 
 void inst_ad(NgaState *vm) {
+  guard(vm, 2, 1, 0);
   if (vm->cpu[vm->active].u != 0) {
     NOS = (unsigned)NOS + (unsigned)TOS;
     vm->cpu[vm->active].u = 0;
@@ -1244,6 +1264,7 @@ void inst_ad(NgaState *vm) {
 }
 
 void inst_su(NgaState *vm) {
+  guard(vm, 2, 1, 0);
   if (vm->cpu[vm->active].u != 0) {
     NOS = (unsigned)NOS - (unsigned)TOS;
     vm->cpu[vm->active].u = 0;
@@ -1254,6 +1275,7 @@ void inst_su(NgaState *vm) {
 }
 
 void inst_mu(NgaState *vm) {
+  guard(vm, 2, 1, 0);
   if (vm->cpu[vm->active].u != 0) {
     NOS = (unsigned)NOS * (unsigned)TOS;
     vm->cpu[vm->active].u = 0;
@@ -1264,6 +1286,7 @@ void inst_mu(NgaState *vm) {
 }
 
 void inst_di(NgaState *vm) {
+  guard(vm, 2, 2, 0);
   CELL a, b;
   a = TOS;
   b = NOS;
@@ -1278,21 +1301,25 @@ void inst_di(NgaState *vm) {
 }
 
 void inst_an(NgaState *vm) {
+  guard(vm, 2, 1, 0);
   NOS = TOS & NOS;
   inst_dr(vm);
 }
 
 void inst_or(NgaState *vm) {
+  guard(vm, 2, 1, 0);
   NOS = TOS | NOS;
   inst_dr(vm);
 }
 
 void inst_xo(NgaState *vm) {
+  guard(vm, 2, 1, 0);
   NOS = TOS ^ NOS;
   inst_dr(vm);
 }
 
 void inst_sh(NgaState *vm) {
+  guard(vm, 2, 1, 0);
   CELL y = TOS;
   CELL x = NOS;
   if (TOS < 0)
@@ -1325,10 +1352,12 @@ void inst_ha(NgaState *vm) {
 }
 
 void inst_ie(NgaState *vm) {
+  guard(vm, 1, 1, 0);
   stack_push(vm, vm->devices);
 }
 
 void inst_iq(NgaState *vm) {
+  guard(vm, 1, 1, 0);
   vm->IO_queryHandlers[stack_pop(vm)](vm);
 }
 
