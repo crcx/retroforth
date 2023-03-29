@@ -8,4 +8,17 @@
 
 ================================================================
 
+* nga-c: split device code into separate source files
+
+================================================================
+
+Development Notes:
+
+It is likely that starting with this release, the source
+distribution will default to building an executable from
+the amalgamation (example/amalgamate.retro) rather than
+rebuilding the image with each build. A new Makefile target
+will be added for those wanting or needing to build a
+custom ngaImage.
+
 ================================================================
