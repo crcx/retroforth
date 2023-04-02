@@ -281,7 +281,7 @@ headers should look like:
   over '####_ s:begins-with? or ;
 
 :format:head
-  ASCII:SPACE s:split
+  ASCII:SPACE s:split/char
   '#   [ '<span_class="h1"> s:put n:inc s:put '</span> s:put nl ] s:case
   '##  [ '<span_class="h2"> s:put n:inc s:put '</span> s:put nl ] s:case
   '### [ '<span_class="h3"> s:put n:inc s:put '</span> s:put nl ] s:case
