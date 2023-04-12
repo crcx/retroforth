@@ -15,8 +15,8 @@ The exposed word set is compact:
 {{
   :block:invoke #3 io:scan-for io:invoke ;
 ---reveal---
-  :block:read (na-) #0 block:invoke ;
-  :block:write (na-) #1 block:invoke ;
+  :block:read  (na-)   #0 block:invoke ;
+  :block:write (na-)   #1 block:invoke ;
   :block:set-file (s-) #2 block:invoke ;
 }}
 ~~~
@@ -25,8 +25,8 @@ The exposed word set is compact:
 
 ~~~
 'interface/blocks.retro s:dedup
-dup 'block:read d:lookup d:source store
-dup 'block:write d:lookup d:source store
+dup 'block:read     d:lookup d:source store
+dup 'block:write    d:lookup d:source store
 dup 'block:set-file d:lookup d:source store
 drop
 ~~~

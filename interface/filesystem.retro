@@ -167,29 +167,28 @@ once for each line in a file. This makes some things trivial. E.g., a simple
 ## d:source
 
 ~~~
-'interface/filesystem.retro s:dedup
-dup 'file:spew d:lookup d:source store
-dup 'file:slurp d:lookup d:source store
-dup 'file:for-each-line d:lookup d:source store
-dup 'file:read-line d:lookup d:source store
-dup 'file:open-for-writing d:lookup d:source store
-dup 'file:open-for-append d:lookup d:source store
-dup 'file:open-for-reading d:lookup d:source store
-dup 'file:exists? d:lookup d:source store
-dup 'file:flush d:lookup d:source store
-dup 'file:delete d:lookup d:source store
-dup 'file:size d:lookup d:source store
-dup 'file:seek d:lookup d:source store
-dup 'file:tell d:lookup d:source store
-dup 'file:write d:lookup d:source store
-dup 'file:read d:lookup d:source store
-dup 'file:close d:lookup d:source store
-dup 'file:open d:lookup d:source store
-dup 'file:R+ d:lookup d:source store
-dup 'file:A d:lookup d:source store
-dup 'file:W d:lookup d:source store
-dup 'file:R d:lookup d:source store
-dup 'file:operation d:lookup d:source store
+'interface/filesystem.retro
+dup 'file:spew             d:set-source
+dup 'file:slurp            d:set-source
+dup 'file:for-each-line    d:set-source
+dup 'file:read-line        d:set-source
+dup 'file:open-for-writing d:set-source
+dup 'file:open-for-append  d:set-source
+dup 'file:open-for-reading d:set-source
+dup 'file:exists?   d:set-source
+dup 'file:flush     d:set-source
+dup 'file:delete    d:set-source
+dup 'file:size      d:set-source
+dup 'file:seek      d:set-source
+dup 'file:tell      d:set-source
+dup 'file:write     d:set-source
+dup 'file:read      d:set-source
+dup 'file:close     d:set-source
+dup 'file:open      d:set-source
+dup 'file:R+        d:set-source
+dup 'file:A         d:set-source
+dup 'file:W         d:set-source
+dup 'file:R         d:set-source
+dup 'file:operation d:set-source
 drop
 ~~~
-

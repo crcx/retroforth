@@ -137,30 +137,30 @@ seconds.
 ## d:source
 
 ~~~
-'interface/unix.retro s:dedup
-dup 'unix:slurp-pipe d:lookup d:source store
-dup 'unix:for-each-file d:lookup d:source store
-dup 'unix:count-files-in-cwd d:lookup d:source store
-dup 'unix:get-cwd d:lookup d:source store
-dup 'unix:pipe d:lookup d:source store
-dup 'unix:execute d:lookup d:source store
-dup 'unix:sleep d:lookup d:source store
-dup 'unix:putenv d:lookup d:source store
-dup 'unix:getenv d:lookup d:source store
-dup 'unix:chdir d:lookup d:source store
-dup 'unix:pclose d:lookup d:source store
-dup 'unix:popen d:lookup d:source store
-dup 'unix:kill d:lookup d:source store
-dup 'unix:wait d:lookup d:source store
-dup 'unix:getpid d:lookup d:source store
-dup 'unix:exit d:lookup d:source store
-dup 'unix:exec3 d:lookup d:source store
-dup 'unix:exec2 d:lookup d:source store
-dup 'unix:exec1 d:lookup d:source store
-dup 'unix:exec0 d:lookup d:source store
-dup 'unix:fork d:lookup d:source store
-dup 'unix:system d:lookup d:source store
-dup 'io:unix-syscall d:lookup d:source store
+'interface/unix.retro
+dup 'unix:slurp-pipe    d:set-source
+dup 'unix:for-each-file d:set-source
+dup 'unix:count-files-in-cwd d:set-source
+dup 'unix:get-cwd d:set-source
+dup 'unix:pipe    d:set-source
+dup 'unix:execute d:set-source
+dup 'unix:sleep   d:set-source
+dup 'unix:putenv  d:set-source
+dup 'unix:getenv  d:set-source
+dup 'unix:chdir   d:set-source
+dup 'unix:pclose  d:set-source
+dup 'unix:popen   d:set-source
+dup 'unix:kill    d:set-source
+dup 'unix:wait    d:set-source
+dup 'unix:getpid  d:set-source
+dup 'unix:exit    d:set-source
+dup 'unix:exec3   d:set-source
+dup 'unix:exec2   d:set-source
+dup 'unix:exec1   d:set-source
+dup 'unix:exec0   d:set-source
+dup 'unix:fork    d:set-source
+dup 'unix:system  d:set-source
+dup 'io:unix-syscall d:set-source
 drop
 ~~~
 

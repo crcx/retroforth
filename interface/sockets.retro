@@ -7,12 +7,11 @@ that it is fairly low level.
 
 ~~~
 :socket:operation
-  #7 io:scan-for
-  dup n:negative? [ drop 'Error:_device_(0007)_not_found s:put nl
-                         'See_https://retroforth.org/support/2022.1/SOCKETS.md
-                         s:put nl
-                         'for_instructions_on_enabling_sockets.
-                         s:put nl ] if;
+  #7 io:scan-for dup n:negative?
+  [ drop 'Error:_device_(0007)_not_found s:put nl
+         'See_https://retroforth.org/support/2022.1/SOCKETS.md
+         s:put nl
+         'for_instructions_on_enabling_sockets. s:put nl ] if;
   io:invoke ;
 ~~~
 
@@ -97,16 +96,16 @@ Does not return anything.
 
 ~~~
 'interface/sockets.retro
-dup 'socket:configure d:set-source
-dup 'socket:close d:set-source
-dup 'socket:recv d:set-source
-dup 'socket:send d:set-source
-dup 'socket:connect d:set-source
-dup 'socket:accept d:set-source
-dup 'socket:listen d:set-source
-dup 'socket:bind d:set-source
-dup 'socket:create d:set-source
+dup 'socket:configure     d:set-source
+dup 'socket:close         d:set-source
+dup 'socket:recv          d:set-source
+dup 'socket:send          d:set-source
+dup 'socket:connect       d:set-source
+dup 'socket:accept        d:set-source
+dup 'socket:listen        d:set-source
+dup 'socket:bind          d:set-source
+dup 'socket:create        d:set-source
 dup 'socket:gethostbyname d:set-source
-dup 'socket:operation d:set-source
+dup 'socket:operation     d:set-source
 drop
 ~~~
