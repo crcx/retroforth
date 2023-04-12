@@ -210,91 +210,91 @@ Deal with special cases.
 ## Populate d:source
 
 ~~~
-'interface/floatingpoint.retro s:dedup
-dup 'e:put d:lookup d:source store
-dup 'f:dump-astack d:lookup d:source store
-dup 'f:dump-stack d:lookup d:source store
-dup 'f:fetch d:lookup d:source store
-dup 'f:store d:lookup d:source store
-dup 'e:to-f d:lookup d:source store
-dup 'f:to-e d:lookup d:source store
-dup 'f:signed-square d:lookup d:source store
-dup 'f:signed-sqrt d:lookup d:source store
-dup 'f:E1 d:lookup d:source store
-dup 'e:clip d:lookup d:source store
-dup 'e:-inf? d:lookup d:source store
-dup 'e:inf? d:lookup d:source store
-dup 'e:nan? d:lookup d:source store
-dup 'e:zero? d:lookup d:source store
-dup 'e:min? d:lookup d:source store
-dup 'e:max? d:lookup d:source store
-dup 'e:n? d:lookup d:source store
-dup 'e:-INF d:lookup d:source store
-dup 'e:INF d:lookup d:source store
-dup 'e:NAN d:lookup d:source store
-dup 'e:MIN d:lookup d:source store
-dup 'e:MAX d:lookup d:source store
-dup 'f:sign d:lookup d:source store
-dup 'f:case d:lookup d:source store
-dup 'f:dec d:lookup d:source store
-dup 'f:inc d:lookup d:source store
-dup 'f:between? d:lookup d:source store
-dup 'f:limit d:lookup d:source store
-dup 'f:max d:lookup d:source store
-dup 'f:min d:lookup d:source store
-dup 'f:round d:lookup d:source store
-dup 'f:-inf? d:lookup d:source store
-dup 'f:inf? d:lookup d:source store
-dup 'f:nan? d:lookup d:source store
-dup 'f:-INF d:lookup d:source store
-dup 'f:INF d:lookup d:source store
-dup 'f:NAN d:lookup d:source store
-dup 'f:E d:lookup d:source store
-dup 'f:PI d:lookup d:source store
-dup 'f:put d:lookup d:source store
-dup 'f:abs d:lookup d:source store
-dup 'f:negate d:lookup d:source store
-dup 'f:negative? d:lookup d:source store
-dup 'f:positive? d:lookup d:source store
-dup 'f:square d:lookup d:source store
-dup 'sigil:. d:lookup d:source store
-dup 'f:rot d:lookup d:source store
-dup 'f:dup-pair d:lookup d:source store
-dup 'f:drop-pair d:lookup d:source store
-dup 'f:nip d:lookup d:source store
-dup 'f:tuck d:lookup d:source store
-dup 'f:over d:lookup d:source store
-dup 'f:adepth d:lookup d:source store
-dup 'f:pop d:lookup d:source store
-dup 'f:push d:lookup d:source store
-dup 'f:atan d:lookup d:source store
-dup 'f:acos d:lookup d:source store
-dup 'f:asin d:lookup d:source store
-dup 'f:tan d:lookup d:source store
-dup 'f:cos d:lookup d:source store
-dup 'f:sin d:lookup d:source store
-dup 'f:power d:lookup d:source store
-dup 'f:log d:lookup d:source store
-dup 'f:swap d:lookup d:source store
-dup 'f:drop d:lookup d:source store
-dup 'f:dup d:lookup d:source store
-dup 'f:depth d:lookup d:source store
-dup 'f:gt? d:lookup d:source store
-dup 'f:lt? d:lookup d:source store
-dup 'f:-eq? d:lookup d:source store
-dup 'f:eq? d:lookup d:source store
-dup 'f:sqrt d:lookup d:source store
-dup 'f:ceiling d:lookup d:source store
-dup 'f:floor d:lookup d:source store
-dup 'f:/ d:lookup d:source store
-dup 'f:* d:lookup d:source store
-dup 'f:- d:lookup d:source store
-dup 'f:+ d:lookup d:source store
-dup 'f:to-string d:lookup d:source store
-dup 'f:to-number d:lookup d:source store
-dup 's:to-float d:lookup d:source store
-dup 'n:to-float d:lookup d:source store
-dup 'float:operation d:lookup d:source store
+'interface/floatingpoint.retro
+dup 'e:put d:set-source
+dup 'f:dump-astack d:set-source
+dup 'f:dump-stack d:set-source
+dup 'f:fetch d:set-source
+dup 'f:store d:set-source
+dup 'e:to-f d:set-source
+dup 'f:to-e d:set-source
+dup 'f:signed-square d:set-source
+dup 'f:signed-sqrt d:set-source
+dup 'f:E1 d:set-source
+dup 'e:clip d:set-source
+dup 'e:-inf? d:set-source
+dup 'e:inf? d:set-source
+dup 'e:nan? d:set-source
+dup 'e:zero? d:set-source
+dup 'e:min? d:set-source
+dup 'e:max? d:set-source
+dup 'e:n? d:set-source
+dup 'e:-INF d:set-source
+dup 'e:INF d:set-source
+dup 'e:NAN d:set-source
+dup 'e:MIN d:set-source
+dup 'e:MAX d:set-source
+dup 'f:sign d:set-source
+dup 'f:case d:set-source
+dup 'f:dec d:set-source
+dup 'f:inc d:set-source
+dup 'f:between? d:set-source
+dup 'f:limit d:set-source
+dup 'f:max d:set-source
+dup 'f:min d:set-source
+dup 'f:round d:set-source
+dup 'f:-inf? d:set-source
+dup 'f:inf? d:set-source
+dup 'f:nan? d:set-source
+dup 'f:-INF d:set-source
+dup 'f:INF d:set-source
+dup 'f:NAN d:set-source
+dup 'f:E d:set-source
+dup 'f:PI d:set-source
+dup 'f:put d:set-source
+dup 'f:abs d:set-source
+dup 'f:negate d:set-source
+dup 'f:negative? d:set-source
+dup 'f:positive? d:set-source
+dup 'f:square d:set-source
+dup 'sigil:. d:set-source
+dup 'f:rot d:set-source
+dup 'f:dup-pair d:set-source
+dup 'f:drop-pair d:set-source
+dup 'f:nip d:set-source
+dup 'f:tuck d:set-source
+dup 'f:over d:set-source
+dup 'f:adepth d:set-source
+dup 'f:pop d:set-source
+dup 'f:push d:set-source
+dup 'f:atan d:set-source
+dup 'f:acos d:set-source
+dup 'f:asin d:set-source
+dup 'f:tan d:set-source
+dup 'f:cos d:set-source
+dup 'f:sin d:set-source
+dup 'f:power d:set-source
+dup 'f:log d:set-source
+dup 'f:swap d:set-source
+dup 'f:drop d:set-source
+dup 'f:dup d:set-source
+dup 'f:depth d:set-source
+dup 'f:gt? d:set-source
+dup 'f:lt? d:set-source
+dup 'f:-eq? d:set-source
+dup 'f:eq? d:set-source
+dup 'f:sqrt d:set-source
+dup 'f:ceiling d:set-source
+dup 'f:floor d:set-source
+dup 'f:/ d:set-source
+dup 'f:* d:set-source
+dup 'f:- d:set-source
+dup 'f:+ d:set-source
+dup 'f:to-string d:set-source
+dup 'f:to-number d:set-source
+dup 's:to-float d:set-source
+dup 'n:to-float d:set-source
+dup 'float:operation d:set-source
 drop
 ~~~
 
