@@ -66,10 +66,10 @@ startup flags passed.
                      [ ASCII:SPACE eq? ] tri or or ;
   (c-f)  :eol?       @EOT [ ASCII:CR eq? ] [ ASCII:LF eq? ] bi or ;
   (s-sf) :valid?     dup s:length n:strictly-positive? ;
-  (c-c)  :check-eof  dup [ #-1 eq? ] [ ASCII:EOT eq? ] bi or [ bye ] if ;
+  (c-c)  :check-eof  dup [ #-1 eq? ] [ ASCII:EOT eq? ] bi or &bye if ;
          :bs         buffer:size #2 gteq?
                      [ buffer:get drop ] if buffer:get drop ;
-  (c-c)  :check-bs   dup [ ASCII:BS eq? ] [ ASCII:DEL eq? ] bi or [ bs ] if ;
+  (c-c)  :check-bs   dup [ ASCII:BS eq? ] [ ASCII:DEL eq? ] bi or &bs if ;
   (c-c)  :check      check-eof check-bs ;
   (-c)   :character  c:get dup buffer:add ;
   (q-)   :buffer     [ TIB buffer:set call buffer:start ] buffer:preserve ;
