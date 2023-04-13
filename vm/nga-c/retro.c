@@ -1339,6 +1339,7 @@ void inst_sh(NgaState *vm) {
 }
 
 void inst_zr(NgaState *vm) {
+  guard(vm, 1, 0, 0);
   if (TOS == 0) {
     inst_dr(vm);
     vm->cpu[vm->active].ip = TORS;
@@ -1347,6 +1348,7 @@ void inst_zr(NgaState *vm) {
 }
 
 void inst_ha(NgaState *vm) {
+  guard(vm, 0, 0, 0);
   vm->cpu[vm->active].ip = IMAGE_SIZE;
   vm->cpu[vm->active].rp = 0;
 }
@@ -1362,6 +1364,7 @@ void inst_iq(NgaState *vm) {
 }
 
 void inst_ii(NgaState *vm) {
+  guard(vm, 1, 0, 0);
   vm->IO_deviceHandlers[stack_pop(vm)](vm);
 }
 
