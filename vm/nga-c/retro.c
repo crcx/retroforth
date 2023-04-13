@@ -127,6 +127,7 @@ struct NgaState {
   char line[4096];
   int current_source;
   int perform_abort;
+  int interactive;
 
   CELL currentLine;
   CELL ignoreToEOL, ignoreToEOF;
@@ -858,6 +859,7 @@ int main(int argc, char **argv) {
 #endif
 
   initialize(vm);               /* Initialize Nga & image    */
+  vm->interactive = 0;
 
   register_device(vm, io_output, query_output);
   register_device(vm, io_keyboard, query_keyboard);
@@ -940,6 +942,7 @@ int main(int argc, char **argv) {
       exit(0);
     } else if (strcmp(argv[i], "-i") == 0) {
       modes[FLAG_INTERACTIVE] = 1;
+      vm->interactive = -1;
     } else if (strcmp(argv[i], "-f") == 0) {
       include_file(vm, argv[i + 1], 0);
       i++;
