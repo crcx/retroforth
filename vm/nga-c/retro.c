@@ -120,6 +120,10 @@ struct NgaState {
   char BlockFile[1025];
 #endif
 
+#ifdef ENABLE_ERROR
+  CELL ErrorHandlers[64];
+#endif
+
   /* Scripting */
   char **sys_argv;
   int sys_argc;
@@ -220,21 +224,41 @@ void inst_iq(NgaState *);  void inst_ii(NgaState *);
 
 void guard(NgaState *vm, int n, int m, int diff) {
   if (vm->cpu[vm->active].sp < n) {
+#ifdef ENABLE_ERROR
+    if (vm->ErrorHandlers[1] != 0) {
+    }
+#else
     printf("E: Data Stack Underflow");
     vm->cpu[vm->active].sp = 0;
     return;
+#endif
   }
   if (((vm->cpu[vm->active].sp + m) - n) > (STACK_DEPTH - 1)) {
+#ifdef ENABLE_ERROR
+    if (vm->ErrorHandlers[2] != 0) {
+    }
+#else
     printf("E: Data Stack Overflow");
     vm->cpu[vm->active].sp = 0;
     return;
+#endif
   }
   if (diff) {
     if (vm->cpu[vm->active].rp + diff < 0) {
+#ifdef ENABLE_ERROR
+    if (vm->ErrorHandlers[3] != 0) {
+    }
+#else
       return;
+#endif
     }
     if (vm->cpu[vm->active].rp + diff > (ADDRESSES - 1)) {
+#ifdef ENABLE_ERROR
+    if (vm->ErrorHandlers[1] != 4) {
+    }
+#else
       return;
+#endif
     }
   }
 }
@@ -1293,6 +1317,12 @@ void inst_di(NgaState *vm) {
   CELL a, b;
   a = TOS;
   b = NOS;
+  if (b == 0) {
+#ifdef ENABLE_ERROR
+    if (vm->ErrorHandlers[6] != 0) {
+    }
+#endif
+  }
   if (vm->cpu[vm->active].u != 0) {
     TOS = (unsigned)b / (unsigned)a;
     NOS = (unsigned)b % (unsigned)a;

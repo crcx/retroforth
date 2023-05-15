@@ -25,7 +25,6 @@ dirs:
 clean:
 	rm -f bin/*
 
-
 # installation targets
 
 install: build install-data install-docs install-examples install-manpages

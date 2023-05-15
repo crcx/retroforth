@@ -42,10 +42,11 @@ ENABLED += -DENABLE_UNIX
 ENABLED += -DENABLE_RNG
 ENABLED += -DENABLE_CLOCK
 ENABLED += -DENABLE_SCRIPTING
-#ENABLED += -DENABLE_SOCKETS
+# ENABLED += -DENABLE_SOCKETS
 ENABLED += -DENABLE_SIGNALS
 ENABLED += -DENABLE_MULTICORE
-ENABLED += -DENABLE_FFI
+# ENABLED += -DENABLE_FFI
+ENABLED += -DENABLE_ERROR
 ENABLED += -DENABLE_UNSIGNED
 ENABLED += -DENABLE_MALLOC
 ENABLED += -DENABLE_BLOCKS
@@ -70,6 +71,7 @@ DEVICES += interface/block.retro
 DEVICES += interface/deprecated.retro
 DEVICES += interface/double.retro
 DEVICES += interface/malloc.retro
+DEVICES += interface/error.retro
 DEVICES += interface/final.retro
 
 # -------------------------------------------------------------
