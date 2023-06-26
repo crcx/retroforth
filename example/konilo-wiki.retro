@@ -1,0 +1,119 @@
+#!/usr/bin/env retro
+
+In the Konilo system, I have a set of blocks that serve as a
+little wiki. This is a small program that generates HTML from
+the wiki: blocks.
+
+It assumes the existance of an `_wiki` directiory under the
+current directory. The generated HTML will be store in this.
+
+If you use this, I recommend having it run via a cron job.
+
+~~~
+'Block d:create #1026 allot ;
+
+:block:buffer &Block n:inc ;
+
+'ilo.blocks block:set-file
+~~~
+
+Wiki blocks take a form of:
+
+   0 wiki: pagename
+   1 ....
+   2 ....
+     ... [snipped] ...
+  14 ....
+  15 ....
+
+I define a helper word to identify the wiki blocks based on
+their title line.
+
+~~~
+:wiki? (-f)
+  block:buffer 'wiki:_ s:begins-with? ;
+~~~
+
+Since the exported blocks need to go into files, I want to name
+the files after the pagename in the title line. A pair of words
+is defined to extract the page name and to generate a file name.
+
+The actual page names are required to be lowercase.
+
+~~~
+:~filter (-q)
+  [ { $. $/ $, $; $: ${ $} $[ $] $( $) $$ } a:contains? not ] ;
+
+:pagename/raw (-s)
+  block:buffer #6 n:add #58 s:left s:trim ;
+
+:pagename (-s)
+  pagename/raw ~filter s:filter ;
+
+:filename (-s)
+ pagename '\_wiki/%s.html s:format ;
+~~~
+
+~~~
+'F var
+
+:~open (-)  filename dup s:put nl file:W file:open !F ;
+:~save (s-) [ @F file:write ] s:for-each #32 @F file:write ;
+:~br   (-)  '<br> [ @F file:write ] s:for-each ;
+:~nl   (-)  #10 @F file:write ;
+:~close (-) @F file:close ;
+~~~
+
+Wiki entries are ordinary blocks. I use an asterisk (*) sigil to
+mark links. My strategy here is to copy a line into a `Line`
+buffer, then tokenize it. I can then look at the start of each
+token to see if it is a link. If so, I generate an <a> tag for
+the link. Otherwise I just display the token.
+
+~~~
+'Line d:create #65 allot
+
+:link? (s-sf) dup #0 s:fetch $* eq? ;
+
+:link:template (-s) '<a_href="/\_wiki/%s.html">%s</a> ;
+
+:link (s-)  dup n:inc s:to-lower ~filter s:filter link:template s:format ~save ;
+
+:line
+  &Line buffer:set #64 [ fetch-next buffer:add ] times
+  &Line #32 s:tokenize [ link? [ link ] [ ~save ] choose ] a:for-each ~nl ;
+
+:~css
+  { '<style>
+    '*_{_font-family:_monospace;_white-space:_pre;
+    '____background:_#E0E3DD;_color:_#000;_}
+    'a_{_color:_red;_}
+    '</style>
+  } &~save a:for-each ;
+
+:display (-)
+  ~open
+  ~css
+  '<a_href="/\_wiki/index.html">start</a>_| s:format ~save
+  '<a_href="/\_wiki/all-pages.html">all-pages</a><br><hr> s:format ~save
+  pagename/raw '<b>%s</b>\n s:format ~save
+  block:buffer #64 n:add #15 &line times drop
+  ~close ;
+
+:dump-blocks
+  'ilo.blocks file:R file:open dup file:size swap file:close #4096 n:div
+  [ I block:buffer block:read wiki? [ display ] if ] indexed-times ;
+
+dump-blocks
+~~~
+
+~~~
+'all-pages.html file:W file:open !F
+~css
+  '<a_href="/\_wiki/index.html">start</a>_| s:format ~save
+  '<a_href="/\_wiki/all-pages.html">all-pages</a><br><hr> s:format ~save
+'\_wiki s:format unix:chdir
+[ dup dup s:length #5 n:sub s:left swap '&bull;_<a_href="/\_wiki/%s">%s</a>\n s:format ~save ] unix:for-each-file
+~close
+~~~
+
