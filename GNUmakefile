@@ -4,6 +4,8 @@
 
 include Configuration.mk
 
+ENABLED += -DNEEDS_STRL
+
 LIBDL += -ldl
 
 # -------------------------------------------------------------

@@ -11,6 +11,8 @@
 * nga-c: split device code into separate source files
 * use hashed dictionary search by default
 * removed words deprecated in 2022.8
+* new example: konilo-wiki.retro
+* GNUmakefile fix from drakonis
 
 ================================================================
 
