@@ -13,6 +13,7 @@
 * removed words deprecated in 2022.8
 * new example: konilo-wiki.retro
 * GNUmakefile fix from drakonis
+* addition of an i/o device for handling some errors
 
 ================================================================
 

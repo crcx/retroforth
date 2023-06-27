@@ -146,6 +146,8 @@ struct NgaState {
 
 
 /* Function Prototypes ----------------------------------------------- */
+void handle_error(NgaState *, CELL);
+
 CELL stack_pop(NgaState *);
 void stack_push(NgaState *, CELL);
 CELL string_inject(NgaState *, char *, CELL);
@@ -226,6 +228,7 @@ void guard(NgaState *vm, int n, int m, int diff) {
   if (vm->cpu[vm->active].sp < n) {
 #ifdef ENABLE_ERROR
     if (vm->ErrorHandlers[1] != 0) {
+      handle_error(vm, 1);
     }
 #else
     printf("E: Data Stack Underflow");
@@ -236,6 +239,7 @@ void guard(NgaState *vm, int n, int m, int diff) {
   if (((vm->cpu[vm->active].sp + m) - n) > (STACK_DEPTH - 1)) {
 #ifdef ENABLE_ERROR
     if (vm->ErrorHandlers[2] != 0) {
+      handle_error(vm, 2);
     }
 #else
     printf("E: Data Stack Overflow");
@@ -247,6 +251,7 @@ void guard(NgaState *vm, int n, int m, int diff) {
     if (vm->cpu[vm->active].rp + diff < 0) {
 #ifdef ENABLE_ERROR
     if (vm->ErrorHandlers[3] != 0) {
+      handle_error(vm, 3);
     }
 #else
       return;
@@ -255,6 +260,7 @@ void guard(NgaState *vm, int n, int m, int diff) {
     if (vm->cpu[vm->active].rp + diff > (ADDRESSES - 1)) {
 #ifdef ENABLE_ERROR
     if (vm->ErrorHandlers[1] != 4) {
+      handle_error(vm, 4);
     }
 #else
       return;
@@ -268,6 +274,10 @@ void guard(NgaState *vm, int n, int m, int diff) {
 #ifdef BIT64
 #include "dev-malloc.c"
 #endif
+#endif
+
+#ifdef ENABLE_ERROR
+#include "dev-error.c"
 #endif
 
 /* Block Storage -------------------------------------------- */
@@ -562,6 +572,7 @@ void execute(NgaState *vm, CELL cell) {
       } else {
         invalid_opcode(vm, opcode);
       }
+#ifndef ENABLE_ERROR
       if (vm->cpu[vm->active].sp < 0 || vm->cpu[vm->active].sp > STACK_DEPTH) {
         printf("\nERROR (nga/execute): Stack Limits Exceeded!\n");
         printf("At %lld, opcode %lld. sp = %lld, core = %lld\n", (long long)vm->cpu[vm->active].ip, (long long)opcode, (long long)vm->cpu[vm->active].sp, (long long)vm->active);
@@ -572,6 +583,7 @@ void execute(NgaState *vm, CELL cell) {
         printf("At %lld, opcode %lld. rp = %lld\n", (long long)vm->cpu[vm->active].ip, (long long)opcode, (long long)vm->cpu[vm->active].rp);
         exit(1);
       }
+#endif
       vm->cpu[vm->active].ip++;
 #ifdef ENABLE_MULTICORE
       switch_core(vm);
@@ -923,6 +935,9 @@ int main(int argc, char **argv) {
 #endif
 #ifdef ENABLE_UNSIGNED
   register_device(vm, io_unsigned, query_unsigned);
+#endif
+#ifdef ENABLE_ERROR
+  register_device(vm, io_error, query_error);
 #endif
 
   strcpy(vm->code_start, "~~~");

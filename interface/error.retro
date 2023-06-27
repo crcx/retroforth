@@ -1,2 +1,16 @@
 ~~~
+:err:set-handler (nn-)
+  #1234 io:scan-for
+    dup n:negative? [ drop 'Error:_device_(1234)_not_found s:put nl ] if;
+    #0 swap io:invoke ;
+
+:err:dsu (-)
+  reset nl 'ERROR:_DSU:_DATA_STACK_UNDERFLOW s:put nl bye ;
+
+:err:dso (-)
+  reset nl 'ERROR:_DSO:_DATA_STACK_OVERFLOW s:put nl bye ;
+
+:err:set-defaults
+  &err:dsu #1 err:set-handler
+  &err:dso #2 err:set-handler ;
 ~~~
