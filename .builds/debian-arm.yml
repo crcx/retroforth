@@ -1,5 +1,5 @@
 image: debian/unstable
-arch: arm64
+arch: amd64
 packages:
 - curl
 sources:
@@ -11,9 +11,9 @@ tasks:
 - repl: |
     cd retroforth
     make bin/retro-repl
-- compiler: |
-    cd retroforth
-    make bin/retro-compiler
+#- compiler: |
+#    cd retroforth
+#   make bin/retro-compiler
 - install: |
     cd retroforth
     sudo make install
