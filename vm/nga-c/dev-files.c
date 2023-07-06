@@ -212,16 +212,44 @@ void file_flush(NgaState *vm) {
   fflush(vm->OpenFileHandles[slot]);
 }
 
-Handler FileActions[10] = {
+char file_bytes[32769];
+
+void file_read_bytes(NgaState *vm) {
+  CELL slot = stack_pop(vm);
+  CELL size = stack_pop(vm);
+  CELL dest = stack_pop(vm);
+  CELL z = fread((char *)file_bytes, 1, size, vm->OpenFileHandles[slot]);
+  for (CELL i = 0; i < size; i++) {
+    CELL x = file_bytes[i];
+    vm->memory[dest + i] = x;
+  }
+  stack_push(vm, z);
+}
+
+void file_write_bytes(NgaState *vm) {
+  CELL slot = stack_pop(vm);
+  CELL size = stack_pop(vm);
+  CELL src  = stack_pop(vm);
+  for (CELL i = 0; i < size; i++) {
+    char x = vm->memory[src + i];
+    file_bytes[i] = x;
+  }
+  CELL z = fwrite(&file_bytes, 1, size, vm->OpenFileHandles[slot]);
+  stack_push(vm, z);
+}
+
+Handler FileActions[] = {
   file_open,          file_close,
   file_read,          file_write,
   file_get_position,  file_set_position,
   file_get_size,      file_delete,
-  file_flush
+  file_flush,
+  file_read_bytes,
+  file_write_bytes,
 };
 
 void query_filesystem(NgaState *vm) {
-  stack_push(vm, 0);
+  stack_push(vm, 1);
   stack_push(vm, 4);
 }
 

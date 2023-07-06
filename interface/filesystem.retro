@@ -85,6 +85,11 @@ Flush pending writes to disk.
 :file:flush (f-) #8 file:operation ;
 ~~~
 
+~~~
+:file:read/bytes (pnf-) #9 file:operation ;
+:file:write/bytes (pnf-) #10 file:operation ;
+~~~
+
 Given a file name, return `TRUE` if it exists or `FALSE` otherwise.
 
 ~~~
