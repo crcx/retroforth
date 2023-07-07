@@ -40,8 +40,8 @@ maps closely to C and `libm`.
 :f:log   (f:ab-c)   #19 float:operation ;
 :f:power (f:ab-c)   #20 float:operation ;
 :f:sin   (f:f-f)    #21 float:operation ;
-:f:cos   (f:f-f)    #22 float:operation ;
-:f:tan   (f:f-f)    #23 float:operation ;
+:f:tan   (f:f-f)    #22 float:operation ;
+:f:cos   (f:f-f)    #23 float:operation ;
 :f:asin  (f:f-f)    #24 float:operation ;
 :f:acos  (f:f-f)    #25 float:operation ;
 :f:atan  (f:f-f)    #26 float:operation ;
