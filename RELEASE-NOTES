@@ -14,6 +14,9 @@
 * new example: konilo-wiki.retro
 * GNUmakefile fix from drakonis
 * addition of an i/o device for handling some errors
+* fixed `f:tan` and `f:cos`
+* added `file:read/bytes` and `file:write/bytes`
+* Casket HTTP server is much, much faster
 
 ================================================================
 

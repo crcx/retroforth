@@ -1,21 +1,57 @@
 #!/usr/bin/env retro
 
-## Casket v5
+================================================================
+           ____          _        _            __
+          / ___|__ _ ___| | _____| |_  __   __/ /_
+         | |   / _` / __| |/ / _ \ __| \ \ / / '_ \
+         | |__| (_| \__ \   <  __/ |_   \ V /| (_) |
+          \____\__,_|___/_|\_\___|\__|   \_/  \___/
 
-This is a small HTTP/1.1 server written in Retro Forth.
+================================================================
+
+Casket is a small HTTP/1.1 server written in RetroForth.
+
+Some notes on this:
+
+- runs under inetd
+- use w/stunnel if you need HTTPS
+- I recommend also using timelimit(1) with this
+
+Changes from v5:
+
+- removed support for running .fsp files
+- now using `file:read/bytes` and `file:write/bytes`
+- support for HEAD requests
+- reject POST, PUT, DELETE requests
+- various refactorings
+
+================================================================
 
 First, some configuration options. Since this will run under
 inetd there's no need to specify the port. But the path to the
-files to serve is rather useful, so define it here.
+files to serve is needed, so define it here.
 
 ~~~
-'/home/crc/www 'WEBROOT s:const
+'/home/crc/wip-test 'WEBROOT s:const
 ~~~
 
-Next, I need to handle the incoming requests. In v0 these were
-just discarded, but here we actually want to store the request
+The server supports virtual servers. For this, create a separate
+directory for each under the `WEBROOT`. E.g., I use a setup like
 
-So an incoming request will look like:
+    /www/retroforth.org
+    /www/retroforth.org:443
+    /www/ilo.retroforth.org
+
+Note the port number: if using a port other than 80 this is
+needed. I recommend just using a symlink.
+
+================================================================
+
+Next, I need to handle the incoming requests. HTTP allows for a
+large number of header fields, but I really only care about two:
+GET and Host.
+
+An incoming request will look like:
 
     GET / HTTP/1.1
     Host: retroforth.org
@@ -32,7 +68,8 @@ three items:
 ~~~
 'Requested d:create #8193 allot
 'Host      d:create #1025 allot
-'GET-Query var
+'Method    var
+'Query     var
 ~~~
 
 The header processor will read each item and store the `Host`
@@ -53,15 +90,26 @@ input.
   [ ASCII:SPACE eq? ] tri or or ;
 
 :s:get (a-)
-  buffer:set [ c:get [ buffer:add ] [ eot? ] bi ] until
+  buffer:set [ c:get &buffer:add &eot? bi ] until
   buffer:get drop ;
+
+:req? (s-f)  here s:to-upper swap s:eq? ;
 
 :read-request (-)
   [ here s:get
-    here s:to-upper 'GET   s:eq? [ &Requested s:get &Done v:inc ] if
-    here s:to-upper 'HOST: s:eq? [ &Host      s:get &Done v:inc ] if
+    'GET    req? [ &Requested s:get &Done v:inc #1 !Method ] if
+    'HEAD   req? [ &Requested s:get &Done v:inc #2 !Method ] if
+
+    (unsupported)
+    'PUT    req? [ &Requested s:get &Done v:inc #0 !Method ] if
+    'POST   req? [ &Requested s:get &Done v:inc #0 !Method ] if
+    'DELETE req? [ &Requested s:get &Done v:inc #0 !Method ] if
+
+    'HOST: req? [ &Host      s:get &Done v:inc ] if
     @Done #2 eq? ] until ;
 ~~~
+
+================================================================
 
 Next is reading in the desired file. An initial request may be
 just a **/**. In this case, Casket will replace the `Requested`
@@ -81,14 +129,20 @@ the requested file from any query string that may be present.
   @Requested $/ -eq?
     [ '/ &Requested s:append s:keep &Requested s:copy ] if ;
 
+:s:terminate (s-) #0 swap store ;
+
 :check-for-params (-)
   &Requested $? s:contains/char?
-    [ &Requested $? s:split/char drop dup n:inc !GET-Query #0 swap store ] if ;
+    [ &Requested $? s:split/char drop
+      [ n:inc !Query ] &s:terminate bi ] if ;
+
+:prepare
+  check-for-params map-/-to-index ensure-leading-/ ;
 
 :filename (-s)
-  check-for-params map-/-to-index ensure-leading-/
-  &Requested &Host WEBROOT '%s/%s%s s:format
-  dup '%s/index.html s:format file:exists? [ '%s/index.html s:format ] if ;
+  prepare &Requested &Host WEBROOT '%s/%s%s s:format
+  dup '%s/index.html s:format
+  file:exists? [ '%s/index.html s:format ] if ;
 ~~~
 
 Next, I need to determine the file type. I'll do this by taking
@@ -101,18 +155,11 @@ a look at the extension, and mapping this to a MIME type.
 
 :get-mime-type (-s)
   filename-w/o-path [ $. s:index/char ] sip +
-  (fsp)
-    '.fsp   [ 'application/fsp          ] s:case
   (textual_files)
-    '.txt   [ 'text/plain               ] s:case
     '.md    [ 'text/markdown            ] s:case
     '.htm   [ 'text/html                ] s:case
     '.html  [ 'text/html                ] s:case
     '.css   [ 'text/css                 ] s:case
-    '.c     [ 'text/plain               ] s:case
-    '.h     [ 'text/plain               ] s:case
-    '.forth [ 'text/plain               ] s:case
-    '.retro [ 'text/plain               ] s:case
   (image_files)
     '.png   [ 'image/png                ] s:case
     '.jpg   [ 'image/jpeg               ] s:case
@@ -131,36 +178,60 @@ a look at the extension, and mapping this to a MIME type.
   drop 'text/plain ;
 ~~~
 
+================================================================
+
 Using these, I can construct a word to read in the file and
 send it to the client.
 
 Reading files is now a bit more involved, since images and
 other formats have binary data.
 
-If the mime type is application/fsp, this will run the code
-in the file. The code should output the necessary headers
-and content.
+`transfer` performs the actual process of reading the requested
+file and sending it to the client. This makes use of the
+`file:read/bytes` and `file:write/bytes` to do the actual i/o.
+These are used as they are faster than reading & writing on a
+per-byte basis.
+
+Adjust the `FileBuffer` size (and matching size constant) as
+desired. The requsted file will be read in chunks of this size,
+so matching the splits better for te files you are using can
+aid in performance.
 
 ~~~
-'FID var
+{{
+  'FID var   'FOUT var    'ChunkSize var
+  'FileBuffer d:create #16385 allot
 
-:read-file (-an)
-  here
-  filename file:R file:open !FID
-  @FID file:size [ [ @FID file:read , ] times ] sip
-  @FID file:close ;
+  :open-files (-)
+    filename     file:R file:open !FID
+    '/dev/stdout file:W file:open !FOUT ;
 
+  :prepare (-nn)
+    #16384 !ChunkSize
+    @FID file:size @ChunkSize n:divmod ;
+
+  :read  (-) &FileBuffer @ChunkSize @FID file:read/bytes drop ;
+  :write (-) &FileBuffer @ChunkSize @FOUT file:write/bytes drop ;
+  :chunk (-) read write ;
+  :cleanup (-) @FID file:close @FOUT file:close ;
+---reveal---
+  :transfer (-)
+    open-files prepare &chunk times !ChunkSize chunk cleanup ;
+}}
+~~~
+
+~~~
 :eol  (-)   ASCII:CR c:put ASCII:LF c:put ;
 
 :send-file (-)
   get-mime-type
-  dup 'application/fsp s:eq?
-  [ drop filename include ]
-  [ 'Content-type:_%s s:format s:put eol eol
-    read-file [ fetch-next c:put ] times drop ] choose ;
+  'Content-type:_%s s:format s:put eol eol
+  @Method #1 eq? &transfer if ;
 ~~~
 
 In the above, `eol` will send an end of line sequence.
+
+================================================================
 
 The last support word is a handler for 404 errors. This
 will send the 404 status code and a human readable error
@@ -169,8 +240,19 @@ message.
 ~~~
 :404 'HTTP/1.1_404_OK s:put eol
      'Content-type:_text/html s:put eol eol
-     'ERROR_404:_FILE_NOT_FOUND s:put eol ;
+     '<h1>ERROR_404:_FILE_NOT_FOUND</h1> s:put eol
+     filename s:put nl ;
 ~~~
+
+================================================================
+
+I have a stub setup for unsupported (PUT/POST/DELETE) methods.
+
+~~~
+:unsupported (-)
+  'HTTP/1.1_204_No_Content s:put eol eol bye ;
+~~~
+================================================================
 
 And now for the top level server.
 
@@ -178,6 +260,12 @@ Receive a request:
 
 ~~~
 read-request
+~~~
+
+If invalid, reject:
+
+~~~
+@Method n:zero? &unsupported if
 ~~~
 
 See if the file exists:
@@ -196,46 +284,31 @@ the file wasn't found):
 
 And the code for Casket is done.
 
-----
+================================================================
 
 ## Using Casket
 
-Casket requires [Retro](http://forthworks.com/retro) and a Unix system
-with inetd.
+Casket requires [Retro](http://forthworks.com/retro) and a Unix
+system with inetd.
 
 Install Retro and put the `casket.forth` somewhere. Then add a
-configuration line to your `/etc/inetd.conf`. I use:
+configuration line to your `/etc/inetd.conf` to run it. Restart
+inetd.
 
-    http    stream  tcp     nowait/6/30/2   casket    /home/crc/servers/casket.forth
-
-Restart inetd.
-
-Edit the `WEBROOT` in `casket.forth` to point to your web directory.
-Then go to the web directory and create a directory for each domain.
-E.g.,
+Edit the `WEBROOT` in `casket.forth` to point to your web
+directory. Then go to the web directory and create a directory
+for each domain. E.g.,
 
     /home/crc/www/casket.forthworks.com
 
-Put your `index.html` and other files here and try accessing your website.
+Put your `index.html` and other files here and try accessing
+your website.
 
-## Download
-
-* [casket.forth](http://forth.works:8080/casket.forth)
-* [retro forth](http://forthworks.com/r/latest.tar.gz)
-
-----
-
-## Real World Uses
-
-Casket has been in use since the second half of 2018 serving a number of
-small websites. It's also used to host the Casket project page you are
-looking at.
-
----
+================================================================
 
 ## License and Copyright
 
-Copyright (c) 2018 - 2019, Charles Childers
+Copyright (c) 2018 - 2023, Charles Childers
 
 Permission to use, copy, modify, and/or distribute this software
 for any purpose with or without fee is hereby granted, provided
