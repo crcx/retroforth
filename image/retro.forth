@@ -1832,7 +1832,7 @@ before the semicolon to a jump.
 ### Memory
 
 ~~~
-:fill (vpn-) [ dup-pair store-next ] times drop-pair ;
+:fill (vpn-) [ dup-pair store n:inc ] times drop-pair ;
 ~~~
 
 ## I/O
