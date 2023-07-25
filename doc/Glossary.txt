@@ -4069,6 +4069,17 @@ Write a character to the file represented by the handle.
 Class: class:word | Namespace: file | Interface Layer: rre
 ------------------------------------------------------------------------
 
+fill
+
+  Data:  vpn-
+  Addr:  -
+  Float: -
+
+Fill memory starting at "p" with value "v". Fills "n" cells.
+
+Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
 fll:append/value
 
   Data:  pv-

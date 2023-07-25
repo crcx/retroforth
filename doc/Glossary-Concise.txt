@@ -1060,6 +1060,9 @@ Given a file handle, return the current offset in the file.
 file:write                D: ch-  A: -  F: -
 Write a character to the file represented by the handle.
 
+fill                      D: vpn-  A: -  F: -
+Fill memory starting at "p" with value "v". Fills "n" cells.
+
 fll:append/value          D: pv-  A: -  F: -
 Append a cons cell to a list.
 

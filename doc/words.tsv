@@ -352,6 +352,7 @@ file:slurp	as-	-	-	Given an address and a file name, read the file contents into
 file:spew	ss-	-	-	Given a string (s1) and a file name (s2), write the string into the file, replacing any existing content.			class:word	{n/a}	{n/a}	file	rre	
 file:tell	h-n	-	-	Given a file handle, return the current offset in the file.			class:word	{n/a}	{n/a}	file	rre	
 file:write	ch-	-	-	Write a character to the file represented by the handle.			class:word	{n/a}	{n/a}	file	rre	
+fill	vpn-	-	-	Fill memory starting at "p" with value "v". Fills "n" cells.			class:word	{n/a}	{n/a}	global	all	
 fll:append/value	pv-	-	-	Append a cons cell to a list.			class:word	{n/a}	{n/a}	rre	all	
 fll:create	v-p	-	-	Create a new list wit the given value as the car of the first node.			class:word	{n/a}	{n/a}	rre	all	
 fll:del	pn-	-	-	Remove the specified cons from a list.			class:word	{n/a}	{n/a}	rre	all	

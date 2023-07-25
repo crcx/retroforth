@@ -352,6 +352,7 @@ file:slurp                D: as-  A: -  F: -
 file:spew                 D: ss-  A: -  F: -
 file:tell                 D: h-n  A: -  F: -
 file:write                D: ch-  A: -  F: -
+fill                      D: vpn-  A: -  F: -
 fll:append/value          D: pv-  A: -  F: -
 fll:create                D: v-p  A: -  F: -
 fll:del                   D: pn-  A: -  F: -

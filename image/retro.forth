@@ -1828,6 +1828,13 @@ before the semicolon to a jump.
 :tail-recurse (-) #1793 here #3 - store ;
 ~~~
 
+
+### Memory
+
+~~~
+:fill (vpn-) [ dup-pair store-next ] times drop-pair ;
+~~~
+
 ## I/O
 
 ~~~

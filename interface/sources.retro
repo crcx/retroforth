@@ -28,6 +28,7 @@ dup 'io:scan-for d:set-source
 dup 'io:invoke d:set-source
 dup 'io:query d:set-source
 dup 'io:enumerate d:set-source
+dup 'fill d:set-source
 dup 'tail-recurse d:set-source
 dup 'hex d:set-source
 dup 'octal d:set-source
