@@ -358,9 +358,47 @@ void query_blocks(NgaState *vm) {
 /*---------------------------------------------------------------------
   Now on to I/O and extensions!
   ---------------------------------------------------------------------*/
+#ifdef USE_UTF32
+void display_utf8(const unsigned char* utf8_bytes, int num_bytes) {
+    if (write(STDOUT_FILENO, utf8_bytes, num_bytes) == -1) {
+        perror("Error writing to /dev/stdout");
+    }
+}
+
+void utf32_to_utf8(uint32_t utf32_char, unsigned char* utf8_bytes, int* num_bytes) {
+    if (utf32_char < 0x80) {
+        utf8_bytes[0] = (unsigned char)utf32_char;
+        *num_bytes = 1;
+    } else if (utf32_char < 0x800) {
+        utf8_bytes[0] = (unsigned char)(0xC0 | (utf32_char >> 6));
+        utf8_bytes[1] = (unsigned char)(0x80 | (utf32_char & 0x3F));
+        *num_bytes = 2;
+    } else if (utf32_char < 0x10000) {
+        utf8_bytes[0] = (unsigned char)(0xE0 | (utf32_char >> 12));
+        utf8_bytes[1] = (unsigned char)(0x80 | ((utf32_char >> 6) & 0x3F));
+        utf8_bytes[2] = (unsigned char)(0x80 | (utf32_char & 0x3F));
+        *num_bytes = 3;
+    } else if (utf32_char < 0x110000) {
+        utf8_bytes[0] = (unsigned char)(0xF0 | (utf32_char >> 18));
+        utf8_bytes[1] = (unsigned char)(0x80 | ((utf32_char >> 12) & 0x3F));
+        utf8_bytes[2] = (unsigned char)(0x80 | ((utf32_char >> 6) & 0x3F));
+        utf8_bytes[3] = (unsigned char)(0x80 | (utf32_char & 0x3F));
+        *num_bytes = 4;
+    } else {
+        *num_bytes = 0;
+    }
+}
+#endif
 
 void io_output(NgaState *vm) {
+#ifdef USE_UTF32
+  unsigned char utf8_bytes[4];
+  int num_bytes;
+  utf32_to_utf8(stack_pop(vm), utf8_bytes, &num_bytes);
+  display_utf8(utf8_bytes, num_bytes);
+#else
   putc(stack_pop(vm), stdout);
+#endif
   fflush(stdout);
 }
 
