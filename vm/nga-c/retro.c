@@ -411,11 +411,11 @@ void query_output(NgaState *vm) {
 /*=====================================================================*/
 
 #ifdef USE_UTF32
-int read_character() {
+int read_character(int from) {
   unsigned char utf8_bytes[4] = { 0 };
   int utf32_char, i, num_bytes;
 
-  if (read(STDIN_FILENO, &utf8_bytes[0], 1) != 1) { return 0; }
+  if (read(from, &utf8_bytes[0], 1) != 1) { return 0; }
   if ((utf8_bytes[0] & 0x80) == 0x00) {
     num_bytes = 1;
   } else if ((utf8_bytes[0] & 0xE0) == 0xC0) {
@@ -429,7 +429,50 @@ int read_character() {
   }
 
   for (i = 1; i < num_bytes; i++) {
-    if (read(STDIN_FILENO, &utf8_bytes[i], 1) != 1) {
+    if (read(from, &utf8_bytes[i], 1) != 1) {
+      return 0;
+    }
+  }
+
+  if (num_bytes == 1) {
+    utf32_char = utf8_bytes[0];
+  } else if (num_bytes == 2) {
+    utf32_char = ((uint32_t)(utf8_bytes[0] & 0x1F) << 6) |
+                            (utf8_bytes[1] & 0x3F);
+  } else if (num_bytes == 3) {
+    utf32_char = ((uint32_t)(utf8_bytes[0] & 0x0F) << 12) |
+                 ((uint32_t)(utf8_bytes[1] & 0x3F) << 6) |
+                            (utf8_bytes[2] & 0x3F);
+  } else if (num_bytes == 4) {
+    utf32_char = ((uint32_t)(utf8_bytes[0] & 0x07) << 18) |
+                 ((uint32_t)(utf8_bytes[1] & 0x3F) << 12) |
+                 ((uint32_t)(utf8_bytes[2] & 0x3F) << 6) |
+                            (utf8_bytes[3] & 0x3F);
+  } else {
+    return 0;
+  }
+  return utf32_char;
+}
+
+int fread_character(FILE *from) {
+  unsigned char utf8_bytes[4] = { 0 };
+  int utf32_char, i, num_bytes;
+
+  if (fread(&utf8_bytes[0], 1, 1, from) != 1) { return 0; }
+  if ((utf8_bytes[0] & 0x80) == 0x00) {
+    num_bytes = 1;
+  } else if ((utf8_bytes[0] & 0xE0) == 0xC0) {
+    num_bytes = 2;
+  } else if ((utf8_bytes[0] & 0xF0) == 0xE0) {
+    num_bytes = 3;
+  } else if ((utf8_bytes[0] & 0xF8) == 0xF0) {
+    num_bytes = 4;
+  } else {
+    return 0;
+  }
+
+  for (i = 1; i < num_bytes; i++) {
+    if (fread(&utf8_bytes[i], 1, 1, from) != 1) {
       return 0;
     }
   }
@@ -457,7 +500,7 @@ int read_character() {
 
 void io_keyboard(NgaState *vm) {
 #ifdef USE_UTF32
-  stack_push(vm, read_character());
+  stack_push(vm, read_character(STDIN_FILENO));
 #else
   stack_push(vm, getc(stdin));
 #endif
@@ -709,7 +752,11 @@ int not_eol(int c) {
 }
 
 void read_token(FILE *file, char *token_buffer) {
+#ifdef USE_UTF32
+  int ch = fread_character(file);
+#else
   int ch = getc(file);
+#endif
   int count = 0;
   while (not_eol(ch)) {
     if ((ch == 8 || ch == 127) && count > 0) {
@@ -717,7 +764,11 @@ void read_token(FILE *file, char *token_buffer) {
     } else {
       token_buffer[count++] = ch;
     }
+#ifdef USE_UTF32
+    ch = fread_character(file);
+#else
     ch = getc(file);
+#endif
   }
   token_buffer[count] = '\0';
 }
@@ -809,7 +860,11 @@ void read_line(NgaState *vm, FILE *file, char *token_buffer) {
   token_buffer[0] = '\0';
   while ((ch != 10) && (ch != 13) && (ch != EOF) && (ch != 0)) {
     token_buffer[count++] = ch;
+#ifdef USE_UTF32
+    ch = fread_character(file);
+#else
     ch = getc(file);
+#endif
   }
   token_buffer[count] = '\0';
 }
