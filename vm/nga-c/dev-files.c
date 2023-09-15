@@ -12,6 +12,9 @@
 
 /* FileSystem Device ------------------------------------------------- */
 
+void utf32_to_utf8(uint32_t utf32_char, unsigned char* utf8_bytes, int* num_bytes);
+int fread_character(FILE *from);
+
 /*---------------------------------------------------------------------
   I keep an array of file handles. RETRO will use the index number as
   its representation of the file.
@@ -238,18 +241,50 @@ void file_write_bytes(NgaState *vm) {
   stack_push(vm, z);
 }
 
+void file_read_character(NgaState *vm) {
+#ifdef USE_UTF32
+  CELL c;
+  CELL slot = stack_pop(vm);
+  if (slot <= 0 || slot > MAX_OPEN_FILES || vm->OpenFileHandles[slot] == 0) {
+    printf("\nERROR (nga/file_read): Invalid file handle\n");
+    exit(1);
+  }
+  c = fread_character(vm->OpenFileHandles[slot]);
+  stack_push(vm, feof(vm->OpenFileHandles[slot]) ? 0 : c);
+#else
+  file_read(vm);
+#endif
+}
+
+void file_write_character(NgaState *vm) {
+#ifdef USE_UTF32
+  unsigned char utf8_bytes[4];
+  int num_bytes;
+  CELL slot, c, r;
+  utf32_to_utf8(stack_pop(vm), utf8_bytes, &num_bytes);
+  slot = stack_pop(vm);
+  if (slot <= 0 || slot > MAX_OPEN_FILES || vm->OpenFileHandles[slot] == 0) {
+    printf("\nERROR (nga/file_write): Invalid file handle\n");
+    exit(1);
+  }
+  r = fwrite(&utf8_bytes, num_bytes, 1, vm->OpenFileHandles[slot]);
+#else
+  file_write(vm);
+#endif
+}
+
 Handler FileActions[] = {
   file_open,          file_close,
   file_read,          file_write,
   file_get_position,  file_set_position,
   file_get_size,      file_delete,
-  file_flush,
-  file_read_bytes,
+  file_flush,         file_read_bytes,
   file_write_bytes,
+  file_read_character,file_write_character,
 };
 
 void query_filesystem(NgaState *vm) {
-  stack_push(vm, 1);
+  stack_push(vm, 2);
   stack_push(vm, 4);
 }
 

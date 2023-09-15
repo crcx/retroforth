@@ -1037,10 +1037,13 @@ file:operation            D: ...n-  A: -  F: -
 Trigger a file I/O operation. This is not intended to be used directly.
 
 file:read                 D: h-c  A: -  F: -
-Given a file handle, read and return the next character in it.
+Given a file handle, read and return the next byte in it.
 
 file:read-line            D: f-s  A: -  F: -
 Given a file handle, read a line and return a pointer to it.
+
+file:read/c               D: h-c  A: -  F: -
+Given a file handle, read and return the next character in it. If compiled with UTF32 support this will read and convert UTF8.
 
 file:seek                 D: nh-  A: -  F: -
 Move the current offset into a file to the specified one.
@@ -1058,7 +1061,10 @@ file:tell                 D: h-n  A: -  F: -
 Given a file handle, return the current offset in the file.
 
 file:write                D: ch-  A: -  F: -
-Write a character to the file represented by the handle.
+Write a byte to the file represented by the handle.
+
+file:write/c              D: ch-  A: -  F: -
+Write a character to the file represented by the handle. If built with UTF32 support, this will translate the character back to a UTF8 sequence before writing.
 
 fill                      D: vpn-  A: -  F: -
 Fill memory starting at "p" with value "v". Fills "n" cells.

@@ -2573,7 +2573,7 @@
 <b>Addr:</b> -<br>
 <b>Float:</b> -</p>
 </div>
-<p>Given a file handle, read and return the next character in it.</p>
+<p>Given a file handle, read and return the next byte in it.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>file</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><hr/>
 <h2>file:read-line</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> f-s<br>
@@ -2581,6 +2581,13 @@
 <b>Float:</b> -</p>
 </div>
 <p>Given a file handle, read a line and return a pointer to it.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>file</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><hr/>
+<h2>file:read/c</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> h-c<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Given a file handle, read and return the next character in it. If compiled with UTF32 support this will read and convert UTF8.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>file</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><hr/>
 <h2>file:seek</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> nh-<br>
@@ -2622,7 +2629,14 @@
 <b>Addr:</b> -<br>
 <b>Float:</b> -</p>
 </div>
-<p>Write a character to the file represented by the handle.</p>
+<p>Write a byte to the file represented by the handle.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>file</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><hr/>
+<h2>file:write/c</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> ch-<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Write a character to the file represented by the handle. If built with UTF32 support, this will translate the character back to a UTF8 sequence before writing.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>file</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><hr/>
 <h2>fill</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> vpn-<br>
