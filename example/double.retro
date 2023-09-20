@@ -1,0 +1,56 @@
+This is a vocabulary for working with double cell numeric
+values. By using two cells we can achieve a greater range
+than the standard 32-bit cells. This probably will not work
+correctly on a Retro with 64-bit cells unless you make some
+small changes (see the `dn:div` in particular).
+
+~~~
+'~res var
+
+:dn:h@ (D-n) fetch ;
+:dn:l@ (D-n) n:inc fetch ;
+:dn:h! (nD-) store ;
+:dn:l! (nD-) n:inc store ;
+
+:dn:new (-D) here #0 dup comma comma ;
+
+:dn:lows  (DD-nn) [ dn:l@ ] bi@ ;
+:dn:highs (DD-nn) [ dn:h@ ] bi@ ;
+
+:dn:make (nn-D)  here [ swap comma comma ] dip ;
+:dn:put fetch-next n:put sp fetch n:put nl ;
+
+:dn:add (DD-D)
+  dn:new !~res
+  dup-pair dn:lows n:add @~res dn:l!
+  over @~res dn:lows gt? n:abs [ dn:highs n:add ] dip n:add
+  @~res dn:h!
+  @~res ;
+
+:dn:sub (DD-D)
+  dn:new !~res
+  dup-pair dn:lows n:sub @~res dn:l!
+  over @~res dn:lows lt? n:abs [ dn:highs n:sub ] dip n:sub
+  @~res dn:h!
+  @~res ;
+
+:dn:mul (DD-D)
+  dn:new !~res
+  dup-pair dn:lows n:mul @~res dn:l!
+  @~res dn:l@ n:negative? n:abs
+  [ dup-pair
+      [ dn:h@ ] [ dn:l@ ] bi* n:mul
+    [ [ dn:l@ ] [ dn:h@ ] bi* n:mul ] dip n:add
+  ] dip n:add
+  @~res dn:h!
+  @~res ;
+
+:dn:div (DD-D)
+  dn:new !~res
+  dup-pair dn:lows n:div @~res dn:l!
+  dup-pair
+    [ dn:h@ ] [ dn:l@ ] bi* n:div #1 shift-left
+  [ [ dn:l@ ] [ dn:h@ ] bi* n:mod #31 shift-right ] dip n:add
+  @~res dn:h!
+  @~res ;
+~~~
