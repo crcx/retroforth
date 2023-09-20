@@ -1,0 +1,21 @@
+This is a vocabulary for doing some basic operations on unsigned
+numbers.
+
+~~~
+:u:patch (n-n)
+  dup n:negative?
+  [ #2147483647 n:add n:inc swap #-2147483648 n:sub n:add ] if ;
+
+:u:add (nn-n)  n:add u:patch ;
+:u:sub (nn-n)  n:sub u:patch ;
+:u:mul (nn-n)  n:mul u:patch ;
+:u:div (nn-n)
+  dup n:zero? [ drop-pair n:MAX ] [ n:div u:patch ] choose ;
+:u:mod (nn-n)
+  dup n:zero? [ drop-pair n:MAX ] [ n:mod u:patch ] choose ;
+
+:u:eq? (nn-f)   or not ;
+:u:-eq? (nn-f)  u:eq? not ;
+:u:lt? (nn-f)   over or and n:negative? ;
+:u:gt? (nn-f)   tuck or and n:negative? ;
+~~~
