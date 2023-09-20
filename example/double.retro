@@ -49,8 +49,8 @@ small changes (see the `dn:div` in particular).
   dn:new !~res
   dup-pair dn:lows n:div @~res dn:l!
   dup-pair
-    [ dn:h@ ] [ dn:l@ ] bi* n:div #1 shift-left
-  [ [ dn:l@ ] [ dn:h@ ] bi* n:mod #31 shift-right ] dip n:add
+    [ dn:h@ ] [ dn:l@ ] bi* n:div #-1 shift
+  [ [ dn:l@ ] [ dn:h@ ] bi* n:mod #31 shift ] dip n:add
   @~res dn:h!
   @~res ;
 ~~~
