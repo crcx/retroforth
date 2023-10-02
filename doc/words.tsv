@@ -345,7 +345,8 @@ file:open-for-reading	s-nn	-	-	Open a file for reading. Returns the size (NOS) a
 file:open-for-writing	s-n	-	-	Open a file for writing. Returns the file ID			class:word	{n/a}	{n/a}	file	rre	
 file:operation	...n-	-	-	Trigger a file I/O operation. This is not intended to be used directly.			class:word	{n/a}	{n/a}	file	rre	
 file:read	h-c	-	-	Given a file handle, read and return the next byte in it.			class:word	{n/a}	{n/a}	file	rre	
-file:read-line	f-s	-	-	Given a file handle, read a line and return a pointer to it.			class:word	{n/a}	{n/a}	file	rre	
+file:read-line	f-s	-	-	Given a file handle, read a line and return a pointer to it.			class:word	{n/a}	{n/a}	file	rre
+file:read/bytes	pnf-	-	-	Given a pointer, a count, and a file handle, read and store the requested number of bytes into memory, starting at the specified address.			class:word	{n/a}	{n/a}	file	rre	
 file:read/c	h-c	-	-	Given a file handle, read and return the next character in it. If compiled with UTF32 support this will read and convert UTF8.			class:word	{n/a}	{n/a}	file	rre	
 file:seek	nh-	-	-	Move the current offset into a file to the specified one.			class:word	{n/a}	{n/a}	file	rre	
 file:size	h-n	-	-	Given a file handle, return the size of the file (in bytes).			class:word	{n/a}	{n/a}	file	rre	
@@ -353,6 +354,7 @@ file:slurp	as-	-	-	Given an address and a file name, read the file contents into
 file:spew	ss-	-	-	Given a string (s1) and a file name (s2), write the string into the file, replacing any existing content.			class:word	{n/a}	{n/a}	file	rre	
 file:tell	h-n	-	-	Given a file handle, return the current offset in the file.			class:word	{n/a}	{n/a}	file	rre	
 file:write	ch-	-	-	Write a byte to the file represented by the handle.			class:word	{n/a}	{n/a}	file	rre	
+file:write/bytes	pnf-	-	-	Write n bytes to the file represented by the handle. Bytes are taken from memory, starting at the provided address.			class:word	{n/a}	{n/a}	file	rre	
 file:write/c	ch-	-	-	Write a character to the file represented by the handle. If built with UTF32 support, this will translate the character back to a UTF8 sequence before writing.			class:word	{n/a}	{n/a}	file	rre	
 fill	vpn-	-	-	Fill memory starting at "p" with value "v". Fills "n" cells.			class:word	{n/a}	{n/a}	global	all	
 fll:append/value	pv-	-	-	Append a cons cell to a list.			class:word	{n/a}	{n/a}	rre	all	

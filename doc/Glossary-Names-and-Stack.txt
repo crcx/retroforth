@@ -346,6 +346,7 @@ file:open-for-writing     D: s-n  A: -  F: -
 file:operation            D: ...n-  A: -  F: -
 file:read                 D: h-c  A: -  F: -
 file:read-line            D: f-s  A: -  F: -
+file:read/bytes           D: pnf-  A: -  F: -
 file:read/c               D: h-c  A: -  F: -
 file:seek                 D: nh-  A: -  F: -
 file:size                 D: h-n  A: -  F: -
@@ -353,6 +354,7 @@ file:slurp                D: as-  A: -  F: -
 file:spew                 D: ss-  A: -  F: -
 file:tell                 D: h-n  A: -  F: -
 file:write                D: ch-  A: -  F: -
+file:write/bytes          D: pnf-  A: -  F: -
 file:write/c              D: ch-  A: -  F: -
 fill                      D: vpn-  A: -  F: -
 fll:append/value          D: pv-  A: -  F: -

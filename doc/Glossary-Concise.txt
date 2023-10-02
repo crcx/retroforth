@@ -1042,6 +1042,9 @@ Given a file handle, read and return the next byte in it.
 file:read-line            D: f-s  A: -  F: -
 Given a file handle, read a line and return a pointer to it.
 
+file:read/bytes           D: pnf-  A: -  F: -
+Given a pointer, a count, and a file handle, read and store the requested number of bytes into memory, starting at the specified address.
+
 file:read/c               D: h-c  A: -  F: -
 Given a file handle, read and return the next character in it. If compiled with UTF32 support this will read and convert UTF8.
 
@@ -1062,6 +1065,9 @@ Given a file handle, return the current offset in the file.
 
 file:write                D: ch-  A: -  F: -
 Write a byte to the file represented by the handle.
+
+file:write/bytes          D: pnf-  A: -  F: -
+Write n bytes to the file represented by the handle. Bytes are taken from memory, starting at the provided address.
 
 file:write/c              D: ch-  A: -  F: -
 Write a character to the file represented by the handle. If built with UTF32 support, this will translate the character back to a UTF8 sequence before writing.

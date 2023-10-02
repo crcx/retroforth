@@ -4003,6 +4003,17 @@ Given a file handle, read a line and return a pointer to it.
 Class: class:word | Namespace: file | Interface Layer: rre
 ------------------------------------------------------------------------
 
+file:read/bytes
+
+  Data:  pnf-
+  Addr:  -
+  Float: -
+
+Given a pointer, a count, and a file handle, read and store the requested number of bytes into memory, starting at the specified address.
+
+Class: class:word | Namespace: file | Interface Layer: rre
+------------------------------------------------------------------------
+
 file:read/c
 
   Data:  h-c
@@ -4076,6 +4087,17 @@ file:write
   Float: -
 
 Write a byte to the file represented by the handle.
+
+Class: class:word | Namespace: file | Interface Layer: rre
+------------------------------------------------------------------------
+
+file:write/bytes
+
+  Data:  pnf-
+  Addr:  -
+  Float: -
+
+Write n bytes to the file represented by the handle. Bytes are taken from memory, starting at the provided address.
 
 Class: class:word | Namespace: file | Interface Layer: rre
 ------------------------------------------------------------------------
