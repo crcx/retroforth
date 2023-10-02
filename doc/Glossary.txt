@@ -2966,6 +2966,28 @@ Example #1:
 
 ------------------------------------------------------------------------
 
+err:dso
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Error handler for data stack overflow
+
+Class: class:word | Namespace: err | Interface Layer: all
+------------------------------------------------------------------------
+
+err:dsu
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Error handler for data stack underflow.
+
+Class: class:word | Namespace: err | Interface Layer: all
+------------------------------------------------------------------------
+
 err:notfound
 
   Data:  -
@@ -2973,6 +2995,28 @@ err:notfound
   Float: -
 
 Vectored. Error handler. Called when a word is not found by `interpret`.
+
+Class: class:word | Namespace: err | Interface Layer: all
+------------------------------------------------------------------------
+
+err:set-defaults
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Set the default error handlers for various conditions.
+
+Class: class:word | Namespace: err | Interface Layer: all
+------------------------------------------------------------------------
+
+err:set-handler
+
+  Data:  an-
+  Addr:  -
+  Float: -
+
+Set error handler for error code N. 
 
 Class: class:word | Namespace: err | Interface Layer: all
 ------------------------------------------------------------------------

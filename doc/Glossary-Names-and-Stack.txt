@@ -258,7 +258,11 @@ e:put                     D: e-  A: -  F: -
 e:to-f                    D: e-  A: -  F: -n
 e:zero?                   D: e-f  A: -  F: -
 eq?                       D: nn-f  A: -  F: -
+err:dso                   D: -  A: -  F: -
+err:dsu                   D: -  A: -  F: -
 err:notfound              D: -  A: -  F: -
+err:set-defaults          D: -  A: -  F: -
+err:set-handler           D: an-  A: -  F: -
 f:*                       D: -  A: -  F: FF-F
 f:+                       D: -  A: -  F: FF-F
 f:-                       D: -  A: -  F: FF-F

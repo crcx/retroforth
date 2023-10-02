@@ -258,7 +258,11 @@ e:put	e-	-	-	Display an encoded number.			class:word	{n/a}	{n/a}	e	rre
 e:to-f	e-	-	-n	Decode an encoded floating-point value.			class:word	{n/a}	{n/a}	e	rre	
 e:zero?	e-f	-	-	Return `TRUE` if the value is zero, or `FALSE` otherwise.			class:word	{n/a}	{n/a}	e	rre	
 eq?	nn-f	-	-	Compare two values for equality. Returns `TRUE` if they are equal or `FALSE` otherwise.			class:primitive	    #1 #2 eq?\n    $a $b eq?	{n/a}	global	all	
+err:dso	-	-	-	Error handler for data stack overflow			class:word	{n/a}	{n/a}	err	all	
+err:dsu	-	-	-	Error handler for data stack underflow.			class:word	{n/a}	{n/a}	err	all	
 err:notfound	-	-	-	Vectored. Error handler. Called when a word is not found by `interpret`.			class:word	{n/a}	{n/a}	err	all	
+err:set-defaults	-	-	-	Set the default error handlers for various conditions.			class:word	{n/a}	{n/a}	err	all	
+err:set-handler	an-	-	-	Set error handler for error code N. 			class:word	{n/a}	{n/a}	err	all	
 f:*	-	-	FF-F	Multiply two floating-point numbers, returning the result.			class:word	    .3.1415 .22 f:*	{n/a}	f	rre	
 f:+	-	-	FF-F	Add two floating-point numbers, returning the result.			class:word	    .3.1 .22 f:+	{n/a}	f	rre	
 f:-	-	-	FF-F	Subtract F2 from F1 returning the result.			class:word	    .22.3 .0.12 f:-	{n/a}	f	rre	

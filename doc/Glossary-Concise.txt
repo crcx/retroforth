@@ -778,8 +778,20 @@ Return `TRUE` if the value is zero, or `FALSE` otherwise.
 eq?                       D: nn-f  A: -  F: -
 Compare two values for equality. Returns `TRUE` if they are equal or `FALSE` otherwise.
 
+err:dso                   D: -  A: -  F: -
+Error handler for data stack overflow
+
+err:dsu                   D: -  A: -  F: -
+Error handler for data stack underflow.
+
 err:notfound              D: -  A: -  F: -
 Vectored. Error handler. Called when a word is not found by `interpret`.
+
+err:set-defaults          D: -  A: -  F: -
+Set the default error handlers for various conditions.
+
+err:set-handler           D: an-  A: -  F: -
+Set error handler for error code N. 
 
 f:*                       D: -  A: -  F: FF-F
 Multiply two floating-point numbers, returning the result.
