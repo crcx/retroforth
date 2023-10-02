@@ -4,26 +4,8 @@
 | | |  __/ |_| | | (_) |  _| (_) | |  | |_| | | |
 |_|  \___|\__|_|  \___/|_|  \___/|_|   \__|_| |_|
                                           for nga
-# RetroForth/nga 2023.9 Release Notes
+# RetroForth/nga 2024.4 Release Notes
 
 ================================================================
-
-* nga-c: split device code into separate source files
-* use hashed dictionary search by default
-* removed words deprecated in 2022.8
-* new example: converting konilo wiki blocks to HTML
-* new example: double cell math (32-bit cells)
-* GNUmakefile fix from drakonis
-* addition of an i/o device for handling some errors
-* fixed `f:tan` and `f:cos` (thanks to Doug Bell)
-* Casket HTTP server is much, much faster
-* Support internal translation of UTF8 and UTF32
-
-New words:
-
-    file:read/bytes    file:write/bytes    file:read/c
-    file:write/c       err:set-handler     err:set-defaults
-    err:dso            err:dsu             fill
-
 
 ================================================================
