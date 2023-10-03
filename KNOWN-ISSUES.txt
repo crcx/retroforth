@@ -1,0 +1,5 @@
+==[ Known Issues ]==============================================
+
+- under tests/* : the instruction tests are not working
+  currently. (rep: sevan, confirm)
+
