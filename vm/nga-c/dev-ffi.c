@@ -1,14 +1,16 @@
-/*---------------------------------------------------------------------
-  Copyright (c) 2008 - 2022, Charles Childers
+/**************************************************************
+                _              __            _   _
+       _ __ ___| |_ _ __ ___  / _| ___  _ __| |_| |__
+      | '__/ _ \ __| '__/ _ \| |_ / _ \| '__| __| '_ \
+      | | |  __/ |_| | | (_) |  _| (_) | |  | |_| | | |
+      |_|  \___|\__|_|  \___/|_|  \___/|_|   \__|_| |_|
+                                                for nga
 
-  Portions are based on Ngaro, which was additionally copyright
-  by the following:
+      (c) Charles Childers, Luke Parrish, Marc Simpsonn,
+          Jay Skeer, Kenneth Keating
 
-  Copyright (c) 2009 - 2010, Luke Parrish
-  Copyright (c) 2010,        Marc Simpson
-  Copyright (c) 2010,        Jay Skeer
-  Copyright (c) 2011,        Kenneth Keating
-  ---------------------------------------------------------------------*/
+**************************************************************/
+
 
 #ifdef ENABLE_FFI
 #include <dlfcn.h>
