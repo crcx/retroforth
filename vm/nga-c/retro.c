@@ -691,10 +691,12 @@ void execute(NgaState *vm, CELL cell) {
   token = TIB;
   while (vm->cpu[vm->active].ip < IMAGE_SIZE) {
     if (vm->perform_abort == 0) {
+/* FIXME
       if (vm->cpu[vm->active].ip == vm->NotFound) {
         printf("\nERROR: Word Not Found: ");
         printf("`%s`\n\n", string_extract(vm, token));
       }
+*/
       if (vm->cpu[vm->active].ip == vm->interpret) {
         token = TOS;
       }

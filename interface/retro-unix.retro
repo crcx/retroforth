@@ -87,6 +87,11 @@ startup flags passed.
 &listen #1 store
 ~~~
 
+~~~
+[ 'ERROR:_Word_Not_Found:_ s:put TIB s:put nl ]
+&err:notfound set-hook
+~~~
+
 ## d:source
 
 ~~~

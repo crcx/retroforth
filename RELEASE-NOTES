@@ -9,5 +9,7 @@
 ================================================================
 
 - removed duplicate typedef in tools/retro-muri.c (sevan)
+- fixed a bug in load_image() in vm/nga-c/retro.c (sevan)
+- err:notfound message no longer in vm/nga-c/retro.c (sevan)
 
 ================================================================
