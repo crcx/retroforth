@@ -225,6 +225,7 @@ void inst_iq(NgaState *);  void inst_ii(NgaState *);
 
 /* Global Variables -------------------------------------------------- */
 
+int verbose;
 void guard(NgaState *vm, int n, int m, int diff) {
   if (vm->cpu[vm->active].sp < n) {
 #ifdef ENABLE_ERROR
@@ -1028,6 +1029,7 @@ int main(int argc, char **argv) {
   int i;
   int modes[16];
   NgaState *vm = calloc(sizeof(NgaState), sizeof(char));
+  verbose = 0;
 
 #ifdef ENABLE_SIGNALS
   signal(SIGHUP, sig_handler);
@@ -1122,6 +1124,8 @@ int main(int argc, char **argv) {
     if (strcmp(argv[i], "-h") == 0) {
       help(argv[0]);
       exit(0);
+    } else if (strcmp(argv[i], "-v") == 0) {
+      verbose = 1;
     } else if (strcmp(argv[i], "-i") == 0) {
       modes[FLAG_INTERACTIVE] = 1;
       vm->interactive = -1;
@@ -1278,6 +1282,8 @@ CELL load_image(NgaState *vm, char *imageFile) {
       exit(1);
     }
     rewind(fp);
+    for (int i = 0; i < IMAGE_SIZE; i++)
+      vm->memory[i] = 0; /* NO - nop instruction */
     /* Read the file into memory */
     imageSize = fread(vm->memory, sizeof(CELL), fileLen, fp);
     fclose(fp);
@@ -1625,6 +1631,7 @@ int validate_opcode_bundle(CELL opcode) {
 void process_opcode_bundle(NgaState *vm, CELL opcode) {
   CELL raw = opcode;
   int i;
+  if (verbose) printf("%lld\n", opcode);
   for (i = 0; i < 4; i++) {
     process_opcode(vm, raw & 0xFF);
     raw = raw >> 8;
