@@ -1,11 +1,20 @@
-# Retro/ilo & Retro/napia Words
 
-This adds support for some words from Retro/ilo. It's intended
+ ,dPYb,                                    ,dPYb,
+ IP'`Yb                                    IP'`Yb
+ I8  8I                               gg   I8  8I
+ I8  8bgg,                            ""   I8  8'
+ I8 dP" "8    ,ggggg,   ,ggg,,ggg,    gg   I8 dP    ,ggggg,
+ I8d8bggP"   dP"  "Y8  ,8" "8P" "8,   88   I8dP    dP"  "Y8
+ I8P' "Yb,  i8'    ,8I d8   8I   8I   88   I8P    i8'    ,8I
+,d8    `Yb,,d8,   ,d8P8P    8I   Yb,_,88,_,d8b,_ ,d8,   ,d8'
+88P      Y8P"Y8888P"        8I   `Y88P""Y88P'"Y88P"Y8888P"
+
+This adds support for some words from Konilo. It's intended
 to aid in portability between the systems.
 
 The basic math operations are given non-symbolic names and
-placed in the `n:` namespace. (In Retro/ilo, these are the
-standard names for these).
+placed in the `n:` namespace. (In Konilo, these are the standard
+names for these).
 
 ~~~
 :n:add    + ;
@@ -15,14 +24,14 @@ standard names for these).
 :n:mod    mod ;
 :n:divmod /mod ;
 
-:comma  , ;
+:comma:a    , ;
 :gc &Heap swap v:preserve ;
 ~~~
 
 Provide source data.
 
 ~~~
-'retro-napia.retro
+'konilo.retro
 dup 'n:add d:lookup d:source store
 dup 'n:sub d:lookup d:source store
 dup 'n:mul d:lookup d:source store
