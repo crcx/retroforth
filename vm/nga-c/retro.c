@@ -1633,7 +1633,7 @@ int validate_opcode_bundle(CELL opcode) {
 void process_opcode_bundle(NgaState *vm, CELL opcode) {
   CELL raw = opcode;
   int i;
-  if (verbose) printf("%lld\n", opcode);
+  if (verbose) { printf("ip: %lld <%lld>\n", vm->cpu[vm->active].ip, opcode); }
   for (i = 0; i < 4; i++) {
     process_opcode(vm, raw & 0xFF);
     raw = raw >> 8;
