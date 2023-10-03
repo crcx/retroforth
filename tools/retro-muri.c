@@ -56,8 +56,6 @@ size_t bsd_strlcpy(char *dst, const char *src, size_t dsize);
 
 char code_start[33], code_end[33], test_start[33], test_end[33];
 
-typedef void (*Handler)(char *);
-
 void read_line(FILE *file, char *line_buffer) {
   int ch = getc(file);
   int count = 0;
