@@ -25,52 +25,7 @@
 #include <time.h>
 #include <unistd.h>
 
-#ifdef ENABLE_SIGNALS
-#include <signal.h>
-#endif
-
-#ifdef ENABLE_MULTICORE
-#define CORES 8
-#else
-#define CORES 1
-#endif
-
-#ifdef _WIN32
-#define NEEDS_STRL
-#endif
-
-#ifdef _WIN64
-#define NEEDS_STRL
-#endif
-
-#if defined(__APPLE__) && defined(__MACH__)
-#ifdef NEEDS_STRL
-#undef NEEDS_STRL
-#endif
-#endif
-
-/* Configuration ----------------------------------------------------- */
-#ifndef BIT64
-#define CELL int32_t
-#define CELL_MIN INT_MIN + 1
-#define CELL_MAX INT_MAX - 1
-#else
-#define CELL int64_t
-#define CELL_MIN LLONG_MIN + 1
-#define CELL_MAX LLONG_MAX - 1
-#endif
-
-#ifndef IMAGE_SIZE
-#define IMAGE_SIZE   524288       /* Amount of RAM, in cells */
-#endif
-
-#ifndef ADDRESSES
-#define ADDRESSES    256          /* Depth of address stack */
-#endif
-
-#ifndef STACK_DEPTH
-#define STACK_DEPTH  256          /* Depth of data stack */
-#endif
+#include "config.h"
 
 #define TIB vm->memory[7]         /* Location of TIB                   */
 
