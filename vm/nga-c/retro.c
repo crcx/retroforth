@@ -1045,10 +1045,10 @@ int main(int argc, char **argv) {
   register_device(vm, io_error, query_error);
 #endif
 
-  strcpy(vm->code_start, "~~~");
-  strcpy(vm->code_end,   "~~~");
-  strcpy(vm->test_start, "```");
-  strcpy(vm->test_end,   "```");
+  strlcpy(vm->code_start, "~~~", 256);
+  strlcpy(vm->code_end,   "~~~", 256);
+  strlcpy(vm->test_start, "```", 256);
+  strlcpy(vm->test_end,   "```", 256);
 
   /* Setup variables related to the scripting device */
   vm->currentLine = 0;           /* Current Line # for script */
@@ -1106,16 +1106,16 @@ int main(int argc, char **argv) {
       i++;
     } else  if (arg_is(argv[i], "--code-start") || arg_is(argv[i], "-cs")) {
       i++;
-      strcpy(vm->code_start, argv[i]);
+      strlcpy(vm->code_start, argv[i], 256);
     } else if (arg_is(argv[i], "--code-end") || arg_is(argv[i], "-ce")) {
       i++;
-      strcpy(vm->code_end, argv[i]);
+      strlcpy(vm->code_end, argv[i], 256);
     } else if (arg_is(argv[i], "--test-start") || arg_is(argv[i], "-ts")) {
       i++;
-      strcpy(vm->test_start, argv[i]);
+      strlcpy(vm->test_start, argv[i], 256);
     } else if (arg_is(argv[i], "--test-end") || arg_is(argv[i], "-te")) {
       i++;
-      strcpy(vm->test_end, argv[i]);
+      strlcpy(vm->test_end, argv[i], 256);
     }
   }
 
