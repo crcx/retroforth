@@ -181,6 +181,7 @@ void inst_iq(NgaState *);  void inst_ii(NgaState *);
 /* Global Variables -------------------------------------------------- */
 
 int verbose;
+
 void guard(NgaState *vm, int n, int m, int diff) {
   if (vm->cpu[vm->active].sp < n) {
 #ifdef ENABLE_ERROR
@@ -965,6 +966,8 @@ void help(char *exename) {
   printf("    Use the image in the specified file instead of the internal one and run the code in it\n");
   printf("  -t filename\n");
   printf("    Run the contents of the specified file, including any tests (in ``` blocks)\n\n");
+  printf("  -v\n");
+  printf("    Run in verbose mode\n");
 }
 
 /* Signal Handler -----------------------------------------------------*/
@@ -1585,10 +1588,18 @@ int validate_opcode_bundle(CELL opcode) {
   return valid;
 }
 
+void verbose_details(NgaState *vm, CELL opcode) {
+  printf("ip: %lld ", vm->cpu[vm->active].ip);
+  printf("sp: %lld ", vm->cpu[vm->active].sp);
+  printf("rp: %lld ", vm->cpu[vm->active].rp);
+  printf("core: %d ", vm->active);
+  printf("opcode: %lld\n", opcode);
+}
+
 void process_opcode_bundle(NgaState *vm, CELL opcode) {
   CELL raw = opcode;
   int i;
-  if (verbose) { printf("ip: %lld <%lld>\n", vm->cpu[vm->active].ip, opcode); }
+  if (verbose) { verbose_details(vm, opcode); }
   for (i = 0; i < 4; i++) {
     process_opcode(vm, raw & 0xFF);
     raw = raw >> 8;
