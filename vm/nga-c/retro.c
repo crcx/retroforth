@@ -1596,14 +1596,12 @@ void verbose_details(NgaState *vm, CELL opcode) {
   fprintf(stderr, "opcode: %lld\n", opcode);
 }
 
+#define INST(n) ((opcode >> n) & 0xFF) != 0
 void process_opcode_bundle(NgaState *vm, CELL opcode) {
-  CELL raw = opcode;
-  int i;
-  if (verbose) { verbose_details(vm, opcode); }
-  for (i = 0; i < 4; i++) {
-    process_opcode(vm, raw & 0xFF);
-    raw = raw >> 8;
-  }
+  if (INST(0))  instructions[opcode & 0xFF](vm);
+  if (INST(8))  instructions[(opcode >> 8) & 0xFF](vm);
+  if (INST(16)) instructions[(opcode >> 16) & 0xFF](vm);
+  if (INST(24)) instructions[(opcode >> 24) & 0xFF](vm);
 }
 
 #ifdef NEEDS_STRL

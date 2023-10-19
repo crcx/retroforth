@@ -10,8 +10,9 @@
 ================================================================
 
 - removed duplicate typedef in tools/retro-muri.c (sevan)
-- fixed a bug in load_image() in vm/nga-c/retro.c (sevan)
-- err:notfound message no longer in vm/nga-c/retro.c (sevan)
-- add -v for verbose mode in vm/nga-c/retro.c
+- fixed a bug in load_image()                 (C) (sevan)
+- err:notfound message no longer in C         (C) (sevan)
+- add -v for verbose mode                     (C)
+- now skip execuion of NOP instructions       (C)
 
 ================================================================

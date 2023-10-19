@@ -284,7 +284,7 @@ void execute(CELL cell) {
       exit(1);
     }
     ip++;
-    if (sp > max_sp) max_sp = sp;
+    if (sp > max_sp)  max_sp  = sp;
     if (rp > max_rsp) max_rsp = rp;
     if (rp == 0)
       ip = IMAGE_SIZE;
@@ -573,8 +573,7 @@ Handler instructions[] = {
 };
 
 void ngaProcessOpcode(CELL opcode) {
-  if (opcode != 0)
-    instructions[opcode]();
+  instructions[opcode]();
 }
 
 int ngaValidatePackedOpcodes(CELL opcode) {
@@ -591,11 +590,11 @@ int ngaValidatePackedOpcodes(CELL opcode) {
   return valid;
 }
 
+#define INST(n) ((opcode >> n) & 0xFF) != 0
+
 void ngaProcessPackedOpcodes(CELL opcode) {
-  CELL raw = opcode;
-  int i;
-  for (i = 0; i < 4; i++) {
-    ngaProcessOpcode(raw & 0xFF);
-    raw = raw >> 8;
-  }
+  if (INST(0))  instructions[opcode & 0xFF]();
+  if (INST(8))  instructions[(opcode >> 8) & 0xFF]();
+  if (INST(16)) instructions[(opcode >> 16) & 0xFF]();
+  if (INST(24)) instructions[(opcode >> 24) & 0xFF]();
 }
