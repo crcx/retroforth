@@ -17,6 +17,6 @@
 - removed some unneeded files
 - update tools/missing-dsource.retro
 - add missing source data for vocabularies:
-  a: d: double: file: fll: mem: script:
+  a: d: double: err: file: fll: mem: script:
 
 ================================================================

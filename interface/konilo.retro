@@ -25,13 +25,13 @@ names for these).
 :n:divmod /mod ;
 
 :comma:a    , ;
-:gc &Heap swap v:preserve ;
 ~~~
 
 Provide source data.
 
 ~~~
-'konilo.retro
+'interface/konilo.retro s:keep
+dup 'comma:a d:lookup d:source store
 dup 'n:add d:lookup d:source store
 dup 'n:sub d:lookup d:source store
 dup 'n:mul d:lookup d:source store

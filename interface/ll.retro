@@ -146,6 +146,16 @@ point.
 
 ~~~
 'interface/ll.retro s:keep
+dup 'comma d:lookup d:source store
+dup 'cdr d:lookup d:source store
+dup 'cons d:lookup d:source store
+dup 'car d:lookup d:source store
+dup 'cdr d:lookup d:source store
+dup 'car@ d:lookup d:source store
+dup 'cdr@ d:lookup d:source store
+dup 'car! d:lookup d:source store
+dup 'cdr! d:lookup d:source store
+dup 'END d:lookup d:source store
 dup 'fll:put          d:lookup d:source store
 dup 'fll:inject       d:lookup d:source store
 dup 'fll:drop         d:lookup d:source store

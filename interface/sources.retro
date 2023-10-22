@@ -13,6 +13,7 @@ each of the provided words are found in.
 ~~~
 'retro.forth s:dedup
 dup 'listen d:set-source
+dup 'gc d:set-source
 dup 'bye d:set-source
 dup 's:get-word d:set-source
 dup 'c:get d:set-source
