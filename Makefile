@@ -19,11 +19,11 @@ toolchain: dirs bin/retro-embedimage bin/retro-extend bin/retro-muri bin/retro-u
 image: vm/nga-c/image.c
 
 dirs:
-	mkdir -p bin
-	cp tools/retro-document.sh bin/retro-document
+	@mkdir -p bin
+	@cp tools/retro-document.sh bin/retro-document
 
 clean:
-	rm -f bin/*
+	@rm -f bin/*
 
 # installation targets
 
@@ -83,64 +83,64 @@ install-manpages:
 # Toolchain ----------------------------------------------------
 
 bin/retro-describe: tools/retro-describe.retro doc/words.tsv
-	cat tools/retro-describe.retro > bin/retro-describe
-	cat doc/words.tsv >> bin/retro-describe
-	chmod +x bin/retro-describe
+	@cat tools/retro-describe.retro > bin/retro-describe
+	@cat doc/words.tsv >> bin/retro-describe
+	@chmod +x bin/retro-describe
 
 bin/retro-embedimage: tools/retro-embedimage.c
-	$(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o $@ $>
+	@$(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o $@ $>
 
 bin/retro-extend: tools/retro-extend.c
-	$(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o $@ $>
+	@$(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o $@ $>
 
 bin/retro-muri: tools/retro-muri.c
-	$(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o $@ $>
+	@$(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o $@ $>
 
 bin/retro-unu: tools/retro-unu.c
-	$(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o $@ $>
+	@$(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o $@ $>
 
 # Image --------------------------------------------------------
 
 ngaImage: toolchain image/retro.muri image/retro.forth image/build.retro
-	$(ASSEMBLE) image/retro.muri
-	$(EXTEND) ngaImage image/retro.forth image/build.retro
+	@$(ASSEMBLE) image/retro.muri
+	@$(EXTEND) ngaImage image/retro.forth image/build.retro
 
 # Executables --------------------------------------------------
 
 bin/retro-repl: vm/nga-c/repl.c vm/nga-c/image.c
-	$(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o $@ $>
+	@$(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o $@ $>
 
 # retro on unix
 
 update-extensions: bin/retro
-	cd package/extensions && ../../bin/retro -f ../../tools/generate-extensions-list.retro >../load-extensions.retro
+	@cd package/extensions && ../../bin/retro -f ../../tools/generate-extensions-list.retro >../load-extensions.retro
 
 vm/nga-c/image.c: toolchain ngaImage interface/retro-unix.retro $(DEVICES)
-	cp ngaImage rre.image
-	$(EXTEND) rre.image $(DEVICES) interface/retro-unix.retro
-	$(EXPORT) rre.image >vm/nga-c/image.c
+	@cp ngaImage rre.image
+	@$(EXTEND) rre.image $(DEVICES) interface/retro-unix.retro
+	@$(EXPORT) rre.image >vm/nga-c/image.c
 
 bin/retro: vm/nga-c/image.c vm/nga-c/retro.c package/list.forth package/load-extensions.retro
-	cd vm/nga-c && $(CC) -DFAST $(OPTIONS) $(ENABLED) $(CFLAGS) $(LDFLAGS) -o ../../bin/retro retro.c $(LIBM) $(LIBDL)
-	cd package && ../bin/retro -u rre.image -f list.forth
-	$(EXPORT) rre.image >vm/nga-c/image.c
-	rm rre.image
-	cd vm/nga-c && $(CC) -DFAST $(OPTIONS) $(ENABLED) $(CFLAGS) $(LDFLAGS) -o ../../bin/retro retro.c $(LIBM) $(LIBDL)
+	@cd vm/nga-c && $(CC) -DFAST $(OPTIONS) $(ENABLED) $(CFLAGS) $(LDFLAGS) -o ../../bin/retro retro.c $(LIBM) $(LIBDL)
+	@cd package && ../bin/retro -u rre.image -f list.forth
+	@$(EXPORT) rre.image >vm/nga-c/image.c
+	@rm rre.image
+	@cd vm/nga-c && $(CC) -DFAST $(OPTIONS) $(ENABLED) $(CFLAGS) $(LDFLAGS) -o ../../bin/retro retro.c $(LIBM) $(LIBDL)
 
 
 # optional targets
 
 bin/retro-compiler: toolchain vm/nga-c/retro-compiler.c vm/nga-c/retro-runtime.c
-	cp ngaImage runtime.image
-	$(EXTEND) runtime.image $(DEVICES) interface/retro-unix.retro
-	cd vm/nga-c && $(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o ../../retro-runtime retro-runtime.c $(LIBM) $(LIBDL)
-	cd vm/nga-c && $(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o ../../bin/retro-compiler retro-compiler.c
-	objcopy --add-section .ngaImage=runtime.image --set-section-flags .ngaImage=noload,readonly bin/retro-compiler
-	objcopy --add-section .runtime=retro-runtime --set-section-flags .runtime=noload,readonly bin/retro-compiler
-	rm runtime.image retro-runtime
+	@cp ngaImage runtime.image
+	@$(EXTEND) runtime.image $(DEVICES) interface/retro-unix.retro
+	@cd vm/nga-c && $(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o ../../retro-runtime retro-runtime.c $(LIBM) $(LIBDL)
+	@cd vm/nga-c && $(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o ../../bin/retro-compiler retro-compiler.c
+	@objcopy --add-section .ngaImage=runtime.image --set-section-flags .ngaImage=noload,readonly bin/retro-compiler
+	@objcopy --add-section .runtime=retro-runtime --set-section-flags .runtime=noload,readonly bin/retro-compiler
+	@rm runtime.image retro-runtime
 
 image-js: bin/retro
-	./bin/retro example/retro-generate-image-js.retro >vm/nga-js/image.js
+	@./bin/retro example/retro-generate-image-js.retro >vm/nga-js/image.js
 
 # Documentation ------------------------------------------------
 
