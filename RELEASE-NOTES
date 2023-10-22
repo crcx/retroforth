@@ -15,5 +15,7 @@
 - add -v for verbose mode                     (C)
 - now skip execuion of NOP instructions       (C)
 - added an implementation of Nga in D         (D)
+- removed some unneeded files
+- update tools/missing-dsource.retro
 
 ================================================================
