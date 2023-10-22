@@ -1589,11 +1589,11 @@ int validate_opcode_bundle(CELL opcode) {
 }
 
 void verbose_details(NgaState *vm, CELL opcode) {
-  fprintf(stderr, "ip: %lld ", vm->cpu[vm->active].ip);
-  fprintf(stderr, "sp: %lld ", vm->cpu[vm->active].sp);
-  fprintf(stderr, "rp: %lld ", vm->cpu[vm->active].rp);
-  fprintf(stderr, "core: %d ", vm->active);
-  fprintf(stderr, "opcode: %lld\n", opcode);
+  fprintf(stderr, "ip: %lld ", (long long)vm->cpu[vm->active].ip);
+  fprintf(stderr, "sp: %lld ", (long long)vm->cpu[vm->active].sp);
+  fprintf(stderr, "rp: %lld ", (long long)vm->cpu[vm->active].rp);
+  fprintf(stderr, "core: %lld ", (long long)vm->active);
+  fprintf(stderr, "opcode: %lld\n", (long long)opcode);
 }
 
 #define INST(n) ((opcode >> n) & 0xFF) != 0

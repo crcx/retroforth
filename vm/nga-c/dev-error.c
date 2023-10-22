@@ -27,7 +27,7 @@ void execute(NgaState *vm, CELL cell);
 void handle_error(NgaState *vm, CELL error) {
   CELL saved_ip = vm->cpu[vm->active].ip;
   if (vm->ErrorHandlers[error] != 0) {
-    printf("\nHandling %lld\n", error);
+    printf("\nHandling %lld\n", (long long)error);
     execute(vm, vm->ErrorHandlers[error]);
   }
   vm->cpu[vm->active].ip = saved_ip;
@@ -37,7 +37,7 @@ void register_error_handler(NgaState *vm) {
   CELL ErrorID = stack_pop(vm);
   CELL ErrorHandler = stack_pop(vm);
   vm->ErrorHandlers[ErrorID] = ErrorHandler;
-  printf("Assigned %lld to %lld\n", ErrorID, ErrorHandler);
+  printf("Assigned %lld to %lld\n", (long long)ErrorID, (long long)ErrorHandler);
 }
 
 void io_error(NgaState *vm) {

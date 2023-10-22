@@ -29,7 +29,7 @@ LIBDL ?=
 
 OPTIONS ?=
 OPTIONS += -DUSE_UTF32
-#OPTIONS += -DBIT64
+OPTIONS += -DBIT64
 
 # The I/O devices can be enabled or disabled. Comment or
 # uncomment the corresponding ENABLED and DEVICES lines and
