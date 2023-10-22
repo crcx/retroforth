@@ -25,4 +25,14 @@
   dup #1 mem:cell+ fetch push mem:fetch pop ;
 :mem:store-double (ann-nn)
   push push dup-pair #1 mem:cell+ pop mem:store pop mem:store ;
+
+'interface/malloc.retro 'mem:alloc        d:set-source
+'interface/malloc.retro 'mem:store        d:set-source
+'interface/malloc.retro 'mem:fetch        d:set-source
+'interface/malloc.retro 'mem:free         d:set-source
+'interface/malloc.retro 'mem:size         d:set-source
+'interface/malloc.retro 'mem:resize       d:set-source
+'interface/malloc.retro 'mem:cell+        d:set-source
+'interface/malloc.retro 'mem:fetch-double d:set-source
+'interface/malloc.retro 'mem:store-double d:set-source
 ~~~

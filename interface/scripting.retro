@@ -69,5 +69,6 @@ dup 'script:name          d:set-source
 dup 'include              d:set-source
 dup 'script:get-argument  d:set-source
 dup 'script:arguments     d:set-source
+dup 'script:current-line-text d:set-source
 drop
 ~~~
