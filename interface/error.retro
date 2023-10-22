@@ -15,9 +15,9 @@
   &err:dso #2 err:set-handler ;
 
 'interface/error.retro s:keep
-dup 'err:set-handler d:lookup d:source store
+dup 'err:set-handler  d:lookup d:source store
 dup 'err:set-defaults d:lookup d:source store
-dup 'err:dso d:lookup d:source store
-dup 'err:dsu d:lookup d:source store
+dup 'err:dso          d:lookup d:source store
+dup 'err:dsu          d:lookup d:source store
 drop
 ~~~
