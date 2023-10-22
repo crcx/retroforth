@@ -21,9 +21,9 @@ echo "ad"; retro-muri ad.muri >/dev/null; retro -r ngaImage; rm -f ngaImage
 echo "su"; retro-muri su.muri >/dev/null; retro -r ngaImage; rm -f ngaImage
 echo "mu"; retro-muri mu.muri >/dev/null; retro -r ngaImage; rm -f ngaImage
 echo "di"; retro-muri di.muri >/dev/null; retro -r ngaImage; rm -f ngaImage
-#echo "an"; retro-muri an.muri >/dev/null; retro -r ngaImage; rm -f ngaImage
-#echo "or"; retro-muri or.muri >/dev/null; retro -r ngaImage; rm -f ngaImage
-#echo "xo"; retro-muri xo.muri >/dev/null; retro -r ngaImage; rm -f ngaImage
+echo "an"; retro-muri an.muri >/dev/null; retro -r ngaImage; rm -f ngaImage
+echo "or"; retro-muri or.muri >/dev/null; retro -r ngaImage; rm -f ngaImage
+echo "xo"; retro-muri xo.muri >/dev/null; retro -r ngaImage; rm -f ngaImage
 echo "sh"; retro-muri sh.muri >/dev/null; retro -r ngaImage; rm -f ngaImage
 echo "zr"; retro-muri zr.muri >/dev/null; retro -r ngaImage; rm -f ngaImage
 echo "ha"; retro-muri ha.muri >/dev/null; retro -r ngaImage; rm -f ngaImage
