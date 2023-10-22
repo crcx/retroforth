@@ -197,5 +197,9 @@ dup 'file:A         d:set-source
 dup 'file:W         d:set-source
 dup 'file:R         d:set-source
 dup 'file:operation d:set-source
+dup 'file:write/bytes     d:set-source
+dup 'file:read/bytes      d:set-source
+dup 'file:write/c         d:set-source
+dup 'file:read/c          d:set-source
 drop
 ~~~

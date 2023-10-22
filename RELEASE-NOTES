@@ -17,5 +17,7 @@
 - added an implementation of Nga in D         (D)
 - removed some unneeded files
 - update tools/missing-dsource.retro
+- add missing source data for vocabularies:
+  file: fll:
 
 ================================================================

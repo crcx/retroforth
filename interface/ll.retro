@@ -141,3 +141,21 @@ point.
   :fll:put (a-) [ n:put sp ] fll:for-each ;
 }}
 ~~~
+
+## Add Source Data
+
+~~~
+'interface/ll.retro s:keep
+dup 'fll:put          d:lookup d:source store
+dup 'fll:inject       d:lookup d:source store
+dup 'fll:drop         d:lookup d:source store
+dup 'fll:length       d:lookup d:source store
+dup 'fll:for-each     d:lookup d:source store
+dup 'fll:del          d:lookup d:source store
+dup 'fll:to-index     d:lookup d:source store
+dup 'fll:append/value d:lookup d:source store
+dup 'fll:to-end       d:lookup d:source store
+dup 'fll:create       d:lookup d:source store
+drop
+~~~
+
