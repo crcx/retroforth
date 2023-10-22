@@ -3,7 +3,6 @@
 This contains a variety of words from my more recent systems
 and things that will be standard in the future.
 
-
 ~~~
 :d:use-hashes
   &eq? &d:lookup #5 - store
@@ -16,4 +15,7 @@ and things that will be standard in the future.
   &d:name &d:lookup #8 - store
   #0 &d:lookup store
   #0 &d:lookup n:inc store ;
+
+'interface/future.retro 'd:use-hashes d:set-source
+'interface/future.retro 'd:use-strings d:set-source
 ~~~

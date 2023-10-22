@@ -7,6 +7,7 @@ each of the provided words are found in.
 
 ~~~
 :d:set-source (ss-) &s:dedup dip d:lookup d:source store ;
+'interface/sources.retro 'd:set-source d:set-source
 ~~~
 
 ~~~
@@ -46,6 +47,10 @@ dup 'a:eq? d:set-source
 dup 'a:middle d:set-source
 dup 'a:right d:set-source
 dup 'a:left d:set-source
+dup 'a:first d:set-source
+dup 'a:last d:set-source
+dup 'a:indices/string d:set-source
+dup 'a:hash d:set-source
 dup '} d:set-source
 dup '{ d:set-source
 dup 'a:temp d:set-source
