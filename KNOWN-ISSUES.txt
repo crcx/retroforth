@@ -2,4 +2,6 @@
 
 - under tests/* : the instruction tests are not working
   currently. (rep: sevan, confirm)
+- there appears to be corruption in the source data;
+  perhaps a bug in s:dedup ?
 
