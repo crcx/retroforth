@@ -17,7 +17,7 @@
 - added an implementation of Nga in D         (D)
 - removed some unneeded files
 - update tools/missing-dsource.retro
-- add missing source data for vocabularies:
+- add missing source data for vocabularies & globals:
   a: d: double: err: file: fll: mem: script:
 - use strlcpy() in tools/retro-muri.c
 - quieter output when building

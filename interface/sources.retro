@@ -11,6 +11,7 @@ each of the provided words are found in.
 ~~~
 
 ~~~
+'build.retro s:dedup 'BUILD d:set-source
 'retro.forth s:dedup
 dup 'listen d:set-source
 dup 'gc d:set-source
@@ -277,6 +278,7 @@ dup 'tuck d:set-source
 dup 'const d:set-source
 dup 'var d:set-source
 dup 'var-n d:set-source
+dup 'var-s d:set-source
 dup 'd:create d:set-source
 dup 'sigil:! d:set-source
 dup 'sigil:@ d:set-source
