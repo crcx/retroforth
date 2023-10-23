@@ -25,5 +25,6 @@
 - small optimizations in fll: vocabulary
 - move from interface/ to package/extensions/:
   double.retro malloc.retro
+- fix misc. typos
 
 ================================================================

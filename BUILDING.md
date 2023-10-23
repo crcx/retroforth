@@ -29,4 +29,4 @@ may wish to enable include sockets, ffi, and multicore.
 ## More Complex Customizations
 
 There are additional things you can update. Take a look in the
-manual for more tedails on this.
+manual for more details on this.
