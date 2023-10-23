@@ -174,7 +174,7 @@ once for each line in a file. This makes some things trivial. E.g., a simple
 ## d:source
 
 ~~~
-'interface/filesystem.retro
+'interface/filesystem.retro s:dedup
 dup 'file:spew             d:set-source
 dup 'file:slurp            d:set-source
 dup 'file:for-each-line    d:set-source

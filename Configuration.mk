@@ -54,8 +54,6 @@ DEVICES += interface/unsigned.retro
 DEVICES += interface/future.retro
 DEVICES += interface/block.retro
 DEVICES += interface/deprecated.retro
-DEVICES += interface/double.retro
-DEVICES += interface/malloc.retro
 DEVICES += interface/error.retro
 DEVICES += interface/final.retro
 

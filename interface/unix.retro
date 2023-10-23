@@ -137,7 +137,7 @@ seconds.
 ## d:source
 
 ~~~
-'interface/unix.retro
+'interface/unix.retro s:dedup
 dup 'unix:slurp-pipe    d:set-source
 dup 'unix:for-each-file d:set-source
 dup 'unix:count-files-in-cwd d:set-source

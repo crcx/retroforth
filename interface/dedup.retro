@@ -8,6 +8,7 @@ String deduplication for RetroForth.
 'init s:keep fll:create 's:dedup.data var-n
 
 {{
+  'Temp d:create #1024 allot
   't1 var
   't2 var
 ---reveal---
@@ -21,8 +22,20 @@ String deduplication for RetroForth.
     @s:dedup.data [ dup @t1 s:eq? [ !t2 ] &drop choose ]
     fll:for-each @t2 ;
   :s:dedup (s-s)
+    &Temp s:copy &Temp
     dup s:dedup.defined? &s:dedup.find &s:dedup.register
     choose ;
   :s:unique? (s-f) s:dedup.defined? ;
 }}
+~~~
+
+~~~
+'interface/dedup.retro s:dedup
+dup 's:unique? d:lookup d:source store
+dup 's:dedup d:lookup d:source store
+dup 's:dedup.find d:lookup d:source store
+dup 's:dedup.defined? d:lookup d:source store
+dup 's:dedup.register d:lookup d:source store
+dup 's:dedup.data d:lookup d:source store
+drop
 ~~~

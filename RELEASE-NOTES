@@ -23,5 +23,7 @@
 - quieter output when building
 - remove old Python build + packaging code
 - small optimizations in fll: vocabulary
+- move from interface/ to package/extensions/:
+  double.retro malloc.retro
 
 ================================================================
