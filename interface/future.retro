@@ -16,6 +16,6 @@ and things that will be standard in the future.
   #0 &d:lookup store
   #0 &d:lookup n:inc store ;
 
-'interface/future.retro 'd:use-hashes d:set-source
+'interface/future.retro 'd:use-hashes  d:set-source
 'interface/future.retro 'd:use-strings d:set-source
 ~~~

@@ -75,7 +75,7 @@ a pointer to the final cons cell.
 ---reveal---
   :fll:to-end (p-p)
     dup !r [ cdr@ dup &END -eq? dup
-    [ over !r ] [ nip ] choose ] while @r ;
+    [ over !r ] &nip choose ] while @r ;
 }}
 ~~~
 
@@ -94,7 +94,7 @@ An issue with this: it does not currently check the length to
 make sure that the index is valid.
 
 ~~~
-:fll:to-index (pn-p) [ cdr@ ] times ;
+:fll:to-index (pn-p) &cdr@ times ;
 ~~~
 
 

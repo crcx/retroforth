@@ -18,10 +18,10 @@ String deduplication for RetroForth.
     @s:dedup.data [ @t1 s:eq? @t2 or !t2 ] fll:for-each @t2 ;
   :s:dedup.find (s-s)
     !t1 #0 !t2
-    @s:dedup.data [ dup @t1 s:eq? [ !t2 ] [ drop ] choose ]
+    @s:dedup.data [ dup @t1 s:eq? [ !t2 ] &drop choose ]
     fll:for-each @t2 ;
   :s:dedup (s-s)
-    dup s:dedup.defined? [ s:dedup.find ] [ s:dedup.register ]
+    dup s:dedup.defined? &s:dedup.find &s:dedup.register
     choose ;
   :s:unique? (s-f) s:dedup.defined? ;
 }}

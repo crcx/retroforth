@@ -22,5 +22,6 @@
 - use strlcpy() in tools/retro-muri.c
 - quieter output when building
 - remove old Python build + packaging code
+- small optimizations in fll: vocabulary
 
 ================================================================
