@@ -255,10 +255,10 @@ void pass5(char *buffer) {
 
 
 int main(int argc, char **argv) {
-  strlcpy(code_start, "~~~", 32);
-  strlcpy(code_end,   "~~~", 32);
-  strlcpy(test_start, "```", 32);
-  strlcpy(test_end,   "```", 32);
+  bsd_strlcpy(code_start, "~~~", 32);
+  bsd_strlcpy(code_end,   "~~~", 32);
+  bsd_strlcpy(test_start, "```", 32);
+  bsd_strlcpy(test_end,   "```", 32);
   np = 0;
   if (argc > 1) {
     here = 0; unu(argv[1], 0, &pass1);

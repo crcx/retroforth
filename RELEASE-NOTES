@@ -26,5 +26,6 @@
 - move from interface/ to package/extensions/:
   double.retro malloc.retro
 - fix misc. typos
+- in retro-muri.c, use bsd_strlcpy (rep. by fangchar)
 
 ================================================================
