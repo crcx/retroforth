@@ -954,28 +954,19 @@ a key part of building the other high-level string operations.
   ] call drop-pair ;
 ~~~
 
-Building on `s:for-each`, I am able to implement `s:index/char`, which
-finds the first instance of a character in a string.
-
-In higher level code:
-
-    :s:index/char (sc-n)
-      swap
-      [ repeat
-          fetch-next 0; swap
-          [ over -eq? ] dip
-          swap 0; drop
-        again
-      ]
-      [ - n:dec nip ]
-      [ s:length over eq? ] tri
-      [ drop #-1 ] if ;
+`s:index/char` finds the first instance of a character in
+a string.
 
 ~~~
 :s:index/char (sc-n)
-  [ [ #-1 #0 ] dip ] dip swap
-  [ over eq? [ [ [ drop ] dip dup ] dip ] if &n:inc dip ]
-  s:for-each drop-pair ;
+  swap
+  [ repeat
+      fetch-next 0; swap
+      [ over -eq? ] dip swap 0; drop
+    again ]
+  [ - n:dec nip ]
+  [ s:length over eq? ] tri
+  [ drop #-1 ] if ;
 ~~~
 
 `s:contains/char?` returns a flag indicating whether or not a

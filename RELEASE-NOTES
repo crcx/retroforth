@@ -8,8 +8,8 @@
 
 ================================================================
 
-- removed duplicate typedef in tools/retro-muri.c (sevan)
-- fixed a bug in load_image()                 (C) (sevan)
+- removed duplicate typedef in tools/retro-muri.c (rep by sevan)
+- fixed a bug in load_image()                 (C) (rep by sevan)
 - err:notfound message no longer in C         (C) (sevan)
 - add -v for verbose mode                     (C)
 - now skip execuion of NOP instructions       (C)
@@ -26,6 +26,7 @@
 - move from interface/ to package/extensions/:
   double.retro malloc.retro
 - fix misc. typos
-- in retro-muri.c, use bsd_strlcpy (rep. by fangchar)
+- in retro-muri.c, use bsd_strlcpy   (rep by fangchar)
+- in retro.forth, fix `s:index/char` (rep by fangchar)
 
 ================================================================
