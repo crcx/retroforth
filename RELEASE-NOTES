@@ -29,5 +29,6 @@
 - fix misc. typos
 - in retro-muri.c, use bsd_strlcpy   (rep by fangchar)
 - in retro.forth, fix `s:index/char` (rep by fangchar)
+- add example/irc-logger.retro
 
 ================================================================

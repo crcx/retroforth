@@ -1,0 +1,78 @@
+This is an IRC bot to log the contents of one or more channels.
+It was written to support for use with http://forth.chat
+
+~~~
+'irc.libera.chat:6665 'SERVER s:const
+'crc[log]             'NICK s:const
+{ '#retro '##forth }  'CHANNELS const
+
+'Output d:create
+  #32768 allot
+
+'Sock var
+
+:connect (s-)
+  socket:create dump-stack nl !Sock
+  $: s:split swap n:inc socket:configure dump-stack nl
+  @Sock socket:connect dump-stack nl drop ;
+
+:s:transmit @Sock socket:send
+   nip n:-zero? [ nl 'Disconnected! s:put nl bye ] if ;
+
+{{
+  :eol?
+    [ ASCII:CR eq? ] [ ASCII:LF eq? ] bi or ;
+
+  :terminate
+    buffer:get drop #0 buffer:add ;
+---reveal---
+  :s:receive
+    [ here buffer:set
+      s:empty dup #500 @Sock socket:recv drop-pair
+      [ dup buffer:add eol? [ terminate ] if ] s:for-each ]
+      buffer:preserve ;
+}}
+
+:disconnect
+  @Sock socket:close ;
+
+'a s:put nl
+SERVER connect
+'b s:put nl
+
+:irc:send
+  '%s\r\n s:format s:transmit ;
+
+:login 'USER_chanlog_crc@forth.works_forth.works_charles irc:send
+        NICK 'NICK_%s s:format irc:send
+        CHANNELS [ 'JOIN_%s s:format irc:send ] a:for-each ;
+
+'c s:put nl
+login
+'d s:put nl
+
+:ping?
+  here 'PING s:begins-with? ;
+
+:pong
+  'PONG here #4 + s:append irc:send ;
+
+:message?
+  here 'PRIVMSG s:contains-string? ;
+
+:process
+  '/home/crc/irc-log.txt file:A file:open
+  clock:timestamp n:to-string [ over file:write ] s:for-each
+  #32 over file:write
+  here [ over file:write ] s:for-each #10 over file:write
+  file:close ;
+
+[ repeat
+    s:receive here s:put nl
+    message? [ process ] if
+    ping?    [ pong    ] if
+    reset
+  again ] call
+
+disconnect
+~~~
