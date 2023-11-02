@@ -1,0 +1,73 @@
+#!/usr/bin/env retro
+
+My Konilo system uses block for data storage. It's sometimes
+useful to export these to smaller sets for sharing. This is a
+small program written in RetroForth that will do this.
+
+I organize the blocks into groups of 16. This tool will export
+a group to a file.
+
+Invocation:
+
+    retro ilo-export.retro <first-block> to <file-name>
+
+
+----
+
+
+Begin by verifying the provided parameters.
+
+~~~
+:s:numeric? (s-f) #-1 swap [ c:digit? and ] s:for-each ;
+
+script:arguments #3 eq?
+  [ 'Too_few_parameters s:put nl bye ] -if
+
+#0 script:get-argument s:numeric?
+  [ 'First_parameter_must_be_a_number s:put nl bye ] -if
+#1 script:get-argument 'to s:eq?
+  [ 'Second_parameter_must_be_'to' s:put nl bye ] -if
+~~~
+
+Next, open the target file and the `ilo.blocks`.
+
+~~~
+'FID var
+
+#2 script:get-argument file:open-for-writing !FID
+
+'ilo.blocks block:set-file
+~~~
+
+Next define a few words to unpack and write cells to the file.
+
+~~~
+:write-byte (n-)  @FID file:write ;
+:mask       (n-)  #255 and ;
+
+:write-cell (n-)
+           dup mask write-byte
+  #8 shift dup mask write-byte
+  #8 shift dup mask write-byte
+  #8 shift     mask write-byte ;
+~~~
+
+Then create a place to read blocks into and process the blocks.
+
+~~~
+#0 script:get-argument s:to-number 'STARTING const
+
+'Buffer d:create #1024 allot
+
+:read  STARTING I n:add &Buffer block:read ;
+:write &Buffer #1024 [ fetch-next write-cell ] times drop ;
+
+#16 [ read write ] indexed-times
+~~~
+
+Clean up.
+
+~~~
+@FID file:close
+bye
+~~~
