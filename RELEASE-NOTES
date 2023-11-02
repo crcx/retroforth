@@ -14,6 +14,7 @@
 - add -v for verbose mode                     (C)
 - now skip execuion of NOP instructions       (C)
 - fix some casting issues in C                (C)
+- force immediate exit() on HA instruction    (C)
 - added an implementation of Nga in D         (D)
 - removed some unneeded files
 - update tools/missing-dsource.retro

@@ -1508,6 +1508,7 @@ void inst_ha(NgaState *vm) {
   guard(vm, 0, 0, 0);
   vm->cpu[vm->active].ip = IMAGE_SIZE;
   vm->cpu[vm->active].rp = 0;
+  exit(0);
 }
 
 void inst_ie(NgaState *vm) {
