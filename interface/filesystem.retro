@@ -129,17 +129,13 @@ once for each line in a file. This makes some things trivial. E.g., a simple
   'FID var
   'Size var
   'Action var
-  'Buffer var
   :-eof? (-f) @FID file:tell @Size lt? ;
   :preserve (q-) &FID [ &Size &call v:preserve ] v:preserve ;
 ---reveal---
   :file:read-line (f-s)
-    !FID
-    [ here dup !Buffer buffer:set
-      [ @FID file:read dup buffer:add
+    [ [ dup file:read dup ,
         [ ASCII:CR eq? ] [ ASCII:LF eq? ] [ ASCII:NUL eq? ] tri or or ] until
-        buffer:get drop ] buffer:preserve
-    @Buffer ;
+      #-1 allot #0 , drop ] gc here ;
 
   :file:for-each-line (sq-)
     [ !Action
