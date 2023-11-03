@@ -133,9 +133,7 @@ once for each line in a file. This makes some things trivial. E.g., a simple
   :preserve (q-) &FID [ &Size &call v:preserve ] v:preserve ;
 ---reveal---
   :file:read-line (f-s)
-    [ [ dup file:read dup ,
-        [ ASCII:CR eq? ] [ ASCII:LF eq? ] [ ASCII:NUL eq? ] tri or or ] until
-      #-1 allot #0 , drop ] gc here ;
+    here swap #13 file:operation here ;
 
   :file:for-each-line (sq-)
     [ !Action

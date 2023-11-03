@@ -273,6 +273,40 @@ void file_write_character(NgaState *vm) {
 #endif
 }
 
+void file_read_line(NgaState *vm) {
+  CELL slot = stack_pop(vm);
+  CELL targ = stack_pop(vm);
+  CELL c;
+  if (slot <= 0 || slot > MAX_OPEN_FILES || vm->OpenFileHandles[slot] == 0) {
+    printf("\nERROR (nga/file_read): Invalid file handle\n");
+    exit(1);
+  }
+#ifdef USE_UTF32
+  c = fread_character(vm->OpenFileHandles[slot]);
+  vm->memory[targ] = c;
+  targ++;
+  while (c != 10 && c != 13 && c != 0) {
+    c = fread_character(vm->OpenFileHandles[slot]);
+    vm->memory[targ] = c;
+    targ++;
+  }
+  vm->memory[targ - 1] = 0;
+#else
+  c = fgetc(vm->OpenFileHandles[slot]);
+  vm->memory[targ] = c;
+  targ++;
+  while (c != 10 && c != 13 && c != 0) {
+    c = fgetc(vm->OpenFileHandles[slot]);
+    vm->memory[targ] = c;
+    targ++;
+  }
+  vm->memory[targ - 1] = 0;
+#endif
+}
+
+void file_write_line(NgaState *vm) {
+}
+
 Handler FileActions[] = {
   file_open,          file_close,
   file_read,          file_write,
@@ -281,10 +315,11 @@ Handler FileActions[] = {
   file_flush,         file_read_bytes,
   file_write_bytes,
   file_read_character,file_write_character,
+  file_read_line,     file_write_line,
 };
 
 void query_filesystem(NgaState *vm) {
-  stack_push(vm, 2);
+  stack_push(vm, 3);
   stack_push(vm, 4);
 }
 
