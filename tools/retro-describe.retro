@@ -132,7 +132,8 @@ the description.
     compile-time
     class | namespace | interface nl
     example1
-    example2 ;
+    example2
+    bye ;
 }}
 ~~~
 
