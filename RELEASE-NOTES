@@ -32,5 +32,7 @@
 - add example/irc-logger.retro
 - add example/ilo-export.retro
 - file:read-line no longer uses buffer:
+- retro-describe now using hash based name comparison
+- retro-describe small reductions in call/return overhead
 
 ================================================================

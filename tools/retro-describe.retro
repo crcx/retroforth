@@ -143,13 +143,13 @@ the description.
 {{
   'Target var
   'LineNumber var
-  :matched? (-f) field:name @Target s:eq? ;
+  :matched? (-f) field:name s:hash @Target eq? ;
   :entry?   (-f) @LineNumber DATA-START gteq? &LineNumber v:inc ;
-  :process  (-)  &Heap [ s:keep !SourceLine matched? [ display-result ] if ] v:preserve ;
+  :process  (-)  &Heap [ s:keep !SourceLine matched? &display-result if ] v:preserve ;
 ---reveal---
   :find-and-display-entry
-    #0 !LineNumber  s:keep !Target
-    script:name [ entry? [ process ] [ drop ] choose ] file:for-each-line nl ;
+    #0 !LineNumber s:hash !Target
+    script:name [ entry? &process &drop choose ] file:for-each-line nl ;
 }}
 ~~~
 
