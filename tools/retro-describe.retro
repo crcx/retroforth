@@ -141,14 +141,15 @@ the description.
 
 ~~~
 {{
-  'Target var
+  'Target     var
+  'Len        var
   'LineNumber var
-  :matched? (-f) field:name s:hash @Target eq? ;
+  :matched? (-f) @SourceLine @Len s:left s:hash @Target eq? ;
   :entry?   (-f) @LineNumber DATA-START gteq? &LineNumber v:inc ;
   :process  (-)  &Heap [ s:keep !SourceLine matched? &display-result if ] v:preserve ;
 ---reveal---
   :find-and-display-entry
-    #0 !LineNumber s:hash !Target
+    #0 !LineNumber dup s:length !Len s:hash !Target
     script:name [ entry? &process &drop choose ] file:for-each-line nl ;
 }}
 ~~~
