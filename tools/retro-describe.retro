@@ -133,7 +133,7 @@ the description.
     class | namespace | interface nl
     example1
     example2
-    bye ;
+    ;
 }}
 ~~~
 
