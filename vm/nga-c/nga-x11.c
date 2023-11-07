@@ -1,18 +1,17 @@
 /* nga.c (c) Charles Childers, Luke Parrish, Marc Simpson
              Jay Skeer, Kenneth Keating                       */
 
-/* cc -o ilo-x vm/ilo-x.c `pkg-config --cflags x11 --libs`    */
+/* cc -o nga-11 vm/nga-c/nga-x11.c `pkg-config --cflags x11 --libs` */
 
 /* Local Configuration */
 
-#define BLOCKS  "/home/crc/konilo/ilo.blocks"
-#define ROM     "/home/crc/retro/ngaImage"
-#define FONT    "/home/crc/konilo/ilo.fnt"
+#define ROM     "ngaImage"
+#define FONT    "retro.fnt"
 #define FG      0xFFFFFF
-#define BG      0x000000
+#define BG      0x000055
 #define CURSOR  0x00FFFF
 #define FW      640
-#define FH      384
+#define FH      480
 #define FONT_H  16
 #define FONT_W  8
 
@@ -78,7 +77,7 @@ V redraw();
 #define TERM_H (FH / FONT_H)
 
 I frame[(FW * FH)/32];    /* frame buffer for display */
-I font[4096];             /* font bitmap              */
+I font[8192];             /* font bitmap              */
 I tx, ty;                 /* text cursor location     */
 
 /* variables for Arland's DEC subset                  */
@@ -425,32 +424,61 @@ V inst_sh() {
 
 V inst_zr() { if (T == 0) { pop(); ip = TORS; rp--; } }
 V inst_ha() { ip = IMAGE_SIZE; exit(0); }
-V inst_ie() { push(2); }
+V inst_ie() { push(5); }
 
 V inst_iq() {
-  if (T == 0) {
-    inst_dr();
-    push(0);
-    push(0);
-  } else if (T == 1) {
-    inst_dr();
-    push(1);
-    push(1);
+  switch (pop()) {
+    case 0:
+      push(0);
+      push(0);
+      break;
+    case 1:
+      push(1);
+      push(1);
+      break;
+    case 2:
+      push(0);
+      push(33);
+      break;
+    case 3:
+      push(0);
+      push(34);
+      break;
+    case 4:
+      push(0);
+      push(35);
+      break;
   }
 }
 
 V inst_ii() {
-  I c;
-  if (T == 0) {
-    inst_dr();
-    dputc((I)pop());
-  } else if (T == 1) {
-    c = wait_key();
-    dputc((I)c);
-    pop();
-    push(c);
-  } else {
-    inst_dr();
+  I c, x, y, wx, wy, mask; Window w;
+  switch (pop()) {
+    case 0:
+      dputc((I)pop());
+      break;
+    case 1:
+      c = wait_key();
+      dputc((I)c);
+      push(c);
+      break;
+    case 2:
+      c = pop();
+      y = pop();
+      x = pop();
+      pixel(x, y, c);
+      break;
+    case 3:
+      y = pop();
+      x = pop();
+      c = get_pixel(x, y);
+      push(c);
+      break;
+    case 4:
+      XQueryPointer(disp, win, &w, &w, &x, &y, &wx, &wy, &mask);
+      push(wx); push(wy);
+      if (mask & Button1Mask) push(-1); else push(0);
+      break;
   }
 }
 
