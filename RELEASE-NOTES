@@ -34,5 +34,6 @@
 - file:read-line now provided by file device (C)
 - retro-describe now using hash based name comparison
 - retro-describe small reductions in call/return overhead
+- nga-x11: Retro on X11
 
 ================================================================
