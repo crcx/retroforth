@@ -35,5 +35,6 @@
 - retro-describe now using hash based name comparison
 - retro-describe small reductions in call/return overhead
 - nga-x11: Retro on X11
+- add (termina) vocabulary from ilo [console position, colors]
 
 ================================================================

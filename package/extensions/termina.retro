@@ -1,0 +1,27 @@
+~~~
+#74 'ti:width  var-n
+#25 'ti:height var-n
+
+:vt:esc (-) #27 c:put ;
+:vt:csi (-) vt:esc $[ c:put ;
+
+:vt:home  (-) vt:csi $H c:put ;
+:vt:row,col (nn-) vt:csi swap n:put $; c:put n:put $H c:put ;
+:vt:up    (-) vt:csi n:put $A c:put ;
+:vt:down  (-) vt:csi n:put $B c:put ;
+:vt:right (-) vt:csi n:put $C c:put ;
+:vt:left  (-) vt:csi n:put $D c:put ;
+:vt:clear (-) vt:csi '2J s:put ;
+:vt:reset vt:csi '0m s:put ;
+
+:vt:set/color (n-) vt:csi '1;34; s:put n:put $m c:put ;
+
+:fg:black   #30 vt:set/color ;  :bg:black   #40 vt:set/color ;
+:fg:red     #31 vt:set/color ;  :bg:red     #41 vt:set/color ;
+:fg:green   #32 vt:set/color ;  :bg:green   #42 vt:set/color ;
+:fg:yellow  #33 vt:set/color ;  :bg:yellow  #43 vt:set/color ;
+:fg:blue    #34 vt:set/color ;  :bg:blue    #44 vt:set/color ;
+:fg:magenta #35 vt:set/color ;  :bg:magenta #45 vt:set/color ;
+:fg:cyan    #36 vt:set/color ;  :bg:cyan    #46 vt:set/color ;
+:fg:white   #37 vt:set/color ;  :bg:white   #47 vt:set/color ;
+~~~
