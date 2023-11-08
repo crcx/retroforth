@@ -36,5 +36,8 @@
 - retro-describe small reductions in call/return overhead
 - nga-x11: Retro on X11
 - add (termina) vocabulary from ilo [console position, colors]
+- fix bugs in retro-compiler(1) preventing compilation
+- fix bug in retro-compiler(1) causing compiled programs to
+  hang on startup
 
 ================================================================

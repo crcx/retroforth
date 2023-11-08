@@ -2109,7 +2109,7 @@ void load_embedded_image(char *arg) {
     if (strcmp(name, ".ngaImage") == 0) {
       fseek(ElfFile, sectHdr.sh_offset, SEEK_SET);
       for (int i = 0; i < (int)sectHdr.sh_size; i++) {
-        fread(&a, 1, sizeof(int), ElfFile);
+        fread(&a, 1, sizeof(CELL), ElfFile);
         memory[i] = a;
       }
     }

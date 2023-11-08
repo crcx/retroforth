@@ -70,7 +70,7 @@ Handler IO_queryHandlers[NUM_DEVICES + 1];
 CELL ngaLoadImage(char *imageFile);
 void ngaPrepare();
 void ngaProcessOpcode(CELL opcode);
-void ngaProcessPackedOpcodes(int opcode);
+void ngaProcessPackedOpcodes(CELL opcode);
 int ngaValidatePackedOpcodes(CELL opcode);
 
 CELL stack_pop();
@@ -106,9 +106,9 @@ void dump_stack() {
   printf("\nStack: ");
   for (i = 1; i <= sp; i++) {
     if (i == sp)
-      printf("[ TOS: %d ]", data[i]);
+      printf("[ TOS: %lld ]", (long long)data[i]);
     else
-      printf("%d ", data[i]);
+      printf("%lld ", (long long)data[i]);
   }
   printf("\n");
 }
@@ -190,6 +190,7 @@ void write_image() {
 
 void patch_entry(CELL a) {
   memory[1] = a;
+  printf("Entry set to %lld\n", (long long)a);
 }
 
 int main(int argc, char **argv) {
@@ -209,7 +210,7 @@ int main(int argc, char **argv) {
   generate_turnkey();
   unlink("__ngaImage");
 
-  printf("\nFinal image is %d cells\n", memory[3]);
+  printf("\nFinal image is %lld cells\n", (long long)memory[3]);
   return validate_image(tokens);
 }
 
