@@ -39,5 +39,6 @@
 - fix bugs in retro-compiler(1) preventing compilation
 - fix bug in retro-compiler(1) causing compiled programs to
   hang on startup
+- added an initial man page for retro-compiler(1)
 
 ================================================================
