@@ -1,0 +1,88 @@
+# ULZ Decompression
+
+ULZ is a compression format.
+
+This LZ compression format is designed to be mildly better than
+RLE but not too difficult to host on Uxn systems. The compressed
+file contains a stream of commands, not unlike a virtual machine
+bytecode. There are two types of instructions LIT and CPY, the
+CPY opcode has a short and a longer mode. Decoding works by
+reading the commands from the input until there's no more input.
+
++---------------------------+------------+---------------------+
+| Byte                      | Byte       | Byte                |
++===========================+============+=====================+
+| 0   LIT(length, 7 bits)   | Bytes to copy at pointer...      |
+| 1 0 CPY1(length, 6 bits)  | Offset from pointer              |
+| 1 1 CPY2(length, 14 bits) |            | Offset from pointer |
++---------------------------+------------+---------------------+
+
+As the output file is being assembled, a pointer moves along,
+and the program appends previously written data at the pointer's
+position up to a maximum of 256 bytes ago.
+
+- https://wiki.xxiivv.com/site/ulz_format
+
+----
+
+Begin by verifying the command line arguments.
+
+~~~
+script:arguments #2 lt? [ 'Missing_parameters! s:put nl bye ] if
+
+#0 script:get-argument file:open-for-reading
+  'IN const 'LEN const
+#1 script:get-argument file:open-for-writing
+  'OUT const
+~~~
+
+Setup variables & data structures.
+
+I'm maintaining a buffer of 32K here, and a variable that will
+point into this. I can calculate the length of the decompressed
+data by subtracting the addresses.
+
+~~~
+'Output d:create #32768 allot
+&Output 'Ptr var-n
+~~~
+
+A couple of phrases separated out to make later code a bit more
+concise.
+
+~~~
+:read (-c) IN file:read ;
+:save (c-) @Ptr store-next !Ptr ;
+~~~
+
+The instructions. There are three: a "lit" to copy values from
+the file directly to the output, and two "copy" instructions
+which copy previously decompressed data to the end of the
+output.
+
+~~~
+:copy-bytes (n-)
+  @Ptr read n:inc - swap
+  #4 n:add [ fetch-next save ] times drop ;
+
+:lit  (n-) n:inc [ read save ] times ;
+:cpy1 (n-) #63 and ;
+:cpy2 (n-) #63 and #-8 shift read or ;
+:cpy  (n-) dup #64 and &cpy2 &cpy1 choose copy-bytes ;
+~~~
+
+Iterate over the input until we reach the end of the file.
+
+~~~
+:-eof? IN file:tell LEN -eq? ;
+[ read dup #128 and n:-zero? &cpy &lit choose -eof? ] while
+~~~
+
+Finally, write the decompressed data to the target file and
+close the open files.
+
+~~~
+&Output @Ptr over - [ fetch-next OUT file:write ] times drop
+IN file:close
+OUT file:close
+~~~
