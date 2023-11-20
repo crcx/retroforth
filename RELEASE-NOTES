@@ -41,5 +41,8 @@
   hang on startup
 - added an initial man page for retro-compiler(1)
 - added new example showing decompression of ulz files
+- configuration of devices can now be done in either config.h
+  or (by default) Configuration.mk
+- build instructions for enabling/disabling devices updated
 
 ================================================================

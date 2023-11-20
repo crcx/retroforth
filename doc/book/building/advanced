@@ -10,8 +10,8 @@ be using this).
 ## I/O Devices
 
 Many of the I/O devices are optional. The most common ones are
-enabled by default in the Makefile. Look near the end of the top
-section for lines starting with `ENABLED`:
+enabled by default in the Configuration.mk. Look for the lines
+starting with `ENABLED`:
 
     ENABLED ?=
     ENABLED += -DENABLE_FLOATS

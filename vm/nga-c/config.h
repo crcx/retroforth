@@ -11,6 +11,7 @@
 
 **************************************************************/
 
+#ifndef MAKEFILE_CONFIG
 #define ENABLE_FLOATS
 #define ENABLE_FILES
 #define ENABLE_UNIX
@@ -25,6 +26,7 @@
 #define ENABLE_UNSIGNED
 #define ENABLE_MALLOC
 #define ENABLE_BLOCKS
+#endif
 
 #ifdef ENABLE_MULTICORE
 #define CORES 8

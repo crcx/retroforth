@@ -36,6 +36,29 @@ OPTIONS += -DBIT64
 # then run `make`. Of particular note here, sockets support
 # is disabled by default and you may wish to enable it.
 
+# The I/O devices can be enabled or disabled. Comment or
+# uncomment the corresponding ENABLED and DEVICES lines and
+# then run `make`. Of particular note here, sockets support
+# is disabled by default and you may wish to enable it.
+
+OPTIONS += -DMAKEFILE_CONFIG
+
+ENABLED ?=
+ENABLED += -DENABLE_FLOATS
+ENABLED += -DENABLE_FILES
+ENABLED += -DENABLE_UNIX
+ENABLED += -DENABLE_RNG
+ENABLED += -DENABLE_CLOCK
+ENABLED += -DENABLE_SCRIPTING
+# ENABLED += -DENABLE_SOCKETS
+ENABLED += -DENABLE_SIGNALS
+ENABLED += -DENABLE_MULTICORE
+# ENABLED += -DENABLE_FFI
+ENABLED += -DENABLE_ERROR
+ENABLED += -DENABLE_UNSIGNED
+ENABLED += -DENABLE_MALLOC
+ENABLED += -DENABLE_BLOCKS
+
 DEVICES ?=
 DEVICES += interface/ll.retro
 DEVICES += interface/dedup.retro
