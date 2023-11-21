@@ -979,6 +979,8 @@ enum flags {
   FLAG_HELP, FLAG_INTERACTIVE,
 };
 
+#define ARG(n) (strcmp(argv[i], n) == 0)
+
 int main(int argc, char **argv) {
   int i;
   int modes[16];
@@ -1075,27 +1077,27 @@ int main(int argc, char **argv) {
 
   /* Process Arguments */
   for (i = 1; i < argc; i++) {
-    if (strcmp(argv[i], "-h") == 0) {
+    if  ARG("-h") {
       help(argv[0]);
       exit(0);
-    } else if (strcmp(argv[i], "-v") == 0) {
+    } else if ARG("-v") {
       verbose = 1;
-    } else if (strcmp(argv[i], "-i") == 0) {
+    } else if ARG("-i") {
       modes[FLAG_INTERACTIVE] = 1;
       vm->interactive = -1;
-    } else if (strcmp(argv[i], "-f") == 0) {
+    } else if ARG("-f") {
       include_file(vm, argv[i + 1], 0);
       i++;
-    } else if (strcmp(argv[i], "-u") == 0) {
+    } else if ARG("-u") {
       i++;
       load_image(vm, argv[i]);
       update_rx(vm);
-    } else if (strcmp(argv[i], "-r") == 0) {
+    } else if ARG("-r") {
       i++;
       load_image(vm, argv[i]);
       modes[FLAG_INTERACTIVE] = 1;
       update_rx(vm);
-    } else if (strcmp(argv[i], "-t") == 0) {
+    } else if ARG("-t") {
       include_file(vm, argv[i + 1], 1);
       i++;
     } else  if (arg_is(argv[i], "--code-start") || arg_is(argv[i], "-cs")) {
