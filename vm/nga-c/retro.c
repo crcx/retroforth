@@ -64,7 +64,7 @@ struct NgaState {
   Handler IO_deviceHandlers[MAX_DEVICES];
   Handler IO_queryHandlers[MAX_DEVICES];
 
-  CELL Dictionary, NotFound, interpret;    /* Interfacing     */
+  CELL Dictionary, interpret;    /* Interfacing     */
   char string_data[8192];
 
 #ifdef ENABLE_FLOATS
@@ -647,12 +647,6 @@ void execute(NgaState *vm, CELL cell) {
   token = TIB;
   while (vm->cpu[vm->active].ip < IMAGE_SIZE) {
     if (vm->perform_abort == 0) {
-/* FIXME
-      if (vm->cpu[vm->active].ip == vm->NotFound) {
-        printf("\nERROR: Word Not Found: ");
-        printf("`%s`\n\n", string_extract(vm, token));
-      }
-*/
       if (vm->cpu[vm->active].ip == vm->interpret) {
         token = TOS;
       }
@@ -1199,7 +1193,6 @@ char *string_extract(NgaState *vm, CELL at) {
   are:
 
   Dictionary - the latest dictionary header
-  NotFound   - called when a word is not found
   interpret  - the heart of the interpreter/compiler
 
   I have to call this periodically, as the Dictionary will change as
@@ -1210,7 +1203,6 @@ char *string_extract(NgaState *vm, CELL at) {
 void update_rx(NgaState *vm) {
   vm->Dictionary = vm->memory[2];
   vm->interpret = vm->memory[5];
-  vm->NotFound = vm->memory[6];
   if (vm->memory[10] != 0) { execute(vm, vm->memory[10]); }
 }
 
