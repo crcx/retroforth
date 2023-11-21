@@ -979,25 +979,7 @@ enum flags {
   FLAG_HELP, FLAG_INTERACTIVE,
 };
 
-#define ARG(n) (strcmp(argv[i], n) == 0)
-
-int main(int argc, char **argv) {
-  int i;
-  int modes[16];
-  NgaState *vm = calloc(sizeof(NgaState), sizeof(char));
-  verbose = 0;
-
-#ifdef ENABLE_SIGNALS
-  signal(SIGHUP, sig_handler);
-  signal(SIGINT, sig_handler);
-  signal(SIGILL, sig_handler);
-  signal(SIGBUS, sig_handler);
-  signal(SIGFPE, sig_handler);
-#endif
-
-  initialize(vm);               /* Initialize Nga & image    */
-  vm->interactive = 0;
-
+void register_devices(NgaState *vm) {
   register_device(vm, io_output, query_output);
   register_device(vm, io_keyboard, query_keyboard);
   register_device(vm, io_filesystem, query_filesystem);
@@ -1040,6 +1022,27 @@ int main(int argc, char **argv) {
 #ifdef ENABLE_ERROR
   register_device(vm, io_error, query_error);
 #endif
+}
+
+#define ARG(n) (strcmp(argv[i], n) == 0)
+
+int main(int argc, char **argv) {
+  int i;
+  int modes[16];
+  NgaState *vm = calloc(sizeof(NgaState), sizeof(char));
+  verbose = 0;
+
+#ifdef ENABLE_SIGNALS
+  signal(SIGHUP, sig_handler);
+  signal(SIGINT, sig_handler);
+  signal(SIGILL, sig_handler);
+  signal(SIGBUS, sig_handler);
+  signal(SIGFPE, sig_handler);
+#endif
+
+  initialize(vm);               /* Initialize Nga & image    */
+  vm->interactive = 0;
+  register_devices(vm);
 
   strlcpy(vm->code_start, "~~~", 256);
   strlcpy(vm->code_end,   "~~~", 256);
@@ -1057,12 +1060,11 @@ int main(int argc, char **argv) {
   vm->ignoreToEOF = 0;
   vm->codeBlocks = 0;
 
+  /* Check arguments. If no flags were passed, load & run the
+     file specified and exit. */
   if (argc >= 2 && argv[1][0] != '-') {
     update_rx(vm);
     include_file(vm, argv[1], 0);
-    /* If no flags were passed,  */
-    /* load the file specified,  */
-    /* and exit                  */
     if (vm->cpu[vm->active].sp >= 1)  dump_stack(vm);
     exit(0);
   }
@@ -1158,17 +1160,13 @@ void stack_push(NgaState *vm, CELL value) {
   ---------------------------------------------------------------------*/
 
 CELL string_inject(NgaState *vm, char *str, CELL buffer) {
-  CELL m, i;
   if (!str) {
     vm->memory[buffer] = 0;
     return 0;
   }
-  m = strlen(str);
-  i = 0;
-  while (m > 0) {
+  for (CELL i = 0; str[i] != '\0'; i++) {
     vm->memory[buffer + i] = (CELL)str[i];
     vm->memory[buffer + i + 1] = 0;
-    m--; i++;
   }
   return buffer;
 }
@@ -1182,9 +1180,8 @@ CELL string_inject(NgaState *vm, char *str, CELL buffer) {
   ---------------------------------------------------------------------*/
 
 char *string_extract(NgaState *vm, CELL at) {
-  CELL starting = at;
-  CELL i = 0;
-  while(vm->memory[starting] && i < 8192)
+  CELL starting = at, i = 0;
+  while (vm->memory[starting] && i < 8192)
     vm->string_data[i++] = (char)vm->memory[starting++];
   vm->string_data[i] = 0;
   return (char *)vm->string_data;
