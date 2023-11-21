@@ -681,7 +681,7 @@ void execute(NgaState *vm, CELL cell) {
   }
 }
 
-
+;
 /*---------------------------------------------------------------------
   RETRO's `interpret` word expects a token on the stack. This next
   function copies a token to the `TIB` (text input buffer) and then
@@ -742,10 +742,9 @@ void skip_indent(FILE *fp) {
   ---------------------------------------------------------------------*/
 
 void dump_stack(NgaState *vm) {
-  CELL i;
   if (ACTIVE.sp == 0)  return;
   printf("\nStack: ");
-  for (i = 1; i <= ACTIVE.sp; i++) {
+  for (CELL i = 1; i <= ACTIVE.sp; i++) {
     if (i == ACTIVE.sp)
       printf("[ TOS: %lld ]", (long long)ACTIVE.data[i]);
     else
@@ -755,10 +754,9 @@ void dump_stack(NgaState *vm) {
 }
 
 void dump_astack(NgaState *vm) {
-  CELL i;
   if (ACTIVE.rp == 0)  return;
   printf("\nAddress Stack: ");
-  for (i = 1; i <= ACTIVE.rp; i++) {
+  for (CELL i = 1; i <= ACTIVE.rp; i++) {
     if (i == ACTIVE.rp)
       printf("[ TOS: %lld ]", (long long)ACTIVE.address[i]);
     else
@@ -1568,17 +1566,19 @@ void process_opcode(NgaState *vm, CELL opcode) {
 }
 
 int validate_opcode_bundle(CELL opcode) {
-  CELL raw = opcode;
-  CELL current;
-  int valid = -1;
-  int i;
-  for (i = 0; i < 4; i++) {
-    current = raw & 0xFF;
-    if (!(current >= 0 && current <= 29))
-      valid = 0;
-    raw = raw >> 8;
+  CELL remainingOpcode = opcode;
+  int isValid = 1;
+
+  for (int i = 0; i < 4; i++) {
+    CELL current = remainingOpcode & 0xFF;
+    if (current < 0 || current > 29) {
+      isValid = 0;
+      break;
+    }
+    remainingOpcode >>= 8;
   }
-  return valid;
+
+  return isValid;
 }
 
 void verbose_details(NgaState *vm, CELL opcode) {
