@@ -50,5 +50,6 @@
 - new example: vocabulary.retro
 - remove need to lookup & call err:notfound by nga-c
 - use C preprocessor to help with readability in arg. processing
+- remove separate temp. string buffer in `s:dedup`
 
 ================================================================
