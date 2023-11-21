@@ -27,6 +27,7 @@
 
 #include "config.h"
 
+#define ACTIVE vm->cpu[vm->active]
 #define TIB vm->memory[7]         /* Location of TIB                   */
 
 #define MAX_DEVICES      32
@@ -174,39 +175,39 @@ void inst_iq(NgaState *);  void inst_ii(NgaState *);
 
 
 /* Image, Stack, and VM variables ------------------------------------ */
-#define TOS  vm->cpu[vm->active].data[vm->cpu[vm->active].sp]
-#define NOS  vm->cpu[vm->active].data[vm->cpu[vm->active].sp-1]
-#define TORS vm->cpu[vm->active].address[vm->cpu[vm->active].rp]
+#define TOS  ACTIVE.data[ACTIVE.sp]
+#define NOS  ACTIVE.data[ACTIVE.sp-1]
+#define TORS ACTIVE.address[ACTIVE.rp]
 
 /* Global Variables -------------------------------------------------- */
 
 int verbose;
 
 void guard(NgaState *vm, int n, int m, int diff) {
-  if (vm->cpu[vm->active].sp < n) {
+  if (ACTIVE.sp < n) {
 #ifdef ENABLE_ERROR
     if (vm->ErrorHandlers[1] != 0) {
       handle_error(vm, 1);
     }
 #else
     printf("E: Data Stack Underflow");
-    vm->cpu[vm->active].sp = 0;
+    ACTIVE.sp = 0;
     return;
 #endif
   }
-  if (((vm->cpu[vm->active].sp + m) - n) > (STACK_DEPTH - 1)) {
+  if (((ACTIVE.sp + m) - n) > (STACK_DEPTH - 1)) {
 #ifdef ENABLE_ERROR
     if (vm->ErrorHandlers[2] != 0) {
       handle_error(vm, 2);
     }
 #else
     printf("E: Data Stack Overflow");
-    vm->cpu[vm->active].sp = 0;
+    ACTIVE.sp = 0;
     return;
 #endif
   }
   if (diff) {
-    if (vm->cpu[vm->active].rp + diff < 0) {
+    if (ACTIVE.rp + diff < 0) {
 #ifdef ENABLE_ERROR
     if (vm->ErrorHandlers[3] != 0) {
       handle_error(vm, 3);
@@ -215,7 +216,7 @@ void guard(NgaState *vm, int n, int m, int diff) {
       return;
 #endif
     }
-    if (vm->cpu[vm->active].rp + diff > (ADDRESSES - 1)) {
+    if (ACTIVE.rp + diff > (ADDRESSES - 1)) {
 #ifdef ENABLE_ERROR
     if (vm->ErrorHandlers[1] != 4) {
       handle_error(vm, 4);
@@ -477,13 +478,13 @@ void io_unsigned(NgaState *vm) {
   int x, y, z;
   long c;
   switch (stack_pop(vm)) {
-    case 0: vm->cpu[vm->active].u = 1; break;
+    case 0: ACTIVE.u = 1; break;
     case 1:
       c = 0;
       z = stack_pop(vm);
       y = stack_pop(vm);
       x = stack_pop(vm);
-      if (vm->cpu[vm->active].u != 0) {
+      if (ACTIVE.u != 0) {
         c = (unsigned)x * (unsigned)y;
         stack_push(vm, (unsigned)c % (unsigned)z);
         stack_push(vm, (unsigned)c / (unsigned)z);
@@ -493,7 +494,7 @@ void io_unsigned(NgaState *vm) {
         stack_push(vm, c % z);
         stack_push(vm, c / z);
       }
-      vm->cpu[vm->active].u = 0;
+      ACTIVE.u = 0;
       break;
   }
 }
@@ -573,9 +574,9 @@ void scripting_abort(NgaState *vm) {
 }
 
 void carry_out_abort(NgaState *vm) {
-  vm->cpu[vm->active].ip = IMAGE_SIZE + 1;
-  vm->cpu[vm->active].rp = 0;
-  vm->cpu[vm->active].sp = 0;
+  ACTIVE.ip = IMAGE_SIZE + 1;
+  ACTIVE.rp = 0;
+  ACTIVE.sp = 0;
 #ifdef ENABLE_FLOATS
   vm->fsp = 0;
   vm->afsp = 0;
@@ -627,7 +628,7 @@ void io_scripting(NgaState *vm) {
 void invalid_opcode(NgaState *vm, CELL opcode) {
   CELL a, i;
   printf("\nERROR (nga/execute): Invalid instruction!\n");
-  printf("At %lld, opcode %lld\n", (long long)vm->cpu[vm->active].ip, (long long)opcode);
+  printf("At %lld, opcode %lld\n", (long long)ACTIVE.ip, (long long)opcode);
   printf("Instructions: ");
   a = opcode;
   for (i = 0; i < 4; i++) {
@@ -641,39 +642,39 @@ void invalid_opcode(NgaState *vm, CELL opcode) {
 void execute(NgaState *vm, CELL cell) {
   CELL token;
   CELL opcode;
-  if (vm->cpu[vm->active].rp == 0)
-    vm->cpu[vm->active].rp = 1;
-  vm->cpu[vm->active].ip = cell;
+  if (ACTIVE.rp == 0)
+    ACTIVE.rp = 1;
+  ACTIVE.ip = cell;
   token = TIB;
-  while (vm->cpu[vm->active].ip < IMAGE_SIZE) {
+  while (ACTIVE.ip < IMAGE_SIZE) {
     if (vm->perform_abort == 0) {
-      if (vm->cpu[vm->active].ip == vm->interpret) {
+      if (ACTIVE.ip == vm->interpret) {
         token = TOS;
       }
-      opcode = vm->memory[vm->cpu[vm->active].ip];
+      opcode = vm->memory[ACTIVE.ip];
       if (validate_opcode_bundle(opcode) != 0) {
         process_opcode_bundle(vm, opcode);
       } else {
         invalid_opcode(vm, opcode);
       }
 #ifndef ENABLE_ERROR
-      if (vm->cpu[vm->active].sp < 0 || vm->cpu[vm->active].sp > STACK_DEPTH) {
+      if (ACTIVE.sp < 0 || ACTIVE.sp > STACK_DEPTH) {
         printf("\nERROR (nga/execute): Stack Limits Exceeded!\n");
-        printf("At %lld, opcode %lld. sp = %lld, core = %lld\n", (long long)vm->cpu[vm->active].ip, (long long)opcode, (long long)vm->cpu[vm->active].sp, (long long)vm->active);
+        printf("At %lld, opcode %lld. sp = %lld, core = %lld\n", (long long)ACTIVE.ip, (long long)opcode, (long long)ACTIVE.sp, (long long)vm->active);
         exit(1);
       }
-      if (vm->cpu[vm->active].rp < 0 || vm->cpu[vm->active].rp > ADDRESSES) {
+      if (ACTIVE.rp < 0 || ACTIVE.rp > ADDRESSES) {
         printf("\nERROR (nga/execute): Address Stack Limits Exceeded!\n");
-        printf("At %lld, opcode %lld. rp = %lld\n", (long long)vm->cpu[vm->active].ip, (long long)opcode, (long long)vm->cpu[vm->active].rp);
+        printf("At %lld, opcode %lld. rp = %lld\n", (long long)ACTIVE.ip, (long long)opcode, (long long)ACTIVE.rp);
         exit(1);
       }
 #endif
-      vm->cpu[vm->active].ip++;
+      ACTIVE.ip++;
 #ifdef ENABLE_MULTICORE
       switch_core(vm);
 #endif
-      if (vm->cpu[vm->active].rp == 0)
-        vm->cpu[vm->active].ip = IMAGE_SIZE;
+      if (ACTIVE.rp == 0)
+        ACTIVE.ip = IMAGE_SIZE;
     } else {
       carry_out_abort(vm);
     }
@@ -742,26 +743,26 @@ void skip_indent(FILE *fp) {
 
 void dump_stack(NgaState *vm) {
   CELL i;
-  if (vm->cpu[vm->active].sp == 0)  return;
+  if (ACTIVE.sp == 0)  return;
   printf("\nStack: ");
-  for (i = 1; i <= vm->cpu[vm->active].sp; i++) {
-    if (i == vm->cpu[vm->active].sp)
-      printf("[ TOS: %lld ]", (long long)vm->cpu[vm->active].data[i]);
+  for (i = 1; i <= ACTIVE.sp; i++) {
+    if (i == ACTIVE.sp)
+      printf("[ TOS: %lld ]", (long long)ACTIVE.data[i]);
     else
-      printf("%lld ", (long long)vm->cpu[vm->active].data[i]);
+      printf("%lld ", (long long)ACTIVE.data[i]);
   }
   printf("\n");
 }
 
 void dump_astack(NgaState *vm) {
   CELL i;
-  if (vm->cpu[vm->active].rp == 0)  return;
+  if (ACTIVE.rp == 0)  return;
   printf("\nAddress Stack: ");
-  for (i = 1; i <= vm->cpu[vm->active].rp; i++) {
-    if (i == vm->cpu[vm->active].rp)
-      printf("[ TOS: %lld ]", (long long)vm->cpu[vm->active].address[i]);
+  for (i = 1; i <= ACTIVE.rp; i++) {
+    if (i == ACTIVE.rp)
+      printf("[ TOS: %lld ]", (long long)ACTIVE.address[i]);
     else
-      printf("%lld ", (long long)vm->cpu[vm->active].address[i]);
+      printf("%lld ", (long long)ACTIVE.address[i]);
   }
   printf("\n");
 }
@@ -854,11 +855,11 @@ void include_file(NgaState *vm, char *fname, int run_tests) {
   priorBlocks = vm->codeBlocks;
   vm->codeBlocks = 0;
 
-  arp = vm->cpu[vm->active].rp;
-  aip = vm->cpu[vm->active].ip;
-  for(vm->cpu[vm->active].rp = 0; vm->cpu[vm->active].rp <= arp; vm->cpu[vm->active].rp++)
-    ReturnStack[vm->cpu[vm->active].rp] = vm->cpu[vm->active].address[vm->cpu[vm->active].rp];
-  vm->cpu[vm->active].rp = 0;
+  arp = ACTIVE.rp;
+  aip = ACTIVE.ip;
+  for(ACTIVE.rp = 0; ACTIVE.rp <= arp; ACTIVE.rp++)
+    ReturnStack[ACTIVE.rp] = ACTIVE.address[ACTIVE.rp];
+  ACTIVE.rp = 0;
 
   vm->current_source++;
   strlcpy(vm->scripting_sources[vm->current_source], fname, 8192);
@@ -907,10 +908,10 @@ void include_file(NgaState *vm, char *fname, int run_tests) {
   if (vm->perform_abort == -1) {
     carry_out_abort(vm);
   }
-  for(vm->cpu[vm->active].rp = 0; vm->cpu[vm->active].rp <= arp; vm->cpu[vm->active].rp++)
-    vm->cpu[vm->active].address[vm->cpu[vm->active].rp] = ReturnStack[vm->cpu[vm->active].rp];
-  vm->cpu[vm->active].rp = arp;
-  vm->cpu[vm->active].ip = aip;
+  for(ACTIVE.rp = 0; ACTIVE.rp <= arp; ACTIVE.rp++)
+    ACTIVE.address[ACTIVE.rp] = ReturnStack[ACTIVE.rp];
+  ACTIVE.rp = arp;
+  ACTIVE.ip = aip;
 
   if (vm->codeBlocks == 0) {
     printf("warning: no code or test blocks found!\n");
@@ -1065,7 +1066,7 @@ int main(int argc, char **argv) {
   if (argc >= 2 && argv[1][0] != '-') {
     update_rx(vm);
     include_file(vm, argv[1], 0);
-    if (vm->cpu[vm->active].sp >= 1)  dump_stack(vm);
+    if (ACTIVE.sp >= 1)  dump_stack(vm);
     exit(0);
   }
 
@@ -1123,7 +1124,7 @@ int main(int argc, char **argv) {
   }
 
   /* Dump Stack */
-  if (vm->cpu[vm->active].sp >= 1)  dump_stack(vm);
+  if (ACTIVE.sp >= 1)  dump_stack(vm);
 
   free(vm);
 }
@@ -1142,13 +1143,13 @@ int main(int argc, char **argv) {
   ---------------------------------------------------------------------*/
 
 CELL stack_pop(NgaState *vm) {
-  vm->cpu[vm->active].sp--;
-  return vm->cpu[vm->active].data[vm->cpu[vm->active].sp + 1];
+  ACTIVE.sp--;
+  return ACTIVE.data[ACTIVE.sp + 1];
 }
 
 void stack_push(NgaState *vm, CELL value) {
-  vm->cpu[vm->active].sp++;
-  vm->cpu[vm->active].data[vm->cpu[vm->active].sp] = value;
+  ACTIVE.sp++;
+  ACTIVE.data[ACTIVE.sp] = value;
 }
 
 
@@ -1244,14 +1245,14 @@ CELL load_image(NgaState *vm, char *imageFile) {
 
 void prepare_vm(NgaState *vm) {
   vm->active = 0;
-  vm->cpu[vm->active].ip = vm->cpu[vm->active].sp = vm->cpu[vm->active].rp = vm->cpu[vm->active].u = 0;
-  vm->cpu[vm->active].active = -1;
-  for (vm->cpu[vm->active].ip = 0; vm->cpu[vm->active].ip < IMAGE_SIZE; vm->cpu[vm->active].ip++)
-    vm->memory[vm->cpu[vm->active].ip] = 0; /* NO - nop instruction */
-  for (vm->cpu[vm->active].ip = 0; vm->cpu[vm->active].ip < STACK_DEPTH; vm->cpu[vm->active].ip++)
-    vm->cpu[vm->active].data[vm->cpu[vm->active].ip] = 0;
-  for (vm->cpu[vm->active].ip = 0; vm->cpu[vm->active].ip < ADDRESSES; vm->cpu[vm->active].ip++)
-    vm->cpu[vm->active].address[vm->cpu[vm->active].ip] = 0;
+  ACTIVE.ip = ACTIVE.sp = ACTIVE.rp = ACTIVE.u = 0;
+  ACTIVE.active = -1;
+  for (ACTIVE.ip = 0; ACTIVE.ip < IMAGE_SIZE; ACTIVE.ip++)
+    vm->memory[ACTIVE.ip] = 0; /* NO - nop instruction */
+  for (ACTIVE.ip = 0; ACTIVE.ip < STACK_DEPTH; ACTIVE.ip++)
+    ACTIVE.data[ACTIVE.ip] = 0;
+  for (ACTIVE.ip = 0; ACTIVE.ip < ADDRESSES; ACTIVE.ip++)
+    ACTIVE.address[ACTIVE.ip] = 0;
 }
 
 void inst_no(NgaState *vm) {
@@ -1260,21 +1261,21 @@ void inst_no(NgaState *vm) {
 
 void inst_li(NgaState *vm) {
   guard(vm, 0, 1, 0);
-  vm->cpu[vm->active].sp++;
-  vm->cpu[vm->active].ip++;
-  TOS = vm->memory[vm->cpu[vm->active].ip];
+  ACTIVE.sp++;
+  ACTIVE.ip++;
+  TOS = vm->memory[ACTIVE.ip];
 }
 
 void inst_du(NgaState *vm) {
   guard(vm, 1, 2, 0);
-  vm->cpu[vm->active].sp++;
-  vm->cpu[vm->active].data[vm->cpu[vm->active].sp] = NOS;
+  ACTIVE.sp++;
+  ACTIVE.data[ACTIVE.sp] = NOS;
 }
 
 void inst_dr(NgaState *vm) {
   guard(vm, 1, 0, 0);
-  vm->cpu[vm->active].data[vm->cpu[vm->active].sp] = 0;
-  vm->cpu[vm->active].sp--;
+  ACTIVE.data[ACTIVE.sp] = 0;
+  ACTIVE.sp--;
 }
 
 void inst_sw(NgaState *vm) {
@@ -1287,29 +1288,29 @@ void inst_sw(NgaState *vm) {
 
 void inst_pu(NgaState *vm) {
   guard(vm, 1, 0, 1);
-  vm->cpu[vm->active].rp++;
+  ACTIVE.rp++;
   TORS = TOS;
   inst_dr(vm);
 }
 
 void inst_po(NgaState *vm) {
   guard(vm, 0, 1, -1);
-  vm->cpu[vm->active].sp++;
+  ACTIVE.sp++;
   TOS = TORS;
-  vm->cpu[vm->active].rp--;
+  ACTIVE.rp--;
 }
 
 void inst_ju(NgaState *vm) {
   guard(vm, 1, 0, 0);
-  vm->cpu[vm->active].ip = TOS - 1;
+  ACTIVE.ip = TOS - 1;
   inst_dr(vm);
 }
 
 void inst_ca(NgaState *vm) {
   guard(vm, 1, 0, 1);
-  vm->cpu[vm->active].rp++;
-  TORS = vm->cpu[vm->active].ip;
-  vm->cpu[vm->active].ip = TOS - 1;
+  ACTIVE.rp++;
+  TORS = ACTIVE.ip;
+  ACTIVE.ip = TOS - 1;
   inst_dr(vm);
 }
 
@@ -1319,23 +1320,23 @@ void inst_cc(NgaState *vm) {
   a = TOS; inst_dr(vm);  /* Target */
   b = TOS; inst_dr(vm);  /* Flag   */
   if (b != 0) {
-    vm->cpu[vm->active].rp++;
-    TORS = vm->cpu[vm->active].ip;
-    vm->cpu[vm->active].ip = a - 1;
+    ACTIVE.rp++;
+    TORS = ACTIVE.ip;
+    ACTIVE.ip = a - 1;
   }
 }
 
 void inst_re(NgaState *vm) {
   guard(vm, 0, 0, -1);
-  vm->cpu[vm->active].ip = TORS;
-  vm->cpu[vm->active].rp--;
+  ACTIVE.ip = TORS;
+  ACTIVE.rp--;
 }
 
 void inst_eq(NgaState *vm) {
   guard(vm, 2, 1, 0);
-  if (vm->cpu[vm->active].u != 0) {
+  if (ACTIVE.u != 0) {
     NOS = ((unsigned)NOS == (unsigned)TOS) ? -1 : 0;
-    vm->cpu[vm->active].u = 0;
+    ACTIVE.u = 0;
   } else {
     NOS = (NOS == TOS) ? -1 : 0;
   }
@@ -1344,9 +1345,9 @@ void inst_eq(NgaState *vm) {
 
 void inst_ne(NgaState *vm) {
   guard(vm, 2, 1, 0);
-  if (vm->cpu[vm->active].u != 0) {
+  if (ACTIVE.u != 0) {
     NOS = ((unsigned)NOS != (unsigned)TOS) ? -1 : 0;
-    vm->cpu[vm->active].u = 0;
+    ACTIVE.u = 0;
   } else {
     NOS = (NOS != TOS) ? -1 : 0;
   }
@@ -1355,9 +1356,9 @@ void inst_ne(NgaState *vm) {
 
 void inst_lt(NgaState *vm) {
   guard(vm, 2, 1, 0);
-  if (vm->cpu[vm->active].u != 0) {
+  if (ACTIVE.u != 0) {
     NOS = ((unsigned)NOS < (unsigned)TOS) ? -1 : 0;
-    vm->cpu[vm->active].u = 0;
+    ACTIVE.u = 0;
   } else {
     NOS = (NOS < TOS) ? -1 : 0;
   }
@@ -1366,9 +1367,9 @@ void inst_lt(NgaState *vm) {
 
 void inst_gt(NgaState *vm) {
   guard(vm, 2, 1, 0);
-  if (vm->cpu[vm->active].u != 0) {
+  if (ACTIVE.u != 0) {
     NOS = ((unsigned)NOS > (unsigned)TOS) ? -1 : 0;
-    vm->cpu[vm->active].u = 0;
+    ACTIVE.u = 0;
   } else {
     NOS = (NOS > TOS) ? -1 : 0;
   }
@@ -1378,8 +1379,8 @@ void inst_gt(NgaState *vm) {
 void inst_fe(NgaState *vm) {
   guard(vm, 1, 1, 0);
   switch (TOS) {
-    case -1: TOS = vm->cpu[vm->active].sp - 1; break;
-    case -2: TOS = vm->cpu[vm->active].rp; break;
+    case -1: TOS = ACTIVE.sp - 1; break;
+    case -2: TOS = ACTIVE.rp; break;
     case -3: TOS = IMAGE_SIZE; break;
     case -4: TOS = CELL_MIN; break;
     case -5: TOS = CELL_MAX; break;
@@ -1396,9 +1397,9 @@ void inst_st(NgaState *vm) {
 
 void inst_ad(NgaState *vm) {
   guard(vm, 2, 1, 0);
-  if (vm->cpu[vm->active].u != 0) {
+  if (ACTIVE.u != 0) {
     NOS = (unsigned)NOS + (unsigned)TOS;
-    vm->cpu[vm->active].u = 0;
+    ACTIVE.u = 0;
   } else {
     NOS += TOS;
   }
@@ -1407,9 +1408,9 @@ void inst_ad(NgaState *vm) {
 
 void inst_su(NgaState *vm) {
   guard(vm, 2, 1, 0);
-  if (vm->cpu[vm->active].u != 0) {
+  if (ACTIVE.u != 0) {
     NOS = (unsigned)NOS - (unsigned)TOS;
-    vm->cpu[vm->active].u = 0;
+    ACTIVE.u = 0;
   } else {
     NOS -= TOS;
   }
@@ -1418,9 +1419,9 @@ void inst_su(NgaState *vm) {
 
 void inst_mu(NgaState *vm) {
   guard(vm, 2, 1, 0);
-  if (vm->cpu[vm->active].u != 0) {
+  if (ACTIVE.u != 0) {
     NOS = (unsigned)NOS * (unsigned)TOS;
-    vm->cpu[vm->active].u = 0;
+    ACTIVE.u = 0;
   } else {
     NOS *= TOS;
   }
@@ -1438,10 +1439,10 @@ void inst_di(NgaState *vm) {
     }
 #endif
   }
-  if (vm->cpu[vm->active].u != 0) {
+  if (ACTIVE.u != 0) {
     TOS = (unsigned)b / (unsigned)a;
     NOS = (unsigned)b % (unsigned)a;
-    vm->cpu[vm->active].u = 0;
+    ACTIVE.u = 0;
   } else {
     TOS = b / a;
     NOS = b % a;
@@ -1473,9 +1474,9 @@ void inst_sh(NgaState *vm) {
   if (TOS < 0)
     NOS = NOS << (0 - TOS);
   else {
-    if (vm->cpu[vm->active].u != 0) {
+    if (ACTIVE.u != 0) {
       NOS = (unsigned)x >> (unsigned)y;
-      vm->cpu[vm->active].u = 0;
+      ACTIVE.u = 0;
     } else {
       if (x < 0 && y > 0)
         NOS = x >> y | ~(~0U >> y);
@@ -1490,15 +1491,15 @@ void inst_zr(NgaState *vm) {
   guard(vm, 1, 0, 0);
   if (TOS == 0) {
     inst_dr(vm);
-    vm->cpu[vm->active].ip = TORS;
-    vm->cpu[vm->active].rp--;
+    ACTIVE.ip = TORS;
+    ACTIVE.rp--;
   }
 }
 
 void inst_ha(NgaState *vm) {
   guard(vm, 0, 0, 0);
-  vm->cpu[vm->active].ip = IMAGE_SIZE;
-  vm->cpu[vm->active].rp = 0;
+  ACTIVE.ip = IMAGE_SIZE;
+  ACTIVE.rp = 0;
   exit(0);
 }
 
@@ -1581,9 +1582,9 @@ int validate_opcode_bundle(CELL opcode) {
 }
 
 void verbose_details(NgaState *vm, CELL opcode) {
-  fprintf(stderr, "ip: %lld ", (long long)vm->cpu[vm->active].ip);
-  fprintf(stderr, "sp: %lld ", (long long)vm->cpu[vm->active].sp);
-  fprintf(stderr, "rp: %lld ", (long long)vm->cpu[vm->active].rp);
+  fprintf(stderr, "ip: %lld ", (long long)ACTIVE.ip);
+  fprintf(stderr, "sp: %lld ", (long long)ACTIVE.sp);
+  fprintf(stderr, "rp: %lld ", (long long)ACTIVE.rp);
   fprintf(stderr, "core: %lld ", (long long)vm->active);
   fprintf(stderr, "opcode: %lld\n", (long long)opcode);
 }
