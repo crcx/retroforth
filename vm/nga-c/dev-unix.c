@@ -204,10 +204,11 @@ void unix_sleep(NgaState *vm) {
 }
 
 Handler UnixActions[] = {
-  unix_system,    unix_fork,       unix_exec0,   unix_exec1,   unix_exec2,
-  unix_exec3,     unix_exit,       unix_getpid,  unix_wait,    unix_kill,
-  unix_open_pipe, unix_close_pipe, unix_write,   unix_chdir,   unix_getenv,
-  unix_putenv,    unix_sleep,      unix_run_external
+  unix_system,    unix_fork,   unix_exec0,     unix_exec1,
+  unix_exec2,     unix_exec3,  unix_exit,      unix_getpid,
+  unix_wait,      unix_kill,   unix_open_pipe, unix_close_pipe,
+  unix_write,     unix_chdir,  unix_getenv,    unix_putenv,
+  unix_sleep,     unix_run_external
 };
 
 void query_unix(NgaState *vm) {

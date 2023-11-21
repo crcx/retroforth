@@ -12,8 +12,8 @@
 **************************************************************/
 
 
-void utf32_to_utf8(uint32_t utf32_char, unsigned char* utf8_bytes, int* num_bytes);
-int fread_character(FILE *from);
+void utf32_to_utf8(uint32_t, unsigned char*, int*);
+int fread_character(FILE *);
 
 /*---------------------------------------------------------------------
   I keep an array of file handles. RETRO will use the index number as
@@ -26,10 +26,11 @@ int fread_character(FILE *from);
   ---------------------------------------------------------------------*/
 
 CELL files_get_handle(NgaState *vm) {
-  CELL i;
-  for(i = 1; i < MAX_OPEN_FILES; i++)
-    if (vm->OpenFileHandles[i] == 0)
+  for(CELL i = 1; i < MAX_OPEN_FILES; i++) {
+    if (vm->OpenFileHandles[i] == 0) {
       return i;
+    }
+  }
   return 0;
 }
 
