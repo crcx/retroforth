@@ -47,5 +47,6 @@
 - use mode array instead of conditionals when opening files and
   pipes
 - remove unused files from vm/nga-c
+- new example: vocabulary.retro
 
 ================================================================

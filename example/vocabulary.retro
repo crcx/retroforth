@@ -1,0 +1,56 @@
+# An Experiment in Vocabularies
+
+Retro provides a single dictionary. By convention, we use short
+prefixes for namespaces  and have some limited ability  to hide
+definitions  using `{{`,  `---reveal---`,  and  `}}`.  But it's
+sometimes  nice to be  able to hide words  and reveal them only
+when actually needed.
+
+These  words  provide a minimal  form of vocabulary by allowing
+temporarily relinking the main dictionary to follow a different
+path. The idea is to provide a word that points to a data stru-
+cture with the current Dictonary pointer. When in use, the main
+Dictionary is  relinked  to this,  and when closed,  the stored
+pointer is updated.
+
+~~~
+{{
+  'a var  'b var
+---reveal---
+  :forth (-) @b @a @Dictionary swap store !Dictionary ;
+  :with (a-) @Dictionary swap dup fetch !Dictionary !a !b ;
+  :voc  (s-) d:create @Dictionary comma ;
+}}
+~~~
+
+# Some Tests
+
+```
+:a #3 n:put nl ;
+:b #5 n:put nl ;
+a  b
+
+'test voc &test with
+  :a #1 n:put nl ;
+  :b #2 n:put nl ;
+a  b
+
+forth
+a  b
+&test
+:b #7 n:put nl ;
+a b
+&test with
+a b
+forth
+'foo voc &foo with
+:b #9 n:put nl ;
+a b
+forth
+
+a b
+&test with a b :c #100 n:put nl ; c forth
+c
+&foo with c forth
+&test with c forth
+```
