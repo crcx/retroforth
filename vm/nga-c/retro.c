@@ -640,17 +640,12 @@ void invalid_opcode(NgaState *vm, CELL opcode) {
 }
 
 void execute(NgaState *vm, CELL cell) {
-  CELL token;
   CELL opcode;
   if (ACTIVE.rp == 0)
     ACTIVE.rp = 1;
   ACTIVE.ip = cell;
-  token = TIB;
   while (ACTIVE.ip < IMAGE_SIZE) {
     if (vm->perform_abort == 0) {
-      if (ACTIVE.ip == vm->interpret) {
-        token = TOS;
-      }
       opcode = vm->memory[ACTIVE.ip];
       if (validate_opcode_bundle(opcode) != 0) {
         process_opcode_bundle(vm, opcode);
