@@ -57,15 +57,13 @@ CELL files_get_handle(NgaState *vm) {
 void file_open(NgaState *vm) {
   CELL slot, mode, name;
   char *request;
+  char *modes[] = {"rb", "w", "a", "rb+"};
   slot = files_get_handle(vm);
   mode = stack_pop(vm);
   name = stack_pop(vm);
   request = string_extract(vm, name);
   if (slot > 0) {
-    if (mode == 0)  vm->OpenFileHandles[slot] = fopen(request, "rb");
-    if (mode == 1)  vm->OpenFileHandles[slot] = fopen(request, "w");
-    if (mode == 2)  vm->OpenFileHandles[slot] = fopen(request, "a");
-    if (mode == 3)  vm->OpenFileHandles[slot] = fopen(request, "rb+");
+    vm->OpenFileHandles[slot] = fopen(request, modes[mode]);
   }
   if (vm->OpenFileHandles[slot] == NULL) {
     vm->OpenFileHandles[slot] = 0;

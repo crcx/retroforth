@@ -42,14 +42,13 @@
 void unix_open_pipe(NgaState *vm) {
   CELL slot, mode, name;
   char *request;
+  const char *modes[] = {"r", "w", "", "r+"};
   slot = files_get_handle(vm);
   mode = stack_pop(vm);
   name = stack_pop(vm);
   request = string_extract(vm, name);
   if (slot > 0) {
-    if (mode == 0)  vm->OpenFileHandles[slot] = popen(request, "r");
-    if (mode == 1)  vm->OpenFileHandles[slot] = popen(request, "w");
-    if (mode == 3)  vm->OpenFileHandles[slot] = popen(request, "r+");
+    vm->OpenFileHandles[slot] = popen(request, modes[mode]);
   }
   if (vm->OpenFileHandles[slot] == NULL) {
     vm->OpenFileHandles[slot] = 0;
