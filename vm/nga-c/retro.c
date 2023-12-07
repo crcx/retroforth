@@ -102,19 +102,23 @@ struct NgaState {
 };
 
 
-/* Function Prototypes ----------------------------------------------- */
-void handle_error(NgaState *, CELL);
 
-CELL stack_pop(NgaState *);
-void stack_push(NgaState *, CELL);
-CELL string_inject(NgaState *, char *, CELL);
-char *string_extract(NgaState *, CELL);
-void update_rx(NgaState *);
-void include_file(NgaState *, char *, int);
+#define V void
 
 #define IO(name) void io_name(NgaState *); void query_name(NgaState *);
 
-void register_device(NgaState *, void *, void *);
+
+/* Function Prototypes ----------------------------------------------- */
+V handle_error(NgaState *, CELL);
+
+CELL stack_pop(NgaState *);
+V stack_push(NgaState *, CELL);
+CELL string_inject(NgaState *, char *, CELL);
+char *string_extract(NgaState *, CELL);
+V update_rx(NgaState *);
+V include_file(NgaState *, char *, int);
+
+V register_device(NgaState *, V *, V *);
 
 IO(output)
 IO(keyboard)
@@ -147,10 +151,10 @@ IO(blocks)
 
 IO(image)
 
-void load_embedded_image(NgaState *);
+V load_embedded_image(NgaState *);
 CELL load_image(NgaState *, char *);
-void prepare_vm(NgaState *);
-void process_opcode_bundle(NgaState *, CELL);
+V prepare_vm(NgaState *);
+V process_opcode_bundle(NgaState *, CELL);
 int validate_opcode_bundle(CELL);
 
 #ifdef NEEDS_STRL
@@ -158,21 +162,21 @@ size_t strlcat(char *dst, const char *src, size_t dsize);
 size_t strlcpy(char *dst, const char *src, size_t dsize);
 #endif
 
-void inst_no(NgaState *);  void inst_li(NgaState *);
-void inst_du(NgaState *);  void inst_dr(NgaState *);
-void inst_sw(NgaState *);  void inst_pu(NgaState *);
-void inst_po(NgaState *);  void inst_ju(NgaState *);
-void inst_ca(NgaState *);  void inst_cc(NgaState *);
-void inst_re(NgaState *);  void inst_eq(NgaState *);
-void inst_ne(NgaState *);  void inst_lt(NgaState *);
-void inst_gt(NgaState *);  void inst_fe(NgaState *);
-void inst_st(NgaState *);  void inst_ad(NgaState *);
-void inst_su(NgaState *);  void inst_mu(NgaState *);
-void inst_di(NgaState *);  void inst_an(NgaState *);
-void inst_or(NgaState *);  void inst_xo(NgaState *);
-void inst_sh(NgaState *);  void inst_zr(NgaState *);
-void inst_ha(NgaState *);  void inst_ie(NgaState *);
-void inst_iq(NgaState *);  void inst_ii(NgaState *);
+V inst_no(NgaState *);  V inst_li(NgaState *);
+V inst_du(NgaState *);  V inst_dr(NgaState *);
+V inst_sw(NgaState *);  V inst_pu(NgaState *);
+V inst_po(NgaState *);  V inst_ju(NgaState *);
+V inst_ca(NgaState *);  V inst_cc(NgaState *);
+V inst_re(NgaState *);  V inst_eq(NgaState *);
+V inst_ne(NgaState *);  V inst_lt(NgaState *);
+V inst_gt(NgaState *);  V inst_fe(NgaState *);
+V inst_st(NgaState *);  V inst_ad(NgaState *);
+V inst_su(NgaState *);  V inst_mu(NgaState *);
+V inst_di(NgaState *);  V inst_an(NgaState *);
+V inst_or(NgaState *);  V inst_xo(NgaState *);
+V inst_sh(NgaState *);  V inst_zr(NgaState *);
+V inst_ha(NgaState *);  V inst_ie(NgaState *);
+V inst_iq(NgaState *);  V inst_ii(NgaState *);
 
 
 /* Image, Stack, and VM variables ------------------------------------ */
@@ -184,7 +188,7 @@ void inst_iq(NgaState *);  void inst_ii(NgaState *);
 
 int verbose;
 
-void guard(NgaState *vm, int n, int m, int diff) {
+V guard(NgaState *vm, int n, int m, int diff) {
   if (ACTIVE.sp < n) {
 #ifdef ENABLE_ERROR
     if (vm->ErrorHandlers[1] != 0) {
@@ -280,13 +284,13 @@ void guard(NgaState *vm, int n, int m, int diff) {
   Now on to I/O and extensions!
   ---------------------------------------------------------------------*/
 #ifdef USE_UTF32
-void display_utf8(const unsigned char* utf8_bytes, int num_bytes) {
+V display_utf8(const unsigned char* utf8_bytes, int num_bytes) {
     if (write(STDOUT_FILENO, utf8_bytes, num_bytes) == -1) {
         perror("Error writing to /dev/stdout");
     }
 }
 
-void utf32_to_utf8(uint32_t utf32_char, unsigned char* utf8_bytes, int* num_bytes) {
+V utf32_to_utf8(uint32_t utf32_char, unsigned char* utf8_bytes, int* num_bytes) {
     if (utf32_char < 0x80) {
         utf8_bytes[0] = (unsigned char)utf32_char;
         *num_bytes = 1;
@@ -311,7 +315,7 @@ void utf32_to_utf8(uint32_t utf32_char, unsigned char* utf8_bytes, int* num_byte
 }
 #endif
 
-void io_output(NgaState *vm) {
+V io_output(NgaState *vm) {
 #ifdef USE_UTF32
   unsigned char utf8_bytes[4];
   int num_bytes;
@@ -323,7 +327,7 @@ void io_output(NgaState *vm) {
   fflush(stdout);
 }
 
-void query_output(NgaState *vm) {
+V query_output(NgaState *vm) {
   stack_push(vm, 0);
   stack_push(vm, 0);
 }
@@ -419,7 +423,7 @@ int fread_character(FILE *from) {
 }
 #endif
 
-void io_keyboard(NgaState *vm) {
+V io_keyboard(NgaState *vm) {
 #ifdef USE_UTF32
   stack_push(vm, read_character(STDIN_FILENO));
 #else
@@ -428,7 +432,7 @@ void io_keyboard(NgaState *vm) {
   if (TOS == 127) TOS = 8;
 }
 
-void query_keyboard(NgaState *vm) {
+V query_keyboard(NgaState *vm) {
   stack_push(vm, 0);
   stack_push(vm, 1);
 }
@@ -436,7 +440,7 @@ void query_keyboard(NgaState *vm) {
 /*=====================================================================*/
 
 #ifdef ENABLE_UNSIGNED
-void io_unsigned(NgaState *vm) {
+V io_unsigned(NgaState *vm) {
   int x, y, z;
   long c;
   switch (stack_pop(vm)) {
@@ -461,7 +465,7 @@ void io_unsigned(NgaState *vm) {
   }
 }
 
-void query_unsigned(NgaState *vm) {
+V query_unsigned(NgaState *vm) {
   stack_push(vm, 0);
   stack_push(vm, 8101);
 }
@@ -469,7 +473,7 @@ void query_unsigned(NgaState *vm) {
 
 /*=====================================================================*/
 
-void io_image(NgaState *vm) {
+V io_image(NgaState *vm) {
   FILE *fp;
   char *f = string_extract(vm, stack_pop(vm));
   if ((fp = fopen(f, "wb")) == NULL) {
@@ -480,7 +484,7 @@ void io_image(NgaState *vm) {
   fclose(fp);
 }
 
-void query_image(NgaState *vm) {
+V query_image(NgaState *vm) {
   stack_push(vm, 0);
   stack_push(vm, 1000);
 }
@@ -493,49 +497,49 @@ void query_image(NgaState *vm) {
   Scripting Support
   ---------------------------------------------------------------------*/
 
-void scripting_arg(NgaState *vm) {
+V scripting_arg(NgaState *vm) {
   CELL a, b;
   a = stack_pop(vm);
   b = stack_pop(vm);
   stack_push(vm, string_inject(vm, vm->sys_argv[a + 2], b));
 }
 
-void scripting_arg_count(NgaState *vm) {
+V scripting_arg_count(NgaState *vm) {
   stack_push(vm, vm->sys_argc - 2);
 }
 
-void scripting_include(NgaState *vm) {
+V scripting_include(NgaState *vm) {
   include_file(vm, string_extract(vm, stack_pop(vm)), 0);
 }
 
-void scripting_name(NgaState *vm) {
+V scripting_name(NgaState *vm) {
   stack_push(vm, string_inject(vm, vm->sys_argv[1], stack_pop(vm)));
 }
 
 /* addeded in scripting i/o device, revision 1 */
-void scripting_source(NgaState *vm) {
+V scripting_source(NgaState *vm) {
   stack_push(vm, string_inject(vm, vm->scripting_sources[vm->current_source], stack_pop(vm)));
 }
 
-void scripting_line(NgaState *vm) {
+V scripting_line(NgaState *vm) {
   stack_push(vm, vm->currentLine);
 }
 
-void scripting_ignore_to_eol(NgaState *vm) {
+V scripting_ignore_to_eol(NgaState *vm) {
   vm->ignoreToEOL = -1;
 }
 
-void scripting_ignore_to_eof(NgaState *vm) {
+V scripting_ignore_to_eof(NgaState *vm) {
   vm->ignoreToEOF = -1;
 }
 
-void scripting_abort(NgaState *vm) {
+V scripting_abort(NgaState *vm) {
   scripting_ignore_to_eol(vm);
   scripting_ignore_to_eof(vm);
   vm->perform_abort = -1;
 }
 
-void carry_out_abort(NgaState *vm) {
+V carry_out_abort(NgaState *vm) {
   ACTIVE.ip = IMAGE_SIZE + 1;
   ACTIVE.rp = 0;
   ACTIVE.sp = 0;
@@ -553,7 +557,7 @@ void carry_out_abort(NgaState *vm) {
   vm->current_source = 0;
 }
 
-void scripting_line_text(NgaState *vm) {
+V scripting_line_text(NgaState *vm) {
   CELL target = stack_pop(vm);
   string_inject(vm, vm->line, target);
 }
@@ -566,12 +570,12 @@ Handler ScriptingActions[] = {
   scripting_abort,         scripting_line_text
 };
 
-void query_scripting(NgaState *vm) {
+V query_scripting(NgaState *vm) {
   stack_push(vm, 2);
   stack_push(vm, 9);
 }
 
-void io_scripting(NgaState *vm) {
+V io_scripting(NgaState *vm) {
   ScriptingActions[stack_pop(vm)](vm);
 }
 
@@ -587,7 +591,7 @@ void io_scripting(NgaState *vm) {
   the word being run, and it's dependencies) are finished.
   ---------------------------------------------------------------------*/
 
-void invalid_opcode(NgaState *vm, CELL opcode) {
+V invalid_opcode(NgaState *vm, CELL opcode) {
   CELL a, i;
   printf("\nERROR (nga/execute): Invalid instruction!\n");
   printf("At %lld, opcode %lld\n", (long long)ACTIVE.ip, (long long)opcode);
@@ -601,7 +605,7 @@ void invalid_opcode(NgaState *vm, CELL opcode) {
   exit(1);
 }
 
-void execute(NgaState *vm, CELL cell) {
+V execute(NgaState *vm, CELL cell) {
   CELL opcode;
   if (ACTIVE.rp == 0)
     ACTIVE.rp = 1;
@@ -645,7 +649,7 @@ void execute(NgaState *vm, CELL cell) {
   calls `interpret` to process it.
   ---------------------------------------------------------------------*/
 
-void evaluate(NgaState *vm, char *s) {
+V evaluate(NgaState *vm, char *s) {
   if (strlen(s) == 0)  return;
   string_inject(vm, s, TIB);
   stack_push(vm, TIB);
@@ -663,7 +667,7 @@ int not_eol(int c) {
   return (c != 9) && (c != 10) && (c != 13) && (c != 32) && (c != EOF) && (c != 0);
 }
 
-void read_token(FILE *file, char *token_buffer) {
+V read_token(FILE *file, char *token_buffer) {
 #ifdef USE_UTF32
   int ch = fread_character(file);
 #else
@@ -686,7 +690,7 @@ void read_token(FILE *file, char *token_buffer) {
 }
 
 
-void skip_indent(FILE *fp) {
+V skip_indent(FILE *fp) {
   int ch = getc(fp);
   while (ch == ' ') {
     ch = getc(fp);
@@ -698,7 +702,7 @@ void skip_indent(FILE *fp) {
   Display the Stack Contents
   ---------------------------------------------------------------------*/
 
-void dump_stack(NgaState *vm) {
+V dump_stack(NgaState *vm) {
   if (ACTIVE.sp == 0)  return;
   printf("\nStack: ");
   for (CELL i = 1; i <= ACTIVE.sp; i++) {
@@ -710,7 +714,7 @@ void dump_stack(NgaState *vm) {
   printf("\n");
 }
 
-void dump_astack(NgaState *vm) {
+V dump_astack(NgaState *vm) {
   if (ACTIVE.rp == 0)  return;
   printf("\nAddress Stack: ");
   for (CELL i = 1; i <= ACTIVE.rp; i++) {
@@ -764,7 +768,7 @@ int fence_boundary(NgaState *vm, char *buffer, int tests_enabled) {
   And now for the actual `include_file()` function.
   ---------------------------------------------------------------------*/
 
-void read_line(NgaState *vm, FILE *file, char *token_buffer) {
+V read_line(NgaState *vm, FILE *file, char *token_buffer) {
   int ch = getc(file);
   int count = 0;
   token_buffer[0] = '\0';
@@ -788,7 +792,7 @@ int count_tokens(char *line) {
   return count;
 }
 
-void include_file(NgaState *vm, char *fname, int run_tests) {
+V include_file(NgaState *vm, char *fname, int run_tests) {
   int inBlock = 0;                 /* Tracks status of in/out of block */
   int priorBlocks = 0;
   char source[64 * 1024];          /* Token buffer [about 64K]         */
@@ -884,7 +888,7 @@ void include_file(NgaState *vm, char *fname, int run_tests) {
   `image.c`) to memory.
   ---------------------------------------------------------------------*/
 
-void initialize(NgaState *vm) {
+V initialize(NgaState *vm) {
   prepare_vm(vm);
   load_embedded_image(vm);
 }
@@ -900,7 +904,7 @@ int arg_is(char *argv, char *t) {
 }
 
 
-void help(char *exename) {
+V help(char *exename) {
   printf("Scripting Usage: %s filename\n\n", exename);
   printf("Interactive Usage: %s [-h] [-i] [-f filename] [-t filename]\n\n", exename);
   printf("Valid Arguments:\n\n");
@@ -923,7 +927,7 @@ void help(char *exename) {
 /* Signal Handler -----------------------------------------------------*/
 
 #ifdef ENABLE_SIGNALS
-static void sig_handler(int _)
+static V sig_handler(int _)
 {
   printf("\nCaught: %d\n", _);
   exit(1);
@@ -935,7 +939,7 @@ enum flags {
   FLAG_HELP, FLAG_INTERACTIVE,
 };
 
-void register_devices(NgaState *vm) {
+V register_devices(NgaState *vm) {
   register_device(vm, io_output, query_output);
   register_device(vm, io_keyboard, query_keyboard);
   register_device(vm, io_filesystem, query_filesystem);
@@ -1102,7 +1106,7 @@ CELL stack_pop(NgaState *vm) {
   return ACTIVE.data[ACTIVE.sp + 1];
 }
 
-void stack_push(NgaState *vm, CELL value) {
+V stack_push(NgaState *vm, CELL value) {
   ACTIVE.sp++;
   ACTIVE.data[ACTIVE.sp] = value;
 }
@@ -1155,7 +1159,7 @@ char *string_extract(NgaState *vm, CELL at) {
   or interpreter.
   ---------------------------------------------------------------------*/
 
-void update_rx(NgaState *vm) {
+V update_rx(NgaState *vm) {
   vm->Dictionary = vm->memory[2];
   vm->interpret = vm->memory[5];
   if (vm->memory[10] != 0) { execute(vm, vm->memory[10]); }
@@ -1163,13 +1167,13 @@ void update_rx(NgaState *vm) {
 
 /*=====================================================================*/
 
-void register_device(NgaState *vm, void *handler, void *query) {
+V register_device(NgaState *vm, V *handler, V *query) {
   vm->IO_deviceHandlers[vm->devices] = handler;
   vm->IO_queryHandlers[vm->devices] = query;
   vm->devices++;
 }
 
-void load_embedded_image(NgaState *vm) {
+V load_embedded_image(NgaState *vm) {
   int i;
   for (i = 0; i < ngaImageCells; i++)
     vm->memory[i] = ngaImage[i];
@@ -1198,7 +1202,7 @@ CELL load_image(NgaState *vm, char *imageFile) {
   return imageSize;
 }
 
-void prepare_vm(NgaState *vm) {
+V prepare_vm(NgaState *vm) {
   vm->active = 0;
   ACTIVE.ip = ACTIVE.sp = ACTIVE.rp = ACTIVE.u = 0;
   ACTIVE.active = -1;
@@ -1210,30 +1214,30 @@ void prepare_vm(NgaState *vm) {
     ACTIVE.address[ACTIVE.ip] = 0;
 }
 
-void inst_no(NgaState *vm) {
+V inst_no(NgaState *vm) {
   guard(vm, 0, 0, 0);
 }
 
-void inst_li(NgaState *vm) {
+V inst_li(NgaState *vm) {
   guard(vm, 0, 1, 0);
   ACTIVE.sp++;
   ACTIVE.ip++;
   TOS = vm->memory[ACTIVE.ip];
 }
 
-void inst_du(NgaState *vm) {
+V inst_du(NgaState *vm) {
   guard(vm, 1, 2, 0);
   ACTIVE.sp++;
   ACTIVE.data[ACTIVE.sp] = NOS;
 }
 
-void inst_dr(NgaState *vm) {
+V inst_dr(NgaState *vm) {
   guard(vm, 1, 0, 0);
   ACTIVE.data[ACTIVE.sp] = 0;
   ACTIVE.sp--;
 }
 
-void inst_sw(NgaState *vm) {
+V inst_sw(NgaState *vm) {
   guard(vm, 2, 2, 0);
   CELL a;
   a = TOS;
@@ -1241,27 +1245,27 @@ void inst_sw(NgaState *vm) {
   NOS = a;
 }
 
-void inst_pu(NgaState *vm) {
+V inst_pu(NgaState *vm) {
   guard(vm, 1, 0, 1);
   ACTIVE.rp++;
   TORS = TOS;
   inst_dr(vm);
 }
 
-void inst_po(NgaState *vm) {
+V inst_po(NgaState *vm) {
   guard(vm, 0, 1, -1);
   ACTIVE.sp++;
   TOS = TORS;
   ACTIVE.rp--;
 }
 
-void inst_ju(NgaState *vm) {
+V inst_ju(NgaState *vm) {
   guard(vm, 1, 0, 0);
   ACTIVE.ip = TOS - 1;
   inst_dr(vm);
 }
 
-void inst_ca(NgaState *vm) {
+V inst_ca(NgaState *vm) {
   guard(vm, 1, 0, 1);
   ACTIVE.rp++;
   TORS = ACTIVE.ip;
@@ -1269,7 +1273,7 @@ void inst_ca(NgaState *vm) {
   inst_dr(vm);
 }
 
-void inst_cc(NgaState *vm) {
+V inst_cc(NgaState *vm) {
   guard(vm, 2, 0, 1);
   CELL a, b;
   a = TOS; inst_dr(vm);  /* Target */
@@ -1281,13 +1285,13 @@ void inst_cc(NgaState *vm) {
   }
 }
 
-void inst_re(NgaState *vm) {
+V inst_re(NgaState *vm) {
   guard(vm, 0, 0, -1);
   ACTIVE.ip = TORS;
   ACTIVE.rp--;
 }
 
-void inst_eq(NgaState *vm) {
+V inst_eq(NgaState *vm) {
   guard(vm, 2, 1, 0);
   if (ACTIVE.u != 0) {
     NOS = ((unsigned)NOS == (unsigned)TOS) ? -1 : 0;
@@ -1298,7 +1302,7 @@ void inst_eq(NgaState *vm) {
   inst_dr(vm);
 }
 
-void inst_ne(NgaState *vm) {
+V inst_ne(NgaState *vm) {
   guard(vm, 2, 1, 0);
   if (ACTIVE.u != 0) {
     NOS = ((unsigned)NOS != (unsigned)TOS) ? -1 : 0;
@@ -1309,7 +1313,7 @@ void inst_ne(NgaState *vm) {
   inst_dr(vm);
 }
 
-void inst_lt(NgaState *vm) {
+V inst_lt(NgaState *vm) {
   guard(vm, 2, 1, 0);
   if (ACTIVE.u != 0) {
     NOS = ((unsigned)NOS < (unsigned)TOS) ? -1 : 0;
@@ -1320,7 +1324,7 @@ void inst_lt(NgaState *vm) {
   inst_dr(vm);
 }
 
-void inst_gt(NgaState *vm) {
+V inst_gt(NgaState *vm) {
   guard(vm, 2, 1, 0);
   if (ACTIVE.u != 0) {
     NOS = ((unsigned)NOS > (unsigned)TOS) ? -1 : 0;
@@ -1331,7 +1335,7 @@ void inst_gt(NgaState *vm) {
   inst_dr(vm);
 }
 
-void inst_fe(NgaState *vm) {
+V inst_fe(NgaState *vm) {
   guard(vm, 1, 1, 0);
   switch (TOS) {
     case -1: TOS = ACTIVE.sp - 1; break;
@@ -1343,14 +1347,14 @@ void inst_fe(NgaState *vm) {
   }
 }
 
-void inst_st(NgaState *vm) {
+V inst_st(NgaState *vm) {
   guard(vm, 2, 0, 0);
   vm->memory[TOS] = NOS;
   inst_dr(vm);
   inst_dr(vm);
 }
 
-void inst_ad(NgaState *vm) {
+V inst_ad(NgaState *vm) {
   guard(vm, 2, 1, 0);
   if (ACTIVE.u != 0) {
     NOS = (unsigned)NOS + (unsigned)TOS;
@@ -1361,7 +1365,7 @@ void inst_ad(NgaState *vm) {
   inst_dr(vm);
 }
 
-void inst_su(NgaState *vm) {
+V inst_su(NgaState *vm) {
   guard(vm, 2, 1, 0);
   if (ACTIVE.u != 0) {
     NOS = (unsigned)NOS - (unsigned)TOS;
@@ -1372,7 +1376,7 @@ void inst_su(NgaState *vm) {
   inst_dr(vm);
 }
 
-void inst_mu(NgaState *vm) {
+V inst_mu(NgaState *vm) {
   guard(vm, 2, 1, 0);
   if (ACTIVE.u != 0) {
     NOS = (unsigned)NOS * (unsigned)TOS;
@@ -1383,7 +1387,7 @@ void inst_mu(NgaState *vm) {
   inst_dr(vm);
 }
 
-void inst_di(NgaState *vm) {
+V inst_di(NgaState *vm) {
   guard(vm, 2, 2, 0);
   CELL a, b;
   a = TOS;
@@ -1404,25 +1408,25 @@ void inst_di(NgaState *vm) {
   }
 }
 
-void inst_an(NgaState *vm) {
+V inst_an(NgaState *vm) {
   guard(vm, 2, 1, 0);
   NOS = TOS & NOS;
   inst_dr(vm);
 }
 
-void inst_or(NgaState *vm) {
+V inst_or(NgaState *vm) {
   guard(vm, 2, 1, 0);
   NOS = TOS | NOS;
   inst_dr(vm);
 }
 
-void inst_xo(NgaState *vm) {
+V inst_xo(NgaState *vm) {
   guard(vm, 2, 1, 0);
   NOS = TOS ^ NOS;
   inst_dr(vm);
 }
 
-void inst_sh(NgaState *vm) {
+V inst_sh(NgaState *vm) {
   guard(vm, 2, 1, 0);
   CELL y = TOS;
   CELL x = NOS;
@@ -1442,7 +1446,7 @@ void inst_sh(NgaState *vm) {
   inst_dr(vm);
 }
 
-void inst_zr(NgaState *vm) {
+V inst_zr(NgaState *vm) {
   guard(vm, 1, 0, 0);
   if (TOS == 0) {
     inst_dr(vm);
@@ -1451,24 +1455,24 @@ void inst_zr(NgaState *vm) {
   }
 }
 
-void inst_ha(NgaState *vm) {
+V inst_ha(NgaState *vm) {
   guard(vm, 0, 0, 0);
   ACTIVE.ip = IMAGE_SIZE;
   ACTIVE.rp = 0;
   exit(0);
 }
 
-void inst_ie(NgaState *vm) {
+V inst_ie(NgaState *vm) {
   guard(vm, 1, 1, 0);
   stack_push(vm, vm->devices);
 }
 
-void inst_iq(NgaState *vm) {
+V inst_iq(NgaState *vm) {
   guard(vm, 1, 1, 0);
   vm->IO_queryHandlers[stack_pop(vm)](vm);
 }
 
-void inst_ii(NgaState *vm) {
+V inst_ii(NgaState *vm) {
   guard(vm, 1, 0, 0);
   vm->IO_deviceHandlers[stack_pop(vm)](vm);
 }
@@ -1481,7 +1485,7 @@ Handler instructions[] = {
   inst_iq, inst_ii
 };
 
-void process_opcode(NgaState *vm, CELL opcode) {
+V process_opcode(NgaState *vm, CELL opcode) {
 #ifdef FAST
   switch (opcode) {
     case 0: break;
@@ -1538,7 +1542,7 @@ int validate_opcode_bundle(CELL opcode) {
   return isValid;
 }
 
-void verbose_details(NgaState *vm, CELL opcode) {
+V verbose_details(NgaState *vm, CELL opcode) {
   fprintf(stderr, "ip: %lld ", (long long)ACTIVE.ip);
   fprintf(stderr, "sp: %lld ", (long long)ACTIVE.sp);
   fprintf(stderr, "rp: %lld ", (long long)ACTIVE.rp);
@@ -1547,7 +1551,7 @@ void verbose_details(NgaState *vm, CELL opcode) {
 }
 
 #define INST(n) ((opcode >> n) & 0xFF) != 0
-void process_opcode_bundle(NgaState *vm, CELL opcode) {
+V process_opcode_bundle(NgaState *vm, CELL opcode) {
   if (INST(0))  instructions[opcode & 0xFF](vm);
   if (INST(8))  instructions[(opcode >> 8) & 0xFF](vm);
   if (INST(16)) instructions[(opcode >> 16) & 0xFF](vm);
