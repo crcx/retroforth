@@ -112,39 +112,40 @@ char *string_extract(NgaState *, CELL);
 void update_rx(NgaState *);
 void include_file(NgaState *, char *, int);
 
+#define IO(name) void io_name(NgaState *); void query_name(NgaState *);
+
 void register_device(NgaState *, void *, void *);
 
-void io_output(NgaState *);         void query_output(NgaState *);
-void io_keyboard(NgaState *);       void query_keyboard(NgaState *);
-void query_filesystem(NgaState *);  void io_filesystem(NgaState *);
-void io_clock(NgaState *);          void query_clock(NgaState *);
-void io_scripting(NgaState *);      void query_scripting(NgaState *);
-void io_rng(NgaState *);            void query_rng(NgaState *);
-void io_unsigned(NgaState *);       void query_unsigned(NgaState *);
+IO(output)
+IO(keyboard)
+IO(filesystem)
+IO(scripting)
+IO(rng)
+IO(unsigned)
 
 #ifdef ENABLE_UNIX
-void query_unix(NgaState *);        void io_unix(NgaState *);
+IO(unix)
 #endif
 
 #ifdef ENABLE_FLOATS
-void io_floatingpoint(NgaState *);  void query_floatingpoint(NgaState *);
+IO(floatingpoint)
 #endif
 
 #ifdef ENABLE_SOCKETS
-void io_socket(NgaState *);         void query_socket(NgaState *);
+IO(socket)
 #endif
 
 #ifdef ENABLE_MALLOC
 #ifdef BIT64
-void io_malloc(NgaState *);         void query_malloc(NgaState *);
+IO(malloc)
 #endif
 #endif
 
 #ifdef ENABLE_BLOCKS
-void io_blocks(NgaState *);         void query_blocks(NgaState *);
+IO(blocks)
 #endif
 
-void io_image(NgaState *);          void query_image(NgaState *);
+IO(image)
 
 void load_embedded_image(NgaState *);
 CELL load_image(NgaState *, char *);
@@ -239,47 +240,8 @@ void guard(NgaState *vm, int n, int m, int diff) {
 #include "dev-error.c"
 #endif
 
-/* Block Storage -------------------------------------------- */
 #ifdef ENABLE_BLOCKS
-void io_blocks(NgaState *vm) {
-  CELL op, buffer, block;
-  int32_t m[1024];
-  op = stack_pop(vm);
-
-  if (op == 0) {
-    buffer = stack_pop(vm);
-    block = stack_pop(vm);
-    int fp = open(vm->BlockFile, O_RDONLY, 0666);
-    lseek(fp, 4096 * block, SEEK_SET);
-    read(fp, m, 4096);
-    for (int i = 0; i < 1024; i++) {
-      vm->memory[buffer + i] = (CELL)m[i];
-    }
-    close(fp);
-  }
-
-  if (op == 1) {
-    buffer = stack_pop(vm);
-    block = stack_pop(vm);
-    int fp = open(vm->BlockFile, O_WRONLY, 0666);
-    lseek(fp, 4096 * block, SEEK_SET);
-    for (int i = 0; i < 1024; i++) {
-      m[i] = (int32_t)vm->memory[buffer + i];
-    }
-    write(fp, m, 4096);
-    close(fp);
-  }
-
-  if (op == 2) {
-    buffer = stack_pop(vm);
-    strlcpy(vm->BlockFile, string_extract(vm, buffer), 1024);
-  }
-}
-
-void query_blocks(NgaState *vm) {
-  stack_push(vm, 0);
-  stack_push(vm, 3);
-}
+#include "dev-blocks.c"
 #endif
 
 #include "dev-files.c"
