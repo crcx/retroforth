@@ -142,7 +142,7 @@ void io_socket(NgaState *vm) {
 
 void query_socket(NgaState *vm) {
   stack_push(vm, 0);
-  stack_push(vm, 7);
+  stack_push(vm, DEVICE_SOCKETS);
 }
 
 #endif

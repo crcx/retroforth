@@ -77,6 +77,6 @@ void io_multicore(NgaState *vm) {
 
 void query_multicore(NgaState *vm) {
   stack_push(vm, 0);
-  stack_push(vm, 8000);  /* device type 8000 */
+  stack_push(vm, DEVICE_MULTICORE);
 }
 #endif

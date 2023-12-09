@@ -26,6 +26,7 @@
 #include <unistd.h>
 
 #include "config.h"
+#include "devices.h"
 
 #define ACTIVE vm->cpu[vm->active]
 #define TIB vm->memory[7]         /* Location of TIB                   */
@@ -329,7 +330,7 @@ V io_output(NgaState *vm) {
 
 V query_output(NgaState *vm) {
   stack_push(vm, 0);
-  stack_push(vm, 0);
+  stack_push(vm, DEVICE_OUTPUT);
 }
 
 
@@ -434,7 +435,7 @@ V io_keyboard(NgaState *vm) {
 
 V query_keyboard(NgaState *vm) {
   stack_push(vm, 0);
-  stack_push(vm, 1);
+  stack_push(vm, DEVICE_KEYBOARD);
 }
 
 /*=====================================================================*/
@@ -467,7 +468,7 @@ V io_unsigned(NgaState *vm) {
 
 V query_unsigned(NgaState *vm) {
   stack_push(vm, 0);
-  stack_push(vm, 8101);
+  stack_push(vm, DEVICE_UNSIGNED);
 }
 #endif
 
@@ -486,7 +487,7 @@ V io_image(NgaState *vm) {
 
 V query_image(NgaState *vm) {
   stack_push(vm, 0);
-  stack_push(vm, 1000);
+  stack_push(vm, DEVICE_IMAGE);
 }
 
 
@@ -572,7 +573,7 @@ Handler ScriptingActions[] = {
 
 V query_scripting(NgaState *vm) {
   stack_push(vm, 2);
-  stack_push(vm, 9);
+  stack_push(vm, DEVICE_SCRIPTING);
 }
 
 V io_scripting(NgaState *vm) {

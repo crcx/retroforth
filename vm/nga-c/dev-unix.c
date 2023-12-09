@@ -213,7 +213,7 @@ Handler UnixActions[] = {
 
 void query_unix(NgaState *vm) {
   stack_push(vm, 3);
-  stack_push(vm, 8);
+  stack_push(vm, DEVICE_UNIX);
 }
 
 void io_unix(NgaState *vm) {

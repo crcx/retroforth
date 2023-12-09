@@ -49,7 +49,7 @@ void io_error(NgaState *vm) {
 
 void query_error(NgaState *vm) {
   stack_push(vm, 0);
-  stack_push(vm, 1234);
+  stack_push(vm, DEVICE_ERROR);
 }
 
 #endif

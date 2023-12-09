@@ -33,6 +33,6 @@ void io_rng(NgaState *vm) {
 
 void query_rng(NgaState *vm) {
   stack_push(vm, 0);
-  stack_push(vm, 10);
+  stack_push(vm, DEVICE_RNG);
 }
 #endif

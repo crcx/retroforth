@@ -86,7 +86,7 @@ Handler ClockActions[] = {
 
 void query_clock(NgaState *vm) {
   stack_push(vm, 0);
-  stack_push(vm, 5);
+  stack_push(vm, DEVICE_CLOCK);
 }
 
 void io_clock(NgaState *vm) {

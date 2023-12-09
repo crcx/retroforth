@@ -319,7 +319,7 @@ Handler FileActions[] = {
 
 void query_filesystem(NgaState *vm) {
   stack_push(vm, 3);
-  stack_push(vm, 4);
+  stack_push(vm, DEVICE_FILES);
 }
 
 void io_filesystem(NgaState *vm) {

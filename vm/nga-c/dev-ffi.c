@@ -50,6 +50,6 @@ void io_ffi(NgaState *vm) {
 
 void query_ffi(NgaState *vm) {
   stack_push(vm, 0);
-  stack_push(vm, 8100);  /* device type 8100 */
+  stack_push(vm, DEVICE_FFI);
 }
 #endif

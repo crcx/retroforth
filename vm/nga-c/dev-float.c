@@ -257,7 +257,7 @@ Handler FloatHandlers[] = {
 
 void query_floatingpoint(NgaState *vm) {
   stack_push(vm, 1);
-  stack_push(vm, 2);
+  stack_push(vm, DEVICE_FLOATS);
 }
 
 void io_floatingpoint(NgaState *vm) {

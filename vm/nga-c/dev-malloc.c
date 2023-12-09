@@ -72,7 +72,7 @@ void malloc_realloc(NgaState *vm) {
 
 void query_malloc(NgaState *vm) {
   stack_push(vm, 0);
-  stack_push(vm, 15);
+  stack_push(vm, DEVICE_MALLOC);
 }
 
 void io_malloc(NgaState *vm) {
