@@ -66,7 +66,7 @@ void float_from_alt(NgaState *vm) {
   to the float stack.
   ---------------------------------------------------------------------*/
 void float_from_number(NgaState *vm) {
-    float_push(vm, (double)stack_pop(vm));
+  float_push(vm, (double)stack_pop(vm));
 }
 
 
@@ -76,7 +76,7 @@ void float_from_number(NgaState *vm) {
   to.
   ---------------------------------------------------------------------*/
 void float_from_string(NgaState *vm) {
-    float_push(vm, atof(string_extract(vm, stack_pop(vm))));
+  float_push(vm, atof(string_extract(vm, stack_pop(vm))));
 }
 
 
@@ -85,8 +85,8 @@ void float_from_string(NgaState *vm) {
   I pass it off to `snprintf()` to deal with.
   ---------------------------------------------------------------------*/
 void float_to_string(NgaState *vm) {
-    snprintf(vm->string_data, 8192, "%f", float_pop(vm));
-    string_inject(vm, vm->string_data, stack_pop(vm));
+  snprintf(vm->string_data, 8192, "%f", float_pop(vm));
+  string_inject(vm, vm->string_data, stack_pop(vm));
 }
 
 
