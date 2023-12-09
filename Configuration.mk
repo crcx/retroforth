@@ -60,6 +60,7 @@ ENABLED += -DENABLE_MALLOC
 ENABLED += -DENABLE_BLOCKS
 
 DEVICES ?=
+DEVICES += interface/devices.retro
 DEVICES += interface/ll.retro
 DEVICES += interface/dedup.retro
 DEVICES += interface/sources.retro

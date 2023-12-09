@@ -5,8 +5,8 @@ system clock.
 
 ~~~
 :clock:operation
-  #5 io:scan-for
-    dup n:negative? [ drop 'Error:_device_(0005)_not_found s:put nl ] if;
+  DEVICE:CLOCK io:scan-for
+    dup n:negative? [ drop 'Error:_clock_device_not_found s:put nl ] if;
     io:invoke ;
 
 :clock:timestamp  (-n) #0 clock:operation ;

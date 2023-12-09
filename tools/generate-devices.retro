@@ -1,0 +1,11 @@
+~~~
+'~~~ s:put nl
+:process (s-)
+  dup s:length n:zero? [ drop ] if;
+  #32 s:tokenize dup #1 a:fetch [ dup $_ eq? [ drop $: ] if ] s:map
+  swap a:last s:to-number
+  '#%n_'%s_const\n s:format s:put ;
+
+'vm/nga-c/devices.h [ process ] file:for-each-line
+'~~~ s:put nl
+~~~

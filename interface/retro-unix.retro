@@ -58,7 +58,6 @@ startup flags passed.
 {{
   'EOT var
   FALSE 'Ignoring var-n
-  (-f)   :ignoring?  @Ignoring ;
   (-nn)  :version    @Version #100 /mod ;
   (c-f)  :done?      dup !EOT
                      [ ASCII:CR eq? ]
@@ -75,7 +74,7 @@ startup flags passed.
   (q-)   :buffer     [ TIB buffer:set call buffer:start ] buffer:preserve ;
   (-s)   :read-token [ [ character check done? ] until ] buffer s:chop ;
   (-sf)  :input      read-token valid? ;
-  (sf-)  :process    ignoring? [ drop-pair eol? [ &Ignoring v:off ] if ] if;
+  (sf-)  :process    @Ignoring [ drop-pair eol? [ &Ignoring v:off ] if ] if;
                      &interpret &drop choose ;
 ---reveal---
   ://    script:ignore-to-eol &Ignoring v:on ; immediate

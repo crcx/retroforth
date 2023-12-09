@@ -7,8 +7,8 @@ that it is fairly low level.
 
 ~~~
 :socket:operation
-  #7 io:scan-for dup n:negative?
-  [ drop 'Error:_device_(0007)_not_found s:put nl
+  DEVICE:SOCKET io:scan-for dup n:negative?
+  [ drop 'Error:_socket_device_not_found s:put nl
          'See_https://retroforth.org/support/2022.1/SOCKETS.md
          s:put nl
          'for_instructions_on_enabling_sockets. s:put nl ] if;

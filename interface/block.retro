@@ -13,7 +13,7 @@ The exposed word set is compact:
 
 ~~~
 {{
-  :block:invoke #3 io:scan-for io:invoke ;
+  :block:invoke DEVICE:BLOCKS io:scan-for io:invoke ;
 ---reveal---
   :block:read  (na-)   #0 block:invoke ;
   :block:write (na-)   #1 block:invoke ;
