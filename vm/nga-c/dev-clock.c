@@ -12,84 +12,75 @@
 **************************************************************/
 
 #ifdef ENABLE_CLOCK
-void clock_time(NgaState *vm) {
+time_t current_time;
+
+V clock_time(NgaState *vm) {
   stack_push(vm, (CELL)time(NULL));
 }
 
-void clock_day(NgaState *vm) {
-  time_t t = time(NULL);
-  stack_push(vm, (CELL)localtime(&t)->tm_mday);
+V clock_day(NgaState *vm) {
+  stack_push(vm, (CELL)localtime(&current_time)->tm_mday);
 }
 
-void clock_month(NgaState *vm) {
-  time_t t = time(NULL);
-  stack_push(vm, (CELL)localtime(&t)->tm_mon + 1);
+V clock_month(NgaState *vm) {
+  stack_push(vm, (CELL)localtime(&current_time)->tm_mon + 1);
 }
 
-void clock_year(NgaState *vm) {
-  time_t t = time(NULL);
-  stack_push(vm, (CELL)localtime(&t)->tm_year + 1900);
+V clock_year(NgaState *vm) {
+  stack_push(vm, (CELL)localtime(&current_time)->tm_year + 1900);
 }
 
-void clock_hour(NgaState *vm) {
-  time_t t = time(NULL);
-  stack_push(vm, (CELL)localtime(&t)->tm_hour);
+V clock_hour(NgaState *vm) {
+  stack_push(vm, (CELL)localtime(&current_time)->tm_hour);
 }
 
-void clock_minute(NgaState *vm) {
-  time_t t = time(NULL);
-  stack_push(vm, (CELL)localtime(&t)->tm_min);
+V clock_minute(NgaState *vm) {
+  stack_push(vm, (CELL)localtime(&current_time)->tm_min);
 }
 
-void clock_second(NgaState *vm) {
-  time_t t = time(NULL);
-  stack_push(vm, (CELL)localtime(&t)->tm_sec);
+V clock_second(NgaState *vm) {
+  stack_push(vm, (CELL)localtime(&current_time)->tm_sec);
 }
 
-void clock_day_utc(NgaState *vm) {
-  time_t t = time(NULL);
-  stack_push(vm, (CELL)gmtime(&t)->tm_mday);
+V clock_day_utc(NgaState *vm) {
+  stack_push(vm, (CELL)gmtime(&current_time)->tm_mday);
 }
 
-void clock_month_utc(NgaState *vm) {
-  time_t t = time(NULL);
-  stack_push(vm, (CELL)gmtime(&t)->tm_mon + 1);
+V clock_month_utc(NgaState *vm) {
+  stack_push(vm, (CELL)gmtime(&current_time)->tm_mon + 1);
 }
 
-void clock_year_utc(NgaState *vm) {
-  time_t t = time(NULL);
-  stack_push(vm, (CELL)gmtime(&t)->tm_year + 1900);
+V clock_year_utc(NgaState *vm) {
+  stack_push(vm, (CELL)gmtime(&current_time)->tm_year + 1900);
 }
 
-void clock_hour_utc(NgaState *vm) {
-  time_t t = time(NULL);
-  stack_push(vm, (CELL)gmtime(&t)->tm_hour);
+V clock_hour_utc(NgaState *vm) {
+  stack_push(vm, (CELL)gmtime(&current_time)->tm_hour);
 }
 
-void clock_minute_utc(NgaState *vm) {
-  time_t t = time(NULL);
-  stack_push(vm, (CELL)gmtime(&t)->tm_min);
+V clock_minute_utc(NgaState *vm) {
+  stack_push(vm, (CELL)gmtime(&current_time)->tm_min);
 }
 
-void clock_second_utc(NgaState *vm) {
-  time_t t = time(NULL);
-  stack_push(vm, (CELL)gmtime(&t)->tm_sec);
+V clock_second_utc(NgaState *vm) {
+  stack_push(vm, (CELL)gmtime(&current_time)->tm_sec);
 }
 
 Handler ClockActions[] = {
-  clock_time,
-  clock_day,      clock_month,      clock_year,
-  clock_hour,     clock_minute,     clock_second,
+  clock_time,     clock_day,        clock_month,
+  clock_year,     clock_hour,       clock_minute,
+  clock_second,
   clock_day_utc,  clock_month_utc,  clock_year_utc,
   clock_hour_utc, clock_minute_utc, clock_second_utc
 };
 
-void query_clock(NgaState *vm) {
+V query_clock(NgaState *vm) {
   stack_push(vm, 0);
   stack_push(vm, DEVICE_CLOCK);
 }
 
-void io_clock(NgaState *vm) {
+V io_clock(NgaState *vm) {
+  current_time = time(NULL);
   ClockActions[stack_pop(vm)](vm);
 }
 #endif

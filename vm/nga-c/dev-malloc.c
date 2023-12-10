@@ -15,14 +15,14 @@
 #ifdef ENABLE_MALLOC
 #ifdef BIT64
 typedef union {
-  void* val;
+  V* val;
   struct {
     CELL msw;
     CELL lsw;
   };
 } double_cell;
 
-void double_add(NgaState *vm) {
+V double_add(NgaState *vm) {
   double_cell a;
   double_cell b;
   double_cell c;
@@ -32,36 +32,36 @@ void double_add(NgaState *vm) {
   a.lsw = stack_pop(vm);
 }
 
-void double_sub(NgaState *vm) {
+V double_sub(NgaState *vm) {
 }
 
-void double_mul(NgaState *vm) {
+V double_mul(NgaState *vm) {
 }
 
-void double_divmod(NgaState *vm) {
+V double_divmod(NgaState *vm) {
 }
 
-void malloc_allocate(NgaState *vm) {
+V malloc_allocate(NgaState *vm) {
   stack_push(vm, (CELL)malloc(stack_pop(vm)));
 }
 
-void malloc_free(NgaState *vm) {
+V malloc_free(NgaState *vm) {
   free((CELL*)stack_pop(vm));
 }
 
-void malloc_store(NgaState *vm) {
+V malloc_store(NgaState *vm) {
   CELL value = stack_pop(vm);
   double_cell addr;
   *(CELL *) stack_pop(vm) = value;
 }
 
-void malloc_fetch(NgaState *vm) {
+V malloc_fetch(NgaState *vm) {
   double_cell addr;
   CELL value = *(CELL *)stack_pop(vm);
   stack_push(vm, value);
 }
 
-void malloc_realloc(NgaState *vm) {
+V malloc_realloc(NgaState *vm) {
   CELL bytes = stack_pop(vm);
   CELL* addr1;
   addr1 = (CELL*)stack_pop(vm);
@@ -70,12 +70,12 @@ void malloc_realloc(NgaState *vm) {
   stack_push(vm, (CELL)addr2);
 }
 
-void query_malloc(NgaState *vm) {
+V query_malloc(NgaState *vm) {
   stack_push(vm, 0);
   stack_push(vm, DEVICE_MALLOC);
 }
 
-void io_malloc(NgaState *vm) {
+V io_malloc(NgaState *vm) {
   int i = stack_pop(vm);
   switch (i) {
     case 0: malloc_allocate(vm); return;

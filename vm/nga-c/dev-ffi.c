@@ -17,17 +17,17 @@
 
 typedef void (*External)(void *);
 
-void *handles[32];
+V *handles[32];
 External funcs[32000];
 int nlibs, nffi;
 
-void open_library(NgaState *vm) {
+V open_library(NgaState *vm) {
   handles[nlibs] = dlopen(string_extract(vm, stack_pop(vm)), RTLD_LAZY);
   stack_push(vm, nlibs);
   nlibs++;
 }
 
-void map_symbol(NgaState *vm) {
+V map_symbol(NgaState *vm) {
   int h;
   h = stack_pop(vm);
   char *s = string_extract(vm, stack_pop(vm));
@@ -36,11 +36,11 @@ void map_symbol(NgaState *vm) {
   nffi++;
 }
 
-void invoke(NgaState *vm) {
+V invoke(NgaState *vm) {
   funcs[stack_pop(vm)](vm);
 }
 
-void io_ffi(NgaState *vm) {
+V io_ffi(NgaState *vm) {
   switch (stack_pop(vm)) {
     case 0: open_library(vm); break;
     case 1: map_symbol(vm); break;
@@ -48,7 +48,7 @@ void io_ffi(NgaState *vm) {
   }
 }
 
-void query_ffi(NgaState *vm) {
+V query_ffi(NgaState *vm) {
   stack_push(vm, 0);
   stack_push(vm, DEVICE_FFI);
 }

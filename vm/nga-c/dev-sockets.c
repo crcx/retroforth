@@ -27,14 +27,14 @@ struct sockaddr_in Sockets[16];
 
 struct addrinfo hints, *res;
 
-void socket_getaddrinfo(NgaState *vm) {
+V socket_getaddrinfo(NgaState *vm) {
   char host[1025], port[6];
   strlcpy(port, string_extract(vm, stack_pop(vm)), 5);
   strlcpy(host, string_extract(vm, stack_pop(vm)), 1024);
   getaddrinfo(host, port, &hints, &res);
 }
 
-void socket_get_host(NgaState *vm) {
+V socket_get_host(NgaState *vm) {
   struct hostent *hp;
   struct in_addr **addr_list;
 
@@ -48,7 +48,7 @@ void socket_get_host(NgaState *vm) {
   string_inject(vm, inet_ntoa(*addr_list[0]), stack_pop(vm));
 }
 
-void socket_create(NgaState *vm) {
+V socket_create(NgaState *vm) {
   int i;
   int sock = socket(PF_INET, SOCK_STREAM, 0);
   for (i = 0; i < 16; i++) {
@@ -60,7 +60,7 @@ void socket_create(NgaState *vm) {
   }
 }
 
-void socket_bind(NgaState *vm) {
+V socket_bind(NgaState *vm) {
   int sock, port;
   memset(&hints, 0, sizeof hints);
   hints.ai_family = AF_UNSPEC;
@@ -75,14 +75,14 @@ void socket_bind(NgaState *vm) {
   stack_push(vm, errno);
 }
 
-void socket_listen(NgaState *vm) {
+V socket_listen(NgaState *vm) {
   int sock = stack_pop(vm);
   int backlog = stack_pop(vm);
   stack_push(vm, listen(SocketID[sock], backlog));
   stack_push(vm, errno);
 }
 
-void socket_accept(NgaState *vm) {
+V socket_accept(NgaState *vm) {
   int i;
   int sock = stack_pop(vm);
   struct sockaddr_storage their_addr;
@@ -99,19 +99,19 @@ void socket_accept(NgaState *vm) {
   stack_push(vm, errno);
 }
 
-void socket_connect(NgaState *vm) {
+V socket_connect(NgaState *vm) {
   stack_push(vm, (CELL)connect(SocketID[stack_pop(vm)], res->ai_addr, res->ai_addrlen));
   stack_push(vm, errno);
 }
 
-void socket_send(NgaState *vm) {
+V socket_send(NgaState *vm) {
   int sock = stack_pop(vm);
   char *buf = string_extract(vm, stack_pop(vm));
   stack_push(vm, send(SocketID[sock], buf, strlen(buf), 0));
   stack_push(vm, errno);
 }
 
-void socket_recv(NgaState *vm) {
+V socket_recv(NgaState *vm) {
   char buf[8193];
   int sock = stack_pop(vm);
   int limit = stack_pop(vm);
@@ -123,7 +123,7 @@ void socket_recv(NgaState *vm) {
   stack_push(vm, errno);
 }
 
-void socket_close(NgaState *vm) {
+V socket_close(NgaState *vm) {
   int sock = stack_pop(vm);
   close(SocketID[sock]);
   SocketID[sock] = 0;
@@ -136,11 +136,11 @@ Handler SocketActions[] = {
   socket_recv,   socket_close,   socket_getaddrinfo
 };
 
-void io_socket(NgaState *vm) {
+V io_socket(NgaState *vm) {
   SocketActions[stack_pop(vm)](vm);
 }
 
-void query_socket(NgaState *vm) {
+V query_socket(NgaState *vm) {
   stack_push(vm, 0);
   stack_push(vm, DEVICE_SOCKETS);
 }

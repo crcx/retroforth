@@ -12,7 +12,7 @@
 **************************************************************/
 
 
-void utf32_to_utf8(uint32_t, unsigned char*, int*);
+V utf32_to_utf8(uint32_t, unsigned char*, int*);
 int fread_character(FILE *);
 
 /*---------------------------------------------------------------------
@@ -27,9 +27,7 @@ int fread_character(FILE *);
 
 CELL files_get_handle(NgaState *vm) {
   for(CELL i = 1; i < MAX_OPEN_FILES; i++) {
-    if (vm->OpenFileHandles[i] == 0) {
-      return i;
-    }
+    if (vm->OpenFileHandles[i] == 0) { return i; }
   }
   return 0;
 }
@@ -55,7 +53,7 @@ CELL files_get_handle(NgaState *vm) {
   into the `OpenFileHandles` array).
   ---------------------------------------------------------------------*/
 
-void file_open(NgaState *vm) {
+V file_open(NgaState *vm) {
   CELL slot, mode, name;
   char *request;
   char *modes[] = {"rb", "w", "a", "rb+"};
@@ -79,7 +77,7 @@ void file_open(NgaState *vm) {
   from the stack and pushes the character that was read to the stack.
   ---------------------------------------------------------------------*/
 
-void file_read(NgaState *vm) {
+V file_read(NgaState *vm) {
   CELL c;
   CELL slot = stack_pop(vm);
   if (slot <= 0 || slot > MAX_OPEN_FILES || vm->OpenFileHandles[slot] == 0) {
@@ -91,13 +89,13 @@ void file_read(NgaState *vm) {
 }
 
 
-/*---------------------------------------------------------------------
-  `file_write()` writes a byte to a file. This takes a file pointer
-  (TOS) and a byte (NOS) from the stack. It does not return any values
-  on the stack.
-  ---------------------------------------------------------------------*/
+/*--------------------------------------------------------------
+  `file_write()` writes a byte to a file. This takes a file
+  pointer (TOS) and a byte (NOS) from the stack. It does not
+  return any values on the stack.
+  ------------------------------------------------------------*/
 
-void file_write(NgaState *vm) {
+V file_write(NgaState *vm) {
   CELL slot, c, r;
   slot = stack_pop(vm);
   if (slot <= 0 || slot > MAX_OPEN_FILES || vm->OpenFileHandles[slot] == 0) {
@@ -109,12 +107,12 @@ void file_write(NgaState *vm) {
 }
 
 
-/*---------------------------------------------------------------------
-  `file_close()` closes a file. This takes a file handle from the
-  stack and does not return anything on the stack.
-  ---------------------------------------------------------------------*/
+/*--------------------------------------------------------------
+  `file_close()` closes a file. This takes a file handle from
+  the stack and does not return anything on the stack.
+  ------------------------------------------------------------*/
 
-void file_close(NgaState *vm) {
+V file_close(NgaState *vm) {
   CELL slot = stack_pop(vm);
   if (slot <= 0 || slot > MAX_OPEN_FILES || vm->OpenFileHandles[slot] == 0) {
     printf("\nERROR (nga/file_close): Invalid file handle\n");
@@ -125,12 +123,13 @@ void file_close(NgaState *vm) {
 }
 
 
-/*---------------------------------------------------------------------
-  `file_get_position()` provides the current index into a file. This
-  takes the file handle from the stack and returns the offset.
-  ---------------------------------------------------------------------*/
+/*--------------------------------------------------------------
+  `file_get_position()` provides the current index into a file.
+  This takes the file handle from the stack and returns the
+  offset.
+  ------------------------------------------------------------*/
 
-void file_get_position(NgaState *vm) {
+V file_get_position(NgaState *vm) {
   CELL slot = stack_pop(vm);
   if (slot <= 0 || slot > MAX_OPEN_FILES || vm->OpenFileHandles[slot] == 0) {
     printf("\nERROR (nga/file_get_position): Invalid file handle\n");
@@ -140,13 +139,13 @@ void file_get_position(NgaState *vm) {
 }
 
 
-/*---------------------------------------------------------------------
-  `file_set_position()` changes the current index into a file to the
-  specified one. This takes a file handle (TOS) and new offset (NOS)
-  from the stack.
-  ---------------------------------------------------------------------*/
+/*--------------------------------------------------------------
+  `file_set_position()` changes the current index into a file to
+  the specified one. This takes a file handle (TOS) and new
+  offset (NOS) from the stack.
+  ------------------------------------------------------------*/
 
-void file_set_position(NgaState *vm) {
+V file_set_position(NgaState *vm) {
   CELL slot, pos;
   slot = stack_pop(vm);
   pos  = stack_pop(vm);
@@ -158,13 +157,13 @@ void file_set_position(NgaState *vm) {
 }
 
 
-/*---------------------------------------------------------------------
-  `file_get_size()` returns the size of a file, or 0 if empty. If the
-  file is a directory, it returns -1. It takes a file handle from the
-  stack.
-  ---------------------------------------------------------------------*/
+/*--------------------------------------------------------------
+  `file_get_size()` returns the size of a file, or 0 if empty.
+  If the file is a directory, it returns -1. It takes a file
+  handle from the stack.
+  ------------------------------------------------------------*/
 
-void file_get_size(NgaState *vm) {
+V file_get_size(NgaState *vm) {
   CELL slot, current, r, size;
   struct stat buffer;
   slot = stack_pop(vm);
@@ -186,12 +185,12 @@ void file_get_size(NgaState *vm) {
 }
 
 
-/*---------------------------------------------------------------------
-  `file_delete()` removes a file. This takes a file name (as a string)
-  from the stack.
-  ---------------------------------------------------------------------*/
+/*--------------------------------------------------------------
+  `file_delete()` removes a file. This takes a file name (as a
+  string) from the stack.
+  ------------------------------------------------------------*/
 
-void file_delete(NgaState *vm) {
+V file_delete(NgaState *vm) {
   char *request;
   CELL name = stack_pop(vm);
   request = string_extract(vm, name);
@@ -199,12 +198,12 @@ void file_delete(NgaState *vm) {
 }
 
 
-/*---------------------------------------------------------------------
-  `file_flush()` flushes any pending writes to disk. This takes a
-  file handle from the stack.
-  ---------------------------------------------------------------------*/
+/*--------------------------------------------------------------
+  `file_flush()` flushes any pending writes to disk. This takes
+  a file handle from the stack.
+  ------------------------------------------------------------*/
 
-void file_flush(NgaState *vm) {
+V file_flush(NgaState *vm) {
   CELL slot;
   slot = stack_pop(vm);
   if (slot <= 0 || slot > MAX_OPEN_FILES || vm->OpenFileHandles[slot] == 0) {
@@ -216,7 +215,7 @@ void file_flush(NgaState *vm) {
 
 char file_bytes[32769];
 
-void file_read_bytes(NgaState *vm) {
+V file_read_bytes(NgaState *vm) {
   CELL slot = stack_pop(vm);
   CELL size = stack_pop(vm);
   CELL dest = stack_pop(vm);
@@ -228,7 +227,7 @@ void file_read_bytes(NgaState *vm) {
   stack_push(vm, z);
 }
 
-void file_write_bytes(NgaState *vm) {
+V file_write_bytes(NgaState *vm) {
   CELL slot = stack_pop(vm);
   CELL size = stack_pop(vm);
   CELL src  = stack_pop(vm);
@@ -240,7 +239,7 @@ void file_write_bytes(NgaState *vm) {
   stack_push(vm, z);
 }
 
-void file_read_character(NgaState *vm) {
+V file_read_character(NgaState *vm) {
 #ifdef USE_UTF32
   CELL c;
   CELL slot = stack_pop(vm);
@@ -255,7 +254,7 @@ void file_read_character(NgaState *vm) {
 #endif
 }
 
-void file_write_character(NgaState *vm) {
+V file_write_character(NgaState *vm) {
 #ifdef USE_UTF32
   unsigned char utf8_bytes[4];
   int num_bytes;
@@ -272,7 +271,7 @@ void file_write_character(NgaState *vm) {
 #endif
 }
 
-void file_read_line(NgaState *vm) {
+V file_read_line(NgaState *vm) {
   CELL slot = stack_pop(vm);
   CELL targ = stack_pop(vm);
   CELL c;
@@ -303,7 +302,7 @@ void file_read_line(NgaState *vm) {
 #endif
 }
 
-void file_write_line(NgaState *vm) {
+V file_write_line(NgaState *vm) {
 }
 
 Handler FileActions[] = {
@@ -317,11 +316,11 @@ Handler FileActions[] = {
   file_read_line,     file_write_line,
 };
 
-void query_filesystem(NgaState *vm) {
+V query_filesystem(NgaState *vm) {
   stack_push(vm, 3);
   stack_push(vm, DEVICE_FILES);
 }
 
-void io_filesystem(NgaState *vm) {
+V io_filesystem(NgaState *vm) {
   FileActions[stack_pop(vm)](vm);
 }

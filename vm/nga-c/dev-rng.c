@@ -12,7 +12,7 @@
 **************************************************************/
 
 #ifdef ENABLE_RNG
-void io_rng(NgaState *vm) {
+V io_rng(NgaState *vm) {
   int64_t r = 0;
   char buffer[8];
   int i;
@@ -31,7 +31,7 @@ void io_rng(NgaState *vm) {
 #endif
 }
 
-void query_rng(NgaState *vm) {
+V query_rng(NgaState *vm) {
   stack_push(vm, 0);
   stack_push(vm, DEVICE_RNG);
 }
