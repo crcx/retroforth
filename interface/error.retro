@@ -1,7 +1,7 @@
 ~~~
 :err:set-handler (nn-)
-  #1234 io:scan-for
-    dup n:negative? [ drop 'Error:_device_(1234)_not_found s:put nl ] if;
+  DEVICE:ERROR io:scan-for
+    dup n:negative? [ drop 'Error:_error_handling_device_not_found s:put nl ] if;
     #0 swap io:invoke ;
 
 :err:dsu (-)

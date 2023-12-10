@@ -36,8 +36,8 @@ Adds support for obtaining current source line text
 ~~~
 {{
   :script:operation
-    #9 io:scan-for
-      dup n:negative? [ drop 'Error:_device_(0009)_not_found s:put nl ] if;
+    DEVICE:SCRIPTING io:scan-for
+      dup n:negative? [ drop 'Error:_scripting_device_not_found s:put nl ] if;
       io:invoke ;
 ---reveal---
   :script:arguments (-n)             #0 script:operation ;
