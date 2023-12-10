@@ -52,5 +52,7 @@
 - use C preprocessor to help with readability in arg. processing
 - remove separate temp. string buffer in `s:dedup`
 - use constants for device identifiers in nga-c
+- use constants for device identifiers in the Forth part of
+  the device handlers
 
 ================================================================
