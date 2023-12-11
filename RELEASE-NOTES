@@ -54,5 +54,7 @@
 - use constants for device identifiers in nga-c
 - use constants for device identifiers in the Forth part of
   the device handlers
+- support loading extensions at runtime via `library:load`
+  (searches ./library/ and ~/.config/retroforth/library/)
 
 ================================================================

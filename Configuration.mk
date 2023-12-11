@@ -80,6 +80,7 @@ DEVICES += interface/block.retro
 DEVICES += interface/deprecated.retro
 DEVICES += interface/error.retro
 DEVICES += interface/final.retro
+DEVICES += interface/library.retro
 
 # -------------------------------------------------------------
 

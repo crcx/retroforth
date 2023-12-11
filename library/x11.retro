@@ -1,0 +1,75 @@
+~~~
+:pixel (xyc-)     #33 io:scan-for io:invoke ;
+:get-pixel (xy-c) #34 io:scan-for io:invoke ;
+:mouse (-xyb)     #35 io:scan-for io:invoke ;
+
+:hline (xyw-)
+  [ dup-pair #1 pixel &n:inc dip ] times drop-pair ;
+
+:vline (xyh-)
+  [ dup-pair #1 pixel n:inc ] times drop-pair ;
+
+:dline\ (xyl-)
+  [ dup-pair #1 pixel &n:inc bi@ ] times drop-pair ;
+
+:dline/ (xyl-)
+  [ dup-pair #1 pixel &n:dec &n:inc bi* ] times drop-pair ;
+
+'X var 'Y var 'H var 'W var
+
+:rect (xyhw-) !W !H !Y !X
+  @X @Y @W hline   @X @Y @H n:add @W hline
+  @X @Y @H vline   @X @W n:add @Y @H vline ;
+
+'XC var 'YC var 'X var 'Y var
+
+:octant (xc,yc,x,y)
+  !Y !X !YC !XC
+  @XC @X n:add @YC @Y n:add #1 pixel
+  @XC @X n:sub @YC @Y n:add #1 pixel
+  @XC @X n:add @YC @Y n:sub #1 pixel
+  @XC @X n:sub @YC @Y n:sub #1 pixel
+  @XC @Y n:add @YC @X n:add #1 pixel
+  @XC @Y n:sub @YC @X n:add #1 pixel
+  @XC @Y n:add @YC @X n:sub #1 pixel
+  @XC @Y n:sub @YC @X n:sub #1 pixel ;
+
+'XC var 'YC var 'X var 'Y var 'D var 'R var
+
+:circle (xyr-)
+  !R !YC !XC  #0 !X  @R [ !Y ] [ !D ] bi
+  @XC @YC @X @Y octant
+  [ &X v:inc
+    @D n:strictly-positive?
+    [ &Y v:dec @X @Y n:sub @R n:mul #2 n:mul @D n:add !D ]
+    [ #2 @R n:mul @X n:mul @D n:add !D ] choose
+    @XC @YC @X @Y octant
+  @Y @X gteq? ] while ;
+
+'X var 'Y var 'C var 'D var 'R var
+
+:t:raise #0 !C ;
+:t:lower #1 !C ;
+
+:t:left [ &X v:dec ] !D ;
+:t:right [ &X v:inc ] !D ;
+:t:up [ &Y v:dec ] !D ;
+:t:down [ &Y v:inc ] !D ;
+:t:at (xy-) !Y !X ;
+:t:forward (n-) [ @X @Y @C pixel @D call ] times ;
+
+#320 #240 t:at t:lower t:right
+
+:t:down-right [ &Y v:inc &X v:inc ] !D ;
+:t:down-left [ &Y v:inc &X v:dec ] !D ;
+:t:up-left [ &Y v:dec &X v:dec ] !D ;
+:t:up-right [ &Y v:dec &X v:inc ] !D ;
+
+'Rotations d:create #8 ,
+  &t:right     , &t:down-right , &t:down    ,
+  &t:down-left , &t:left       , &t:up-left ,
+  &t:up        , &t:up-right   ,
+
+:t:rotate
+  &R v:inc @R #8 eq? [ #0 !R ] if &Rotations @R a:fetch call ;
+~~~
