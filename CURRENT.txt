@@ -1,6 +1,4 @@
 Currently Active:
 
-- Porting Konilo's (termina) words
-- Completing port of Konilo's block editor
 - Adding missing source data for existing vocabularies
 - Improving the D implementation of Nga

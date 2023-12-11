@@ -1,0 +1,19 @@
+This show use of the termina color words to display the contents
+of the dictionary, using colors for various word classes.
+
+~~~
+'termina library:load
+
+:d:words/c
+  [ dup d:class fetch
+    [ &class:data      [ fg:magenta ] case
+      &class:macro     [ fg:red     ] case
+      &class:primitive [ fg:yellow  ] case
+      drop fg:green
+    ] call d:name s:put sp vt:reset ] d:for-each ;
+~~~
+
+
+```
+d:words/c
+```

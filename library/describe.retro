@@ -1,0 +1,7 @@
+This adds a `describe` word which runs retro-describe(1). It's
+a useful tool for looking up glossay data in an interactive
+session.
+
+~~~
+:describe (s-) 'retro-describe_%s s:format unix:system ;
+~~~
