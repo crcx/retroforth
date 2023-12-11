@@ -56,7 +56,8 @@
   the device handlers
 - support loading extensions at runtime via `library:load`
   (searches ./library/ and ~/.config/retroforth/library/)
-- library contents: block-editor describe termina x11
+- library contents: block-editor describe konilo termina x11
 - new example: colored-dwords.retro
+- moved konilo words to ./library/
 
 ================================================================

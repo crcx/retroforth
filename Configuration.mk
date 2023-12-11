@@ -64,7 +64,6 @@ DEVICES += interface/devices.retro
 DEVICES += interface/ll.retro
 DEVICES += interface/dedup.retro
 DEVICES += interface/sources.retro
-DEVICES += interface/konilo.retro
 DEVICES += interface/floatingpoint.retro
 DEVICES += interface/filesystem.retro
 DEVICES += interface/unix.retro
