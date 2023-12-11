@@ -56,6 +56,6 @@
   the device handlers
 - support loading extensions at runtime via `library:load`
   (searches ./library/ and ~/.config/retroforth/library/)
-- library contents: block-editor x11
+- library contents: block-editor termina x11
 
 ================================================================
