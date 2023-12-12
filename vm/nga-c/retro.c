@@ -156,7 +156,7 @@ V load_embedded_image(NgaState *);
 CELL load_image(NgaState *, char *);
 V prepare_vm(NgaState *);
 V process_opcode_bundle(NgaState *, CELL);
-int validate_opcode_bundle(CELL);
+V validate_opcode_bundle(NgaState *, CELL);
 
 #ifdef NEEDS_STRL
 size_t strlcat(char *dst, const char *src, size_t dsize);
@@ -614,11 +614,8 @@ V execute(NgaState *vm, CELL cell) {
   while (ACTIVE.ip < IMAGE_SIZE) {
     if (vm->perform_abort == 0) {
       opcode = vm->memory[ACTIVE.ip];
-      if (validate_opcode_bundle(opcode) != 0) {
-        process_opcode_bundle(vm, opcode);
-      } else {
-        invalid_opcode(vm, opcode);
-      }
+      validate_opcode_bundle(vm, opcode);
+      process_opcode_bundle(vm, opcode);
 #ifndef ENABLE_ERROR
       if (ACTIVE.sp < 0 || ACTIVE.sp > STACK_DEPTH) {
         printf("\nERROR (nga/execute): Stack Limits Exceeded!\n");
@@ -1527,20 +1524,15 @@ V process_opcode(NgaState *vm, CELL opcode) {
 #endif
 }
 
-int validate_opcode_bundle(CELL opcode) {
+V validate_opcode_bundle(NgaState *vm, CELL opcode) {
   CELL remainingOpcode = opcode;
-  int isValid = 1;
-
   for (int i = 0; i < 4; i++) {
     CELL current = remainingOpcode & 0xFF;
     if (current < 0 || current > 29) {
-      isValid = 0;
-      break;
+      invalid_opcode(vm, opcode);
     }
     remainingOpcode >>= 8;
   }
-
-  return isValid;
 }
 
 V verbose_details(NgaState *vm, CELL opcode) {

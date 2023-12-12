@@ -8,56 +8,77 @@
 
 ================================================================
 
-- removed duplicate typedef in tools/retro-muri.c (rep by sevan)
-- fixed a bug in load_image()                 (C) (rep by sevan)
-- err:notfound message no longer in C         (C) (sevan)
-- add -v for verbose mode                     (C)
-- now skip execuion of NOP instructions       (C)
-- fix some casting issues in C                (C)
-- force immediate exit() on HA instruction    (C)
-- added an implementation of Nga in D         (D)
-- removed some unneeded files
-- update tools/missing-dsource.retro
-- add missing source data for vocabularies & globals:
-  a: d: double: err: file: fll: mem: script:
-- use strlcpy() in tools/retro-muri.c
-- quieter output when building
-- remove old Python build + packaging code
-- small optimizations in fll: vocabulary
-- move from interface/ to package/extensions/:
-  double.retro malloc.retro
-- fix misc. typos
-- in retro-muri.c, use bsd_strlcpy   (rep by fangchar)
-- in retro.forth, fix `s:index/char` (rep by fangchar)
-- add example/irc-logger.retro
-- add example/ilo-export.retro
-- file:read-line now provided by file device (C)
-- retro-describe now using hash based name comparison
-- retro-describe small reductions in call/return overhead
-- nga-x11: Retro on X11
-- add (termina) vocabulary from ilo [console position, colors]
-- fix bugs in retro-compiler(1) preventing compilation
-- fix bug in retro-compiler(1) causing compiled programs to
-  hang on startup
-- added an initial man page for retro-compiler(1)
-- added new example showing decompression of ulz files
-- configuration of devices can now be done in either config.h
-  or (by default) Configuration.mk
-- build instructions for enabling/disabling devices updated
-- use mode array instead of conditionals when opening files and
-  pipes
-- remove unused files from vm/nga-c
-- new example: vocabulary.retro
-- remove need to lookup & call err:notfound by nga-c
-- use C preprocessor to help with readability in arg. processing
-- remove separate temp. string buffer in `s:dedup`
-- use constants for device identifiers in nga-c
-- use constants for device identifiers in the Forth part of
-  the device handlers
-- support loading extensions at runtime via `library:load`
-  (searches ./library/ and ~/.config/retroforth/library/)
-- library contents: block-editor describe konilo termina x11
-- new example: colored-dwords.retro
-- moved konilo words to ./library/
+- general
+  - removed some unneeded files
+  - quieter output when building
+  - remove old Python build + packaging code
+  - configuration of devices can now be done in either config.h
+    or (by default) Configuration.mk
+  - build instructions for enabling/disabling devices updated
+
+- toolchain
+  - removed duplicate typedef in tools/retro-muri.c
+    (reported by sevan)
+  - update tools/missing-dsource.retro
+  - in retro-muri.c, use bsd_strlcpy  (rep by fangchar)
+  - retro-describe now using hash based name comparison
+  - retro-describe small reductions in call/return overhead
+
+- documentation
+  - add missing source data for vocabularies & globals:
+    a: d: double: err: file: fll: mem: script:
+  - fix misc. typos
+
+- examples
+  - add example/irc-logger.retro
+  - add example/ilo-export.retro
+  - add new example showing decompression of ulz files
+  - add example/vocabulary.retro
+  - add example/colored-dwords.retro
+
+- image
+  - small optimizations in fll: vocabulary
+  - move from interface/ to package/extensions/:
+    double.retro malloc.retro
+  - in retro.forth, fix `s:index/char` (rep by fangchar)
+  - remove separate temp. string buffer in `s:dedup`
+  - use constants for device identifiers in the Forth part of
+    the device handlers
+  - support loading extensions at runtime via `library:load`
+    (searches ./library/ and ~/.config/retroforth/library/)
+
+- library
+  - block-editor (from konilo)
+  - describe (lookup glossary data at runtime)
+  - konilo (some words from konilo, was in image previously)
+  - termina (from konilo [console, colors, tui programs])
+  - x11 (for use w/nga-x11)
+
+- retro-compiler
+  - fix bugs in retro-compiler(1) preventing compilation
+  - fix bug in retro-compiler(1) causing compiled programs to
+    hang on startup
+  - added an initial man page for retro-compiler(1)
+
+- new nga implementations
+  - nga-d
+  - nga-x11
+
+- nga-c
+  - fixed a bug in load_image()  (rep. by sevan)
+  - err:notfound message no longer in C  (sevan)
+  - add -v for verbose mode
+  - now skip execuion of NOP instructions
+  - fix some casting issues
+  - force immediate exit() on HA instruction
+  - file:read-line now provided by file device
+  - use mode array instead of conditionals when opening files
+    and pipes
+  - remove obsolete/unused files
+  - refactor handling of invalid opcodes
+  - use constants for device identifiers
+  - remove need to lookup & call err:notfound
+  - use C preprocessor to help with readability in arg.
+    processing
 
 ================================================================
