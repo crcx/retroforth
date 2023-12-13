@@ -29,7 +29,7 @@
 #include "devices.h"
 
 #define ACTIVE vm->cpu[vm->active]
-#define TIB vm->memory[7]         /* Location of TIB                   */
+#define TIB vm->memory[7]
 
 #define MAX_DEVICES      32
 #define MAX_OPEN_FILES   32
@@ -41,15 +41,15 @@ typedef struct NgaState NgaState;
 typedef void (*Handler)(NgaState *);
 
 struct NgaCore {
-  CELL sp, rp, ip;              /* Stack & instruction pointers */
-  CELL active;                  /* Is core active?              */
-  CELL u;                       /* Should next operation be     */
-                                /* unsigned?                    */
-  CELL data[STACK_DEPTH];       /* The data stack               */
-  CELL address[ADDRESSES];      /* The address stack            */
+  CELL sp, rp, ip;            /* Stack & instruction pointers */
+  CELL active;                /* Is core active?              */
+  CELL u;                     /* Should next operation be     */
+                              /* unsigned?                    */
+  CELL data[STACK_DEPTH];     /* The data stack               */
+  CELL address[ADDRESSES];    /* The address stack            */
 
 #ifdef ENABLE_MULTICORE
-  CELL registers[24];           /* Internal Registers           */
+  CELL registers[24];         /* Internal Registers           */
 #endif
 };
 
@@ -234,7 +234,6 @@ V guard(NgaState *vm, int n, int m, int diff) {
   }
 }
 
-/* Dynamic Memory / `malloc` support --------------------------------- */
 #ifdef ENABLE_MALLOC
 #ifdef BIT64
 #include "dev-malloc.c"
@@ -251,7 +250,6 @@ V guard(NgaState *vm, int n, int m, int diff) {
 
 #include "dev-files.c"
 
-/* Multi Core Support ------------------------------------------------ */
 #ifdef ENABLE_MULTICORE
 #include "dev-multicore.c"
 #endif
@@ -889,16 +887,21 @@ V include_file(NgaState *vm, char *fname, int run_tests) {
 V initialize(NgaState *vm) {
   prepare_vm(vm);
   load_embedded_image(vm);
-}
+  vm->interactive = 0;
 
+  strlcpy(vm->code_start, "~~~", 256);
+  strlcpy(vm->code_end,   "~~~", 256);
+  strlcpy(vm->test_start, "```", 256);
+  strlcpy(vm->test_end,   "```", 256);
 
-/*---------------------------------------------------------------------
-  `arg_is()` exists to aid in readability. It compares the first actual
-  command line argument to a string and returns a boolean flag.
-  ---------------------------------------------------------------------*/
-
-int arg_is(char *argv, char *t) {
-  return strcmp(argv, t) == 0;
+  /* Setup variables related to the scripting device */
+  vm->currentLine = 0;           /* Current Line # for script */
+  vm->current_source = 0;        /* Current file being run    */
+  vm->perform_abort = 0;         /* Carry out abort procedure */
+  strlcpy(vm->scripting_sources[0], "/dev/stdin", 8192);
+  vm->ignoreToEOL = 0;
+  vm->ignoreToEOF = 0;
+  vm->codeBlocks = 0;
 }
 
 
@@ -982,6 +985,16 @@ V register_devices(NgaState *vm) {
 #endif
 }
 
+V register_signal_handlers() {
+#ifdef ENABLE_SIGNALS
+  signal(SIGHUP, sig_handler);
+  signal(SIGINT, sig_handler);
+  signal(SIGILL, sig_handler);
+  signal(SIGBUS, sig_handler);
+  signal(SIGFPE, sig_handler);
+#endif
+}
+
 #define ARG(n) (strcmp(argv[i], n) == 0)
 
 int main(int argc, char **argv) {
@@ -990,33 +1003,12 @@ int main(int argc, char **argv) {
   NgaState *vm = calloc(sizeof(NgaState), sizeof(char));
   verbose = 0;
 
-#ifdef ENABLE_SIGNALS
-  signal(SIGHUP, sig_handler);
-  signal(SIGINT, sig_handler);
-  signal(SIGILL, sig_handler);
-  signal(SIGBUS, sig_handler);
-  signal(SIGFPE, sig_handler);
-#endif
+  register_signal_handlers();
 
   initialize(vm);               /* Initialize Nga & image    */
-  vm->interactive = 0;
   register_devices(vm);
-
-  strlcpy(vm->code_start, "~~~", 256);
-  strlcpy(vm->code_end,   "~~~", 256);
-  strlcpy(vm->test_start, "```", 256);
-  strlcpy(vm->test_end,   "```", 256);
-
-  /* Setup variables related to the scripting device */
-  vm->currentLine = 0;           /* Current Line # for script */
-  vm->current_source = 0;        /* Current file being run    */
-  vm->perform_abort = 0;         /* Carry out abort procedure */
   vm->sys_argc = argc;           /* Point the global argc and */
   vm->sys_argv = argv;           /* argv to the actual ones   */
-  strlcpy(vm->scripting_sources[0], "/dev/stdin", 8192);
-  vm->ignoreToEOL = 0;
-  vm->ignoreToEOF = 0;
-  vm->codeBlocks = 0;
 
   /* Check arguments. If no flags were passed, load & run the
      file specified and exit. */
@@ -1060,16 +1052,16 @@ int main(int argc, char **argv) {
     } else if ARG("-t") {
       include_file(vm, argv[i + 1], 1);
       i++;
-    } else  if (arg_is(argv[i], "--code-start") || arg_is(argv[i], "-cs")) {
+    } else  if (ARG("--code-start") || ARG("-cs")) {
       i++;
       strlcpy(vm->code_start, argv[i], 256);
-    } else if (arg_is(argv[i], "--code-end") || arg_is(argv[i], "-ce")) {
+    } else if (ARG("--code-end") || ARG("-ce")) {
       i++;
       strlcpy(vm->code_end, argv[i], 256);
-    } else if (arg_is(argv[i], "--test-start") || arg_is(argv[i], "-ts")) {
+    } else if (ARG("--test-start") || ARG("-ts")) {
       i++;
       strlcpy(vm->test_start, argv[i], 256);
-    } else if (arg_is(argv[i], "--test-end") || arg_is(argv[i], "-te")) {
+    } else if (ARG("--test-end") || ARG("-te")) {
       i++;
       strlcpy(vm->test_end, argv[i], 256);
     }
