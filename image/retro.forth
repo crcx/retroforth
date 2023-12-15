@@ -78,7 +78,7 @@ observations:
 
 The basic sigils are:
 
-    | sigil | used for               |
+    | sigil  | used for               |
     | ------ | ---------------------- |
     | :      | starting a definition  |
     | &      | obtaining pointers     |
@@ -658,16 +658,18 @@ hidden), so use `v:preserve` if you need reentrancy.
 
 ---reveal---
 
-  :b:to-byte-address (a-a) #4 * ;
+  :b:to-byte-address (a-a) \limu.... `4 ;
 
   :b:fetch (a-b)
-    #4 /mod swap
-    #4 /mod
-    rot + fetch swap byte-mask ;
+    \lidisw.. `4
+    \lidilica `4 ^rot
+    \adfesw..
+    byte-mask ;
 
   :b:store (ba-)
-    swap !Byte
-    #4 /mod swap [ dup fetch unpack ] dip
+    \swlist.. ^Byte
+    \lidisw.. `4
+    [ \dufelica ^unpack ] dip
     replace pack swap store ;
 }}
 ~~~
