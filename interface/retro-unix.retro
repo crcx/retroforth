@@ -3,13 +3,6 @@
 In this file I am implementing the interactive listener that
 RETRO will run when started with `-i`, `-i,c`, or `-i,fs`.
 
-The basic image has a space allocated for input at the end of
-the kernel. A pointer to this is stored at address 7.
-
-~~~
-:TIB #7 fetch ;
-~~~
-
 ~~~
 :image:save (s-) #1000 io:scan-for io:invoke ;
 ~~~
@@ -55,53 +48,17 @@ RRE's C part will access a couple parts of this, based on the
 startup flags passed.
 
 ~~~
-{{
-  'EOT var
-  FALSE 'Ignoring var-n
-  (-nn)  :version    @Version #100 /mod ;
-  (c-f)  :done?      dup !EOT
-                     [ ASCII:CR eq? ]
-                     [ ASCII:LF eq? ]
-                     [ ASCII:SPACE eq? ] tri or or ;
-  (c-f)  :eol?       @EOT [ ASCII:CR eq? ] [ ASCII:LF eq? ] bi or ;
-  (s-sf) :valid?     dup s:length n:strictly-positive? ;
-  (c-c)  :check-eof  dup [ #-1 eq? ] [ ASCII:EOT eq? ] bi or &bye if ;
-         :bs         buffer:size #2 gteq?
-                     [ buffer:get drop ] if buffer:get drop ;
-  (c-c)  :check-bs   dup [ ASCII:BS eq? ] [ ASCII:DEL eq? ] bi or &bs if ;
-  (c-c)  :check      check-eof check-bs ;
-  (-c)   :character  c:get dup buffer:add ;
-  (q-)   :buffer     [ TIB buffer:set call buffer:start ] buffer:preserve ;
-  (-s)   :read-token [ [ character check done? ] until ] buffer s:chop ;
-  (-sf)  :input      read-token valid? ;
-  (sf-)  :process    @Ignoring [ drop-pair eol? [ &Ignoring v:off ] if ] if;
-                     &interpret &drop choose ;
----reveal---
-  ://    script:ignore-to-eol &Ignoring v:on ; immediate
-  :banner  version 'RETRO_12_(%n.%n)\n s:format s:put
-           FREE EOM FREE - EOM '%n_Max,_%n_Used,_%n_Free\n s:format s:put ;
-  :listen  banner repeat input process again ;
-}}
-
-&listen #1 store
-~~~
-
-~~~
-[ 'ERROR:_Word_Not_Found:_ s:put TIB s:put nl ]
-&err:notfound set-hook
+://    script:ignore-to-eol &Ignoring v:on ; immediate
 ~~~
 
 ## d:source
 
 ~~~
 'interface/retro-unix.retro s:keep
-dup 'listen d:lookup d:source store
-dup 'banner d:lookup d:source store
 dup '// d:lookup d:source store
 dup 'clear d:lookup d:source store
 dup 's:get d:lookup d:source store
 dup 'parse-until d:lookup d:source store
 dup 'image:save d:lookup d:source store
-dup 'TIB d:lookup d:source store
 drop
 ~~~

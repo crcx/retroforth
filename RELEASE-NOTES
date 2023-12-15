@@ -46,6 +46,9 @@
     the device handlers
   - support loading extensions at runtime via `library:load`
     (searches ./library/ and ~/.config/retroforth/library/)
+  - more use of assembly language
+  - move full listener from interface/retro-unix to the base
+    image
 
 - library
   - block-editor (from konilo)

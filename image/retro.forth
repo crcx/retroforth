@@ -1872,33 +1872,52 @@ provide much more than I can do here.
 
 ## Listener
 
+The basic image has a space allocated for input at the end of
+the kernel. A pointer to this is stored at address 7.
+
+~~~
+:TIB #7 fetch ;
+~~~
+
+~~~
+[ 'ERROR:_Word_Not_Found:_ s:put TIB s:put nl ]
+&err:notfound set-hook
+~~~
+
 If a VM implementation provides both the character output and a
 generic "keyboard" input, the basic listener here can be used.
 
 ~~~
+:c:get (-c) hook #1 io:scan-for io:invoke ;
+:bye (-) \ha...... ;
+FALSE 'Ignoring var-n
 {{
-  :eol? (c-f)
-    [ ASCII:CR eq? ] [ ASCII:LF eq? ] [ ASCII:SPACE eq? ] tri or or ;
-
-  :valid? (s-sf)
-    dup s:length n:-zero? ;
-
-  :bs? (c-cf)
-    dup [ #8 eq? ] [ #127 eq? ] bi or ;
-
-  :check-bs (c-c)
-    bs? [ buffer:size #2 gteq? [ buffer:get drop ] if buffer:get drop ] if ;
+  'EOT var
+  (-nn)  :version    @Version #100 /mod ;
+  (c-f)  :done?      dup !EOT
+                     [ ASCII:CR eq? ]
+                     [ ASCII:LF eq? ]
+                     [ ASCII:SPACE eq? ] tri or or ;
+  (c-f)  :eol?       @EOT [ ASCII:CR eq? ] [ ASCII:LF eq? ] bi or ;
+  (s-sf) :valid?     dup s:length n:strictly-positive? ;
+  (c-c)  :check-eof  dup [ #-1 eq? ] [ ASCII:EOT eq? ] bi or &bye if ;
+         :bs         buffer:size #2 gteq?
+                     [ buffer:get drop ] if buffer:get drop ;
+  (c-c)  :check-bs   dup [ ASCII:BS eq? ] [ ASCII:DEL eq? ] bi or &bs if ;
+  (c-c)  :check      check-eof check-bs ;
+  (-c)   :character  c:get dup buffer:add ;
+  (q-)   :buffer     [ TIB buffer:set call buffer:start ] buffer:preserve ;
+  (-s)   :read-token [ [ character check done? ] until ] buffer s:chop ;
+  (-sf)  :input      read-token valid? ;
+  (sf-)  :process    @Ignoring [ drop-pair eol? [ &Ignoring v:off ] if ] if;
+                     &interpret &drop choose ;
 ---reveal---
-  :c:get (-c) hook #1 io:scan-for io:invoke ;
-
   :s:get-word (-s) [ #7 fetch buffer:set
                      [ c:get dup buffer:add check-bs eol? ] until
                        buffer:start s:chop ] buffer:preserve ;
-
-  :bye (-) \ha...... ;
-
-  :listen (-)
-    repeat s:get-word valid? &interpret &drop choose again ;
+  :banner  version 'RETRO_12_(%n.%n)\n s:format s:put
+           FREE EOM FREE - EOM '%n_Max,_%n_Used,_%n_Free\n s:format s:put ;
+  :listen  banner repeat input process again ;
 }}
 
 &listen #1 store
