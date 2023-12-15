@@ -678,10 +678,10 @@ Fetch/store for halfword values.
 
 ~~~
 :h:fetch (a-n)
-  [ b:fetch ] [ n:inc b:fetch #-8 shift ] bi or ;
+  &b:fetch [ n:inc b:fetch #-8 shift ] bi or ;
 :h:store (na-)
-  dup-pair [ #255 and ] dip b:store
-  n:inc [ #8 shift #255 and ] dip b:store ;
+  dup-pair \pulianpo `255 b:store
+  n:inc \pulishli `8 `255 \anpoliju ^b:store ;
 ~~~
 
 Fetch/store for word values (using byte level address). Note that
