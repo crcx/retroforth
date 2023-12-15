@@ -1609,7 +1609,7 @@ and return a new value.
 
 {{
   'NextArray var
-  :arrays STRINGS #1025 - #513 #12 * - ;
+  :arrays FREE here + ;
 ---reveal---
   :a:temp (a-a) @NextArray dup #12 eq? [ drop #0 dup !NextArray ] if
                 #513 * arrays + over a:length n:inc copy
