@@ -1624,12 +1624,8 @@ and return a new value.
   :patch    here over - n:dec over store ;
   :cleanup  dup a:temp swap &Heap store ;
   :record   @Count , ;
-  (numbers)
-  :match?   over eq? ;
-  :iterate/n [ match? &record if &Count v:inc ] a:for-each ;
-  (strings)
-  :match?   over s:eq? ;
-  :iterate/s [ match? &record if &Count v:inc ] a:for-each ;
+  :iterate/n [ over eq? &record if &Count v:inc ] a:for-each ;
+  :iterate/s [ over s:eq? &record if &Count v:inc ] a:for-each ;
 ---reveal---
   :a:indices (av-a)
     prepare here [ reserve iterate/n drop ] dip patch cleanup ;
