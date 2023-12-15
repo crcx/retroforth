@@ -742,8 +742,8 @@ helpful when revisiting older code as it makes the intent
 a bit clearer.
 
 ~~~
-:v:preserve (aq-)
-  \swdufe.. [ &call dip ] dip \swst.... ;
+:v:preserve (aq-)n
+  \swdufepu &call dip \poswst.. ;
 ~~~
 
 If you need to update a stored variable there are two typical
@@ -1408,7 +1408,7 @@ entire dictionary in a very clean manner.
 ~~~
 :d:for-each (q-)
   &Dictionary [ repeat \fezr....
-  dup-pair [ [ \swca.... ] dip ] dip again ] call drop ;
+  dup-pair \pupuswca \popo.... again ] call drop ;
 ~~~
 
 Using `d:for-each`, I implement a means of looking up a
