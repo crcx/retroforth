@@ -716,8 +716,8 @@ handling of variables. With this, the above can become simply:
   &foo v:inc
 
 ~~~
-:v:inc-by  (na-)   [ \fead.... ] sip store ;
-:v:dec-by  (na-)   [ \feswsu.. ] sip store ;
+:v:inc-by  (na-)   \dupufead \postre.. ;
+:v:dec-by  (na-)   \dupufesw \supostre ;
 :v:inc     (n-n)   #1 swap v:inc-by ;
 :v:dec     (n-n)   #1 swap v:dec-by ;
 :v:limit   (alu-)  \pupudufe \popo.... n:limit \swst.... ;
