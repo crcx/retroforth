@@ -2,8 +2,8 @@
 
 # These are used when building and signing a release.
 
-VERSION ?= 2024.4
-KEYPAIR ?= 2024-04
+VERSION ?= 2024.1
+KEYPAIR ?= 2024-01
 
 # -------------------------------------------------------------
 
