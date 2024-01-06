@@ -20,5 +20,5 @@
 
 :library:load
   dup library:contains? [ library:filename include ]
-  [ 'ERROR:_Libray_`%s`_was_not_found s:format s:put nl ] choose ;
+  [ 'ERROR:_Library_`%s`_was_not_found s:format s:put nl ] choose ;
 ~~~
