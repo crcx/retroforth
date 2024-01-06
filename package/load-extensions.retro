@@ -2,5 +2,4 @@
 'extensions/README.retro include
 'extensions/double.retro include
 'extensions/malloc.retro include
-'extensions/termina.retro include
 ~~~
