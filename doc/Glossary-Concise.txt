@@ -166,6 +166,69 @@ Variable. Holds the current numeric base. Base must be in the range of 2-16.
 Compiler                  D: -a  A: -  F: -
 Variable. Holds the compiler state. If TRUE, the compiler is active. If FALSE, it is not.
 
+DEVICE:BLOCKS             D: -n  A: -  F: -
+Return device ID for block support.
+
+DEVICE:CLOCK              D: -n  A: -  F: -
+Return device ID for clock words.
+
+DEVICE:ERROR              D: -n  A: -  F: -
+Return device ID for error handlers.
+
+DEVICE:FFI                D: -n  A: -  F: -
+Return device ID for foreign function interface.
+
+DEVICE:FILES              D: -n  A: -  F: -
+Return device ID for filesystem access.
+
+DEVICE:FLOATS             D: -n  A: -  F: -
+Return device ID for floating point.
+
+DEVICE:IMAGE              D: -n  A: -  F: -
+Return device ID for image writer.
+
+DEVICE:KEYBOARD           D: -n  A: -  F: -
+Return device ID for Keyboard input.
+
+DEVICE:MALLOC             D: -n  A: -  F: -
+Return device ID for memory allocator.
+
+DEVICE:MULTICORE          D: -n  A: -  F: -
+Return device ID for multicore support.
+
+DEVICE:OUTPUT             D: -n  A: -  F: -
+Return device ID for Output device.
+
+DEVICE:RESERVED11         D: -n  A: -  F: -
+Reserved device ID.
+
+DEVICE:RESERVED12         D: -n  A: -  F: -
+Reserved device ID.
+
+DEVICE:RESERVED13         D: -n  A: -  F: -
+Reserved device ID.
+
+DEVICE:RESERVED14         D: -n  A: -  F: -
+Reserved device ID.
+
+DEVICE:RESERVED6          D: -n  A: -  F: -
+Reserved device ID.
+
+DEVICE:RNG                D: -n  A: -  F: -
+Return device ID for random number generator.
+
+DEVICE:SCRIPTING          D: -n  A: -  F: -
+Return device ID for scripting support.
+
+DEVICE:SOCKET             D: -n  A: -  F: -
+Return device ID for sockets.
+
+DEVICE:UNIX               D: -n  A: -  F: -
+Return device ID for unix syscall.
+
+DEVICE:UNSIGNED           D: -n  A: -  F: -
+Return device ID for unsigned maths.
+
 Dictionary                D: -a  A: -  F: -
 Variable. Holds a pointer to the most recent dictionary header.
 

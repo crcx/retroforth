@@ -647,6 +647,237 @@ Variable. Holds the compiler state. If TRUE, the compiler is active. If FALSE, i
 Class: class:data | Namespace: global | Interface Layer: all
 ------------------------------------------------------------------------
 
+DEVICE:BLOCKS
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Return device ID for block support.
+
+Class: class:data | Namespace: DEVICE | Interface Layer: rre
+------------------------------------------------------------------------
+
+DEVICE:CLOCK
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Return device ID for clock words.
+
+Class: class:data | Namespace: DEVICE | Interface Layer: rre
+------------------------------------------------------------------------
+
+DEVICE:ERROR
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Return device ID for error handlers.
+
+Class: class:data | Namespace: DEVICE | Interface Layer: rre
+------------------------------------------------------------------------
+
+DEVICE:FFI
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Return device ID for foreign function interface.
+
+Class: class:data | Namespace: DEVICE | Interface Layer: rre
+------------------------------------------------------------------------
+
+DEVICE:FILES
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Return device ID for filesystem access.
+
+Class: class:data | Namespace: DEVICE | Interface Layer: rre
+------------------------------------------------------------------------
+
+DEVICE:FLOATS
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Return device ID for floating point.
+
+Class: class:data | Namespace: DEVICE | Interface Layer: rre
+------------------------------------------------------------------------
+
+DEVICE:IMAGE
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Return device ID for image writer.
+
+Class: class:data | Namespace: DEVICE | Interface Layer: rre
+------------------------------------------------------------------------
+
+DEVICE:KEYBOARD
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Return device ID for Keyboard input.
+
+Class: class:data | Namespace: DEVICE | Interface Layer: rre
+------------------------------------------------------------------------
+
+DEVICE:MALLOC
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Return device ID for memory allocator.
+
+Class: class:data | Namespace: DEVICE | Interface Layer: rre
+------------------------------------------------------------------------
+
+DEVICE:MULTICORE
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Return device ID for multicore support.
+
+Class: class:data | Namespace: DEVICE | Interface Layer: rre
+------------------------------------------------------------------------
+
+DEVICE:OUTPUT
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Return device ID for Output device.
+
+Class: class:data | Namespace: DEVICE | Interface Layer: rre
+------------------------------------------------------------------------
+
+DEVICE:RESERVED11
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Reserved device ID.
+
+Class: class:data | Namespace: DEVICE | Interface Layer: rre
+------------------------------------------------------------------------
+
+DEVICE:RESERVED12
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Reserved device ID.
+
+Class: class:data | Namespace: DEVICE | Interface Layer: rre
+------------------------------------------------------------------------
+
+DEVICE:RESERVED13
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Reserved device ID.
+
+Class: class:data | Namespace: DEVICE | Interface Layer: rre
+------------------------------------------------------------------------
+
+DEVICE:RESERVED14
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Reserved device ID.
+
+Class: class:data | Namespace: DEVICE | Interface Layer: rre
+------------------------------------------------------------------------
+
+DEVICE:RESERVED6
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Reserved device ID.
+
+Class: class:data | Namespace: DEVICE | Interface Layer: rre
+------------------------------------------------------------------------
+
+DEVICE:RNG
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Return device ID for random number generator.
+
+Class: class:data | Namespace: DEVICE | Interface Layer: rre
+------------------------------------------------------------------------
+
+DEVICE:SCRIPTING
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Return device ID for scripting support.
+
+Class: class:data | Namespace: DEVICE | Interface Layer: rre
+------------------------------------------------------------------------
+
+DEVICE:SOCKET
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Return device ID for sockets.
+
+Class: class:data | Namespace: DEVICE | Interface Layer: rre
+------------------------------------------------------------------------
+
+DEVICE:UNIX
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Return device ID for unix syscall.
+
+Class: class:data | Namespace: DEVICE | Interface Layer: rreDEVICE:
+------------------------------------------------------------------------
+
+DEVICE:UNSIGNED
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Return device ID for unsigned maths.
+
+Class: class:data | Namespace: DEVICE | Interface Layer: rre
+------------------------------------------------------------------------
+
 Dictionary
 
   Data:  -a

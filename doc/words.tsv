@@ -54,6 +54,27 @@ ASCII:VT	-n	-	-	Constant. Refers to specific ASCII code.			class:data	{n/a}	{n/a
 BUILD	-n	-	-	Constant. Return a build identifier. Use along with version to identify an image.			class:data	{n/a}	{n/a}	global	all	
 Base	-a	-	-	Variable. Holds the current numeric base. Base must be in the range of 2-16.			class:data	{n/a}	{n/a}	global	all	
 Compiler	-a	-	-	Variable. Holds the compiler state. If TRUE, the compiler is active. If FALSE, it is not.			class:data	{n/a}	{n/a}	global	all	
+DEVICE:BLOCKS	-n	-	-	Return device ID for block support.			class:data	{n/a}	{n/a}	DEVICE	rre	
+DEVICE:CLOCK	-n	-	-	Return device ID for clock words.			class:data	{n/a}	{n/a}	DEVICE	rre	
+DEVICE:ERROR	-n	-	-	Return device ID for error handlers.			class:data	{n/a}	{n/a}	DEVICE	rre	
+DEVICE:FFI	-n	-	-	Return device ID for foreign function interface.			class:data	{n/a}	{n/a}	DEVICE	rre	
+DEVICE:FILES	-n	-	-	Return device ID for filesystem access.			class:data	{n/a}	{n/a}	DEVICE	rre	
+DEVICE:FLOATS	-n	-	-	Return device ID for floating point.			class:data	{n/a}	{n/a}	DEVICE	rre	
+DEVICE:IMAGE	-n	-	-	Return device ID for image writer.			class:data	{n/a}	{n/a}	DEVICE	rre	
+DEVICE:KEYBOARD	-n	-	-	Return device ID for Keyboard input.			class:data	{n/a}	{n/a}	DEVICE	rre	
+DEVICE:MALLOC	-n	-	-	Return device ID for memory allocator.			class:data	{n/a}	{n/a}	DEVICE	rre	
+DEVICE:MULTICORE	-n	-	-	Return device ID for multicore support.			class:data	{n/a}	{n/a}	DEVICE	rre	
+DEVICE:OUTPUT	-n	-	-	Return device ID for Output device.			class:data	{n/a}	{n/a}	DEVICE	rre	
+DEVICE:RESERVED11	-n	-	-	Reserved device ID.			class:data	{n/a}	{n/a}	DEVICE	rre	
+DEVICE:RESERVED12	-n	-	-	Reserved device ID.			class:data	{n/a}	{n/a}	DEVICE	rre	
+DEVICE:RESERVED13	-n	-	-	Reserved device ID.			class:data	{n/a}	{n/a}	DEVICE	rre	
+DEVICE:RESERVED14	-n	-	-	Reserved device ID.			class:data	{n/a}	{n/a}	DEVICE	rre	
+DEVICE:RESERVED6	-n	-	-	Reserved device ID.			class:data	{n/a}	{n/a}	DEVICE	rre	
+DEVICE:RNG	-n	-	-	Return device ID for random number generator.			class:data	{n/a}	{n/a}	DEVICE	rre	
+DEVICE:SCRIPTING	-n	-	-	Return device ID for scripting support.			class:data	{n/a}	{n/a}	DEVICE	rre	
+DEVICE:SOCKET	-n	-	-	Return device ID for sockets.			class:data	{n/a}	{n/a}	DEVICE	rre	
+DEVICE:UNIX	-n	-	-	Return device ID for unix syscall.			class:data	{n/a}	{n/a}	DEVICE	rreDEVICE:	-n	-	-	Return device ID for .			class:data	{n/a}	{n/a}	DEVICE	rre		
+DEVICE:UNSIGNED	-n	-	-	Return device ID for unsigned maths.			class:data	{n/a}	{n/a}	DEVICE	rre	
 Dictionary	-a	-	-	Variable. Holds a pointer to the most recent dictionary header.			class:data	{n/a}	{n/a}	global	all	
 END	-	-	-	Used to denote the end of a linked list. The last cons will have the cdr point to this address.			class:word	{n/a}	{n/a}	rre	all	
 EOM	-a	-	-	Constant. Returns the last addressable memory address.			class:word	{n/a}	{n/a}	global	all	
