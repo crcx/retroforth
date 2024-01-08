@@ -933,6 +933,17 @@ Returns the number of cells available to your application. This is the amount of
 Class: class:word | Namespace: global | Interface Layer: all
 ------------------------------------------------------------------------
 
+HOME
+
+  Data:  -s
+  Addr:  -
+  Float: -
+
+Hold the path to the users home directory.
+
+Class: class:data | Namespace: global | Interface Layer: rre
+------------------------------------------------------------------------
+
 Heap
 
   Data:  -a
@@ -953,6 +964,17 @@ I
 Access the loop index for the current loop. (For loops made using `indexed-times`)
 
 Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
+Ignoring
+
+  Data:  -a
+  Addr:  -
+  Float: -
+
+Variable. When TRUE, ignore input to end of line.
+
+Class: class:data | Namespace: global | Interface Layer: all
 ------------------------------------------------------------------------
 
 J
@@ -4831,6 +4853,83 @@ io:unix-syscall
 Trigger a Unix system call. This is not intended to be used directly.
 
 Class: class:word | Namespace: io | Interface Layer: rre
+------------------------------------------------------------------------
+
+library:.CONFIG
+
+  Data:  -s
+  Addr:  -
+  Float: -
+
+Data. Return a template for a library file name in `~/.config/retroforth/library`.
+
+Class: class:data | Namespace: global | Interface Layer: rre
+------------------------------------------------------------------------
+
+library:.config
+
+  Data:  s-s
+  Addr:  -
+  Float: -
+
+Find the users home directory and construct a filename for a library in the `~/.config/retroforth/library` directory.
+
+Class: class:word | Namespace: global | Interface Layer: rre
+------------------------------------------------------------------------
+
+library:CWD
+
+  Data:  -s
+  Addr:  -
+  Float: -
+
+Data. Return a template for a library file name in `./library`.
+
+Class: class:data | Namespace: global | Interface Layer: rre
+------------------------------------------------------------------------
+
+library:contains?
+
+  Data:  s-f
+  Addr:  -
+  Float: -
+
+Check to see if a library exists.
+
+Class: class:word | Namespace: global | Interface Layer: rre
+------------------------------------------------------------------------
+
+library:cwd
+
+  Data:  s-s
+  Addr:  -
+  Float: -
+
+Construct a filename for a library in the `~/library` directory.
+
+Class: class:word | Namespace: global | Interface Layer: rre
+------------------------------------------------------------------------
+
+library:filename
+
+  Data:  s-s
+  Addr:  -
+  Float: -
+
+Given a library name, construct the actual filename to load.
+
+Class: class:word | Namespace: global | Interface Layer: rre
+------------------------------------------------------------------------
+
+library:load
+
+  Data:  s-
+  Addr:  -
+  Float: -
+
+Load a library. This will load the string, with ".retro".
+
+Class: class:word | Namespace: global | Interface Layer: rre
 ------------------------------------------------------------------------
 
 listen

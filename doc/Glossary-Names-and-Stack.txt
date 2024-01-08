@@ -80,8 +80,10 @@ END                       D: -  A: -  F: -
 EOM                       D: -a  A: -  F: -
 FALSE                     D: -n  A: -  F: -
 FREE                      D: -n  A: -  F: -
+HOME                      D: -s  A: -  F: -
 Heap                      D: -a  A: -  F: -
 I                         D: -n  A: -  F: -
+Ignoring                  D: -a  A: -  F: -
 J                         D: -n  A: -  F: -
 K                         D: -n  A: -  F: -
 RewriteUnderscores        D: -a  A: -  F: -
@@ -419,6 +421,13 @@ io:invoke                 D: n-  A: -  F: -
 io:query                  D: n-mN  A: -  F: -
 io:scan-for               D: n-m  A: -  F: -
 io:unix-syscall           D: ...n-  A: -  F: -
+library:.CONFIG           D: -s  A: -  F: -
+library:.config           D: s-s  A: -  F: -
+library:CWD               D: -s  A: -  F: -
+library:contains?         D: s-f  A: -  F: -
+library:cwd               D: s-s  A: -  F: -
+library:filename          D: s-s  A: -  F: -
+library:load              D: s-  A: -  F: -
 listen                    D: -  A: -  F: -
 lt?                       D: nn-f  A: -  F: -
 lteq?                     D: nn-f  A: -  F: -

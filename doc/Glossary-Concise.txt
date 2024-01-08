@@ -244,11 +244,17 @@ Returns `0`, the value used to indicate a FALSE result.
 FREE                      D: -n  A: -  F: -
 Returns the number of cells available to your application. This is the amount of memory, less the already consumed portion and buffers mapped for Retro's internal use.
 
+HOME                      D: -s  A: -  F: -
+Hold the path to the users home directory.
+
 Heap                      D: -a  A: -  F: -
 Variable. Holds the address of the next available cell.
 
 I                         D: -n  A: -  F: -
 Access the loop index for the current loop. (For loops made using `indexed-times`)
+
+Ignoring                  D: -a  A: -  F: -
+Variable. When TRUE, ignore input to end of line.
 
 J                         D: -n  A: -  F: -
 Access the parent loop index for the current loop. (For loops made using `indexed-times`)
@@ -1260,6 +1266,27 @@ Scan the I/O devices for a device with a specified ID. Returns the device number
 
 io:unix-syscall           D: ...n-  A: -  F: -
 Trigger a Unix system call. This is not intended to be used directly.
+
+library:.CONFIG           D: -s  A: -  F: -
+Data. Return a template for a library file name in `~/.config/retroforth/library`.
+
+library:.config           D: s-s  A: -  F: -
+Find the users home directory and construct a filename for a library in the `~/.config/retroforth/library` directory.
+
+library:CWD               D: -s  A: -  F: -
+Data. Return a template for a library file name in `./library`.
+
+library:contains?         D: s-f  A: -  F: -
+Check to see if a library exists.
+
+library:cwd               D: s-s  A: -  F: -
+Construct a filename for a library in the `~/library` directory.
+
+library:filename          D: s-s  A: -  F: -
+Given a library name, construct the actual filename to load.
+
+library:load              D: s-  A: -  F: -
+Load a library. This will load the string, with ".retro".
 
 listen                    D: -  A: -  F: -
 "Run interactive ""listener"" (a REPL)."
