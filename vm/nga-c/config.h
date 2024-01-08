@@ -64,3 +64,8 @@
 #ifndef STACK_DEPTH
 #define STACK_DEPTH  256          /* Depth of data stack */
 #endif
+
+#ifdef BRANCH_PREDICTION
+/* The Compiler Magic Trick */
+#define unlikely(x) __builtin_expect((x),0)
+#endif

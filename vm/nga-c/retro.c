@@ -17,6 +17,7 @@
 #include <limits.h>
 #include <signal.h>
 #include <stdint.h>
+#include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -156,7 +157,9 @@ V load_embedded_image(NgaState *);
 CELL load_image(NgaState *, char *);
 V prepare_vm(NgaState *);
 V process_opcode_bundle(NgaState *, CELL);
+#ifndef BRANCH_PREDICTION
 V validate_opcode_bundle(NgaState *, CELL);
+#endif
 
 #ifdef NEEDS_STRL
 size_t strlcat(char *dst, const char *src, size_t dsize);
@@ -189,6 +192,7 @@ V inst_iq(NgaState *);  V inst_ii(NgaState *);
 
 int verbose;
 
+#ifndef BRANCH_PREDICTION
 V guard(NgaState *vm, int n, int m, int diff) {
   if (ACTIVE.sp < n) {
 #ifdef ENABLE_ERROR
@@ -233,6 +237,50 @@ V guard(NgaState *vm, int n, int m, int diff) {
     }
   }
 }
+#else
+V guard(NgaState *vm, int n, int m, int diff) {
+  if (unlikely(ACTIVE.sp < n)) {
+#ifdef ENABLE_ERROR
+    if (vm->ErrorHandlers[1] != 0) {
+      handle_error(vm, 1);
+    }
+#else
+    printf("E: Data Stack Underflow");
+    ACTIVE.sp = 0;
+    return;
+#endif
+  }
+  if (unlikely(((ACTIVE.sp + m) - n) > (STACK_DEPTH - 1))) {
+#ifdef ENABLE_ERROR
+    if (vm->ErrorHandlers[2] != 0) {
+      handle_error(vm, 2);
+    }
+#else
+    printf("E: Data Stack Overflow");
+    ACTIVE.sp = 0;
+    return;
+#endif
+  }
+  if (unlikely(ACTIVE.rp + diff < 0)) {
+#ifdef ENABLE_ERROR
+    if (vm->ErrorHandlers[3] != 0) {
+      handle_error(vm, 3);
+    }
+#else
+      return;
+#endif
+  }
+  if (unlikely(ACTIVE.rp + diff > (ADDRESSES - 1))) {
+#ifdef ENABLE_ERROR
+    if (vm->ErrorHandlers[1] != 4) {
+      handle_error(vm, 4);
+    }
+#else
+    return;
+#endif
+  }
+}
+#endif
 
 #ifdef ENABLE_MALLOC
 #ifdef BIT64
@@ -612,7 +660,9 @@ V execute(NgaState *vm, CELL cell) {
   while (ACTIVE.ip < IMAGE_SIZE) {
     if (vm->perform_abort == 0) {
       opcode = vm->memory[ACTIVE.ip];
+#ifndef BRANCH_PREDICTION
       validate_opcode_bundle(vm, opcode);
+#endif
       process_opcode_bundle(vm, opcode);
 #ifndef ENABLE_ERROR
       if (ACTIVE.sp < 0 || ACTIVE.sp > STACK_DEPTH) {
@@ -1205,7 +1255,9 @@ V prepare_vm(NgaState *vm) {
 }
 
 V inst_no(NgaState *vm) {
+#ifndef BRANCH_PREDICTION
   guard(vm, 0, 0, 0);
+#endif
 }
 
 V inst_li(NgaState *vm) {
@@ -1516,6 +1568,7 @@ V process_opcode(NgaState *vm, CELL opcode) {
 #endif
 }
 
+#ifndef BRANCH_PREDICTION
 V validate_opcode_bundle(NgaState *vm, CELL opcode) {
   CELL remainingOpcode = opcode;
   for (int i = 0; i < 4; i++) {
@@ -1526,6 +1579,7 @@ V validate_opcode_bundle(NgaState *vm, CELL opcode) {
     remainingOpcode >>= 8;
   }
 }
+#endif
 
 V verbose_details(NgaState *vm, CELL opcode) {
   fprintf(stderr, "ip: %lld ", (long long)ACTIVE.ip);
@@ -1537,10 +1591,20 @@ V verbose_details(NgaState *vm, CELL opcode) {
 
 #define INST(n) ((opcode >> n) & 0xFF) != 0
 V process_opcode_bundle(NgaState *vm, CELL opcode) {
+#ifndef BRANCH_PREDICTION
   if (INST(0))  instructions[opcode & 0xFF](vm);
   if (INST(8))  instructions[(opcode >> 8) & 0xFF](vm);
   if (INST(16)) instructions[(opcode >> 16) & 0xFF](vm);
   if (INST(24)) instructions[(opcode >> 24) & 0xFF](vm);
+#else
+  for (size_t i = 0; i < 4; ++i) {
+    uint8_t current = ((uint8_t*)&opcode)[i];
+    if (unlikely(current > 29)) {
+      invalid_opcode(vm, opcode);
+    }
+    instructions[current](vm);
+  }
+#endif
 }
 
 #ifdef NEEDS_STRL

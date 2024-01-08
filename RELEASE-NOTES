@@ -83,6 +83,8 @@
   - remove need to lookup & call err:notfound
   - use C preprocessor to help with readability in arg.
     processing
+  - optional BRANCH_PREDICTION (build-time option) to use
+    __builtin_expect() (faster on some systems). (~iacore)
 
 Future Notes
 

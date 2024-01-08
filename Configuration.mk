@@ -31,6 +31,10 @@ OPTIONS ?=
 OPTIONS += -DUSE_UTF32
 OPTIONS += -DBIT64
 
+# This helps improve performance on some systems.
+
+# OPTIONS += -DBRANCH_PREDICTION
+
 # This may help improve performance, but not all compilers
 # support it. (E.g., clang-1200 on some macOS systems does
 # not support it).
