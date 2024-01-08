@@ -13,6 +13,9 @@ each of the provided words are found in.
 ~~~
 'build.retro s:dedup 'BUILD d:set-source
 'retro.forth s:dedup
+dup 'Ignoring d:set-source
+dup 'banner d:set-source
+dup 'TIB d:set-source
 dup 'listen d:set-source
 dup 'gc d:set-source
 dup 'bye d:set-source

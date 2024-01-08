@@ -20,4 +20,29 @@
 #8000 'DEVICE:MULTICORE const
 #8100 'DEVICE:FFI const
 #8101 'DEVICE:UNSIGNED const
+
+
+'interface/devices.retro s:dedup
+dup 'DEVICE:UNSIGNED   d:set-source
+dup 'DEVICE:FFI        d:set-source
+dup 'DEVICE:MULTICORE  d:set-source
+dup 'DEVICE:ERROR      d:set-source
+dup 'DEVICE:IMAGE      d:set-source
+dup 'DEVICE:MALLOC     d:set-source
+dup 'DEVICE:RESERVED14 d:set-source
+dup 'DEVICE:RESERVED13 d:set-source
+dup 'DEVICE:RESERVED12 d:set-source
+dup 'DEVICE:RESERVED11 d:set-source
+dup 'DEVICE:RNG        d:set-source
+dup 'DEVICE:SCRIPTING  d:set-source
+dup 'DEVICE:UNIX       d:set-source
+dup 'DEVICE:SOCKET     d:set-source
+dup 'DEVICE:RESERVED6  d:set-source
+dup 'DEVICE:CLOCK      d:set-source
+dup 'DEVICE:BLOCKS     d:set-source
+dup 'DEVICE:FILES      d:set-source
+dup 'DEVICE:FLOATS     d:set-source
+dup 'DEVICE:KEYBOARD   d:set-source
+dup 'DEVICE:OUTPUT     d:set-source
+drop
 ~~~

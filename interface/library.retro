@@ -21,4 +21,15 @@
 :library:load
   dup library:contains? [ library:filename include ]
   [ 'ERROR:_Library_`%s`_was_not_found s:format s:put nl ] choose ;
+
+'interface/library.retro s:dedup
+dup 'library:load d:set-source
+dup 'library:contains? d:set-source
+dup 'library:filename d:set-source
+dup 'library:.config d:set-source
+dup 'library:cwd d:set-source
+dup 'library:CWD d:set-source
+dup 'library:.CONFIG d:set-source
+dup 'HOME d:set-source
+drop
 ~~~
