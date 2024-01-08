@@ -31,6 +31,12 @@ OPTIONS ?=
 OPTIONS += -DUSE_UTF32
 OPTIONS += -DBIT64
 
+# This may help improve performance, but not all compilers
+# support it. (E.g., clang-1200 on some macOS systems does
+# not support it).
+
+# OPTIONS += -march=native
+
 # The I/O devices can be enabled or disabled. Comment or
 # uncomment the corresponding ENABLED and DEVICES lines and
 # then run `make`. Of particular note here, sockets support
