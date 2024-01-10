@@ -166,21 +166,21 @@ size_t strlcat(char *dst, const char *src, size_t dsize);
 size_t strlcpy(char *dst, const char *src, size_t dsize);
 #endif
 
-V inst_no(NgaState *);  V inst_li(NgaState *);
-V inst_du(NgaState *);  V inst_dr(NgaState *);
-V inst_sw(NgaState *);  V inst_pu(NgaState *);
-V inst_po(NgaState *);  V inst_ju(NgaState *);
-V inst_ca(NgaState *);  V inst_cc(NgaState *);
-V inst_re(NgaState *);  V inst_eq(NgaState *);
-V inst_ne(NgaState *);  V inst_lt(NgaState *);
-V inst_gt(NgaState *);  V inst_fe(NgaState *);
-V inst_st(NgaState *);  V inst_ad(NgaState *);
-V inst_su(NgaState *);  V inst_mu(NgaState *);
-V inst_di(NgaState *);  V inst_an(NgaState *);
-V inst_or(NgaState *);  V inst_xo(NgaState *);
-V inst_sh(NgaState *);  V inst_zr(NgaState *);
-V inst_ha(NgaState *);  V inst_ie(NgaState *);
-V inst_iq(NgaState *);  V inst_ii(NgaState *);
+V i_no(NgaState *);  V i_li(NgaState *);
+V i_du(NgaState *);  V i_dr(NgaState *);
+V i_sw(NgaState *);  V i_pu(NgaState *);
+V i_po(NgaState *);  V i_ju(NgaState *);
+V i_ca(NgaState *);  V i_cc(NgaState *);
+V i_re(NgaState *);  V i_eq(NgaState *);
+V i_ne(NgaState *);  V i_lt(NgaState *);
+V i_gt(NgaState *);  V i_fe(NgaState *);
+V i_st(NgaState *);  V i_ad(NgaState *);
+V i_su(NgaState *);  V i_mu(NgaState *);
+V i_di(NgaState *);  V i_an(NgaState *);
+V i_or(NgaState *);  V i_xo(NgaState *);
+V i_sh(NgaState *);  V i_zr(NgaState *);
+V i_ha(NgaState *);  V i_ie(NgaState *);
+V i_iq(NgaState *);  V i_ii(NgaState *);
 
 
 /* Image, Stack, and VM variables ------------------------------------ */
@@ -1059,7 +1059,7 @@ int main(int argc, char **argv) {
 
   /* Process Arguments */
   for (i = 1; i < argc; i++) {
-    if  ARG("-h") {
+    if ARG("-h") {
       help(argv[0]);
       exit(0);
     } else if ARG("-v") {
@@ -1082,7 +1082,7 @@ int main(int argc, char **argv) {
     } else if ARG("-t") {
       include_file(vm, argv[i + 1], 1);
       i++;
-    } else  if (ARG("--code-start") || ARG("-cs")) {
+    } else if (ARG("--code-start") || ARG("-cs")) {
       i++;
       strlcpy(vm->code_start, argv[i], 256);
     } else if (ARG("--code-end") || ARG("-ce")) {
@@ -1213,8 +1213,10 @@ CELL load_image(NgaState *vm, char *imageFile) {
       exit(1);
     }
     rewind(fp);
-    for (int i = 0; i < IMAGE_SIZE; i++)
-      vm->memory[i] = 0; /* NO - nop instruction */
+
+    /* Erase old image in memory: 0 = nop instruction */
+    for (int i = 0; i < IMAGE_SIZE; i++) { vm->memory[i] = 0; }
+
     /* Read the file into memory */
     imageSize = fread(vm->memory, sizeof(CELL), fileLen, fp);
     fclose(fp);
@@ -1234,32 +1236,32 @@ V prepare_vm(NgaState *vm) {
     ACTIVE.address[ACTIVE.ip] = 0;
 }
 
-V inst_no(NgaState *vm) {
+V i_no(NgaState *vm) {
 #ifndef BRANCH_PREDICTION
   guard(vm, 0, 0, 0);
 #endif
 }
 
-V inst_li(NgaState *vm) {
+V i_li(NgaState *vm) {
   guard(vm, 0, 1, 0);
   ACTIVE.sp++;
   ACTIVE.ip++;
   TOS = vm->memory[ACTIVE.ip];
 }
 
-V inst_du(NgaState *vm) {
+V i_du(NgaState *vm) {
   guard(vm, 1, 2, 0);
   ACTIVE.sp++;
   ACTIVE.data[ACTIVE.sp] = NOS;
 }
 
-V inst_dr(NgaState *vm) {
+V i_dr(NgaState *vm) {
   guard(vm, 1, 0, 0);
   ACTIVE.data[ACTIVE.sp] = 0;
   ACTIVE.sp--;
 }
 
-V inst_sw(NgaState *vm) {
+V i_sw(NgaState *vm) {
   guard(vm, 2, 2, 0);
   CELL a;
   a = TOS;
@@ -1267,39 +1269,39 @@ V inst_sw(NgaState *vm) {
   NOS = a;
 }
 
-V inst_pu(NgaState *vm) {
+V i_pu(NgaState *vm) {
   guard(vm, 1, 0, 1);
   ACTIVE.rp++;
   TORS = TOS;
-  inst_dr(vm);
+  i_dr(vm);
 }
 
-V inst_po(NgaState *vm) {
+V i_po(NgaState *vm) {
   guard(vm, 0, 1, -1);
   ACTIVE.sp++;
   TOS = TORS;
   ACTIVE.rp--;
 }
 
-V inst_ju(NgaState *vm) {
+V i_ju(NgaState *vm) {
   guard(vm, 1, 0, 0);
   ACTIVE.ip = TOS - 1;
-  inst_dr(vm);
+  i_dr(vm);
 }
 
-V inst_ca(NgaState *vm) {
+V i_ca(NgaState *vm) {
   guard(vm, 1, 0, 1);
   ACTIVE.rp++;
   TORS = ACTIVE.ip;
   ACTIVE.ip = TOS - 1;
-  inst_dr(vm);
+  i_dr(vm);
 }
 
-V inst_cc(NgaState *vm) {
+V i_cc(NgaState *vm) {
   guard(vm, 2, 0, 1);
   CELL a, b;
-  a = TOS; inst_dr(vm);  /* Target */
-  b = TOS; inst_dr(vm);  /* Flag   */
+  a = TOS; i_dr(vm);  /* Target */
+  b = TOS; i_dr(vm);  /* Flag   */
   if (b != 0) {
     ACTIVE.rp++;
     TORS = ACTIVE.ip;
@@ -1307,13 +1309,13 @@ V inst_cc(NgaState *vm) {
   }
 }
 
-V inst_re(NgaState *vm) {
+V i_re(NgaState *vm) {
   guard(vm, 0, 0, -1);
   ACTIVE.ip = TORS;
   ACTIVE.rp--;
 }
 
-V inst_eq(NgaState *vm) {
+V i_eq(NgaState *vm) {
   guard(vm, 2, 1, 0);
   if (ACTIVE.u != 0) {
     NOS = ((unsigned)NOS == (unsigned)TOS) ? -1 : 0;
@@ -1321,10 +1323,10 @@ V inst_eq(NgaState *vm) {
   } else {
     NOS = (NOS == TOS) ? -1 : 0;
   }
-  inst_dr(vm);
+  i_dr(vm);
 }
 
-V inst_ne(NgaState *vm) {
+V i_ne(NgaState *vm) {
   guard(vm, 2, 1, 0);
   if (ACTIVE.u != 0) {
     NOS = ((unsigned)NOS != (unsigned)TOS) ? -1 : 0;
@@ -1332,10 +1334,10 @@ V inst_ne(NgaState *vm) {
   } else {
     NOS = (NOS != TOS) ? -1 : 0;
   }
-  inst_dr(vm);
+  i_dr(vm);
 }
 
-V inst_lt(NgaState *vm) {
+V i_lt(NgaState *vm) {
   guard(vm, 2, 1, 0);
   if (ACTIVE.u != 0) {
     NOS = ((unsigned)NOS < (unsigned)TOS) ? -1 : 0;
@@ -1343,10 +1345,10 @@ V inst_lt(NgaState *vm) {
   } else {
     NOS = (NOS < TOS) ? -1 : 0;
   }
-  inst_dr(vm);
+  i_dr(vm);
 }
 
-V inst_gt(NgaState *vm) {
+V i_gt(NgaState *vm) {
   guard(vm, 2, 1, 0);
   if (ACTIVE.u != 0) {
     NOS = ((unsigned)NOS > (unsigned)TOS) ? -1 : 0;
@@ -1354,10 +1356,10 @@ V inst_gt(NgaState *vm) {
   } else {
     NOS = (NOS > TOS) ? -1 : 0;
   }
-  inst_dr(vm);
+  i_dr(vm);
 }
 
-V inst_fe(NgaState *vm) {
+V i_fe(NgaState *vm) {
   guard(vm, 1, 1, 0);
   switch (TOS) {
     case -1: TOS = ACTIVE.sp - 1; break;
@@ -1369,14 +1371,14 @@ V inst_fe(NgaState *vm) {
   }
 }
 
-V inst_st(NgaState *vm) {
+V i_st(NgaState *vm) {
   guard(vm, 2, 0, 0);
   vm->memory[TOS] = NOS;
-  inst_dr(vm);
-  inst_dr(vm);
+  i_dr(vm);
+  i_dr(vm);
 }
 
-V inst_ad(NgaState *vm) {
+V i_ad(NgaState *vm) {
   guard(vm, 2, 1, 0);
   if (ACTIVE.u != 0) {
     NOS = (unsigned)NOS + (unsigned)TOS;
@@ -1384,10 +1386,10 @@ V inst_ad(NgaState *vm) {
   } else {
     NOS += TOS;
   }
-  inst_dr(vm);
+  i_dr(vm);
 }
 
-V inst_su(NgaState *vm) {
+V i_su(NgaState *vm) {
   guard(vm, 2, 1, 0);
   if (ACTIVE.u != 0) {
     NOS = (unsigned)NOS - (unsigned)TOS;
@@ -1395,10 +1397,10 @@ V inst_su(NgaState *vm) {
   } else {
     NOS -= TOS;
   }
-  inst_dr(vm);
+  i_dr(vm);
 }
 
-V inst_mu(NgaState *vm) {
+V i_mu(NgaState *vm) {
   guard(vm, 2, 1, 0);
   if (ACTIVE.u != 0) {
     NOS = (unsigned)NOS * (unsigned)TOS;
@@ -1406,10 +1408,10 @@ V inst_mu(NgaState *vm) {
   } else {
     NOS *= TOS;
   }
-  inst_dr(vm);
+  i_dr(vm);
 }
 
-V inst_di(NgaState *vm) {
+V i_di(NgaState *vm) {
   guard(vm, 2, 2, 0);
   CELL a, b;
   a = TOS;
@@ -1430,25 +1432,25 @@ V inst_di(NgaState *vm) {
   }
 }
 
-V inst_an(NgaState *vm) {
+V i_an(NgaState *vm) {
   guard(vm, 2, 1, 0);
   NOS = TOS & NOS;
-  inst_dr(vm);
+  i_dr(vm);
 }
 
-V inst_or(NgaState *vm) {
+V i_or(NgaState *vm) {
   guard(vm, 2, 1, 0);
   NOS = TOS | NOS;
-  inst_dr(vm);
+  i_dr(vm);
 }
 
-V inst_xo(NgaState *vm) {
+V i_xo(NgaState *vm) {
   guard(vm, 2, 1, 0);
   NOS = TOS ^ NOS;
-  inst_dr(vm);
+  i_dr(vm);
 }
 
-V inst_sh(NgaState *vm) {
+V i_sh(NgaState *vm) {
   guard(vm, 2, 1, 0);
   CELL y = TOS;
   CELL x = NOS;
@@ -1465,81 +1467,66 @@ V inst_sh(NgaState *vm) {
         NOS = x >> y;
     }
   }
-  inst_dr(vm);
+  i_dr(vm);
 }
 
-V inst_zr(NgaState *vm) {
+V i_zr(NgaState *vm) {
   guard(vm, 1, 0, 0);
   if (TOS == 0) {
-    inst_dr(vm);
+    i_dr(vm);
     ACTIVE.ip = TORS;
     ACTIVE.rp--;
   }
 }
 
-V inst_ha(NgaState *vm) {
+V i_ha(NgaState *vm) {
   guard(vm, 0, 0, 0);
   ACTIVE.ip = IMAGE_SIZE;
   ACTIVE.rp = 0;
   exit(0);
 }
 
-V inst_ie(NgaState *vm) {
+V i_ie(NgaState *vm) {
   guard(vm, 1, 1, 0);
   stack_push(vm, vm->devices);
 }
 
-V inst_iq(NgaState *vm) {
+V i_iq(NgaState *vm) {
   guard(vm, 1, 1, 0);
   vm->IO_queryHandlers[stack_pop(vm)](vm);
 }
 
-V inst_ii(NgaState *vm) {
+V i_ii(NgaState *vm) {
   guard(vm, 1, 0, 0);
   vm->IO_deviceHandlers[stack_pop(vm)](vm);
 }
 
 Handler instructions[] = {
-  inst_no, inst_li, inst_du, inst_dr, inst_sw, inst_pu, inst_po,
-  inst_ju, inst_ca, inst_cc, inst_re, inst_eq, inst_ne, inst_lt,
-  inst_gt, inst_fe, inst_st, inst_ad, inst_su, inst_mu, inst_di,
-  inst_an, inst_or, inst_xo, inst_sh, inst_zr, inst_ha, inst_ie,
-  inst_iq, inst_ii
+  i_no, i_li, i_du, i_dr, i_sw, i_pu, i_po,
+  i_ju, i_ca, i_cc, i_re, i_eq, i_ne, i_lt,
+  i_gt, i_fe, i_st, i_ad, i_su, i_mu, i_di,
+  i_an, i_or, i_xo, i_sh, i_zr, i_ha, i_ie,
+  i_iq, i_ii
 };
 
 V process_opcode(NgaState *vm, CELL opcode) {
 #ifdef FAST
   switch (opcode) {
-    case 0: break;
-    case 1: inst_li(vm); break;
-    case 2: inst_du(vm); break;
-    case 3: inst_dr(vm); break;
-    case 4: inst_sw(vm); break;
-    case 5: inst_pu(vm); break;
-    case 6: inst_po(vm); break;
-    case 7: inst_ju(vm); break;
-    case 8: inst_ca(vm); break;
-    case 9: inst_cc(vm); break;
-    case 10: inst_re(vm); break;
-    case 11: inst_eq(vm); break;
-    case 12: inst_ne(vm); break;
-    case 13: inst_lt(vm); break;
-    case 14: inst_gt(vm); break;
-    case 15: inst_fe(vm); break;
-    case 16: inst_st(vm); break;
-    case 17: inst_ad(vm); break;
-    case 18: inst_su(vm); break;
-    case 19: inst_mu(vm); break;
-    case 20: inst_di(vm); break;
-    case 21: inst_an(vm); break;
-    case 22: inst_or(vm); break;
-    case 23: inst_xo(vm); break;
-    case 24: inst_sh(vm); break;
-    case 25: inst_zr(vm); break;
-    case 26: inst_ha(vm); break;
-    case 27: inst_ie(vm); break;
-    case 28: inst_iq(vm); break;
-    case 29: inst_ii(vm); break;
+    case 0: break;              case 1: i_li(vm); break;
+    case 2: i_du(vm); break;    case 3: i_dr(vm); break;
+    case 4: i_sw(vm); break;    case 5: i_pu(vm); break;
+    case 6: i_po(vm); break;    case 7: i_ju(vm); break;
+    case 8: i_ca(vm); break;    case 9: i_cc(vm); break;
+    case 10: i_re(vm); break;   case 11: i_eq(vm); break;
+    case 12: i_ne(vm); break;   case 13: i_lt(vm); break;
+    case 14: i_gt(vm); break;   case 15: i_fe(vm); break;
+    case 16: i_st(vm); break;   case 17: i_ad(vm); break;
+    case 18: i_su(vm); break;   case 19: i_mu(vm); break;
+    case 20: i_di(vm); break;   case 21: i_an(vm); break;
+    case 22: i_or(vm); break;   case 23: i_xo(vm); break;
+    case 24: i_sh(vm); break;   case 25: i_zr(vm); break;
+    case 26: i_ha(vm); break;   case 27: i_ie(vm); break;
+    case 28: i_iq(vm); break;   case 29: i_ii(vm); break;
     default: break;
   }
 #else
