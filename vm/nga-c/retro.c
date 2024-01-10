@@ -296,7 +296,9 @@ V guard(NgaState *vm, int n, int m, int diff) {
 #include "dev-blocks.c"
 #endif
 
+#ifdef ENABLE_FILES
 #include "dev-files.c"
+#endif
 
 #ifdef ENABLE_MULTICORE
 #include "dev-multicore.c"
@@ -969,7 +971,9 @@ enum flags {
 V register_devices(NgaState *vm) {
   register_device(vm, io_output, query_output);
   register_device(vm, io_keyboard, query_keyboard);
+#ifdef ENABLE_FILES
   register_device(vm, io_filesystem, query_filesystem);
+#endif
   register_device(vm, io_image, query_image);
 #ifdef ENABLE_FLOATS
   register_device(vm, io_floatingpoint, query_floatingpoint);

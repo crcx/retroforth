@@ -27,6 +27,8 @@
 - nga-c
 
   - use UTF32 internally (translating to/from UTF8 externally)
+  - filesystem device no longer included if ENABLE_FILES not
+    defined
 
 Future Notes
 
