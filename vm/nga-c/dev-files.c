@@ -240,7 +240,6 @@ V file_write_bytes(NgaState *vm) {
 }
 
 V file_read_character(NgaState *vm) {
-#ifdef USE_UTF32
   CELL c;
   CELL slot = stack_pop(vm);
   if (slot <= 0 || slot > MAX_OPEN_FILES || vm->OpenFileHandles[slot] == 0) {
@@ -249,13 +248,9 @@ V file_read_character(NgaState *vm) {
   }
   c = fread_character(vm->OpenFileHandles[slot]);
   stack_push(vm, feof(vm->OpenFileHandles[slot]) ? 0 : c);
-#else
-  file_read(vm);
-#endif
 }
 
 V file_write_character(NgaState *vm) {
-#ifdef USE_UTF32
   unsigned char utf8_bytes[4];
   int num_bytes;
   CELL slot, c, r;
@@ -266,9 +261,6 @@ V file_write_character(NgaState *vm) {
     exit(1);
   }
   r = fwrite(&utf8_bytes, num_bytes, 1, vm->OpenFileHandles[slot]);
-#else
-  file_write(vm);
-#endif
 }
 
 V file_read_line(NgaState *vm) {
@@ -279,7 +271,6 @@ V file_read_line(NgaState *vm) {
     printf("\nERROR (nga/file_read): Invalid file handle\n");
     exit(1);
   }
-#ifdef USE_UTF32
   c = fread_character(vm->OpenFileHandles[slot]);
   vm->memory[targ] = c;
   targ++;
@@ -289,17 +280,6 @@ V file_read_line(NgaState *vm) {
     targ++;
   }
   vm->memory[targ - 1] = 0;
-#else
-  c = fgetc(vm->OpenFileHandles[slot]);
-  vm->memory[targ] = c;
-  targ++;
-  while (c != 10 && c != 13 && c != 0) {
-    c = fgetc(vm->OpenFileHandles[slot]);
-    vm->memory[targ] = c;
-    targ++;
-  }
-  vm->memory[targ - 1] = 0;
-#endif
 }
 
 V file_write_line(NgaState *vm) {

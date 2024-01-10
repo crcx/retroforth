@@ -26,13 +26,8 @@
 
 - nga-c
 
-Future Notes
+  - use UTF32 internally (translating to/from UTF8 externally)
 
-In 2023.9 the nga-c implementation added support (enabled by
-default) for using UTF32 (translating incoming source and output
-between UTF8 and UTF32 transparently). The fallback option (to
-just read raw 8-bit values) is now considered deprecated and
-will be removed in the future (assuming no bug reports relating
-to the UTF32 conversions are reported).
+Future Notes
 
 ================================================================

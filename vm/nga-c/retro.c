@@ -330,7 +330,6 @@ V guard(NgaState *vm, int n, int m, int diff) {
 /*---------------------------------------------------------------------
   Now on to I/O and extensions!
   ---------------------------------------------------------------------*/
-#ifdef USE_UTF32
 V display_utf8(const unsigned char* utf8_bytes, int num_bytes) {
     if (write(STDOUT_FILENO, utf8_bytes, num_bytes) == -1) {
         perror("Error writing to /dev/stdout");
@@ -360,17 +359,12 @@ V utf32_to_utf8(uint32_t utf32_char, unsigned char* utf8_bytes, int* num_bytes) 
         *num_bytes = 0;
     }
 }
-#endif
 
 V io_output(NgaState *vm) {
-#ifdef USE_UTF32
   unsigned char utf8_bytes[4];
   int num_bytes;
   utf32_to_utf8(stack_pop(vm), utf8_bytes, &num_bytes);
   display_utf8(utf8_bytes, num_bytes);
-#else
-  putc(stack_pop(vm), stdout);
-#endif
   fflush(stdout);
 }
 
@@ -382,7 +376,6 @@ V query_output(NgaState *vm) {
 
 /*=====================================================================*/
 
-#ifdef USE_UTF32
 int read_character(int from) {
   unsigned char utf8_bytes[4] = { 0 };
   int utf32_char, i, num_bytes;
@@ -468,14 +461,9 @@ int fread_character(FILE *from) {
   }
   return utf32_char;
 }
-#endif
 
 V io_keyboard(NgaState *vm) {
-#ifdef USE_UTF32
   stack_push(vm, read_character(STDIN_FILENO));
-#else
-  stack_push(vm, getc(stdin));
-#endif
   if (TOS == 127) TOS = 8;
 }
 
@@ -714,11 +702,7 @@ int not_eol(int c) {
 }
 
 V read_token(FILE *file, char *token_buffer) {
-#ifdef USE_UTF32
   int ch = fread_character(file);
-#else
-  int ch = getc(file);
-#endif
   int count = 0;
   while (not_eol(ch)) {
     if ((ch == 8 || ch == 127) && count > 0) {
@@ -726,11 +710,7 @@ V read_token(FILE *file, char *token_buffer) {
     } else {
       token_buffer[count++] = ch;
     }
-#ifdef USE_UTF32
     ch = fread_character(file);
-#else
-    ch = getc(file);
-#endif
   }
   token_buffer[count] = '\0';
 }
@@ -820,11 +800,7 @@ V read_line(NgaState *vm, FILE *file, char *token_buffer) {
   token_buffer[0] = '\0';
   while ((ch != 10) && (ch != 13) && (ch != EOF) && (ch != 0)) {
     token_buffer[count++] = ch;
-#ifdef USE_UTF32
     ch = fread_character(file);
-#else
-    ch = getc(file);
-#endif
   }
   token_buffer[count] = '\0';
 }

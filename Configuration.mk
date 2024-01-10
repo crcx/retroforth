@@ -28,7 +28,6 @@ LIBDL ?=
 # -------------------------------------------------------------
 
 OPTIONS ?=
-OPTIONS += -DUSE_UTF32
 OPTIONS += -DBIT64
 
 # This helps improve performance on some systems.
