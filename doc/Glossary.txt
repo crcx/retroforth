@@ -939,9 +939,9 @@ HOME
   Addr:  -
   Float: -
 
-Hold the path to the users home directory.
+Hold the path to the users home directory. Defined as a floating buffer above `here`.
 
-Class: class:data | Namespace: global | Interface Layer: rre
+Class: class:word | Namespace: global | Interface Layer: rre
 ------------------------------------------------------------------------
 
 Heap

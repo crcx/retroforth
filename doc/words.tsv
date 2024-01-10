@@ -80,7 +80,7 @@ END	-	-	-	Used to denote the end of a linked list. The last cons will have the c
 EOM	-a	-	-	Constant. Returns the last addressable memory address.			class:word	{n/a}	{n/a}	global	all	
 FALSE	-n	-	-	Returns `0`, the value used to indicate a FALSE result.			class:word	{n/a}	{n/a}	global	all	
 FREE	-n	-	-	Returns the number of cells available to your application. This is the amount of memory, less the already consumed portion and buffers mapped for Retro's internal use.			class:word	{n/a}	{n/a}	global	all	
-HOME	-s	-	-	Hold the path to the users home directory.			class:data	{n/a}	{n/a}	global	rre	
+HOME	-s	-	-	Hold the path to the users home directory. Defined as a floating buffer above `here`.			class:word	{n/a}	{n/a}	global	rre	
 Heap	-a	-	-	Variable. Holds the address of the next available cell.			class:data	{n/a}	{n/a}	global	all	
 I	-n	-	-	Access the loop index for the current loop. (For loops made using `indexed-times`)			class:word	{n/a}	{n/a}	global	all	
 Ignoring	-a	-	-	Variable. When TRUE, ignore input to end of line.			class:data	{n/a}	{n/a}	global	all	

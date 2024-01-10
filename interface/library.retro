@@ -1,5 +1,5 @@
 ~~~
-'HOME d:create #1025 allot
+:HOME here #4096 + ;
 
 '%s/.config/retroforth/library/%s.retro 'library:.CONFIG s:const
 './library/%s.retro 'library:CWD s:const
@@ -7,8 +7,8 @@
 :library:cwd library:CWD s:format ;
 
 :library:.config
-  'HOME &HOME unix:getenv
-  &HOME library:.CONFIG s:format ;
+  'HOME HOME unix:getenv
+  HOME library:.CONFIG s:format ;
 
 :library:filename (s-s)
   dup library:cwd

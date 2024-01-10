@@ -245,7 +245,7 @@ FREE                      D: -n  A: -  F: -
 Returns the number of cells available to your application. This is the amount of memory, less the already consumed portion and buffers mapped for Retro's internal use.
 
 HOME                      D: -s  A: -  F: -
-Hold the path to the users home directory.
+Hold the path to the users home directory. Defined as a floating buffer above `here`.
 
 Heap                      D: -a  A: -  F: -
 Variable. Holds the address of the next available cell.

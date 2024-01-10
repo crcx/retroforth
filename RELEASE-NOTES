@@ -18,6 +18,9 @@
 
 - image
 
+  - `HOME` (in the library code) is now a floating buffer
+    above `here`
+
 - library
 
 - retro-compiler
