@@ -4,87 +4,27 @@
       | | |  __/ |_| | | (_) |  _| (_) | |  | |_| | | |
       |_|  \___|\__|_|  \___/|_|  \___/|_|   \__|_| |_|
 
-            RetroForth & nga 2024.1 Release Notes
+            RetroForth & nga 2024.9 Release Notes
 
 ================================================================
 
 - general
-  - removed some unneeded files
-  - quieter output when building
-  - remove old Python build + packaging code
-  - configuration of devices can now be done in either config.h
-    or (by default) Configuration.mk
-  - build instructions for enabling/disabling devices updated
 
 - toolchain
-  - removed duplicate typedef in tools/retro-muri.c
-    (reported by sevan)
-  - update tools/missing-dsource.retro
-  - in retro-muri.c, use bsd_strlcpy  (rep by fangchar)
-  - retro-describe now using hash based name comparison
-  - retro-describe small reductions in call/return overhead
 
 - documentation
-  - add missing source data for vocabularies & globals:
-    a: d: double: err: file: fll: mem: script:
-  - fix misc. typos
 
 - examples
-  - add example/irc-logger.retro
-  - add example/ilo-export.retro
-  - add new example showing decompression of ulz files
-  - add example/vocabulary.retro
-  - add example/colored-dwords.retro
 
 - image
-  - small optimizations in fll: vocabulary
-  - move from interface/ to package/extensions/:
-    double.retro malloc.retro
-  - in retro.forth, fix `s:index/char` (rep by fangchar)
-  - remove separate temp. string buffer in `s:dedup`
-  - use constants for device identifiers in the Forth part of
-    the device handlers
-  - support loading extensions at runtime via `library:load`
-    (searches ./library/ and ~/.config/retroforth/library/)
-  - more use of assembly language
-  - move full listener from interface/retro-unix to the base
-    image
 
 - library
-  - block-editor (from konilo)
-  - describe (lookup glossary data at runtime)
-  - konilo (some words from konilo, was in image previously)
-  - termina (from konilo [console, colors, tui programs])
-  - x11 (for use w/nga-x11)
 
 - retro-compiler
-  - fix bugs in retro-compiler(1) preventing compilation
-  - fix bug in retro-compiler(1) causing compiled programs to
-    hang on startup
-  - added an initial man page for retro-compiler(1)
 
 - new nga implementations
-  - nga-d
-  - nga-x11
 
 - nga-c
-  - fixed a bug in load_image()  (rep. by sevan)
-  - err:notfound message no longer in C  (sevan)
-  - add -v for verbose mode
-  - now skip execuion of NOP instructions
-  - fix some casting issues
-  - force immediate exit() on HA instruction
-  - file:read-line now provided by file device
-  - use mode array instead of conditionals when opening files
-    and pipes
-  - remove obsolete/unused files
-  - refactor handling of invalid opcodes
-  - use constants for device identifiers
-  - remove need to lookup & call err:notfound
-  - use C preprocessor to help with readability in arg.
-    processing
-  - optional BRANCH_PREDICTION (build-time option) to use
-    __builtin_expect() (faster on some systems). (~iacore)
 
 Future Notes
 
