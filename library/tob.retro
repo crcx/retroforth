@@ -1,0 +1,66 @@
+# Text Output Buffer
+
+DEPENDS:
+
+- konilo
+
+TODO:
+
+- cursor row, col
+- improve handling of newlines
+- escape sequence support
+
+This is intended to be a virtual terminal, with support for the
+DEC escape sequence subset used by the termina vocabulary. At
+present it does not yet implement most of the needed functions.
+
+~~~
+#80 'TOB:W const
+#23 'TOB:H const
+~~~
+
+You can create constants for the terminal width & height before
+loading the TOB library. If you do not do so, this will create
+them for an 80x25 display.
+
+~~~
+'TOB:W d:lookup [ #80 'TOB:W const ] -if
+'TOB:H d:lookup [ #25 'TOB:H const ] -if
+~~~
+
+~~~
+'TOB d:create TOB:W TOB:H n:mul #4 n:mul allot
+
+'TX var (col)
+'TY var (row)
+
+:scroll (source) &TOB TOB:W n:add
+        (dest)   &TOB
+        (length) TOB:W TOB:H n:dec n:mul copy
+                 &TY v:dec
+        (erase)  #32 &TOB TOB:W TOB:H n:dec n:mul n:add TOB:W fill
+;
+
+:advance-cursor @TX TOB:W gt? [ #0 !TX &TY v:inc ] if
+                @TY TOB:H eq? [ &TY v:dec scroll ] if ;
+
+:handle
+  #8   [ ] case
+  #127 [ ] case
+  #9   [ ] case
+  #10  [ #0 !TX &TY v:inc ] case
+  #13  [ #0 !TX &TY v:inc ] case
+  &TOB TOB:W @TY n:mul n:add @TX n:add store &TX v:inc ;
+
+:tob:put (c-) handle advance-cursor ;
+
+:tob:display
+  &TOB TOB:H [ TOB:W [ fetch-next c:put ] times nl ] times drop ;
+
+:tob:with (q-) &tob:put &c:put set-hook call &c:put unhook ;
+
+:tob:clear (-)
+  TOB:W TOB:H n:mul [ #32 tob:put ] times #0 !TX #0 !TY ;
+
+tob:clear
+~~~

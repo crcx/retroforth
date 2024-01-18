@@ -23,6 +23,8 @@
 
 - library
 
+  - added "tob", a text output buffer
+
 - retro-compiler
 
 - new nga implementations
