@@ -1,4 +1,18 @@
-# Text Output Buffer
+ _            _                 _               _     _            __  __
+| |_ _____  _| |_    ___  _   _| |_ _ __  _   _| |_  | |__  _   _ / _|/ _| ___ _ __
+| __/ _ \ \/ / __|  / _ \| | | | __| '_ \| | | | __| | '_ \| | | | |_| |_ / _ \ '__|
+| ||  __/>  <| |_  | (_) | |_| | |_| |_) | |_| | |_  | |_) | |_| |  _|  _|  __/ |
+ \__\___/_/\_\\__|  \___/ \__,_|\__| .__/ \__,_|\__| |_.__/ \__,_|_| |_|  \___|_|
+                                   |_|
+
+The text output buffer (TOB) provides a virtual terminal model
+emulating a small subset of the traditional DEC VT100. It is
+sufficient to support the Termina vocabulary and application
+scaffold.
+
+This is intended to be a virtual terminal, with support for the
+DEC escape sequence subset used by the termina vocabulary. At
+present it does not yet implement most of the needed functions.
 
 DEPENDS:
 
@@ -9,10 +23,7 @@ TODO:
 - cursor row, col
 - improve handling of newlines
 - escape sequence support
-
-This is intended to be a virtual terminal, with support for the
-DEC escape sequence subset used by the termina vocabulary. At
-present it does not yet implement most of the needed functions.
+- separate out attributes to separate buffers
 
 ~~~
 #80 'TOB:W const
