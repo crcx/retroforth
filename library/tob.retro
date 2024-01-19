@@ -25,11 +25,6 @@ TODO:
 - escape sequence support
 - separate out attributes to separate buffers
 
-~~~
-#80 'TOB:W const
-#23 'TOB:H const
-~~~
-
 You can create constants for the terminal width & height before
 loading the TOB library. If you do not do so, this will create
 them for an 80x25 display.
@@ -52,7 +47,7 @@ them for an 80x25 display.
         (erase)  #32 &TOB TOB:W TOB:H n:dec n:mul n:add TOB:W fill
 ;
 
-:advance-cursor @TX TOB:W gt? [ #0 !TX &TY v:inc ] if
+:advance-cursor @TX TOB:W eq? [ #0 !TX &TY v:inc ] if
                 @TY TOB:H eq? [ &TY v:dec scroll ] if ;
 
 :handle
