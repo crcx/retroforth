@@ -1,3 +1,5 @@
+#!/usr/bin/env retro
+
 ================================================================
   _        _                  _      _
  | |_ __ _| | ____ ___      _(_)_ __(_)  crc's new listener for
@@ -7,6 +9,11 @@
 
 ================================================================
 
+~~~
+#80 'TOB:W const
+#23 'TOB:H const
+~~~
+
 Load depenencies from the library.
 
 ~~~
@@ -15,11 +22,16 @@ Load depenencies from the library.
 
 # ui
 
+Configure the UI colors.
+
 ~~~
-:dss:label (-) fg:red ;
+:dss:label (-) fg:red  ;
 :dss:value (-) fg:cyan ;
 :dss:sep   (-) fg:blue ;
+:dss:prompt (-) fg:magenta ;
+~~~
 
+~~~
 :~left dss:sep #23 [ I n:inc #82 vt:row,col $| c:put ] indexed-times vt:reset ;
 :~bottom dss:sep #24 #1 vt:row,col #81 [ $= c:put ] times $+ c:put vt:reset ;
 
@@ -38,24 +50,48 @@ Load depenencies from the library.
   n:inc ] a:for-each
   drop ] gc ;
 
+:layout:stat,col (-n) #84 ;
+:layout:stat     (sn-) layout:stat,col vt:row,col dss:label s:put dss:value ;
+
 :stats
-  #1 #84 vt:row,col dss:label 'HERE:__ s:put dss:value here n:put
-  #2 #84 vt:row,col dss:label 'FREE:__ s:put dss:value FREE n:put
-  #3 #84 vt:row,col dss:label 'DEPTH:_ s:put dss:value depth n:put
-  #4 #84 vt:row,col dss:label 'ROW:___ s:put dss:value @TY n:put
-  #5 #84 vt:row,col dss:label 'COL:___ s:put dss:value @TX n:put
+  'HERE:__ #1 layout:stat here n:put
+  'FREE:__ #2 layout:stat FREE n:put
+  'DEPTH:_ #3 layout:stat depth n:put
+  'ROW:___ #4 layout:stat @TY n:put
+  'COL:___ #5 layout:stat @TX n:put
   vt:reset
 ;
 
 #1 #2 #3 #4 #5
 
+:prompt (-)
+  dss:prompt #25 #1 vt:row,col '>>_ s:put vt:reset ; 
+
+~~~
+
+Start of work on a new input model. The current one uses
+`s:evaluate`, which works, but burns through the temporary
+strings pool. For this to be practical, I need to avoid doing
+that, so it's time to write a replacement.
+
+~~~
+'InputStream d:create #1025 allot
+'Len var
+'At var
+
+:end? (-f) @At @Len gt? ;
+
+:s:get/input s:get &InputStream s:copy ;
+~~~
+
+~~~
 :ui
   &err:notfound unhook
   &banner tob:with
   [ vt:clear vt:home tob:display
     ~left stats dss
     ~bottom
-    #25 #1 vt:row,col '>>_ s:put s:get
+    prompt s:get
     [ dup s:put nl s:evaluate ] tob:with
  ] forever ;
 
