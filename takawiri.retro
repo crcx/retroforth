@@ -1,0 +1,75 @@
+================================================================
+  _        _                  _      _
+ | |_ __ _| | ____ ___      _(_)_ __(_)  crc's new listener for
+ | __/ _` | |/ / _` \ \ /\ / / | '__| |  RetroForth
+ | || (_| |   < (_| |\ V  V /| | |  | |
+  \__\__,_|_|\_\__,_| \_/\_/ |_|_|  |_|  ** UNDER DEVELOPMENT **
+
+================================================================
+
+Load depenencies from the library.
+
+~~~
+{ 'konilo 'termina 'tob } &library:load a:for-each
+~~~
+
+# ui
+
+~~~
+:dss:label (-) fg:red ;
+:dss:value (-) fg:cyan ;
+:dss:sep   (-) fg:blue ;
+
+:~left dss:sep #23 [ I n:inc #82 vt:row,col $| c:put ] indexed-times vt:reset ;
+:~bottom dss:sep #24 #1 vt:row,col #81 [ $= c:put ] times $+ c:put vt:reset ;
+
+'Items d:create #0 comma #32 allot
+
+:dss
+  [ depth #32 n:min !Items
+  &Items fetch-next [ store-next ] times drop
+  &Items a:reverse [ ] a:for-each
+  #0 &Items [
+  over n:inc #6 n:add #84 vt:row,col
+  dss:label
+  over n:zero? [ 'TOS:___ s:put ] [ '_______ s:put ] choose
+  vt:reset
+  n:put
+  n:inc ] a:for-each
+  drop ] gc ;
+
+:stats
+  #1 #84 vt:row,col dss:label 'HERE:__ s:put dss:value here n:put
+  #2 #84 vt:row,col dss:label 'FREE:__ s:put dss:value FREE n:put
+  #3 #84 vt:row,col dss:label 'DEPTH:_ s:put dss:value depth n:put
+  #4 #84 vt:row,col dss:label 'ROW:___ s:put dss:value @TY n:put
+  #5 #84 vt:row,col dss:label 'COL:___ s:put dss:value @TX n:put
+  vt:reset
+;
+
+#1 #2 #3 #4 #5
+
+:ui
+  &err:notfound unhook
+  &banner tob:with
+  [ vt:clear vt:home tob:display
+    ~left stats dss
+    ~bottom
+    #25 #1 vt:row,col '>>_ s:put s:get
+    [ dup s:put nl s:evaluate ] tob:with
+ ] forever ;
+
+ui
+~~~
+
+================================================================
+
+Things needed:
+
+- termios device & words (or add termios to unix device?)
+- colors for interface elements
+- write a better alternative to `s:evaluate` to avoid consuming
+  the temporary string space
+- refactor & document everything
+
+================================================================
