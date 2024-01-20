@@ -20,6 +20,19 @@ Load depenencies from the library.
 { 'konilo 'termina 'tob } &library:load a:for-each
 ~~~
 
+# tools
+
+I intend for takawiri to provide a variety of useful tools to
+aid in using RetroForth interactively.
+
+This word provides access to retro-describe(1).
+
+~~~
+:describe (s-)
+  'retro-describe_"%s" s:format file:R unix:popen
+  [ dup file:read dup c:put n:zero? ] until unix:pclose ;
+~~~
+
 # ui
 
 Configure the UI colors.
@@ -38,7 +51,7 @@ Configure the UI colors.
 'Items d:create #0 comma #32 allot
 
 :dss
-  [ depth #32 n:min !Items
+  [ depth #5 n:min !Items
   &Items fetch-next [ store-next ] times drop
   &Items a:reverse [ ] a:for-each
   #0 &Items [
@@ -49,7 +62,26 @@ Configure the UI colors.
   n:put
   n:inc ] a:for-each
   drop ] gc ;
+~~~
 
+This is the start of code to display temporary strings on the
+data stack. The plan is to have it show below the stack values,
+in a format like:
+
+  <depth> <first XX characters>
+
+The <depth> data will match up to the values in the stack disp.
+
+Note: this won't be useful until after the alternate `s:evaluate`
+is done.
+
+~~~
+:ss (-)
+  #0 &Items [ dup STRINGS gt? [ over n:inc #12 n:add #84 vt:row,col s:put ] &drop choose n:inc  ] a:for-each drop
+;
+~~~
+
+~~~
 :layout:stat,col (-n) #84 ;
 :layout:stat     (sn-) layout:stat,col vt:row,col dss:label s:put dss:value ;
 
@@ -81,7 +113,9 @@ that, so it's time to write a replacement.
 
 :end? (-f) @At @Len gt? ;
 
-:s:get/input s:get &InputStream s:copy ;
+:c:get-from-input (-c)
+  &InputStream @At fetch &At v:inc end? [ &c:get unhook ] if ;
+:s:get/input s:get &InputStream s:copy &c:get-from-input &c:get set-hook ;
 ~~~
 
 ~~~
@@ -89,7 +123,7 @@ that, so it's time to write a replacement.
   &err:notfound unhook
   &banner tob:with
   [ vt:clear vt:home tob:display
-    ~left stats dss
+    ~left stats dss (ss
     ~bottom
     prompt s:get
     [ dup s:put nl s:evaluate ] tob:with
