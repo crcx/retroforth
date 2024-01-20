@@ -61,17 +61,17 @@ do something like:
   '________
   '________
   '________
-  '________
-  '________
-  '________
-} 'WatchlistLabels d:create #8 , &, a:for-each
+} 'WatchlistLabels d:create #5 , &, a:for-each
 
-'Watchlist d:create #8 , #8 allot
+'Watchlist d:create #5 , #5 allot
 
-'Watchlist d:create #8 , #8 allot
 :watch (sa-)  drop-pair ;
 :unwatch (a-) drop ;
-:watchlist:display (-) ;
+:watchlist (-)
+  #18 #84 vt:row,col #20 [ $- c:put ] times
+  #19 #5 [ dup #84 vt:row,col
+        &Watchlist over #19 n:sub a:fetch
+        fetch n:put n:inc ] times drop ;
 ~~~
 
 # ui
@@ -92,6 +92,7 @@ Configure the UI colors.
 'Items d:create #0 comma #32 allot
 
 :dss
+  #6 #84 vt:row,col #20 [ $- c:put ] times
   [ depth #5 n:min !Items
   &Items fetch-next [ store-next ] times drop
   &Items a:reverse [ ] a:for-each
@@ -118,6 +119,9 @@ is done.
 
 ~~~
 :ss (-)
+  #12 #84 vt:row,col #20 [ $- c:put ] times ;
+
+:ss/later (-)
   #0 &Items [ dup STRINGS gt? [ over n:inc #12 n:add #84 vt:row,col s:put ] &drop choose n:inc  ] a:for-each drop
 ;
 ~~~
@@ -166,7 +170,7 @@ that, so it's time to write a replacement.
   &err:notfound unhook
   &banner tob:with
   [ vt:clear vt:home tob:display
-    ~left stats dss (ss
+    ~left stats dss ss watchlist
     ~bottom
     prompt s:get vt:reset
     [ dup s:put nl s:evaluate ] tob:with
