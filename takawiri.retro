@@ -9,10 +9,23 @@
 
 ================================================================
 
+# Terminal Configuration
+
+Setup the text output buffer dimensions.
+
 ~~~
 #80 'TOB:W const
 #23 'TOB:H const
 ~~~
+
+Setup the local terminal dimensions.
+
+~~~
+#100 'LT:W const
+#30  'LT:H const
+~~~
+
+# Dependencies
 
 Load depenencies from the library.
 
@@ -20,7 +33,7 @@ Load depenencies from the library.
 { 'konilo 'termina 'tob } &library:load a:for-each
 ~~~
 
-# tools
+# Utilities
 
 I intend for takawiri to provide a variety of useful tools to
 aid in using RetroForth interactively.
@@ -33,6 +46,34 @@ This word provides access to retro-describe(1).
   [ dup file:read dup c:put n:zero? ] until unix:pclose ;
 ~~~
 
+# Watchlist
+
+The watchlist will allow monitoring a small number of addresses
+in the right panel of the interface. A use case might be to
+do something like:
+
+    'Base &Base watch
+    'Compiler &Compiler watch
+
+~~~
+{ '________
+  '________
+  '________
+  '________
+  '________
+  '________
+  '________
+  '________
+} 'WatchlistLabels d:create #8 , &, a:for-each
+
+'Watchlist d:create #8 , #8 allot
+
+'Watchlist d:create #8 , #8 allot
+:watch (sa-)  drop-pair ;
+:unwatch (a-) drop ;
+:watchlist:display (-) ;
+~~~
+
 # ui
 
 Configure the UI colors.
@@ -41,7 +82,7 @@ Configure the UI colors.
 :dss:label (-) fg:red  ;
 :dss:value (-) fg:cyan ;
 :dss:sep   (-) fg:blue ;
-:dss:prompt (-) fg:magenta ;
+:dss:prompt (-) bg:blue fg:white ;
 ~~~
 
 ~~~
@@ -97,7 +138,9 @@ is done.
 #1 #2 #3 #4 #5
 
 :prompt (-)
-  dss:prompt #25 #1 vt:row,col '>>_ s:put vt:reset ; 
+  dss:prompt
+  #25 #1 vt:row,col LT:W [ sp ] times
+  #25 #1 vt:row,col '>>_ s:put ; 
 
 ~~~
 
@@ -125,7 +168,7 @@ that, so it's time to write a replacement.
   [ vt:clear vt:home tob:display
     ~left stats dss (ss
     ~bottom
-    prompt s:get
+    prompt s:get vt:reset
     [ dup s:put nl s:evaluate ] tob:with
  ] forever ;
 
