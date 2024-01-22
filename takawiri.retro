@@ -15,13 +15,13 @@ Setup the text output buffer dimensions.
 
 ~~~
 #80 'TOB:W const
-#23 'TOB:H const
+#25 'TOB:H const
 ~~~
 
 Setup the local terminal dimensions.
 
 ~~~
-#100 'LT:W const
+#105 'LT:W const
 #30  'LT:H const
 ~~~
 
@@ -86,8 +86,8 @@ Configure the UI colors.
 ~~~
 
 ~~~
-:~left dss:sep #23 [ I n:inc #82 vt:row,col $| c:put ] indexed-times vt:reset ;
-:~bottom dss:sep #24 #1 vt:row,col #81 [ $= c:put ] times $+ c:put vt:reset ;
+:~left dss:sep TOB:H n:inc [ I n:inc #82 vt:row,col $| c:put ] indexed-times vt:reset ;
+:~bottom dss:sep TOB:H n:inc #1 vt:row,col #81 [ $= c:put ] times $+ c:put vt:reset ;
 
 'Items d:create #0 comma #32 allot
 
@@ -143,8 +143,8 @@ is done.
 
 :prompt (-)
   dss:prompt
-  #25 #1 vt:row,col LT:W [ sp ] times
-  #25 #1 vt:row,col '>>_ s:put ; 
+  LT:H #1 vt:row,col LT:W [ sp ] times
+  LT:H #1 vt:row,col '>>_ s:put ; 
 
 ~~~
 
