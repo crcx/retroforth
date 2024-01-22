@@ -119,6 +119,7 @@ CELL string_inject(NgaState *, char *, CELL);
 char *string_extract(NgaState *, CELL);
 V update_rx(NgaState *);
 V include_file(NgaState *, char *, int);
+V include_plain_file(NgaState *, char *, int);
 
 V register_device(NgaState *, V *, V *);
 
@@ -557,6 +558,10 @@ V scripting_include(NgaState *vm) {
   include_file(vm, string_extract(vm, stack_pop(vm)), 0);
 }
 
+V scripting_include_plain(NgaState *vm) {
+  include_plain_file(vm, string_extract(vm, stack_pop(vm)), 0);
+}
+
 V scripting_name(NgaState *vm) {
   stack_push(vm, string_inject(vm, vm->sys_argv[1], stack_pop(vm)));
 }
@@ -612,11 +617,12 @@ Handler ScriptingActions[] = {
   scripting_include,       scripting_name,
   scripting_source,        scripting_line,
   scripting_ignore_to_eol, scripting_ignore_to_eof,
-  scripting_abort,         scripting_line_text
+  scripting_abort,         scripting_line_text,
+  scripting_include_plain
 };
 
 V query_scripting(NgaState *vm) {
-  stack_push(vm, 2);
+  stack_push(vm, 3);
   stack_push(vm, DEVICE_SCRIPTING);
 }
 
@@ -915,6 +921,70 @@ V include_file(NgaState *vm, char *fname, int run_tests) {
 }
 
 
+V include_plain_file(NgaState *vm, char *fname, int run_tests) {
+  char source[64 * 1024];          /* Token buffer [about 64K]         */
+
+  CELL ReturnStack[ADDRESSES];
+  CELL arp, aip;
+
+  long offset = 0;
+  CELL at = 0;
+  int tokens = 0;
+  FILE *fp;                        /* Open the file. If not found,     */
+  fp = fopen(fname, "r");          /* exit.                            */
+  if (fp == NULL) {
+    printf("File `%s` not found. Exiting.\n", fname);
+    exit(1);
+  }
+
+  arp = ACTIVE.rp;
+  aip = ACTIVE.ip;
+  for(ACTIVE.rp = 0; ACTIVE.rp <= arp; ACTIVE.rp++)
+    ReturnStack[ACTIVE.rp] = ACTIVE.address[ACTIVE.rp];
+  ACTIVE.rp = 0;
+
+  vm->current_source++;
+  strlcpy(vm->scripting_sources[vm->current_source], fname, 8192);
+
+  vm->ignoreToEOF = 0;
+
+  while (!feof(fp) && (vm->ignoreToEOF == 0)) { /* Loop through the file   */
+
+    vm->ignoreToEOL = 0;
+
+    offset = ftell(fp);
+    read_line(vm, fp, vm->line);
+    at++;
+    fseek(fp, offset, SEEK_SET);
+    skip_indent(fp);
+
+    tokens = count_tokens(vm->line);
+
+    while (tokens > 0 && vm->ignoreToEOL == 0) {
+      tokens--;
+      read_token(fp, source);
+      vm->currentLine = at;
+      evaluate(vm, source);
+      vm->currentLine = at;
+    }
+    if (vm->ignoreToEOL == -1) {
+      read_line(vm, fp, vm->line);
+    }
+  }
+
+  vm->current_source--;
+  vm->ignoreToEOF = 0;
+  fclose(fp);
+  if (vm->perform_abort == -1) {
+    carry_out_abort(vm);
+  }
+  for(ACTIVE.rp = 0; ACTIVE.rp <= arp; ACTIVE.rp++)
+    ACTIVE.address[ACTIVE.rp] = ReturnStack[ACTIVE.rp];
+  ACTIVE.rp = arp;
+  ACTIVE.ip = aip;
+}
+
+
 /*---------------------------------------------------------------------
   `initialize()` sets up Nga and loads the image (from the array in
   `image.c`) to memory.
@@ -950,13 +1020,15 @@ V help(char *exename) {
   printf("  -i\n");
   printf("    Launches in interactive mode\n");
   printf("  -f filename\n");
+  printf("    Run the contents of the code blocks in the specified file\n");
+  printf("  -p filename\n");
   printf("    Run the contents of the specified file\n");
   printf("  -u filename\n");
   printf("    Use the image in the specified file instead of the internal one\n");
   printf("  -r filename\n");
   printf("    Use the image in the specified file instead of the internal one and run the code in it\n");
   printf("  -t filename\n");
-  printf("    Run the contents of the specified file, including any tests (in ``` blocks)\n\n");
+  printf("    Run the contents of the code blocks in the specified file, including any tests (in ``` blocks)\n\n");
   printf("  -v\n");
   printf("    Run in verbose mode\n");
 }
@@ -1080,6 +1152,9 @@ int main(int argc, char **argv) {
       vm->interactive = -1;
     } else if ARG("-f") {
       include_file(vm, argv[i + 1], 0);
+      i++;
+    } else if ARG("-p") {
+      include_plain_file(vm, argv[i + 1], 0);
       i++;
     } else if ARG("-u") {
       i++;

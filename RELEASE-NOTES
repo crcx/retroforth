@@ -38,6 +38,7 @@
     defined
   - formatting cleanups
   - added ioctl device
+  - new "-p" option to run non-Unu format source files
 
 Future Notes
 
