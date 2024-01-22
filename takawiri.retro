@@ -20,6 +20,9 @@ Setup the text output buffer dimensions.
 
 Setup the local terminal dimensions.
 
+TODO: some systems may provide this in the environment. See if
+      this can be pulled in automatically if present?
+
 ~~~
 #105 'LT:W const
 #30  'LT:H const
@@ -31,6 +34,15 @@ Load depenencies from the library.
 
 ~~~
 { 'konilo 'termina 'tob } &library:load a:for-each
+~~~
+
+# Configure UI Colors
+
+~~~
+:dss:label  (-) fg:red  ;
+:dss:value  (-) fg:cyan ;
+:dss:sep    (-) fg:blue ;
+:dss:prompt (-) bg:blue fg:white ;
 ~~~
 
 # Utilities
@@ -56,39 +68,40 @@ do something like:
     'Compiler &Compiler watch
 
 ~~~
-{ '________
-  '________
-  '________
+{ 'Add_Zero
+  'Heap____
+  'Compiler
   '________
   '________
 } 'WatchlistLabels d:create #5 , &, a:for-each
 
-'Watchlist d:create #5 , #5 allot
+'Watchlist d:create #5 ,
+ #0 ,
+ &Heap ,
+ &Compiler ,
+ #5 allot
 
 :watch (sa-)  drop-pair ;
 :unwatch (a-) drop ;
 :watchlist (-)
   #18 #84 vt:row,col #20 [ $- c:put ] times
   #19 #5 [ dup #84 vt:row,col
+        &WatchlistLabels over #19 n:sub a:fetch s:put sp
         &Watchlist over #19 n:sub a:fetch
         fetch n:put n:inc ] times drop ;
 ~~~
 
-# ui
+# UI
 
-Configure the UI colors.
-
-~~~
-:dss:label (-) fg:red  ;
-:dss:value (-) fg:cyan ;
-:dss:sep   (-) fg:blue ;
-:dss:prompt (-) bg:blue fg:white ;
-~~~
+First are words to display the text output buffer.
 
 ~~~
-:~left dss:sep TOB:H n:inc [ I n:inc #82 vt:row,col $| c:put ] indexed-times vt:reset ;
-:~bottom dss:sep TOB:H n:inc #1 vt:row,col #81 [ $= c:put ] times $+ c:put vt:reset ;
+:bar:right dss:sep TOB:H n:inc [ I n:inc TOB:W #2 n:add vt:row,col $| c:put ] indexed-times vt:reset ;
+:bar:bottom dss:sep TOB:H n:inc #1 vt:row,col TOB:W n:inc [ $= c:put ] times $+ c:put vt:reset ;
+:display:tob (-) tob:display bar:right bar:bottom ;
+~~~
 
+~~~
 'Items d:create #0 comma #32 allot
 
 :dss
@@ -145,7 +158,6 @@ is done.
   dss:prompt
   LT:H #1 vt:row,col LT:W [ sp ] times
   LT:H #1 vt:row,col '>>_ s:put ; 
-
 ~~~
 
 Start of work on a new input model. The current one uses
@@ -169,9 +181,9 @@ that, so it's time to write a replacement.
 :ui
   &err:notfound unhook
   &banner tob:with
-  [ vt:clear vt:home tob:display
-    ~left stats dss ss watchlist
-    ~bottom
+  [ vt:clear vt:home
+    display:tob
+    stats dss ss watchlist
     prompt s:get vt:reset
     [ dup s:put nl s:evaluate ] tob:with
  ] forever ;
