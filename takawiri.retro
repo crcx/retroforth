@@ -40,8 +40,8 @@ Load depenencies from the library.
 
 ~~~
 :dss:label  (-) fg:red  ;
-:dss:value  (-) fg:cyan ;
-:dss:sep    (-) fg:blue ;
+:dss:value  (-) fg:yellow ;
+:dss:sep    (-) fg:cyan ;
 :dss:prompt (-) bg:blue fg:white ;
 ~~~
 
@@ -84,11 +84,10 @@ do something like:
 :watch (sa-)  drop-pair ;
 :unwatch (a-) drop ;
 :watchlist (-)
-  #18 #84 vt:row,col #20 [ $- c:put ] times
   #19 #5 [ dup #84 vt:row,col
-        &WatchlistLabels over #19 n:sub a:fetch s:put sp
-        &Watchlist over #19 n:sub a:fetch
-        fetch n:put n:inc ] times drop ;
+        dss:label &WatchlistLabels over #19 n:sub a:fetch s:put sp
+        dss:value &Watchlist over #19 n:sub a:fetch
+        fetch n:put n:inc vt:reset ] times drop ;
 ~~~
 
 # UI
@@ -96,16 +95,28 @@ do something like:
 First are words to display the text output buffer.
 
 ~~~
-:bar:right dss:sep TOB:H n:inc [ I n:inc TOB:W #2 n:add vt:row,col $| c:put ] indexed-times vt:reset ;
-:bar:bottom dss:sep TOB:H n:inc #1 vt:row,col TOB:W n:inc [ $= c:put ] times $+ c:put vt:reset ;
+:bar:right   (-) dss:sep TOB:H n:inc [ I n:inc TOB:W #2 n:add vt:row,col $| c:put ] indexed-times vt:reset ;
+:bar:bottom  (-) dss:sep TOB:H n:inc #1 vt:row,col TOB:W n:inc [ $= c:put ] times $+ c:put vt:reset ;
 :display:tob (-) tob:display bar:right bar:bottom ;
+~~~
+
+Draw the section separators.
+
+~~~
+:length (-n) LT:W TOB:W #4 n:add n:sub ;
+:---    (n-) [ $- c:put ] times sp ;
+:sections (-)
+  dss:sep
+  #6  TOB:W #4 n:add vt:row,col length ---
+  #12 TOB:W #4 n:add vt:row,col length ---
+  #18 TOB:W #4 n:add vt:row,col length ---
+  vt:reset ;
 ~~~
 
 ~~~
 'Items d:create #0 comma #32 allot
 
 :dss
-  #6 #84 vt:row,col #20 [ $- c:put ] times
   [ depth #5 n:min !Items
   &Items fetch-next [ store-next ] times drop
   &Items a:reverse [ ] a:for-each
@@ -131,9 +142,6 @@ Note: this won't be useful until after the alternate `s:evaluate`
 is done.
 
 ~~~
-:ss (-)
-  #12 #84 vt:row,col #20 [ $- c:put ] times ;
-
 :ss/later (-)
   #0 &Items [ dup STRINGS gt? [ over n:inc #12 n:add #84 vt:row,col s:put ] &drop choose n:inc  ] a:for-each drop
 ;
@@ -181,9 +189,10 @@ that, so it's time to write a replacement.
 :ui
   &err:notfound unhook
   &banner tob:with
-  [ vt:clear vt:home
+  [ vt:reset vt:clear vt:home
     display:tob
-    stats dss ss watchlist
+    sections
+    stats dss (ss watchlist
     prompt s:get vt:reset
     [ dup s:put nl s:evaluate ] tob:with
  ] forever ;
