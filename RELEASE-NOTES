@@ -37,6 +37,7 @@
   - filesystem device no longer included if ENABLE_FILES not
     defined
   - formatting cleanups
+  - added ioctl device
 
 Future Notes
 

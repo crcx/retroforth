@@ -724,6 +724,17 @@ Return device ID for image writer.
 Class: class:data | Namespace: DEVICE | Interface Layer: rre
 ------------------------------------------------------------------------
 
+DEVICE:IOCTL
+
+  Data:  -n
+  Addr:  -
+  Float: -
+
+Return device ID for Unix IOCTL interface.
+
+Class: class:data | Namespace: DEVICE | Interface Layer: rre
+------------------------------------------------------------------------
+
 DEVICE:KEYBOARD
 
   Data:  -n
@@ -791,17 +802,6 @@ Class: class:data | Namespace: DEVICE | Interface Layer: rre
 ------------------------------------------------------------------------
 
 DEVICE:RESERVED13
-
-  Data:  -n
-  Addr:  -
-  Float: -
-
-Reserved device ID.
-
-Class: class:data | Namespace: DEVICE | Interface Layer: rre
-------------------------------------------------------------------------
-
-DEVICE:RESERVED14
 
   Data:  -n
   Addr:  -

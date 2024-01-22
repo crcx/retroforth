@@ -67,6 +67,7 @@ ENABLED += -DENABLE_ERROR
 ENABLED += -DENABLE_UNSIGNED
 ENABLED += -DENABLE_MALLOC
 ENABLED += -DENABLE_BLOCKS
+ENABLED += -DENABLE_IOCTL
 
 DEVICES ?=
 DEVICES += interface/ll.retro
@@ -87,6 +88,7 @@ DEVICES += interface/future.retro
 DEVICES += interface/block.retro
 DEVICES += interface/deprecated.retro
 DEVICES += interface/error.retro
+DEVICES += interface/ioctl.retro
 DEVICES += interface/final.retro
 DEVICES += interface/library.retro
 

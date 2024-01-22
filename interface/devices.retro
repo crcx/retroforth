@@ -13,7 +13,7 @@
 #11 'DEVICE:RESERVED11 const
 #12 'DEVICE:RESERVED12 const
 #13 'DEVICE:RESERVED13 const
-#14 'DEVICE:RESERVED14 const
+#14 'DEVICE:IOCTL  const
 #15 'DEVICE:MALLOC const
 #1000 'DEVICE:IMAGE const
 #1234 'DEVICE:ERROR const
@@ -29,7 +29,7 @@ dup 'DEVICE:MULTICORE  d:set-source
 dup 'DEVICE:ERROR      d:set-source
 dup 'DEVICE:IMAGE      d:set-source
 dup 'DEVICE:MALLOC     d:set-source
-dup 'DEVICE:RESERVED14 d:set-source
+dup 'DEVICE:IOCTL      d:set-source
 dup 'DEVICE:RESERVED13 d:set-source
 dup 'DEVICE:RESERVED12 d:set-source
 dup 'DEVICE:RESERVED11 d:set-source

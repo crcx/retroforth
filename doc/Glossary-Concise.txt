@@ -187,6 +187,9 @@ Return device ID for floating point.
 DEVICE:IMAGE              D: -n  A: -  F: -
 Return device ID for image writer.
 
+DEVICE:IOCTL              D: -n  A: -  F: -
+Return device ID for Unix IOCTL interface.
+
 DEVICE:KEYBOARD           D: -n  A: -  F: -
 Return device ID for Keyboard input.
 
@@ -206,9 +209,6 @@ DEVICE:RESERVED12         D: -n  A: -  F: -
 Reserved device ID.
 
 DEVICE:RESERVED13         D: -n  A: -  F: -
-Reserved device ID.
-
-DEVICE:RESERVED14         D: -n  A: -  F: -
 Reserved device ID.
 
 DEVICE:RESERVED6          D: -n  A: -  F: -

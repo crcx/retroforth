@@ -61,6 +61,7 @@ DEVICE:FFI                D: -n  A: -  F: -
 DEVICE:FILES              D: -n  A: -  F: -
 DEVICE:FLOATS             D: -n  A: -  F: -
 DEVICE:IMAGE              D: -n  A: -  F: -
+DEVICE:IOCTL              D: -n  A: -  F: -
 DEVICE:KEYBOARD           D: -n  A: -  F: -
 DEVICE:MALLOC             D: -n  A: -  F: -
 DEVICE:MULTICORE          D: -n  A: -  F: -
@@ -68,7 +69,6 @@ DEVICE:OUTPUT             D: -n  A: -  F: -
 DEVICE:RESERVED11         D: -n  A: -  F: -
 DEVICE:RESERVED12         D: -n  A: -  F: -
 DEVICE:RESERVED13         D: -n  A: -  F: -
-DEVICE:RESERVED14         D: -n  A: -  F: -
 DEVICE:RESERVED6          D: -n  A: -  F: -
 DEVICE:RNG                D: -n  A: -  F: -
 DEVICE:SCRIPTING          D: -n  A: -  F: -

@@ -61,6 +61,7 @@ DEVICE:FFI	-n	-	-	Return device ID for foreign function interface.			class:data	
 DEVICE:FILES	-n	-	-	Return device ID for filesystem access.			class:data	{n/a}	{n/a}	DEVICE	rre	
 DEVICE:FLOATS	-n	-	-	Return device ID for floating point.			class:data	{n/a}	{n/a}	DEVICE	rre	
 DEVICE:IMAGE	-n	-	-	Return device ID for image writer.			class:data	{n/a}	{n/a}	DEVICE	rre	
+DEVICE:IOCTL	-n	-	-	Return device ID for Unix IOCTL interface.			class:data	{n/a}	{n/a}	DEVICE	rre	
 DEVICE:KEYBOARD	-n	-	-	Return device ID for Keyboard input.			class:data	{n/a}	{n/a}	DEVICE	rre	
 DEVICE:MALLOC	-n	-	-	Return device ID for memory allocator.			class:data	{n/a}	{n/a}	DEVICE	rre	
 DEVICE:MULTICORE	-n	-	-	Return device ID for multicore support.			class:data	{n/a}	{n/a}	DEVICE	rre	
@@ -68,7 +69,6 @@ DEVICE:OUTPUT	-n	-	-	Return device ID for Output device.			class:data	{n/a}	{n/a
 DEVICE:RESERVED11	-n	-	-	Reserved device ID.			class:data	{n/a}	{n/a}	DEVICE	rre	
 DEVICE:RESERVED12	-n	-	-	Reserved device ID.			class:data	{n/a}	{n/a}	DEVICE	rre	
 DEVICE:RESERVED13	-n	-	-	Reserved device ID.			class:data	{n/a}	{n/a}	DEVICE	rre	
-DEVICE:RESERVED14	-n	-	-	Reserved device ID.			class:data	{n/a}	{n/a}	DEVICE	rre	
 DEVICE:RESERVED6	-n	-	-	Reserved device ID.			class:data	{n/a}	{n/a}	DEVICE	rre	
 DEVICE:RNG	-n	-	-	Return device ID for random number generator.			class:data	{n/a}	{n/a}	DEVICE	rre	
 DEVICE:SCRIPTING	-n	-	-	Return device ID for scripting support.			class:data	{n/a}	{n/a}	DEVICE	rre	

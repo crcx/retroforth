@@ -151,6 +151,10 @@ IO(malloc)
 IO(blocks)
 #endif
 
+#ifdef ENABLE_IOCTL
+IO(ioctl)
+#endif
+
 IO(image)
 
 V load_embedded_image(NgaState *);
@@ -280,6 +284,10 @@ V guard(NgaState *vm, int n, int m, int diff) {
 #endif
   }
 }
+#endif
+
+#ifdef ENABLE_IOCTL
+#include "dev-ioctl.c"
 #endif
 
 #ifdef ENABLE_MALLOC
@@ -1012,6 +1020,9 @@ V register_devices(NgaState *vm) {
 #endif
 #ifdef ENABLE_ERROR
   register_device(vm, io_error, query_error);
+#endif
+#ifdef ENABLE_IOCTL
+  register_device(vm, io_ioctl, query_ioctl);
 #endif
 }
 

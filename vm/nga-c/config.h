@@ -26,6 +26,7 @@
 #define ENABLE_UNSIGNED
 #define ENABLE_MALLOC
 #define ENABLE_BLOCKS
+#define ENABLE_IOCTL
 #endif
 
 #ifdef ENABLE_MULTICORE
