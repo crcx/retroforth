@@ -29,12 +29,12 @@ ioctl:term-size (rows,cols) 'LT:W const 'LT:H const
 
 ~~~
 LT:W #100 lt? [ 'Terminal_too_narrow! s:put nl bye ] if
-LT:H #27 lt?  [ 'Terminal_too_short! s:put nl bye ] if
+LT:H #27 lt?  [ 'Terminal_too_short!  s:put nl bye ] if
 ~~~
 
 # Dependencies
 
-Load depenencies from the library.
+Load dependencies from the library.
 
 ~~~
 { 'konilo 'termina 'tob } &library:load a:for-each
@@ -111,9 +111,8 @@ Draw the section separators.
 :---    (n-) [ $- c:put ] times sp ;
 :sections (-)
   dss:sep
-  #6  TOB:W #4 n:add vt:row,col length ---
-  #12 TOB:W #4 n:add vt:row,col length ---
-  #18 TOB:W #4 n:add vt:row,col length ---
+  #3 [ I n:inc #6 n:mul TOB:W #4 n:add vt:row,col length --- ]
+  indexed-times
   vt:reset ;
 ~~~
 
