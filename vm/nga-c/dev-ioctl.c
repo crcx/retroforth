@@ -25,7 +25,7 @@ void ioctl_get_terminal_size(NgaState *vm) {
 void ioctl_set_character_breaking_mode(NgaState *vm) {
   struct termios term;
   tcgetattr(STDIN_FILENO, &term);
-  term.c_iflag |= BRKINT;
+  term.c_lflag &=(~ICANON & ECHO);
   tcsetattr(STDIN_FILENO, TCSANOW, &term);
 }
 
@@ -33,6 +33,7 @@ void ioctl_set_line_buffered_mode(NgaState *vm) {
   struct termios term;
   tcgetattr(STDIN_FILENO, &term);
   term.c_lflag |= ICANON;
+  term.c_lflag |= ECHO;
   tcsetattr(STDIN_FILENO, TCSANOW, &term);
 }
 
