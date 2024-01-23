@@ -171,33 +171,22 @@ is done.
   LT:H #1 vt:row,col '>>_ s:put ; 
 ~~~
 
-Start of work on a new input model. The current one uses
-`s:evaluate`, which works, but burns through the temporary
-strings pool. For this to be practical, I need to avoid doing
-that, so it's time to write a replacement.
-
 ~~~
-'InputStream d:create #1025 allot
-'Len var
-'At var
-
-:end? (-f) @At @Len gt? ;
-
-:c:get-from-input (-c)
-  &InputStream @At fetch &At v:inc end? [ &c:get unhook ] if ;
-:s:get/input s:get &InputStream s:copy &c:get-from-input &c:get set-hook ;
+:quit ioctl:set-lbreak vt:reset bye ;
+:bye quit ;
 ~~~
 
 ~~~
 :ui
   &err:notfound unhook
+  ioctl:set-cbreak
   &banner tob:with
   [ vt:reset vt:clear vt:home
     display:tob
     sections
     stats dss (ss watchlist
-    prompt s:get vt:reset
-    [ dup s:put nl s:evaluate ] tob:with
+    prompt s:get-word vt:reset
+    [ dup s:put sp interpret ] tob:with
  ] forever ;
 
 ui
@@ -209,8 +198,6 @@ Things needed:
 
 - termios device & words (or add termios to unix device?)
 - colors for interface elements
-- write a better alternative to `s:evaluate` to avoid consuming
-  the temporary string space
 - refactor & document everything
 
 ================================================================

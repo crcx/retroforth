@@ -1288,9 +1288,11 @@ returns an array containing pointers to each of them.
   :n->digit   (n-c)  s:DIGITS + fetch ;
   :convert    (n-)   [ @Base /mod swap n->digit buffer:add dup n:zero? ] until drop ;
 ---reveal---
-  :n:to-string (n-s)
+  :n:to-string/reversed (n-s)
     [ &String buffer:set dup n:abs convert check-sign ] buffer:preserve
-    &String s:reverse ;
+    &String ;
+  :n:to-string (n-s)
+    n:to-string/reversed s:reverse ;
 }}
 ~~~
 
@@ -1852,7 +1854,8 @@ the log.
 :sp    (-)   ASCII:SPACE c:put ;
 :tab   (-)   ASCII:HT    c:put ;
 :s:put (s-)  &c:put s:for-each ;
-:n:put (n-)  n:to-string s:put ;
+:n:put (n-)  n:to-string/reversed dup s:length &+ sip n:inc
+             [ dup fetch c:put n:dec ] times drop ;
 ~~~
 
 An interface layer may provide additional I/O words, but these
@@ -1913,7 +1916,7 @@ FALSE 'Ignoring var-n
                      &interpret &drop choose ;
 ---reveal---
   :s:get-word (-s) [ #7 fetch buffer:set
-                     [ c:get dup buffer:add check-bs eol? ] until
+                     [ c:get dup buffer:add check-bs done? ] until
                        buffer:start s:chop ] buffer:preserve ;
   :banner  version 'RETRO_12_(%n.%n)\n s:format s:put
            FREE EOM FREE - EOM '%n_Max,_%n_Used,_%n_Free\n s:format s:put ;

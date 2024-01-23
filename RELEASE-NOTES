@@ -22,6 +22,9 @@
 
   - `HOME` (in the library code) is now a floating buffer
     above `here`
+  - `s:get-word` was not properly breaking on space; this is
+    now corrected
+  - `n:put` no longer uses temporary string buffers
 
 - library
 
