@@ -11,13 +11,6 @@
 
 # Terminal Configuration
 
-Setup the text output buffer dimensions.
-
-~~~
-#80 'TOB:W const
-#25 'TOB:H const
-~~~
-
 Setup the local terminal dimensions. This requires the current
 development build of Retro to gain access to the `ioctl:` words.
 (If not using this, hard code the terminal constraints for your
@@ -26,6 +19,18 @@ system).
 ~~~
 ioctl:term-size (rows,cols) 'LT:W const 'LT:H const
 ~~~
+
+Setup the text output buffer dimensions. The width is currently
+fixed at 80 columns; the height is set based on the terminal
+height.
+
+~~~
+#80 'TOB:W const
+LT:H #2 - 'TOB:H const
+~~~
+
+Check to make sure the terminal is large enough to display
+everything.
 
 ~~~
 LT:W #100 lt? [ 'Terminal_too_narrow! s:put nl bye ] if
