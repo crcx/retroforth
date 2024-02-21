@@ -34,6 +34,11 @@
 
 - new nga implementations
 
+  - nga-zig
+
+    - added a zig implementation from iacore under vm/libnga-zig
+    - build with: zig build -Doptimize=ReleaseFast -p ~/.local
+
 - nga-c
 
   - use UTF32 internally (translating to/from UTF8 externally)
