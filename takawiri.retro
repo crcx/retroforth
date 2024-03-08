@@ -77,26 +77,30 @@ do something like:
     'Compiler &Compiler watch
 
 ~~~
-{ 'Add_Zero
-  'Heap____
-  'Compiler
+{ '________
+  '________
+  '________
   '________
   '________
 } 'WatchlistLabels d:create #5 , &, a:for-each
 
-'Watchlist d:create #5 ,
- #0 ,
- &Heap ,
- &Compiler ,
- #5 allot
+'Watchlist d:create #5 ,  &Heap , #-1 , #-1 , #-1 , #-1 ,
 
-:watch (sa-)  drop-pair ;
-:unwatch (a-) drop ;
+:watchlist:find (a-n)
+  dup &Watchlist a:contains? [ drop #-1 ] -if;
+  &Watchlist swap a:index ;
+
+:watch (sa-)  s:keep drop-pair ;
+:unwatch (a-)
+  watchlist:find dup n:positive? [ drop ] -if
+  &Watchlist #-1 'abc 'acab reorder a:store ;
+
 :watchlist (-)
   #19 #5 [ dup #84 vt:row,col
         dss:label &WatchlistLabels over #19 n:sub a:fetch s:put sp
         dss:value &Watchlist over #19 n:sub a:fetch
-        fetch n:put n:inc vt:reset ] times drop ;
+        dup n:positive? [ fetch ] [ drop #0 ] choose
+        n:put n:inc vt:reset ] times drop ;
 ~~~
 
 # UI
