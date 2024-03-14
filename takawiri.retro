@@ -73,31 +73,37 @@ The watchlist will allow monitoring a small number of addresses
 in the right panel of the interface. A use case might be to
 do something like:
 
-    'Base &Base watch
-    'Compiler &Compiler watch
+    &Base 'Base watch
+    &Compiler 'Compiler watch
 
 ~~~
-{ '________
-  '________
-  '________
-  '________
-  '________
-} 'WatchlistLabels d:create #5 , &, a:for-each
-
-'Watchlist d:create #5 ,  &Heap , #-1 , #-1 , #-1 , #-1 ,
+'Watchlist       d:create #5 , #-1 , #-1 , #-1 , #-1 , #-1 ,
+'WatchlistLabels d:create #5 , #-1 , #-1 , #-1 , #-1 , #-1 ,
 
 :watchlist:find (a-n)
   dup &Watchlist a:contains? [ drop #-1 ] -if;
   &Watchlist swap a:index ;
 
-:watch (sa-)  s:keep drop-pair ;
+:watchlist:make-label (s-s)
+  dup s:length #8 gt? [ #8 s:left ] if
+  dup s:length #8 lt?
+    [ dup s:length #8 swap n:sub [ '_ s:append ] times ] if
+  s:keep ;
+
+:watch (as-)
+  watchlist:make-label
+  #-1 watchlist:find &Watchlist &WatchlistLabels
+  'abcde 'adcbec reorder a:store a:store ;
+
 :unwatch (a-)
-  watchlist:find dup n:positive? [ drop ] -if
-  &Watchlist #-1 'abc 'acab reorder a:store ;
+  watchlist:find dup n:positive? &drop -if
+  [ &Watchlist #-1 'abc 'acab reorder a:store ]
+  [ &WatchlistLabels #-1 'abc 'acab reorder a:store ] bi ;
 
 :watchlist (-)
   #19 #5 [ dup #84 vt:row,col
-        dss:label &WatchlistLabels over #19 n:sub a:fetch s:put sp
+        dss:label &WatchlistLabels over #19 n:sub a:fetch
+          dup #-1 -eq? [ s:put sp ] [ drop '_________ s:put ] choose
         dss:value &Watchlist over #19 n:sub a:fetch
         dup n:positive? [ fetch ] [ drop #0 ] choose
         n:put n:inc vt:reset ] times drop ;
@@ -128,14 +134,15 @@ Draw the section separators.
 ~~~
 'Items d:create #0 comma #32 allot
 
+:tos? over n:zero? ;
 :dss
   [ depth #5 n:min !Items
-  &Items fetch-next [ store-next ] times drop
+  &Items fetch-next &store-next times drop
   &Items a:reverse [ ] a:for-each
   #0 &Items [
   over n:inc #6 n:add #84 vt:row,col
   dss:label
-  over n:zero? [ 'TOS:___ s:put ] [ '_______ s:put ] choose
+  tos? [ 'TOS:___ s:put ] [ '_______ s:put ] choose
   vt:reset
   n:put
   n:inc ] a:for-each
@@ -172,12 +179,10 @@ is done.
   vt:reset
 ;
 
-#1 #2 #3 #4 #5
-
 :prompt (-)
   dss:prompt
   LT:H #1 vt:row,col LT:W [ sp ] times
-  LT:H #1 vt:row,col '>>_ s:put ; 
+  LT:H #1 vt:row,col '>>_ s:put ;
 ~~~
 
 ~~~
