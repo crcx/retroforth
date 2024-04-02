@@ -13,6 +13,9 @@ DESCRIPTION
      retro-unu is a tool for extracting code from fenced blocks in literate
      sources. It will write output to stdout.
 
+     retro-unu does not support "out of order" structuring of code, commentary,
+     and test blocks.
+
 AUTHORS
      Charles Childers <crc@forthworks.com>
 

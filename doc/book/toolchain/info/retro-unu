@@ -5,6 +5,9 @@ are in a format called Unu. This allows easy mixing of
 commentary and code blocks, making it simple to document
 the code.
 
+The Unu format does not support writing code and commentary "out
+of order".
+
 As an example,
 
     # Determine The Average Word Name Length
