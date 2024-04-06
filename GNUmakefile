@@ -98,16 +98,16 @@ bin/retro-describe: tools/retro-describe.retro doc/words.tsv
 	@chmod +x bin/retro-describe
 
 bin/retro-embedimage: tools/retro-embedimage.c
-	@$(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o $@ $>
+	@$(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o $@ $^
 
 bin/retro-extend: tools/retro-extend.c
-	@$(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o $@ $>
+	@$(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o $@ $^
 
 bin/retro-muri: tools/retro-muri.c
-	@$(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o $@ $>
+	@$(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o $@ $^
 
 bin/retro-unu: tools/retro-unu.c
-	@$(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o $@ $>
+	@$(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o $@ $^
 
 
 # basic image target
