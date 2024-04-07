@@ -1,0 +1,181 @@
+This is an implementation of the ilo computer. It's written in
+RetroForth. I wrote this mostly to satisfy a personal desire to
+run Konilo under RetroForth.
+
+The ilo computer is quite similar to the nga computer that Retro
+runs on. Both are dual stack minimal instruction set computers
+with similar instruction sets. But ilo is, by design, a smaller,
+simpler system.
+
+ilo presents the following:
+
+- 65,5536 cells of memory
+- 32-bit cells are the only addressable memory unit
+- data stack of 32 values
+- address stack of 256 addresses
+- keyboard input
+- serial display
+- block storage
+- blocks are 1,024 cells in size
+- 30 instructions
+
+
+# Memory And Loading The ROM
+
+A standard ilo system will provide exactly 65,536 cells of RAM.
+I create a label pointing to this and allocate the space.
+
+~~~
+'IMAGE d:create  #65536 allot
+~~~
+
+On startup, ilo loads a ROM (typically named "ilo.rom") into
+memory. This will always be a full memory image, so the size
+will be 65,536 cells. Loading this takes advantage of Retro's
+`block:` vocabulary, reading in the ROM as a series of 64 1K
+blocks. Doing this is significantly faster than reading the
+ROM in byte by byte and assembling the bytes into cells.
+
+~~~
+:load-image (s-)
+  block:set-file
+  #64 [ I IMAGE I #1024 * + block:read ] indexed-times ;
+
+'ilo.rom load-image
+~~~
+
+# Stacks & Registers
+
+I create labels and allocate space for the two stacks. And also
+create registers for the stack pointers and instruction pointer.
+Using these, I then implement several words for moving values
+to and from these. The `>s` and `s>` operate on the data stack
+whereas `>r` and `r>` operate on the address stack.
+
+It'd be faster to just use the RetroForth stacks directly, but
+this is cleaner and less error prone. It also makes debugging
+easier as the ilo stacks are now separate entities.
+
+The last thing I define here is `[IP]`, which returns the value
+in memory at the instruction pointer. This is strictly for
+readability and could be inlined in the two places it's used.
+
+~~~
+'DataStack   d:create  #33 allot
+'ReturnStack d:create  #257 allot
+
+'SP var
+'RP var
+'IP var
+
+:>s (n-) &DataStack @SP + store &SP v:inc ;
+:s> (-n) &SP v:dec &DataStack @SP + fetch ;
+:>r (n-) &ReturnStack @RP + store &RP v:inc ;
+:r> (-n) &RP v:dec &ReturnStack @RP + fetch ;
+
+:[IP] IMAGE @IP + fetch ;
+~~~
+
+# A Utility Word
+
+RetroForth doesn't have a word to directly compare two blocks
+of memory. Until I rectify this, I define one here.
+
+~~~
+:compare (sdl-f)
+  #-1 swap
+  [ [ dup-pair &fetch bi@ eq? ] dip and [ &n:inc bi@ ] dip ]
+  times &drop-pair dip ;
+~~~
+
+# The ilo Instructions
+
+Now I'm ready to implement the ilo instruction set. I chose to
+follow my (very) similar approach from retro-extend(1) and the
+Autopsy debugger. This creates one word per instruction and then
+fills in a jump table of pointers.
+
+If you are familiar with Retro, it should be pretty easy to
+follow these. Mostly just move values onto the RetroForth stack,
+do an operation, then put results back.
+
+The longest one of these is the I/O instruction, which has 8
+possible actions. I implemented this using a `case` structure.
+
+~~~
+:i:no                                       ;
+:i:li       &IP v:inc [IP]            >s    ;
+:i:du s>    dup                       >s >s ;
+:i:dr s>    drop                            ;
+:i:sw s> s> swap                      >s >s ;
+:i:pu s>    >r                              ;
+:i:po       r>                        >s    ;
+:i:ju s>    n:dec !IP                       ;
+:i:ca       @IP >r i:ju                     ;
+:i:cc s> s> [ >s i:ca ] &drop choose        ;
+:i:cj s> s> [ >s i:ju ] &drop choose        ;
+:i:re       r> !IP                          ;
+:i:eq s> s> eq?                       >s    ;
+:i:ne s> s> -eq?                      >s    ;
+:i:lt s> s> swap lt?                  >s    ;
+:i:gt s> s> swap gt?                  >s    ;
+:i:fe s>    IMAGE + fetch             >s    ;
+:i:st s> s> swap IMAGE + store              ;
+:i:ad s> s> +                         >s    ;
+:i:su s> s> swap -                    >s    ;
+:i:mu s> s> *                         >s    ;
+:i:di s> s> swap /mod swap            >s >s ;
+:i:an s> s> and                       >s    ;
+:i:or s> s> or                        >s    ;
+:i:xo s> s> xor                       >s    ;
+:i:sl s> s> swap n:abs n:negate shift >s    ;
+:i:sr s> s> swap n:abs shift          >s    ;
+:i:cp s> s> s> [ IMAGE + ] bi@ 'abc 'cba reorder compare >s ;
+:i:cy s> s> s> [ IMAGE + ] bi@ 'abc 'cba reorder copy ;
+:i:io s>
+  #0 [ s> c:put        ] case
+  #1 [ c:get >s        ] case
+  #2 [ s> s> swap IMAGE + block:read  ] case
+  #3 [ s> s> swap IMAGE + block:write ] case
+  #4 [ dump-stack      ] case
+  #5 [ #-1 !IP         ] case
+  #6 [ #65536 !IP      ] case
+  #7 [ @SP >s @RP >s   ] case
+  drop ;
+
+'Instructions d:create
+  &i:no ,  &i:li ,  &i:du ,  &i:dr ,  &i:sw ,  &i:pu ,
+  &i:po ,  &i:ju ,  &i:ca ,  &i:cc ,  &i:cj ,  &i:re ,
+  &i:eq ,  &i:ne ,  &i:lt ,  &i:gt ,  &i:fe ,  &i:st ,
+  &i:ad ,  &i:su ,  &i:mu ,  &i:di ,  &i:an ,  &i:or ,
+  &i:xo ,  &i:sl ,  &i:sr ,  &i:cp ,  &i:cy ,  &i:io ,
+~~~
+
+# Instruction Processor
+
+~~~
+{{
+  :mask #255 and ;
+  :next #8 shift ;
+---reveal---
+  :unpack (n-dcba)
+    dup mask swap next
+    dup mask swap next
+    dup mask swap next
+    'abcd 'dcba reorder ;
+}}
+
+:process-opcodes (n-)
+  unpack
+  &Instructions + fetch call
+  &Instructions + fetch call
+  &Instructions + fetch call
+  &Instructions + fetch call ;
+
+:process (-)
+  [ [IP] process-opcodes &IP v:inc @IP #0 #65535 n:between? ] while ;
+
+'ilo.blocks block:set-file
+
+process
+~~~

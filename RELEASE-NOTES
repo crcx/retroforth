@@ -18,6 +18,8 @@
 
 - examples
 
+  - add ilo.retro
+
 - image
 
   - `HOME` (in the library code) is now a floating buffer
