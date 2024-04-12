@@ -54,23 +54,15 @@ CELL files_get_handle(NgaState *vm) {
   ---------------------------------------------------------------------*/
 
 V file_open(NgaState *vm) {
-  CELL slot, mode, name;
-  char *request;
+  CELL slot = files_get_handle(vm);
+  CELL mode = stack_pop(vm);
+  CELL name = stack_pop(vm);
   char *modes[] = {"rb", "w", "a", "rb+"};
-  slot = files_get_handle(vm);
-  mode = stack_pop(vm);
-  name = stack_pop(vm);
-  request = string_extract(vm, name);
-  if (slot > 0) {
-    vm->OpenFileHandles[slot] = fopen(request, modes[mode]);
-  }
-  if (vm->OpenFileHandles[slot] == NULL) {
-    vm->OpenFileHandles[slot] = 0;
-    slot = 0;
-  }
+  char *request = string_extract(vm, name);
+  FILE *file = (slot > 0) ? fopen(request, modes[mode]) : NULL;
+  vm->OpenFileHandles[slot] = (file != NULL) ? file : 0;
   stack_push(vm, slot);
 }
-
 
 /*---------------------------------------------------------------------
   `file_read()` reads a byte from a file. This takes a file pointer
@@ -78,14 +70,13 @@ V file_open(NgaState *vm) {
   ---------------------------------------------------------------------*/
 
 V file_read(NgaState *vm) {
-  CELL c;
   CELL slot = stack_pop(vm);
-  if (slot <= 0 || slot > MAX_OPEN_FILES || vm->OpenFileHandles[slot] == 0) {
+  FILE *file = vm->OpenFileHandles[slot];
+  if (slot <= 0 || slot > MAX_OPEN_FILES || file == 0) {
     printf("\nERROR (nga/file_read): Invalid file handle\n");
     exit(1);
   }
-  c = fgetc(vm->OpenFileHandles[slot]);
-  stack_push(vm, feof(vm->OpenFileHandles[slot]) ? 0 : c);
+  stack_push(vm, feof(file) ? 0 : fgetc(file));
 }
 
 
@@ -96,16 +87,14 @@ V file_read(NgaState *vm) {
   ------------------------------------------------------------*/
 
 V file_write(NgaState *vm) {
-  CELL slot, c, r;
-  slot = stack_pop(vm);
-  if (slot <= 0 || slot > MAX_OPEN_FILES || vm->OpenFileHandles[slot] == 0) {
+  CELL slot = stack_pop(vm);
+  FILE *file = vm->OpenFileHandles[slot];
+  if (slot <= 0 || slot > MAX_OPEN_FILES || file == 0) {
     printf("\nERROR (nga/file_write): Invalid file handle\n");
     exit(1);
   }
-  c = stack_pop(vm);
-  r = fputc(c, vm->OpenFileHandles[slot]);
+  fputc(stack_pop(vm), file);
 }
-
 
 /*--------------------------------------------------------------
   `file_close()` closes a file. This takes a file handle from
@@ -114,11 +103,12 @@ V file_write(NgaState *vm) {
 
 V file_close(NgaState *vm) {
   CELL slot = stack_pop(vm);
-  if (slot <= 0 || slot > MAX_OPEN_FILES || vm->OpenFileHandles[slot] == 0) {
+  FILE *file = vm->OpenFileHandles[slot];
+  if (slot <= 0 || slot > MAX_OPEN_FILES || file == 0) {
     printf("\nERROR (nga/file_close): Invalid file handle\n");
     exit(1);
   }
-  fclose(vm->OpenFileHandles[slot]);
+  fclose(file);
   vm->OpenFileHandles[slot] = 0;
 }
 
