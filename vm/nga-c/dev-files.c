@@ -59,9 +59,17 @@ V file_open(NgaState *vm) {
   CELL name = stack_pop(vm);
   char *modes[] = {"rb", "w", "a", "rb+"};
   char *request = string_extract(vm, name);
-  FILE *file = (slot > 0) ? fopen(request, modes[mode]) : NULL;
-  vm->OpenFileHandles[slot] = (file != NULL) ? file : 0;
+  if (slot > 0) {
+    vm->OpenFileHandles[slot] = fopen(request, modes[mode]);
+  }
+  if (vm->OpenFileHandles[slot] == NULL) {
+    vm->OpenFileHandles[slot] = 0;
+    slot = 0;
+  }
   stack_push(vm, slot);
+//  FILE *file = (slot > 0) ? fopen(request, modes[mode]) : NULL;
+//  vm->OpenFileHandles[slot] = (file != NULL) ? file : 0;
+//  stack_push(vm, slot);
 }
 
 /*---------------------------------------------------------------------
