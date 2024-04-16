@@ -161,8 +161,19 @@ Note: this won't be useful until after the alternate `s:evaluate`
 is done.
 
 ~~~
+:string? (v-vf) dup STRINGS gt? ;
+:ss:display
+ over n:inc #12 n:add #84 vt:row,col
+ fg:red
+ tos? [ 'TOS:___ s:put ] [ '_______ s:put ] choose
+ vt:reset
+ s:put ;
+
+:ss:not-string
+ over n:inc #12 n:add #84 vt:row,col fg:blue '_______n/a s:put drop vt:reset ;
+
 :ss/later (-)
-  #0 &Items [ dup STRINGS gt? [ over n:inc #12 n:add #84 vt:row,col s:put ] &drop choose n:inc  ] a:for-each drop
+  #0 &Items [ string? &ss:display &ss:not-string choose n:inc  ] a:for-each drop
 ;
 ~~~
 
@@ -198,7 +209,7 @@ is done.
   [ vt:reset vt:clear vt:home
     display:tob
     sections
-    stats dss (ss watchlist
+    stats dss ss/later watchlist
     prompt s:get-word vt:reset
     [ dup s:put sp interpret ] tob:with
  ] forever ;
