@@ -9,15 +9,67 @@
 
 ================================================================
 
-# Terminal Configuration
+# Background
 
-Setup the local terminal dimensions. This requires the current
-development build of Retro to gain access to the `ioctl:` words.
-(If not using this, hard code the terminal constraints for your
-system).
+The current generation of RetroForth did not start off as a
+traditional, interactive Forth. A minimal (and lightly expanded)
+REPL simply called the listener has existed, but it is not a
+user friendly system.
+
+Takawiri is a new listener. I've been slowly working on it,
+with a goal of growing it into something useful. At present it
+is functional, but many pieces remain. (See the end of this
+document for a partial list).
+
+# The Interface
+
+Takawiri presents a fullscreen interface. This has a large area
+for the display (the "text output buffer", or TOB) with a set
+of introspection views on the right. At the bottom is the text
+input area.
+
+  +-----------------------------------------+----------------+
+  | Text Output Buffer                      | Introspection  |
+  |                                         |                |
+  |                                         |                |
+  |                                         +----------------+
+  |                                         | Stack Display  |
+  |                                         |                |
+  |                                         |                |
+  |                                         +----------------+
+  |                                         | String Preview |
+  |                                         |                |
+  |                                         |                |
+  |                                         +----------------+
+  |                                         | Watched Vars   |
+  |                                         |                |
+  |                                         |                |
+  +-----------------------------------------+----------------+
+  | input area                                               |
+  +----------------------------------------------------------+
+
+# Startup & Dependencies
+
+Takawiri requires RetroForth 2024.9 or newer, with the ioctl
+device enabled. It also requires a terminal with 100 or more
+columns and at least 27 rows.
+
+I do the initial configuration, and check these, reporting any
+errors and exiting if necessary.
+
+~~~
+@Version #202409 lt?
+  [ 'Requires_RetroForth_2024.9_or_newer s:put nl bye ] if
+~~~
+
+Setup the local terminal dimensions. This uses the `ioctl:`
+words added in RetroForth 2024.9.
 
 ~~~
 ioctl:term-size (rows,cols) 'LT:W const 'LT:H const
+
+LT:W #100 lt? [ 'Terminal_too_narrow! s:put nl bye ] if
+LT:H #27 lt?  [ 'Terminal_too_short!  s:put nl bye ] if
 ~~~
 
 Setup the text output buffer dimensions. The width is currently
@@ -25,19 +77,9 @@ fixed at 80 columns; the height is set based on the terminal
 height.
 
 ~~~
-#80 'TOB:W const
+#80       'TOB:W const
 LT:H #2 - 'TOB:H const
 ~~~
-
-Check to make sure the terminal is large enough to display
-everything.
-
-~~~
-LT:W #100 lt? [ 'Terminal_too_narrow! s:put nl bye ] if
-LT:H #27 lt?  [ 'Terminal_too_short!  s:put nl bye ] if
-~~~
-
-# Dependencies
 
 Load dependencies from the library.
 
@@ -65,48 +107,6 @@ This word provides access to retro-describe(1).
 :describe (s-)
   'retro-describe_"%s" s:format file:R unix:popen
   [ dup file:read dup c:put n:zero? ] until unix:pclose ;
-~~~
-
-# Watchlist
-
-The watchlist will allow monitoring a small number of addresses
-in the right panel of the interface. A use case might be to
-do something like:
-
-    &Base 'Base watch
-    &Compiler 'Compiler watch
-
-~~~
-'Watchlist       d:create #5 , #-1 , #-1 , #-1 , #-1 , #-1 ,
-'WatchlistLabels d:create #5 , #-1 , #-1 , #-1 , #-1 , #-1 ,
-
-:watchlist:find (a-n)
-  dup &Watchlist a:contains? [ drop #-1 ] -if;
-  &Watchlist swap a:index ;
-
-:watchlist:make-label (s-s)
-  dup s:length #8 gt? [ #8 s:left ] if
-  dup s:length #8 lt?
-    [ dup s:length #8 swap n:sub [ '_ s:append ] times ] if
-  s:keep ;
-
-:watch (as-)
-  watchlist:make-label
-  #-1 watchlist:find &Watchlist &WatchlistLabels
-  'abcde 'adcbec reorder a:store a:store ;
-
-:unwatch (a-)
-  watchlist:find dup n:positive? &drop -if
-  [ &Watchlist #-1 'abc 'acab reorder a:store ]
-  [ &WatchlistLabels #-1 'abc 'acab reorder a:store ] bi ;
-
-:watchlist (-)
-  #19 #5 [ dup #84 vt:row,col
-        dss:label &WatchlistLabels over #19 n:sub a:fetch
-          dup #-1 -eq? [ s:put sp ] [ drop '_________ s:put ] choose
-        dss:value &Watchlist over #19 n:sub a:fetch
-        dup n:positive? [ fetch ] [ drop #0 ] choose
-        n:put n:inc vt:reset ] times drop ;
 ~~~
 
 # UI
@@ -149,6 +149,8 @@ Draw the section separators.
   drop ] gc ;
 ~~~
 
+## String Preview
+
 This is the start of code to display temporary strings on the
 data stack. The plan is to have it show below the stack values,
 in a format like:
@@ -161,20 +163,24 @@ Note: this won't be useful until after the alternate `s:evaluate`
 is done.
 
 ~~~
-:string? (v-vf) dup STRINGS gt? ;
-:ss:display
- over n:inc #12 n:add #84 vt:row,col
- fg:red
- tos? [ 'TOS:___ s:put ] [ '_______ s:put ] choose
- vt:reset
- s:put ;
+{{
+  :string? (v-vf) dup STRINGS gt? ;
 
-:ss:not-string
- over n:inc #12 n:add #84 vt:row,col fg:blue '_______n/a s:put drop vt:reset ;
+  :display
+    over n:inc #12 n:add #84 vt:row,col
+    fg:red
+    tos? [ 'TOS:___ s:put ] [ '_______ s:put ] choose
+    vt:reset
+    s:put ;
 
-:ss/later (-)
-  #0 &Items [ string? &ss:display &ss:not-string choose n:inc  ] a:for-each drop
-;
+  :not-string
+    over n:inc #12 n:add #84 vt:row,col
+    fg:blue '_______n/a s:put drop vt:reset ;
+---reveal---
+  :strings (-)
+    #0 &Items [ string? &display &not-string choose n:inc  ]
+    a:for-each drop ;
+}}
 ~~~
 
 ~~~
@@ -201,6 +207,48 @@ is done.
 :bye quit ;
 ~~~
 
+# Watchlist
+
+The watchlist will allow monitoring a small number of addresses
+in the right panel of the interface. A use case might be to
+do something like:
+
+    &Base 'Base watch
+    &Compiler 'Compiler watch
+
+~~~
+'Watchlist       d:create #5 , #-1 , #-1 , #-1 , #-1 , #-1 ,
+'WatchlistLabels d:create #5 , #-1 , #-1 , #-1 , #-1 , #-1 ,
+
+:watchlist:find (a-n)
+  dup &Watchlist a:contains? [ drop #-1 ] -if;
+  &Watchlist swap a:index ;
+
+:watchlist:make-label (s-s)
+  dup s:length #8 gt? [ #8 s:left ] if
+  dup s:length #8 lt?
+    [ dup s:length #8 swap n:sub [ '_ s:append ] times ] if
+  s:keep ;
+
+:watch (as-)
+  watchlist:make-label
+  #-1 watchlist:find &Watchlist &WatchlistLabels
+  'abcde 'adcbec reorder a:store a:store ;
+
+:unwatch (a-)
+  watchlist:find dup n:positive? &drop -if
+  [ &Watchlist       #-1 'abc 'acab reorder a:store ]
+  [ &WatchlistLabels #-1 'abc 'acab reorder a:store ] bi ;
+
+:watchlist (-)
+  #19 #5 [ dup #84 vt:row,col
+        dss:label &WatchlistLabels over #19 n:sub a:fetch
+          dup #-1 -eq? [ s:put sp ] [ drop '_________ s:put ] choose
+        dss:value &Watchlist over #19 n:sub a:fetch
+        dup n:positive? [ fetch ] [ drop #0 ] choose
+        n:put n:inc vt:reset ] times drop ;
+~~~
+
 ~~~
 :ui
   &err:notfound unhook
@@ -209,7 +257,7 @@ is done.
   [ vt:reset vt:clear vt:home
     display:tob
     sections
-    stats dss ss/later watchlist
+    stats dss strings watchlist
     prompt s:get-word vt:reset
     [ dup s:put sp interpret ] tob:with
  ] forever ;
@@ -224,5 +272,6 @@ Things needed:
 - termios device & words (or add termios to unix device?)
 - colors for interface elements
 - refactor & document everything
+- line editing
 
 ================================================================
