@@ -1,0 +1,10 @@
+~~~
+:keys:UP    #-300 ;
+:keys:DOWN  #-301 ;
+:keys:RIGHT #-302 ;
+:keys:LEFT  #-303 ;
+
+:c:get/ext (-c)
+  c:get dup #27 eq?
+  [ drop c:get drop c:get #235 + n:negate ] if ;
+~~~

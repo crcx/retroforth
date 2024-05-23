@@ -31,6 +31,8 @@
 - library
 
   - added "tob", a text output buffer
+  - added "c:get/ext", for reading keys and returning unique
+    codes for arrows
 
 - retro-compiler
 
