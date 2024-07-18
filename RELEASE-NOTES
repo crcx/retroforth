@@ -51,6 +51,8 @@
   - formatting cleanups
   - added ioctl device
   - new "-p" option to run non-Unu format source files
+  - now report "<none>" for `script:name` if no file is being
+    run
 
 Future Notes
 

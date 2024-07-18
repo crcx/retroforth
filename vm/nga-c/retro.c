@@ -563,7 +563,10 @@ V scripting_include_plain(NgaState *vm) {
 }
 
 V scripting_name(NgaState *vm) {
-  stack_push(vm, string_inject(vm, vm->sys_argv[1], stack_pop(vm)));
+  if ((vm->sys_argc - 2) <= 0)
+    stack_push(vm, string_inject(vm, "<none>", stack_pop(vm)));
+  else
+    stack_push(vm, string_inject(vm, vm->sys_argv[1], stack_pop(vm)));
 }
 
 /* addeded in scripting i/o device, revision 1 */
@@ -1122,6 +1125,9 @@ int main(int argc, char **argv) {
   register_devices(vm);
   vm->sys_argc = argc;           /* Point the global argc and */
   vm->sys_argv = argv;           /* argv to the actual ones   */
+
+  strlcpy(vm->scripting_sources[0], "<none>", 8192);
+
 
   /* Check arguments. If no flags were passed, load & run the
      file specified and exit. */
