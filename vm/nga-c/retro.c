@@ -566,7 +566,7 @@ V scripting_include_plain(NgaState *vm) {
 }
 
 V scripting_name(NgaState *vm) {
-  if ((vm->sys_argc - 2) <= 0)
+  if (vm->sys_argc == 1)
     stack_push(vm, string_inject(vm, "<none>", stack_pop(vm)));
   else
     stack_push(vm, string_inject(vm, vm->sys_argv[1], stack_pop(vm)));
