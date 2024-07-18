@@ -551,7 +551,10 @@ V scripting_arg(NgaState *vm) {
 }
 
 V scripting_arg_count(NgaState *vm) {
-  stack_push(vm, vm->sys_argc - 2);
+  if ((vm->sys_argc - 2) <= 0)
+    stack_push(vm, 0);
+  else
+    stack_push(vm, vm->sys_argc - 2);
 }
 
 V scripting_include(NgaState *vm) {

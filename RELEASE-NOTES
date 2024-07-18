@@ -53,6 +53,7 @@
   - new "-p" option to run non-Unu format source files
   - now report "<none>" for `script:name` if no file is being
     run
+  - now report 0 for `script:arguments` if not running a program
 
 Future Notes
 
