@@ -27,6 +27,7 @@
   - `s:get-word` was not properly breaking on space; this is
     now corrected
   - `n:put` no longer uses temporary string buffers
+  - `s:get` now truncates strings longer than `TempStringMax`
 
 - library
 

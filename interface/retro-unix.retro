@@ -17,7 +17,9 @@ not `TRUE` it will add the character to the buffer.
 ~~~
 {{
   (c-cf) :edit?  dup [ ASCII:BS eq? ] [ ASCII:DEL eq? ] bi or ;
-  (c-)   :gather edit? &drop &buffer:add choose ;
+  (-f)   :ended? buffer:size @TempStringMax gteq? ;
+  (c-)   :add    ended? &drop &buffer:add choose ;
+  (c-)   :gather edit? &drop &add choose ;
   (q-qc) :cycle  repeat c:get dup-pair swap call not 0; drop gather again ;
 ---reveal---
   :parse-until (q-s)
