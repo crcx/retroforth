@@ -28,6 +28,11 @@
     now corrected
   - `n:put` no longer uses temporary string buffers
   - `s:get` now truncates strings longer than `TempStringMax`
+  - add `s:oversize?`
+  - add `s:truncate`
+  - `s:append`, `s:prepend` now truncate if source string is
+    at `TempStringMax`
+  - `s:temp` now truncates strings longer than `TempStringMax`
 
 - library
 

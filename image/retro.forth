@@ -845,6 +845,12 @@ variables.
 :TempStringMax ; data #512 !TempStringMax
 :STRINGS   EOM @TempStrings @TempStringMax * - ;
 
+:s:oversize? (s-f)
+  s:length @TempStringMax n:dec gt? ;
+
+:s:truncate (s-s)
+  dup s:oversize? [ #0 over @TempStringMax + store ] if ;
+
 {{
   :Current `0 ; data
 
@@ -852,11 +858,8 @@ variables.
   :s:next    (-)
     &Current v:inc
     @Current @TempStrings eq? [ #0 !Current ] if ;
-  :truncate  (s-s)
-    dup s:length @TempStringMax n:dec gt?
-    [ #0 over @TempStringMax + store ] if ;
 ---reveal---
-  :s:temp (s-s) truncate
+  :s:temp (s-s) s:truncate
                 dup s:length n:inc s:pointer swap copy
                 s:pointer s:next ;
   :s:empty (-s) s:pointer s:next #0 over store ;
@@ -934,7 +937,11 @@ a string.
 
 ~~~
 :s:prepend (ss-s)
-  s:temp [ dup s:length + [ dup s:length n:inc ] dip swap copy ] sip ;
+  s:temp [ dup s:oversize?
+           &drop-pair
+           [ dup s:length + [ dup s:length n:inc ] dip swap copy ]
+           choose
+  ] sip ;
 :s:append (ss-s) swap s:prepend ;
 ~~~
 
