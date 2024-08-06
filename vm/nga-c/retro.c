@@ -31,6 +31,7 @@
 
 #define ACTIVE vm->cpu[vm->active]
 #define TIB vm->memory[7]
+#define TIB_END vm->memory[8]
 
 #define MAX_DEVICES      32
 #define MAX_OPEN_FILES   32
@@ -707,6 +708,9 @@ V execute(NgaState *vm, CELL cell) {
 
 V evaluate(NgaState *vm, char *s) {
   if (strlen(s) == 0)  return;
+  if (strlen(s) > (TIB_END  - TIB)) {
+    s[TIB_END - TIB] = 0;
+  }
   string_inject(vm, s, TIB);
   stack_push(vm, TIB);
   execute(vm, vm->interpret);

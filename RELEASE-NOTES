@@ -55,6 +55,8 @@
   - now report "<none>" for `script:name` if no file is being
     run
   - now report 0 for `script:arguments` if not running a program
+  - source read from a file now truncates (w/null termination)
+    input tokens bigger than the defined text input buffer
 
 Future Notes
 

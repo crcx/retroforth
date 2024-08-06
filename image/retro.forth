@@ -852,8 +852,12 @@ variables.
   :s:next    (-)
     &Current v:inc
     @Current @TempStrings eq? [ #0 !Current ] if ;
+  :truncate  (s-s)
+    dup s:length @TempStringMax n:dec gt?
+    [ #0 over @TempStringMax + store ] if ;
 ---reveal---
-  :s:temp (s-s) dup s:length n:inc s:pointer swap copy
+  :s:temp (s-s) truncate
+                dup s:length n:inc s:pointer swap copy
                 s:pointer s:next ;
   :s:empty (-s) s:pointer s:next #0 over store ;
 }}
