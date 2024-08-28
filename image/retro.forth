@@ -937,11 +937,10 @@ a string.
 
 ~~~
 :s:prepend (ss-s)
-  s:temp [ dup s:oversize?
+  s:temp [ dup-pair &s:length bi@ + @TempStringMax gt?
            &drop-pair
            [ dup s:length + [ dup s:length n:inc ] dip swap copy ]
-           choose
-  ] sip ;
+           choose ] sip ;
 :s:append (ss-s) swap s:prepend ;
 ~~~
 
