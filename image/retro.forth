@@ -1051,6 +1051,7 @@ from another string that are filtered by a quotation.
 
 ~~~
 :s:filter (sq-s)
+  over s:oversize? [ &s:truncate dip ] if
   [ s:empty buffer:set swap
     [ dup-pair swap call
         &buffer:add &drop choose

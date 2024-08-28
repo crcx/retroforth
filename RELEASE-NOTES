@@ -33,6 +33,7 @@
   - `s:append`, `s:prepend` now truncate if source string is
     at `TempStringMax`
   - `s:temp` now truncates strings longer than `TempStringMax`
+  - `s:filter` now truncates strings longer than `TempStringMax`
 
 - library
 
