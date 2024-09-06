@@ -1351,7 +1351,7 @@ a:last
   Addr:  -
   Float: -
 
-Return a new array containing the first `n` values from the source array.
+Return the last value in the array.
 
 Class: class:word | Namespace: a | Interface Layer: all
 ------------------------------------------------------------------------

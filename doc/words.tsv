@@ -117,7 +117,7 @@ a:index	an-n	-	-	Return the location of the first instance of the specified valu
 a:index/string	as-n	-	-	Return the location of the first instance of the specified string in the array.			class:word	{n/a}	{n/a}	a	all	
 a:indices	av-a	-	-	Return a new array with the indices the specified value was found at in the original array.			class:word	{n/a}	{n/a}	a	all	
 a:indices/string	as-a	-	-	Return a new array with the indices of the specified string in the original array.			class:word	{n/a}	{n/a}	a	all	
-a:last	a-n	-	-	Return a new array containing the first `n` values from the source array.			class:word	{n/a}	{n/a}	a	all	
+a:last	a-n	-	-	Return the last value in the array.			class:word	{n/a}	{n/a}	a	all	
 a:left	an-a	-	-	Return a new array containing the first `n` values from the source array.			class:word	{n/a}	{n/a}	a	all	
 a:length	a-n	-	-	Return the length of a array.			class:word	{n/a}	{n/a}	a	all	
 a:make	q-a	-	-	Execute quote. Return a new array containing the values the quote leaves on the stack. This is identical to doing `a:counted-results			class:word	{n/a}	{n/a}	a	all	

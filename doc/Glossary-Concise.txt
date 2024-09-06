@@ -356,7 +356,7 @@ a:indices/string          D: as-a  A: -  F: -
 Return a new array with the indices of the specified string in the original array.
 
 a:last                    D: a-n  A: -  F: -
-Return a new array containing the first `n` values from the source array.
+Return the last value in the array.
 
 a:left                    D: an-a  A: -  F: -
 Return a new array containing the first `n` values from the source array.
