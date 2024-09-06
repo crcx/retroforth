@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"><head>
-<title>.</title>
+<title>doc/book/techniques/checking-the-version</title>
 <style type="text/css">
 
     * { color: #000; background: #fff; max-width: 700px; }
@@ -43,7 +43,8 @@
     .hr { display: block; height: 2px; background: #000000; }
 </style>
 </head><body>
-<p><br/><br/>
+<p><span class="h1">Checking The Version</span>
+<br/><br/>
 RETRO releases add and change things. You can use the <span class="tt">Version</span>
 variable to determine the version in use and react accordingly.
 <br/><br/>
@@ -54,6 +55,7 @@ This can be also be used to conditionally load compatibility files:
 <span class='codeblock'><span class="tt">```</span><br/><span class="tt"><span class='note'>(If_newer_than_2016.6,_load_aliases_for_renamed_words)</span> </span><br/>
 <span class="tt"><span class='fetch'>@Version</span> <span class='num'>#201906</span> <span class='prim'>gt?</span> <span class='imm'>[</span> <span class='str'>'Renamed_2019.6.forth</span> include <span class='imm'>]</span> <span class='prim'>if</span> </span><br/>
 <span class="tt">```</span></span><br/><br/>
+<span class="h2">Version Number Format</span>
 <br/><br/>
 The version is a six digit number encoding the year and month of
 the release. So:

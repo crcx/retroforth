@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"><head>
-<title>.</title>
+<title>doc/book/techniques/loops</title>
 <style type="text/css">
 
     * { color: #000; background: #fff; max-width: 700px; }
@@ -47,6 +47,7 @@
 <br/><br/>
 RETRO provides several words for creating loops.
 <br/><br/>
+<span class="h2">Unconditional Loops</span>
 <br/><br/>
 An unconditional loop begins with <span class="tt">repeat</span> and ends with <span class="tt">again</span>.
 <br/><br/>
@@ -71,6 +72,7 @@ Be careful with recursion as the virtual machine will have a limited
 amount of space for the address stack and recursing too many times
 can cause a stack overflow.
 <br/><br/>
+<span class="h2">Conditional Loops</span>
 <br/><br/>
 There are two conditional looping combinators: <span class="tt">while</span> and <span class="tt">until</span>.
 Both take a quote and execute it, checking a returned flag to decide
@@ -79,6 +81,7 @@ when to stop running.
 <tt class='indentedcode'>#0&nbsp;[&nbsp;dup&nbsp;n:put&nbsp;sp&nbsp;n:inc&nbsp;dup&nbsp;#10&nbsp;eq?&nbsp;]&nbsp;until</tt>
 <tt class='indentedcode'>#10&nbsp;[&nbsp;dup&nbsp;n:put&nbsp;sp&nbsp;n:dec&nbsp;dup&nbsp;n:-zero?&nbsp;]&nbsp;while</tt>
 <br/><br/>
+<span class="h2">Counted Loops</span>
 <br/><br/>
 There are two combinators for counted loops. These are <span class="tt">times</span> and
 <span class="tt">indexed-times</span>.

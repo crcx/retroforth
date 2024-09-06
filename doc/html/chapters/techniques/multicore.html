@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"><head>
-<title>.</title>
+<title>doc/book/techniques/multicore</title>
 <style type="text/css">
 
     * { color: #000; background: #fff; max-width: 700px; }
@@ -43,7 +43,8 @@
     .hr { display: block; height: 2px; background: #000000; }
 </style>
 </head><body>
-<p><br/><br/>
+<p><span class="h1">Multiple Cores</span>
+<br/><br/>
 Nga has optional support for multiple virtual cores. These
 are not directly comparable to actual CPU cores, but do
 allow for a degree of multitasking.
@@ -83,6 +84,7 @@ Example:
 <br/><br/>
 <tt class='indentedcode'>#4&nbsp;core:init</tt>
 <br/><br/>
+<span class="h2">Starting a Core</span>
 <br/><br/>
 Initialization does not activate a core. To do this, you need
 to use <span class="tt">core:start</span>. Pass this the address of the word to
@@ -93,6 +95,7 @@ Example:
 <tt class='indentedcode'>:a&nbsp;[&nbsp;$a&nbsp;c:put&nbsp;]&nbsp;forever&nbsp;;</tt>
 <tt class='indentedcode'>&amp;a&nbsp;#4&nbsp;core:start</tt>
 <br/><br/>
+<span class="h2">Pausing a Core</span>
 <br/><br/>
 Two words are provided for suspending a core. The first is
 <span class="tt">core:pause</span>. Pass this the core number to pause.
@@ -108,6 +111,7 @@ Example:
 <br/><br/>
 <tt class='indentedcode'>core:pause-current</tt>
 <br/><br/>
+<span class="h2">Resuming a Core</span>
 <br/><br/>
 To reactive a core, use <span class="tt">core:resume</span>. This takes the core
 number to activate.
@@ -135,6 +139,7 @@ usable on Retro/Napia with minimal changes.
 The main differences are that under Nga, this is an optional
 extension, but in Napia, it is part of the standard system.
 <br/><br/>
+<span class="h2">Other Notes</span>
 <br/><br/>
 On startup, execution occurs on core 0, with only core 0 being
 initialized.

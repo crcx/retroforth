@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"><head>
-<title>.</title>
+<title>doc/book/techniques/floating-point</title>
 <style type="text/css">
 
     * { color: #000; background: #fff; max-width: 700px; }
@@ -43,7 +43,8 @@
     .hr { display: block; height: 2px; background: #000000; }
 </style>
 </head><body>
-<p><br/><br/>
+<p><span class="h1">Working With Floating Point</span>
+<br/><br/>
 Some RETRO systems include support for floating point numbers.
 When present, this is built over the system <span class="tt">libm</span> using the
 C <span class="tt">double</span> type.
@@ -135,6 +136,7 @@ like infinity and NaN.
 &bull; <span class="tt">f:inf?</span><br/>
 &bull; <span class="tt">f:nan?</span><br/>
 <br/><br/>
+<span class="h2">Basic Math</span>
 <br/><br/>
 &bull; <span class="tt">f:*</span><br/>
 &bull; <span class="tt">f:+</span><br/>
@@ -172,6 +174,7 @@ related calculations.
 | <span class="tt">f:sin</span>  | sine         |
 | <span class="tt">f:tan</span>  | tangent      |
 <br/><br/>
+<span class="h2">Storage and Retrieval</span>
 <br/><br/>
 By leveraging the encoded value functions, RETRO is able to
 allow storage of floating point values in memory. This does
@@ -193,6 +196,7 @@ store and retrieve values using multiple cells.
 The floating point vocabulary has a single I/O word, <span class="tt">f:put</span>,
 for the display of floating point numbers.
 <br/><br/>
+<span class="h2">Encoded Values</span>
 <br/><br/>
 RETRO provides a means of encoding and decoding floating point
 values into standard integer cells. This is based on the paper

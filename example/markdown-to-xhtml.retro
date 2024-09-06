@@ -95,7 +95,7 @@ work nicely, so I start with some header stuff.
 '<!DOCTYPE_html_PUBLIC_"-//W3C//DTD_XHTML_1.1//EN" s:put sp
 '"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd"> s:put nl
 '<html_xmlns="http://www.w3.org/1999/xhtml"><head> s:put nl
-'<title>.</title> s:put nl
+#0 script:get-argument '<title>%s</title> s:format s:put nl
 ~~~
 
 Locate and embed the CSS from the end of this file. The CSS

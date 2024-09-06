@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"><head>
-<title>.</title>
+<title>doc/book/internals/io-devices</title>
 <style type="text/css">
 
     * { color: #000; background: #fff; max-width: 700px; }
@@ -43,7 +43,8 @@
     .hr { display: block; height: 2px; background: #000000; }
 </style>
 </head><body>
-<p><br/><br/>
+<p><span class="h1">I/O Devices</span>
+<br/><br/>
 I/O devices on Nga are exposed via three instructions:
 <br/><br/>
 <tt class='indentedcode'>ie&nbsp;&nbsp;enumerate&nbsp;i/o&nbsp;devices</tt>
@@ -53,6 +54,7 @@ I/O devices on Nga are exposed via three instructions:
 All devices are registered with the VM. How this occurs is
 implementation dependent.
 <br/><br/>
+<span class="h2">Counting Devices</span>
 <br/><br/>
 Use the <span class="tt">ie</span> instruction to return the number of attached devices.
 <br/><br/>
@@ -61,12 +63,14 @@ Use the <span class="tt">ie</span> instruction to return the number of attached 
 Upon running, the stack will contain the number of devices. You
 can then query these by passing the device number to <span class="tt">iq</span>.
 <br/><br/>
+<span class="h2">Query Devices</span>
 <br/><br/>
 Use <span class="tt">iq</span> to query an attached device. This will return two values,
 a device class and a revision number.
 <br/><br/>
 The device class will be the top value on the stack.
 <br/><br/>
+<span class="h2">Invoking a Device</span>
 <br/><br/>
 You can trigger an I/O operation by passing the device handle to
 the <span class="tt">ii</span> instruction.
@@ -79,6 +83,7 @@ E.g., to display a character (ASCII code 98 in this case):
 <br/><br/>
 Be sure to pass the device handle, not the device class.
 <br/><br/>
+<span class="h2">Device Class</span>
 <br/><br/>
 Ultimately devices are implementation-specific, but the
 standard system provides or reserves the following:
@@ -102,19 +107,23 @@ It must be noted here that nothing forces devices to use these
 class identifiers, and one must take care to use an Nga
 implementation that provides the devices they need.
 <br/><br/>
+<span class="h2">Device Revisions</span>
 <br/><br/>
 Over time, the functionality a device provides may change. To allow
 detection of this, the query functionality provides a revision number.
 Your code can use this to ensure that the device provided supports
 the level of functionality you need.
 <br/><br/>
+<span class="h2">Device Class Details</span>
 <br/><br/>
+<span class="h3">0000: Generic Output</span>
 <br/><br/>
 Supported by all Nga implementations. This is required to be the
 first device, and is the only one guaranteed to be provided. It
 consumes a value from the stack, writing to to the host-specific
 output. (This does not need to be a screen).
 <br/><br/>
+<span class="h3">0001: Keyboard</span>
 <br/><br/>
 Read and return a keypress.
 <br/><br/>
@@ -123,6 +132,7 @@ character that was read.
 <br/><br/>
 No subcommands are defined.
 <br/><br/>
+<span class="h3">0002: Floating Point</span>
 <br/><br/>
 The current revision is 1.
 <br/><br/>
@@ -159,9 +169,11 @@ It currently provides:
 <tt class='indentedcode'>f:pop&nbsp;&nbsp;&nbsp;(f:-f)</tt>
 <tt class='indentedcode'>f:adepth&nbsp;&nbsp;(-n)</tt>
 <br/><br/>
+<span class="h3">0003: Block Storage</span>
 <br/><br/>
 Reserved for future use.
 <br/><br/>
+<span class="h3">0004: Filesystem</span>
 <br/><br/>
 Currently at revision 0.
 <br/><br/>
@@ -182,11 +194,13 @@ additional values.
 <tt class='indentedcode'>|&nbsp;7&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;s-&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;Delete&nbsp;a&nbsp;file&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
 <tt class='indentedcode'>|&nbsp;8&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;h-&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;Flush&nbsp;pending&nbsp;writes&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
 <br/><br/>
+<span class="h3">0010: Random Number Generator</span>
 <br/><br/>
 This is currently at revision 0.
 <br/><br/>
 On invocation, this returns a random number.
 <br/><br/>
+<span class="h2">Implementation Details (C)</span>
 <br/><br/>
 On the C implementation, each I/O device has the needed support
 functions defined, then a query function and invocation function

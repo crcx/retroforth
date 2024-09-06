@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"><head>
-<title>.</title>
+<title>doc/book/techniques/sockets</title>
 <style type="text/css">
 
     * { color: #000; background: #fff; max-width: 700px; }
@@ -48,6 +48,7 @@
 On Unix hosts, RETRO provides an optional set of words for using
 network sockets.
 <br/><br/>
+<span class="h2">Create a Socket</span>
 <br/><br/>
 To create a new socket, just run:
 <br/><br/>
@@ -55,6 +56,7 @@ To create a new socket, just run:
 <br/><br/>
 This will return a socket handle.
 <br/><br/>
+<span class="h2">Bind To A Port</span>
 <br/><br/>
 To bind to a port, pass the port number and socket handle
 to <span class="tt">socket:bind</span>. The port should be a string. This will return
@@ -62,6 +64,7 @@ to <span class="tt">socket:bind</span>. The port should be a string. This will r
 <br/><br/>
 <tt class='indentedcode'>'9998&nbsp;@Sock&nbsp;socket:bind</tt>
 <br/><br/>
+<span class="h2">Configure To Allow Incoming Connections</span>
 <br/><br/>
 To prepare a socket for incoming connections use socket:listen. This
 will take a backlog count and a socket handle. It returns a flag
@@ -69,12 +72,14 @@ will take a backlog count and a socket handle. It returns a flag
 <br/><br/>
 <tt class='indentedcode'>#3&nbsp;@Sock&nbsp;socket:listen</tt>
 <br/><br/>
+<span class="h2">Accept Connections</span>
 <br/><br/>
 To accept connections pass the socket handle to <span class="tt">socket:accept</span>.
 This returns a new socket for the connection and an error code.
 <br/><br/>
 <tt class='indentedcode'>@Sock&nbsp;socket:accept</tt>
 <br/><br/>
+<span class="h2">Make A Connection</span>
 <br/><br/>
 To connect to a server using the socket:
 <br/><br/>
@@ -83,6 +88,7 @@ To connect to a server using the socket:
 <br/><br/>
 <span class="tt">socket:connect</span> will return a status code and an error code.
 <br/><br/>
+<span class="h2">Writing To A Socket</span>
 <br/><br/>
 To write a string to a socket, use <span class="tt">socket:send</span>. This will
 take a string and a socket handle and will return the number
@@ -90,6 +96,7 @@ of bytes sent and an error code.
 <br/><br/>
 <tt class='indentedcode'>'test&nbsp;@Sock&nbsp;socket:send</tt>
 <br/><br/>
+<span class="h2">Reading From A Socket</span>
 <br/><br/>
 To read data from a socket pass an address, a maximum number of
 bytes, and the socket handle to <span class="tt">socket:recv</span>. This will return
@@ -98,6 +105,7 @@ be stored in memory starting at the specified address.
 <br/><br/>
 <tt class='indentedcode'>here&nbsp;#1024&nbsp;@Sock&nbsp;socket:recv</tt>
 <br/><br/>
+<span class="h2">Close a Socket</span>
 <br/><br/>
 To close a socket, pass the socket handle to <span class="tt">socket:close</span>.
 <br/><br/>

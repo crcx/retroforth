@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"><head>
-<title>.</title>
+<title>doc/book/internals/nga</title>
 <style type="text/css">
 
     * { color: #000; background: #fff; max-width: 700px; }
@@ -43,7 +43,8 @@
     .hr { display: block; height: 2px; background: #000000; }
 </style>
 </head><body>
-<p><br/><br/>
+<p><span class="h1">Internals: Nga Virtual Machine</span>
+<br/><br/>
 <span class="h2">Overview</span>
 <br/><br/>
 At the heart of Retro is a simple MISC (minimal instruction
@@ -54,6 +55,7 @@ This is a very simple and straightforward system. There are
 bit values. And there are two stacks: one for data and one
 for return addresses.
 <br/><br/>
+<span class="h2">Instruction Table</span>
 <br/><br/>
 <tt class='indentedcode'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Stacks&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|</tt>
 <tt class='indentedcode'>|&nbsp;Opcode&nbsp;|&nbsp;Muri&nbsp;|&nbsp;Full&nbsp;Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;Data&nbsp;&nbsp;|&nbsp;Address&nbsp;|</tt>
@@ -126,6 +128,7 @@ And returns a single one:
 If y is positive, this shifts <span class="tt">x</span> right by <span class="tt">y</span> bits. If negative,
 it shifts left.
 <br/><br/>
+<span class="h2">Queries: Memory, Stacks</span>
 <br/><br/>
 The <span class="tt">fe</span> instruction allows queries of some data related to
 the Nga VM state. These are returned by reading from negative
@@ -139,6 +142,7 @@ addresses:
 <tt class='indentedcode'>|&nbsp;-4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;Minimum&nbsp;Integer&nbsp;Value&nbsp;&nbsp;|</tt>
 <tt class='indentedcode'>|&nbsp;-5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;Maximum&nbsp;Integer&nbsp;Value&nbsp;&nbsp;|</tt>
 <br/><br/>
+<span class="h2">I/O Devices</span>
 <br/><br/>
 Nga provides three instructions for interacting with I/O devices.
 These are:

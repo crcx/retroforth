@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"><head>
-<title>.</title>
+<title>doc/book/techniques/dictionary</title>
 <style type="text/css">
 
     * { color: #000; background: #fff; max-width: 700px; }
@@ -43,7 +43,8 @@
     .hr { display: block; height: 2px; background: #000000; }
 </style>
 </head><body>
-<p><br/><br/>
+<p><span class="h1">Working With The Dictionary</span>
+<br/><br/>
 The Dictionary is a linked list containing the dictionary
 headers.
 <br/><br/>
@@ -56,6 +57,7 @@ Words operating on the dictionary are in the <span class="tt">d:</span> namespac
 <span class="tt">Dictionary</span> is a variable holding a pointer to the most recent
 header.
 <br/><br/>
+<span class="h2">Header Structure</span>
 <br/><br/>
 Each entry follows the following structure:
 <br/><br/>
@@ -71,12 +73,14 @@ RETRO provides words for accessing the fields in a portable
 manner. It's recommended to use these to allow for future
 revision of the header structure.
 <br/><br/>
+<span class="h2">Accessing Fields</span>
 <br/><br/>
 Given a pointer to a header, you can use <span class="tt">d:xt</span>, <span class="tt">d:class</span>,
 and <span class="tt">d:name</span> to access the address of each specific field.
 There is no <span class="tt">d:link</span>, as the link will always be the first
 field.
 <br/><br/>
+<span class="h2">Shortcuts For The Latest Header</span>
 <br/><br/>
 RETRO provides several words for operating on the most recent
 header.
@@ -85,6 +89,7 @@ header.
 will give the contents of the <span class="tt">d:xt</span> field for the latest
 header. There are also <span class="tt">d:last.class</span> and <span class="tt">d:last.name</span>.
 <br/><br/>
+<span class="h2">Adding Headers</span>
 <br/><br/>
 Two words exist for making new headers. The easy one is
 <span class="tt">d:create</span>. This takes a string for the name and makes a
@@ -126,6 +131,7 @@ of all words:
 For each entry, this combinator will push a pointer to the
 entry to the stack and call the quotation.
 <br/><br/>
+<span class="h2">Listing Words</span>
 <br/><br/>
 Most Forth systems provide WORDS for listing the names of all
 words in the dictionary. RETRO does as well, but this is named
