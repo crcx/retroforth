@@ -12,16 +12,16 @@
 
 ---reveal---
 
-  :mem:alloc  (n--a) ALLOC  mem:invoke ;
-  :mem:store  (an--) STORE  mem:invoke ;
-  :mem:fetch  (a--n) FETCH  mem:invoke ;
-  :mem:free   (a--)  FREE   mem:invoke ;
-  :mem:resize (an--) RESIZE mem:invoke ;
+  :mem:alloc  (:n--a) ALLOC  mem:invoke ;
+  :mem:store  (:an--) STORE  mem:invoke ;
+  :mem:fetch  (:a--n) FETCH  mem:invoke ;
+  :mem:free   (:a--)  FREE   mem:invoke ;
+  :mem:resize (:an--) RESIZE mem:invoke ;
 }}
 
-:mem:cell+ (nn-n) #8 * + ;
-:mem:fetch-double (n-nn)
+:mem:cell+ (:nn-n) #8 * + ;
+:mem:fetch-double (:n-nn)
   dup #1 mem:cell+ fetch push mem:fetch pop ;
-:mem:store-double (ann-nn)
+:mem:store-double (:ann-nn)
   push push dup-pair #1 mem:cell+ pop mem:store pop mem:store ;
 ~~~

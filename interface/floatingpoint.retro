@@ -122,11 +122,11 @@ the standard  integer range as the smallest value is used
 for NaN.
 
 ~~~
-n:MAX n:dec          'e:MAX const
-n:MAX n:dec n:negate 'e:MIN const
-n:MIN                'e:NAN const
-n:MAX                'e:INF const
-n:MAX n:negate       'e:-INF const
+n:MAX n:dec          'e:MAX const (:-n)
+n:MAX n:dec n:negate 'e:MIN const (:-n)
+n:MIN                'e:NAN const (:-n)
+n:MAX                'e:INF const (:-n)
+n:MAX n:negate       'e:-INF const (:-n)
 ~~~
 
 ~~~

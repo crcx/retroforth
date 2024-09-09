@@ -4,7 +4,7 @@ In this file I am implementing the interactive listener that
 RETRO will run when started with `-i`, `-i,c`, or `-i,fs`.
 
 ~~~
-:image:save (s-) #1000 io:scan-for io:invoke ;
+:image:save (:s-) #1000 io:scan-for io:invoke ;
 ~~~
 
 Now that I can read characters, it's time to support reading
@@ -22,7 +22,7 @@ not `TRUE` it will add the character to the buffer.
   (c-)   :gather edit? &drop &add choose ;
   (q-qc) :cycle  repeat c:get dup-pair swap call not 0; drop gather again ;
 ---reveal---
-  :parse-until (q-s)
+  :parse-until (:q-s)
     [ s:empty buffer:set cycle drop-pair buffer:start ] buffer:preserve ;
 }}
 ~~~
@@ -31,12 +31,12 @@ Using this, a simple `s:get` can be implemented very easily as
 a quote which looks for an end of line character.
 
 ~~~
-:s:get (-s) [ [ ASCII:CR eq? ]
+:s:get (:-s) [ [ ASCII:CR eq? ]
               [ ASCII:LF eq? ] bi or ] parse-until ;
 ~~~
 
 ~~~
-:clear '\^[2J\^[0;0H s:format s:put ;
+:clear (:-) '\^[2J\^[0;0H s:format s:put ;
 ~~~
 
 Hide the support words.
@@ -50,7 +50,7 @@ RRE's C part will access a couple parts of this, based on the
 startup flags passed.
 
 ~~~
-://    script:ignore-to-eol &Ignoring v:on ; immediate
+:// (:-)   script:ignore-to-eol &Ignoring v:on ; immediate
 ~~~
 
 ## d:source

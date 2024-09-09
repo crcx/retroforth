@@ -1,25 +1,25 @@
 ~~~
-#0    'DEVICE:OUTPUT     const
-#1    'DEVICE:KEYBOARD   const
-#2    'DEVICE:FLOATS     const
-#4    'DEVICE:FILES      const
-#3    'DEVICE:BLOCKS     const
-#5    'DEVICE:CLOCK      const
-#6    'DEVICE:RESERVED6  const
-#7    'DEVICE:SOCKET     const
-#8    'DEVICE:UNIX       const
-#9    'DEVICE:SCRIPTING  const
-#10   'DEVICE:RNG        const
-#11   'DEVICE:RESERVED11 const
-#12   'DEVICE:RESERVED12 const
-#13   'DEVICE:RESERVED13 const
-#14   'DEVICE:IOCTL      const
-#15   'DEVICE:MALLOC     const
-#1000 'DEVICE:IMAGE      const
-#1234 'DEVICE:ERROR      const
-#8000 'DEVICE:MULTICORE  const
-#8100 'DEVICE:FFI        const
-#8101 'DEVICE:UNSIGNED   const
+#0    'DEVICE:OUTPUT     const (:-n)
+#1    'DEVICE:KEYBOARD   const (:-n)
+#2    'DEVICE:FLOATS     const (:-n)
+#4    'DEVICE:FILES      const (:-n)
+#3    'DEVICE:BLOCKS     const (:-n)
+#5    'DEVICE:CLOCK      const (:-n)
+#6    'DEVICE:RESERVED6  const (:-n)
+#7    'DEVICE:SOCKET     const (:-n)
+#8    'DEVICE:UNIX       const (:-n)
+#9    'DEVICE:SCRIPTING  const (:-n)
+#10   'DEVICE:RNG        const (:-n)
+#11   'DEVICE:RESERVED11 const (:-n)
+#12   'DEVICE:RESERVED12 const (:-n)
+#13   'DEVICE:RESERVED13 const (:-n)
+#14   'DEVICE:IOCTL      const (:-n)
+#15   'DEVICE:MALLOC     const (:-n)
+#1000 'DEVICE:IMAGE      const (:-n)
+#1234 'DEVICE:ERROR      const (:-n)
+#8000 'DEVICE:MULTICORE  const (:-n)
+#8100 'DEVICE:FFI        const (:-n)
+#8101 'DEVICE:UNSIGNED   const (:-n)
 
 
 'interface/devices.retro s:dedup

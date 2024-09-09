@@ -1,19 +1,19 @@
 ~~~
-:double:var (nns-)
+:double:var (:nns-)
   d:create swap , , ;
 
-:double:fetch (a-nn)
+:double:fetch (:a-nn)
   fetch-next swap fetch ;
 
-:double:store (nna-)
+:double:store (:nna-)
   &swap dip store-next store ;
 
-:double:const (nns-)
+:double:const (:nns-)
   double:var &double:fetch does ;
 
-:double:swap (nnmm-mmnn)
+:double:swap (:nnmm-mmnn)
   rot push rot pop ;
 
-:double:dip (mnq-mn) rot rot push push call pop pop ;
-:double:sip (mnq-mn) &dup-pair dip double:dip ;
+:double:dip (:mnq-mn) rot rot push push call pop pop ;
+:double:sip (:mnq-mn) &dup-pair dip double:dip ;
 ~~~

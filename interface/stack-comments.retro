@@ -28,6 +28,13 @@ comment format this introduces to add them inline.
 Add the stack comments for existing words:
 
 ~~~
+'ss- 'd:set-source d:set-stack-comment
+'n-s 'n:to-string/reversed d:set-stack-comment
+'s-s 's:truncate d:set-stack-comment
+'s-sf 's:oversize? d:set-stack-comment
+'- 'err:notfound d:set-stack-comment
+'a-a 'd:stack d:set-stack-comment
+
 'D:_-c__A:_-__F:_- '$ d:set-stack-comment
 'D:_-s__A:_-__F:_- '' d:set-stack-comment
 'D:_-__A:_-__F:_- '( d:set-stack-comment

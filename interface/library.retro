@@ -1,24 +1,24 @@
 ~~~
 :HOME here #4096 + ;
 
-'%s/.config/retroforth/library/%s.retro 'library:.CONFIG s:const
-'./library/%s.retro 'library:CWD s:const
+'%s/.config/retroforth/library/%s.retro 'library:.CONFIG s:const (:-s)
+'./library/%s.retro 'library:CWD s:const (:-s)
 
-:library:cwd library:CWD s:format ;
+:library:cwd (:s-s) library:CWD s:format ;
 
-:library:.config
+:library:.config (:-s)
   'HOME HOME unix:getenv
   HOME library:.CONFIG s:format ;
 
-:library:filename (s-s)
+:library:filename (:s-s)
   dup library:cwd
-  dup file:exists? [ nip ] if; drop
+  dup file:exists? &nip if; drop
   library:.config dup file:exists? [ ] if; drop s:empty ;
 
-:library:contains? (s-f)
+:library:contains? (:s-f)
   &library:cwd &library:.config bi &file:exists? bi@ or ;
 
-:library:load
+:library:load (:s-)
   dup library:contains? [ library:filename include ]
   [ 'ERROR:_Library_`%s`_was_not_found s:format s:put nl ] choose ;
 

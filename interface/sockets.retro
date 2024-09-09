@@ -6,7 +6,7 @@ wrapper over the standard Unix socket functions. This means
 that it is fairly low level.
 
 ~~~
-:socket:operation
+:socket:operation (:n-)
   DEVICE:SOCKET io:scan-for dup n:negative?
   [ drop 'Error:_socket_device_not_found s:put nl
          'See_https://retroforth.org/support/2022.1/SOCKETS.md
