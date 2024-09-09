@@ -34,68 +34,68 @@ For opening a file, provide the file name and mode. This will return
 a number identifying the file handle.
 
 ~~~
-:file:open  (sm-h) #0 file:operation ;
+:file:open  (:sm-h) #0 file:operation ;
 ~~~
 
 Given a file handle, close the file.
 
 ~~~
-:file:close (h-) #1 file:operation ;
+:file:close (:h-) #1 file:operation ;
 ~~~
 
 Given a file handle, read a character.
 
 ~~~
-:file:read  (h-c) #2 file:operation ;
+:file:read  (:h-c) #2 file:operation ;
 ~~~
 
 Write a character to an open file.
 
 ~~~
-:file:write (ch-) #3 file:operation ;
+:file:write (:ch-) #3 file:operation ;
 ~~~
 
 Return the current pointer within a file.
 
 ~~~
-:file:tell  (h-n) #4 file:operation ;
+:file:tell  (:h-n) #4 file:operation ;
 ~~~
 
 Move the file pointer to the specified location.
 
 ~~~
-:file:seek  (nh-) #5 file:operation ;
+:file:seek  (:nh-) #5 file:operation ;
 ~~~
 
 Return the size of the opened file.
 
 ~~~
-:file:size  (h-n) #6 file:operation ;
+:file:size  (:h-n) #6 file:operation ;
 ~~~
 
 Given a file name, delete the file.
 
 ~~~
-:file:delete (s-) #7 file:operation ;
+:file:delete (:s-) #7 file:operation ;
 ~~~
 
 Flush pending writes to disk.
 
 ~~~
-:file:flush (f-) #8 file:operation ;
+:file:flush (:f-) #8 file:operation ;
 ~~~
 
 ~~~
-:file:read/bytes (pnf-) #9 file:operation ;
-:file:write/bytes (pnf-) #10 file:operation ;
-:file:read/c (h-c) #11 file:operation ;
-:file:write/c (ch-c) #12 file:operation ;
+:file:read/bytes (:pnf-) #9 file:operation ;
+:file:write/bytes (:pnf-) #10 file:operation ;
+:file:read/c (:h-c) #11 file:operation ;
+:file:write/c (:ch-c) #12 file:operation ;
 ~~~
 
 Given a file name, return `TRUE` if it exists or `FALSE` otherwise.
 
 ~~~
-:file:exists?  (s-f)
+:file:exists?  (:s-f)
   file:R file:open dup n:-zero?
   [ file:close TRUE ]
   [ drop FALSE      ] choose ;
@@ -103,13 +103,13 @@ Given a file name, return `TRUE` if it exists or `FALSE` otherwise.
 
 
 ~~~
-:file:open-for-reading (s-nn)
+:file:open-for-reading (:s-nn)
   file:R file:open dup file:size swap ;
 
-:file:open-for-append (s-nn)
+:file:open-for-append (:s-nn)
   file:A file:open dup file:size swap ;
 
-:file:open-for-writing (s-n)
+:file:open-for-writing (:s-n)
   file:W file:open ;
 ~~~
 
@@ -132,10 +132,10 @@ once for each line in a file. This makes some things trivial. E.g., a simple
   :-eof? (-f) @FID file:tell @Size lt? ;
   :preserve (q-) &FID [ &Size &call v:preserve ] v:preserve ;
 ---reveal---
-  :file:read-line (f-s)
+  :file:read-line (:f-s)
     here swap #13 file:operation here ;
 
-  :file:for-each-line (sq-)
+  :file:for-each-line (:sq-)
     [ !Action
       file:open-for-reading !FID !Size
       [ @FID file:read-line @Action call -eof? ] while
@@ -150,7 +150,7 @@ once for each line in a file. This makes some things trivial. E.g., a simple
 {{
   'FID var
 ---reveal---
-  :file:slurp (as-)
+  :file:slurp (:as-)
     [ swap buffer:set file:open-for-reading !FID
       [ @FID file:read buffer:add ] times
       @FID file:close
@@ -161,7 +161,7 @@ once for each line in a file. This makes some things trivial. E.g., a simple
 `file:spew` writes a string to a file.
 
 ~~~
-:file:spew (ss-)
+:file:spew (:ss-)
   file:open-for-writing swap [ over file:write ] s:for-each file:close ;
 ~~~
 
