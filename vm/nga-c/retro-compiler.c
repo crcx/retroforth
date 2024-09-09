@@ -49,7 +49,8 @@
 #define D_OFFSET_LINK     0       /* Dictionary Format Info. Update if */
 #define D_OFFSET_XT       1       /* you change the dictionary fields. */
 #define D_OFFSET_CLASS    2
-#define D_OFFSET_NAME     5
+#define D_OFFSET_STACK    5
+#define D_OFFSET_NAME     6
 
 #define NUM_DEVICES       1       /* Set the number of I/O devices     */
 
