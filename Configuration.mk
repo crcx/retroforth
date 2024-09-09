@@ -72,6 +72,7 @@ ENABLED += -DENABLE_IOCTL
 DEVICES ?=
 DEVICES += interface/ll.retro
 DEVICES += interface/dedup.retro
+DEVICES += interface/stack-comments.retro
 DEVICES += interface/sources.retro
 DEVICES += interface/devices.retro
 DEVICES += interface/floatingpoint.retro

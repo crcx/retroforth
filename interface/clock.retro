@@ -9,19 +9,19 @@ system clock.
     dup n:negative? [ drop 'Error:_clock_device_not_found s:put nl ] if;
     io:invoke ;
 
-:clock:timestamp  (-n) #0 clock:operation ;
-:clock:day        (-n) #1 clock:operation ;
-:clock:month      (-n) #2 clock:operation ;
-:clock:year       (-n) #3 clock:operation ;
-:clock:hour       (-n) #4 clock:operation ;
-:clock:minute     (-n) #5 clock:operation ;
-:clock:second     (-n) #6 clock:operation ;
-:clock:utc:day    (-n) #7 clock:operation ;
-:clock:utc:month  (-n) #8 clock:operation ;
-:clock:utc:year   (-n) #9 clock:operation ;
-:clock:utc:hour   (-n) #10 clock:operation ;
-:clock:utc:minute (-n) #11 clock:operation ;
-:clock:utc:second (-n) #12 clock:operation ;
+:clock:timestamp  (:-n) #0 clock:operation ;
+:clock:day        (:-n) #1 clock:operation ;
+:clock:month      (:-n) #2 clock:operation ;
+:clock:year       (:-n) #3 clock:operation ;
+:clock:hour       (:-n) #4 clock:operation ;
+:clock:minute     (:-n) #5 clock:operation ;
+:clock:second     (:-n) #6 clock:operation ;
+:clock:utc:day    (:-n) #7 clock:operation ;
+:clock:utc:month  (:-n) #8 clock:operation ;
+:clock:utc:year   (:-n) #9 clock:operation ;
+:clock:utc:hour   (:-n) #10 clock:operation ;
+:clock:utc:minute (:-n) #11 clock:operation ;
+:clock:utc:second (:-n) #12 clock:operation ;
 ~~~
 
 ## d:source

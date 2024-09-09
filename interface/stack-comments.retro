@@ -1,0 +1,24 @@
+Add stack comments to existing words (from retro.muri,
+retro.forth, interface/ll.retro, and interface/dedup.retro).
+Words defined in the others will make use of the extended
+comment format this introduces to add them inline.
+
+~~~
+{{
+  :save (s-)  n:inc s:chop here swap s:keep &drop compile:call #2 + d:last.name n:dec store ;
+  :stack-comment? (s-sf) dup #0 s:fetch $: eq? ;
+---reveal---
+  :sigil:(
+    stack-comment? [ compiling? &save &drop choose ] &drop choose ;
+  immediate
+}}
+
+:d:describe (:s-)
+  d:lookup nl
+  dup 'Name:____ s:put d:name s:put nl
+  dup 'Address:_ s:put d:xt fetch n:put nl
+  dup 'Class:___ s:put d:class fetch n:put nl
+  dup 'Source:__ s:put d:source fetch dup n:-zero? &s:put &drop choose nl
+  dup 'Stack:___ s:put d:stack fetch dup n:-zero? &s:put &drop choose nl
+  drop ;
+~~~

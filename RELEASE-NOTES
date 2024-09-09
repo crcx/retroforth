@@ -35,6 +35,9 @@
   - `s:temp` now truncates strings longer than `TempStringMax`
   - `s:filter` now truncates strings longer than `TempStringMax`
   - added new `d:stack` field for storing a stack comment
+  - `sigil:(` extended to store stack comments (with a form of
+    `(:comment)`
+  - add `d:describe`
 
 - library
 
