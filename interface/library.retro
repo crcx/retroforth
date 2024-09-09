@@ -1,5 +1,5 @@
 ~~~
-:HOME here #4096 + ;
+:HOME (:-s) here #4096 + ;
 
 '%s/.config/retroforth/library/%s.retro 'library:.CONFIG s:const (:-s)
 './library/%s.retro 'library:CWD s:const (:-s)

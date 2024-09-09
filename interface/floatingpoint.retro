@@ -7,7 +7,7 @@ point format.
 
 
 ~~~
-:float:operation
+:float:operation (:n-)
   DEVICE:FLOATS io:scan-for
     dup n:negative? [ drop 'Error:_floating_point_device_not_found s:put nl ] if;
     io:invoke ;

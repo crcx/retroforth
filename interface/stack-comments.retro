@@ -34,6 +34,7 @@ Add the stack comments for existing words:
 's-sf 's:oversize? d:set-stack-comment
 '- 'err:notfound d:set-stack-comment
 'a-a 'd:stack d:set-stack-comment
+'n- 'io:core d:set-stack-comment
 
 'D:_-c__A:_-__F:_- '$ d:set-stack-comment
 'D:_-s__A:_-__F:_- '' d:set-stack-comment

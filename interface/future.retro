@@ -4,13 +4,13 @@ This contains a variety of words from my more recent systems
 and things that will be standard in the future.
 
 ~~~
-:d:use-hashes
+:d:use-hashes (:-)
   &eq? &d:lookup #5 - store
   [ d:hash fetch ] &d:lookup #8 - store
   #2049 &d:lookup store
   &s:hash &d:lookup n:inc store ;
 
-:d:use-strings
+:d:use-strings (:-)
   &s:eq? &d:lookup #5 - store
   &d:name &d:lookup #8 - store
   #0 &d:lookup store
