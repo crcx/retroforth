@@ -20,14 +20,14 @@ an address to hold the dotted notation and a string containing the
 host name.
 
 ~~~
-:socket:gethostbyname (as-)    #0 socket:operation ;
+:socket:gethostbyname (:as-)    #0 socket:operation ;
 ~~~
 
 `socket:create` creates a new socket. It does not take any
 parameters, and returns the socket id.
 
 ~~~
-:socket:create        (-n)     #1 socket:operation ;
+:socket:create        (:-n)     #1 socket:operation ;
 ~~~
 
 `socket:bind` binds a socket to a port. The socket should be
@@ -36,7 +36,7 @@ string. This will return 0 if successful, -1 if not successful,
 and a host specific error code.
 
 ~~~
-:socket:bind          (sn-n)   #2 socket:operation ;
+:socket:bind          (:sn-n)   #2 socket:operation ;
 ~~~
 
 `socket:listen` prepares a socket for accepting incoming
@@ -44,21 +44,21 @@ connections. Takes a backlog count and a socket id. Returns
 a flag (0 success, -1 failed) and an error code.
 
 ~~~
-:socket:listen        (nn-nn)  #3 socket:operation ;
+:socket:listen        (:nn-nn)  #3 socket:operation ;
 ~~~
 
 `socket:accept` begins accepting connections on the provided
 socket id. Returns a new socket id and an error code.
 
 ~~~
-:socket:accept        (n-nn)   #4 socket:operation ;
+:socket:accept        (:n-nn)   #4 socket:operation ;
 ~~~
 
 `socket:connect` connects to a server. Provide a socket id,
 this will return a status flag and an error code.
 
 ~~~
-:socket:connect       (n-nn)   #5 socket:operation ;
+:socket:connect       (:n-nn)   #5 socket:operation ;
 ~~~
 
 `socket:send` sends a string to a socket. This will return
@@ -66,7 +66,7 @@ the number of characters sent and an error code. It takes a
 string and a socket id.
 
 ~~~
-:socket:send          (sn-nn)  #6 socket:operation ;
+:socket:send          (:sn-nn)  #6 socket:operation ;
 ~~~
 
 `socket:recv` is a wrapper over recv(2). It takes an address,
@@ -74,14 +74,14 @@ a maxmimum number of bytes to read, and a socket id. It returns
 the number of bytes received and an error code.
 
 ~~~
-:socket:recv          (ann-nn) #7 socket:operation ;
+:socket:recv          (:ann-nn) #7 socket:operation ;
 ~~~
 
 `socket:close` is a wrapper over close(2). It takes a socket id
 and closes the socket.
 
 ~~~
-:socket:close         (n-)     #8 socket:operation ;
+:socket:close         (:n-)     #8 socket:operation ;
 ~~~
 
 `socket:configure` is used before `socket:bind` to set some
@@ -89,7 +89,7 @@ internal state. Takes the host name and port, both as strings.
 Does not return anything.
 
 ~~~
-:socket:configure     (ss-)    #9 socket:operation ;
+:socket:configure     (:ss-)    #9 socket:operation ;
 ~~~
 
 # Source Data

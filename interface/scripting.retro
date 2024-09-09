@@ -40,19 +40,19 @@ Adds support for obtaining current source line text
       dup n:negative? [ drop 'Error:_scripting_device_not_found s:put nl ] if;
       io:invoke ;
 ---reveal---
-  :script:arguments (-n)             #0 script:operation ;
-  :script:get-argument (n-s) s:empty swap #1 script:operation ;
-  :include  (s-)                     #2 script:operation ;
-  :script:name (-s)          s:empty #3 script:operation ;
+  :script:arguments (:-n)             #0 script:operation ;
+  :script:get-argument (:n-s) s:empty swap #1 script:operation ;
+  :include  (:s-)                     #2 script:operation ;
+  :script:name (:-s)          s:empty #3 script:operation ;
 
-  :script:current-file (-s)  s:empty #4 script:operation ;
-  :script:current-line (-n)          #5 script:operation class:data ; immediate
-  :script:ignore-to-eol (-)          #6 script:operation ;
-  :script:abort-include (-)          #7 script:operation ;
+  :script:current-file (:-s)  s:empty #4 script:operation ;
+  :script:current-line (:-n)          #5 script:operation class:data ; immediate
+  :script:ignore-to-eol (:-)          #6 script:operation ;
+  :script:abort-include (:-)          #7 script:operation ;
 
-  :abort (-) &Compiler v:off         #8 script:operation ;
+  :abort (:-) &Compiler v:off         #8 script:operation ;
 
-  :script:current-line-text (-s) s:empty [ #9 script:operation ] sip ;
+  :script:current-line-text (:-s) s:empty [ #9 script:operation ] sip ;
 }}
 ~~~
 

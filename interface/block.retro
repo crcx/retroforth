@@ -15,9 +15,9 @@ The exposed word set is compact:
 {{
   :block:invoke DEVICE:BLOCKS io:scan-for io:invoke ;
 ---reveal---
-  :block:read  (na-)   #0 block:invoke ;
-  :block:write (na-)   #1 block:invoke ;
-  :block:set-file (s-) #2 block:invoke ;
+  :block:read  (:na-)   #0 block:invoke ;
+  :block:write (:na-)   #1 block:invoke ;
+  :block:set-file (:s-) #2 block:invoke ;
 }}
 ~~~
 
