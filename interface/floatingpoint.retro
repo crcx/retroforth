@@ -18,87 +18,87 @@ floating point device functionality, which on a Unix host
 maps closely to C and `libm`.
 
 ~~~
-:n:to-float  (n-_f:-n)   #0 float:operation ;
-:s:to-float  (s-_f:-n)   #1 float:operation ;
-:f:to-number (f:a-__-n)  #2 float:operation ;
-:f:to-string (f:n-__-s) s:empty dup #3 float:operation ;
-:f:+     (f:ab-c)    #4 float:operation ;
-:f:-     (f:ab-c)    #5 float:operation ;
-:f:*     (f:ab-c)    #6 float:operation ;
-:f:/     (f:ab-c)    #7 float:operation ;
-:f:floor (f:ab-c)    #8 float:operation ;
-:f:ceiling (f:f-f)   #9 float:operation ;
-:f:sqrt  (f:f-f)    #10 float:operation ;
-:f:eq?   (f:ab-c)   #11 float:operation ;
-:f:-eq?  (f:ab-c)   #12 float:operation ;
-:f:lt?   (f:ab-c)   #13 float:operation ;
-:f:gt?   (f:ab-c)   #14 float:operation ;
-:f:depth (-n)       #15 float:operation ;
-:f:dup   (f:a-aa)   #16 float:operation ;
-:f:drop  (f:a-)     #17 float:operation ;
-:f:swap  (f:ab-ba)  #18 float:operation ;
-:f:log   (f:ab-c)   #19 float:operation ;
-:f:power (f:ab-c)   #20 float:operation ;
-:f:sin   (f:f-f)    #21 float:operation ;
-:f:tan   (f:f-f)    #22 float:operation ;
-:f:cos   (f:f-f)    #23 float:operation ;
-:f:asin  (f:f-f)    #24 float:operation ;
-:f:acos  (f:f-f)    #25 float:operation ;
-:f:atan  (f:f-f)    #26 float:operation ;
-:f:push  (f:f-)     #27 float:operation ;
-:f:pop   (f:-f)     #28 float:operation ;
-:f:adepth  (-n)     #29 float:operation ;
+:n:to-float  (:n-_f:-n)   #0 float:operation ;
+:s:to-float  (:s-_f:-n)   #1 float:operation ;
+:f:to-number (:f:a-__-n)  #2 float:operation ;
+:f:to-string (:f:n-__-s) s:empty dup #3 float:operation ;
+:f:+     (:f:ab-c)    #4 float:operation ;
+:f:-     (:f:ab-c)    #5 float:operation ;
+:f:*     (:f:ab-c)    #6 float:operation ;
+:f:/     (:f:ab-c)    #7 float:operation ;
+:f:floor (:f:ab-c)    #8 float:operation ;
+:f:ceiling (:f:f-f)   #9 float:operation ;
+:f:sqrt  (:f:f-f)    #10 float:operation ;
+:f:eq?   (:f:ab-c)   #11 float:operation ;
+:f:-eq?  (:f:ab-c)   #12 float:operation ;
+:f:lt?   (:f:ab-c)   #13 float:operation ;
+:f:gt?   (:f:ab-c)   #14 float:operation ;
+:f:depth (:-n)       #15 float:operation ;
+:f:dup   (:f:a-aa)   #16 float:operation ;
+:f:drop  (:f:a-)     #17 float:operation ;
+:f:swap  (:f:ab-ba)  #18 float:operation ;
+:f:log   (:f:ab-c)   #19 float:operation ;
+:f:power (:f:ab-c)   #20 float:operation ;
+:f:sin   (:f:f-f)    #21 float:operation ;
+:f:tan   (:f:f-f)    #22 float:operation ;
+:f:cos   (:f:f-f)    #23 float:operation ;
+:f:asin  (:f:f-f)    #24 float:operation ;
+:f:acos  (:f:f-f)    #25 float:operation ;
+:f:atan  (:f:f-f)    #26 float:operation ;
+:f:push  (:f:f-)     #27 float:operation ;
+:f:pop   (:f:-f)     #28 float:operation ;
+:f:adepth  (:-n)     #29 float:operation ;
 ~~~
 
 Above this, additional functions are defined. First are words
 to aid in structuring the floating point stack.
 
 ~~~
-:f:over  (f:ab-aba) f:push f:dup f:pop f:swap ;
-:f:tuck  (f:ab-bab) f:dup f:push f:swap f:pop ;
-:f:nip   (f:ab-b)   f:swap f:drop ;
-:f:drop-pair (f:ab-) f:drop f:drop ;
-:f:dup-pair (f:ab-abab) f:over f:over ;
-:f:rot  (f:abc-bca)  f:push f:swap f:pop f:swap ;
+:f:over  (:f:ab-aba) f:push f:dup f:pop f:swap ;
+:f:tuck  (:f:ab-bab) f:dup f:push f:swap f:pop ;
+:f:nip   (:f:ab-b)   f:swap f:drop ;
+:f:drop-pair (:f:ab-) f:drop f:drop ;
+:f:dup-pair (:f:ab-abab) f:over f:over ;
+:f:rot  (:f:abc-bca)  f:push f:swap f:pop f:swap ;
 ~~~
 
 Then a word to allow creation of floating point values via a
 `.` sigil.
 
 ~~~
-:sigil:. (s-__f:-a)
+:sigil:. (:s-__f:-a)
   compiling? &s:keep &s:temp choose &s:to-float class:word ; immediate
 ~~~
 
 ~~~
-:f:square (f:n-m)   f:dup f:* ;
-:f:positive? (-f__f:a-) #0 n:to-float f:gt? ;
-:f:negative? (-f__f:a-) #0 n:to-float f:lt? ;
-:f:negate (f:a-b)  #-1 n:to-float f:* ;
-:f:abs    (f:a-b)  f:dup f:negative? &f:negate if ;
-:f:put  (f:a-) f:to-string s:put ;
+:f:square (:f:n-m)   f:dup f:* ;
+:f:positive? (:-f__f:a-) #0 n:to-float f:gt? ;
+:f:negative? (:-f__f:a-) #0 n:to-float f:lt? ;
+:f:negate (:f:a-b)  #-1 n:to-float f:* ;
+:f:abs    (:f:a-b)  f:dup f:negative? &f:negate if ;
+:f:put  (:f:a-) f:to-string s:put ;
 
-:f:PI   (f:-F) .3.141592654 ;
-:f:E    (f:-F) .2.718281828 ;
-:f:NAN  (f:-n) .0 .0 f:/ ;
-:f:INF  (f:-n) .1.0 .0 f:/ ;
-:f:-INF (f:-n) .-1.0 .0 f:/ ;
-:f:nan? (f:n-,-f)  f:dup f:-eq? ;
-:f:inf? (f:n-,-f)  f:INF f:eq? ;
-:f:-inf? (f:n-,-f) f:-INF f:eq? ;
-:f:round (-|f:a-b)
+:f:PI   (:f:-F) .3.141592654 ;
+:f:E    (:f:-F) .2.718281828 ;
+:f:NAN  (:f:-n) .0 .0 f:/ ;
+:f:INF  (:f:-n) .1.0 .0 f:/ ;
+:f:-INF (:f:-n) .-1.0 .0 f:/ ;
+:f:nan? (:f:n-,-f)  f:dup f:-eq? ;
+:f:inf? (:f:n-,-f)  f:INF f:eq? ;
+:f:-inf? (:f:n-,-f) f:-INF f:eq? ;
+:f:round (:-|f:a-b)
   f:dup f:negative?
   [ .0.5 f:- f:ceiling ]
   [ .0.5 f:+ f:floor   ] choose ;
-:f:min   (f:nn-n)  f:dup-pair f:lt? &f:drop &f:nip choose ;
-:f:max   (f:nn-n)  f:dup-pair f:gt? &f:drop &f:nip choose ;
-:f:limit (f:nlu-n) f:swap f:push f:min f:pop f:max ;
-:f:between? (f:nlu-n) f:rot f:dup f:push f:rot f:rot f:limit f:pop f:eq? ;
-:f:inc   (f:n-n)   .1 f:+ ;
-:f:dec   (f:n-n)   .1 f:- ;
-:f:case  (f:ff-,q-)
+:f:min   (:f:nn-n)  f:dup-pair f:lt? &f:drop &f:nip choose ;
+:f:max   (:f:nn-n)  f:dup-pair f:gt? &f:drop &f:nip choose ;
+:f:limit (:f:nlu-n) f:swap f:push f:min f:pop f:max ;
+:f:between? (:f:nlu-n) f:rot f:dup f:push f:rot f:rot f:limit f:pop f:eq? ;
+:f:inc   (:f:n-n)   .1 f:+ ;
+:f:dec   (:f:n-n)   .1 f:- ;
+:f:case  (:f:ff-,q-)
   f:over f:eq? [ f:drop call #-1 ] [ drop #0 ] choose 0; pop drop-pair ;
-:f:sign (-n|f:a-)
+:f:sign (:-n|f:a-)
   f:dup .0 f:eq? [ #0 f:drop ] if;
   .0 f:gt? [ #1 ] [ #-1 ] choose ;
 ~~~
@@ -130,14 +130,14 @@ n:MAX n:negate       'e:-INF const
 ~~~
 
 ~~~
-:e:n?    (u-f) e:MIN n:inc e:MAX n:dec n:between? ;
-:e:max?  (u-f) e:MAX   eq? ;
-:e:min?  (u-f) e:MIN   eq? ;
-:e:zero? (u-f) n:zero?     ;
-:e:nan?  (u-f) e:NAN   eq? ;
-:e:inf?  (u-f) e:INF   eq? ;
-:e:-inf? (u-f) e:-INF  eq? ;
-:e:clip  (u-u) e:MIN e:MAX n:limit ;
+:e:n?    (:u-f) e:MIN n:inc e:MAX n:dec n:between? ;
+:e:max?  (:u-f) e:MAX   eq? ;
+:e:min?  (:u-f) e:MIN   eq? ;
+:e:zero? (:u-f) n:zero?     ;
+:e:nan?  (:u-f) e:NAN   eq? ;
+:e:inf?  (:u-f) e:INF   eq? ;
+:e:-inf? (:u-f) e:-INF  eq? ;
+:e:clip  (:u-u) e:MIN e:MAX n:limit ;
 ~~~
 
 Since 32-bit cells take about 9 decimal digits, if you set
@@ -152,9 +152,9 @@ Encode/decode words to secure dynamic range. This portion
 is the essence of the method.
 
 ~~~
-:f:E1 (-|f:-n)_e-unit_in_float  hook .1.e5 ; (decimal_digits_to_shift_left
-:f:signed-sqrt   (|f:n-n) f:dup f:sign  f:abs f:sqrt n:to-float f:* ;
-:f:signed-square (|f:n-n) f:dup f:sign  f:dup f:*    n:to-float f:* ;
+:f:E1 (:-|f:-n)_e-unit_in_float  hook .1.e5 ; (decimal_digits_to_shift_left
+:f:signed-sqrt   (:|f:n-n) f:dup f:sign  f:abs f:sqrt n:to-float f:* ;
+:f:signed-square (:|f:n-n) f:dup f:sign  f:dup f:*    n:to-float f:* ;
 ~~~
 
 Deal with special cases.
@@ -166,7 +166,7 @@ Deal with special cases.
   :f:+encode     (|f:n-n) f:signed-sqrt f:-shift ;
   :f:-encode     (|f:n-n) f:dup f:sign  f:+shift f:dup f:*  n:to-float f:* ;
 ---reveal---
-  :f:to-e (-e|f:n-)
+  :f:to-e (:-e|f:n-)
     f:dup f:nan?  [ f:drop e:NAN  ] if;
     f:dup f:inf?  [ f:drop e:INF  ] if;
     f:dup f:-inf? [ f:drop e:-INF ] if;
@@ -174,7 +174,7 @@ Deal with special cases.
     e:MIN         &f:drop           case
     e:MAX         &f:drop           case ;
 
-  :e:to-f (e-|f:-n)
+  :e:to-f (:e-|f:-n)
     e:NAN  &f:NAN  case
     e:INF  &f:INF  case
     e:-INF &f:-INF case
@@ -183,21 +183,21 @@ Deal with special cases.
 ~~~
 
 ~~~
-:f:store (a-|f:n-) &f:to-e dip store ;
-:f:fetch (a-|f:-n) fetch e:to-f ;
+:f:store (:a-|f:n-) &f:to-e dip store ;
+:f:fetch (:a-|f:-n) fetch e:to-f ;
 ~~~
 
 ~~~
-:f:dump-stack  (-)
+:f:dump-stack  (:-)
   f:depth dup &f:push times
               [ f:pop f:dup f:put sp ] times ;
-:f:dump-astack (-)
+:f:dump-astack (:-)
   f:adepth dup &f:pop times
                [ f:dup f:put sp f:push ] times ;
 ~~~
 
 ~~~
-:e:put (e-)
+:e:put (:e-)
   e:MAX  [ 'e:MAX  s:put ] case
   e:MIN  [ 'e:MIN  s:put ] case
   #0     [ 'e:0    s:put ] case
