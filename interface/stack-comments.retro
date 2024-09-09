@@ -16,7 +16,7 @@ comment format this introduces to add them inline.
   d:lookup nl
   dup 'Name:____ s:put d:name s:put nl
   dup 'Address:_ s:put d:xt fetch n:put nl
-  dup 'Class:___ s:put d:class fetch n:put nl
+  dup 'Class:___ s:put d:class fetch dup n:put d:lookup-xt dup n:-zero? [ sp d:name s:put ] &drop choose nl
   dup 'Source:__ s:put d:source fetch dup n:-zero? &s:put &drop choose nl
   dup 'Stack:___ s:put d:stack fetch dup n:-zero? &s:put &drop choose nl
   drop ;
