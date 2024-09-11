@@ -24,7 +24,7 @@
 #endif
 
 #define KiB * 1024
-#define MAX_NAMES 1024
+#define MAX_NAMES 4096
 #define STRING_LEN 64
 
 #ifndef IMAGE_SIZE

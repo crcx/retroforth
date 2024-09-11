@@ -6,7 +6,7 @@ comment format this introduces to add them inline.
 ~~~
 {{
   :save (s-)
-     n:inc s:chop here swap s:keep |drop #2 + d:last.name n:dec store ;
+     n:inc s:chop here swap s:keep |drop #2 + d:last.name #4 - store ;
   :stack-comment? (s-sf) dup #0 s:fetch $: eq? ;
 ---reveal---
   :sigil:( stack-comment? &save &drop choose ; immediate
@@ -14,11 +14,14 @@ comment format this introduces to add them inline.
 
 :d:describe (:s-)
   d:lookup nl
-  dup 'Name:____ s:put d:name s:put nl
-  dup 'Address:_ s:put d:xt fetch n:put nl
-  dup 'Class:___ s:put d:class fetch dup n:put d:lookup-xt dup n:-zero? [ sp d:name s:put ] &drop choose nl
-  dup 'Source:__ s:put d:source fetch dup n:-zero? &s:put &drop choose nl
-  dup 'Stack:___ s:put d:stack fetch dup n:-zero? &s:put &drop choose nl
+  dup 'Name:_____ s:put d:name   s:put nl
+  dup 'Address:__ s:put d:xt     fetch n:put nl
+  dup 'Class:____ s:put d:class  fetch dup n:put d:lookup-xt dup n:-zero? [ sp d:name s:put ] &drop choose nl
+  dup 'Source:___ s:put d:source fetch dup n:-zero? &s:put &drop choose nl
+  dup 'Stack:____ s:put d:stack  fetch dup n:-zero? &s:put &drop choose nl
+  dup 'A._Stack:_ s:put d:astack fetch dup n:-zero? &s:put &drop choose nl
+  dup 'Float:____ s:put d:fstack fetch dup n:-zero? &s:put &drop choose nl
+  dup 'Descr:____ s:put d:descr  fetch dup n:-zero? &s:put &drop choose nl
   drop ;
 
 :d:set-stack-comment (:ss-)
@@ -28,13 +31,13 @@ comment format this introduces to add them inline.
 Add the stack comments for existing words:
 
 ~~~
-'ss- 'd:set-source d:set-stack-comment
-'n-s 'n:to-string/reversed d:set-stack-comment
-'s-s 's:truncate d:set-stack-comment
+'ss-  'd:set-source d:set-stack-comment
+'n-s  'n:to-string/reversed d:set-stack-comment
+'s-s  's:truncate d:set-stack-comment
 's-sf 's:oversize? d:set-stack-comment
-'- 'err:notfound d:set-stack-comment
-'a-a 'd:stack d:set-stack-comment
-'n- 'io:core d:set-stack-comment
+'-    'err:notfound d:set-stack-comment
+'a-a  'd:stack d:set-stack-comment
+'n-   'io:core d:set-stack-comment
 
 'D:_-c__A:_-__F:_- '$ d:set-stack-comment
 'D:_-s__A:_-__F:_- '' d:set-stack-comment

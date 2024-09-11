@@ -36,7 +36,10 @@
 #define D_OFFSET_SOURCE   3
 #define D_OFFSET_HASH     4
 #define D_OFFSET_STACK    5
-#define D_OFFSET_NAME     6
+#define D_OFFSET_RSTACK   6
+#define D_OFFSET_FSTACK   7
+#define D_OFFSET_DESCR    8
+#define D_OFFSET_NAME     9
 
 
 /* These settings can be overridden at compile time. */

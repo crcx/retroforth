@@ -17,7 +17,7 @@ const
   D_OFFSET_LINK  = 0;
   D_OFFSET_XT    = 1;
   D_OFFSET_CLASS = 2;
-  D_OFFSET_NAME  = 6;
+  D_OFFSET_NAME  = 9;
   TIB            = 1471;
 
 var
