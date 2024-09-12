@@ -82,10 +82,11 @@ install-manpages:
 
 # Toolchain ----------------------------------------------------
 
-bin/retro-describe: tools/retro-describe.retro doc/words.tsv
-	@cat tools/retro-describe.retro > bin/retro-describe
-	@cat doc/words.tsv >> bin/retro-describe
-	@chmod +x bin/retro-describe
+bin/retro-describe: tools/retro-describe.retro
+	@cp tools/retro-describe.retro bin/retro-describe
+#	@cat tools/retro-describe.retro > bin/retro-describe
+#	@cat doc/words.tsv >> bin/retro-describe
+#	@chmod +x bin/retro-describe
 
 bin/retro-embedimage: tools/retro-embedimage.c
 	@$(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o $@ $>
