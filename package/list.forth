@@ -15,7 +15,7 @@ data for words, and record this as part of the header.
   :record (s-s)  s:keep dup &Sources v:inc
                  @Sources &Sources + store ;
 
-  [ script:current-file known? [ index ] [ record ] choose
+  [ script:current-file known? &index &record choose
     [ &d:add-header #2 + call ] dip
     d:last d:source store
     d:last d:name @d:Hash-Function call d:last d:hash store
