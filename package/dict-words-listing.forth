@@ -36,3 +36,11 @@ deal with this, `d:words-beginning-with` is provided.
     here s:copy [ d:name display-if-left ] d:for-each ;
 }}
 ~~~
+
+~~~
+:d:words-missing-details (:-)
+  'D.Stack: s:put nl [ dup d:stack fetch n:zero? [ d:name s:put sp ] &drop choose ] d:for-each nl
+  'A.Stack: s:put nl [ dup d:astack fetch n:zero? [ d:name s:put sp ] &drop choose ] d:for-each nl
+  'F.Stack: s:put nl [ dup d:fstack fetch n:zero? [ d:name s:put sp ] &drop choose ] d:for-each nl
+  'Desc:    s:put nl [ dup d:descr fetch n:zero? [ d:name s:put sp ] &drop choose ] d:for-each nl ;
+~~~

@@ -6,7 +6,7 @@ each of the provided words are found in.
 ## Standard Library
 
 ~~~
-:d:set-source (ss-) &s:dedup dip d:lookup d:source store ;
+:d:set-source (:ss-) &s:dedup dip d:lookup d:source store ;
 'interface/sources.retro 'd:set-source d:set-source
 ~~~
 

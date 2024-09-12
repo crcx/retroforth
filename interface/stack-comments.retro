@@ -13,7 +13,7 @@ comment format this introduces to add them inline.
 }}
 
 :d:describe (:s-)
-  d:lookup nl
+  d:lookup 0; nl
   dup 'Name:_____ s:put d:name   s:put nl
   dup 'Address:__ s:put d:xt     fetch n:put nl
   dup 'Class:____ s:put d:class  fetch dup n:put d:lookup-xt dup n:-zero? [ sp d:name s:put ] &drop choose nl
