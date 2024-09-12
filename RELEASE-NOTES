@@ -46,6 +46,7 @@
   - stack comments & descriptions are now part of the standard
     system image
   - add `d:words-missing-details`
+  - add `describe`
 
 - library
 
