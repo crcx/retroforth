@@ -26,9 +26,20 @@ comment format this introduces to add them inline.
 
 :d:set-stack-comment (:ss-)
   d:lookup dup n:-zero? [ d:stack &s:keep dip store ] &drop-pair choose ;
+
+:d:set-astack-comment (:ss-)
+  d:lookup dup n:-zero? [ d:astack &s:keep dip store ] &drop-pair choose ;
+
+:d:set-fstack-comment (:ss-)
+  d:lookup dup n:-zero? [ d:fstack &s:keep dip store ] &drop-pair choose ;
 ~~~
 
 Add the stack comments for existing words:
+
+~~~
+'n- 'pop d:set-astack-comment
+'-n 'push d:set-astack-comment
+~~~
 
 ~~~
 'ss-  'd:set-source d:set-stack-comment

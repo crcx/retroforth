@@ -298,3 +298,73 @@ dup 'float:operation d:set-source
 drop
 ~~~
 
+Add float stack effects.
+
+~~~
+'-n 'e:to-f d:set-fstack-comment
+'FF-F 'f:* d:set-fstack-comment
+'FF-F 'f:+ d:set-fstack-comment
+'FF-F 'f:- d:set-fstack-comment
+'-n 'f:-INF d:set-fstack-comment
+'FF- 'f:-eq? d:set-fstack-comment
+'F- 'f:-inf? d:set-fstack-comment
+'FF-F 'f:/ d:set-fstack-comment
+'-F 'f:E d:set-fstack-comment
+'-f 'f:E1 d:set-fstack-comment
+'-n 'f:INF d:set-fstack-comment
+'-n 'f:NAN d:set-fstack-comment
+'-F 'f:PI d:set-fstack-comment
+'F-F 'f:abs d:set-fstack-comment
+'F-F 'f:acos d:set-fstack-comment
+'F-F 'f:asin d:set-fstack-comment
+'F-F 'f:atan d:set-fstack-comment
+'nlu- 'f:between? d:set-fstack-comment
+'nm-n 'f:case d:set-fstack-comment
+'F-F 'f:ceiling d:set-fstack-comment
+'F-F 'f:cos d:set-fstack-comment
+'n-m 'f:dec d:set-fstack-comment
+'F- 'f:drop d:set-fstack-comment
+'FF- 'f:drop-pair d:set-fstack-comment
+'F-FF 'f:dup d:set-fstack-comment
+'nm-nmnm 'f:dup-pair d:set-fstack-comment
+'FF- 'f:eq? d:set-fstack-comment
+'-n 'f:fetch d:set-fstack-comment
+'F-F 'f:floor d:set-fstack-comment
+'FF- 'f:gt? d:set-fstack-comment
+'n-m 'f:inc d:set-fstack-comment
+'F- 'f:inf? d:set-fstack-comment
+'nlu-m 'f:limit d:set-fstack-comment
+'FF-F 'f:log d:set-fstack-comment
+'FF- 'f:lt? d:set-fstack-comment
+'mn-o 'f:max d:set-fstack-comment
+'mn-o 'f:min d:set-fstack-comment
+'F- 'f:nan? d:set-fstack-comment
+'F-F 'f:negate d:set-fstack-comment
+'F- 'f:negative? d:set-fstack-comment
+'NM-M 'f:nip d:set-fstack-comment
+'FG-FGF 'f:over d:set-fstack-comment
+'-F 'f:pop d:set-fstack-comment
+'F- 'f:positive? d:set-fstack-comment
+'FF-F 'f:power d:set-fstack-comment
+'F- 'f:push d:set-fstack-comment
+'F- 'f:put d:set-fstack-comment
+'abc-bca 'f:rot d:set-fstack-comment
+'f-f 'f:round d:set-fstack-comment
+'F- 'f:sign d:set-fstack-comment
+'F-F 'f:signed-sqrt d:set-fstack-comment
+'f-f 'f:signed-square d:set-fstack-comment
+'F-F 'f:sin d:set-fstack-comment
+'F-F 'f:sqrt d:set-fstack-comment
+'f-f 'f:square d:set-fstack-comment
+'n- 'f:store d:set-fstack-comment
+'FG-GF 'f:swap d:set-fstack-comment
+'F-F 'f:tan d:set-fstack-comment
+'n- 'f:to-e d:set-fstack-comment
+'F- 'f:to-number d:set-fstack-comment
+'F- 'f:to-string d:set-fstack-comment
+'FG-GFG 'f:tuck d:set-fstack-comment
+'-F 'n:to-float d:set-fstack-comment
+'-? 's:evaluate d:set-fstack-comment
+'-F 's:to-float d:set-fstack-comment
+'-F 'sigil:. d:set-fstack-comment
+~~~
