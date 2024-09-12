@@ -41,6 +41,8 @@
   - `sigil:(` extended to store stack comments (with a form of
     `(:comment)`
   - add `d:describe`
+  - stack comments & descriptions are now part of the standard
+    system image
 
 - library
 

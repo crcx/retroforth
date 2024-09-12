@@ -92,6 +92,7 @@ DEVICES += interface/error.retro
 DEVICES += interface/ioctl.retro
 DEVICES += interface/final.retro
 DEVICES += interface/library.retro
+DEVICES += interface/descriptions.retro
 
 # -------------------------------------------------------------
 
