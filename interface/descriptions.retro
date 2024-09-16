@@ -3,9 +3,10 @@
   d:lookup dup n:-zero? [ d:descr &s:keep dip store ] &drop-pair choose ;
 'add_a_description_to_a_word 'd:set-description d:set-description
 
-:describe (:s-)
+:add-description (:s-)
   s:keep d:last d:descr store ;
-  'add_a_description_for_the_most_recently_defined_word describe
+  'add_a_description_for_the_most_recently_defined_word
+  add-description
 ~~~
 
 ~~~

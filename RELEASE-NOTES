@@ -46,13 +46,17 @@
   - stack comments & descriptions are now part of the standard
     system image
   - add `d:words-missing-details`
-  - add `describe`
+  - add `add-description`
 
 - library
 
   - added "tob", a text output buffer
   - added "c:get/ext", for reading keys and returning unique
     codes for arrows
+  - added "openbsd", for interacting with an openbsd-specific
+    i/o extension
+    - adds "openbsd:pledge"
+    - adds "openbsd:unveil"
 
 - retro-compiler
 
