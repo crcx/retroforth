@@ -77,8 +77,8 @@ fixed at 80 columns; the height is set based on the terminal
 height.
 
 ~~~
-#80       'TOB:W const
-LT:H #2 - 'TOB:H const
+#80       'TOB:W const (:-n)
+LT:H #2 - 'TOB:H const (:-n)
 ~~~
 
 Load dependencies from the library.
@@ -90,10 +90,10 @@ Load dependencies from the library.
 # Configure UI Colors
 
 ~~~
-:dss:label  (-) fg:red  ;
-:dss:value  (-) fg:yellow ;
-:dss:sep    (-) fg:cyan ;
-:dss:prompt (-) bg:blue fg:white ;
+:dss:label  (:-) fg:red  ;
+:dss:value  (:-) fg:yellow ;
+:dss:sep    (:-) fg:cyan ;
+:dss:prompt (:-) bg:blue fg:white ;
 ~~~
 
 # Utilities
@@ -101,12 +101,8 @@ Load dependencies from the library.
 I intend for takawiri to provide a variety of useful tools to
 aid in using RetroForth interactively.
 
-This word provides access to retro-describe(1).
-
 ~~~
-:describe (s-)
-  'retro-describe_"%s" s:format file:R unix:popen
-  [ dup file:read dup c:put n:zero? ] until unix:pclose ;
+:,stack (:s-) d:lookup d:stack fetch s:put nl ;
 ~~~
 
 # UI
@@ -114,17 +110,17 @@ This word provides access to retro-describe(1).
 First are words to display the text output buffer.
 
 ~~~
-:bar:right   (-) dss:sep TOB:H n:inc [ I n:inc TOB:W #2 n:add vt:row,col $| c:put ] indexed-times vt:reset ;
-:bar:bottom  (-) dss:sep TOB:H n:inc #1 vt:row,col TOB:W n:inc [ $= c:put ] times $+ c:put vt:reset ;
-:display:tob (-) tob:display bar:right bar:bottom ;
+:bar:right   (:-) dss:sep TOB:H n:inc [ I n:inc TOB:W #2 n:add vt:row,col $| c:put ] indexed-times vt:reset ;
+:bar:bottom  (:-) dss:sep TOB:H n:inc #1 vt:row,col TOB:W n:inc [ $= c:put ] times $+ c:put vt:reset ;
+:display:tob (:-) tob:display bar:right bar:bottom ;
 ~~~
 
 Draw the section separators.
 
 ~~~
-:length (-n) LT:W TOB:W #4 n:add n:sub ;
-:---    (n-) [ $- c:put ] times sp ;
-:sections (-)
+:length (:-n) LT:W TOB:W #4 n:add n:sub ;
+:---    (:n-) [ $- c:put ] times sp ;
+:sections (:-)
   dss:sep
   #3 [ I n:inc #6 n:mul TOB:W #4 n:add vt:row,col length --- ]
   indexed-times
@@ -134,8 +130,8 @@ Draw the section separators.
 ~~~
 'Items d:create #0 comma #32 allot
 
-:tos? over n:zero? ;
-:dss
+:tos? (:nm-nmf) over n:zero? ;
+:dss (:-)
   [ depth #5 n:min !Items
   &Items fetch-next &store-next times drop
   &Items a:reverse [ ] a:for-each
@@ -177,17 +173,17 @@ is done.
     over n:inc #12 n:add #84 vt:row,col
     fg:blue '_______n/a s:put drop vt:reset ;
 ---reveal---
-  :strings (-)
+  :strings (:-)
     #0 &Items [ string? &display &not-string choose n:inc  ]
     a:for-each drop ;
 }}
 ~~~
 
 ~~~
-:layout:stat,col (-n) #84 ;
-:layout:stat     (sn-) layout:stat,col vt:row,col dss:label s:put dss:value ;
+:layout:stat,col (:-n) #84 ;
+:layout:stat     (:sn-) layout:stat,col vt:row,col dss:label s:put dss:value ;
 
-:stats
+:stats (:-)
   'HERE:__ #1 layout:stat here n:put
   'FREE:__ #2 layout:stat FREE n:put
   'DEPTH:_ #3 layout:stat depth n:put
@@ -196,15 +192,15 @@ is done.
   vt:reset
 ;
 
-:prompt (-)
+:prompt (:-)
   dss:prompt
   LT:H #1 vt:row,col LT:W [ sp ] times
   LT:H #1 vt:row,col '>>_ s:put ;
 ~~~
 
 ~~~
-:quit ioctl:set-lbreak vt:reset bye ;
-:bye quit ;
+:quit (:-) ioctl:set-lbreak vt:reset bye ;
+:bye  (:-) quit ;
 ~~~
 
 # Watchlist
@@ -220,27 +216,27 @@ do something like:
 'Watchlist       d:create #5 , #-1 , #-1 , #-1 , #-1 , #-1 ,
 'WatchlistLabels d:create #5 , #-1 , #-1 , #-1 , #-1 , #-1 ,
 
-:watchlist:find (a-n)
+:watchlist:find (:a-n)
   dup &Watchlist a:contains? [ drop #-1 ] -if;
   &Watchlist swap a:index ;
 
-:watchlist:make-label (s-s)
+:watchlist:make-label (:s-s)
   dup s:length #8 gt? [ #8 s:left ] if
   dup s:length #8 lt?
     [ dup s:length #8 swap n:sub [ '_ s:append ] times ] if
   s:keep ;
 
-:watch (as-)
+:watch (:as-)
   watchlist:make-label
   #-1 watchlist:find &Watchlist &WatchlistLabels
   'abcde 'adcbec reorder a:store a:store ;
 
-:unwatch (a-)
+:unwatch (:a-)
   watchlist:find dup n:positive? &drop -if
   [ &Watchlist       #-1 'abc 'acab reorder a:store ]
   [ &WatchlistLabels #-1 'abc 'acab reorder a:store ] bi ;
 
-:watchlist (-)
+:watchlist (:-)
   #19 #5 [ dup #84 vt:row,col
         dss:label &WatchlistLabels over #19 n:sub a:fetch
           dup #-1 -eq? [ s:put sp ] [ drop '_________ s:put ] choose
@@ -250,7 +246,7 @@ do something like:
 ~~~
 
 ~~~
-:ui
+:ui (:-)
   &err:notfound unhook
   ioctl:set-cbreak
   &banner tob:with
