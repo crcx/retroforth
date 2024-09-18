@@ -1,29 +1,29 @@
 ~~~
-:pixel (xyc-)     #33 io:scan-for io:invoke ;
-:get-pixel (xy-c) #34 io:scan-for io:invoke ;
-:mouse (-xyb)     #35 io:scan-for io:invoke ;
+:pixel (:xyc-)     #33 io:scan-for io:invoke ;
+:get-pixel (:xy-c) #34 io:scan-for io:invoke ;
+:mouse (:-xyb)     #35 io:scan-for io:invoke ;
 
-:hline (xyw-)
+:hline (:xyw-)
   [ dup-pair #1 pixel &n:inc dip ] times drop-pair ;
 
-:vline (xyh-)
+:vline (:xyh-)
   [ dup-pair #1 pixel n:inc ] times drop-pair ;
 
-:dline\ (xyl-)
+:dline\ (:xyl-)
   [ dup-pair #1 pixel &n:inc bi@ ] times drop-pair ;
 
-:dline/ (xyl-)
+:dline/ (:xyl-)
   [ dup-pair #1 pixel &n:dec &n:inc bi* ] times drop-pair ;
 
 'X var 'Y var 'H var 'W var
 
-:rect (xyhw-) !W !H !Y !X
+:rect (:xyhw-) !W !H !Y !X
   @X @Y @W hline   @X @Y @H n:add @W hline
   @X @Y @H vline   @X @W n:add @Y @H vline ;
 
 'XC var 'YC var 'X var 'Y var
 
-:octant (xc,yc,x,y)
+:octant (:xc,yc,x,y)
   !Y !X !YC !XC
   @XC @X n:add @YC @Y n:add #1 pixel
   @XC @X n:sub @YC @Y n:add #1 pixel
@@ -36,7 +36,7 @@
 
 'XC var 'YC var 'X var 'Y var 'D var 'R var
 
-:circle (xyr-)
+:circle (:xyr-)
   !R !YC !XC  #0 !X  @R [ !Y ] [ !D ] bi
   @XC @YC @X @Y octant
   [ &X v:inc
@@ -55,8 +55,8 @@
 :t:right [ &X v:inc ] !D ;
 :t:up [ &Y v:dec ] !D ;
 :t:down [ &Y v:inc ] !D ;
-:t:at (xy-) !Y !X ;
-:t:forward (n-) [ @X @Y @C pixel @D call ] times ;
+:t:at (:xy-) !Y !X ;
+:t:forward (:n-) [ @X @Y @C pixel @D call ] times ;
 
 #320 #240 t:at t:lower t:right
 

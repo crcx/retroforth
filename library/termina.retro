@@ -2,19 +2,19 @@
 #74 'ti:width  var-n
 #21 'ti:height var-n
 
-:vt:esc (-) #27 c:put ;
-:vt:csi (-) vt:esc $[ c:put ;
+:vt:esc (:-) #27 c:put ;
+:vt:csi (:-) vt:esc $[ c:put ;
 
-:vt:home  (-) vt:csi $H c:put ;
-:vt:row,col (nn-) vt:csi swap n:put $; c:put n:put $H c:put ;
-:vt:up    (-) vt:csi n:put $A c:put ;
-:vt:down  (-) vt:csi n:put $B c:put ;
-:vt:right (-) vt:csi n:put $C c:put ;
-:vt:left  (-) vt:csi n:put $D c:put ;
-:vt:clear (-) vt:csi '2J s:put ;
+:vt:home  (:-) vt:csi $H c:put ;
+:vt:row,col (:nn-) vt:csi swap n:put $; c:put n:put $H c:put ;
+:vt:up    (:-) vt:csi n:put $A c:put ;
+:vt:down  (:-) vt:csi n:put $B c:put ;
+:vt:right (:-) vt:csi n:put $C c:put ;
+:vt:left  (:-) vt:csi n:put $D c:put ;
+:vt:clear (:-) vt:csi '2J s:put ;
 :vt:reset vt:csi '0m s:put ;
 
-:vt:set/color (n-) vt:csi '1;34; s:put n:put $m c:put ;
+:vt:set/color (:n-) vt:csi '1;34; s:put n:put $m c:put ;
 
 :fg:black   #30 vt:set/color ;  :bg:black   #40 vt:set/color ;
 :fg:red     #31 vt:set/color ;  :bg:red     #41 vt:set/color ;
@@ -27,17 +27,17 @@
 
 'ti:Actions d:create #128 comma #128 allot
 
-:ti:set-action (qc-) &ti:Actions swap a:store ;
+:ti:set-action (:qc-) &ti:Actions swap a:store ;
 
-:ti:reset-actions (-)
+:ti:reset-actions (:-)
   #128 [ #0 I ti:set-action ] indexed-times ;
 
-:ti:get-action (c-q) &ti:Actions swap a:fetch ;
+:ti:get-action (:c-q) &ti:Actions swap a:fetch ;
 
-:ti:perform-action (c-)
+:ti:perform-action (:c-)
   ti:get-action dup n:-zero? &call &drop choose ;
 
-:ti:input (-) c:get ti:perform-action ;
+:ti:input (:-) c:get ti:perform-action ;
 
 {{
  'ti:Hints d:create #130 allot :empty  (-s)  '____________ ;
@@ -49,9 +49,9 @@
                   dup n:put sp start s:put sp ;
  :clean     (-)   '_ s:temp constrain pad I start #13 copy ;
 ---reveal---
- :ti:add-hint (sn-)
+ :ti:add-hint (:sn-)
    #13 n:mul &ti:Hints n:add [ constrain pad ] dip #13 copy ;
- :ti:reset-hints (-) #10 &clean indexed-times ;
+ :ti:reset-hints (:-) #10 &clean indexed-times ;
  :ti:hints  #10 [ display I #4 eq? &nl if ] indexed-times ;
 }}
 
@@ -59,22 +59,22 @@
 
 &ti:display/none 'ti:Display var-n
 
-:ti:set-display (a-) !ti:Display ;
+:ti:set-display (:a-) !ti:Display ;
 
-:ti:reset-display (-) &ti:display/none ti:set-display ;
+:ti:reset-display (:-) &ti:display/none ti:set-display ;
 
-:ti:display (-)
+:ti:display (:-)
   vt:home @ti:Display call
   @ti:height #3 n:sub #0 vt:row,col @ti:width [ $- c:put ] times
   nl ti:hints nl ;
 
 'ti:ptrs d:create #0 comma #5 allot
-:ti:add-program (a-) &ti:ptrs v:inc &ti:ptrs @ti:ptrs a:store ;
-:ti:current (-a) &ti:ptrs @ti:ptrs a:fetch ;
-:ti:more? (-f) @ti:ptrs n:-zero? ;
+:ti:add-program (:a-) &ti:ptrs v:inc &ti:ptrs @ti:ptrs a:store ;
+:ti:current (:-a) &ti:ptrs @ti:ptrs a:fetch ;
+:ti:more? (:-f) @ti:ptrs n:-zero? ;
 :ti:remove &ti:ptrs v:dec ;
 
-:ti:load (-)
+:ti:load (:-)
   ti:current call
   !ti:Display ti:reset-hints call ti:reset-actions call ;
 
@@ -82,10 +82,10 @@
 :ti:done #-1 !ti:Done vt:reset nl ;
 :ti:done? @ti:Done ;
 
-:ti:application/run (-)
+:ti:application/run (:-)
   [ #0 !ti:Done ti:display ti:input ti:done? ] until
   ti:remove ti:more? [ ti:load #0 !ti:Done ] if ;
 
-:ti:application (q-)
+:ti:application (:q-)
   ti:add-program ti:load ti:application/run ;
 ~~~
