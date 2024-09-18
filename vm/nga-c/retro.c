@@ -29,6 +29,8 @@
 #include "config.h"
 #include "devices.h"
 
+#include "utf32.c"
+
 #define ACTIVE vm->cpu[vm->active]
 #define TIB vm->memory[7]
 #define TIB_END vm->memory[8]
