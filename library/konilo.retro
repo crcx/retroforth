@@ -17,12 +17,12 @@ placed in the `n:` namespace. (In Konilo, these are the standard
 names for these).
 
 ~~~
-:n:add    + ;
-:n:sub    - ;
-:n:mul    * ;
-:n:div    / ;
-:n:mod    mod ;
-:n:divmod /mod ;
+:n:add    (:nn-n) + ;
+:n:sub    (:nn-n) - ;
+:n:mul    (:nn-n) * ;
+:n:div    (:nn-nn) / ;
+:n:mod    (:nn-n) mod ;
+:n:divmod (:nn-n) /mod ;
 
-:comma    , ;
+:comma    (:n-) , ;
 ~~~

@@ -58,14 +58,14 @@ them for an 80x25 display.
   #13  [ #0 !TX &TY v:inc ] case
   &TOB TOB:W @TY n:mul n:add @TX n:add store &TX v:inc ;
 
-:tob:put (c-) handle advance-cursor ;
+:tob:put (:c-) handle advance-cursor ;
 
 :tob:display
   &TOB TOB:H [ TOB:W [ fetch-next c:put ] times nl ] times drop ;
 
-:tob:with (q-) &tob:put &c:put set-hook call &c:put unhook ;
+:tob:with (:q-) &tob:put &c:put set-hook call &c:put unhook ;
 
-:tob:clear (-)
+:tob:clear (:-)
   TOB:W TOB:H n:mul [ #32 tob:put ] times #0 !TX #0 !TY ;
 
 tob:clear

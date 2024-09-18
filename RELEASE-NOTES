@@ -57,6 +57,7 @@
     i/o extension
     - adds "openbsd:pledge"
     - adds "openbsd:unveil"
+  - remove "describe.retro"
 
 - retro-compiler
 

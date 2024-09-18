@@ -15,8 +15,8 @@ This begins by using these to implement the `block:load` and
 ~~~
 'ilo.blocks block:set-file
 
-:block:load block:read ;
-:block:save block:write ;
+:block:load (:na-) block:read ;
+:block:save (:na-) block:write ;
 ~~~
 
 In Konilo, the memory is constrained to 65,536 cells, with a
@@ -37,14 +37,17 @@ are provided. Alter the `Blocks` count to match your actual
 data store limits.
 
 ~~~
-'Block var
-#128 'Blocks var-n
+'Block var (:-a)
+'Variable;_current_block_number add-description
+
+#128 'Blocks var-n (:-a)
+'Variable;_number_of_blocks_in_block_store add-description
 ~~~
 
 `e:line` displays a line from the block buffer.
 
 ~~~
-:e:line (n-)
+:e:line (:n-)
   #64 n:mul block:buffer n:add
   #64 [ fetch-next c:put ] times drop nl ;
 ~~~
@@ -63,9 +66,9 @@ data store limits.
   :block# 'Editing_# s:put @Block n:put
           '_of_ s:put @Blocks n:dec n:put nl ;
 ---reveal---
-  :list* nl #16 [ I e:line ] indexed-times ;
-  :list# nl lines ;
-  :list  nl sep lines sep block# ;
+  :list* (:-) nl #16 [ I e:line ] indexed-times ;
+  :list# (:-) nl lines ;
+  :list  (:-) nl sep lines sep block# ;
 }}
 ~~~
 
@@ -88,13 +91,13 @@ blocks.
 {{
   :constrain @Block #0 @Blocks n:dec n:limit !Block ;
 ---reveal---
-  :set  &Block store constrain ;
-  :save &Block fetch block:buffer block:save ;
-  :load &Block fetch block:buffer block:load ;
-  :next &Block v:inc constrain load ;
-  :prev &Block v:dec constrain load ;
-  :new  block:buffer #1024 [ #32 swap store-next ] times drop ;
-  :edit set load @e:Display call ;
+  :set  (:n-) &Block store constrain ;
+  :save (:-) &Block fetch block:buffer block:save ;
+  :load (:-) &Block fetch block:buffer block:load ;
+  :next (:-) &Block v:inc constrain load ;
+  :prev (:-) &Block v:dec constrain load ;
+  :new  (:-) block:buffer #1024 [ #32 swap store-next ] times drop ;
+  :edit (:n-) set load @e:Display call ;
 }}
 ~~~
 
@@ -160,7 +163,7 @@ arrays.
     &set-input &count-words bi
     [ parse-word valid? [ a:to-string interpret ] &drop choose ] times ;
 ---reveal---
-  :run &block:buffer n:dec #1024 over store s:evaluate ;
+  :run (:-) &block:buffer n:dec #1024 over store s:evaluate ;
 }}
 ~~~
 
@@ -172,9 +175,9 @@ arrays.
     +-------+-----+--------------------------------------------+
 
 ~~~
-:use (block) set load run ;
+:use (:block) set load run ;
 
-:using (first,last)
+:using (:first,last)
   over n:sub swap set load run [ next run ] times ;
 ~~~
 
@@ -192,7 +195,7 @@ space.
   :save &Block fetch ;
   :restore &Block store load ;
 ---reveal---
-  :titles save setup @Blocks &describe indexed-times restore ;
+  :titles (:-) save setup @Blocks &describe indexed-times restore ;
 }}
 ~~~
 
@@ -219,7 +222,7 @@ but not:
   :actual block:buffer n:dec dup #32 a:index a:left a:to-string ;
   :code?  block:buffer fetch $( eq? ;
 ---reveal---
-  :needs (s-)
+  :needs (:s-)
     @Hash [ @Block swap
       s:hash !Hash
       @Blocks [ I set load reset code?
