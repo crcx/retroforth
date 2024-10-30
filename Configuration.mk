@@ -28,7 +28,7 @@ LIBDL ?=
 # -------------------------------------------------------------
 
 OPTIONS ?=
-OPTIONS += -DBIT64
+#OPTIONS += -DBIT64
 
 # This helps improve performance on some systems.
 
@@ -97,7 +97,8 @@ DEVICES += interface/descriptions.retro
 # -------------------------------------------------------------
 
 GLOSSARY ?= ./bin/retro tools/glossary.retro
-ASSEMBLE ?= ./bin/retro-muri
+ASSEMBLE ?= ./tools/retro-muri.py
+#EXTEND   ?= ./tools/retro-extend.py
 EXTEND   ?= ./bin/retro-extend
 EXPORT   ?= ./bin/retro-embedimage
 RETRO    ?= ./bin/retro

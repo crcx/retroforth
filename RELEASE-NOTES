@@ -15,6 +15,7 @@
 - toolchain
 
   - retro-describe(1) now uses embedded glossary data
+  - retro-muri.py: increase memory size for initial image
 
 - documentation
 

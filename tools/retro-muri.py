@@ -143,7 +143,7 @@ def save(filename):
 
 
 if __name__ == "__main__":
-    image.extend([0] * 1024)
+    image.extend([0] * 1024 * 8)
     pass1()
     pass2()
     save("ngaImage")
