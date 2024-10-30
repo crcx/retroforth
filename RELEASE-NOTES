@@ -16,6 +16,7 @@
 
   - retro-describe(1) now uses embedded glossary data
   - retro-muri.py: increase memory size for initial image
+  - retro-extend.py: fix dictionary lookups
 
 - documentation
 
