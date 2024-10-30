@@ -84,6 +84,11 @@
   - source read from a file now truncates (w/null termination)
     input tokens bigger than the defined text input buffer
 
+- nga-python
+
+  - fix dictionary lookups
+  - update to current embedded image
+
 Future Notes
 
 ================================================================
