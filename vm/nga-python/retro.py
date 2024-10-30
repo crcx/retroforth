@@ -149,7 +149,7 @@ class Retro:
         Dictionary = dict()
         header = self.memory[2]
         while header != 0:
-            named = self.extract_string(header + 4)
+            named = self.extract_string(header + 9)
             if not named in Dictionary:
                 Dictionary[named] = header
             header = self.memory[header]
@@ -162,7 +162,7 @@ class Retro:
         header = self.memory[2]
         Done = False
         while header != 0 and not Done:
-            if named == self.extract_string(header + 4):
+            if named == self.extract_string(header + 9):
                 self.Dictionary[named] = header
                 Done = True
             else:

@@ -27,6 +27,9 @@ LIBDL ?=
 
 # -------------------------------------------------------------
 
+# If using the Python toolchain, remove the -DBIT64 from the
+# OPTIONS
+
 OPTIONS ?=
 #OPTIONS += -DBIT64
 
@@ -97,8 +100,7 @@ DEVICES += interface/descriptions.retro
 # -------------------------------------------------------------
 
 GLOSSARY ?= ./bin/retro tools/glossary.retro
-ASSEMBLE ?= ./tools/retro-muri.py
-#EXTEND   ?= ./tools/retro-extend.py
+ASSEMBLE ?= ./bin/retro-muri
 EXTEND   ?= ./bin/retro-extend
 EXPORT   ?= ./bin/retro-embedimage
 RETRO    ?= ./bin/retro
