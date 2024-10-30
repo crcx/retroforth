@@ -137,7 +137,7 @@ def pass2():
 def save(filename):
     with open(filename, "wb") as file:
         j = 0
-        while j < 1024:
+        while j < 1024 * 8:
             file.write(struct.pack("i", image[j]))
             j = j + 1
 
