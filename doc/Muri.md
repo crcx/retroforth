@@ -31,7 +31,7 @@ instruction name. For a non operation, use '..' instead of
 
 E.g., for a sequence of dup, multiply, no-op, drop:
 
-    i dupmu..dr
+    i dumu..dr
 
 An example of a small program:
 
@@ -43,7 +43,7 @@ An example of a small program:
     i lilica..
     d 12
     r square
-    i en......
+    i ha......
 
 As mentioned earlier this requires knowledge of Nga architecture.
 While you can pack up to four instructions per location, you
