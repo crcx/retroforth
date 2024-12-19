@@ -5,7 +5,7 @@
 #define DEVICE_BLOCKS      3
 #define DEVICE_CLOCK       5
 #define DEVICE_RESERVED6   6
-#define DEVICE_SOCKET      7
+#define DEVICE_SOCKETS     7
 #define DEVICE_UNIX        8
 #define DEVICE_SCRIPTING   9
 #define DEVICE_RNG         10
