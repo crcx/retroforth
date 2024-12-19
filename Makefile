@@ -70,6 +70,7 @@ install-examples:
 	cp -fpR example $(DESTDIR)$(EXAMPLESDIR)
 
 install-manpages:
+	install -m 755 -d -- $(MANDIR)
 	install -c -m 644 man/retro.1 $(MANDIR)/retro.1
 	install -c -m 644 man/retro-embedimage.1 $(MANDIR)/retro-embedimage.1
 	install -c -m 644 man/retro-extend.1 $(MANDIR)/retro-extend.1
