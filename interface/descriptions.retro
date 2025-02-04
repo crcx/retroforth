@@ -159,6 +159,7 @@
 'Set_`Base`_to_binary. 'binary d:set-description
 'Read_1024_cells_from_block_n_in_the_block_storage_into_memory_at_address_a. 'block:read d:set-description
 'Set_the_file_name_of_the_block_storage_device. 'block:set-file d:set-description
+'Set_the_number_of_blocks_to_reserve._These_are_reserved_from_the_start_of_the_block_file. 'block:set-reserved d:set-description
 'Save_the_1024_cells_at_address_a_to_block_n_in_the_block_storage. 'block:write d:set-description
 'Append_a_value_to_the_current_buffer. 'buffer:add d:set-description
 'Reset_the_current_buffer_to_an_empty_state. 'buffer:empty d:set-description

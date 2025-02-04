@@ -13,11 +13,13 @@ The exposed word set is compact:
 
 ~~~
 {{
+  'Skip var
   :block:invoke DEVICE:BLOCKS io:scan-for io:invoke ;
 ---reveal---
-  :block:read  (:na-)   #0 block:invoke ;
-  :block:write (:na-)   #1 block:invoke ;
+  :block:read  (:na-)   [ @Skip + ] dip #0 block:invoke ;
+  :block:write (:na-)   [ @Skip + ] dip #1 block:invoke ;
   :block:set-file (:s-) #2 block:invoke ;
+  :block:set-reserved (n-) !Skip ;
 }}
 ~~~
 
@@ -28,5 +30,6 @@ The exposed word set is compact:
 dup 'block:read     d:lookup d:source store
 dup 'block:write    d:lookup d:source store
 dup 'block:set-file d:lookup d:source store
+dup 'block:set-reserved d:lookup d:source store
 drop
 ~~~

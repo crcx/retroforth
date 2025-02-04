@@ -4,7 +4,7 @@
       | | |  __/ |_| | | (_) |  _| (_) | |  | |_| | | |
       |_|  \___|\__|_|  \___/|_|  \___/|_|   \__|_| |_|
 
-           RetroForth & nga 2024.10 Release Notes
+           RetroForth & nga 2025.xx Release Notes
 
 ================================================================
 
@@ -49,6 +49,7 @@
     system image
   - add `d:words-missing-details`
   - add `add-description`
+  - add `block:set-reserved`
 
 - library
 
