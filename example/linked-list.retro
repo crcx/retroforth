@@ -37,7 +37,7 @@ So:
     ll:node-n  (n-a)  create a new node with a head of n and a next of 0
     ll:node     (-a)   create a new node with both fields set to 0
 
-~~~ 
+~~~
 :ll:head ;
 :ll:next n:inc ;
 
