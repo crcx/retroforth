@@ -732,11 +732,22 @@ int not_eol(int c) {
 V read_token(FILE *file, char *token_buffer) {
   int ch = fread_character(file);
   int count = 0;
+  unsigned char utf8_bytes[4];
+  int num_bytes;
+
   while (not_eol(ch)) {
     if ((ch == 8 || ch == 127) && count > 0) {
+      // Handle backspace - need to find start of previous UTF-8 character
       count--;
+      while (count > 0 && (token_buffer[count] & 0xC0) == 0x80) {
+        count--; // Skip continuation bytes
+      }
     } else {
-      token_buffer[count++] = ch;
+      // Convert UTF-32 character to UTF-8 bytes and store
+      utf32_to_utf8((uint32_t)ch, utf8_bytes, &num_bytes);
+      for (int i = 0; i < num_bytes && count < 65535; i++) {
+        token_buffer[count++] = utf8_bytes[i];
+      }
     }
     ch = fread_character(file);
   }
@@ -1245,10 +1256,50 @@ CELL string_inject(NgaState *vm, char *str, CELL buffer) {
     vm->memory[buffer] = 0;
     return 0;
   }
-  for (CELL i = 0; str[i] != '\0'; i++) {
-    vm->memory[buffer + i] = (CELL)str[i];
-    vm->memory[buffer + i + 1] = 0;
+
+  CELL pos = 0;
+  int i = 0;
+
+  while (str[i] != '\0') {
+    unsigned char *utf8_str = (unsigned char *)&str[i];
+    int utf32_char = 0;
+    int bytes_consumed = 0;
+
+    // Convert UTF-8 to UTF-32
+    if ((utf8_str[0] & 0x80) == 0x00) {
+      // 1-byte UTF-8 sequence
+      utf32_char = utf8_str[0];
+      bytes_consumed = 1;
+    } else if ((utf8_str[0] & 0xE0) == 0xC0) {
+      // 2-byte UTF-8 sequence
+      utf32_char = ((uint32_t)(utf8_str[0] & 0x1F) << 6) |
+                              (utf8_str[1] & 0x3F);
+      bytes_consumed = 2;
+    } else if ((utf8_str[0] & 0xF0) == 0xE0) {
+      // 3-byte UTF-8 sequence
+      utf32_char = ((uint32_t)(utf8_str[0] & 0x0F) << 12) |
+                   ((uint32_t)(utf8_str[1] & 0x3F) << 6) |
+                              (utf8_str[2] & 0x3F);
+      bytes_consumed = 3;
+    } else if ((utf8_str[0] & 0xF8) == 0xF0) {
+      // 4-byte UTF-8 sequence
+      utf32_char = ((uint32_t)(utf8_str[0] & 0x07) << 18) |
+                   ((uint32_t)(utf8_str[1] & 0x3F) << 12) |
+                   ((uint32_t)(utf8_str[2] & 0x3F) << 6) |
+                              (utf8_str[3] & 0x3F);
+      bytes_consumed = 4;
+    } else {
+      // Invalid UTF-8, skip byte
+      utf32_char = utf8_str[0];
+      bytes_consumed = 1;
+    }
+
+    vm->memory[buffer + pos] = (CELL)utf32_char;
+    vm->memory[buffer + pos + 1] = 0;
+    pos++;
+    i += bytes_consumed;
   }
+
   return buffer;
 }
 
