@@ -7,6 +7,11 @@
   s:keep d:last d:descr store ;
   'add_a_description_for_the_most_recently_defined_word
   add-description
+
+'interface/descriptions.retro s:dedup
+dup 'd:set-description d:set-source
+dup 'add-description   d:set-source
+drop
 ~~~
 
 ~~~
@@ -379,6 +384,7 @@
 'Given_a_file_name,_return_`TRUE`_if_it_exists_or_`FALSE`_if_it_does_not. 'file:exists? d:set-description
 'Given_a_file_handle,_flush_any_pending_writes_to_disk. 'file:flush d:set-description
 'Given_a_file_name,_open_it_and_run_the_quote_once_for_each_line_in_the_file. 'file:for-each-line d:set-description
+'Given_a_file_name,_open_it_and_run_the_quote_once_for_each_byte_in_the_file. 'file:for-each-byte d:set-description
 'Open_a_named_file_(s)_with_the_given_mode_(m)._Returns_a_handle_identifying_the_file. 'file:open d:set-description
 'Open_a_file_for_reading_&_writing._Returns_the_size_(NOS)_and_a_file_ID_(TOS) 'file:open-for-append d:set-description
 'Open_a_file_for_reading._Returns_the_size_(NOS)_and_a_file_ID_(TOS) 'file:open-for-reading d:set-description
