@@ -141,6 +141,13 @@ once for each line in a file. This makes some things trivial. E.g., a simple
       [ @FID file:read-line @Action call -eof? ] while
       @FID file:close
     ] preserve ;
+
+  :file:for-each-byte (:sq-)
+    [ !Action
+      file:open-for-reading !FID !Size
+      [ @FID file:read @Action call -eof? ] while
+      @FID file:close
+    ] preserve ;
 }}
 ~~~
 
