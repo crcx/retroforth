@@ -27,7 +27,11 @@ Include compilation instructions and enable i/o devices.
   'SCRIPTING
 } [ '#define_ENABLE\_%s s:format s:put nl ] a:for-each nl
 
-'#define_BIT64 s:put nl
+'#define_BIT64                s:put nl
+'#ifdef_\_WIN32      s:format s:put nl
+'#undef_ENABLE\_UNIX s:format s:put nl
+'#undef_ENABLE\_RNG  s:format s:put nl
+'#endif                       s:put nl
 ~~~
 
 Then extract and generate the single file source.

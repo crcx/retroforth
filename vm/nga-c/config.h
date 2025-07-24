@@ -12,21 +12,22 @@
 **************************************************************/
 
 #ifndef MAKEFILE_CONFIG
-#define ENABLE_FLOATS
 #define ENABLE_FILES
-#define ENABLE_UNIX
-#define ENABLE_RNG
-#define ENABLE_CLOCK
 #define ENABLE_SCRIPTING
-/* #define ENABLE_SOCKETS */
-#define ENABLE_SIGNALS
 #define ENABLE_MULTICORE
-/* #define ENABLE_FFI */
 #define ENABLE_ERROR
 #define ENABLE_UNSIGNED
 #define ENABLE_MALLOC
 #define ENABLE_BLOCKS
+#ifndef _WIN32
+#define ENABLE_UNIX
+#define ENABLE_RNG
+#define ENABLE_CLOCK
+/* #define ENABLE_SOCKETS */
+#define ENABLE_SIGNALS
+/* #define ENABLE_FFI */
 #define ENABLE_IOCTL
+#endif
 #endif
 
 #ifdef ENABLE_MULTICORE
