@@ -132,6 +132,7 @@ a:temp                    D: a-a  A: -  F: -
 a:th                      D: an-b  A: -  F: -
 a:to-string               D: a-s  A: -  F: -
 abort                     D: -  A: -  F: -
+add-description           D: s-  A: -  F: -
 again                     D: -  A: -  F: -
 allot                     D: n-  A: -  F: -
 and                       D: nm-o  A: -  F: -
@@ -147,6 +148,7 @@ bi@                       D: xyq-?  A: -  F: -
 binary                    D: -  A: -  F: -
 block:read                D: na-  A: -  F: -
 block:set-file            D: s-  A: -  F: -
+block:set-reserved        D: n-  A: -  F: -
 block:write               D: na-  A: -  F: -
 buffer:add                D: n-  A: -  F: -
 buffer:empty              D: -  A: -  F: -
@@ -227,9 +229,13 @@ curry                     D: nq-q  A: -  F: -
 d                         D: n-  A: -  F: -
 d:Hash-Function           D: -  A: -  F: -
 d:add-header              D: saa-  A: -  F: -
+d:astack                  D: d-a  A: -  F: -
 d:class                   D: d-a  A: -  F: -
 d:create                  D: s-  A: -  F: -
+d:descr                   D: d-a  A: -  F: -
+d:describe                D: s-  A: -  F: -
 d:for-each                D: q-  A: -  F: -
+d:fstack                  D: d-a  A: -  F: -
 d:hash                    D: d-a  A: -  F: -
 d:last                    D: -d  A: -  F: -
 d:last.class              D: -a  A: -  F: -
@@ -240,12 +246,18 @@ d:lookup                  D: s-d  A: -  F: -
 d:lookup-xt               D: a-d  A: -  F: -
 d:name                    D: d-s  A: -  F: -
 d:rehash                  D: -  A: -  F: -
+d:set-astack-comment      D: ss-  A: -  F: -
+d:set-description         D: ss-  A: -  F: -
+d:set-fstack-comment      D: ss-  A: -  F: -
 d:set-source              D: ss-  A: -  F: -
+d:set-stack-comment       D: ss-  A: -  F: -
 d:source                  D: d-a  A: -  F: -
+d:stack                   D: d-a  A: -  F: -
 d:use-hashes              D: -  A: -  F: -
 d:use-strings             D: -  A: -  F: -
 d:words                   D: -  A: -  F: -
 d:words-beginning-with    D: s-  A: -  F: -
+d:words-missing-details   D: -  A: -  F: -
 d:words-with              D: s-  A: -  F: -
 d:xt                      D: d-a  A: -  F: -
 data                      D: -  A: -  F: -
@@ -365,6 +377,7 @@ file:close                D: h-  A: -  F: -
 file:delete               D: s-  A: -  F: -
 file:exists?              D: s-f  A: -  F: -
 file:flush                D: h-  A: -  F: -
+file:for-each-byte        D: sq-  A: -  F: -
 file:for-each-line        D: sq-  A: -  F: -
 file:open                 D: sm-h  A: -  F: -
 file:open-for-append      D: s-nn  A: -  F: -
@@ -421,6 +434,12 @@ io:invoke                 D: n-  A: -  F: -
 io:query                  D: n-mN  A: -  F: -
 io:scan-for               D: n-m  A: -  F: -
 io:unix-syscall           D: ...n-  A: -  F: -
+ioctl:operation           D: n-  A: -  F: -
+ioctl:restore-state       D: -  A: -  F: -
+ioctl:save-state          D: -  A: -  F: -
+ioctl:set-cbreak          D: -  A: -  F: -
+ioctl:set-lbreak          D: -  A: -  F: -
+ioctl:term-size           D: -nn  A: -  F: -
 library:.CONFIG           D: -s  A: -  F: -
 library:.config           D: s-s  A: -  F: -
 library:CWD               D: -s  A: -  F: -
@@ -527,6 +546,7 @@ s:keep                    D: s-s  A: -  F: -
 s:left                    D: sn-s  A: -  F: -
 s:length                  D: s-n  A: -  F: -
 s:map                     D: sq-s  A: -  F: -
+s:oversize?               D: s-sf  A: -  F: -
 s:prepend                 D: ss-s  A: -  F: -
 s:put                     D: s-  A: -  F: -
 s:replace                 D: sss-s  A: -  F: -
@@ -548,6 +568,7 @@ s:tokenize-on-string      D: ss-a  A: -  F: -
 s:trim                    D: s-s  A: -  F: -
 s:trim-left               D: s-s  A: -  F: -
 s:trim-right              D: s-s  A: -  F: -
+s:truncate                D: s-s  A: -  F: -
 s:unique?                 D: s-f  A: -  F: -
 script:abort-include      D: -  A: -  F: -
 script:arguments          D: -n  A: -  F: -

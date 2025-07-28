@@ -975,6 +975,13 @@
 </div>
 <p>Abort execution.</p>
 <table><tr><td><b>Class:</b> </td><td>class:macro</td></tr><tr><td><b>Namespace:</b> </td><td>global</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><hr/>
+<h2>add-description</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> s-<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>add a description for the most recently defined word</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>global</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
 <h2>again</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> -<br>
 <b>Addr:</b> -<br>
@@ -1100,6 +1107,13 @@
 </div>
 <p>Set the file name of the block storage device.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>block</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><hr/>
+<h2>block:set-reserved</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> n-<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Set the number of blocks to reserve. These are reserved from the start of the block file.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>block</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
 <h2>block:write</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> na-<br>
 <b>Addr:</b> -<br>
@@ -1688,6 +1702,13 @@
 </div>
 <p>Vectored. Create a header. Provide a string (s) for the name, a pointer to the class handler (a1) and a pointer to the word definition (a2) Generally this won't be used directly.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>d</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
+<h2>d:astack</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> d-a<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Given a dictionary pointer, return address of the address stack field</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>d</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
 <h2>d:class</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> d-a<br>
 <b>Addr:</b> -<br>
@@ -1702,12 +1723,33 @@
 </div>
 <p>Hook. Create a new dictionary header named the specified string. The new header will point to `here` and have a class of `class:data`.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>d</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
+<h2>d:descr</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> d-a<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Given a dictionary pointer, return address of the description field</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>d</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
+<h2>d:describe</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> s-<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Describe a word by name.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>d</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
 <h2>d:for-each</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> q-<br>
 <b>Addr:</b> -<br>
 <b>Float:</b> -</p>
 </div>
 <p>Execute the specified quote once for each header in the dictionary. Before running the quote, this also pushes a pointer to the header onto the stack.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>d</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
+<h2>d:fstack</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> d-a<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Given a dictionary pointer, return address of the float stack field</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>d</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
 <h2>d:hash</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> d-a<br>
@@ -1779,6 +1821,27 @@
 </div>
 <p>Update the hashes for all visible words in the dictionary.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>d</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
+<h2>d:set-astack-comment</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> ss-<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Set the d:astack field for a word.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>d</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
+<h2>d:set-description</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> ss-<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>add a description to a word</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>d</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
+<h2>d:set-fstack-comment</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> ss-<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Set the d:fstack field for a word.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>d</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
 <h2>d:set-source</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> ss-<br>
 <b>Addr:</b> -<br>
@@ -1786,12 +1849,26 @@
 </div>
 <p>Set the `d:source` field of the header for the named word (s2) to string (s1). The string will not be duplicated.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>d</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><hr/>
+<h2>d:set-stack-comment</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> ss-<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Set the d:stack field for a word.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>d</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
 <h2>d:source</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> d-a<br>
 <b>Addr:</b> -<br>
 <b>Float:</b> -</p>
 </div>
 <p>Given a dictionary header, return the source field.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>d</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
+<h2>d:stack</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> d-a<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Given a dictionary pointer, return address of the data stack field</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>d</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
 <h2>d:use-hashes</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> -<br>
@@ -1821,6 +1898,13 @@
 </div>
 <p>Display a list of all named items in the `Dictionary` that begin with the provided substring.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>d</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><hr/>
+<h2>d:words-missing-details</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> -<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Display words missing one or more information fields.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>d</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
 <h2>d:words-with</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> s-<br>
 <b>Addr:</b> -<br>
@@ -2711,6 +2795,13 @@
 </div>
 <p>Given a file handle, flush any pending writes to disk.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>file</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><hr/>
+<h2>file:for-each-byte</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> sq-<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Given a file name, open it and run the quote once for each byte in the file.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>file</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
 <h2>file:for-each-line</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> sq-<br>
 <b>Addr:</b> -<br>
@@ -3129,6 +3220,48 @@
 </div>
 <p>Trigger a Unix system call. This is not intended to be used directly.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>io</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><hr/>
+<h2>ioctl:operation</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> n-<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Perform an ioctl device operation</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>ioctl</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
+<h2>ioctl:restore-state</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> -<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Restore saved ioctle settings/state</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>ioctl</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
+<h2>ioctl:save-state</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> -<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Save current ioctl settings/state</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>ioctl</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
+<h2>ioctl:set-cbreak</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> -<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Set 'cbreak' state</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>ioctl</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
+<h2>ioctl:set-lbreak</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> -<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Set 'lbreak' state</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>ioctl</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
+<h2>ioctl:term-size</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> -nn<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Return height, width of the terminal</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>ioctl</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
 <h2>library:.CONFIG</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> -s<br>
 <b>Addr:</b> -<br>
@@ -3950,6 +4083,13 @@
 </div>
 <p>Execute the specified quote once for each character in the string. Builds a new string from the return value of the quote. The quote should return only one value.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>s</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
+<h2>s:oversize?</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> s-sf<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Given a pointer to a string, return TRUE if longer than `TempStringMax`.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>s</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
 <h2>s:prepend</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> ss-s<br>
 <b>Addr:</b> -<br>
@@ -4117,6 +4257,13 @@
 <xmp style='background:#f2f2f2'>    '__hello__ s:trim-right</xmp>
 </p>
 <hr/>
+<h2>s:truncate</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> s-s<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>If string is oversize (see `s:oversize?`), truncate to `TempStringMax`.</p>
+<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>s</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
 <h2>s:unique?</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> s-f<br>
 <b>Addr:</b> -<br>

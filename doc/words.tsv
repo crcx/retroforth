@@ -132,6 +132,7 @@ a:temp	a-a	-	-	Make a copy of the array in a rotating set of temporary buffers.	
 a:th	an-b	-	-	Return the actual address of the `n`th item in the array.			class:word	{n/a}	{n/a}	a	all	
 a:to-string	a-s	-	-	Create a new string from the provided array of character values. This string will be stored in the temporal string buffers.			class:word	    { $h $e $l $l $o } a:to-string s:put nl	{n/a}	a	all	
 abort	-	-	-	Abort execution.			class:macro	{n/a}	{n/a}	global	rre	
+add-description	s-	-	-	add a description for the most recently defined word			class:word	{n/a}	{n/a}	global	all	
 again	-	-	-	Close an unconditional loop. Branches back to the prior `repeat`.			class:macro	{n/a}	{n/a}	global	all	
 allot	n-	-	-	Allocate the specified number of cells from the `Heap`.			class:word	    'Buffer d:create  #100 allot	{n/a}	global	all	
 and	nm-o	-	-	Perform a bitwise AND operation between the two provided values.			class:primitive	{n/a}	{n/a}	global	all	
@@ -147,6 +148,7 @@ bi@	xyq-?	-	-	Execute q against x, then execute q against y.			class:word	    #1
 binary	-	-	-	Set `Base` to binary.			class:word	{n/a}	{n/a}	a	all	
 block:read	na-	-	-	Read 1024 cells from block n in the block storage into memory at address a.			class:word	{n/a}	{n/a}	block	rre	
 block:set-file	s-	-	-	Set the file name of the block storage device.			class:word	{n/a}	{n/a}	block	rre	
+block:set-reserved	n-	-	-	Set the number of blocks to reserve. These are reserved from the start of the block file.			class:word	{n/a}	{n/a}	block	all	
 block:write	na-	-	-	Save the 1024 cells at address a to block n in the block storage.			class:word	{n/a}	{n/a}	block	rre	
 buffer:add	n-	-	-	Append a value to the current buffer.			class:word	{n/a}	{n/a}	buffer	all	
 buffer:empty	-	-	-	Reset the current buffer to an empty state.			class:word	{n/a}	{n/a}	buffer	all	
@@ -227,9 +229,13 @@ curry	nq-q	-	-	Bind a value to a function and return a new quote that calls the 
 d	n-	-	-	Inline a numeric value to the current assembly segment.			class:word	{n/a}	{n/a}	global	all	
 d:Hash-Function	-	-	-	Variable. Holds a pointer tho the function for calculating dictionary hashes.			class:data	{n/a}	{n/a}	d	all	
 d:add-header	saa-	-	-	Vectored. Create a header. Provide a string (s) for the name, a pointer to the class handler (a1) and a pointer to the word definition (a2) Generally this won't be used directly.			class:word	{n/a}	{n/a}	d	all	
+d:astack	d-a	-	-	Given a dictionary pointer, return address of the address stack field			class:word	{n/a}	{n/a}	d	all	
 d:class	d-a	-	-	Given a dictionary header, return the class field.			class:word	{n/a}	{n/a}	d	all	
 d:create	s-	-	-	Hook. Create a new dictionary header named the specified string. The new header will point to `here` and have a class of `class:data`.			class:word	{n/a}	{n/a}	d	all	
+d:descr	d-a	-	-	Given a dictionary pointer, return address of the description field			class:word	{n/a}	{n/a}	d	all	
+d:describe	s-	-	-	Describe a word by name.			class:word	{n/a}	{n/a}	d	all	
 d:for-each	q-	-	-	Execute the specified quote once for each header in the dictionary. Before running the quote, this also pushes a pointer to the header onto the stack.			class:word	{n/a}	{n/a}	d	all	
+d:fstack	d-a	-	-	Given a dictionary pointer, return address of the float stack field			class:word	{n/a}	{n/a}	d	all	
 d:hash	d-a	-	-	Given a dictionary header, return the hash field.			class:word	{n/a}	{n/a}	d	all	
 d:last	-d	-	-	Return the most recent dictionary header.			class:word	{n/a}	{n/a}	d	all	
 d:last.class	-a	-	-	Return a pointer to the class field of the most recent dictionary header.			class:word	{n/a}	{n/a}	d	all	
@@ -240,12 +246,18 @@ d:lookup	s-d	-	-	Lookup the specified name in the dictionary and return a pointe
 d:lookup-xt	a-d	-	-	Lookup the specified address in the dictionary and return a pointer to its dictionary header. This returns zero if the word is not found.			class:word	{n/a}	{n/a}	d	all	
 d:name	d-s	-	-	Given a dictionary header, return the name field.			class:word	{n/a}	{n/a}	d	all	
 d:rehash	-	-	-	Update the hashes for all visible words in the dictionary.			class:word	{n/a}	{n/a}	d	all	
+d:set-astack-comment	ss-	-	-	Set the d:astack field for a word.			class:word	{n/a}	{n/a}	d	all	
+d:set-description	ss-	-	-	add a description to a word			class:word	{n/a}	{n/a}	d	all	
+d:set-fstack-comment	ss-	-	-	Set the d:fstack field for a word.			class:word	{n/a}	{n/a}	d	all	
 d:set-source	ss-	-	-	Set the `d:source` field of the header for the named word (s2) to string (s1). The string will not be duplicated.			class:word	{n/a}	{n/a}	d	rre	
+d:set-stack-comment	ss-	-	-	Set the d:stack field for a word.			class:word	{n/a}	{n/a}	d	all	
 d:source	d-a	-	-	Given a dictionary header, return the source field.			class:word	{n/a}	{n/a}	d	all	
+d:stack	d-a	-	-	Given a dictionary pointer, return address of the data stack field			class:word	{n/a}	{n/a}	d	all	
 d:use-hashes	-	-	-	Change dictionary search to use hashed name comparions.			class:word	{n/a}	{n/a}	d	all	
 d:use-strings	-	-	-	Change dictionary search to use full name comparions.			class:word	{n/a}	{n/a}	d	all	
 d:words	-	-	-	Display a list of all named items in the `Dictionary`.			class:word	{n/a}	{n/a}	d	rre	
 d:words-beginning-with	s-	-	-	Display a list of all named items in the `Dictionary` that begin with the provided substring.			class:word	{n/a}	{n/a}	d	rre	
+d:words-missing-details	-	-	-	Display words missing one or more information fields.			class:word	{n/a}	{n/a}	d	all	
 d:words-with	s-	-	-	Display a list of all named items in the `Dictionary` that contain the provided substring.			class:word	{n/a}	{n/a}	d	rre	
 d:xt	d-a	-	-	Given a dictionary header, return the xt field.			class:word	{n/a}	{n/a}	d	all	
 data	-	-	-	Change the class of the most recently defined word to `class:data`.			class:word	{n/a}	{n/a}	global	all	
@@ -365,6 +377,7 @@ file:close	h-	-	-	Given a file handle, close the file.			class:word	{n/a}	{n/a}	
 file:delete	s-	-	-	Delete the named file.			class:word	{n/a}	{n/a}	file	rre	
 file:exists?	s-f	-	-	Given a file name, return `TRUE` if it exists or `FALSE` if it does not.			class:word	{n/a}	{n/a}	file	rre	
 file:flush	h-	-	-	Given a file handle, flush any pending writes to disk.			class:word	{n/a}	{n/a}	file	rre	
+file:for-each-byte	sq-	-	-	Given a file name, open it and run the quote once for each byte in the file.			class:word	{n/a}	{n/a}	file	all	
 file:for-each-line	sq-	-	-	Given a file name, open it and run the quote once for each line in the file.			class:word	{n/a}	{n/a}	file	rre	
 file:open	sm-h	-	-	Open a named file (s) with the given mode (m). Returns a handle identifying the file.			class:word	  '/etc/motd file:R file:open	{n/a}	file	rre	
 file:open-for-append	s-nn	-	-	Open a file for reading & writing. Returns the size (NOS) and a file ID (TOS)			class:word	{n/a}	{n/a}	file	rre	
@@ -421,6 +434,12 @@ io:invoke	n-	-	-	Invoke an interaction with an I/O device.			class:word	{n/a}	{n
 io:query	n-mN	-	-	Ask an I/O device to identify itself. Returns a version (m) and device ID (N).			class:word	{n/a}	{n/a}	io	all	
 io:scan-for	n-m	-	-	Scan the I/O devices for a device with a specified ID. Returns the device number, or -1 if not found.			class:word	{n/a}	{n/a}	io	all	
 io:unix-syscall	...n-	-	-	Trigger a Unix system call. This is not intended to be used directly.			class:word	{n/a}	{n/a}	io	rre	
+ioctl:operation	n-	-	-	Perform an ioctl device operation			class:word	{n/a}	{n/a}	ioctl	all	
+ioctl:restore-state	-	-	-	Restore saved ioctle settings/state			class:word	{n/a}	{n/a}	ioctl	all	
+ioctl:save-state	-	-	-	Save current ioctl settings/state			class:word	{n/a}	{n/a}	ioctl	all	
+ioctl:set-cbreak	-	-	-	Set 'cbreak' state			class:word	{n/a}	{n/a}	ioctl	all	
+ioctl:set-lbreak	-	-	-	Set 'lbreak' state			class:word	{n/a}	{n/a}	ioctl	all	
+ioctl:term-size	-nn	-	-	Return height, width of the terminal			class:word	{n/a}	{n/a}	ioctl	all	
 library:.CONFIG	-s	-	-	Data. Return a template for a library file name in `~/.config/retroforth/library`.			class:data	{n/a}	{n/a}	global	rre	
 library:.config	s-s	-	-	Find the users home directory and construct a filename for a library in the `~/.config/retroforth/library` directory.			class:word	{n/a}	{n/a}	global	rre	
 library:CWD	-s	-	-	Data. Return a template for a library file name in `./library`.			class:data	{n/a}	{n/a}	global	rre	
@@ -527,6 +546,7 @@ s:keep	s-s	-	-	Store a string into the heap and return a pointer to the start of
 s:left	sn-s	-	-	Return a new string containing the first `n` characters from the source string.			class:word	{n/a}	{n/a}	s	all	
 s:length	s-n	-	-	Return the number of characters in a string, excluding the NULL terminator.			class:word	{n/a}	{n/a}	s	all	
 s:map	sq-s	-	-	Execute the specified quote once for each character in the string. Builds a new string from the return value of the quote. The quote should return only one value.			class:word	{n/a}	{n/a}	s	all	
+s:oversize?	s-sf	-	-	Given a pointer to a string, return TRUE if longer than `TempStringMax`.			class:word	{n/a}	{n/a}	s	all	
 s:prepend	ss-s	-	-	Return a new string consisting of s2 followed by s1.			class:word	{n/a}	{n/a}	s	all	
 s:put	s-	-	-	Display a string.			class:word	{n/a}	{n/a}	global	all	
 s:replace	sss-s	-	-	Replace the first instance of s2 in s1 with s3.			class:word	{n/a}	{n/a}	s	all	
@@ -548,6 +568,7 @@ s:tokenize-on-string	ss-a	-	-	Takes a string (s1) and a substring (s2)  use as a
 s:trim	s-s	-	-	Trim leading and trailing whitespace from a string.			class:word	    '__hello__ s:trim	{n/a}	s	all	
 s:trim-left	s-s	-	-	Trim leading whitespace from a string.			class:word	    '__hello__ s:trim-left	{n/a}	s	all	
 s:trim-right	s-s	-	-	Trim trailing whitespace from a string.			class:word	    '__hello__ s:trim-right	{n/a}	s	all	
+s:truncate	s-s	-	-	If string is oversize (see `s:oversize?`), truncate to `TempStringMax`.			class:word	{n/a}	{n/a}	s	all	
 s:unique?	s-f	-	-	Alias for `s:dedup.defined?`.			class:word	{n/a}	{n/a}	s	rre	
 script:abort-include	-	-	-	Discard remaining tokens on the current line being evaluated. This only works when including a file, not at the interpreter.			class:word	{n/a}	{n/a}	sys	rre	
 script:arguments	-n	-	-	Return the number of arguments passed to the program.			class:word	{n/a}	{n/a}	sys	rre	

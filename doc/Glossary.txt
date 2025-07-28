@@ -1520,6 +1520,17 @@ Abort execution.
 Class: class:macro | Namespace: global | Interface Layer: rre
 ------------------------------------------------------------------------
 
+add-description
+
+  Data:  s-
+  Addr:  -
+  Float: -
+
+add a description for the most recently defined word
+
+Class: class:word | Namespace: global | Interface Layer: all
+------------------------------------------------------------------------
+
 again
 
   Data:  -
@@ -1708,6 +1719,17 @@ block:set-file
 Set the file name of the block storage device.
 
 Class: class:word | Namespace: block | Interface Layer: rre
+------------------------------------------------------------------------
+
+block:set-reserved
+
+  Data:  n-
+  Addr:  -
+  Float: -
+
+Set the number of blocks to reserve. These are reserved from the start of the block file.
+
+Class: class:word | Namespace: block | Interface Layer: all
 ------------------------------------------------------------------------
 
 block:write
@@ -2619,6 +2641,17 @@ Vectored. Create a header. Provide a string (s) for the name, a pointer to the c
 Class: class:word | Namespace: d | Interface Layer: all
 ------------------------------------------------------------------------
 
+d:astack
+
+  Data:  d-a
+  Addr:  -
+  Float: -
+
+Given a dictionary pointer, return address of the address stack field
+
+Class: class:word | Namespace: d | Interface Layer: all
+------------------------------------------------------------------------
+
 d:class
 
   Data:  d-a
@@ -2641,6 +2674,28 @@ Hook. Create a new dictionary header named the specified string. The new header 
 Class: class:word | Namespace: d | Interface Layer: all
 ------------------------------------------------------------------------
 
+d:descr
+
+  Data:  d-a
+  Addr:  -
+  Float: -
+
+Given a dictionary pointer, return address of the description field
+
+Class: class:word | Namespace: d | Interface Layer: all
+------------------------------------------------------------------------
+
+d:describe
+
+  Data:  s-
+  Addr:  -
+  Float: -
+
+Describe a word by name.
+
+Class: class:word | Namespace: d | Interface Layer: all
+------------------------------------------------------------------------
+
 d:for-each
 
   Data:  q-
@@ -2648,6 +2703,17 @@ d:for-each
   Float: -
 
 Execute the specified quote once for each header in the dictionary. Before running the quote, this also pushes a pointer to the header onto the stack.
+
+Class: class:word | Namespace: d | Interface Layer: all
+------------------------------------------------------------------------
+
+d:fstack
+
+  Data:  d-a
+  Addr:  -
+  Float: -
+
+Given a dictionary pointer, return address of the float stack field
 
 Class: class:word | Namespace: d | Interface Layer: all
 ------------------------------------------------------------------------
@@ -2762,6 +2828,39 @@ Update the hashes for all visible words in the dictionary.
 Class: class:word | Namespace: d | Interface Layer: all
 ------------------------------------------------------------------------
 
+d:set-astack-comment
+
+  Data:  ss-
+  Addr:  -
+  Float: -
+
+Set the d:astack field for a word.
+
+Class: class:word | Namespace: d | Interface Layer: all
+------------------------------------------------------------------------
+
+d:set-description
+
+  Data:  ss-
+  Addr:  -
+  Float: -
+
+add a description to a word
+
+Class: class:word | Namespace: d | Interface Layer: all
+------------------------------------------------------------------------
+
+d:set-fstack-comment
+
+  Data:  ss-
+  Addr:  -
+  Float: -
+
+Set the d:fstack field for a word.
+
+Class: class:word | Namespace: d | Interface Layer: all
+------------------------------------------------------------------------
+
 d:set-source
 
   Data:  ss-
@@ -2773,6 +2872,17 @@ Set the `d:source` field of the header for the named word (s2) to string (s1). T
 Class: class:word | Namespace: d | Interface Layer: rre
 ------------------------------------------------------------------------
 
+d:set-stack-comment
+
+  Data:  ss-
+  Addr:  -
+  Float: -
+
+Set the d:stack field for a word.
+
+Class: class:word | Namespace: d | Interface Layer: all
+------------------------------------------------------------------------
+
 d:source
 
   Data:  d-a
@@ -2780,6 +2890,17 @@ d:source
   Float: -
 
 Given a dictionary header, return the source field.
+
+Class: class:word | Namespace: d | Interface Layer: all
+------------------------------------------------------------------------
+
+d:stack
+
+  Data:  d-a
+  Addr:  -
+  Float: -
+
+Given a dictionary pointer, return address of the data stack field
 
 Class: class:word | Namespace: d | Interface Layer: all
 ------------------------------------------------------------------------
@@ -2826,6 +2947,17 @@ d:words-beginning-with
 Display a list of all named items in the `Dictionary` that begin with the provided substring.
 
 Class: class:word | Namespace: d | Interface Layer: rre
+------------------------------------------------------------------------
+
+d:words-missing-details
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Display words missing one or more information fields.
+
+Class: class:word | Namespace: d | Interface Layer: all
 ------------------------------------------------------------------------
 
 d:words-with
@@ -4207,6 +4339,17 @@ Given a file handle, flush any pending writes to disk.
 Class: class:word | Namespace: file | Interface Layer: rre
 ------------------------------------------------------------------------
 
+file:for-each-byte
+
+  Data:  sq-
+  Addr:  -
+  Float: -
+
+Given a file name, open it and run the quote once for each byte in the file.
+
+Class: class:word | Namespace: file | Interface Layer: all
+------------------------------------------------------------------------
+
 file:for-each-line
 
   Data:  sq-
@@ -4853,6 +4996,72 @@ io:unix-syscall
 Trigger a Unix system call. This is not intended to be used directly.
 
 Class: class:word | Namespace: io | Interface Layer: rre
+------------------------------------------------------------------------
+
+ioctl:operation
+
+  Data:  n-
+  Addr:  -
+  Float: -
+
+Perform an ioctl device operation
+
+Class: class:word | Namespace: ioctl | Interface Layer: all
+------------------------------------------------------------------------
+
+ioctl:restore-state
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Restore saved ioctle settings/state
+
+Class: class:word | Namespace: ioctl | Interface Layer: all
+------------------------------------------------------------------------
+
+ioctl:save-state
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Save current ioctl settings/state
+
+Class: class:word | Namespace: ioctl | Interface Layer: all
+------------------------------------------------------------------------
+
+ioctl:set-cbreak
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Set 'cbreak' state
+
+Class: class:word | Namespace: ioctl | Interface Layer: all
+------------------------------------------------------------------------
+
+ioctl:set-lbreak
+
+  Data:  -
+  Addr:  -
+  Float: -
+
+Set 'lbreak' state
+
+Class: class:word | Namespace: ioctl | Interface Layer: all
+------------------------------------------------------------------------
+
+ioctl:term-size
+
+  Data:  -nn
+  Addr:  -
+  Float: -
+
+Return height, width of the terminal
+
+Class: class:word | Namespace: ioctl | Interface Layer: all
 ------------------------------------------------------------------------
 
 library:.CONFIG
@@ -6117,6 +6326,17 @@ Execute the specified quote once for each character in the string. Builds a new 
 Class: class:word | Namespace: s | Interface Layer: all
 ------------------------------------------------------------------------
 
+s:oversize?
+
+  Data:  s-sf
+  Addr:  -
+  Float: -
+
+Given a pointer to a string, return TRUE if longer than `TempStringMax`.
+
+Class: class:word | Namespace: s | Interface Layer: all
+------------------------------------------------------------------------
+
 s:prepend
 
   Data:  ss-s
@@ -6371,6 +6591,17 @@ Example #1:
 
     '__hello__ s:trim-right
 
+------------------------------------------------------------------------
+
+s:truncate
+
+  Data:  s-s
+  Addr:  -
+  Float: -
+
+If string is oversize (see `s:oversize?`), truncate to `TempStringMax`.
+
+Class: class:word | Namespace: s | Interface Layer: all
 ------------------------------------------------------------------------
 
 s:unique?

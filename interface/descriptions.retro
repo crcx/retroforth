@@ -675,3 +675,17 @@ drop
 'Complete_an_array_begun_by_`{`._Returns_a_pointer_to_the_data. '} d:set-description
 'End_a_lexically_scoped_area._This_will_hide_any_headers_between_`{{`_and_`---reveal---`,_leaving_only_headers_between_`---reveal---`_and_the_`}}`_visible. '}} d:set-description
 ~~~
+
+Additional
+
+~~~
+'Describe_a_word_by_name. 'd:describe d:set-description
+'Set_the_d:stack_field_for_a_word. 'd:set-stack-comment d:set-description
+'Set_the_d:fstack_field_for_a_word. 'd:set-fstack-comment d:set-description
+'Set_the_d:astack_field_for_a_word. 'd:set-astack-comment d:set-description
+'Given_a_dictionary_pointer,_return_address_of_the_data_stack_field 'd:stack d:set-description
+'Given_a_dictionary_pointer,_return_address_of_the_address_stack_field 'd:astack d:set-description
+'Given_a_dictionary_pointer,_return_address_of_the_float_stack_field 'd:fstack d:set-description
+'Given_a_dictionary_pointer,_return_address_of_the_description_field 'd:descr d:set-description
+~~~
+

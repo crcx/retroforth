@@ -400,6 +400,9 @@ Create a new string from the provided array of character values. This string wil
 abort                     D: -  A: -  F: -
 Abort execution.
 
+add-description           D: s-  A: -  F: -
+add a description for the most recently defined word
+
 again                     D: -  A: -  F: -
 Close an unconditional loop. Branches back to the prior `repeat`.
 
@@ -444,6 +447,9 @@ Read 1024 cells from block n in the block storage into memory at address a.
 
 block:set-file            D: s-  A: -  F: -
 Set the file name of the block storage device.
+
+block:set-reserved        D: n-  A: -  F: -
+Set the number of blocks to reserve. These are reserved from the start of the block file.
 
 block:write               D: na-  A: -  F: -
 Save the 1024 cells at address a to block n in the block storage.
@@ -685,14 +691,26 @@ Variable. Holds a pointer tho the function for calculating dictionary hashes.
 d:add-header              D: saa-  A: -  F: -
 Vectored. Create a header. Provide a string (s) for the name, a pointer to the class handler (a1) and a pointer to the word definition (a2) Generally this won't be used directly.
 
+d:astack                  D: d-a  A: -  F: -
+Given a dictionary pointer, return address of the address stack field
+
 d:class                   D: d-a  A: -  F: -
 Given a dictionary header, return the class field.
 
 d:create                  D: s-  A: -  F: -
 Hook. Create a new dictionary header named the specified string. The new header will point to `here` and have a class of `class:data`.
 
+d:descr                   D: d-a  A: -  F: -
+Given a dictionary pointer, return address of the description field
+
+d:describe                D: s-  A: -  F: -
+Describe a word by name.
+
 d:for-each                D: q-  A: -  F: -
 Execute the specified quote once for each header in the dictionary. Before running the quote, this also pushes a pointer to the header onto the stack.
+
+d:fstack                  D: d-a  A: -  F: -
+Given a dictionary pointer, return address of the float stack field
 
 d:hash                    D: d-a  A: -  F: -
 Given a dictionary header, return the hash field.
@@ -724,11 +742,26 @@ Given a dictionary header, return the name field.
 d:rehash                  D: -  A: -  F: -
 Update the hashes for all visible words in the dictionary.
 
+d:set-astack-comment      D: ss-  A: -  F: -
+Set the d:astack field for a word.
+
+d:set-description         D: ss-  A: -  F: -
+add a description to a word
+
+d:set-fstack-comment      D: ss-  A: -  F: -
+Set the d:fstack field for a word.
+
 d:set-source              D: ss-  A: -  F: -
 Set the `d:source` field of the header for the named word (s2) to string (s1). The string will not be duplicated.
 
+d:set-stack-comment       D: ss-  A: -  F: -
+Set the d:stack field for a word.
+
 d:source                  D: d-a  A: -  F: -
 Given a dictionary header, return the source field.
+
+d:stack                   D: d-a  A: -  F: -
+Given a dictionary pointer, return address of the data stack field
 
 d:use-hashes              D: -  A: -  F: -
 Change dictionary search to use hashed name comparions.
@@ -741,6 +774,9 @@ Display a list of all named items in the `Dictionary`.
 
 d:words-beginning-with    D: s-  A: -  F: -
 Display a list of all named items in the `Dictionary` that begin with the provided substring.
+
+d:words-missing-details   D: -  A: -  F: -
+Display words missing one or more information fields.
 
 d:words-with              D: s-  A: -  F: -
 Display a list of all named items in the `Dictionary` that contain the provided substring.
@@ -1099,6 +1135,9 @@ Given a file name, return `TRUE` if it exists or `FALSE` if it does not.
 file:flush                D: h-  A: -  F: -
 Given a file handle, flush any pending writes to disk.
 
+file:for-each-byte        D: sq-  A: -  F: -
+Given a file name, open it and run the quote once for each byte in the file.
+
 file:for-each-line        D: sq-  A: -  F: -
 Given a file name, open it and run the quote once for each line in the file.
 
@@ -1266,6 +1305,24 @@ Scan the I/O devices for a device with a specified ID. Returns the device number
 
 io:unix-syscall           D: ...n-  A: -  F: -
 Trigger a Unix system call. This is not intended to be used directly.
+
+ioctl:operation           D: n-  A: -  F: -
+Perform an ioctl device operation
+
+ioctl:restore-state       D: -  A: -  F: -
+Restore saved ioctle settings/state
+
+ioctl:save-state          D: -  A: -  F: -
+Save current ioctl settings/state
+
+ioctl:set-cbreak          D: -  A: -  F: -
+Set 'cbreak' state
+
+ioctl:set-lbreak          D: -  A: -  F: -
+Set 'lbreak' state
+
+ioctl:term-size           D: -nn  A: -  F: -
+Return height, width of the terminal
 
 library:.CONFIG           D: -s  A: -  F: -
 Data. Return a template for a library file name in `~/.config/retroforth/library`.
@@ -1585,6 +1642,9 @@ Return the number of characters in a string, excluding the NULL terminator.
 s:map                     D: sq-s  A: -  F: -
 Execute the specified quote once for each character in the string. Builds a new string from the return value of the quote. The quote should return only one value.
 
+s:oversize?               D: s-sf  A: -  F: -
+Given a pointer to a string, return TRUE if longer than `TempStringMax`.
+
 s:prepend                 D: ss-s  A: -  F: -
 Return a new string consisting of s2 followed by s1.
 
@@ -1647,6 +1707,9 @@ Trim leading whitespace from a string.
 
 s:trim-right              D: s-s  A: -  F: -
 Trim trailing whitespace from a string.
+
+s:truncate                D: s-s  A: -  F: -
+If string is oversize (see `s:oversize?`), truncate to `TempStringMax`.
 
 s:unique?                 D: s-f  A: -  F: -
 Alias for `s:dedup.defined?`.
