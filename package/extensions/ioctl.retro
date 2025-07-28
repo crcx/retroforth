@@ -9,4 +9,11 @@
 :ioctl:set-lbreak     (:-)   #2 ioctl:operation ;
 :ioctl:save-state     (:-)   #3 ioctl:operation ;
 :ioctl:restore-state  (:-)   #4 ioctl:operation ;
+
+'Perform_an_ioctl_device_operation    'ioctl:operation     d:set-description
+'Return_height,_width_of_the_terminal 'ioctl:term-size     d:set-description
+'Set_'cbreak'_state                   'ioctl:set-cbreak    d:set-description
+'Set_'lbreak'_state                   'ioctl:set-lbreak    d:set-description
+'Save_current_ioctl_settings/state    'ioctl:save-state    d:set-description
+'Restore_saved_ioctle_settings/state  'ioctl:restore-state d:set-description
 ~~~
