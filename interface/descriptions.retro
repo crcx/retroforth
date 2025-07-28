@@ -110,6 +110,8 @@ drop
 'Returns_`-1`,_the_value_used_to_indicate_a_TRUE_result. 'TRUE d:set-description
 'Variable._Holds_the_maximum_length_of_a_temporary_string. 'TempStringMax d:set-description
 'Variable._Holds_the_number_of_temporary_strings. 'TempStrings d:set-description
+'Given_a_pointer_to_a_string,_return_TRUE_if_longer_than_`TempStringMax`. 's:oversize? d:set-description
+'If_string_is_oversize_(see_`s:oversize?`),_truncate_to_`TempStringMax`. 's:truncate d:set-description
 'Variable._This_stores_the_version_number. 'Version d:set-description
 'Begin_a_quotation. '[ d:set-description
 'End_a_quotation. '] d:set-description

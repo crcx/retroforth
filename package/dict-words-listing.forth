@@ -44,3 +44,10 @@ deal with this, `d:words-beginning-with` is provided.
   'F.Stack: s:put nl [ dup d:fstack fetch n:zero? [ d:name s:put sp ] &drop choose ] d:for-each nl
   'Desc:    s:put nl [ dup d:descr fetch n:zero? [ d:name s:put sp ] &drop choose ] d:for-each nl ;
 ~~~
+
+~~~
+'Display_words_missing_one_or_more_information_fields. 'd:words-missing-details d:set-description
+'Display_words_with_name_starting_with_the_provided_string. 'd:words-beginning-with d:set-description
+'Display_words_with_name_containing_the_provided_string. 'd:words-with d:set-description
+'Display_all_named_words. 'd:words d:set-description
+~~~
