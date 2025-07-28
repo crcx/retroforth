@@ -92,7 +92,6 @@ DEVICES += interface/future.retro
 DEVICES += interface/block.retro
 DEVICES += interface/deprecated.retro
 DEVICES += interface/error.retro
-DEVICES += interface/ioctl.retro
 DEVICES += interface/final.retro
 DEVICES += interface/library.retro
 DEVICES += interface/descriptions.retro
