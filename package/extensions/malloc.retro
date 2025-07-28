@@ -24,4 +24,13 @@
   dup #1 mem:cell+ fetch push mem:fetch pop ;
 :mem:store-double (:ann-nn)
   push push dup-pair #1 mem:cell+ pop mem:store pop mem:store ;
+
+'Use_malloc_to_allocate_memory._Returns_a_double_cell_pointer_to_this_memory. 'mem:alloc d:set-description
+'Return_address_of_next_cell._Uses_a_double_cell_pointer_on_the_stack. 'mem:cell+ d:set-description
+'Fetch_value_from_malloc'd_memory_region._Address_is_a_double_cell_value. 'mem:fetch d:set-description
+'Fetch_a_double_cell_value_from_a_malloc_memory_region. 'mem:fetch-double d:set-description
+'Fre_a_malloc'd_region_of_memory._Pass_a_double_cell_pointer_to_the_memory_to_free. 'mem:free d:set-description
+'Resize_a_malloc'd_memory_area. 'mem:resize d:set-description
+'Store_a_value_into_a_malloc'd_memory_region._Uses_a_double_cell_pointer_for_the_address. 'mem:store d:set-description
+'Store_a_double_value_into_a_malloc'd_memory_region._Uses_a_double_cell_pointer_for_the_address. 'mem:store-double d:set-description
 ~~~
