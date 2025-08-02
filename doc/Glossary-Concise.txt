@@ -1468,6 +1468,9 @@ Convert a number into a floating-point value.
 n:to-string               D: n-s  A: -  F: -
 Convert a number into a string.
 
+n:to-string/reversed      D: n-s  A: -  F: -
+Convert a number into a string. The string will have the digits in reversed order.
+
 n:zero?                   D: n-f  A: -  F: -
 Return `TRUE` if number is zero, or `FALSE` otherwise.
 

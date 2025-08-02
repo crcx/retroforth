@@ -488,6 +488,7 @@ n:strictly-positive?      D: n-f  A: -  F: -
 n:sub                     D: nn-n  A: -  F: -
 n:to-float                D: n-  A: -  F: -F
 n:to-string               D: n-s  A: -  F: -
+n:to-string/reversed      D: n-s  A: -  F: -
 n:zero?                   D: n-f  A: -  F: -
 nip                       D: nm-m  A: -  F: -
 nl                        D: -  A: -  F: -

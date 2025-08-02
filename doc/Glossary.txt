@@ -5666,6 +5666,17 @@ Convert a number into a string.
 Class: class:word | Namespace: n | Interface Layer: all
 ------------------------------------------------------------------------
 
+n:to-string/reversed
+
+  Data:  n-s
+  Addr:  -
+  Float: -
+
+Convert a number into a string. The string will have the digits in reversed order.
+
+Class: class:word | Namespace: n | Interface Layer: all
+------------------------------------------------------------------------
+
 n:zero?
 
   Data:  n-f

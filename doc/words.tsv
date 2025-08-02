@@ -488,6 +488,7 @@ n:strictly-positive?	n-f	-	-	Return TRUE if number is greater than zero or FALSE
 n:sub	nn-n	-	-	Subtract `n2` from `n1` and return the result.			class:primitive	    #2 #1 - 	{n/a}	global	all	
 n:to-float	n-	-	-F	Convert a number into a floating-point value.			class:word	{n/a}	{n/a}	n	rre	
 n:to-string	n-s	-	-	Convert a number into a string.			class:word	{n/a}	{n/a}	n	all	
+n:to-string/reversed	n-s	-	-	Convert a number into a string. The string will have the digits in reversed order.			class:word	{n/a}	{n/a}	n	all	
 n:zero?	n-f	-	-	Return `TRUE` if number is zero, or `FALSE` otherwise.			class:word	{n/a}	{n/a}	n	all	
 nip	nm-m	-	-	Remove the second item from the stack.			class:word	{n/a}	{n/a}	global	all	
 nl	-	-	-	Display a newline.			class:word	{n/a}	{n/a}	global	all	
