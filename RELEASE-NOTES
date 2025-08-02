@@ -4,13 +4,13 @@
       | | |  __/ |_| | | (_) |  _| (_) | |  | |_| | | |
       |_|  \___|\__|_|  \___/|_|  \___/|_|   \__|_| |_|
 
-           RetroForth & nga 2025.7 Release Notes
+           RetroForth & nga 2025.8 Release Notes
 
 ================================================================
 
 - general
 
-  - added takawiri, a new listener
+  - added takawiri, a new (optional, external) listener
 
 - toolchain
 
@@ -57,10 +57,6 @@
   - added "tob", a text output buffer
   - added "c:get/ext", for reading keys and returning unique
     codes for arrows
-  - added "openbsd", for interacting with an openbsd-specific
-    i/o extension
-    - adds "openbsd:pledge"
-    - adds "openbsd:unveil"
   - remove "describe.retro"
 
 - retro-compiler

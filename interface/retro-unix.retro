@@ -64,3 +64,11 @@ dup 'parse-until d:lookup d:source store
 dup 'image:save d:lookup d:source store
 drop
 ~~~
+
+~~~
+'Save_the_current_system_to_a_new_image_file. 'image:save d:set-description
+'Read_input_from_stdin_(via_`c:get`)_until_the_returned_character_is_matched_by_the_quote._Returns_a_string. 'parse-until d:set-description
+'Read_input_from_standard_in_(via_`c:get`)_until_a_CR_or_LF_is_encountered._Returns_a_string. 's:get d:set-description
+'Clear_the_display. 'clear d:set-description
+'Ignore_any_tokens_remaining_on_the_current_line._Works_with_files_and_the_interactive_`listener`. '// d:set-description
+~~~
