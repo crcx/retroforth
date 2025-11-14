@@ -4,88 +4,28 @@
       | | |  __/ |_| | | (_) |  _| (_) | |  | |_| | | |
       |_|  \___|\__|_|  \___/|_|  \___/|_|   \__|_| |_|
 
-           RetroForth & nga 2025.8 Release Notes
+           RetroForth & nga 2026.x Release Notes
 
 ================================================================
 
 - general
 
-  - added takawiri, a new (optional, external) listener
-
 - toolchain
-
-  - retro-describe(1) now uses embedded glossary data
-  - retro-muri.py: increase memory size for initial image
-  - retro-extend.py: fix dictionary lookups
 
 - documentation
 
 - examples
 
-  - add ilo.retro
-
 - image
 
-  - `HOME` (in the library code) is now a floating buffer
-    above `here`
-  - `s:get-word` was not properly breaking on space; this is
-    now corrected
-  - `n:put` no longer uses temporary string buffers
-  - `s:get` now truncates strings longer than `TempStringMax`
-  - add `s:oversize?`
-  - add `s:truncate`
-  - `s:append`, `s:prepend` now truncate if source string is
-    at `TempStringMax`
-  - `s:temp` now truncates strings longer than `TempStringMax`
-  - `s:filter` now truncates strings longer than `TempStringMax`
-  - added new `d:stack` field for storing a stack comment
-  - added new `d:astack` field for storing an address stack comment
-  - added new `d:fstack` field for storing a float stack comment
-  - added new `d:descr` field for storing a description
-  - `sigil:(` extended to store stack comments (with a form of
-    `(:comment)`
-  - add `d:describe`
-  - stack comments & descriptions are now part of the standard
-    system image
-  - add `d:words-missing-details`
-  - add `add-description`
-  - add `block:set-reserved`
-  - add `file:for-each-byte`
-
 - library
-
-  - added "tob", a text output buffer
-  - added "c:get/ext", for reading keys and returning unique
-    codes for arrows
-  - remove "describe.retro"
 
 - retro-compiler
 
 - new nga implementations
 
-  - nga-zig
-
-    - added a zig implementation from iacore under vm/libnga-zig
-    - build with: zig build -Doptimize=ReleaseFast -p ~/.local
-
-- nga-c
-
-  - use UTF32 internally (translating to/from UTF8 externally)
-  - filesystem device no longer included if ENABLE_FILES not
-    defined
-  - formatting cleanups
-  - added ioctl device
-  - new "-p" option to run non-Unu format source files
-  - now report "<none>" for `script:name` if no file is being
-    run
-  - now report 0 for `script:arguments` if not running a program
-  - source read from a file now truncates (w/null termination)
-    input tokens bigger than the defined text input buffer
-
-- nga-python
-
-  - fix dictionary lookups
-  - update to current embedded image
+  - common lisp (sbcl)
+  - scheme (chicken)
 
 Future Notes
 
