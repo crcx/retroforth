@@ -26,6 +26,9 @@
 
   - common lisp (sbcl)
   - scheme (chicken)
+  - javascript (node)
+  - java
+  - kotlin
 
 Future Notes
 
