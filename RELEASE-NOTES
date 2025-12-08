@@ -20,6 +20,8 @@
 
 - image
 
+  - use new D directive to build initial dictionary
+
 - library
 
 - retro-compiler
