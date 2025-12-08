@@ -37,10 +37,14 @@ CELL np;
 char source[1 KiB];
 CELL target[IMAGE_SIZE];
 CELL here;
+CELL last_dictionary_entry;
+int dictionary_entries;
 
 typedef void (*Handler)(char *);
 void unu(char *, int, Handler);
 size_t bsd_strlcpy(char *dst, const char *src, size_t dsize);
+void parse_dict_line(char *buffer, char *name, char *label, char *class_name);
+CELL dict_entry_size(char *name);
 
 
 #include <stdio.h>
@@ -167,11 +171,18 @@ CELL opcode_for(char *s) {
 /* the first pass records the address for each label */
 
 void pass1(char *buffer) {
+  char name[256], label[256], class_name[256];
   switch (buffer[0]) {
     case 'i': here++;                             break;
     case 'r': here++;                             break;
+    case '-': here++;                             break;
     case 'd': here++;                             break;
     case 's': here = here + strlen(buffer) - 1;   break;
+    case 'o': here = atoi(buffer+2);              break;
+    case '*': here += atoi(buffer+2);             break;
+    case 'D': parse_dict_line(buffer, name, label, class_name);
+              here += dict_entry_size(name);
+                                                  break;
     case ':': add_label(buffer+2, here);          break;
   }
 }
@@ -183,6 +194,7 @@ void pass2(char *buffer) {
   unsigned int opcode;
   char inst[3];
   inst[2] = '\0';
+  char name[256], label[256], class_name[256];
   switch (buffer[0]) {
     case 'i': memcpy(inst, buffer + 8, 2);
               opcode = opcode_for(inst);
@@ -197,6 +209,12 @@ void pass2(char *buffer) {
               opcode += opcode_for(inst);
               target[here++] = opcode;
               break;
+    case 'o': here = atoi(buffer+2);              break;
+    case '*': here += atoi(buffer+2);             break;
+    case 'D': parse_dict_line(buffer, name, label, class_name);
+              here += dict_entry_size(name);
+                                                  break;
+    case '-': here++;                             break;
     case 'r': here++;                             break;
     case 'd': here++;                             break;
     case 's': here = here + strlen(buffer) - 1;   break;
@@ -208,10 +226,17 @@ void pass2(char *buffer) {
 /* the third pass assembles raw numeric values */
 
 void pass3(char *buffer) {
+  char name[256], label[256], class_name[256];
   switch (buffer[0]) {
     case 'i': here++;                             break;
     case 'r': here++;                             break;
+    case '-': here++;                             break;
+    case 'o': here = atoi(buffer+2);              break;
+    case '*': here += atoi(buffer+2);             break;
     case 'd': target[here++] = atoi(buffer+2);    break;
+    case 'D': parse_dict_line(buffer, name, label, class_name);
+              here += dict_entry_size(name);
+                                                  break;
     case 's': here = here + strlen(buffer) - 1;   break;
     case ':':                                     break;
   }
@@ -222,15 +247,32 @@ void pass3(char *buffer) {
 
 void pass4(char *buffer) {
   unsigned int opcode;
+  char name[256], label[256], class_name[256];
   switch (buffer[0]) {
     case 'i': here++;                             break;
     case 'r': here++;                             break;
+    case '-': here++;                             break;
     case 'd': here++;                             break;
+    case 'o': here = atoi(buffer+2);              break;
+    case '*': here += atoi(buffer+2);             break;
     case 's': opcode = 2;
               while (opcode < strlen(buffer)) {
                 target[here++] = buffer[opcode++];
               }
               target[here++] = 0;
+                                                  break;
+    case 'D': {
+                CELL start = here;
+                parse_dict_line(buffer, name, label, class_name);
+                CELL size = dict_entry_size(name);
+                CELL string_start = start + 9;
+                size_t len = strlen(name);
+                for (size_t i = 0; i < len; i++) {
+                  target[string_start + i] = name[i];
+                }
+                target[string_start + len] = 0;
+                here += size;
+              }
                                                   break;
     case ':':                                     break;
   }
@@ -240,14 +282,48 @@ void pass4(char *buffer) {
 /* the fifth pass resolves references to labels */
 
 void pass5(char *buffer) {
+  char name[256], label[256], class_name[256];
   switch (buffer[0]) {
     case 'i': here++;                             break;
+    case 'o': here = atoi(buffer+2);              break;
+    case '*': here += atoi(buffer+2);             break;
     case 'r': target[here++] = lookup(buffer+2);
+              if (lookup(buffer+2) == -1)
+                printf("Lookup failed: '%s'\n", buffer+2);
+                                                  break;
+    case '-': target[here++] = lookup(buffer+2);
               if (lookup(buffer+2) == -1)
                 printf("Lookup failed: '%s'\n", buffer+2);
                                                   break;
     case 'd': here++;                             break;
     case 's': here = here + strlen(buffer) - 1;   break;
+    case 'D': {
+                CELL start = here;
+                parse_dict_line(buffer, name, label, class_name);
+                CELL size = dict_entry_size(name);
+                CELL link = (dictionary_entries == 0) ? 0 : last_dictionary_entry;
+                CELL xt = lookup(label);
+                CELL class_handler = lookup(class_name);
+                if (xt == -1) {
+                  printf("Lookup failed: '%s'\n", label);
+                }
+                if (class_handler == -1) {
+                  printf("Lookup failed: '%s'\n", class_name);
+                }
+                target[start + 0] = link;
+                target[start + 1] = xt;
+                target[start + 2] = class_handler;
+                target[start + 3] = 0; /* source */
+                target[start + 4] = 0; /* hash */
+                target[start + 5] = 0; /* stack */
+                target[start + 6] = 0; /* astack */
+                target[start + 7] = 0; /* fstack */
+                target[start + 8] = 0; /* descr */
+                last_dictionary_entry = start;
+                dictionary_entries++;
+                here += size;
+              }
+                                                  break;
     case ':':                                     break;
   }
 }
@@ -259,6 +335,8 @@ int main(int argc, char **argv) {
   bsd_strlcpy(code_end,   "~~~", 32);
   bsd_strlcpy(test_start, "```", 32);
   bsd_strlcpy(test_end,   "```", 32);
+  last_dictionary_entry = 0;
+  dictionary_entries = 0;
   np = 0;
   if (argc > 1) {
     here = 0; unu(argv[1], 0, &pass1);
@@ -277,6 +355,36 @@ int main(int argc, char **argv) {
 
 
 /* *********************************************************************** */
+
+void parse_dict_line(char *buffer, char *name, char *label, char *class_name) {
+  char *p = buffer + 2;
+  int field = 0;
+  char *dest = name;
+  size_t max = 256;
+  name[0] = label[0] = class_name[0] = '\0';
+  while (*p == ' ' || *p == '\t') { p++; }
+  while (*p != '\0') {
+    if (*p == ' ' || *p == '\t') {
+      while (*p == ' ' || *p == '\t') { p++; }
+      field++;
+      if (field == 1) { dest = label; max = 256; label[0] = '\0'; }
+      else if (field == 2) { dest = class_name; max = 256; class_name[0] = '\0'; }
+      else { break; }
+      continue;
+    }
+    size_t len = strlen(dest);
+    if (len + 1 < max) {
+      dest[len] = *p;
+      dest[len + 1] = '\0';
+    }
+    p++;
+  }
+}
+
+CELL dict_entry_size(char *name) {
+  return 9 + (CELL)strlen(name) + 1;
+}
+
 
 /* GNU libc does not include the strl* functions available on BSD systems.
    I include a copy of the OpenBSD implementation here as I'd rather use
