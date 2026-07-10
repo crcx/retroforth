@@ -1643,14 +1643,40 @@ V i_ie(NgaState *vm) {
   stack_push(vm, vm->devices);
 }
 
+int valid_device(NgaState *vm, CELL device) {
+  return device >= 0 && device < vm->devices && device < MAX_DEVICES;
+}
+
+V invalid_device(NgaState *vm, CELL device) {
+#ifdef ENABLE_ERROR
+  if (vm->ErrorHandlers[5] != 0) {
+    handle_error(vm, 5);
+    return;
+  }
+#endif
+  printf("\nERROR (nga/device): Invalid device id %lld\n", (long long)device);
+  ACTIVE.ip = IMAGE_SIZE;
+  ACTIVE.rp = 0;
+}
+
 V i_iq(NgaState *vm) {
   guard(vm, 1, 1, 0);
-  vm->IO_queryHandlers[stack_pop(vm)](vm);
+  CELL device = stack_pop(vm);
+  if (valid_device(vm, device)) {
+    vm->IO_queryHandlers[device](vm);
+  } else {
+    invalid_device(vm, device);
+  }
 }
 
 V i_ii(NgaState *vm) {
   guard(vm, 1, 0, 0);
-  vm->IO_deviceHandlers[stack_pop(vm)](vm);
+  CELL device = stack_pop(vm);
+  if (valid_device(vm, device)) {
+    vm->IO_deviceHandlers[device](vm);
+  } else {
+    invalid_device(vm, device);
+  }
 }
 
 Handler instructions[] = {
