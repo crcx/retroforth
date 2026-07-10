@@ -38,6 +38,9 @@
 - nga-c
 
   - add device range validation for i/o
+  - add checks for file i/o operations
+  - split string handling to a separate source file
+  - split scripting interface to a separate source file
 
 Future Notes
 
