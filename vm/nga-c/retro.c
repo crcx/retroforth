@@ -29,103 +29,14 @@
 #include "config.h"
 #include "devices.h"
 
-#define ACTIVE vm->cpu[vm->active]
-#define TIB vm->memory[7]
-#define TIB_END vm->memory[8]
-
-#define MAX_DEVICES      32
-#define MAX_OPEN_FILES   32
+#include "nga_core.h"
 
 #include "image.c"
-
-typedef struct NgaState NgaState;
-
-typedef void (*Handler)(NgaState *);
-
-struct NgaCore {
-  CELL sp, rp, ip;            /* Stack & instruction pointers */
-  CELL active;                /* Is core active?              */
-  CELL u;                     /* Should next operation be     */
-                              /* unsigned?                    */
-  CELL data[STACK_DEPTH];     /* The data stack               */
-  CELL address[ADDRESSES];    /* The address stack            */
-
-#ifdef ENABLE_MULTICORE
-  CELL registers[24];         /* Internal Registers           */
-#endif
-};
-
-struct NgaState {
-  /* System Memory */
-  CELL memory[IMAGE_SIZE + 1];
-
-  /* CPU Cores */
-  struct NgaCore cpu[CORES];
-  int active;
-
-  /* I/O Devices */
-  int devices;
-  Handler IO_deviceHandlers[MAX_DEVICES];
-  Handler IO_queryHandlers[MAX_DEVICES];
-
-  CELL Dictionary, interpret;    /* Interfacing     */
-  char string_data[8192];
-
-#ifdef ENABLE_FLOATS
-  double Floats[256], AFloats[256];        /* Floating Point */
-  CELL fsp, afsp;
-#endif
-
-#ifdef ENABLE_BLOCKS
-  char BlockFile[1025];
-#endif
-
-#ifdef ENABLE_ERROR
-  CELL ErrorHandlers[64];
-#endif
-
-  /* Scripting */
-  char **sys_argv;
-  int sys_argc;
-  char scripting_sources[64][8192];
-  char line[4096];
-  int current_source;
-  int perform_abort;
-  int interactive;
-
-  CELL currentLine;
-  CELL ignoreToEOL, ignoreToEOF;
-
-  /* Configuration of code & test fences for Unu */
-  char code_start[256], code_end[256];
-  char test_start[256], test_end[256];
-  int codeBlocks;
-
-  FILE *OpenFileHandles[MAX_OPEN_FILES];
-};
-
-
-
-#define V void
 
 #define IO(name) void io_name(NgaState *); void query_name(NgaState *);
 
 
-/* Function Prototypes ----------------------------------------------- */
-V handle_error(NgaState *, CELL);
-
-CELL stack_pop(NgaState *);
-V stack_push(NgaState *, CELL);
-CELL string_inject(NgaState *, char *, CELL);
-char *string_extract(NgaState *, CELL);
-V update_rx(NgaState *);
-V include_file(NgaState *, char *, int);
-V include_plain_file(NgaState *, char *, int);
-V initialize_scripting(NgaState *);
-V carry_out_abort(NgaState *);
-
-V register_device(NgaState *, V *, V *);
-
+/* Device Prototypes ------------------------------------------------- */
 IO(output)
 IO(keyboard)
 IO(filesystem)
@@ -161,48 +72,16 @@ IO(ioctl)
 
 IO(image)
 
-V load_embedded_image(NgaState *);
-CELL load_image(NgaState *, char *);
-V prepare_vm(NgaState *);
-V execute(NgaState *, CELL);
-V process_opcode_bundle(NgaState *, CELL);
-#ifndef BRANCH_PREDICTION
-V validate_opcode_bundle(NgaState *, CELL);
-#endif
-#ifdef ENABLE_MULTICORE
-V switch_core(NgaState *);
-#endif
-
-#ifdef NEEDS_STRL
-size_t strlcat(char *dst, const char *src, size_t dsize);
-size_t strlcpy(char *dst, const char *src, size_t dsize);
-#endif
-
-V i_no(NgaState *);  V i_li(NgaState *);
-V i_du(NgaState *);  V i_dr(NgaState *);
-V i_sw(NgaState *);  V i_pu(NgaState *);
-V i_po(NgaState *);  V i_ju(NgaState *);
-V i_ca(NgaState *);  V i_cc(NgaState *);
-V i_re(NgaState *);  V i_eq(NgaState *);
-V i_ne(NgaState *);  V i_lt(NgaState *);
-V i_gt(NgaState *);  V i_fe(NgaState *);
-V i_st(NgaState *);  V i_ad(NgaState *);
-V i_su(NgaState *);  V i_mu(NgaState *);
-V i_di(NgaState *);  V i_an(NgaState *);
-V i_or(NgaState *);  V i_xo(NgaState *);
-V i_sh(NgaState *);  V i_zr(NgaState *);
-V i_ha(NgaState *);  V i_ie(NgaState *);
-V i_iq(NgaState *);  V i_ii(NgaState *);
-
-
-/* Image, Stack, and VM variables ------------------------------------ */
-#define TOS  ACTIVE.data[ACTIVE.sp]
-#define NOS  ACTIVE.data[ACTIVE.sp-1]
-#define TORS ACTIVE.address[ACTIVE.rp]
-
 /* Global Variables -------------------------------------------------- */
 
 int verbose;
+
+/* Include Module Order -----------------------------------------------
+  image.c provides the embedded image data consumed by nga_core.c.
+  nga_core.c provides stack, image, execution, and opcode primitives.
+  string_handling.c and device modules depend on the VM state/macros.
+  scripting.c is included later, after execute() is available.
+  --------------------------------------------------------------------*/
 
 #include "nga_core.c"
 

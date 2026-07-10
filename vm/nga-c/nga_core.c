@@ -11,6 +11,10 @@
 
 **************************************************************/
 
+#ifndef RETRO_NGA_CORE_H
+#error "nga_core.c must be included after nga_core.h"
+#endif
+
 #ifndef BRANCH_PREDICTION
 V guard(NgaState *vm, int n, int m, int diff) {
   if (ACTIVE.sp < n) {
