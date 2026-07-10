@@ -41,6 +41,7 @@
   - add checks for file i/o operations
   - split string handling to a separate source file
   - split scripting interface to a separate source file
+  - split nga core into separate nga_core.c
 
 Future Notes
 
