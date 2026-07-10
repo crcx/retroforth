@@ -197,9 +197,11 @@ V stack_push(NgaState *vm, CELL value) {
   ---------------------------------------------------------------------*/
 
 V update_rx(NgaState *vm) {
-  vm->Dictionary = vm->memory[2];
-  vm->interpret = vm->memory[5];
-  if (vm->memory[10] != 0) { execute(vm, vm->memory[10]); }
+  vm->Dictionary = vm->memory[RETRO_IMAGE_DICTIONARY];
+  vm->interpret = vm->memory[RETRO_IMAGE_INTERPRET];
+  if (vm->memory[RETRO_IMAGE_DICTREHASH] != 0) {
+    execute(vm, vm->memory[RETRO_IMAGE_DICTREHASH]);
+  }
 }
 
 /*=====================================================================*/

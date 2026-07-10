@@ -17,6 +17,7 @@
 #include <string.h>
 #include <limits.h>
 
+#include "generated/retro_layout.h"
 
 /* To aid in readability */
 
@@ -25,22 +26,7 @@
 #define TORS address[rp]
 
 
-/* This assumes some knowledge of the ngaImage format for the
-   Retro language. If things change there, these will need to
-   be adjusted to match. */
-
-#define TIB memory[7]
-#define D_OFFSET_LINK     0
-#define D_OFFSET_XT       1
-#define D_OFFSET_CLASS    2
-#define D_OFFSET_SOURCE   3
-#define D_OFFSET_HASH     4
-#define D_OFFSET_STACK    5
-#define D_OFFSET_RSTACK   6
-#define D_OFFSET_FSTACK   7
-#define D_OFFSET_DESCR    8
-#define D_OFFSET_NAME     9
-
+#define TIB memory[RETRO_IMAGE_TIB]
 
 /* These settings can be overridden at compile time. */
 
@@ -167,7 +153,7 @@ int main(int argc, char **argv) {
     printf("Unable to save the ngaImage!\n");
     exit(2);
   }
-  fwrite(&memory, sizeof(CELL), memory[3] + 1, fp);
+  fwrite(&memory, sizeof(CELL), memory[RETRO_IMAGE_HEAP] + 1, fp);
   fclose(fp);
   if (sp != 0) {
     printf("Stack not empty!\n");
@@ -210,19 +196,19 @@ char *string_extract(CELL at) {
 }
 
 int d_link(CELL dt) {
-  return dt + D_OFFSET_LINK;
+  return dt + RETRO_DICT_OFFSET_LINK;
 }
 
 int d_xt(CELL dt) {
-  return dt + D_OFFSET_XT;
+  return dt + RETRO_DICT_OFFSET_XT;
 }
 
 int d_class(CELL dt) {
-  return dt + D_OFFSET_CLASS;
+  return dt + RETRO_DICT_OFFSET_CLASS;
 }
 
 int d_name(CELL dt) {
-  return dt + D_OFFSET_NAME;
+  return dt + RETRO_DICT_OFFSET_NAME;
 }
 
 int d_lookup(CELL Dictionary, char *name) {
@@ -254,8 +240,8 @@ CELL d_class_for(char *Name, CELL Dictionary) {
    in sync with the image state. */
 
 void update_rx() {
-  Dictionary = memory[2];
-  Heap = memory[3];
+  Dictionary = memory[RETRO_IMAGE_DICTIONARY];
+  Heap = memory[RETRO_IMAGE_HEAP];
   Compiler = d_xt_for("Compiler", Dictionary);
   notfound = d_xt_for("err:notfound", Dictionary);
   interpret = d_xt_for("interpret", Dictionary);

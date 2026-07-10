@@ -37,6 +37,7 @@ from DecimalDevice import DecimalStack
 from IntegerStack import IntegerStack
 from Memory import Memory
 from InitialImage import InitialImage
+from layout import DICTIONARY, IMAGE
 
 from BenchmarkDevice import BenchmarkDevice
 
@@ -64,7 +65,7 @@ except:
 
 class Retro:
     def map_in(self, name):
-        return self.memory[self.find_entry(name) + 1]
+        return self.memory[self.find_entry(name) + DICTIONARY["xt"]]
 
     def __init__(self):
         self.ip = 0
@@ -147,9 +148,9 @@ class Retro:
 
     def populate_dictionary(self):
         Dictionary = dict()
-        header = self.memory[2]
+        header = self.memory[IMAGE["Dictionary"]]
         while header != 0:
-            named = self.extract_string(header + 9)
+            named = self.extract_string(header + DICTIONARY["name"])
             if not named in Dictionary:
                 Dictionary[named] = header
             header = self.memory[header]
@@ -159,10 +160,10 @@ class Retro:
         if named in self.Dictionary:
             return self.Dictionary[named]
 
-        header = self.memory[2]
+        header = self.memory[IMAGE["Dictionary"]]
         Done = False
         while header != 0 and not Done:
-            if named == self.extract_string(header + 9):
+            if named == self.extract_string(header + DICTIONARY["name"]):
                 self.Dictionary[named] = header
                 Done = True
             else:
@@ -678,8 +679,8 @@ class Retro:
                 done = True
             else:
                 for token in line.split():
-                    self.inject_string(token, self.memory[7])
-                    self.stack.push(self.memory[7])
+                    self.inject_string(token, self.memory[IMAGE["TIB"]])
+                    self.stack.push(self.memory[IMAGE["TIB"]])
                     self.execute(self.Cached["interpreter"], self.Cached["not_found"])
 
     def run_file(self, file):
@@ -694,8 +695,8 @@ class Retro:
                     in_block = not in_block
                 elif in_block:
                     for token in line.strip().split():
-                        self.inject_string(token, self.memory[7])
-                        self.stack.push(self.memory[7])
+                        self.inject_string(token, self.memory[IMAGE["TIB"]])
+                        self.stack.push(self.memory[IMAGE["TIB"]])
                         self.execute(
                             self.Cached["interpreter"], self.Cached["not_found"]
                         )

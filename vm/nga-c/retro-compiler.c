@@ -22,6 +22,8 @@
 #include <sys/stat.h>
 #include <limits.h>
 
+#include "layout.h"
+
 #ifndef BIT64
 #define CELL int32_t
 #define CELL_MIN INT_MIN + 1
@@ -44,13 +46,7 @@
 #define STACK_DEPTH  256          /* Depth of data stack               */
 #endif
 
-#define TIB memory[7]             /* Location of TIB                   */
-
-#define D_OFFSET_LINK     0       /* Dictionary Format Info. Update if */
-#define D_OFFSET_XT       1       /* you change the dictionary fields. */
-#define D_OFFSET_CLASS    2
-#define D_OFFSET_STACK    5
-#define D_OFFSET_NAME     9
+#define TIB memory[RETRO_IMAGE_TIB] /* Location of TIB                 */
 
 #define NUM_DEVICES       1       /* Set the number of I/O devices     */
 
@@ -185,7 +181,7 @@ void write_image() {
     printf("Unable to save the ngaImage!\n");
     exit(2);
   }
-  fwrite(&memory, sizeof(CELL), memory[3] + 1, fp);
+  fwrite(&memory, sizeof(CELL), memory[RETRO_IMAGE_HEAP] + 1, fp);
   fclose(fp);
 }
 
@@ -211,7 +207,7 @@ int main(int argc, char **argv) {
   generate_turnkey();
   unlink("__ngaImage");
 
-  printf("\nFinal image is %lld cells\n", (long long)memory[3]);
+  printf("\nFinal image is %lld cells\n", (long long)memory[RETRO_IMAGE_HEAP]);
   return validate_image(tokens);
 }
 
@@ -252,11 +248,11 @@ char *string_extract(int at) {
 }
 
 int d_xt(CELL dt) {
-  return dt + D_OFFSET_XT;
+  return dt + RETRO_DICT_OFFSET_XT;
 }
 
 int d_name(CELL dt) {
-  return dt + D_OFFSET_NAME;
+  return dt + RETRO_DICT_OFFSET_NAME;
 }
 
 int d_lookup(CELL Dictionary, char *name) {
@@ -284,8 +280,8 @@ CELL d_xt_for(char *Name, CELL Dictionary) {
    in sync with the image state. */
 
 void update_rx() {
-  Dictionary = memory[2];
-  Heap = memory[3];
+  Dictionary = memory[RETRO_IMAGE_DICTIONARY];
+  Heap = memory[RETRO_IMAGE_HEAP];
   Compiler = d_xt_for("Compiler", Dictionary);
   notfound = d_xt_for("err:notfound", Dictionary);
 }

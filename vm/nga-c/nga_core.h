@@ -14,9 +14,11 @@
 #ifndef RETRO_NGA_CORE_H
 #define RETRO_NGA_CORE_H
 
+#include "layout.h"
+
 #define ACTIVE vm->cpu[vm->active]
-#define TIB vm->memory[7]
-#define TIB_END vm->memory[8]
+#define TIB vm->memory[RETRO_IMAGE_TIB]
+#define TIB_END vm->memory[RETRO_IMAGE_TIB_END]
 #define TOS  ACTIVE.data[ACTIVE.sp]
 #define NOS  ACTIVE.data[ACTIVE.sp-1]
 #define TORS ACTIVE.address[ACTIVE.rp]

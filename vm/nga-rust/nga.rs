@@ -2,6 +2,9 @@ use std::convert::TryInto;
 use std::io::{BufRead, Read, Write};
 use std::process::exit;
 
+mod layout;
+use layout::{DICT_OFFSET_NAME, DICT_OFFSET_XT, IMAGE_DICTIONARY, IMAGE_HEAP, IMAGE_TIB, IMAGE_VERSION};
+
 const IMAGE_SIZE: usize = 242000;
 const NUM_DEVICES: usize = 2;
 
@@ -71,10 +74,10 @@ impl VM {
     }
 
     fn nga_lookup(&self, name: String) -> usize {
-        let mut i: usize = self.memory[2] as usize;
+        let mut i: usize = self.memory[IMAGE_DICTIONARY] as usize;
 
         while self.memory[i] != 0 && i != 0 {
-            let target = self.nga_string_extract(i + 4);
+            let target = self.nga_string_extract(i + DICT_OFFSET_NAME);
             if name == target {
                 return i;
             } else {
@@ -340,7 +343,7 @@ impl VM {
     }
 
     fn nga_lookup_xt(&mut self, name: String) -> Cell {
-        self.memory[1 + self.nga_lookup(name)]
+        self.memory[DICT_OFFSET_XT + self.nga_lookup(name)]
     }
 
     fn new() -> VM {
@@ -443,11 +446,11 @@ fn main() {
 
     vm.nga_load_image("ngaImage");
 
-    vm.tib = vm.memory[7];
+    vm.tib = vm.memory[IMAGE_TIB];
 
-    println!("RETRO 12 (rx-{}.{})", vm.memory[4] / 100, vm.memory[4] % 100);
+    println!("RETRO 12 (rx-{}.{})", vm.memory[IMAGE_VERSION] / 100, vm.memory[IMAGE_VERSION] % 100);
 
-    println!("{} MAX, TIB @ {}, HEAP @ {}", IMAGE_SIZE, vm.tib, vm.memory[3]);
+    println!("{} MAX, TIB @ {}, HEAP @ {}", IMAGE_SIZE, vm.tib, vm.memory[IMAGE_HEAP]);
 
     for input in std::io::stdin().lock().lines() {
         for word in input.unwrap().split_whitespace() {

@@ -344,7 +344,7 @@ function execute(offset) {
     opcode = image[ip];
     if (ip == notfound) {
       document.getElementById('console').value +=
-        "err:notfound : " + string_extract(image[7]) + "\n";
+        "err:notfound : " + string_extract(image[RETRO_IMAGE.TIB]) + "\n";
     }
     if (validatePackedOpcodes(opcode) != 0) {
       ngaProcessPackedOpcodes(opcode);
@@ -396,16 +396,16 @@ function string_extract(at) {
 }
 
 function d_xt(dt) {
-  return dt + 1;
+  return dt + RETRO_DICTIONARY.xt;
 }
 
 function d_name(dt) {
-  return dt + 4;
+  return dt + RETRO_DICTIONARY.name;
 }
 
 function d_lookup(name) {
   var dt = 0;
-  var i = image[2];
+  var i = image[RETRO_IMAGE.Dictionary];
   var dname;
   while (image[i] != 0 && i != 0) {
     dname = string_extract(d_name(i));
@@ -426,8 +426,8 @@ function d_xt_for(name) {
 function evaluate(s) {
   if (s.length == 0)
     return;
-  string_inject(s, image[7]);
-  data.push(image[7]);
+  string_inject(s, image[RETRO_IMAGE.TIB]);
+  data.push(image[RETRO_IMAGE.TIB]);
   execute(interpret);
 }
 

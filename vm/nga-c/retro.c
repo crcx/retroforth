@@ -148,7 +148,7 @@ V io_image(NgaState *vm) {
     printf("\nERROR (nga/io_image): Unable to save the image: %s!\n", f);
     exit(2);
   }
-  fwrite(vm->memory, sizeof(CELL), vm->memory[3] + 1, fp);
+  fwrite(vm->memory, sizeof(CELL), vm->memory[RETRO_IMAGE_HEAP] + 1, fp);
   fclose(fp);
 }
 

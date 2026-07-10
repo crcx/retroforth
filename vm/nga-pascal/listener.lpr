@@ -15,9 +15,6 @@ uses
 
 {$include 'nga.inc'}
 
-const
-  TIB       = 1100;
-
 //implementation
 
 procedure include_file(fname : PChar);
@@ -74,14 +71,14 @@ begin
   if n = 0 then
     exit();
   update_rx();
-  writeln(format('RETRO 12 (rx-%d.%d)', [memory[4] div 100, memory[4] mod 100]));
+  writeln(format('RETRO 12 (rx-%d.%d)', [memory[RETRO_IMAGE_VERSION] div 100, memory[RETRO_IMAGE_VERSION] mod 100]));
   //include_file('retro.forth');
-  writeln(format('%d MAX, TIB @ %d, Heap @ %d', [IMAGE_SIZE, TIB, Heap]));
+  writeln(format('%d MAX, TIB @ %d, Heap @ %d', [IMAGE_SIZE, memory[RETRO_IMAGE_TIB], Heap]));
   writeln();
   while true do
   begin
     prompt();
-    Dictionary := memory[2];
+    Dictionary := memory[RETRO_IMAGE_DICTIONARY];
     read_token(input);
     if strcomp(input, 'bye') = 0 then
     begin
@@ -106,4 +103,3 @@ begin
       evaluate(input);
   end;
 end.
-

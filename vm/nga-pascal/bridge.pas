@@ -12,13 +12,7 @@ unit bridge;
 interface
 
 {$include 'nga.inc'}
-
-const
-  D_OFFSET_LINK  = 0;
-  D_OFFSET_XT    = 1;
-  D_OFFSET_CLASS = 2;
-  D_OFFSET_NAME  = 9;
-  TIB            = 1471;
+{$include 'layout.inc'}
 
 var
   Dictionary, Heap, Compiler, notfound : Cell;
@@ -92,22 +86,22 @@ end;
 
 function d_link(dt : Cell) : Integer;
 begin
-  result := dt + D_OFFSET_LINK;
+  result := dt + RETRO_DICT_OFFSET_LINK;
 end;
 
 function d_xt(dt : Cell) : Integer;
 begin
-  result := dt + D_OFFSET_XT;
+  result := dt + RETRO_DICT_OFFSET_XT;
 end;
 
 function d_class(dt : Cell) : Integer;
 begin
-  result := dt + D_OFFSET_CLASS;
+  result := dt + RETRO_DICT_OFFSET_CLASS;
 end;
 
 function d_name(dt : Cell) : Integer;
 begin
-  result := dt + D_OFFSET_NAME;
+  result := dt + RETRO_DICT_OFFSET_NAME;
 end;
 
 function d_count_entries(Dictionary : Cell) : Cell;
@@ -164,7 +158,7 @@ begin
   while ip < IMAGE_SIZE - 1 do
   begin
     if ip = notfound then
-      writeln(format('%s ?', [string_extract(TIB)]));
+      writeln(format('%s ?', [string_extract(memory[RETRO_IMAGE_TIB])]));
     opcode := memory[ip];
     if ngaValidatePackedOpcodes(opcode) <> 0 then
       ngaProcessPackedOpcodes(opcode)
@@ -197,8 +191,8 @@ end;
 
 procedure update_rx();
 begin
-  Dictionary := memory[2];
-  Heap := memory[3];
+  Dictionary := memory[RETRO_IMAGE_DICTIONARY];
+  Heap := memory[RETRO_IMAGE_HEAP];
   Compiler := d_xt_for('Compiler', Dictionary);
   notfound := d_xt_for('err:notfound', Dictionary);
 end;
@@ -211,8 +205,8 @@ begin
     exit();
   update_rx();
   interpret := d_xt_for('interpret', Dictionary);
-  string_inject(s, TIB);
-  stack_push(TIB);
+  string_inject(s, memory[RETRO_IMAGE_TIB]);
+  stack_push(memory[RETRO_IMAGE_TIB]);
   execute(interpret);
 end;
 
