@@ -616,3 +616,5 @@ V process_opcode_bundle(NgaState *vm, CELL opcode) {
   }
 #endif
 }
+
+#define RETRO_NGA_CORE_IMPLEMENTED 1

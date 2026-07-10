@@ -114,6 +114,10 @@ V handle_error(NgaState *, CELL);
 V carry_out_abort(NgaState *);
 
 /* String and scripting helpers shared by devices and the host runtime */
+V display_utf8(const unsigned char *, int);
+V utf32_to_utf8(uint32_t, unsigned char *, int *);
+int read_character(int);
+int fread_character(FILE *);
 CELL string_inject(NgaState *, char *, CELL);
 char *string_extract(NgaState *, CELL);
 V include_file(NgaState *, char *, int);

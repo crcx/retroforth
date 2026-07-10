@@ -11,10 +11,6 @@
 
 **************************************************************/
 
-
-V utf32_to_utf8(uint32_t, unsigned char*, int*);
-int fread_character(FILE *);
-
 /*---------------------------------------------------------------------
   I keep an array of file handles. RETRO will use the index number as
   its representation of the file.

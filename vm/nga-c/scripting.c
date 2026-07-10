@@ -11,6 +11,14 @@
 
 **************************************************************/
 
+#ifndef RETRO_NGA_CORE_IMPLEMENTED
+#error "scripting.c must be included after nga_core.c"
+#endif
+
+#ifndef RETRO_STRING_HANDLING_IMPLEMENTED
+#error "scripting.c must be included after string_handling.c"
+#endif
+
 /*---------------------------------------------------------------------
   Scripting Support
   ---------------------------------------------------------------------*/

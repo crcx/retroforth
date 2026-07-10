@@ -76,66 +76,7 @@ IO(image)
 
 int verbose;
 
-/* Include Module Order -----------------------------------------------
-  image.c provides the embedded image data consumed by nga_core.c.
-  nga_core.c provides stack, image, execution, and opcode primitives.
-  string_handling.c and device modules depend on the VM state/macros.
-  scripting.c is included later, after execute() is available.
-  --------------------------------------------------------------------*/
-
-#include "nga_core.c"
-
-#include "string_handling.c"
-
-#ifdef ENABLE_IOCTL
-#include "dev-ioctl.c"
-#endif
-
-#ifdef ENABLE_MALLOC
-#ifdef BIT64
-#include "dev-malloc.c"
-#endif
-#endif
-
-#ifdef ENABLE_ERROR
-#include "dev-error.c"
-#endif
-
-#ifdef ENABLE_BLOCKS
-#include "dev-blocks.c"
-#endif
-
-#ifdef ENABLE_FILES
-#include "dev-files.c"
-#endif
-
-#ifdef ENABLE_MULTICORE
-#include "dev-multicore.c"
-#endif
-
-#ifdef ENABLE_FFI
-#include "dev-ffi.c"
-#endif
-
-#ifdef ENABLE_FLOATS
-#include "dev-float.c"
-#endif
-
-#ifdef ENABLE_CLOCK
-#include "dev-clock.c"
-#endif
-
-#ifdef ENABLE_RNG
-#include "dev-rng.c"
-#endif
-
-#ifdef ENABLE_SOCKETS
-#include "dev-sockets.c"
-#endif
-
-#ifdef ENABLE_UNIX
-#include "dev-unix.c"
-#endif
+#include "retro_modules.c"
 
 
 V io_output(NgaState *vm) {
@@ -219,8 +160,6 @@ V query_image(NgaState *vm) {
 
 /*=====================================================================*/
 
-
-#include "scripting.c"
 
 /*---------------------------------------------------------------------
   Display the Stack Contents

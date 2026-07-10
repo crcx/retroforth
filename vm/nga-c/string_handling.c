@@ -11,6 +11,10 @@
 
 **************************************************************/
 
+#ifndef RETRO_NGA_CORE_IMPLEMENTED
+#error "string_handling.c must be included after nga_core.c"
+#endif
+
 #include "utf32.c"
 
 V display_utf8(const unsigned char* utf8_bytes, int num_bytes) {
@@ -188,3 +192,5 @@ char *string_extract(NgaState *vm, CELL at) {
   vm->string_data[i] = 0;
   return (char *)vm->string_data;
 }
+
+#define RETRO_STRING_HANDLING_IMPLEMENTED 1

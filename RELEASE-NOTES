@@ -42,6 +42,8 @@
   - split string handling to a separate source file
   - split scripting interface to a separate source file
   - split nga core into separate nga_core.c
+  - better compile time error messages if device/module order
+    is incorrect
 
 Future Notes
 
