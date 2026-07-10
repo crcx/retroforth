@@ -13,6 +13,8 @@
 - toolchain
 
   - retro-muri gained additional directives
+  - generate-layout to turn a description of dictionary and
+    image format into usable includes for the VM & tools
 
 - documentation
 

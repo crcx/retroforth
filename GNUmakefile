@@ -18,7 +18,7 @@ build: dirs toolchain ngaImage bin/retro bin/retro-describe
 
 optional: build bin/retro-repl
 
-toolchain: dirs bin/retro-embedimage bin/retro-extend bin/retro-muri bin/retro-unu
+toolchain: dirs layout bin/retro-embedimage bin/retro-extend bin/retro-muri bin/retro-unu
 
 image: vm/nga-c/image.c
 
@@ -91,6 +91,13 @@ install-manpages:
 
 
 # toolchain targets
+
+layout: dirs bin/generate-layout tools/layout/image.tsv tools/layout/dictionary.tsv
+	@mkdir -p tools/generated
+	@./bin/generate-layout
+
+bin/generate-layout: tools/generate-layout.c
+	@$(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o $@ $^
 
 bin/retro-describe: tools/retro-describe.retro doc/words.tsv
 	@cat tools/retro-describe.retro > bin/retro-describe
@@ -198,4 +205,3 @@ test: bin/retro
 
 update: bin/retro image/retro.forth image/retro.muri
 	./bin/retro tools/update-build.retro > image/build.retro
-

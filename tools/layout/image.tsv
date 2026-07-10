@@ -1,0 +1,10 @@
+# Canonical RETRO image cell layout.
+Dictionary  2
+Heap        3
+Version     4
+interpret   5
+NotFound    6
+TIB         7
+TIB_END     8
+DictHash    9
+DictRehash  10

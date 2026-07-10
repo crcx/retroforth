@@ -1,0 +1,11 @@
+# Canonical RETRO dictionary header layout.
+link    0
+xt      1
+class   2
+source  3
+hash    4
+stack   5
+astack  6
+fstack  7
+descr   8
+name    9

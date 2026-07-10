@@ -14,7 +14,7 @@ build: dirs toolchain ngaImage binaries
 
 binaries: bin/retro bin/retro-repl bin/retro-describe
 
-toolchain: dirs bin/retro-embedimage bin/retro-extend bin/retro-muri bin/retro-unu
+toolchain: dirs layout bin/retro-embedimage bin/retro-extend bin/retro-muri bin/retro-unu
 
 image: vm/nga-c/image.c
 
@@ -82,6 +82,13 @@ install-manpages:
 	install -c -m 644 man/retro-locate.1 $(MANDIR)/retro-locate.1
 
 # Toolchain ----------------------------------------------------
+
+layout: dirs bin/generate-layout tools/layout/image.tsv tools/layout/dictionary.tsv
+	@mkdir -p tools/generated
+	@./bin/generate-layout
+
+bin/generate-layout: tools/generate-layout.c
+	@$(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o $@ $>
 
 bin/retro-describe: tools/retro-describe.retro
 	@cp tools/retro-describe.retro bin/retro-describe
