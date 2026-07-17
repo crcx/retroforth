@@ -1583,7 +1583,7 @@ d 2
 i lica....
 r name-to-id
 : id-to-opcode
-i lilica....
+i lilica..
 r Instructions
 r opcode-lookup
 i swdrlisu
