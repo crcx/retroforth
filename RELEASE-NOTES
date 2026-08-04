@@ -13,6 +13,7 @@
 - toolchain
 
   - retro-muri gained additional directives
+  - retro-muri now validates instruction bundles
   - generate-layout to turn a description of dictionary and
     image format into usable includes for the VM & tools
 

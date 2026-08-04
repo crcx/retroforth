@@ -40,7 +40,7 @@ CELL here;
 CELL last_dictionary_entry;
 int dictionary_entries;
 
-typedef void (*Handler)(char *);
+typedef void (*Handler)(char *, int);
 void unu(char *, int, Handler);
 size_t bsd_strlcpy(char *dst, const char *src, size_t dsize);
 void parse_dict_line(char *buffer, char *name, char *label, char *class_name);
@@ -59,6 +59,10 @@ CELL dict_entry_size(char *name);
    I embed a minimal version of this here. */
 
 char code_start[33], code_end[33], test_start[33], test_end[33];
+
+void red()   { printf("\033[0;31m"); }
+void cyan()  { printf("\033[0;36m"); }
+void plain() { printf("\033[0;0m");  }
 
 void read_line(FILE *file, char *line_buffer) {
   int ch = getc(file);
@@ -81,8 +85,100 @@ int fence_boundary(char *buffer, int tests_enabled) {
   return flag;
 }
 
+/* Strip an inline comment. `#` remains part of a string literal. */
+void strip_comments(char *line) {
+  char *hash_pos;
+  size_t len;
+
+  if (line[0] == 's') {
+    return;
+  }
+
+  hash_pos = strchr(line, '#');
+  while (hash_pos != NULL) {
+    if (hash_pos == line || *(hash_pos - 1) == ' ' || *(hash_pos - 1) == '\t') {
+      *hash_pos = '\0';
+      break;
+    }
+    hash_pos = strchr(hash_pos + 1, '#');
+  }
+
+  len = strlen(line);
+  while (len > 0 && (line[len - 1] == ' ' || line[len - 1] == '\t')) {
+    line[--len] = '\0';
+  }
+}
+
+/*
+ * Nga instructions use two-character names, four per cell. The Nga
+ * documentation recommends that instructions which modify IP (jump, call,
+ * ccall, return, and zret) are followed only by NOPs in the same bundle,
+ * for portable and predictable behavior.
+ */
+int is_valid_instruction(char *instruction) {
+  static const char *instructions[] = {
+    "..", "li", "du", "dr", "sw", "pu", "po", "ju", "ca", "cc",
+    "re", "eq", "ne", "lt", "gt", "fe", "st", "ad", "su", "mu",
+    "di", "an", "or", "xo", "sh", "zr", "ha", "ie", "iq", "ii"
+  };
+  int i;
+
+  for (i = 0; i < 30; i++) {
+    if (strncmp(instruction, instructions[i], 2) == 0) {
+      return 1;
+    }
+  }
+  return 0;
+}
+
+int modifies_instruction_pointer(char *instruction) {
+  return strncmp(instruction, "ju", 2) == 0 ||
+         strncmp(instruction, "ca", 2) == 0 ||
+         strncmp(instruction, "cc", 2) == 0 ||
+         strncmp(instruction, "re", 2) == 0 ||
+         strncmp(instruction, "zr", 2) == 0;
+}
+
+void validate_instruction_bundle(char *buffer, int line_number) {
+  char instruction[4][3];
+  int i, j;
+
+  if (buffer[0] != 'i' || buffer[1] != ' ') {
+    return;
+  }
+  if (strlen(buffer + 2) != 8) {
+    red(); printf("Error on line %d: instruction bundle must contain exactly four two-character instructions\n", line_number); plain();
+    exit(1);
+  }
+
+  for (i = 0; i < 4; i++) {
+    memcpy(instruction[i], buffer + 2 + (i * 2), 2);
+    instruction[i][2] = '\0';
+    if (!is_valid_instruction(instruction[i])) {
+      red(); printf("Error on line %d: invalid Nga instruction '", line_number);
+      cyan(); printf("%s", instruction[i]); plain();
+      printf("' in bundle '"); cyan(); printf("%s", buffer + 2); plain(); printf("'\n");
+      exit(1);
+    }
+  }
+
+  for (i = 0; i < 3; i++) {
+    if (modifies_instruction_pointer(instruction[i])) {
+      for (j = i + 1; j < 4; j++) {
+        if (strcmp(instruction[j], "..") != 0) {
+          red(); printf("Error on line %d: Nga instruction '", line_number);
+          cyan(); printf("%s", instruction[i]); plain();
+          printf("' must be followed only by NOPs (..) in its bundle\n");
+          exit(1);
+        }
+      }
+    }
+  }
+}
+
 void unu(char *fname, int tests_enabled, Handler handler) {
   int inBlock = 0;
+  int line_number = 0;
   char buffer[4096];
   FILE *fp;
   fp = fopen(fname, "r");
@@ -92,6 +188,7 @@ void unu(char *fname, int tests_enabled, Handler handler) {
   }
   while (!feof(fp)) {
     read_line(fp, buffer);
+    line_number++;
     if (fence_boundary(buffer, tests_enabled) == -1) {
       if (inBlock == 0) {
         inBlock = 1;
@@ -100,7 +197,9 @@ void unu(char *fname, int tests_enabled, Handler handler) {
       }
     } else {
       if (inBlock == 1) {
-        handler(buffer);
+        strip_comments(buffer);
+        validate_instruction_bundle(buffer, line_number);
+        handler(buffer, line_number);
       }
     }
   }
@@ -170,9 +269,11 @@ CELL opcode_for(char *s) {
 
 /* the first pass records the address for each label */
 
-void pass1(char *buffer) {
+void pass1(char *buffer, int line_number) {
   char name[256], label[256], class_name[256];
+  (void)line_number;
   switch (buffer[0]) {
+    case 'c':                                     break;
     case 'i': here++;                             break;
     case 'r': here++;                             break;
     case '-': here++;                             break;
@@ -190,12 +291,14 @@ void pass1(char *buffer) {
 
 /* the second pass assembles the instruction bundles */
 
-void pass2(char *buffer) {
+void pass2(char *buffer, int line_number) {
   unsigned int opcode;
   char inst[3];
   inst[2] = '\0';
   char name[256], label[256], class_name[256];
+  (void)line_number;
   switch (buffer[0]) {
+    case 'c':                                     break;
     case 'i': memcpy(inst, buffer + 8, 2);
               opcode = opcode_for(inst);
               opcode = opcode << 8;
@@ -225,9 +328,11 @@ void pass2(char *buffer) {
 
 /* the third pass assembles raw numeric values */
 
-void pass3(char *buffer) {
+void pass3(char *buffer, int line_number) {
   char name[256], label[256], class_name[256];
+  (void)line_number;
   switch (buffer[0]) {
+    case 'c':                                     break;
     case 'i': here++;                             break;
     case 'r': here++;                             break;
     case '-': here++;                             break;
@@ -245,10 +350,12 @@ void pass3(char *buffer) {
 
 /* the fourth pass assembles strings */
 
-void pass4(char *buffer) {
+void pass4(char *buffer, int line_number) {
   unsigned int opcode;
   char name[256], label[256], class_name[256];
+  (void)line_number;
   switch (buffer[0]) {
+    case 'c':                                     break;
     case 'i': here++;                             break;
     case 'r': here++;                             break;
     case '-': here++;                             break;
@@ -281,9 +388,11 @@ void pass4(char *buffer) {
 
 /* the fifth pass resolves references to labels */
 
-void pass5(char *buffer) {
+void pass5(char *buffer, int line_number) {
   char name[256], label[256], class_name[256];
+  (void)line_number;
   switch (buffer[0]) {
+    case 'c':                                     break;
     case 'i': here++;                             break;
     case 'o': here = atoi(buffer+2);              break;
     case '*': here += atoi(buffer+2);             break;
