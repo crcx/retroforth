@@ -139,15 +139,6 @@ bin/retro: vm/nga-c/image.c vm/nga-c/retro.c package/list.forth package/load-ext
 
 # optional targets
 
-bin/retro-compiler: toolchain vm/nga-c/retro-compiler.c vm/nga-c/retro-runtime.c
-	@cp ngaImage runtime.image
-	@$(EXTEND) runtime.image $(DEVICES) interface/retro-unix.retro
-	@cd vm/nga-c && $(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o ../../retro-runtime retro-runtime.c $(LIBM) $(LIBDL)
-	@cd vm/nga-c && $(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o ../../bin/retro-compiler retro-compiler.c
-	@objcopy --add-section .ngaImage=runtime.image --set-section-flags .ngaImage=noload,readonly bin/retro-compiler
-	@objcopy --add-section .runtime=retro-runtime --set-section-flags .runtime=noload,readonly bin/retro-compiler
-	@rm runtime.image retro-runtime
-
 image-js: bin/retro
 	@./bin/retro example/retro-generate-image-js.retro >vm/nga-js/image.js
 

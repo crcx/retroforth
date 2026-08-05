@@ -31,6 +31,8 @@
 
 - retro-compiler
 
+  - removed retro-compiler
+
 - new nga implementations
 
   - common lisp (sbcl)
@@ -49,6 +51,10 @@
   - split nga core into separate nga_core.c
   - better compile time error messages if device/module order
     is incorrect
+
+- nga-x11
+
+  - moved to separate directory from nga-c
 
 Future Notes
 
