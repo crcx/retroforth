@@ -14,6 +14,8 @@
 
   - retro-muri gained additional directives
   - retro-muri now validates instruction bundles
+  - update retro-muri.py to match functionality of the C
+  - added retro-muri.js (node)
   - generate-layout to turn a description of dictionary and
     image format into usable includes for the VM & tools
 
