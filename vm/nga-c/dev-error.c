@@ -36,6 +36,10 @@ V handle_error(NgaState *vm, CELL error) {
 V register_error_handler(NgaState *vm) {
   CELL ErrorID = stack_pop(vm);
   CELL ErrorHandler = stack_pop(vm);
+  if (ErrorID < 0 || ErrorID >= (CELL)(sizeof(vm->ErrorHandlers) / sizeof(vm->ErrorHandlers[0]))) {
+    printf("\nERROR (nga/error): Invalid error handler id %lld\n", (long long)ErrorID);
+    return;
+  }
   vm->ErrorHandlers[ErrorID] = ErrorHandler;
   printf("Assigned %lld to %lld\n", (long long)ErrorID, (long long)ErrorHandler);
 }
