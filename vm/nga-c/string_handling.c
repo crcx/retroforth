@@ -133,64 +133,86 @@ int fread_character(FILE *from) {
   return utf32_char;
 }
 
+V string_memory_error(const char *operation) {
+  fprintf(stderr, "ERROR (nga/%s): Invalid memory range\n", operation);
+}
+
+size_t decode_utf8_character(const unsigned char *input, size_t remaining,
+                             uint32_t *character) {
+  if ((input[0] & 0x80) == 0x00) {
+    *character = input[0];
+    return 1;
+  }
+  if ((input[0] & 0xE0) == 0xC0 && remaining >= 2) {
+    *character = ((uint32_t)(input[0] & 0x1F) << 6) |
+                 (input[1] & 0x3F);
+    return 2;
+  }
+  if ((input[0] & 0xF0) == 0xE0 && remaining >= 3) {
+    *character = ((uint32_t)(input[0] & 0x0F) << 12) |
+                 ((uint32_t)(input[1] & 0x3F) << 6) |
+                 (input[2] & 0x3F);
+    return 3;
+  }
+  if ((input[0] & 0xF8) == 0xF0 && remaining >= 4) {
+    *character = ((uint32_t)(input[0] & 0x07) << 18) |
+                 ((uint32_t)(input[1] & 0x3F) << 12) |
+                 ((uint32_t)(input[2] & 0x3F) << 6) |
+                 (input[3] & 0x3F);
+    return 4;
+  }
+  *character = input[0];
+  return 1;
+}
+
 CELL string_inject(NgaState *vm, char *str, CELL buffer) {
+  const unsigned char *input;
+  size_t input_length, offset, cells;
+
+  if (buffer < 0 || buffer >= IMAGE_SIZE) {
+    string_memory_error("string_inject");
+    return 0;
+  }
   if (!str) {
     vm->memory[buffer] = 0;
     return 0;
   }
 
-  CELL pos = 0;
-  int i = 0;
-
-  while (str[i] != '\0') {
-    unsigned char *utf8_str = (unsigned char *)&str[i];
-    int utf32_char = 0;
-    int bytes_consumed = 0;
-
-    // Convert UTF-8 to UTF-32
-    if ((utf8_str[0] & 0x80) == 0x00) {
-      // 1-byte UTF-8 sequence
-      utf32_char = utf8_str[0];
-      bytes_consumed = 1;
-    } else if ((utf8_str[0] & 0xE0) == 0xC0) {
-      // 2-byte UTF-8 sequence
-      utf32_char = ((uint32_t)(utf8_str[0] & 0x1F) << 6) |
-                              (utf8_str[1] & 0x3F);
-      bytes_consumed = 2;
-    } else if ((utf8_str[0] & 0xF0) == 0xE0) {
-      // 3-byte UTF-8 sequence
-      utf32_char = ((uint32_t)(utf8_str[0] & 0x0F) << 12) |
-                   ((uint32_t)(utf8_str[1] & 0x3F) << 6) |
-                              (utf8_str[2] & 0x3F);
-      bytes_consumed = 3;
-    } else if ((utf8_str[0] & 0xF8) == 0xF0) {
-      // 4-byte UTF-8 sequence
-      utf32_char = ((uint32_t)(utf8_str[0] & 0x07) << 18) |
-                   ((uint32_t)(utf8_str[1] & 0x3F) << 12) |
-                   ((uint32_t)(utf8_str[2] & 0x3F) << 6) |
-                              (utf8_str[3] & 0x3F);
-      bytes_consumed = 4;
-    } else {
-      // Invalid UTF-8, skip byte
-      utf32_char = utf8_str[0];
-      bytes_consumed = 1;
-    }
-
-    vm->memory[buffer + pos] = (CELL)utf32_char;
-    vm->memory[buffer + pos + 1] = 0;
-    pos++;
-    i += bytes_consumed;
+  input = (const unsigned char *)str;
+  input_length = strlen(str);
+  for (offset = cells = 0; offset < input_length; cells++) {
+    uint32_t character;
+    offset += decode_utf8_character(input + offset, input_length - offset,
+                                    &character);
+  }
+  if (cells >= (size_t)(IMAGE_SIZE - buffer)) {
+    string_memory_error("string_inject");
+    return 0;
   }
 
+  for (offset = cells = 0; offset < input_length; cells++) {
+    uint32_t character;
+    offset += decode_utf8_character(input + offset, input_length - offset,
+                                    &character);
+    vm->memory[buffer + cells] = (CELL)character;
+  }
+  vm->memory[buffer + cells] = 0;
   return buffer;
 }
 
 char *string_extract(NgaState *vm, CELL at) {
-  CELL starting = at, i = 0;
-  while (vm->memory[starting] && i < 8192)
-    vm->string_data[i++] = (char)vm->memory[starting++];
+  CELL i = 0;
+  if (at < 0 || at >= IMAGE_SIZE) {
+    string_memory_error("string_extract");
+    vm->string_data[0] = 0;
+    return vm->string_data;
+  }
+  while (at < IMAGE_SIZE && vm->memory[at] &&
+         i < (CELL)sizeof(vm->string_data) - 1) {
+    vm->string_data[i++] = (char)vm->memory[at++];
+  }
   vm->string_data[i] = 0;
-  return (char *)vm->string_data;
+  return vm->string_data;
 }
 
 #define RETRO_STRING_HANDLING_IMPLEMENTED 1
