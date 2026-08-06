@@ -136,8 +136,20 @@ Handler SocketActions[] = {
   socket_recv,   socket_close,   socket_getaddrinfo
 };
 
+V invalid_socket_action(NgaState *vm, CELL action) {
+  printf("\nERROR (nga/sockets): Invalid socket action %lld\n", (long long)action);
+  ACTIVE.ip = IMAGE_SIZE;
+  ACTIVE.rp = 0;
+}
+
 V io_socket(NgaState *vm) {
-  SocketActions[stack_pop(vm)](vm);
+  CELL action = stack_pop(vm);
+  CELL actions = sizeof(SocketActions) / sizeof(SocketActions[0]);
+  if (action >= 0 && action < actions) {
+    SocketActions[action](vm);
+  } else {
+    invalid_socket_action(vm, action);
+  }
 }
 
 V query_socket(NgaState *vm) {

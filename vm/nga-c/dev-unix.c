@@ -46,6 +46,10 @@ V unix_open_pipe(NgaState *vm) {
   slot = files_get_handle(vm);
   mode = stack_pop(vm);
   name = stack_pop(vm);
+  if (mode < 0 || mode > 3 || mode == 2) {
+    stack_push(vm, 0);
+    return;
+  }
   request = string_extract(vm, name);
   if (slot > 0) {
     vm->OpenFileHandles[slot] = popen(request, modes[mode]);
@@ -201,7 +205,19 @@ V query_unix(NgaState *vm) {
   stack_push(vm, DEVICE_UNIX);
 }
 
+V invalid_unix_action(NgaState *vm, CELL action) {
+  printf("\nERROR (nga/unix): Invalid Unix action %lld\n", (long long)action);
+  ACTIVE.ip = IMAGE_SIZE;
+  ACTIVE.rp = 0;
+}
+
 V io_unix(NgaState *vm) {
-  UnixActions[stack_pop(vm)](vm);
+  CELL action = stack_pop(vm);
+  CELL actions = sizeof(UnixActions) / sizeof(UnixActions[0]);
+  if (action >= 0 && action < actions) {
+    UnixActions[action](vm);
+  } else {
+    invalid_unix_action(vm, action);
+  }
 }
 #endif
