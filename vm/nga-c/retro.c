@@ -300,6 +300,14 @@ V register_signal_handlers() {
 
 #define ARG(n) (strcmp(argv[i], n) == 0)
 
+char *option_argument(int argc, char **argv, int *index) {
+  if (*index + 1 >= argc) {
+    fprintf(stderr, "ERROR: %s requires an argument\n", argv[*index]);
+    exit(1);
+  }
+  return argv[++*index];
+}
+
 int main(int argc, char **argv) {
   int i;
   int modes[16];
@@ -344,35 +352,26 @@ int main(int argc, char **argv) {
       modes[FLAG_INTERACTIVE] = 1;
       vm->interactive = -1;
     } else if ARG("-f") {
-      include_file(vm, argv[i + 1], 0);
-      i++;
+      include_file(vm, option_argument(argc, argv, &i), 0);
     } else if ARG("-p") {
-      include_plain_file(vm, argv[i + 1], 0);
-      i++;
+      include_plain_file(vm, option_argument(argc, argv, &i), 0);
     } else if ARG("-u") {
-      i++;
-      load_image(vm, argv[i]);
+      load_image(vm, option_argument(argc, argv, &i));
       update_rx(vm);
     } else if ARG("-r") {
-      i++;
-      load_image(vm, argv[i]);
+      load_image(vm, option_argument(argc, argv, &i));
       modes[FLAG_INTERACTIVE] = 1;
       update_rx(vm);
     } else if ARG("-t") {
-      include_file(vm, argv[i + 1], 1);
-      i++;
+      include_file(vm, option_argument(argc, argv, &i), 1);
     } else if (ARG("--code-start") || ARG("-cs")) {
-      i++;
-      strlcpy(vm->code_start, argv[i], 256);
+      strlcpy(vm->code_start, option_argument(argc, argv, &i), 256);
     } else if (ARG("--code-end") || ARG("-ce")) {
-      i++;
-      strlcpy(vm->code_end, argv[i], 256);
+      strlcpy(vm->code_end, option_argument(argc, argv, &i), 256);
     } else if (ARG("--test-start") || ARG("-ts")) {
-      i++;
-      strlcpy(vm->test_start, argv[i], 256);
+      strlcpy(vm->test_start, option_argument(argc, argv, &i), 256);
     } else if (ARG("--test-end") || ARG("-te")) {
-      i++;
-      strlcpy(vm->test_end, argv[i], 256);
+      strlcpy(vm->test_end, option_argument(argc, argv, &i), 256);
     }
   }
 
