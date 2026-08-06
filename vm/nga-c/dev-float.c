@@ -260,7 +260,19 @@ void query_floatingpoint(NgaState *vm) {
   stack_push(vm, DEVICE_FLOATS);
 }
 
+void invalid_float_action(NgaState *vm, CELL action) {
+  printf("\nERROR (nga/floats): Invalid floating-point action %lld\n", (long long)action);
+  ACTIVE.ip = IMAGE_SIZE;
+  ACTIVE.rp = 0;
+}
+
 void io_floatingpoint(NgaState *vm) {
-  FloatHandlers[stack_pop(vm)](vm);
+  CELL action = stack_pop(vm);
+  CELL actions = sizeof(FloatHandlers) / sizeof(FloatHandlers[0]);
+  if (action >= 0 && action < actions) {
+    FloatHandlers[action](vm);
+  } else {
+    invalid_float_action(vm, action);
+  }
 }
 #endif

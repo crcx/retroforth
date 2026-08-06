@@ -60,7 +60,19 @@ V query_ioctl(NgaState *vm) {
   stack_push(vm, DEVICE_IOCTL);
 }
 
+V invalid_ioctl_action(NgaState *vm, CELL action) {
+  printf("\nERROR (nga/ioctl): Invalid ioctl action %lld\n", (long long)action);
+  ACTIVE.ip = IMAGE_SIZE;
+  ACTIVE.rp = 0;
+}
+
 V io_ioctl(NgaState *vm) {
-  IOCTLActions[stack_pop(vm)](vm);
+  CELL action = stack_pop(vm);
+  CELL actions = sizeof(IOCTLActions) / sizeof(IOCTLActions[0]);
+  if (action >= 0 && action < actions) {
+    IOCTLActions[action](vm);
+  } else {
+    invalid_ioctl_action(vm, action);
+  }
 }
 #endif

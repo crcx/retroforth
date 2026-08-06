@@ -79,8 +79,20 @@ V query_clock(NgaState *vm) {
   stack_push(vm, DEVICE_CLOCK);
 }
 
+V invalid_clock_action(NgaState *vm, CELL action) {
+  printf("\nERROR (nga/clock): Invalid clock action %lld\n", (long long)action);
+  ACTIVE.ip = IMAGE_SIZE;
+  ACTIVE.rp = 0;
+}
+
 V io_clock(NgaState *vm) {
+  CELL action = stack_pop(vm);
+  CELL actions = sizeof(ClockActions) / sizeof(ClockActions[0]);
   current_time = time(NULL);
-  ClockActions[stack_pop(vm)](vm);
+  if (action >= 0 && action < actions) {
+    ClockActions[action](vm);
+  } else {
+    invalid_clock_action(vm, action);
+  }
 }
 #endif
