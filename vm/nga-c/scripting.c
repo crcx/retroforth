@@ -234,24 +234,22 @@ int fence_boundary(NgaState *vm, char *buffer, int tests_enabled) {
   And now for the actual `include_file()` function.
   ---------------------------------------------------------------------*/
 
-V read_line(NgaState *vm, FILE *file, char *token_buffer) {
+int read_line(NgaState *vm, FILE *file, char *token_buffer) {
   int ch = getc(file);
   int count = 0;
+  int tokens = 1;
   token_buffer[0] = '\0';
   while ((ch != 10) && (ch != 13) && (ch != EOF) && (ch != 0)) {
-    token_buffer[count++] = ch;
+    if (count < (int)sizeof(vm->line) - 1) {
+      token_buffer[count++] = ch;
+    }
     ch = fread_character(file);
+    if (ch != 10 && ch != 13 && ch != EOF && ch != 0 && isspace((unsigned char)ch)) {
+      tokens++;
+    }
   }
   token_buffer[count] = '\0';
-}
-
-int count_tokens(char *line) {
-  int count = 1;
-  while (*line++) {
-    if (isspace(line[0]))
-      count++;
-  }
-  return count;
+  return tokens;
 }
 
 V include_file(NgaState *vm, char *fname, int run_tests) {
@@ -267,6 +265,11 @@ V include_file(NgaState *vm, char *fname, int run_tests) {
   CELL at = 0;
   int tokens = 0;
   FILE *fp;                        /* Open the file. If not found,     */
+  if (vm->current_source >= MAX_SCRIPTING_SOURCES - 1) {
+    printf("Maximum source include depth exceeded. Exiting.\n");
+    exit(1);
+  }
+
   fp = fopen(fname, "r");          /* exit.                            */
   if (fp == NULL) {
     printf("File `%s` not found. Exiting.\n", fname);
@@ -292,12 +295,10 @@ V include_file(NgaState *vm, char *fname, int run_tests) {
     vm->ignoreToEOL = 0;
 
     offset = ftell(fp);
-    read_line(vm, fp, vm->line);
+    tokens = read_line(vm, fp, vm->line);
     at++;
     fseek(fp, offset, SEEK_SET);
     skip_indent(fp);
-
-    tokens = count_tokens(vm->line);
 
     while (tokens > 0 && vm->ignoreToEOL == 0) {
       tokens--;
@@ -355,6 +356,11 @@ V include_plain_file(NgaState *vm, char *fname, int run_tests) {
   CELL at = 0;
   int tokens = 0;
   FILE *fp;                        /* Open the file. If not found,     */
+  if (vm->current_source >= MAX_SCRIPTING_SOURCES - 1) {
+    printf("Maximum source include depth exceeded. Exiting.\n");
+    exit(1);
+  }
+
   fp = fopen(fname, "r");          /* exit.                            */
   if (fp == NULL) {
     printf("File `%s` not found. Exiting.\n", fname);
@@ -377,12 +383,10 @@ V include_plain_file(NgaState *vm, char *fname, int run_tests) {
     vm->ignoreToEOL = 0;
 
     offset = ftell(fp);
-    read_line(vm, fp, vm->line);
+    tokens = read_line(vm, fp, vm->line);
     at++;
     fseek(fp, offset, SEEK_SET);
     skip_indent(fp);
-
-    tokens = count_tokens(vm->line);
 
     while (tokens > 0 && vm->ignoreToEOL == 0) {
       tokens--;
