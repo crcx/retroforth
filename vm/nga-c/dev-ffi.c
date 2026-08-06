@@ -17,12 +17,31 @@
 
 typedef void (*External)(void *);
 
-V *handles[32];
-External funcs[32000];
+#define MAX_FFI_LIBRARIES 32
+#define MAX_FFI_FUNCTIONS 32000
+
+V *handles[MAX_FFI_LIBRARIES];
+External funcs[MAX_FFI_FUNCTIONS];
 int nlibs, nffi;
 
+V ffi_error(NgaState *vm, const char *message) {
+  printf("\nERROR (nga/ffi): %s\n", message);
+  ACTIVE.ip = IMAGE_SIZE;
+  ACTIVE.rp = 0;
+}
+
 V open_library(NgaState *vm) {
-  handles[nlibs] = dlopen(string_extract(vm, stack_pop(vm)), RTLD_LAZY);
+  V *handle;
+  if (nlibs >= MAX_FFI_LIBRARIES) {
+    ffi_error(vm, "Too many open libraries");
+    return;
+  }
+  handle = dlopen(string_extract(vm, stack_pop(vm)), RTLD_LAZY);
+  if (handle == NULL) {
+    stack_push(vm, -1);
+    return;
+  }
+  handles[nlibs] = handle;
   stack_push(vm, nlibs);
   nlibs++;
 }
@@ -30,14 +49,31 @@ V open_library(NgaState *vm) {
 V map_symbol(NgaState *vm) {
   int h;
   h = stack_pop(vm);
+  if (h < 0 || h >= nlibs || handles[h] == NULL) {
+    ffi_error(vm, "Invalid library handle");
+    return;
+  }
+  if (nffi >= MAX_FFI_FUNCTIONS) {
+    ffi_error(vm, "Too many mapped symbols");
+    return;
+  }
   char *s = string_extract(vm, stack_pop(vm));
   funcs[nffi] = dlsym(handles[h], s);
+  if (funcs[nffi] == NULL) {
+    stack_push(vm, -1);
+    return;
+  }
   stack_push(vm, nffi);
   nffi++;
 }
 
 V invoke(NgaState *vm) {
-  funcs[stack_pop(vm)](vm);
+  CELL function = stack_pop(vm);
+  if (function < 0 || function >= nffi || funcs[function] == NULL) {
+    ffi_error(vm, "Invalid function handle");
+    return;
+  }
+  funcs[function](vm);
 }
 
 V io_ffi(NgaState *vm) {
@@ -45,6 +81,7 @@ V io_ffi(NgaState *vm) {
     case 0: open_library(vm); break;
     case 1: map_symbol(vm); break;
     case 2: invoke(vm); break;
+    default: ffi_error(vm, "Invalid FFI action"); break;
   }
 }
 
