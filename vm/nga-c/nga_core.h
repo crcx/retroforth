@@ -25,6 +25,7 @@
 
 #define MAX_DEVICES      32
 #define MAX_OPEN_FILES   32
+#define MAX_SCRIPTING_SOURCES 64
 
 typedef struct NgaState NgaState;
 
@@ -75,7 +76,7 @@ struct NgaState {
   /* Scripting */
   char **sys_argv;
   int sys_argc;
-  char scripting_sources[64][8192];
+  char scripting_sources[MAX_SCRIPTING_SOURCES][8192];
   char line[4096];
   int current_source;
   int perform_abort;
@@ -98,7 +99,7 @@ struct NgaState {
 CELL stack_pop(NgaState *);
 V stack_push(NgaState *, CELL);
 V update_rx(NgaState *);
-V register_device(NgaState *, V *, V *);
+V register_device(NgaState *, Handler, Handler);
 V load_embedded_image(NgaState *);
 CELL load_image(NgaState *, char *);
 V prepare_vm(NgaState *);

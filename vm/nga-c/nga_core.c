@@ -206,7 +206,7 @@ V update_rx(NgaState *vm) {
 
 /*=====================================================================*/
 
-V register_device(NgaState *vm, V *handler, V *query) {
+V register_device(NgaState *vm, Handler handler, Handler query) {
   vm->IO_deviceHandlers[vm->devices] = handler;
   vm->IO_queryHandlers[vm->devices] = query;
   vm->devices++;
