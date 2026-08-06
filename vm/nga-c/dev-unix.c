@@ -62,9 +62,10 @@ V unix_open_pipe(NgaState *vm) {
 }
 
 V unix_close_pipe(NgaState *vm) {
-  pclose(vm->OpenFileHandles[TOS]);
-  vm->OpenFileHandles[TOS] = 0;
-  stack_pop(vm);
+  CELL slot = stack_pop(vm);
+  FILE *pipe = files_get_open_handle(vm, slot, "unix_close_pipe");
+  pclose(pipe);
+  vm->OpenFileHandles[slot] = 0;
 }
 
 V unix_system(NgaState *vm) {
@@ -173,7 +174,8 @@ V unix_write(NgaState *vm) {
   CELL c = stack_pop(vm);
   CELL b = stack_pop(vm);
   CELL a = stack_pop(vm);
-  ignore = write(fileno(vm->OpenFileHandles[c]), string_extract(vm, a), b);
+  FILE *file = files_get_open_handle(vm, c, "unix_write");
+  ignore = write(fileno(file), string_extract(vm, a), b);
 }
 
 V unix_chdir(NgaState *vm) {
