@@ -221,7 +221,7 @@ V file_read_bytes(NgaState *vm) {
   FILE *file = files_get_open_handle(vm, slot, "file_read_bytes");
   files_validate_transfer(size, dest, "file_read_bytes");
   CELL z = fread((char *)file_bytes, 1, size, file);
-  for (CELL i = 0; i < size; i++) {
+  for (CELL i = 0; i < z; i++) {
     CELL x = file_bytes[i];
     vm->memory[dest + i] = x;
   }
