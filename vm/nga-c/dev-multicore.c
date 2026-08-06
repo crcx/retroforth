@@ -46,32 +46,55 @@ void switch_core(NgaState *vm) {
   if (!vm->cpu[vm->active].active) { switch_core(vm); }
 }
 
+int multicore_valid_core(CELL core) {
+  return core >= 0 && core < CORES;
+}
+
+int multicore_valid_register(CELL reg) {
+  return reg >= 0 && reg < 24;
+}
+
+void multicore_error(NgaState *vm, const char *message) {
+  printf("\nERROR (nga/multicore): %s\n", message);
+  ACTIVE.ip = IMAGE_SIZE;
+  ACTIVE.rp = 0;
+}
+
 void io_multicore(NgaState *vm) {
-  int x, y, z;
+  CELL x, y, z;
   x = stack_pop(vm);
   switch(x) {
     case 0: y = stack_pop(vm);
-            init_core(vm, y);
+            if (multicore_valid_core(y)) init_core(vm, y);
+            else multicore_error(vm, "Invalid core index");
             break;
     case 1: y = stack_pop(vm);
             z = stack_pop(vm);
-            start_core(vm, y, z);
+            if (multicore_valid_core(y)) start_core(vm, y, z);
+            else multicore_error(vm, "Invalid core index");
             break;
     case 2: y = stack_pop(vm);
-            pause_core(vm, y);
+            if (multicore_valid_core(y)) pause_core(vm, y);
+            else multicore_error(vm, "Invalid core index");
             break;
     case 3: pause_core(vm, vm->active);
             break;
     case 4: y = stack_pop(vm);
-            resume_core(vm, y);
+            if (multicore_valid_core(y)) resume_core(vm, y);
+            else multicore_error(vm, "Invalid core index");
             break;
     case 5: y = stack_pop(vm);
-            stack_push(vm, vm->cpu[vm->active].registers[y]);
+            if (multicore_valid_register(y))
+              stack_push(vm, vm->cpu[vm->active].registers[y]);
+            else multicore_error(vm, "Invalid register index");
             break;
     case 6: y = stack_pop(vm);
             z = stack_pop(vm);
-            vm->cpu[vm->active].registers[y] = z;
+            if (multicore_valid_register(y))
+              vm->cpu[vm->active].registers[y] = z;
+            else multicore_error(vm, "Invalid register index");
             break;
+    default: multicore_error(vm, "Invalid multicore action");
   }
 }
 
