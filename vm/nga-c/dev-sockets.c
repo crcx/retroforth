@@ -27,6 +27,17 @@ struct sockaddr_in Sockets[16];
 
 struct addrinfo hints, *res;
 
+int socket_get_handle(NgaState *vm, CELL socket, int *handle) {
+  if (socket < 0 || socket >= 16 || SocketID[socket] == 0) {
+    printf("\nERROR (nga/sockets): Invalid socket handle %lld\n", (long long)socket);
+    ACTIVE.ip = IMAGE_SIZE;
+    ACTIVE.rp = 0;
+    return 0;
+  }
+  *handle = SocketID[socket];
+  return 1;
+}
+
 V socket_getaddrinfo(NgaState *vm) {
   char host[1025], port[6];
   strlcpy(port, string_extract(vm, stack_pop(vm)), 5);
@@ -61,7 +72,8 @@ V socket_create(NgaState *vm) {
 }
 
 V socket_bind(NgaState *vm) {
-  int sock, port;
+  int handle;
+  CELL sock, port;
   memset(&hints, 0, sizeof hints);
   hints.ai_family = AF_UNSPEC;
   hints.ai_socktype = SOCK_STREAM;
@@ -69,25 +81,30 @@ V socket_bind(NgaState *vm) {
 
   sock = stack_pop(vm);
   port = stack_pop(vm);
+  if (!socket_get_handle(vm, sock, &handle)) return;
 
   getaddrinfo(NULL, string_extract(vm, port), &hints, &res);
-  stack_push(vm, (CELL) bind(SocketID[sock], res->ai_addr, res->ai_addrlen));
+  stack_push(vm, (CELL) bind(handle, res->ai_addr, res->ai_addrlen));
   stack_push(vm, errno);
 }
 
 V socket_listen(NgaState *vm) {
-  int sock = stack_pop(vm);
+  int handle;
+  CELL sock = stack_pop(vm);
   int backlog = stack_pop(vm);
-  stack_push(vm, listen(SocketID[sock], backlog));
+  if (!socket_get_handle(vm, sock, &handle)) return;
+  stack_push(vm, listen(handle, backlog));
   stack_push(vm, errno);
 }
 
 V socket_accept(NgaState *vm) {
   int i;
-  int sock = stack_pop(vm);
+  int handle;
+  CELL sock = stack_pop(vm);
   struct sockaddr_storage their_addr;
   socklen_t addr_size = sizeof their_addr;
-  int new_fd = accept(SocketID[sock], (struct sockaddr *)&their_addr, &addr_size);
+  if (!socket_get_handle(vm, sock, &handle)) return;
+  int new_fd = accept(handle, (struct sockaddr *)&their_addr, &addr_size);
 
   for (i = 0; i < 16; i++) {
     if (SocketID[i] == 0 && new_fd != 0) {
@@ -100,23 +117,36 @@ V socket_accept(NgaState *vm) {
 }
 
 V socket_connect(NgaState *vm) {
-  stack_push(vm, (CELL)connect(SocketID[stack_pop(vm)], res->ai_addr, res->ai_addrlen));
+  int handle;
+  CELL sock = stack_pop(vm);
+  if (!socket_get_handle(vm, sock, &handle)) return;
+  stack_push(vm, (CELL)connect(handle, res->ai_addr, res->ai_addrlen));
   stack_push(vm, errno);
 }
 
 V socket_send(NgaState *vm) {
-  int sock = stack_pop(vm);
+  int handle;
+  CELL sock = stack_pop(vm);
   char *buf = string_extract(vm, stack_pop(vm));
-  stack_push(vm, send(SocketID[sock], buf, strlen(buf), 0));
+  if (!socket_get_handle(vm, sock, &handle)) return;
+  stack_push(vm, send(handle, buf, strlen(buf), 0));
   stack_push(vm, errno);
 }
 
 V socket_recv(NgaState *vm) {
   char buf[8193];
-  int sock = stack_pop(vm);
-  int limit = stack_pop(vm);
-  int dest = stack_pop(vm);
-  int len = recv(SocketID[sock], buf, limit, 0);
+  int handle;
+  CELL sock = stack_pop(vm);
+  CELL limit = stack_pop(vm);
+  CELL dest = stack_pop(vm);
+  if (!socket_get_handle(vm, sock, &handle)) return;
+  if (limit < 0 || limit >= (CELL)sizeof(buf)) {
+    printf("\nERROR (nga/sockets): Invalid receive length %lld\n", (long long)limit);
+    ACTIVE.ip = IMAGE_SIZE;
+    ACTIVE.rp = 0;
+    return;
+  }
+  int len = recv(handle, buf, (size_t)limit, 0);
   if (len > 0)  buf[len] = '\0';
   if (len > 0)  string_inject(vm, buf, dest);
   stack_push(vm, len);
@@ -124,8 +154,10 @@ V socket_recv(NgaState *vm) {
 }
 
 V socket_close(NgaState *vm) {
-  int sock = stack_pop(vm);
-  close(SocketID[sock]);
+  int handle;
+  CELL sock = stack_pop(vm);
+  if (!socket_get_handle(vm, sock, &handle)) return;
+  close(handle);
   SocketID[sock] = 0;
 }
 
