@@ -52,6 +52,7 @@
   - better compile time error messages if device/module order
     is incorrect
   - remove unused code
+  - clean up and consolidate duplicated utf8/32 code
 
 - nga-x11
 

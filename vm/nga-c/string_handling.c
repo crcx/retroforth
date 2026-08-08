@@ -42,101 +42,19 @@ V utf32_to_utf8(uint32_t utf32_char, unsigned char* utf8_bytes, int* num_bytes) 
         *num_bytes = 4;
     } else {
         *num_bytes = 0;
-    }
+  }
 }
 
-int read_character(int from) {
-  unsigned char utf8_bytes[4] = { 0 };
-  int utf32_char, i, num_bytes;
-
-  if (read(from, &utf8_bytes[0], 1) != 1) { return 0; }
-  if ((utf8_bytes[0] & 0x80) == 0x00) {
-    num_bytes = 1;
-  } else if ((utf8_bytes[0] & 0xE0) == 0xC0) {
-    num_bytes = 2;
-  } else if ((utf8_bytes[0] & 0xF0) == 0xE0) {
-    num_bytes = 3;
-  } else if ((utf8_bytes[0] & 0xF8) == 0xF0) {
-    num_bytes = 4;
-  } else {
-    return 0;
-  }
-
-  for (i = 1; i < num_bytes; i++) {
-    if (read(from, &utf8_bytes[i], 1) != 1) {
-      return 0;
-    }
-  }
-
-  if (num_bytes == 1) {
-    utf32_char = utf8_bytes[0];
-  } else if (num_bytes == 2) {
-    utf32_char = ((uint32_t)(utf8_bytes[0] & 0x1F) << 6) |
-                            (utf8_bytes[1] & 0x3F);
-  } else if (num_bytes == 3) {
-    utf32_char = ((uint32_t)(utf8_bytes[0] & 0x0F) << 12) |
-                 ((uint32_t)(utf8_bytes[1] & 0x3F) << 6) |
-                            (utf8_bytes[2] & 0x3F);
-  } else if (num_bytes == 4) {
-    utf32_char = ((uint32_t)(utf8_bytes[0] & 0x07) << 18) |
-                 ((uint32_t)(utf8_bytes[1] & 0x3F) << 12) |
-                 ((uint32_t)(utf8_bytes[2] & 0x3F) << 6) |
-                            (utf8_bytes[3] & 0x3F);
-  } else {
-    return 0;
-  }
-  return utf32_char;
+static size_t utf8_character_length(unsigned char byte) {
+  if ((byte & 0x80) == 0x00) return 1;
+  if ((byte & 0xE0) == 0xC0) return 2;
+  if ((byte & 0xF0) == 0xE0) return 3;
+  if ((byte & 0xF8) == 0xF0) return 4;
+  return 0;
 }
 
-int fread_character(FILE *from) {
-  unsigned char utf8_bytes[4] = { 0 };
-  int utf32_char, i, num_bytes;
-
-  if (fread(&utf8_bytes[0], 1, 1, from) != 1) { return 0; }
-  if ((utf8_bytes[0] & 0x80) == 0x00) {
-    num_bytes = 1;
-  } else if ((utf8_bytes[0] & 0xE0) == 0xC0) {
-    num_bytes = 2;
-  } else if ((utf8_bytes[0] & 0xF0) == 0xE0) {
-    num_bytes = 3;
-  } else if ((utf8_bytes[0] & 0xF8) == 0xF0) {
-    num_bytes = 4;
-  } else {
-    return 0;
-  }
-
-  for (i = 1; i < num_bytes; i++) {
-    if (fread(&utf8_bytes[i], 1, 1, from) != 1) {
-      return 0;
-    }
-  }
-
-  if (num_bytes == 1) {
-    utf32_char = utf8_bytes[0];
-  } else if (num_bytes == 2) {
-    utf32_char = ((uint32_t)(utf8_bytes[0] & 0x1F) << 6) |
-                            (utf8_bytes[1] & 0x3F);
-  } else if (num_bytes == 3) {
-    utf32_char = ((uint32_t)(utf8_bytes[0] & 0x0F) << 12) |
-                 ((uint32_t)(utf8_bytes[1] & 0x3F) << 6) |
-                            (utf8_bytes[2] & 0x3F);
-  } else if (num_bytes == 4) {
-    utf32_char = ((uint32_t)(utf8_bytes[0] & 0x07) << 18) |
-                 ((uint32_t)(utf8_bytes[1] & 0x3F) << 12) |
-                 ((uint32_t)(utf8_bytes[2] & 0x3F) << 6) |
-                            (utf8_bytes[3] & 0x3F);
-  } else {
-    return 0;
-  }
-  return utf32_char;
-}
-
-V string_memory_error(const char *operation) {
-  fprintf(stderr, "ERROR (nga/%s): Invalid memory range\n", operation);
-}
-
-size_t decode_utf8_character(const unsigned char *input, size_t remaining,
-                             uint32_t *character) {
+static size_t decode_utf8_character(const unsigned char *input,
+                                    size_t remaining, uint32_t *character) {
   if ((input[0] & 0x80) == 0x00) {
     *character = input[0];
     return 1;
@@ -161,6 +79,43 @@ size_t decode_utf8_character(const unsigned char *input, size_t remaining,
   }
   *character = input[0];
   return 1;
+}
+
+typedef int (*Utf8ByteReader)(void *, unsigned char *);
+
+static int read_utf8_character(void *source, Utf8ByteReader read_byte) {
+  unsigned char bytes[4];
+  uint32_t character;
+  size_t length, i;
+
+  if (!read_byte(source, &bytes[0])) return 0;
+  length = utf8_character_length(bytes[0]);
+  if (length == 0) return 0;
+  for (i = 1; i < length; i++) {
+    if (!read_byte(source, &bytes[i])) return 0;
+  }
+  decode_utf8_character(bytes, length, &character);
+  return (int)character;
+}
+
+static int read_descriptor_byte(void *source, unsigned char *byte) {
+  return read(*(int *)source, byte, 1) == 1;
+}
+
+static int read_file_byte(void *source, unsigned char *byte) {
+  return fread(byte, 1, 1, source) == 1;
+}
+
+int read_character(int from) {
+  return read_utf8_character(&from, read_descriptor_byte);
+}
+
+int fread_character(FILE *from) {
+  return read_utf8_character(from, read_file_byte);
+}
+
+V string_memory_error(const char *operation) {
+  fprintf(stderr, "ERROR (nga/%s): Invalid memory range\n", operation);
 }
 
 CELL string_inject(NgaState *vm, char *str, CELL buffer) {
