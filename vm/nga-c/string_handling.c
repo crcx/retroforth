@@ -15,8 +15,6 @@
 #error "string_handling.c must be included after nga_core.c"
 #endif
 
-#include "utf32.c"
-
 V display_utf8(const unsigned char* utf8_bytes, int num_bytes) {
     if (write(STDOUT_FILENO, utf8_bytes, num_bytes) == -1) {
         perror("Error writing to /dev/stdout");

@@ -51,6 +51,7 @@
   - split nga core into separate nga_core.c
   - better compile time error messages if device/module order
     is incorrect
+  - remove unused code
 
 - nga-x11
 

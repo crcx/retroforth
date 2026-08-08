@@ -554,32 +554,6 @@ Handler instructions[] = {
   i_iq, i_ii
 };
 
-V process_opcode(NgaState *vm, CELL opcode) {
-#ifdef FAST
-  switch (opcode) {
-    case 0: break;              case 1: i_li(vm); break;
-    case 2: i_du(vm); break;    case 3: i_dr(vm); break;
-    case 4: i_sw(vm); break;    case 5: i_pu(vm); break;
-    case 6: i_po(vm); break;    case 7: i_ju(vm); break;
-    case 8: i_ca(vm); break;    case 9: i_cc(vm); break;
-    case 10: i_re(vm); break;   case 11: i_eq(vm); break;
-    case 12: i_ne(vm); break;   case 13: i_lt(vm); break;
-    case 14: i_gt(vm); break;   case 15: i_fe(vm); break;
-    case 16: i_st(vm); break;   case 17: i_ad(vm); break;
-    case 18: i_su(vm); break;   case 19: i_mu(vm); break;
-    case 20: i_di(vm); break;   case 21: i_an(vm); break;
-    case 22: i_or(vm); break;   case 23: i_xo(vm); break;
-    case 24: i_sh(vm); break;   case 25: i_zr(vm); break;
-    case 26: i_ha(vm); break;   case 27: i_ie(vm); break;
-    case 28: i_iq(vm); break;   case 29: i_ii(vm); break;
-    default: break;
-  }
-#else
-  if (opcode != 0)
-    instructions[opcode](vm);
-#endif
-}
-
 #ifndef BRANCH_PREDICTION
 V validate_opcode_bundle(NgaState *vm, CELL opcode) {
   CELL remainingOpcode = opcode;
@@ -592,14 +566,6 @@ V validate_opcode_bundle(NgaState *vm, CELL opcode) {
   }
 }
 #endif
-
-V verbose_details(NgaState *vm, CELL opcode) {
-  fprintf(stderr, "ip: %lld ", (long long)ACTIVE.ip);
-  fprintf(stderr, "sp: %lld ", (long long)ACTIVE.sp);
-  fprintf(stderr, "rp: %lld ", (long long)ACTIVE.rp);
-  fprintf(stderr, "core: %lld ", (long long)vm->active);
-  fprintf(stderr, "opcode: %lld\n", (long long)opcode);
-}
 
 #define INST(n) ((opcode >> n) & 0xFF) != 0
 V process_opcode_bundle(NgaState *vm, CELL opcode) {
