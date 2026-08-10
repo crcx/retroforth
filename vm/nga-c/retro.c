@@ -31,46 +31,18 @@
 
 #include "nga_core.h"
 
+#ifndef NO_EMBEDDED_IMAGE
 #include "image.c"
+#endif
 
 #define IO(name) void io_name(NgaState *); void query_name(NgaState *);
 
-
 /* Device Prototypes ------------------------------------------------- */
-IO(output)
-IO(keyboard)
-IO(filesystem)
-IO(scripting)
-IO(rng)
-IO(unsigned)
-
-#ifdef ENABLE_UNIX
-IO(unix)
-#endif
-
-#ifdef ENABLE_FLOATS
-IO(floatingpoint)
-#endif
-
-#ifdef ENABLE_SOCKETS
-IO(socket)
-#endif
-
-#ifdef ENABLE_MALLOC
-#ifdef BIT64
-IO(malloc)
-#endif
-#endif
-
-#ifdef ENABLE_BLOCKS
-IO(blocks)
-#endif
-
-#ifdef ENABLE_IOCTL
-IO(ioctl)
-#endif
-
-IO(image)
+#define DEVICE(name) IO(name)
+#define DEVICE_WITH_INIT(name, init) DEVICE(name) V init(NgaState *);
+#include "devices.def"
+#undef DEVICE_WITH_INIT
+#undef DEVICE
 
 /* Global Variables -------------------------------------------------- */
 
@@ -196,7 +168,9 @@ V dump_astack(NgaState *vm) {
 
 V initialize(NgaState *vm) {
   prepare_vm(vm);
+#ifndef NO_EMBEDDED_IMAGE
   load_embedded_image(vm);
+#endif
   initialize_scripting(vm);
 }
 
@@ -239,53 +213,11 @@ enum flags {
 };
 
 V register_devices(NgaState *vm) {
-  register_device(vm, io_output, query_output);
-  register_device(vm, io_keyboard, query_keyboard);
-#ifdef ENABLE_FILES
-  register_device(vm, io_filesystem, query_filesystem);
-#endif
-  register_device(vm, io_image, query_image);
-#ifdef ENABLE_FLOATS
-  register_device(vm, io_floatingpoint, query_floatingpoint);
-#endif
-#ifdef ENABLE_UNIX
-  register_device(vm, io_unix, query_unix);
-#endif
-#ifdef ENABLE_MALLOC
-#ifdef BIT64
-  register_device(vm, io_malloc, query_malloc);
-#endif
-#endif
-#ifdef ENABLE_BLOCKS
-  register_device(vm, io_blocks, query_blocks);
-#endif
-#ifdef ENABLE_CLOCK
-  register_device(vm, io_clock, query_clock);
-#endif
-  register_device(vm, io_scripting, query_scripting);
-#ifdef ENABLE_RNG
-  register_device(vm, io_rng, query_rng);
-#endif
-#ifdef ENABLE_SOCKETS
-  register_device(vm, io_socket, query_socket);
-#endif
-#ifdef ENABLE_MULTICORE
-  register_device(vm, io_multicore, query_multicore);
-#endif
-#ifdef ENABLE_FFI
-  register_device(vm, io_ffi, query_ffi);
-  nlibs = 0;
-  nffi = 0;
-#endif
-#ifdef ENABLE_UNSIGNED
-  register_device(vm, io_unsigned, query_unsigned);
-#endif
-#ifdef ENABLE_ERROR
-  register_device(vm, io_error, query_error);
-#endif
-#ifdef ENABLE_IOCTL
-  register_device(vm, io_ioctl, query_ioctl);
-#endif
+#define DEVICE(name) register_device(vm, io_ ## name, query_ ## name);
+#define DEVICE_WITH_INIT(name, init) DEVICE(name) init(vm);
+#include "devices.def"
+#undef DEVICE_WITH_INIT
+#undef DEVICE
 }
 
 V register_signal_handlers() {

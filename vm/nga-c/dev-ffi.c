@@ -24,6 +24,12 @@ V *handles[MAX_FFI_LIBRARIES];
 External funcs[MAX_FFI_FUNCTIONS];
 int nlibs, nffi;
 
+V initialize_ffi(NgaState *vm) {
+  (void)vm;
+  nlibs = 0;
+  nffi = 0;
+}
+
 V ffi_error(NgaState *vm, const char *message) {
   printf("\nERROR (nga/ffi): %s\n", message);
   ACTIVE.ip = IMAGE_SIZE;

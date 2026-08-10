@@ -28,54 +28,10 @@
 
 #include "string_handling.c"
 
-#ifdef ENABLE_IOCTL
-#include "dev-ioctl.c"
-#endif
-
-#ifdef ENABLE_MALLOC
-#ifdef BIT64
-#include "dev-malloc.c"
-#endif
-#endif
-
-#ifdef ENABLE_ERROR
-#include "dev-error.c"
-#endif
-
-#ifdef ENABLE_BLOCKS
-#include "dev-blocks.c"
-#endif
-
-#ifdef ENABLE_FILES
-#include "dev-files.c"
-#endif
-
-#ifdef ENABLE_MULTICORE
-#include "dev-multicore.c"
-#endif
-
-#ifdef ENABLE_FFI
-#include "dev-ffi.c"
-#endif
-
-#ifdef ENABLE_FLOATS
-#include "dev-float.c"
-#endif
-
-#ifdef ENABLE_CLOCK
-#include "dev-clock.c"
-#endif
-
-#ifdef ENABLE_RNG
-#include "dev-rng.c"
-#endif
-
-#ifdef ENABLE_SOCKETS
-#include "dev-sockets.c"
-#endif
-
-#ifdef ENABLE_UNIX
-#include "dev-unix.c"
-#endif
-
-#include "scripting.c"
+#define DEVICE_IMPLEMENTATIONS
+#define DEVICE(name)
+#define DEVICE_WITH_INIT(name, init)
+#include "devices.def"
+#undef DEVICE_WITH_INIT
+#undef DEVICE
+#undef DEVICE_IMPLEMENTATIONS

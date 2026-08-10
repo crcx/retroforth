@@ -55,6 +55,7 @@
   - clean up and consolidate duplicated utf8/32 code
   - cleaner handling of included files via the scripting
     interface
+  - work on making the device registrations more robust
 
 - nga-x11
 

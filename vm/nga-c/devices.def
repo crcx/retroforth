@@ -1,0 +1,103 @@
+/*
+  Device manifest. Define DEVICE(name) and DEVICE_WITH_INIT(name, init)
+  before including this file. Defining DEVICE_IMPLEMENTATIONS additionally
+  includes the enabled device implementations.
+*/
+
+DEVICE(output)
+DEVICE(keyboard)
+
+#ifdef ENABLE_FILES
+#ifdef DEVICE_IMPLEMENTATIONS
+#include "dev-files.c"
+#endif
+DEVICE(filesystem)
+#endif
+
+DEVICE(image)
+
+#ifdef ENABLE_FLOATS
+#ifdef DEVICE_IMPLEMENTATIONS
+#include "dev-float.c"
+#endif
+DEVICE(floatingpoint)
+#endif
+
+#ifdef ENABLE_UNIX
+#ifdef DEVICE_IMPLEMENTATIONS
+#include "dev-unix.c"
+#endif
+DEVICE(unix)
+#endif
+
+#if defined(ENABLE_MALLOC) && defined(BIT64)
+#ifdef DEVICE_IMPLEMENTATIONS
+#include "dev-malloc.c"
+#endif
+DEVICE(malloc)
+#endif
+
+#ifdef ENABLE_BLOCKS
+#ifdef DEVICE_IMPLEMENTATIONS
+#include "dev-blocks.c"
+#endif
+DEVICE(blocks)
+#endif
+
+#ifdef ENABLE_CLOCK
+#ifdef DEVICE_IMPLEMENTATIONS
+#include "dev-clock.c"
+#endif
+DEVICE(clock)
+#endif
+
+#ifdef DEVICE_IMPLEMENTATIONS
+#include "scripting.c"
+#endif
+DEVICE(scripting)
+
+#ifdef ENABLE_RNG
+#ifdef DEVICE_IMPLEMENTATIONS
+#include "dev-rng.c"
+#endif
+DEVICE(rng)
+#endif
+
+#ifdef ENABLE_SOCKETS
+#ifdef DEVICE_IMPLEMENTATIONS
+#include "dev-sockets.c"
+#endif
+DEVICE(socket)
+#endif
+
+#ifdef ENABLE_MULTICORE
+#ifdef DEVICE_IMPLEMENTATIONS
+#include "dev-multicore.c"
+#endif
+DEVICE(multicore)
+#endif
+
+#ifdef ENABLE_FFI
+#ifdef DEVICE_IMPLEMENTATIONS
+#include "dev-ffi.c"
+#endif
+DEVICE_WITH_INIT(ffi, initialize_ffi)
+#endif
+
+#ifdef ENABLE_UNSIGNED
+DEVICE(unsigned)
+#endif
+
+#ifdef ENABLE_ERROR
+#ifdef DEVICE_IMPLEMENTATIONS
+#include "dev-error.c"
+#endif
+DEVICE(error)
+#endif
+
+#ifdef ENABLE_IOCTL
+#ifdef DEVICE_IMPLEMENTATIONS
+#include "dev-ioctl.c"
+#endif
+DEVICE(ioctl)
+#endif
