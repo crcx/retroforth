@@ -43,34 +43,41 @@ OPTIONS ?=
 
 # OPTIONS += -march=native
 
-# The I/O devices can be enabled or disabled. Comment or
-# uncomment the corresponding ENABLED and DEVICES lines and
-# then run `make`. Of particular note here, sockets support
-# is disabled by default and you may wish to enable it.
-
-# The I/O devices can be enabled or disabled. Comment or
-# uncomment the corresponding ENABLED and DEVICES lines and
-# then run `make`. Of particular note here, sockets support
-# is disabled by default and you may wish to enable it.
+# Select a feature profile with `make PROFILE=...`. `full` preserves
+# the historical default; callers may still append feature flags through
+# ENABLED or replace the embedded interfaces through DEVICES.
 
 OPTIONS += -DMAKEFILE_CONFIG
 
+PROFILE ?= full
 ENABLED ?=
-ENABLED += -DENABLE_FLOATS
-ENABLED += -DENABLE_FILES
-ENABLED += -DENABLE_UNIX
-ENABLED += -DENABLE_RNG
-ENABLED += -DENABLE_CLOCK
-ENABLED += -DENABLE_SCRIPTING
-# ENABLED += -DENABLE_SOCKETS
-ENABLED += -DENABLE_SIGNALS
-ENABLED += -DENABLE_MULTICORE
-# ENABLED += -DENABLE_FFI
-ENABLED += -DENABLE_ERROR
-ENABLED += -DENABLE_UNSIGNED
-ENABLED += -DENABLE_MALLOC
-ENABLED += -DENABLE_BLOCKS
-ENABLED += -DENABLE_IOCTL
+
+PROFILE_FULL = \
+	-DENABLE_FLOATS \
+	-DENABLE_FILES \
+	-DENABLE_UNIX \
+	-DENABLE_RNG \
+	-DENABLE_CLOCK \
+	-DENABLE_SCRIPTING \
+	-DENABLE_SIGNALS \
+	-DENABLE_MULTICORE \
+	-DENABLE_ERROR \
+	-DENABLE_UNSIGNED \
+	-DENABLE_MALLOC \
+	-DENABLE_BLOCKS \
+	-DENABLE_IOCTL
+
+PROFILE_PORTABLE = \
+	-DENABLE_FLOATS \
+	-DENABLE_FILES \
+	-DENABLE_CLOCK \
+	-DENABLE_SCRIPTING \
+	-DENABLE_ERROR \
+	-DENABLE_UNSIGNED \
+	-DENABLE_BLOCKS
+
+PROFILE_MINIMAL = \
+	-DENABLE_SCRIPTING
 
 DEVICES ?=
 DEVICES += interface/ll.retro

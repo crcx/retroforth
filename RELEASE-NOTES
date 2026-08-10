@@ -10,6 +10,10 @@
 
 - general
 
+- building
+
+  - add build profile support
+
 - toolchain
 
   - retro-muri gained additional directives

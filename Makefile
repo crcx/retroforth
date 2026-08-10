@@ -3,6 +3,15 @@
 # -------------------------------------------------------------
 
 include Configuration.mk
+.if $(PROFILE) == "full"
+ENABLED += $(PROFILE_FULL)
+.elif $(PROFILE) == "portable"
+ENABLED += $(PROFILE_PORTABLE)
+.elif $(PROFILE) == "minimal"
+ENABLED += $(PROFILE_MINIMAL)
+.else
+.error Unknown PROFILE '$(PROFILE)' (expected full, portable, or minimal)
+.endif
 
 # -------------------------------------------------------------
 

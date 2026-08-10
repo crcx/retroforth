@@ -3,6 +3,15 @@
 # -------------------------------------------------------------
 
 include Configuration.mk
+ifeq ($(PROFILE),full)
+ENABLED += $(PROFILE_FULL)
+else ifeq ($(PROFILE),portable)
+ENABLED += $(PROFILE_PORTABLE)
+else ifeq ($(PROFILE),minimal)
+ENABLED += $(PROFILE_MINIMAL)
+else
+$(error Unknown PROFILE '$(PROFILE)' (expected full, portable, or minimal))
+endif
 
 ENABLED += -DNEEDS_STRL
 
