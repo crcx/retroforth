@@ -53,6 +53,8 @@
     is incorrect
   - remove unused code
   - clean up and consolidate duplicated utf8/32 code
+  - cleaner handling of included files via the scripting
+    interface
 
 - nga-x11
 

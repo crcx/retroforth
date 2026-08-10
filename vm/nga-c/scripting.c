@@ -252,7 +252,7 @@ int read_line(NgaState *vm, FILE *file, char *token_buffer) {
   return tokens;
 }
 
-V include_file(NgaState *vm, char *fname, int run_tests) {
+static V include_source(NgaState *vm, char *fname, int run_tests, int fenced) {
   int inBlock = 0;                 /* Tracks status of in/out of block */
   int priorBlocks = 0;
   char source[64 * 1024];          /* Token buffer [about 64K]         */
@@ -276,8 +276,10 @@ V include_file(NgaState *vm, char *fname, int run_tests) {
     exit(1);
   }
 
-  priorBlocks = vm->codeBlocks;
-  vm->codeBlocks = 0;
+  if (fenced) {
+    priorBlocks = vm->codeBlocks;
+    vm->codeBlocks = 0;
+  }
 
   arp = ACTIVE.rp;
   aip = ACTIVE.ip;
@@ -303,20 +305,26 @@ V include_file(NgaState *vm, char *fname, int run_tests) {
     while (tokens > 0 && vm->ignoreToEOL == 0) {
       tokens--;
       read_token(fp, source);
-      strlcpy(fence, source, 32); /* Copy the first three characters  */
-      if (fence_boundary(vm, fence, run_tests) == -1) {
-        if (inBlock == 0) {
-          inBlock = 1;
-          vm->codeBlocks++;
+      if (fenced) {
+        strlcpy(fence, source, 32); /* Copy the first three characters */
+        if (fence_boundary(vm, fence, run_tests) == -1) {
+          if (inBlock == 0) {
+            inBlock = 1;
+            vm->codeBlocks++;
+          } else {
+            inBlock = 0;
+          }
         } else {
-          inBlock = 0;
+          if (inBlock == 1) {
+            vm->currentLine = at;
+            evaluate(vm, source);
+            vm->currentLine = at;
+          }
         }
       } else {
-        if (inBlock == 1) {
-          vm->currentLine = at;
-          evaluate(vm, source);
-          vm->currentLine = at;
-        }
+        vm->currentLine = at;
+        evaluate(vm, source);
+        vm->currentLine = at;
       }
     }
     if (vm->ignoreToEOL == -1) {
@@ -335,81 +343,23 @@ V include_file(NgaState *vm, char *fname, int run_tests) {
   ACTIVE.rp = arp;
   ACTIVE.ip = aip;
 
-  if (vm->codeBlocks == 0) {
-    printf("warning: no code or test blocks found!\n");
-    printf("         filename: %s\n", fname);
-    printf("         see http://unu.retroforth.org for a brief summary of\n");
-    printf("         the unu code format used by retro\n");
-
+  if (fenced) {
+    if (vm->codeBlocks == 0) {
+      printf("warning: no code or test blocks found!\n");
+      printf("         filename: %s\n", fname);
+      printf("         see http://unu.retroforth.org for a brief summary of\n");
+      printf("         the unu code format used by retro\n");
+    }
+    vm->codeBlocks = priorBlocks;
   }
-  vm->codeBlocks = priorBlocks;
 }
 
+V include_file(NgaState *vm, char *fname, int run_tests) {
+  include_source(vm, fname, run_tests, 1);
+}
 
 V include_plain_file(NgaState *vm, char *fname, int run_tests) {
-  char source[64 * 1024];          /* Token buffer [about 64K]         */
-
-  CELL ReturnStack[ADDRESSES];
-  CELL arp, aip;
-
-  long offset = 0;
-  CELL at = 0;
-  int tokens = 0;
-  FILE *fp;                        /* Open the file. If not found,     */
-  if (vm->current_source >= MAX_SCRIPTING_SOURCES - 1) {
-    printf("Maximum source include depth exceeded. Exiting.\n");
-    exit(1);
-  }
-
-  fp = fopen(fname, "r");          /* exit.                            */
-  if (fp == NULL) {
-    printf("File `%s` not found. Exiting.\n", fname);
-    exit(1);
-  }
-
-  arp = ACTIVE.rp;
-  aip = ACTIVE.ip;
-  for(ACTIVE.rp = 0; ACTIVE.rp <= arp; ACTIVE.rp++)
-    ReturnStack[ACTIVE.rp] = ACTIVE.address[ACTIVE.rp];
-  ACTIVE.rp = 0;
-
-  vm->current_source++;
-  strlcpy(vm->scripting_sources[vm->current_source], fname, 8192);
-
-  vm->ignoreToEOF = 0;
-
-  while (!feof(fp) && (vm->ignoreToEOF == 0)) { /* Loop through the file   */
-
-    vm->ignoreToEOL = 0;
-
-    offset = ftell(fp);
-    tokens = read_line(vm, fp, vm->line);
-    at++;
-    fseek(fp, offset, SEEK_SET);
-    skip_indent(fp);
-
-    while (tokens > 0 && vm->ignoreToEOL == 0) {
-      tokens--;
-      read_token(fp, source);
-      vm->currentLine = at;
-      evaluate(vm, source);
-      vm->currentLine = at;
-    }
-    if (vm->ignoreToEOL == -1) {
-      read_line(vm, fp, vm->line);
-    }
-  }
-
-  vm->current_source--;
-  vm->ignoreToEOF = 0;
-  fclose(fp);
-  if (vm->perform_abort == -1) {
-    carry_out_abort(vm);
-  }
-  for(ACTIVE.rp = 0; ACTIVE.rp <= arp; ACTIVE.rp++)
-    ACTIVE.address[ACTIVE.rp] = ReturnStack[ACTIVE.rp];
-  ACTIVE.rp = arp;
-  ACTIVE.ip = aip;
+  include_source(vm, fname, run_tests, 0);
 }
 
 V initialize_scripting(NgaState *vm) {
