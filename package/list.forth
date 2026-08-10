@@ -63,5 +63,5 @@ Save the image with anything loaded here added in. The
 `retro` binary will be rebuilt using the extended image.
 
 ~~~
-'../rre.image image:save
+'../bin/rre.image image:save
 ~~~

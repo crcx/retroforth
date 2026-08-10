@@ -1,0 +1,62 @@
+.Dd October 2023
+.Dt RETRO-RUNTIME 1
+.Os
+.Sh RETRO-RUNTIME
+.Nm retro-runtime
+.Nd "host runtime for working with a Retro image"
+.Sh SYNOPSIS
+.Nm
+.Op Fl h
+.Op Fl i
+.Op Fl v
+.Op Fl t Ar filename
+.Op Fl f Ar filename
+.Op Fl p Ar filename
+.Op Fl u Ar image
+.Op Fl r Ar image
+.Op Ar filename
+.Sh DESCRIPTION
+.Nm
+is the non-embedded version of the Retro runtime. Unlike
+.Xr retro 1 ,
+it does not contain an integral image. Supply an image with
+.Fl u
+or
+.Fl r
+before loading source files or entering interactive mode.
+.Pp
+It is primarily a build-time tool. The Retro build uses it with
+.Fl u
+to load package source into the temporary
+.Pa rre.image
+image. It is not installed as part of the normal Retro distribution.
+.Sh OPTIONS
+.Bl -tag -width -indent
+.It Fl h
+Display a help screen.
+.It Fl i
+Start Retro in interactive mode.
+.It Fl v
+Run in verbose mode, showing debugging information. Verbose output is written to /dev/stderr.
+.It Fl t Ar filename
+Run any code and test blocks in the specified file.
+.It Fl f Ar filename
+Run any code blocks in the specified file.
+.It Fl p Ar filename
+Run the code in the specified file.
+.It Fl u Ar image
+Load and use the specified image file.
+.It Fl r Ar image
+Load and use the specified image file, then start Retro in interactive mode.
+.It Ar filename
+Run code blocks in a single file.
+.El
+.Sh EXAMPLES
+Load an image and run the code blocks in a source file:
+.Bd -literal -offset indent
+retro-runtime -u rre.image -f package/list.forth
+.Ed
+.Sh SEE ALSO
+.Xr retro 1
+.Sh AUTHORS
+.An Charles Childers Aq Mt crc@forthworks.com

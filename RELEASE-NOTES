@@ -60,6 +60,7 @@
   - cleaner handling of included files via the scripting
     interface
   - work on making the device registrations more robust
+  - support building a retro-runtime(1) without embedded image
 
 - nga-x11
 
