@@ -100,7 +100,9 @@ CELL stack_pop(NgaState *);
 V stack_push(NgaState *, CELL);
 V update_rx(NgaState *);
 V register_device(NgaState *, Handler, Handler);
+#ifndef NO_EMBEDDED_IMAGE
 V load_embedded_image(NgaState *);
+#endif
 CELL load_image(NgaState *, char *);
 V prepare_vm(NgaState *);
 V execute(NgaState *, CELL);

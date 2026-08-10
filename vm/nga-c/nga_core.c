@@ -212,11 +212,13 @@ V register_device(NgaState *vm, Handler handler, Handler query) {
   vm->devices++;
 }
 
+#ifndef NO_EMBEDDED_IMAGE
 V load_embedded_image(NgaState *vm) {
   int i;
   for (i = 0; i < ngaImageCells; i++)
     vm->memory[i] = ngaImage[i];
 }
+#endif
 
 CELL load_image(NgaState *vm, char *imageFile) {
   FILE *fp;

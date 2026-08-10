@@ -145,6 +145,9 @@ bin/retro: vm/nga-c/image.c vm/nga-c/retro.c package/list.forth package/load-ext
 	@rm rre.image
 	@cd vm/nga-c && $(CC) -DFAST $(OPTIONS) $(ENABLED) $(CFLAGS) $(LDFLAGS) -o ../../bin/retro retro.c $(LIBM) $(LIBDL)
 
+bin/retro-external: vm/nga-c/retro.c
+	@cd vm/nga-c && $(CC) -DNO_EMBEDDED_IMAGE -DFAST $(OPTIONS) $(ENABLED) $(CFLAGS) $(LDFLAGS) -o ../../bin/retro-external retro.c $(LIBM) $(LIBDL)
+
 
 # optional targets
 
