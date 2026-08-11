@@ -65,6 +65,8 @@
     - rng ignored failures on opening/reading /dev/urandom
     - prefer use of host-specific random functions where
       possible
+    - read_line() in the scripting interface could mishandle a
+      multibyte character at the start of a line
 
 - nga-x11
 

@@ -235,13 +235,17 @@ int fence_boundary(NgaState *vm, char *buffer, int tests_enabled) {
   ---------------------------------------------------------------------*/
 
 int read_line(NgaState *vm, FILE *file, char *token_buffer) {
-  int ch = getc(file);
+  int ch = fread_character(file);
   int count = 0;
   int tokens = 1;
+  int i;
+  int num_bytes;
+  unsigned char utf8_bytes[4];
   token_buffer[0] = '\0';
   while ((ch != 10) && (ch != 13) && (ch != EOF) && (ch != 0)) {
-    if (count < (int)sizeof(vm->line) - 1) {
-      token_buffer[count++] = ch;
+    utf32_to_utf8((uint32_t)ch, utf8_bytes, &num_bytes);
+    for (i = 0; i < num_bytes && count < (int)sizeof(vm->line) - 1; i++) {
+      token_buffer[count++] = utf8_bytes[i];
     }
     ch = fread_character(file);
     if (ch != 10 && ch != 13 && ch != EOF && ch != 0 && isspace((unsigned char)ch)) {
