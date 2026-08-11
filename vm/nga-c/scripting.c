@@ -141,11 +141,11 @@ V io_scripting(NgaState *vm) {
   ---------------------------------------------------------------------*/
 
 V evaluate(NgaState *vm, char *s) {
+  char token[TIB_END - TIB + 1];
+
   if (strlen(s) == 0)  return;
-  if (strlen(s) > (TIB_END  - TIB)) {
-    s[TIB_END - TIB] = 0;
-  }
-  string_inject(vm, s, TIB);
+  strlcpy(token, s, sizeof(token));
+  string_inject(vm, token, TIB);
   stack_push(vm, TIB);
   execute(vm, vm->interpret);
 }
