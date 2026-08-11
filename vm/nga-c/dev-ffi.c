@@ -11,6 +11,8 @@
 
 **************************************************************/
 
+#include "retro.h"
+
 
 #ifdef ENABLE_FFI
 #include <dlfcn.h>

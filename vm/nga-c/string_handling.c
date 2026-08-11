@@ -11,9 +11,7 @@
 
 **************************************************************/
 
-#ifndef RETRO_NGA_CORE_IMPLEMENTED
-#error "string_handling.c must be included after nga_core.c"
-#endif
+#include "retro.h"
 
 V display_utf8(const unsigned char* utf8_bytes, int num_bytes) {
     if (write(STDOUT_FILENO, utf8_bytes, num_bytes) == -1) {

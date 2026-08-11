@@ -11,6 +11,8 @@
 
 **************************************************************/
 
+#include "retro.h"
+
 /*---------------------------------------------------------------------
   I keep an array of file handles. RETRO will use the index number as
   its representation of the file.

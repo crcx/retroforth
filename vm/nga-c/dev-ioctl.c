@@ -11,6 +11,8 @@
 
 **************************************************************/
 
+#include "retro.h"
+
 #ifdef ENABLE_IOCTL
 #include <sys/ioctl.h>
 #include <termios.h>

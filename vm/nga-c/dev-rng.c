@@ -11,6 +11,8 @@
 
 **************************************************************/
 
+#include "retro.h"
+
 #ifdef ENABLE_RNG
 #if defined(__linux__)
 #include <sys/syscall.h>

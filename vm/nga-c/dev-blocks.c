@@ -11,6 +11,8 @@
 
 **************************************************************/
 
+#include "retro.h"
+
 #define BLOCK_CELLS 1024
 #define BLOCK_BYTES (BLOCK_CELLS * (int)sizeof(int32_t))
 

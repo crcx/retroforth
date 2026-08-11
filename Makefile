@@ -3,6 +3,41 @@
 # -------------------------------------------------------------
 
 include Configuration.mk
+VM_OBJECTS = \
+	vm/nga-c/retro.o \
+	vm/nga-c/image_data.o \
+	vm/nga-c/nga_core.o \
+	vm/nga-c/string_handling.o \
+	vm/nga-c/scripting.o \
+	vm/nga-c/dev-files.o \
+	vm/nga-c/dev-float.o \
+	vm/nga-c/dev-unix.o \
+	vm/nga-c/dev-malloc.o \
+	vm/nga-c/dev-blocks.o \
+	vm/nga-c/dev-clock.o \
+	vm/nga-c/dev-rng.o \
+	vm/nga-c/dev-sockets.o \
+	vm/nga-c/dev-multicore.o \
+	vm/nga-c/dev-ffi.o \
+	vm/nga-c/dev-error.o \
+	vm/nga-c/dev-ioctl.o
+VM_RUNTIME_SOURCES = \
+	vm/nga-c/retro.c \
+	vm/nga-c/nga_core.c \
+	vm/nga-c/string_handling.c \
+	vm/nga-c/scripting.c \
+	vm/nga-c/dev-files.c \
+	vm/nga-c/dev-float.c \
+	vm/nga-c/dev-unix.c \
+	vm/nga-c/dev-malloc.c \
+	vm/nga-c/dev-blocks.c \
+	vm/nga-c/dev-clock.c \
+	vm/nga-c/dev-rng.c \
+	vm/nga-c/dev-sockets.c \
+	vm/nga-c/dev-multicore.c \
+	vm/nga-c/dev-ffi.c \
+	vm/nga-c/dev-error.c \
+	vm/nga-c/dev-ioctl.c
 .if $(PROFILE) == "full"
 ENABLED += $(PROFILE_FULL)
 .elif $(PROFILE) == "portable"
@@ -33,6 +68,7 @@ dirs:
 
 clean:
 	@rm -f bin/*
+	@rm -f vm/nga-c/*.o
 
 # installation targets
 
@@ -119,7 +155,7 @@ bin/retro-unu: tools/retro-unu.c
 
 # Image --------------------------------------------------------
 
-ngaImage: toolchain image/retro.muri image/retro.forth image/build.retro
+ngaImage: bin/retro-muri bin/retro-extend image/retro.muri image/retro.forth image/build.retro
 	@$(ASSEMBLE) image/retro.muri
 	@$(EXTEND) ngaImage image/retro.forth image/build.retro
 
@@ -133,8 +169,8 @@ bin/retro-repl: vm/nga-c/repl.c vm/nga-c/image.c
 update-extensions: bin/retro
 	@cd package/extensions && ../../bin/retro -f ../../tools/generate-extensions-list.retro >../load-extensions.retro
 
-bin/retro-runtime: vm/nga-c/retro.c
-	@cd vm/nga-c && $(CC) -DNO_EMBEDDED_IMAGE -DFAST $(OPTIONS) $(ENABLED) $(CFLAGS) $(LDFLAGS) -o ../../bin/retro-runtime retro.c $(LIBM) $(LIBDL)
+bin/retro-runtime: $(VM_RUNTIME_SOURCES)
+	@$(CC) -DNO_EMBEDDED_IMAGE -DFAST $(OPTIONS) $(ENABLED) $(CFLAGS) $(LDFLAGS) -o $@ $(VM_RUNTIME_SOURCES) $(LIBM) $(LIBDL)
 
 bin/rre.image: ngaImage bin/retro-extend bin/retro-runtime interface/retro-unix.retro $(DEVICES) package/list.forth package/load-extensions.retro
 	@cp ngaImage bin/rre.image
@@ -144,8 +180,15 @@ bin/rre.image: ngaImage bin/retro-extend bin/retro-runtime interface/retro-unix.
 vm/nga-c/image.c: bin/rre.image bin/retro-embedimage
 	@$(EXPORT) bin/rre.image >vm/nga-c/image.c
 
-bin/retro: vm/nga-c/image.c vm/nga-c/retro.c
-	@cd vm/nga-c && $(CC) -DFAST $(OPTIONS) $(ENABLED) $(CFLAGS) $(LDFLAGS) -o ../../bin/retro retro.c $(LIBM) $(LIBDL)
+$(VM_OBJECTS): vm/nga-c/retro.h vm/nga-c/nga_core.h vm/nga-c/config.h vm/nga-c/devices.h vm/nga-c/devices.def
+
+vm/nga-c/image_data.o: vm/nga-c/image.c
+
+.c.o:
+	$(CC) $(OPTIONS) $(ENABLED) $(CFLAGS) -c -o $@ $<
+
+bin/retro: vm/nga-c/image.c $(VM_OBJECTS)
+	$(CC) $(OPTIONS) $(ENABLED) $(CFLAGS) $(LDFLAGS) -o $@ $(VM_OBJECTS) $(LIBM) $(LIBDL)
 
 
 # optional targets

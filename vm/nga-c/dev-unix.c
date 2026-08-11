@@ -11,6 +11,8 @@
 
 **************************************************************/
 
+#include "retro.h"
+
 
 #ifdef ENABLE_UNIX
 #include <sys/wait.h>

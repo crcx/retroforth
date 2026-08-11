@@ -11,6 +11,8 @@
 
 **************************************************************/
 
+#include "retro.h"
+
 #ifdef ENABLE_SOCKETS
 
 #include <arpa/inet.h>

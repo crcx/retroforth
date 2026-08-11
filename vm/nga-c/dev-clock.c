@@ -11,6 +11,8 @@
 
 **************************************************************/
 
+#include "retro.h"
+
 #ifdef ENABLE_CLOCK
 time_t current_time;
 

@@ -11,6 +11,8 @@
 
 **************************************************************/
 
+#include "retro.h"
+
 #ifndef RETRO_NGA_CORE_H
 #error "nga_core.c must be included after nga_core.h"
 #endif
@@ -211,14 +213,6 @@ V register_device(NgaState *vm, Handler handler, Handler query) {
   vm->IO_queryHandlers[vm->devices] = query;
   vm->devices++;
 }
-
-#ifndef NO_EMBEDDED_IMAGE
-V load_embedded_image(NgaState *vm) {
-  int i;
-  for (i = 0; i < ngaImageCells; i++)
-    vm->memory[i] = ngaImage[i];
-}
-#endif
 
 CELL load_image(NgaState *vm, char *imageFile) {
   FILE *fp;
