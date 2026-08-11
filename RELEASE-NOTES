@@ -61,6 +61,10 @@
     interface
   - work on making the device registrations more robust
   - support building a retro-runtime(1) without embedded image
+  - fix bugs
+    - rng ignored failures on opening/reading /dev/urandom
+    - prefer use of host-specific random functions where
+      possible
 
 - nga-x11
 

@@ -19,9 +19,9 @@
 #define ENABLE_UNSIGNED
 #define ENABLE_MALLOC
 #define ENABLE_BLOCKS
+#define ENABLE_RNG
 #ifndef _WIN32
 #define ENABLE_UNIX
-#define ENABLE_RNG
 #define ENABLE_CLOCK
 /* #define ENABLE_SOCKETS */
 #define ENABLE_SIGNALS
