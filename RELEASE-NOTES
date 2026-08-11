@@ -67,6 +67,8 @@
       possible
     - read_line() in the scripting interface could mishandle a
       multibyte character at the start of a line
+    - scripting_arg() indexes sys_argv[a + 2] with no bounds
+      check
 
 - nga-x11
 

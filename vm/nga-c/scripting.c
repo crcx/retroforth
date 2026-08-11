@@ -27,7 +27,10 @@ V scripting_arg(NgaState *vm) {
   CELL a, b;
   a = stack_pop(vm);
   b = stack_pop(vm);
-  stack_push(vm, string_inject(vm, vm->sys_argv[a + 2], b));
+  if (a >= 0 && a < vm->sys_argc - 2)
+    stack_push(vm, string_inject(vm, vm->sys_argv[a + 2], b));
+  else
+    stack_push(vm, string_inject(vm, "", b));
 }
 
 V scripting_arg_count(NgaState *vm) {
