@@ -52,6 +52,9 @@ public final class Nga {
 
     private void loadImage(String imageFile) throws IOException {
         try (FileInputStream in = new FileInputStream(imageFile)) {
+            if (in.getChannel().size() > (long) IMAGE_SIZE * Integer.BYTES) {
+                throw new IOException("image exceeds VM memory capacity");
+            }
             byte[] buf = in.readAllBytes();
             ByteBuffer bb = ByteBuffer.wrap(buf).order(ByteOrder.LITTLE_ENDIAN);
             int cells = Math.min(bb.remaining() / 4, IMAGE_SIZE);
@@ -319,7 +322,11 @@ public final class Nga {
         Nga vm = new Nga();
         vm.prepareVm();
         vm.loadImage("ngaImage");
-        vm.execute(0);
+        try {
+            vm.execute(0);
+        } catch (RuntimeException e) {
+            /* Invalid guest state halts this VM invocation. */
+        }
     }
 
     public static void main(String[] args) {

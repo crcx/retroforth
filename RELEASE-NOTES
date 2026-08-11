@@ -38,7 +38,7 @@
 
   - removed retro-compiler
 
-- new nga implementations
+- new minimal nga implementations
 
   - common lisp (sbcl)
   - scheme (chicken)

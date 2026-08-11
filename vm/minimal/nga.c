@@ -34,6 +34,7 @@
 #define IMAGE_SIZE   65536       /* Amount of RAM, in cells */
 #define ADDRESSES    256          /* Depth of address stack */
 #define STACK_DEPTH  256          /* Depth of data stack */
+#define IMAGE_CELLS  (IMAGE_SIZE + 1)
 
 CELL sp, rp, ip;                  /* Stack and instruction pointers */
 CELL data[STACK_DEPTH];           /* The data stack          */
@@ -53,12 +54,33 @@ void load_image(char *imageFile);
 void prepare_vm();
 void process_opcode_bundle(CELL opcode);
 
+static void halt_with_error(void) {
+  ip = IMAGE_SIZE;
+}
+
+static int valid_memory_address(CELL value) {
+  return value >= 0 && value < IMAGE_CELLS;
+}
+
+static int can_push_data(void) { return sp < STACK_DEPTH - 1; }
+static int can_pop_data(void) { return sp > 0; }
+static int can_push_address(void) { return rp < ADDRESSES - 1; }
+static int can_pop_address(void) { return rp > 0; }
+
 CELL stack_pop() {
+  if (!can_pop_data()) {
+    halt_with_error();
+    return 0;
+  }
   sp--;
   return data[sp + 1];
 }
 
 void stack_push(CELL value) {
+  if (!can_push_data()) {
+    halt_with_error();
+    return;
+  }
   sp++;
   data[sp] = value;
 }
@@ -67,7 +89,7 @@ void execute(CELL cell) {
   CELL opcode;
   rp = 1;
   ip = cell;
-  while (ip < IMAGE_SIZE) {
+  while (ip >= 0 && ip < IMAGE_SIZE) {
     opcode = memory[ip];
     process_opcode_bundle(opcode);
     ip++;
@@ -89,6 +111,10 @@ void load_image(char *imageFile) {
   if ((fp = fopen(imageFile, "rb")) != NULL) {
     fseek(fp, 0, SEEK_END);
     fileLen = ftell(fp) / sizeof(CELL);
+    if (fileLen < 0 || fileLen > IMAGE_CELLS) {
+      fclose(fp);
+      return;
+    }
     rewind(fp);
     fread(&memory, sizeof(CELL), fileLen, fp);
     fclose(fp);
@@ -109,15 +135,18 @@ void inst_no() {
 }
 
 void inst_li() {
+  if (ip >= IMAGE_SIZE - 1 || !can_push_data()) { halt_with_error(); return; }
   ip++;
   stack_push(memory[ip]);
 }
 
 void inst_du() {
+  if (!can_pop_data()) { halt_with_error(); return; }
   stack_push(TOS);
 }
 
 void inst_dr() {
+  if (!can_pop_data()) { halt_with_error(); return; }
   data[sp] = 0;
    if (--sp < 0)
      ip = IMAGE_SIZE;
@@ -125,28 +154,33 @@ void inst_dr() {
 
 void inst_sw() {
   CELL a;
+  if (sp < 2) { halt_with_error(); return; }
   a = TOS;
   TOS = NOS;
   NOS = a;
 }
 
 void inst_pu() {
+  if (!can_push_address() || !can_pop_data()) { halt_with_error(); return; }
   rp++;
   TORS = TOS;
   inst_dr();
 }
 
 void inst_po() {
+  if (!can_pop_address() || !can_push_data()) { halt_with_error(); return; }
   stack_push(TORS);
   rp--;
 }
 
 void inst_ju() {
+  if (!can_pop_data() || TOS < 0 || TOS >= IMAGE_SIZE) { halt_with_error(); return; }
   ip = TOS - 1;
   inst_dr();
 }
 
 void inst_ca() {
+  if (!can_push_address() || !can_pop_data() || TOS < 0 || TOS >= IMAGE_SIZE) { halt_with_error(); return; }
   rp++;
   TORS = ip;
   ip = TOS - 1;
@@ -155,9 +189,11 @@ void inst_ca() {
 
 void inst_cc() {
   CELL a, b;
+  if (sp < 2) { halt_with_error(); return; }
   a = TOS; inst_dr();  /* Target */
   b = TOS; inst_dr();  /* Flag   */
   if (b != 0) {
+    if (!can_push_address() || a < 0 || a >= IMAGE_SIZE) { halt_with_error(); return; }
     rp++;
     TORS = ip;
     ip = a - 1;
@@ -165,43 +201,51 @@ void inst_cc() {
 }
 
 void inst_re() {
+  if (!can_pop_address() || TORS < 0 || TORS >= IMAGE_SIZE) { halt_with_error(); return; }
   ip = TORS;
   rp--;
 }
 
 void inst_eq() {
+  if (sp < 2) { halt_with_error(); return; }
   NOS = (NOS == TOS) ? -1 : 0;
   inst_dr();
 }
 
 void inst_ne() {
+  if (sp < 2) { halt_with_error(); return; }
   NOS = (NOS != TOS) ? -1 : 0;
   inst_dr();
 }
 
 void inst_lt() {
+  if (sp < 2) { halt_with_error(); return; }
   NOS = (NOS < TOS) ? -1 : 0;
   inst_dr();
 }
 
 void inst_gt() {
+  if (sp < 2) { halt_with_error(); return; }
   NOS = (NOS > TOS) ? -1 : 0;
   inst_dr();
 }
 
 void inst_fe() {
+  if (!can_pop_data()) { halt_with_error(); return; }
   switch (TOS) {
     case -1: TOS = sp - 1; break;
     case -2: TOS = rp; break;
     case -3: TOS = IMAGE_SIZE; break;
     case -4: TOS = CELL_MIN; break;
     case -5: TOS = CELL_MAX; break;
-    default: TOS = memory[TOS]; break;
+    default: if (!valid_memory_address(TOS)) { halt_with_error(); return; }
+             TOS = memory[TOS]; break;
   }
 }
 
 void inst_st() {
-  if (TOS <= IMAGE_SIZE && TOS >= 0) {
+  if (sp < 2) { halt_with_error(); return; }
+  if (valid_memory_address(TOS)) {
     memory[TOS] = NOS;
     inst_dr();
     inst_dr();
@@ -211,39 +255,47 @@ void inst_st() {
 }
 
 void inst_ad() {
-  NOS += TOS;
+  if (sp < 2) { halt_with_error(); return; }
+  NOS = (CELL)((uint32_t)NOS + (uint32_t)TOS);
   inst_dr();
 }
 
 void inst_su() {
-  NOS -= TOS;
+  if (sp < 2) { halt_with_error(); return; }
+  NOS = (CELL)((uint32_t)NOS - (uint32_t)TOS);
   inst_dr();
 }
 
 void inst_mu() {
-  NOS *= TOS;
+  if (sp < 2) { halt_with_error(); return; }
+  NOS = (CELL)((uint32_t)NOS * (uint32_t)TOS);
   inst_dr();
 }
 
 void inst_di() {
   CELL a, b;
+  if (sp < 2) { halt_with_error(); return; }
   a = TOS;
   b = NOS;
+  if (a == 0 || (a == -1 && b == INT32_MIN)) { halt_with_error(); return; }
   TOS = b / a;
   NOS = b % a;
 }
 
 void inst_an() {
+  if (sp < 2) { halt_with_error(); return; }
   NOS = TOS & NOS;
   inst_dr();
 }
 
 void inst_or() {
+  if (sp < 2) { halt_with_error(); return; }
   NOS = TOS | NOS;
   inst_dr();
 }
 
 void inst_xo() {
+  if (sp < 2) { halt_with_error(); return; }
   NOS = TOS ^ NOS;
   inst_dr();
 }
@@ -251,8 +303,9 @@ void inst_xo() {
 void inst_sh() {
   CELL y = TOS;
   CELL x = NOS;
+  if (sp < 2 || y < -31 || y > 31) { halt_with_error(); return; }
   if (TOS < 0)
-    NOS = NOS << (0 - TOS);
+    NOS = (CELL)((uint32_t)NOS << (0 - TOS));
   else {
     if (x < 0 && y > 0)
       NOS = x >> y | ~(~0U >> y);
@@ -263,7 +316,9 @@ void inst_sh() {
 }
 
 void inst_zr() {
+  if (!can_pop_data()) { halt_with_error(); return; }
   if (TOS == 0) {
+    if (!can_pop_address() || TORS < 0 || TORS >= IMAGE_SIZE) { halt_with_error(); return; }
     inst_dr();
     ip = TORS;
     rp--;
@@ -279,6 +334,7 @@ void inst_ie() {
 }
 
 void inst_iq() {
+  if (!can_pop_data()) { halt_with_error(); return; }
   if (TOS == 0) {
     inst_dr();
     stack_push(0);
@@ -292,6 +348,7 @@ void inst_iq() {
 
 void inst_ii() {
   int c;
+  if (!can_pop_data()) { halt_with_error(); return; }
   if (TOS == 0) {
     inst_dr();
     putc(stack_pop(), stdout);
@@ -314,6 +371,11 @@ Handler instructions[] = {
 };
 
 void process_opcode_bundle(CELL opcode) {
+  if ((opcode & 0xFF) >= 30 || ((opcode >> 8) & 0xFF) >= 30 ||
+      ((opcode >> 16) & 0xFF) >= 30 || ((opcode >> 24) & 0xFF) >= 30) {
+    halt_with_error();
+    return;
+  }
   instructions[opcode & 0xFF]();
   instructions[(opcode >> 8) & 0xFF]();
   instructions[(opcode >> 16) & 0xFF]();

@@ -3,6 +3,7 @@
 import qualified Data.ByteString as BS
 import Data.Array.IO (IOArray, newArray, readArray, writeArray)
 import Data.Bits ((.&.), (.|.), shiftL, shiftR, complement, xor)
+import Control.Exception (SomeException, catch)
 import Data.IORef
 import Data.Int (Int32)
 import Data.Word (Word32)
@@ -357,4 +358,7 @@ main = do
   vm <- newVm
   prepareVm vm
   loadImage vm "ngaImage"
-  execute vm 0
+  execute vm 0 `catch` ignoreGuestError
+
+ignoreGuestError :: SomeException -> IO ()
+ignoreGuestError _ = pure ()

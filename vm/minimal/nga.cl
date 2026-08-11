@@ -73,21 +73,20 @@
                           :element-type '(unsigned-byte 8)
                           :if-does-not-exist nil)
     (when stream
-      (let ((i 0))
-        (loop for byte1 = (read-byte stream nil nil)
-              for byte2 = (read-byte stream nil nil)
-              for byte3 = (read-byte stream nil nil)
-              for byte4 = (read-byte stream nil nil)
-              while (and byte1 byte2 byte3 byte4)
-              do (let ((value (logior byte1
-                                     (ash byte2 8)
-                                     (ash byte3 16)
-                                     (ash byte4 24))))
-                   (setf (aref (nga-vm-memory vm) i)
-                         (if (logbitp 31 value)
-                             (- value (ash 1 32))
-                             value))
-                   (incf i)))))))
+      (loop for i from 0 below +image-size+
+            for byte1 = (read-byte stream nil nil)
+            for byte2 = (read-byte stream nil nil)
+            for byte3 = (read-byte stream nil nil)
+            for byte4 = (read-byte stream nil nil)
+            while (and byte1 byte2 byte3 byte4)
+            do (let ((value (logior byte1
+                                   (ash byte2 8)
+                                   (ash byte3 16)
+                                   (ash byte4 24))))
+                 (setf (aref (nga-vm-memory vm) i)
+                       (if (logbitp 31 value)
+                           (- value (ash 1 32))
+                           value)))))))
 
 (defun prepare-vm (vm)
   (setf (nga-vm-ip vm) 0
@@ -300,6 +299,8 @@
   (let ((vm (make-nga-vm)))
     (prepare-vm vm)
     (load-image vm "ngaImage")
-    (execute vm 0)))
+    (handler-case
+        (execute vm 0)
+      (error () nil))))
 
 (main)

@@ -83,7 +83,8 @@
                 (b2 (read-byte))
                 (b3 (read-byte))
                 (b4 (read-byte)))
-            (when (and (not (eof-object? b1))
+            (when (and (< i +image-size+)
+                       (not (eof-object? b1))
                        (not (eof-object? b2))
                        (not (eof-object? b3))
                        (not (eof-object? b4)))
@@ -302,6 +303,8 @@
   (let ((vm (make-new-vm)))
     (prepare-vm! vm)
     (load-image! vm "ngaImage")
-    (execute! vm 0)))
+    (handle-exceptions ex
+      (void)
+      (execute! vm 0))))
 
 (main)

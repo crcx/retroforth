@@ -368,6 +368,13 @@ func (vm *NgaVM) processOpcodeBundle(opcode Cell) {
 }
 
 func (vm *NgaVM) Execute(cell Cell) {
+	defer func() {
+		if recover() != nil {
+			vm.ip = ImageSize
+			vm.sp = 0
+			vm.rp = 0
+		}
+	}()
 	vm.rp = 1
 	vm.ip = int(cell)
 	for vm.ip < ImageSize {

@@ -52,6 +52,9 @@ private class NgaVm {
     @Throws(IOException::class)
     fun loadImage(imageFile: String) {
         FileInputStream(imageFile).use { fis ->
+            if (fis.channel.size() > IMAGE_SIZE.toLong() * Int.SIZE_BYTES) {
+                throw IOException("image exceeds VM memory capacity")
+            }
             val buf = fis.readBytes()
             val bb = ByteBuffer.wrap(buf).order(ByteOrder.LITTLE_ENDIAN)
             val cells = minOf(bb.remaining() / 4, IMAGE_SIZE)
@@ -202,7 +205,11 @@ private fun runVm() {
     val vm = NgaVm()
     vm.prepareVm()
     vm.loadImage("ngaImage")
-    vm.execute(0)
+    try {
+        vm.execute(0)
+    } catch (e: RuntimeException) {
+        // Invalid guest state halts this VM invocation.
+    }
 }
 
 @Throws(Exception::class)

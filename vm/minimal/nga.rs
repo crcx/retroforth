@@ -21,6 +21,7 @@
 */
 
 use std::io::{self, Read, Write};
+use std::panic::{catch_unwind, AssertUnwindSafe};
 use std::fs::File;
 
 const IMAGE_SIZE: usize = 65536;
@@ -100,7 +101,18 @@ impl NgaVm {
         }
     }
 
+    fn execute_safely(&mut self, cell: Cell) {
+        if catch_unwind(AssertUnwindSafe(|| self.execute(cell))).is_err() {
+            self.ip = IMAGE_SIZE;
+            self.sp = 0;
+            self.rp = 0;
+        }
+    }
+
     pub fn load_image(&mut self, image_file: &str) -> Result<(), Box<dyn std::error::Error>> {
+        if std::fs::metadata(image_file)?.len() > (IMAGE_SIZE * std::mem::size_of::<Cell>()) as u64 {
+            return Err("image exceeds VM memory capacity".into());
+        }
         let mut file = File::open(image_file)?;
         let mut buffer = Vec::new();
         file.read_to_end(&mut buffer)?;
@@ -399,7 +411,12 @@ fn main() {
     vm.prepare_vm();
     
     match vm.load_image("ngaImage") {
-        Ok(_) => vm.execute(0),
+        Ok(_) => {
+            let previous_panic_hook = std::panic::take_hook();
+            std::panic::set_hook(Box::new(|_| {}));
+            vm.execute_safely(0);
+            std::panic::set_hook(previous_panic_hook);
+        },
         Err(e) => eprintln!("Error loading image: {}", e),
     }
 }

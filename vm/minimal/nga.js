@@ -21,6 +21,9 @@ class NgaVm {
     this.memory = new Int32Array(IMAGE_SIZE + 1);
   }
 
+  halt() { this.ip = IMAGE_SIZE; }
+  validAddress(addr) { return Number.isInteger(addr) && addr >= 0 && addr <= IMAGE_SIZE; }
+
   tos() {
     return this.data[this.sp];
   }
@@ -46,11 +49,13 @@ class NgaVm {
   }
 
   stackPop() {
+    if (this.sp <= 0) { this.halt(); return 0; }
     this.sp -= 1;
     return this.data[this.sp + 1];
   }
 
   stackPush(v) {
+    if (this.sp >= STACK_DEPTH - 1) { this.halt(); return; }
     this.sp += 1;
     this.data[this.sp] = toCell(v);
   }
@@ -58,7 +63,7 @@ class NgaVm {
   execute(cell) {
     this.rp = 1;
     this.ip = cell | 0;
-    while (this.ip < IMAGE_SIZE) {
+    while (this.ip >= 0 && this.ip < IMAGE_SIZE) {
       const opcode = this.memory[this.ip];
       this.processOpcodeBundle(opcode);
       this.ip += 1;
@@ -69,6 +74,9 @@ class NgaVm {
   }
 
   loadImage(imageFile) {
+    if (fs.statSync(imageFile).size > IMAGE_SIZE * 4) {
+      throw new Error('image exceeds VM memory capacity');
+    }
     const buf = fs.readFileSync(imageFile);
     const cells = Math.floor(buf.length / 4);
     for (let i = 0; i < cells && i < IMAGE_SIZE; i += 1) {
@@ -88,11 +96,13 @@ class NgaVm {
   inst_no() {}
 
   inst_li() {
+    if (this.ip >= IMAGE_SIZE - 1) { this.halt(); return; }
     this.ip += 1;
     this.stackPush(this.memory[this.ip]);
   }
 
   inst_du() {
+    if (this.sp <= 0) { this.halt(); return; }
     this.stackPush(this.tos());
   }
 
@@ -105,28 +115,33 @@ class NgaVm {
   }
 
   inst_sw() {
+    if (this.sp < 2) { this.halt(); return; }
     const a = this.tos();
     this.setTos(this.nos());
     this.setNos(a);
   }
 
   inst_pu() {
+    if (this.sp <= 0 || this.rp >= ADDRESSES - 1) { this.halt(); return; }
     this.rp += 1;
     this.setTors(this.tos());
     this.inst_dr();
   }
 
   inst_po() {
+    if (this.rp <= 0) { this.halt(); return; }
     this.stackPush(this.tors());
     this.rp -= 1;
   }
 
   inst_ju() {
+    if (this.sp <= 0 || !this.validAddress(this.tos()) || this.tos() === IMAGE_SIZE) { this.halt(); return; }
     this.ip = this.tos() - 1;
     this.inst_dr();
   }
 
   inst_ca() {
+    if (this.sp <= 0 || this.rp >= ADDRESSES - 1 || !this.validAddress(this.tos()) || this.tos() === IMAGE_SIZE) { this.halt(); return; }
     this.rp += 1;
     this.setTors(this.ip);
     this.ip = this.tos() - 1;
@@ -134,11 +149,13 @@ class NgaVm {
   }
 
   inst_cc() {
+    if (this.sp < 2) { this.halt(); return; }
     const a = this.tos();
     this.inst_dr();
     const b = this.tos();
     this.inst_dr();
     if (b !== 0) {
+      if (this.rp >= ADDRESSES - 1 || !this.validAddress(a) || a === IMAGE_SIZE) { this.halt(); return; }
       this.rp += 1;
       this.setTors(this.ip);
       this.ip = a - 1;
@@ -146,6 +163,7 @@ class NgaVm {
   }
 
   inst_re() {
+    if (this.rp <= 0 || !this.validAddress(this.tors()) || this.tors() === IMAGE_SIZE) { this.halt(); return; }
     this.ip = this.tors();
     this.rp -= 1;
   }
@@ -171,6 +189,7 @@ class NgaVm {
   }
 
   inst_fe() {
+    if (this.sp <= 0) { this.halt(); return; }
     switch (this.tos()) {
       case -1:
         this.setTos(this.sp - 1);
@@ -188,6 +207,7 @@ class NgaVm {
         this.setTos(CELL_MAX);
         break;
       default:
+        if (!this.validAddress(this.tos())) { this.halt(); return; }
         this.setTos(this.memory[this.tos()]);
         break;
     }
@@ -195,7 +215,9 @@ class NgaVm {
 
   inst_st() {
     const addr = this.tos();
-    if (addr >= 0 && addr <= IMAGE_SIZE) {
+    if (this.sp < 2) {
+      this.halt();
+    } else if (this.validAddress(addr)) {
       this.memory[addr] = this.nos();
       this.inst_dr();
       this.inst_dr();
@@ -220,6 +242,7 @@ class NgaVm {
   }
 
   inst_di() {
+    if (this.sp < 2 || this.tos() === 0 || (this.nos() === CELL_MIN && this.tos() === -1)) { this.halt(); return; }
     const a = this.tos();
     const b = this.nos();
     this.setTos(toCell(b / a));
@@ -245,6 +268,7 @@ class NgaVm {
     const y = this.tos();
     const x = this.nos();
     let result;
+    if (this.sp < 2 || y < -31 || y > 31) { this.halt(); return; }
     if (y < 0) {
       result = x << (0 - y);
     } else if (x < 0 && y > 0) {
@@ -257,7 +281,9 @@ class NgaVm {
   }
 
   inst_zr() {
+    if (this.sp <= 0) { this.halt(); return; }
     if (this.tos() === 0) {
+      if (this.rp <= 0 || !this.validAddress(this.tors()) || this.tors() === IMAGE_SIZE) { this.halt(); return; }
       this.inst_dr();
       this.ip = this.tors();
       this.rp -= 1;
@@ -273,6 +299,7 @@ class NgaVm {
   }
 
   inst_iq() {
+    if (this.sp <= 0) { this.halt(); return; }
     if (this.tos() === 0) {
       this.inst_dr();
       this.stackPush(0);
@@ -285,6 +312,7 @@ class NgaVm {
   }
 
   inst_ii() {
+    if (this.sp <= 0) { this.halt(); return; }
     if (this.tos() === 0) {
       this.inst_dr();
       const c = this.stackPop();
@@ -303,6 +331,11 @@ class NgaVm {
   }
 
   processOpcodeBundle(opcode) {
+    if ((opcode & 0xff) > 29 || ((opcode >> 8) & 0xff) > 29 ||
+        ((opcode >> 16) & 0xff) > 29 || ((opcode >> 24) & 0xff) > 29) {
+      this.halt();
+      return;
+    }
     this.executeInstruction(opcode & 0xff);
     this.executeInstruction((opcode >> 8) & 0xff);
     this.executeInstruction((opcode >> 16) & 0xff);

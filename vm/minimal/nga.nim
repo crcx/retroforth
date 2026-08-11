@@ -264,11 +264,19 @@ proc execute*(vm: var NgaVm, cell: Cell) =
     if vm.rp == 0:
       vm.ip = IMAGE_SIZE
 
+proc executeSafely(vm: var NgaVm, cell: Cell) =
+  try:
+    vm.execute(cell)
+  except CatchableError, Defect:
+    vm.ip = IMAGE_SIZE
+    vm.sp = 0
+    vm.rp = 0
+
 when isMainModule:
   var vm: NgaVm
   vm.prepareVm()
   if vm.loadImage("ngaImage"):
-    vm.execute(0)
+    vm.executeSafely(0)
   else:
     echo "Error loading ngaImage"
     quit(1)
