@@ -72,6 +72,8 @@
     - i_fe and i_st index VM memory directly with unvalidated
       guest addresses
     - jump/call targets can drive ip negative
+    - the fast execution path reads an opcode through
+      (uint8_t *)&opcode, which depends on host byte order
 
 - nga-x11
 

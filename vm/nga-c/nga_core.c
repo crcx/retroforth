@@ -631,7 +631,7 @@ V process_opcode_bundle(NgaState *vm, CELL opcode) {
   if (INST(24)) instructions[(opcode >> 24) & 0xFF](vm);
 #else
   for (size_t i = 0; i < 4; ++i) {
-    uint8_t current = ((uint8_t*)&opcode)[i];
+    CELL current = (opcode >> (i * 8)) & 0xFF;
     if (unlikely(current > 29)) {
       invalid_opcode(vm, opcode);
     }
