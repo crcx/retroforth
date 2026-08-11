@@ -74,6 +74,8 @@
     - jump/call targets can drive ip negative
     - the fast execution path reads an opcode through
       (uint8_t *)&opcode, which depends on host byte order
+    - terminal setup ignores tcgetattr, tcsetattr, and ioctl
+      failures
 
 - nga-x11
 

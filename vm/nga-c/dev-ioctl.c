@@ -17,34 +17,61 @@
 
 void ioctl_get_terminal_size(NgaState *vm) {
   struct winsize size;
-  ioctl(STDOUT_FILENO, TIOCGWINSZ, &size);
+  if (ioctl(STDOUT_FILENO, TIOCGWINSZ, &size) == -1) {
+    perror("ERROR (nga/ioctl): Unable to get terminal size");
+    stack_push(vm, 0);
+    stack_push(vm, 0);
+    return;
+  }
   stack_push(vm, size.ws_row);
   stack_push(vm, size.ws_col);
 }
 
 void ioctl_set_character_breaking_mode(NgaState *vm) {
   struct termios term;
-  tcgetattr(STDIN_FILENO, &term);
+  if (tcgetattr(STDIN_FILENO, &term) == -1) {
+    perror("ERROR (nga/ioctl): Unable to get terminal settings");
+    return;
+  }
   term.c_lflag &=(~ICANON & ECHO);
-  tcsetattr(STDIN_FILENO, TCSANOW, &term);
+  if (tcsetattr(STDIN_FILENO, TCSANOW, &term) == -1) {
+    perror("ERROR (nga/ioctl): Unable to set terminal settings");
+  }
 }
 
 void ioctl_set_line_buffered_mode(NgaState *vm) {
   struct termios term;
-  tcgetattr(STDIN_FILENO, &term);
+  if (tcgetattr(STDIN_FILENO, &term) == -1) {
+    perror("ERROR (nga/ioctl): Unable to get terminal settings");
+    return;
+  }
   term.c_lflag |= ICANON;
   term.c_lflag |= ECHO;
-  tcsetattr(STDIN_FILENO, TCSANOW, &term);
+  if (tcsetattr(STDIN_FILENO, TCSANOW, &term) == -1) {
+    perror("ERROR (nga/ioctl): Unable to set terminal settings");
+  }
 }
 
 struct termios savedTermState;
+int savedTermStateValid;
 
 void ioctl_save_current_state(NgaState *vm) {
-  tcgetattr(STDIN_FILENO, &savedTermState);
+  if (tcgetattr(STDIN_FILENO, &savedTermState) == -1) {
+    savedTermStateValid = 0;
+    perror("ERROR (nga/ioctl): Unable to save terminal settings");
+    return;
+  }
+  savedTermStateValid = 1;
 }
 
 void ioctl_restore_saved_state(NgaState *vm) {
-  tcsetattr(STDIN_FILENO, TCSANOW, &savedTermState);
+  if (!savedTermStateValid) {
+    fprintf(stderr, "ERROR (nga/ioctl): No saved terminal settings\n");
+    return;
+  }
+  if (tcsetattr(STDIN_FILENO, TCSANOW, &savedTermState) == -1) {
+    perror("ERROR (nga/ioctl): Unable to restore terminal settings");
+  }
 }
 
 Handler IOCTLActions[] = {
