@@ -50,7 +50,7 @@ ENABLED += $(PROFILE_MINIMAL)
 
 # -------------------------------------------------------------
 
-all: clean build
+all: build
 
 help:
 
