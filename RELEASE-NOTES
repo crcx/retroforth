@@ -69,6 +69,9 @@
       multibyte character at the start of a line
     - scripting_arg() indexes sys_argv[a + 2] with no bounds
       check
+    - i_fe and i_st index VM memory directly with unvalidated
+      guest addresses
+    - jump/call targets can drive ip negative
 
 - nga-x11
 

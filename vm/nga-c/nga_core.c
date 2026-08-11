@@ -133,7 +133,7 @@ V execute(NgaState *vm, CELL cell) {
   if (ACTIVE.rp == 0)
     ACTIVE.rp = 1;
   ACTIVE.ip = cell;
-  while (ACTIVE.ip < IMAGE_SIZE) {
+  while (ACTIVE.ip >= 0 && ACTIVE.ip < IMAGE_SIZE) {
     if (vm->perform_abort == 0) {
       opcode = vm->memory[ACTIVE.ip];
 #ifndef BRANCH_PREDICTION
@@ -257,6 +257,22 @@ V prepare_vm(NgaState *vm) {
     ACTIVE.address[ACTIVE.ip] = 0;
 }
 
+int valid_memory_address(CELL address) {
+  return address >= 0 && address < IMAGE_SIZE;
+}
+
+V invalid_memory_access(NgaState *vm) {
+#ifdef ENABLE_ERROR
+  if (vm->ErrorHandlers[5] != 0) {
+    handle_error(vm, 5);
+    return;
+  }
+#endif
+  printf("\nERROR (nga/memory): Invalid memory access\n");
+  ACTIVE.ip = IMAGE_SIZE;
+  ACTIVE.rp = 0;
+}
+
 V i_no(NgaState *vm) {
 #ifndef BRANCH_PREDICTION
   guard(vm, 0, 0, 0);
@@ -265,9 +281,13 @@ V i_no(NgaState *vm) {
 
 V i_li(NgaState *vm) {
   guard(vm, 0, 1, 0);
-  ACTIVE.sp++;
-  ACTIVE.ip++;
-  TOS = vm->memory[ACTIVE.ip];
+  if (ACTIVE.ip + 1 < IMAGE_SIZE) {
+    ACTIVE.sp++;
+    ACTIVE.ip++;
+    TOS = vm->memory[ACTIVE.ip];
+  } else {
+    invalid_memory_access(vm);
+  }
 }
 
 V i_du(NgaState *vm) {
@@ -306,15 +326,23 @@ V i_po(NgaState *vm) {
 
 V i_ju(NgaState *vm) {
   guard(vm, 1, 0, 0);
-  ACTIVE.ip = TOS - 1;
+  if (valid_memory_address(TOS)) {
+    ACTIVE.ip = TOS - 1;
+  } else {
+    invalid_memory_access(vm);
+  }
   i_dr(vm);
 }
 
 V i_ca(NgaState *vm) {
   guard(vm, 1, 0, 1);
-  ACTIVE.rp++;
-  TORS = ACTIVE.ip;
-  ACTIVE.ip = TOS - 1;
+  if (valid_memory_address(TOS)) {
+    ACTIVE.rp++;
+    TORS = ACTIVE.ip;
+    ACTIVE.ip = TOS - 1;
+  } else {
+    invalid_memory_access(vm);
+  }
   i_dr(vm);
 }
 
@@ -324,16 +352,26 @@ V i_cc(NgaState *vm) {
   a = TOS; i_dr(vm);  /* Target */
   b = TOS; i_dr(vm);  /* Flag   */
   if (b != 0) {
-    ACTIVE.rp++;
-    TORS = ACTIVE.ip;
-    ACTIVE.ip = a - 1;
+    if (valid_memory_address(a)) {
+      ACTIVE.rp++;
+      TORS = ACTIVE.ip;
+      ACTIVE.ip = a - 1;
+    } else {
+      invalid_memory_access(vm);
+    }
   }
 }
 
 V i_re(NgaState *vm) {
+  CELL target;
   guard(vm, 0, 0, -1);
-  ACTIVE.ip = TORS;
+  target = TORS;
   ACTIVE.rp--;
+  if (valid_memory_address(target)) {
+    ACTIVE.ip = target;
+  } else {
+    invalid_memory_access(vm);
+  }
 }
 
 V i_eq(NgaState *vm) {
@@ -388,13 +426,23 @@ V i_fe(NgaState *vm) {
     case -3: TOS = IMAGE_SIZE; break;
     case -4: TOS = CELL_MIN; break;
     case -5: TOS = CELL_MAX; break;
-    default: TOS = vm->memory[TOS]; break;
+    default:
+      if (valid_memory_address(TOS)) {
+        TOS = vm->memory[TOS];
+      } else {
+        invalid_memory_access(vm);
+      }
+      break;
   }
 }
 
 V i_st(NgaState *vm) {
   guard(vm, 2, 0, 0);
-  vm->memory[TOS] = NOS;
+  if (valid_memory_address(TOS)) {
+    vm->memory[TOS] = NOS;
+  } else {
+    invalid_memory_access(vm);
+  }
   i_dr(vm);
   i_dr(vm);
 }
@@ -494,9 +542,14 @@ V i_sh(NgaState *vm) {
 V i_zr(NgaState *vm) {
   guard(vm, 1, 0, 0);
   if (TOS == 0) {
+    CELL target = TORS;
     i_dr(vm);
-    ACTIVE.ip = TORS;
     ACTIVE.rp--;
+    if (valid_memory_address(target)) {
+      ACTIVE.ip = target;
+    } else {
+      invalid_memory_access(vm);
+    }
   }
 }
 
