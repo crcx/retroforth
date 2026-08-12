@@ -58,7 +58,7 @@ build: dirs toolchain ngaImage binaries
 
 binaries: bin/retro bin/retro-repl bin/retro-describe
 
-toolchain: dirs layout bin/retro-embedimage bin/retro-extend bin/retro-muri bin/retro-unu
+toolchain: dirs layout bin/generate-amalgamation bin/retro-embedimage bin/retro-extend bin/retro-muri bin/retro-unu
 
 image: vm/nga-c/image.c
 
@@ -133,6 +133,9 @@ layout: dirs bin/generate-layout tools/layout/image.tsv tools/layout/dictionary.
 	@./bin/generate-layout
 
 bin/generate-layout: tools/generate-layout.c
+	@$(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o $@ $>
+
+bin/generate-amalgamation: tools/generate-amalgamation.c
 	@$(CC) $(OPTIONS) $(CFLAGS) $(LDFLAGS) -o $@ $>
 
 bin/retro-describe: tools/retro-describe.retro
