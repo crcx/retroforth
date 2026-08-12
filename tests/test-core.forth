@@ -95,6 +95,9 @@ passed
 
 ~~~
 '/ Testing
+  [ #5 #2 / ] [ #2 eq? ] try
+  [ #-5 #2 / ] [ #-2 eq? ] try
+  [ #5 #-2 / ] [ #-2 eq? ] try
 passed
 ~~~
 
@@ -160,6 +163,7 @@ passed
 
 ~~~
 'again Testing
+  [ #3 repeat dup n:dec 0; again ] [ #1 match #2 match #3 match ] try
 passed
 ~~~
 
@@ -176,6 +180,9 @@ passed
 
 ~~~
 'and Testing
+  [ #-1 #-1 and ] [ #-1 eq? ] try
+  [ #12 #10 and ] [ #8 eq? ] try
+  [ #0 #-1 and ] [ #0 eq? ] try
 passed
 ~~~
 
@@ -552,6 +559,8 @@ passed
 
 ~~~
 'call Testing
+  [ #1 [ ] call #2 ] [ #2 match #1 match ] try
+  [ #1 [ #3 ] call #2 ] [ #2 match #3 match #1 match ] try
 passed
 ~~~
 
@@ -926,6 +935,10 @@ passed
 
 ~~~
 'd:add-header Testing
+  'Test-Add-Header &class:data #0 d:add-header
+  [ d:last.name ] [ 'Test-Add-Header s:eq? ] try
+  [ d:last.class ] [ &class:data eq? ] try
+  [ d:last.xt ] [ #0 eq? ] try
 passed
 ~~~
 
@@ -933,6 +946,8 @@ passed
 
 ~~~
 'data Testing
+  :Test-Data-Word #123 ; data
+  [ 'Test-Data-Word d:lookup d:class fetch ] [ &class:data eq? ] try
 passed
 ~~~
 
@@ -940,6 +955,7 @@ passed
 
 ~~~
 'd:class Testing
+  [ 'Test-Dictionary-Value d:lookup d:class ] [ #2 + eq? ] try
 passed
 ~~~
 
@@ -947,6 +963,12 @@ passed
 
 ~~~
 'd:create Testing
+  'Test-Create-XT var
+  'Test-Create-Word d:create
+  d:last.xt !Test-Create-XT
+  [ d:last.name ] [ 'Test-Create-Word s:eq? ] try
+  [ d:last.class ] [ &class:data eq? ] try
+  [ d:last.xt ] [ @Test-Create-XT eq? ] try
 passed
 ~~~
 
@@ -964,6 +986,13 @@ passed
 
 ~~~
 'd:for-each Testing
+  'Test-Dictionary-Previous var
+  'Test-Dictionary-Value    var
+  'Test-Dictionary-Seen     var
+  #0 !Test-Dictionary-Seen
+  [ d:name 'Test-Dictionary-Value s:eq?
+    [ TRUE !Test-Dictionary-Seen ] if ] d:for-each
+  [ @Test-Dictionary-Seen ] [ TRUE eq? ] try
 passed
 ~~~
 
@@ -971,6 +1000,8 @@ passed
 
 ~~~
 'Dictionary Testing
+  [ Dictionary ] [ #2 eq? ] try
+  [ &Dictionary ] [ #2 eq? ] try
 passed
 ~~~
 
@@ -987,6 +1018,7 @@ passed
 
 ~~~
 'd:last Testing
+  [ d:last ] [ 'Test-Dictionary-Seen d:lookup eq? ] try
 passed
 ~~~
 
@@ -994,6 +1026,7 @@ passed
 
 ~~~
 'd:last.class Testing
+  [ d:last.class ] [ &class:data eq? ] try
 passed
 ~~~
 
@@ -1001,6 +1034,7 @@ passed
 
 ~~~
 'd:last.name Testing
+  [ d:last.name ] [ 'Test-Dictionary-Seen s:eq? ] try
 passed
 ~~~
 
@@ -1008,6 +1042,7 @@ passed
 
 ~~~
 'd:last.xt Testing
+  [ d:last.xt ] [ &Test-Dictionary-Seen eq? ] try
 passed
 ~~~
 
@@ -1015,6 +1050,8 @@ passed
 
 ~~~
 'd:link Testing
+  [ 'Test-Dictionary-Value d:lookup d:link fetch ]
+  [ 'Test-Dictionary-Previous d:lookup eq? ] try
 passed
 ~~~
 
@@ -1022,6 +1059,9 @@ passed
 
 ~~~
 'd:lookup Testing
+  [ 'Test-Dictionary-Seen d:lookup ] [ d:last eq? ] try
+  [ 'Test-Dictionary-Not-Found d:lookup ] [ n:zero? ] try
+  [ 'Test-Dictionary-Seen d:lookup d:xt fetch d:lookup-xt ] [ d:last eq? ] try
 passed
 ~~~
 
@@ -1029,6 +1069,8 @@ passed
 
 ~~~
 'd:name Testing
+  [ 'Test-Dictionary-Value d:lookup d:name ]
+  [ 'Test-Dictionary-Value s:eq? ] try
 passed
 ~~~
 
@@ -1091,6 +1133,7 @@ passed
 
 ~~~
 'd:xt Testing
+  [ 'Test-Dictionary-Value d:lookup d:xt fetch ] [ &Test-Dictionary-Value eq? ] try
 passed
 ~~~
 
@@ -1098,6 +1141,8 @@ passed
 
 ~~~
 'EOM Testing
+  [ EOM ] [ #-3 fetch eq? ] try
+  [ EOM ] [ here gt? ] try
 passed
 ~~~
 
@@ -1183,6 +1228,8 @@ passed
 
 ~~~
 'Heap Testing
+  [ Heap ] [ #3 eq? ] try
+  [ &Heap ] [ #3 eq? ] try
 passed
 ~~~
 
@@ -1190,6 +1237,7 @@ passed
 
 ~~~
 'here Testing
+  [ here ] [ &Heap fetch eq? ] try
 passed
 ~~~
 
@@ -1204,6 +1252,8 @@ passed
 
 ~~~
 'if Testing
+  [ #0 TRUE [ #1 ] if ] [ #1 match #0 match ] try
+  [ #0 FALSE [ #1 ] if ] [ #0 match ] try
 passed
 ~~~
 
@@ -1211,6 +1261,8 @@ passed
 
 ~~~
 '-if Testing
+  [ #0 TRUE [ #1 ] -if ] [ #0 match ] try
+  [ #0 FALSE [ #1 ] -if ] [ #1 match #0 match ] try
 passed
 ~~~
 
@@ -1218,6 +1270,8 @@ passed
 
 ~~~
 'immediate Testing
+  :Test-Immediate-Word ; immediate
+  [ d:last.class ] [ &class:macro eq? ] try
 passed
 ~~~
 
@@ -1252,6 +1306,9 @@ passed
 
 ~~~
 'mod Testing
+  [ #5 #2 mod ] [ #1 eq? ] try
+  [ #-5 #2 mod ] [ #-1 eq? ] try
+  [ #5 #-2 mod ] [ #1 eq? ] try
 passed
 ~~~
 
@@ -1259,6 +1316,10 @@ passed
 
 ~~~
 '/mod Testing
+  [ #5 #2 /mod ] [ #2 match #1 match ] try
+  [ #-5 #2 /mod ] [ #-2 match #-1 match ] try
+  [ #-5 #-2 /mod ] [ #2 match #-1 match ] try
+  [ #5 #-2 /mod ] [ #-2 match #1 match ] try
 passed
 ~~~
 
@@ -1416,6 +1477,9 @@ passed
 
 ~~~
 'not Testing
+  [ #0 not ] [ TRUE eq? ] try
+  [ TRUE not ] [ FALSE eq? ] try
+  [ #5 not ] [ #-6 eq? ] try
 passed
 ~~~
 
@@ -1485,6 +1549,9 @@ passed
 
 ~~~
 'or Testing
+  [ #0 #0 or ] [ #0 eq? ] try
+  [ #12 #10 or ] [ #14 eq? ] try
+  [ #0 TRUE or ] [ TRUE eq? ] try
 passed
 ~~~
 
@@ -1501,6 +1568,7 @@ passed
 
 ~~~
 'pop Testing
+  [ #1 dup push #2 pop ] [ #1 match #2 match #1 match ] try
 passed
 ~~~
 
@@ -1571,6 +1639,7 @@ passed
 
 ~~~
 'push Testing
+  [ #1 dup push #2 pop ] [ #1 match #2 match #1 match ] try
 passed
 ~~~
 
@@ -1606,6 +1675,8 @@ passed
 
 ~~~
 'reclass Testing
+  :Test-Reclass-Word ; &class:data reclass
+  [ d:last.class ] [ &class:data eq? ] try
 passed
 ~~~
 
@@ -1613,6 +1684,8 @@ passed
 
 ~~~
 'reorder Testing
+  [ #1 #2 #3 #4 'abcd 'dcba reorder ]
+  [ #1 match #2 match #3 match #4 match ] try
 passed
 ~~~
 
@@ -1620,6 +1693,7 @@ passed
 
 ~~~
 'repeat Testing
+  [ #3 repeat dup n:dec 0; again ] [ #1 match #2 match #3 match ] try
 passed
 ~~~
 
@@ -1648,6 +1722,7 @@ passed
 
 ~~~
 'rot Testing
+  [ #1 #2 #3 rot ] [ #1 match #3 match #2 match ] try
 passed
 ~~~
 
@@ -1825,6 +1900,8 @@ passed
 
 ~~~
 'shift Testing
+  [ #455 #-3 shift ] [ #3640 eq? ] try
+  [ #3640 #3 shift ] [ #455 eq? ] try
 passed
 ~~~
 
@@ -2083,6 +2160,10 @@ passed
 
 ~~~
 'until Testing
+  'Test-Until-Count var
+  [ #0 !Test-Until-Count
+    [ &Test-Until-Count v:inc @Test-Until-Count #3 eq? ] until ]
+  [ @Test-Until-Count #3 eq? ] try
 passed
 ~~~
 
@@ -2220,6 +2301,10 @@ passed
 
 ~~~
 'while Testing
+  'Test-While-Count var
+  [ #0 !Test-While-Count
+    [ &Test-While-Count v:inc @Test-While-Count #3 lt? ] while ]
+  [ @Test-While-Count #3 eq? ] try
 passed
 ~~~
 
@@ -2227,6 +2312,9 @@ passed
 
 ~~~
 'xor Testing
+  [ #-1 #-1 xor ] [ #0 eq? ] try
+  [ #12 #10 xor ] [ #6 eq? ] try
+  [ #0 TRUE xor ] [ TRUE eq? ] try
 passed
 ~~~
 
