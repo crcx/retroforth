@@ -11,6 +11,89 @@ each of the provided words are found in.
 ~~~
 
 ~~~
+'interface/stack-comments.retro s:dedup
+dup 'd:set-fstack-comment d:set-source
+dup 'd:set-astack-comment d:set-source
+dup 'd:set-stack-comment d:set-source
+dup 'd:describe d:set-source
+dup 'sigil:( d:set-source
+drop
+~~~
+
+~~~
+'retro.muri s:dedup
+dup 'err:notfound d:set-source
+dup 'd:descr d:set-source
+dup 'd:fstack d:set-source
+dup 'd:astack d:set-source
+dup 'd:stack d:set-source
+dup 'd:hash d:set-source
+dup 'd:source d:set-source
+dup 'unpack d:set-source
+dup 'pack d:set-source
+dup 'Base d:set-source
+dup 'r d:set-source
+dup 'd d:set-source
+dup 'i d:set-source
+dup 'Version d:set-source
+dup 'class:primitive d:set-source
+dup 'd:lookup d:set-source
+dup 'interpret d:set-source
+dup 'again d:set-source
+dup 'repeat d:set-source
+dup 'sigil:$ d:set-source
+dup 'sigil:& d:set-source
+dup 'sigil:: d:set-source
+dup 'sigil:# d:set-source
+dup 'd:add-header d:set-source
+dup 'class:data d:set-source
+dup 'class:macro d:set-source
+dup 'class:word d:set-source
+dup 'd:name d:set-source
+dup 'd:class d:set-source
+dup 'd:xt d:set-source
+dup 'd:link d:set-source
+dup 'Dictionary d:set-source
+dup '] d:set-source
+dup '[ d:set-source
+dup '; d:set-source
+dup 's, d:set-source
+dup ', d:set-source
+dup 'Heap d:set-source
+dup 'Compiler d:set-source
+dup '-if d:set-source
+dup 'if d:set-source
+dup 'choose d:set-source
+dup 's:length d:set-source
+dup 's:eq? d:set-source
+dup 's:to-number d:set-source
+dup 'store-next d:set-source
+dup 'fetch-next d:set-source
+dup '0; d:set-source
+dup 'pop d:set-source
+dup 'push d:set-source
+dup 'shift d:set-source
+dup 'xor d:set-source
+dup 'or d:set-source
+dup 'and d:set-source
+dup '/mod d:set-source
+dup '* d:set-source
+dup '- d:set-source
+dup '+ d:set-source
+dup 'store d:set-source
+dup 'fetch d:set-source
+dup 'gt? d:set-source
+dup 'lt? d:set-source
+dup '-eq? d:set-source
+dup 'eq? d:set-source
+dup 'call d:set-source
+dup 'swap d:set-source
+dup 'drop d:set-source
+dup 'dup d:set-source
+drop
+~~~
+
+~~~
 'build.retro s:dedup 'BUILD d:set-source
 'retro.forth s:dedup
 dup 'Ignoring d:set-source
@@ -90,6 +173,7 @@ dup 'reorder d:set-source
 dup 's:const d:set-source
 dup 's:format d:set-source
 dup 'n:to-string d:set-source
+dup 'n:to-string/reversed d:set-source
 dup 's:replace-all d:set-source
 dup 's:tokenize-on-string d:set-source
 dup 's:tokenize d:set-source
@@ -166,6 +250,8 @@ dup 's:ASCII-UPPERCASE d:set-source
 dup 's:ASCII-LOWERCASE d:set-source
 dup 's:DIGITS d:set-source
 dup 's:copy d:set-source
+dup 's:oversize? d:set-source
+dup 's:truncate d:set-source
 dup 's:ends-with? d:set-source
 dup 's:begins-with? d:set-source
 dup 's:left d:set-source

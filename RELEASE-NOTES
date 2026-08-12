@@ -33,6 +33,7 @@
 - image
 
   - use new D directive to build initial dictionary
+  - fill in missing `d:source` data
 
 - library
 
