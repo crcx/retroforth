@@ -1,4 +1,0 @@
-Currently Active:
-
-- Adding missing source data for existing vocabularies
-- Improving the D implementation of Nga
