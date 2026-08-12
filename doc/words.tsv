@@ -130,7 +130,7 @@ a:right	an-a	-	-	Return a new array containing the specified number of values fr
 a:store	van-	-	-	Store a value into the array at the specified index.			class:word	    #3 { #0 #1 #2 } #1 a:store	{n/a}	a	all	
 a:temp	a-a	-	-	Make a copy of the array in a rotating set of temporary buffers.			class:word	{n/a}	{n/a}	a	all	
 a:th	an-b	-	-	Return the actual address of the `n`th item in the array.			class:word	{n/a}	{n/a}	a	all	
-a:to-string	a-s	-	-	Create a new string from the provided array of character values. This string will be stored in the temporal string buffers.			class:word	    { $h $e $l $l $o } a:to-string s:put nl	{n/a}	a	all	
+a:to-string	a-s	-	-	Create a new string from the provided array of character values. This string will be stored in the temporary string buffers.			class:word	    { $h $e $l $l $o } a:to-string s:put nl	{n/a}	a	all	
 abort	-	-	-	Abort execution.			class:macro	{n/a}	{n/a}	global	rre	
 add-description	s-	-	-	add a description for the most recently defined word			class:word	{n/a}	{n/a}	global	all	
 again	-	-	-	Close an unconditional loop. Branches back to the prior `repeat`.			class:macro	{n/a}	{n/a}	global	all	
@@ -192,7 +192,7 @@ cdr@	a-n	-	-	Return the contents of the cdr of cons a.			class:word	{n/a}	{n/a}	
 choose	fqq-	-	-	Execute q1 if the flag is true (-1) or q2 if the flag is false (0). Only these flags are valid when using `choose`; passing other values as flags will result in memory corruption.			class:word	{n/a}	{n/a}	global	all	
 class:data	n- || n-n	-	-	Class handler for data structures.	Keep the address or value on the stack.	Compile the value or address as a literal into the current definition.	class:word	{n/a}	{n/a}	class	all	
 class:macro	a-	-	-	Class handler for compiler macros (immediate words)	Execute the function at the provided address.	Execute the function at the provided address.	class:word	{n/a}	{n/a}	class	all	
-class:primitive	a-	-	-	Class handler for primitive words (words which map to Nga instructions)	Execute the function.	Compile the machine code in the definiton into the current definition.	class:word	{n/a}	{n/a}	class	all	
+class:primitive	a-	-	-	Class handler for primitive words (words which map to Nga instructions)	Execute the function.	Compile the machine code in the definition into the current definition.	class:word	{n/a}	{n/a}	class	all	
 class:word	a-	-	-	Class handler for normal words.	Execute the function at the provided address.	Compile a call to the specified address into the current definition.	class:word	{n/a}	{n/a}	class	all	
 clear	-	-	-	Clear the display.			class:word	{n/a}	{n/a}	global	rre	
 clock:day	-n	-	-	Return the current day.			class:word	{n/a}	{n/a}	clock	iOS, rre	
@@ -227,7 +227,7 @@ core:start	an-	-	-	Set the IP of core `n` to address `a` and begin processing on
 core:write/reg	vn-	-	-	Write a value to register number `n` on the current core.			class:word	{n/a}	{n/a}	core	rre	
 curry	nq-q	-	-	Bind a value to a function and return a new quote that calls the bound action.			class:word	{n/a}	{n/a}	global	all	
 d	n-	-	-	Inline a numeric value to the current assembly segment.			class:word	{n/a}	{n/a}	global	all	
-d:Hash-Function	-	-	-	Variable. Holds a pointer tho the function for calculating dictionary hashes.			class:data	{n/a}	{n/a}	d	all	
+d:Hash-Function	-	-	-	Variable. Holds a pointer to the function for calculating dictionary hashes.			class:data	{n/a}	{n/a}	d	all	
 d:add-header	saa-	-	-	Vectored. Create a header. Provide a string (s) for the name, a pointer to the class handler (a1) and a pointer to the word definition (a2) Generally this won't be used directly.			class:word	{n/a}	{n/a}	d	all	
 d:astack	d-a	-	-	Given a dictionary pointer, return address of the address stack field			class:word	{n/a}	{n/a}	d	all	
 d:class	d-a	-	-	Given a dictionary header, return the class field.			class:word	{n/a}	{n/a}	d	all	
@@ -253,8 +253,8 @@ d:set-source	ss-	-	-	Set the `d:source` field of the header for the named word (
 d:set-stack-comment	ss-	-	-	Set the d:stack field for a word.			class:word	{n/a}	{n/a}	d	all	
 d:source	d-a	-	-	Given a dictionary header, return the source field.			class:word	{n/a}	{n/a}	d	all	
 d:stack	d-a	-	-	Given a dictionary pointer, return address of the data stack field			class:word	{n/a}	{n/a}	d	all	
-d:use-hashes	-	-	-	Change dictionary search to use hashed name comparions.			class:word	{n/a}	{n/a}	d	all	
-d:use-strings	-	-	-	Change dictionary search to use full name comparions.			class:word	{n/a}	{n/a}	d	all	
+d:use-hashes	-	-	-	Change dictionary search to use hashed name comparisons.			class:word	{n/a}	{n/a}	d	all	
+d:use-strings	-	-	-	Change dictionary search to use full name comparisons.			class:word	{n/a}	{n/a}	d	all	
 d:words	-	-	-	Display a list of all named items in the `Dictionary`.			class:word	{n/a}	{n/a}	d	rre	
 d:words-beginning-with	s-	-	-	Display a list of all named items in the `Dictionary` that begin with the provided substring.			class:word	{n/a}	{n/a}	d	rre	
 d:words-missing-details	-	-	-	Display words missing one or more information fields.			class:word	{n/a}	{n/a}	d	all	
@@ -333,7 +333,7 @@ f:floor	-	-	F-F	Perform a mathematical floor operation on the floating-point val
 f:gt?	-f	-	FF-	Compare two floating-point values for greater than.			class:word	{n/a}	{n/a}	f	rre	
 f:inc	-	-	n-m	Increment n by one.			class:word	    .100 f:inc	{n/a}	f	rre	
 f:inf?	-f	-	F-	Return `TRUE` if floating-point value is INF or `FALSE` otherwise.			class:word	{n/a}	{n/a}	f	rre	
-f:limit	-	-	nlu-m	Return n if it is within the lower (l) and upper (u) bounds. If outside the bounds, return the closes boundary value.			class:word	    .-10 .5 .8 f:limit\n    .10  .1 .15 f:limit	{n/a}	f	rre	
+f:limit	-	-	nlu-m	Return n if it is within the lower (l) and upper (u) bounds. If outside the bounds, return the closest boundary value.			class:word	    .-10 .5 .8 f:limit\n    .10  .1 .15 f:limit	{n/a}	f	rre	
 f:log	-	-	FF-F	Return log(F1) for base F2 for floating-point values.			class:word	{n/a}	{n/a}	f	rre	
 f:lt?	-f	-	FF-	Compare two floating-point values for less than.			class:word	{n/a}	{n/a}	f	rre	
 f:max	-	-	mn-o	Return the greater of two values.			class:word	    .1 .7 f:max\n    .-8 .-10 f:max	{n/a}	f	rre	
@@ -398,7 +398,7 @@ file:write/bytes	pnf-	-	-	Write n bytes to the file represented by the handle. B
 file:write/c	ch-	-	-	Write a character to the file represented by the handle. If built with UTF32 support, this will translate the character back to a UTF8 sequence before writing.			class:word	{n/a}	{n/a}	file	rre	
 fill	vpn-	-	-	Fill memory starting at "p" with value "v". Fills "n" cells.			class:word	{n/a}	{n/a}	global	all	
 fll:append/value	pv-	-	-	Append a cons cell to a list.			class:word	{n/a}	{n/a}	rre	all	
-fll:create	v-p	-	-	Create a new list wit the given value as the car of the first node.			class:word	{n/a}	{n/a}	rre	all	
+fll:create	v-p	-	-	Create a new list with the given value as the car of the first node.			class:word	{n/a}	{n/a}	rre	all	
 fll:del	pn-	-	-	Remove the specified cons from a list.			class:word	{n/a}	{n/a}	rre	all	
 fll:drop	p-	-	-	Remove the last cons from a list.			class:word	{n/a}	{n/a}	rre	all	
 fll:for-each	pq-	-	-	Run a quotation against each value in a list.			class:word	{n/a}	{n/a}	rre	all	
@@ -435,7 +435,7 @@ io:query	n-mN	-	-	Ask an I/O device to identify itself. Returns a version (m) an
 io:scan-for	n-m	-	-	Scan the I/O devices for a device with a specified ID. Returns the device number, or -1 if not found.			class:word	{n/a}	{n/a}	io	all	
 io:unix-syscall	...n-	-	-	Trigger a Unix system call. This is not intended to be used directly.			class:word	{n/a}	{n/a}	io	rre	
 ioctl:operation	n-	-	-	Perform an ioctl device operation			class:word	{n/a}	{n/a}	ioctl	all	
-ioctl:restore-state	-	-	-	Restore saved ioctle settings/state			class:word	{n/a}	{n/a}	ioctl	all	
+ioctl:restore-state	-	-	-	Restore saved ioctl settings/state			class:word	{n/a}	{n/a}	ioctl	all	
 ioctl:save-state	-	-	-	Save current ioctl settings/state			class:word	{n/a}	{n/a}	ioctl	all	
 ioctl:set-cbreak	-	-	-	Set 'cbreak' state			class:word	{n/a}	{n/a}	ioctl	all	
 ioctl:set-lbreak	-	-	-	Set 'lbreak' state			class:word	{n/a}	{n/a}	ioctl	all	
@@ -454,7 +454,7 @@ mem:alloc	n-nn	-	-	Use malloc to allocate memory. Returns a double cell pointer 
 mem:cell+	nnn-n	-	-	Return address of next cell. Uses a double cell pointer on the stack.			class:word	{n/a}	{n/a}	mem	rre	
 mem:fetch	nn-n	-	-	Fetch value from malloc'd memory region. Address is a double cell value.			class:word	{n/a}	{n/a}	mem	rre	
 mem:fetch-double	nn-n	-	-	Fetch a double cell value from a malloc memory region.			class:word	{n/a}	{n/a}	mem	rre	
-mem:free	nn-	-	-	Fre a malloc'd region of memory. Pass a double cell pointer to the memory to free.			class:word	{n/a}	{n/a}	mem	rre	
+mem:free	nn-	-	-	Free a malloc'd region of memory. Pass a double cell pointer to the memory to free.			class:word	{n/a}	{n/a}	mem	rre	
 mem:resize	mmn-	-	-	Resize a malloc'd memory area.			class:word	{n/a}	{n/a}	mem	rre	
 mem:store	xnn-	-	-	Store a value into a malloc'd memory region. Uses a double cell pointer for the address.			class:word	{n/a}	{n/a}	mem	rre	
 mem:store-double	xxnn-	-	-	Store a double value into a malloc'd memory region. Uses a double cell pointer for the address.			class:word	{n/a}	{n/a}	mem	rre	
@@ -463,18 +463,13 @@ n:-zero?	n-f	-	-	Return `TRUE` if number is not zero, or `FALSE` otherwise.			cl
 n:MAX	-n	-	-	Return the maximum value that will fit in a cell.			class:word	{n/a}	{n/a}	n	all	
 n:MIN	-n	-	-	Return the minimum value that will fit in a cell.			class:word	{n/a}	{n/a}	n	all	
 n:abs	n-n	-	-	Return the absolute value of a number.			class:word	    #10 n:abs\n    #-10 n:abs\n	{n/a}	n	all	
-n:add	nn-n	-	-	Add `n1` to `n2` and return the result.			class:primitive	    #1 #2 + 	{n/a}	global	all	
 n:between?	nlu-f	-	-	Return TRUE if number is between the lower (l) and upper (u) bounds. If not, return FALSE. This is inclusive of the limits.			class:word	    #3 #1 #100 n:between?\n    $q $a $b   n:between?	{n/a}	n	all	
 n:dec	n-m	-	-	Decrement n by one.			class:word	    #100 n:dec	{n/a}	n	all	
-n:div	nm-v	-	-	Divide `n` by `m` and return the integer part of the quotient.			class:word	{n/a}	{n/a}	global	all	
-n:divmod	nm-rv	-	-	Divide `n` by `m` and return the integer part of the quotient and remainder.			class:primitive	{n/a}	{n/a}	global	all	
 n:even?	n-f	-	-	Return `TRUE` if number is even, or `FALSE` if not.			class:word	    #12 n:even?\n    #11 n:even?	{n/a}	n	all	
 n:inc	n-m	-	-	Increment n by one.			class:word	    #100 n:inc	{n/a}	n	all	
-n:limit	nlu-m	-	-	Return n if it is within the lower (l) and upper (u) bounds. If outside the bounds, return the closes boundary value.			class:word	    #-10 #5 #8 n:limit\n    #10  #1 #15 n:limit	{n/a}	n	all	
+n:limit	nlu-m	-	-	Return n if it is within the lower (l) and upper (u) bounds. If outside the bounds, return the closest boundary value.			class:word	    #-10 #5 #8 n:limit\n    #10  #1 #15 n:limit	{n/a}	n	all	
 n:max	mn-o	-	-	Return the greater of two values.			class:word	    #1 #7 n:max\n    #-8 #-10 n:max	{n/a}	n	all	
 n:min	mn-o	-	-	Return the lesser of two values.			class:word	    #1 #7 n:min\n    #-8 #-10 n:min	{n/a}	n	all	
-n:mod	nm-o	-	-	Divide `n` by `m` and return the remainder.			class:word	{n/a}	{n/a}	global	all	
-n:mul	nn-n	-	-	Multiply `n1` by `n2` and return the result.			class:primitive	    #2 #6 *\n    #-1 #100 *	{n/a}	global	all	
 n:negate	n-n	-	-	Invert the sign of a number.			class:word	    #10 n:negate\n    #-10 n:negate	{n/a}	n	rre	
 n:negative?	n-f	-	-	Return `TRUE` if number is negative, or `FALSE` if not.			class:word	{n/a}	{n/a}	n	all	
 n:odd?	n-f	-	-	Return `TRUE` if number is odd, or `FALSE` if not.			class:word	{n/a}	{n/a}	n	all	
@@ -485,7 +480,6 @@ n:random	-n	-	-	Return a random number.			class:word	    n:random n:put	{n/a}	n	
 n:sqrt	n-m	-	-	Return the square root of a number.			class:word	{n/a}	{n/a}	n	all	
 n:square	n-m	-	-	Return the square of a number.			class:word	{n/a}	{n/a}	n	all	
 n:strictly-positive?	n-f	-	-	Return TRUE if number is greater than zero or FALSE if it is zero or less.			class:word	{n/a}	{n/a}	n	all	
-n:sub	nn-n	-	-	Subtract `n2` from `n1` and return the result.			class:primitive	    #2 #1 - 	{n/a}	global	all	
 n:to-float	n-	-	-F	Convert a number into a floating-point value.			class:word	{n/a}	{n/a}	n	rre	
 n:to-string	n-s	-	-	Convert a number into a string.			class:word	{n/a}	{n/a}	n	all	
 n:to-string/reversed	n-s	-	-	Convert a number into a string. The string will have the digits in reversed order.			class:word	{n/a}	{n/a}	n	all	
@@ -498,9 +492,6 @@ or	mn-o	-	-	Perform a bitwise OR between the provided values.			class:primitive	
 over	nm-nmn	-	-	Put a copy of n over m.			class:word	{n/a}	{n/a}	global	all	
 pack	nnnn-n	-	-	Pack four 8-bit values into a 32-bit value.			class:word	{n/a}	{n/a}	global	all	
 parse-until	q-s	-	-	Read input from stdin (via `c:get`) until the returned character is matched by the quote. Returns a string.			class:word	  :read-until-period (-s)\n    [ $. eq? ] parse-until ;	{n/a}	all	rre	
-pb:get	a-	-	-	Copy a string from the pasteboard to the specified address.			class:word	{n/a}	{n/a}	pb	iOS	{n/a}
-pb:length	-n	-	-	Return the length of the string on the pasteboard.			class:word	{n/a}	pb	pb	iOS	
-pb:set	s-	-	-	Copy a string to the pasteboard.			class:word	{n/a}	{n/a}	pb	iOS	
 pop	-n	n-	-	Move a value from the return stack to the data stack.			class:macro	{n/a}	{n/a}	global	all	
 primitive	-	-	-	Change the class of the most recently defined word to `class:primitive`.			class:word	{n/a}	{n/a}	global	all	
 push	n-	-n	-	Move a value from the data stack to the return stack.			class:macro	{n/a}	{n/a}	global	all	
@@ -577,11 +568,10 @@ script:current-file	-s	-	-	Return the filename of the file being processed by th
 script:current-line	-n	-	-	Return the current line number of the file being processed by the current `include`, or `0` if the input source is the terminal. Line numbering starts at 1.			class:macro	{n/a}	{n/a}	script	rre	
 script:current-line-text	-s	-	-	Return the text of the current line being processed by the current `include`.			class:macro	{n/a}	{n/a}	script	rre	
 script:get-argument	n-s	-	-	Given an argument number, return the argument as a string.			class:word	{n/a}	{n/a}	script	rre	
-script:ignore-to-eof	-	-	-	Discard remaining lines in the file currently being evaluated. This only works when including a file, not at the interpreter.			class:word	{n/a}	{n/a}	script	rre	
 script:ignore-to-eol	-	-	-	Discard remaining tokens in the current line. This only works when including a file, not at the interpreter.			class:word	{n/a}	{n/a}	script	rre	
 script:name	-s	-	-	Return the filename of the program being run.			class:word	{n/a}	{n/a}	script	rre	
 set-hook	aa-	-	-	Patch the hook point in a2 to point to a1.			class:word	    :foo hook ;\n    :bar #1 ;\n    &bar &foo set-hook	{n/a}	global	all	
-shift	mn-o	-	-	Peform a bitwise shift of m by n bits. If n is positive, shift right. If negative, the shift will be to the left.			class:primitive	{n/a}	{n/a}	global	all	
+shift	mn-o	-	-	Perform a bitwise shift of m by n bits. If n is positive, shift right. If negative, the shift will be to the left.			class:primitive	{n/a}	{n/a}	global	all	
 sigil:!	ns-	-	-	Store a value into a variable.	Store a value into the named variable.	Compile the code to store a value into a named variable.	class:macro	{n/a}	{n/a}	sigil	all	
 sigil:#	s-n	-	-	Process token as a number.	Convert the string into a number and leave on the stack.	Convert the string into a number and compile into the current definition as a literal.	class:macro	{n/a}	{n/a}	sigil	all	
 sigil:$	s-c	-	-	Process token as an ASCII character.	Fetch first character from string. Leave on stack.	Fetch first character from the string. Compile into the current definition as  literal.	class:macro	{n/a}	{n/a}	sigil	all	
@@ -618,21 +608,6 @@ tri	xqqq-?	-	-	Apply q1 against x, then q2 against a copy of x, and finally q3 a
 tri*	xyzqqq-?	-	-	Apply q1 against x, q2 against y, and q3 against z.			class:word	{n/a}	{n/a}	global	all	
 tri@	xyzq-?	-	-	Apply q against x, then against y, and finally against z.			class:word	{n/a}	{n/a}	global	all	
 tuck	nm-mnm	-	-	Put a copy of the top item on the stack under the second one.			class:word	{n/a}	{n/a}	global	all	
-ui:add-view	s-	-	-	Add view named `s` to the displayed views.			class:word	{n/a}	{n/a}	ui	retro/python	
-ui:create-view	ss-	-	-	Create a new view. `s1` is the name and `s2` is the type.			class:word	{n/a}	{n/a}	ui	retro/python	
-ui:get-action	s-a	-	-	Return the address of the Retro handler for a view's associated action.			class:word	{n/a}	{n/a}	ui	retro/python	
-ui:get-position	s-nn	-	-	Return the row and column of the named view.			class:word	{n/a}	{n/a}	ui	retro/python	
-ui:get-size	s-nn	-	-	Return the height and width of the named view.			class:word	{n/a}	{n/a}	ui	retro/python	
-ui:get-text	s-s	-	-	Get the value of the text property of the named view.			class:word	{n/a}	{n/a}	ui	retro/python	
-ui:get-title	s-s	-	-	Get the value of the title property for the named view.			class:word	{n/a}	{n/a}	ui	retro/python	
-ui:operation	...n-	-	-	Carry out a UI operation. Used internally by the other `ui:` words.			class:word	{n/a}	{n/a}	ui	retro/python	
-ui:present	-	-	-	Display all views.			class:word	{n/a}	{n/a}	ui	retro/python	
-ui:remove-view	s-	-	-	Remove view named `s` from the displayed views.			class:word	{n/a}	{n/a}	ui	retro/python	
-ui:set-action	as-	-	-	Set the action handler for a view to the specified Retro word address.			class:word	{n/a}	{n/a}	ui	retro/python	
-ui:set-position	nns-	-	-	Move view `s` to row `n1` and column `n2`.			class:word	{n/a}	{n/a}	ui	retro/python	
-ui:set-size	nns-	-	-	Set view `s` to height `n1` and width `n2`.			class:word	{n/a}	{n/a}	ui	retro/python	
-ui:set-text	ss-	-	-	Set the text property of view `s2` to `s1`.			class:word	{n/a}	{n/a}	ui	retro/python	
-ui:set-title	ss-	-	-	Set the title property of view `s2` to `s1`.			class:word	{n/a}	{n/a}	ui	retro/python	
 unhook	a-	-	-	Reset the hook point in a1 to the default definition.			class:word	    :foo hook #1 ;\n    :bar #2 ;\n    &bar &foo set-hook\n    &foo unhook	{n/a}	global	all	
 unix:chdir	s-	-	-	Change the current working directory to the specified one.			class:word	  '/etc unix:chdir	{n/a}	unix	rre	
 unix:count-files-in-cwd	-n	-	-	Return the number of files (and subdirectories) in the current working directory			class:word	{n/a}	{n/a}	unix	rre	
@@ -666,7 +641,7 @@ unsigned:/mod	nm-rv	-	-	Divide `n` by `m` and return the integer part of the quo
 unsigned:eq?	nn-f	-	-	Compare two values for equality. Returns `TRUE` if they are equal or `FALSE` otherwise.			class:word	    #1 #2 unsigned:eq?\n    $a $b unsigned:eq?	{n/a}	unsigned	all	
 unsigned:gt?	nn-f	-	-	Compare n1 and n2. Return `TRUE` if n1 is greater than n2, or `FALSE` otherwise.			class:word	{n/a}	{n/a}	unsigned	all	
 unsigned:lt?	nn-f	-	-	Compare n1 and n2. Return `TRUE` if n1 is less than n2, or `FALSE` otherwise.			class:word	{n/a}	{n/a}	unsigned	all	
-unsigned:shift	mn-o	-	-	Peform a bitwise shift of m by n bits. If n is positive, shift right. If negative, the shift will be to the left.			class:word	{n/a}	{n/a}	unsigned	all	
+unsigned:shift	mn-o	-	-	Perform a bitwise shift of m by n bits. If n is positive, shift right. If negative, the shift will be to the left.			class:word	{n/a}	{n/a}	unsigned	all	
 until	q(-f)-	-	-	Execute quote repeatedly while the quote returns a value of `FALSE`. The quote should return a flag of either `TRUE` or `FALSE`, though `until` will treat any non-zero value as `TRUE`.			class:word	    #10 [ dup n:put nl n:dec dup n:zero? ] until	{n/a}	global	all	
 v:dec	a-	-	-	Decrement the value stored at the specified address by 1.			class:word	{n/a}	{n/a}	v	all	
 v:dec-by	na-	-	-	Decrement the value stored at the specified address by the specified value.			class:word	{n/a}	{n/a}	v	all	

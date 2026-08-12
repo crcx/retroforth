@@ -962,7 +962,7 @@
 <b>Addr:</b> -<br>
 <b>Float:</b> -</p>
 </div>
-<p>Create a new string from the provided array of character values. This string will be stored in the temporal string buffers.</p>
+<p>Create a new string from the provided array of character values. This string will be stored in the temporary string buffers.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>a</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><p><b>Example:</b> <br>
 <br>
 <xmp style='background:#f2f2f2'>    { $h $e $l $l $o } a:to-string s:put nl</xmp>
@@ -1437,7 +1437,7 @@
   Execute the function.</p>
 
 <p>Compile Time:
-  Compile the machine code in the definiton into the current definition.</p>
+  Compile the machine code in the definition into the current definition.</p>
 
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>class</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
 <h2>class:word</h2>
@@ -1693,7 +1693,7 @@
 <b>Addr:</b> -<br>
 <b>Float:</b> -</p>
 </div>
-<p>Variable. Holds a pointer tho the function for calculating dictionary hashes.</p>
+<p>Variable. Holds a pointer to the function for calculating dictionary hashes.</p>
 <table><tr><td><b>Class:</b> </td><td>class:data</td></tr><tr><td><b>Namespace:</b> </td><td>d</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
 <h2>d:add-header</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> saa-<br>
@@ -1875,14 +1875,14 @@
 <b>Addr:</b> -<br>
 <b>Float:</b> -</p>
 </div>
-<p>Change dictionary search to use hashed name comparions.</p>
+<p>Change dictionary search to use hashed name comparisons.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>d</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
 <h2>d:use-strings</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> -<br>
 <b>Addr:</b> -<br>
 <b>Float:</b> -</p>
 </div>
-<p>Change dictionary search to use full name comparions.</p>
+<p>Change dictionary search to use full name comparisons.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>d</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
 <h2>d:words</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> -<br>
@@ -2465,7 +2465,7 @@
 <b>Addr:</b> -<br>
 <b>Float:</b> nlu-m</p>
 </div>
-<p>Return n if it is within the lower (l) and upper (u) bounds. If outside the bounds, return the closes boundary value.</p>
+<p>Return n if it is within the lower (l) and upper (u) bounds. If outside the bounds, return the closest boundary value.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>f</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><p><b>Example:</b> <br>
 <br>
 <xmp style='background:#f2f2f2'>    .-10 .5 .8 f:limit
@@ -2951,7 +2951,7 @@
 <b>Addr:</b> -<br>
 <b>Float:</b> -</p>
 </div>
-<p>Create a new list wit the given value as the car of the first node.</p>
+<p>Create a new list with the given value as the car of the first node.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>rre</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
 <h2>fll:del</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> pn-<br>
@@ -3232,7 +3232,7 @@
 <b>Addr:</b> -<br>
 <b>Float:</b> -</p>
 </div>
-<p>Restore saved ioctle settings/state</p>
+<p>Restore saved ioctl settings/state</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>ioctl</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
 <h2>ioctl:save-state</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> -<br>
@@ -3365,7 +3365,7 @@
 <b>Addr:</b> -<br>
 <b>Float:</b> -</p>
 </div>
-<p>Fre a malloc'd region of memory. Pass a double cell pointer to the memory to free.</p>
+<p>Free a malloc'd region of memory. Pass a double cell pointer to the memory to free.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>mem</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><hr/>
 <h2>mem:resize</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> mmn-<br>
@@ -3429,17 +3429,6 @@
 </xmp>
 </p>
 <hr/>
-<h2>n:add</h2>
-<div style='margin-left: 1em;'><p><b>Data:</b> nn-n<br>
-<b>Addr:</b> -<br>
-<b>Float:</b> -</p>
-</div>
-<p>Add `n1` to `n2` and return the result.</p>
-<table><tr><td><b>Class:</b> </td><td>class:primitive</td></tr><tr><td><b>Namespace:</b> </td><td>global</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><p><b>Example:</b> <br>
-<br>
-<xmp style='background:#f2f2f2'>    #1 #2 + </xmp>
-</p>
-<hr/>
 <h2>n:between?</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> nlu-f<br>
 <b>Addr:</b> -<br>
@@ -3463,20 +3452,6 @@
 <xmp style='background:#f2f2f2'>    #100 n:dec</xmp>
 </p>
 <hr/>
-<h2>n:div</h2>
-<div style='margin-left: 1em;'><p><b>Data:</b> nm-v<br>
-<b>Addr:</b> -<br>
-<b>Float:</b> -</p>
-</div>
-<p>Divide `n` by `m` and return the integer part of the quotient.</p>
-<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>global</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
-<h2>n:divmod</h2>
-<div style='margin-left: 1em;'><p><b>Data:</b> nm-rv<br>
-<b>Addr:</b> -<br>
-<b>Float:</b> -</p>
-</div>
-<p>Divide `n` by `m` and return the integer part of the quotient and remainder.</p>
-<table><tr><td><b>Class:</b> </td><td>class:primitive</td></tr><tr><td><b>Namespace:</b> </td><td>global</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
 <h2>n:even?</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> n-f<br>
 <b>Addr:</b> -<br>
@@ -3505,7 +3480,7 @@
 <b>Addr:</b> -<br>
 <b>Float:</b> -</p>
 </div>
-<p>Return n if it is within the lower (l) and upper (u) bounds. If outside the bounds, return the closes boundary value.</p>
+<p>Return n if it is within the lower (l) and upper (u) bounds. If outside the bounds, return the closest boundary value.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>n</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><p><b>Example:</b> <br>
 <br>
 <xmp style='background:#f2f2f2'>    #-10 #5 #8 n:limit
@@ -3534,25 +3509,6 @@
 <br>
 <xmp style='background:#f2f2f2'>    #1 #7 n:min
     #-8 #-10 n:min</xmp>
-</p>
-<hr/>
-<h2>n:mod</h2>
-<div style='margin-left: 1em;'><p><b>Data:</b> nm-o<br>
-<b>Addr:</b> -<br>
-<b>Float:</b> -</p>
-</div>
-<p>Divide `n` by `m` and return the remainder.</p>
-<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>global</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
-<h2>n:mul</h2>
-<div style='margin-left: 1em;'><p><b>Data:</b> nn-n<br>
-<b>Addr:</b> -<br>
-<b>Float:</b> -</p>
-</div>
-<p>Multiply `n1` by `n2` and return the result.</p>
-<table><tr><td><b>Class:</b> </td><td>class:primitive</td></tr><tr><td><b>Namespace:</b> </td><td>global</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><p><b>Example:</b> <br>
-<br>
-<xmp style='background:#f2f2f2'>    #2 #6 *
-    #-1 #100 *</xmp>
 </p>
 <hr/>
 <h2>n:negate</h2>
@@ -3634,17 +3590,6 @@
 </div>
 <p>Return TRUE if number is greater than zero or FALSE if it is zero or less.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>n</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
-<h2>n:sub</h2>
-<div style='margin-left: 1em;'><p><b>Data:</b> nn-n<br>
-<b>Addr:</b> -<br>
-<b>Float:</b> -</p>
-</div>
-<p>Subtract `n2` from `n1` and return the result.</p>
-<table><tr><td><b>Class:</b> </td><td>class:primitive</td></tr><tr><td><b>Namespace:</b> </td><td>global</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><p><b>Example:</b> <br>
-<br>
-<xmp style='background:#f2f2f2'>    #2 #1 - </xmp>
-</p>
-<hr/>
 <h2>n:to-float</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> n-<br>
 <b>Addr:</b> -<br>
@@ -3734,31 +3679,6 @@
     [ $. eq? ] parse-until ;</xmp>
 </p>
 <hr/>
-<h2>pb:get</h2>
-<div style='margin-left: 1em;'><p><b>Data:</b> a-<br>
-<b>Addr:</b> -<br>
-<b>Float:</b> -</p>
-</div>
-<p>Copy a string from the pasteboard to the specified address.</p>
-<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>pb</td></tr><tr><td><b>Interface Layer:</b> </td><td>iOS</td></tr></table><hr/>
-<h2>pb:length</h2>
-<div style='margin-left: 1em;'><p><b>Data:</b> -n<br>
-<b>Addr:</b> -<br>
-<b>Float:</b> -</p>
-</div>
-<p>Return the length of the string on the pasteboard.</p>
-<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>pb</td></tr><tr><td><b>Interface Layer:</b> </td><td>iOS</td></tr></table><p><b>Example:</b> <br>
-<br>
-<xmp style='background:#f2f2f2'>pb</xmp>
-</p>
-<hr/>
-<h2>pb:set</h2>
-<div style='margin-left: 1em;'><p><b>Data:</b> s-<br>
-<b>Addr:</b> -<br>
-<b>Float:</b> -</p>
-</div>
-<p>Copy a string to the pasteboard.</p>
-<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>pb</td></tr><tr><td><b>Interface Layer:</b> </td><td>iOS</td></tr></table><hr/>
 <h2>pop</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> -n<br>
 <b>Addr:</b> n-<br>
@@ -4320,13 +4240,6 @@
 </div>
 <p>Given an argument number, return the argument as a string.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>script</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><hr/>
-<h2>script:ignore-to-eof</h2>
-<div style='margin-left: 1em;'><p><b>Data:</b> -<br>
-<b>Addr:</b> -<br>
-<b>Float:</b> -</p>
-</div>
-<p>Discard remaining lines in the file currently being evaluated. This only works when including a file, not at the interpreter.</p>
-<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>script</td></tr><tr><td><b>Interface Layer:</b> </td><td>rre</td></tr></table><hr/>
 <h2>script:ignore-to-eol</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> -<br>
 <b>Addr:</b> -<br>
@@ -4359,7 +4272,7 @@
 <b>Addr:</b> -<br>
 <b>Float:</b> -</p>
 </div>
-<p>Peform a bitwise shift of m by n bits. If n is positive, shift right. If negative, the shift will be to the left.</p>
+<p>Perform a bitwise shift of m by n bits. If n is positive, shift right. If negative, the shift will be to the left.</p>
 <table><tr><td><b>Class:</b> </td><td>class:primitive</td></tr><tr><td><b>Namespace:</b> </td><td>global</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
 <h2>sigil:!</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> ns-<br>
@@ -4696,111 +4609,6 @@
 </div>
 <p>Put a copy of the top item on the stack under the second one.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>global</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
-<h2>ui:add-view</h2>
-<div style='margin-left: 1em;'><p><b>Data:</b> s-<br>
-<b>Addr:</b> -<br>
-<b>Float:</b> -</p>
-</div>
-<p>Add view named `s` to the displayed views.</p>
-<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>ui</td></tr><tr><td><b>Interface Layer:</b> </td><td>retro/python</td></tr></table><hr/>
-<h2>ui:create-view</h2>
-<div style='margin-left: 1em;'><p><b>Data:</b> ss-<br>
-<b>Addr:</b> -<br>
-<b>Float:</b> -</p>
-</div>
-<p>Create a new view. `s1` is the name and `s2` is the type.</p>
-<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>ui</td></tr><tr><td><b>Interface Layer:</b> </td><td>retro/python</td></tr></table><hr/>
-<h2>ui:get-action</h2>
-<div style='margin-left: 1em;'><p><b>Data:</b> s-a<br>
-<b>Addr:</b> -<br>
-<b>Float:</b> -</p>
-</div>
-<p>Return the address of the Retro handler for a view's associated action.</p>
-<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>ui</td></tr><tr><td><b>Interface Layer:</b> </td><td>retro/python</td></tr></table><hr/>
-<h2>ui:get-position</h2>
-<div style='margin-left: 1em;'><p><b>Data:</b> s-nn<br>
-<b>Addr:</b> -<br>
-<b>Float:</b> -</p>
-</div>
-<p>Return the row and column of the named view.</p>
-<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>ui</td></tr><tr><td><b>Interface Layer:</b> </td><td>retro/python</td></tr></table><hr/>
-<h2>ui:get-size</h2>
-<div style='margin-left: 1em;'><p><b>Data:</b> s-nn<br>
-<b>Addr:</b> -<br>
-<b>Float:</b> -</p>
-</div>
-<p>Return the height and width of the named view.</p>
-<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>ui</td></tr><tr><td><b>Interface Layer:</b> </td><td>retro/python</td></tr></table><hr/>
-<h2>ui:get-text</h2>
-<div style='margin-left: 1em;'><p><b>Data:</b> s-s<br>
-<b>Addr:</b> -<br>
-<b>Float:</b> -</p>
-</div>
-<p>Get the value of the text property of the named view.</p>
-<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>ui</td></tr><tr><td><b>Interface Layer:</b> </td><td>retro/python</td></tr></table><hr/>
-<h2>ui:get-title</h2>
-<div style='margin-left: 1em;'><p><b>Data:</b> s-s<br>
-<b>Addr:</b> -<br>
-<b>Float:</b> -</p>
-</div>
-<p>Get the value of the title property for the named view.</p>
-<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>ui</td></tr><tr><td><b>Interface Layer:</b> </td><td>retro/python</td></tr></table><hr/>
-<h2>ui:operation</h2>
-<div style='margin-left: 1em;'><p><b>Data:</b> ...n-<br>
-<b>Addr:</b> -<br>
-<b>Float:</b> -</p>
-</div>
-<p>Carry out a UI operation. Used internally by the other `ui:` words.</p>
-<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>ui</td></tr><tr><td><b>Interface Layer:</b> </td><td>retro/python</td></tr></table><hr/>
-<h2>ui:present</h2>
-<div style='margin-left: 1em;'><p><b>Data:</b> -<br>
-<b>Addr:</b> -<br>
-<b>Float:</b> -</p>
-</div>
-<p>Display all views.</p>
-<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>ui</td></tr><tr><td><b>Interface Layer:</b> </td><td>retro/python</td></tr></table><hr/>
-<h2>ui:remove-view</h2>
-<div style='margin-left: 1em;'><p><b>Data:</b> s-<br>
-<b>Addr:</b> -<br>
-<b>Float:</b> -</p>
-</div>
-<p>Remove view named `s` from the displayed views.</p>
-<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>ui</td></tr><tr><td><b>Interface Layer:</b> </td><td>retro/python</td></tr></table><hr/>
-<h2>ui:set-action</h2>
-<div style='margin-left: 1em;'><p><b>Data:</b> as-<br>
-<b>Addr:</b> -<br>
-<b>Float:</b> -</p>
-</div>
-<p>Set the action handler for a view to the specified Retro word address.</p>
-<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>ui</td></tr><tr><td><b>Interface Layer:</b> </td><td>retro/python</td></tr></table><hr/>
-<h2>ui:set-position</h2>
-<div style='margin-left: 1em;'><p><b>Data:</b> nns-<br>
-<b>Addr:</b> -<br>
-<b>Float:</b> -</p>
-</div>
-<p>Move view `s` to row `n1` and column `n2`.</p>
-<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>ui</td></tr><tr><td><b>Interface Layer:</b> </td><td>retro/python</td></tr></table><hr/>
-<h2>ui:set-size</h2>
-<div style='margin-left: 1em;'><p><b>Data:</b> nns-<br>
-<b>Addr:</b> -<br>
-<b>Float:</b> -</p>
-</div>
-<p>Set view `s` to height `n1` and width `n2`.</p>
-<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>ui</td></tr><tr><td><b>Interface Layer:</b> </td><td>retro/python</td></tr></table><hr/>
-<h2>ui:set-text</h2>
-<div style='margin-left: 1em;'><p><b>Data:</b> ss-<br>
-<b>Addr:</b> -<br>
-<b>Float:</b> -</p>
-</div>
-<p>Set the text property of view `s2` to `s1`.</p>
-<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>ui</td></tr><tr><td><b>Interface Layer:</b> </td><td>retro/python</td></tr></table><hr/>
-<h2>ui:set-title</h2>
-<div style='margin-left: 1em;'><p><b>Data:</b> ss-<br>
-<b>Addr:</b> -<br>
-<b>Float:</b> -</p>
-</div>
-<p>Set the title property of view `s2` to `s1`.</p>
-<table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>ui</td></tr><tr><td><b>Interface Layer:</b> </td><td>retro/python</td></tr></table><hr/>
 <h2>unhook</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> a-<br>
 <b>Addr:</b> -<br>
@@ -5091,7 +4899,7 @@
 <b>Addr:</b> -<br>
 <b>Float:</b> -</p>
 </div>
-<p>Peform a bitwise shift of m by n bits. If n is positive, shift right. If negative, the shift will be to the left.</p>
+<p>Perform a bitwise shift of m by n bits. If n is positive, shift right. If negative, the shift will be to the left.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>unsigned</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
 <h2>until</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> q(-f)-<br>

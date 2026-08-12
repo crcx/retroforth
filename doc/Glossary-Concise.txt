@@ -395,7 +395,7 @@ a:th                      D: an-b  A: -  F: -
 Return the actual address of the `n`th item in the array.
 
 a:to-string               D: a-s  A: -  F: -
-Create a new string from the provided array of character values. This string will be stored in the temporal string buffers.
+Create a new string from the provided array of character values. This string will be stored in the temporary string buffers.
 
 abort                     D: -  A: -  F: -
 Abort execution.
@@ -686,7 +686,7 @@ d                         D: n-  A: -  F: -
 Inline a numeric value to the current assembly segment.
 
 d:Hash-Function           D: -  A: -  F: -
-Variable. Holds a pointer tho the function for calculating dictionary hashes.
+Variable. Holds a pointer to the function for calculating dictionary hashes.
 
 d:add-header              D: saa-  A: -  F: -
 Vectored. Create a header. Provide a string (s) for the name, a pointer to the class handler (a1) and a pointer to the word definition (a2) Generally this won't be used directly.
@@ -764,10 +764,10 @@ d:stack                   D: d-a  A: -  F: -
 Given a dictionary pointer, return address of the data stack field
 
 d:use-hashes              D: -  A: -  F: -
-Change dictionary search to use hashed name comparions.
+Change dictionary search to use hashed name comparisons.
 
 d:use-strings             D: -  A: -  F: -
-Change dictionary search to use full name comparions.
+Change dictionary search to use full name comparisons.
 
 d:words                   D: -  A: -  F: -
 Display a list of all named items in the `Dictionary`.
@@ -1004,7 +1004,7 @@ f:inf?                    D: -f  A: -  F: F-
 Return `TRUE` if floating-point value is INF or `FALSE` otherwise.
 
 f:limit                   D: -  A: -  F: nlu-m
-Return n if it is within the lower (l) and upper (u) bounds. If outside the bounds, return the closes boundary value.
+Return n if it is within the lower (l) and upper (u) bounds. If outside the bounds, return the closest boundary value.
 
 f:log                     D: -  A: -  F: FF-F
 Return log(F1) for base F2 for floating-point values.
@@ -1199,7 +1199,7 @@ fll:append/value          D: pv-  A: -  F: -
 Append a cons cell to a list.
 
 fll:create                D: v-p  A: -  F: -
-Create a new list wit the given value as the car of the first node.
+Create a new list with the given value as the car of the first node.
 
 fll:del                   D: pn-  A: -  F: -
 Remove the specified cons from a list.
@@ -1310,7 +1310,7 @@ ioctl:operation           D: n-  A: -  F: -
 Perform an ioctl device operation
 
 ioctl:restore-state       D: -  A: -  F: -
-Restore saved ioctle settings/state
+Restore saved ioctl settings/state
 
 ioctl:save-state          D: -  A: -  F: -
 Save current ioctl settings/state
@@ -1367,7 +1367,7 @@ mem:fetch-double          D: nn-n  A: -  F: -
 Fetch a double cell value from a malloc memory region.
 
 mem:free                  D: nn-  A: -  F: -
-Fre a malloc'd region of memory. Pass a double cell pointer to the memory to free.
+Free a malloc'd region of memory. Pass a double cell pointer to the memory to free.
 
 mem:resize                D: mmn-  A: -  F: -
 Resize a malloc'd memory area.
@@ -1393,20 +1393,11 @@ Return the minimum value that will fit in a cell.
 n:abs                     D: n-n  A: -  F: -
 Return the absolute value of a number.
 
-n:add                     D: nn-n  A: -  F: -
-Add `n1` to `n2` and return the result.
-
 n:between?                D: nlu-f  A: -  F: -
 Return TRUE if number is between the lower (l) and upper (u) bounds. If not, return FALSE. This is inclusive of the limits.
 
 n:dec                     D: n-m  A: -  F: -
 Decrement n by one.
-
-n:div                     D: nm-v  A: -  F: -
-Divide `n` by `m` and return the integer part of the quotient.
-
-n:divmod                  D: nm-rv  A: -  F: -
-Divide `n` by `m` and return the integer part of the quotient and remainder.
 
 n:even?                   D: n-f  A: -  F: -
 Return `TRUE` if number is even, or `FALSE` if not.
@@ -1415,19 +1406,13 @@ n:inc                     D: n-m  A: -  F: -
 Increment n by one.
 
 n:limit                   D: nlu-m  A: -  F: -
-Return n if it is within the lower (l) and upper (u) bounds. If outside the bounds, return the closes boundary value.
+Return n if it is within the lower (l) and upper (u) bounds. If outside the bounds, return the closest boundary value.
 
 n:max                     D: mn-o  A: -  F: -
 Return the greater of two values.
 
 n:min                     D: mn-o  A: -  F: -
 Return the lesser of two values.
-
-n:mod                     D: nm-o  A: -  F: -
-Divide `n` by `m` and return the remainder.
-
-n:mul                     D: nn-n  A: -  F: -
-Multiply `n1` by `n2` and return the result.
 
 n:negate                  D: n-n  A: -  F: -
 Invert the sign of a number.
@@ -1458,9 +1443,6 @@ Return the square of a number.
 
 n:strictly-positive?      D: n-f  A: -  F: -
 Return TRUE if number is greater than zero or FALSE if it is zero or less.
-
-n:sub                     D: nn-n  A: -  F: -
-Subtract `n2` from `n1` and return the result.
 
 n:to-float                D: n-  A: -  F: -F
 Convert a number into a floating-point value.
@@ -1497,15 +1479,6 @@ Pack four 8-bit values into a 32-bit value.
 
 parse-until               D: q-s  A: -  F: -
 Read input from stdin (via `c:get`) until the returned character is matched by the quote. Returns a string.
-
-pb:get                    D: a-  A: -  F: -
-Copy a string from the pasteboard to the specified address.
-
-pb:length                 D: -n  A: -  F: -
-Return the length of the string on the pasteboard.
-
-pb:set                    D: s-  A: -  F: -
-Copy a string to the pasteboard.
 
 pop                       D: -n  A: n-  F: -
 Move a value from the return stack to the data stack.
@@ -1735,9 +1708,6 @@ Return the text of the current line being processed by the current `include`.
 script:get-argument       D: n-s  A: -  F: -
 Given an argument number, return the argument as a string.
 
-script:ignore-to-eof      D: -  A: -  F: -
-Discard remaining lines in the file currently being evaluated. This only works when including a file, not at the interpreter.
-
 script:ignore-to-eol      D: -  A: -  F: -
 Discard remaining tokens in the current line. This only works when including a file, not at the interpreter.
 
@@ -1748,7 +1718,7 @@ set-hook                  D: aa-  A: -  F: -
 Patch the hook point in a2 to point to a1.
 
 shift                     D: mn-o  A: -  F: -
-Peform a bitwise shift of m by n bits. If n is positive, shift right. If negative, the shift will be to the left.
+Perform a bitwise shift of m by n bits. If n is positive, shift right. If negative, the shift will be to the left.
 
 sigil:!                   D: ns-  A: -  F: -
 Store a value into a variable.
@@ -1858,51 +1828,6 @@ Apply q against x, then against y, and finally against z.
 tuck                      D: nm-mnm  A: -  F: -
 Put a copy of the top item on the stack under the second one.
 
-ui:add-view               D: s-  A: -  F: -
-Add view named `s` to the displayed views.
-
-ui:create-view            D: ss-  A: -  F: -
-Create a new view. `s1` is the name and `s2` is the type.
-
-ui:get-action             D: s-a  A: -  F: -
-Return the address of the Retro handler for a view's associated action.
-
-ui:get-position           D: s-nn  A: -  F: -
-Return the row and column of the named view.
-
-ui:get-size               D: s-nn  A: -  F: -
-Return the height and width of the named view.
-
-ui:get-text               D: s-s  A: -  F: -
-Get the value of the text property of the named view.
-
-ui:get-title              D: s-s  A: -  F: -
-Get the value of the title property for the named view.
-
-ui:operation              D: ...n-  A: -  F: -
-Carry out a UI operation. Used internally by the other `ui:` words.
-
-ui:present                D: -  A: -  F: -
-Display all views.
-
-ui:remove-view            D: s-  A: -  F: -
-Remove view named `s` from the displayed views.
-
-ui:set-action             D: as-  A: -  F: -
-Set the action handler for a view to the specified Retro word address.
-
-ui:set-position           D: nns-  A: -  F: -
-Move view `s` to row `n1` and column `n2`.
-
-ui:set-size               D: nns-  A: -  F: -
-Set view `s` to height `n1` and width `n2`.
-
-ui:set-text               D: ss-  A: -  F: -
-Set the text property of view `s2` to `s1`.
-
-ui:set-title              D: ss-  A: -  F: -
-Set the title property of view `s2` to `s1`.
-
 unhook                    D: a-  A: -  F: -
 Reset the hook point in a1 to the default definition.
 
@@ -2003,7 +1928,7 @@ unsigned:lt?              D: nn-f  A: -  F: -
 Compare n1 and n2. Return `TRUE` if n1 is less than n2, or `FALSE` otherwise.
 
 unsigned:shift            D: mn-o  A: -  F: -
-Peform a bitwise shift of m by n bits. If n is positive, shift right. If negative, the shift will be to the left.
+Perform a bitwise shift of m by n bits. If n is positive, shift right. If negative, the shift will be to the left.
 
 until                     D: q(-f)-  A: -  F: -
 Execute quote repeatedly while the quote returns a value of `FALSE`. The quote should return a flag of either `TRUE` or `FALSE`, though `until` will treat any non-zero value as `TRUE`.
