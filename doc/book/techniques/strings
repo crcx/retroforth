@@ -135,7 +135,7 @@ which let you trim just the leading or trailing end as desired.
 
 ## Controlling The Temporary Buffers
 
-As dicussed in the Lifetime subsection, temporary strings are
+As discussed in the Lifetime subsection, temporary strings are
 allocated in a rotating buffer. The details of this can be
 altered by updating two variables.
 

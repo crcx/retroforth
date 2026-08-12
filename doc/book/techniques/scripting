@@ -21,7 +21,7 @@ will return a number with the arguments, other than the script name.
 
     script:arguments '%n_arguments_passed\n s:format s:put
 
-To retreive an argument, pass the argument number to `script:get-argument`:
+To retrieve an argument, pass the argument number to `script:get-argument`:
 
     script:arguments [ I script:get-argument s:put nl ] indexed-times
 

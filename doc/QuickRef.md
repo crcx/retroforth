@@ -99,7 +99,7 @@ Multiple Comparisons
     ] call
 
 
-Function Defintions
+Function Definitions
 -------------------
 
 Quotes (Anonymous)

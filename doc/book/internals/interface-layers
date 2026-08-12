@@ -2,7 +2,7 @@
 
 Nga provides a virtual processor and an extensible way of adding
 I/O devices, but does not provide any I/O itself. Adding I/O is
-the responsability of the *interface layer*.
+the responsibility of the *interface layer*.
 
 An interface layer will wrap Nga, providing at least one I/O
 device (a generic output target), and a means of interacting

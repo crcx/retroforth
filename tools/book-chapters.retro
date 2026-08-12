@@ -14,7 +14,6 @@ This contains the list of files for the chapters in the book.
   { 'A_Quick_Tutorial               'general/quick-tutorial }
   { 'Syntax                         'general/syntax }
   { 'Toolchain:_Additional_Tools    'toolchain/info/additional-tools }
-  { 'Toolchain:_retro-compiler      'toolchain/info/retro-compiler }
   { 'Manpage:_retro(1)              'toolchain/man/retro }
   { 'Manpage:_retro-describe(1)     'toolchain/man/retro-describe }
   { 'Manpage:_retro-document(1)     'toolchain/man/retro-document }

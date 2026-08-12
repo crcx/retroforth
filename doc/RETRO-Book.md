@@ -201,53 +201,6 @@ A basic interactive system can be built by using:
 This requires a copy of `ngaImage` to be in the current
 directory.
 
-## Barebones
-
-This is a minimal version of the `retro-repl`. It keeps the C
-portion as short as possible, making it a useful starting point
-for new interfaces.
-
-To build:
-
-    make bin/retro-barebones
-
-## retro-compiler
-
-This is a turnkey compiler. It can compile a new executable
-bundling a Retro VM and image.
-
-Requirements:
-
-- BSD or Linux
-- objcopy in $PATH
-
-To build:
-
-    make bin/retro-compiler
-
-Example use:
-
-1. Given a source file like "Hello.forth":
-
-    ~~~
-    :hello 'hello_world! s:put nl ;
-    ~~~
-
-2. Use:
-
-    ./bin/retro-compiler Hello.forth hello
-
-The first argument is the source file, the second is the
-word to run on startup.
-
-3. Run the generated `a.out`
-
-Limits:
-
-This only supports the core words ('all' interface) and the
-file i/o words. Support for other I/O extensions will be
-added in the future.
-
 ## Pascal
 
 There is a Pascal version of `retro-repl`.
@@ -667,7 +620,7 @@ To mark a sequence as inline code, surround it with backticks.
 
 ## Escaping
 
-You can preceed a character with a backslash (\\) to have it
+You can precede a character with a backslash (\\) to have it
 not be processed as a Markdown element.
 
 # A Quick Tutorial
@@ -884,61 +837,6 @@ Example usage:
     retro-unu literate/RetroForth.md
 
 Output is written to stdout; redirect as neeeded.
-
-# The Optional Retro Compiler
-
-In addition to the base system, users of RETRO on Unix hosts
-with ELF executables can build and use the `retro-compiler`
-to generate turnkey executables.
-
-## Requirements
-
-- Unix host
-- ELF executable support
-- `objcopy` in the $PATH
-
-## Building
-
-   make bin/retro-compiler
-
-## Installing
-
-Copy `bin/retro-compiler` to somewhere in your $PATH.
-
-## Using
-
-`retro-compiler` takes two arguments: the source file to
-compile and the name of the word to use as the main entry
-point.
-
-Example:
-
-Given a `hello.forth`:
-
-    ~~~
-    :hello 'Hello_World! s:put nl ;
-    ~~~
-
-Use:
-
-    retro-compiler hello.forth hello
-
-The compiler will generate an `a.out` file which you can
-then rename.
-
-## Known Limitations
-
-This does not provide the scripting support for command line
-arguments that the standard `retro` interface offers.
-
-A copy of `objcopy` needs to be in the path for compilation
-to work.
-
-The current working directory must be writable.
-
-This only supports hosts using ELF executables.
-
-The output file name is fixed to `a.out`.
 
 RETRO(1)		    General Commands Manual		      RETRO(1)
 
@@ -1758,7 +1656,7 @@ may be buffered, depending on the host.
 
 # Defining Words
 
-Words are named functions. To start a word, preceed it's name
+Words are named functions. To start a word, precede its name
 with a colon. Follow this by the definition, and end with a
 semicolon.
 
@@ -2149,9 +2047,9 @@ You can delete a file by passing the file name to `file:delete`.
 
     /tmp/test file:delete
 
-## Check For File Existance
+## Check For File Existence
 
-Use `file:exists?` to detect the existance of a file. Pass it a
+Use `file:exists?` to detect the existence of a file. Pass it a
 file name and it will return `TRUE` if existing or `FALSE` if
 it does not.
 
@@ -2587,7 +2485,7 @@ will return a number with the arguments, other than the script name.
 
     script:arguments '%n_arguments_passed\n s:format s:put
 
-To retreive an argument, pass the argument number to `script:get-argument`:
+To retrieve an argument, pass the argument number to `script:get-argument`:
 
     script:arguments [ I script:get-argument s:put nl ] indexed-times
 
@@ -2753,7 +2651,7 @@ which let you trim just the leading or trailing end as desired.
 
 ## Controlling The Temporary Buffers
 
-As dicussed in the Lifetime subsection, temporary strings are
+As discussed in the Lifetime subsection, temporary strings are
 allocated in a rotating buffer. The details of this can be
 altered by updating two variables.
 
@@ -3577,13 +3475,13 @@ The currently supported and reserved device identifiers are:
     | 0010 | Random Number    |                            |
 
 This list may be revised in the future. The only guaranteed
-stable indentifier is 0000 for generic output.
+stable identifier is 0000 for generic output.
 
 # Internals: Interface Layers
 
 Nga provides a virtual processor and an extensible way of adding
 I/O devices, but does not provide any I/O itself. Adding I/O is
-the responsability of the *interface layer*.
+the responsibility of the *interface layer*.
 
 An interface layer will wrap Nga, providing at least one I/O
 device (a generic output target), and a means of interacting
@@ -4289,7 +4187,7 @@ instance using the new image via a subprocess and piping in
 the source, or doing relocations of the data), but this is
 less error prone and will work on all systems that I plan to
 support (including, with a few minor adjustments, the native
-hardware versions [assuming the existance of mass storage]).
+hardware versions [assuming the existence of mass storage]).
 
 Sources:
 

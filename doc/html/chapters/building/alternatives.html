@@ -63,53 +63,6 @@ A basic interactive system can be built by using:
 This requires a copy of <span class="tt">ngaImage</span> to be in the current
 directory.
 <br/><br/>
-<span class="h2">Barebones</span>
-<br/><br/>
-This is a minimal version of the <span class="tt">retro-repl</span>. It keeps the C
-portion as short as possible, making it a useful starting point
-for new interfaces.
-<br/><br/>
-To build:
-<br/><br/>
-<tt class='indentedcode'>make&nbsp;bin/retro-barebones</tt>
-<br/><br/>
-<span class="h2">retro-compiler</span>
-<br/><br/>
-This is a turnkey compiler. It can compile a new executable
-bundling a Retro VM and image.
-<br/><br/>
-Requirements:
-<br/><br/>
-&bull; BSD or Linux<br/>
-&bull; objcopy in $PATH<br/>
-<br/><br/>
-To build:
-<br/><br/>
-<tt class='indentedcode'>make&nbsp;bin/retro-compiler</tt>
-<br/><br/>
-Example use:
-<br/><br/>
-1. Given a source file like "Hello.forth":
-<br/><br/>
-<tt class='indentedcode'>~~~</tt>
-<tt class='indentedcode'>:hello&nbsp;'hello_world!&nbsp;s:put&nbsp;nl&nbsp;;</tt>
-<tt class='indentedcode'>~~~</tt>
-<br/><br/>
-2. Use:
-<br/><br/>
-<tt class='indentedcode'>./bin/retro-compiler&nbsp;Hello.forth&nbsp;hello</tt>
-<br/><br/>
-The first argument is the source file, the second is the
-word to run on startup.
-<br/><br/>
-3. Run the generated <span class="tt">a.out</span>
-<br/><br/>
-Limits:
-<br/><br/>
-This only supports the core words ('all' interface) and the
-file i/o words. Support for other I/O extensions will be
-added in the future.
-<br/><br/>
 <span class="h2">Pascal</span>
 <br/><br/>
 There is a Pascal version of <span class="tt">retro-repl</span>.

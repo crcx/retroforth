@@ -107,5 +107,5 @@ To mark a sequence as inline code, surround it with backticks.
 
 ## Escaping
 
-You can preceed a character with a backslash (\\) to have it
+You can precede a character with a backslash (\\) to have it
 not be processed as a Markdown element.

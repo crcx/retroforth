@@ -91,9 +91,9 @@ You can delete a file by passing the file name to `file:delete`.
 
     /tmp/test file:delete
 
-## Check For File Existance
+## Check For File Existence
 
-Use `file:exists?` to detect the existance of a file. Pass it a
+Use `file:exists?` to detect the existence of a file. Pass it a
 file name and it will return `TRUE` if existing or `FALSE` if
 it does not.
 
