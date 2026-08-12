@@ -1,4 +1,4 @@
-.Dd January 2021
+.Dd August 2026
 .Dt RETRO-EXTEND 1
 .Os
 .Sh RETRO-EXTEND
@@ -12,18 +12,16 @@ image filename
 RETRO is a modern, pragmatic Forth drawing influences from many
 sources. It's clean, elegant, tiny, and easy to grasp and adapt
 to various uses.
-
+.Pp
 .Nm
 is a tool to load additional code into an image file. It takes
 the name of an image file and one or more source files to load
 into the image. After completion the image file will be updated
 with the changes.
-
 .Sh CAVEATS
 .Nm
 only emulates the minimal console output device. If the source
 files require additional I/O to be present, the extend process
 will likely fail to work correctly.
-
 .Sh AUTHORS
 .An Charles Childers Aq Mt crc@forthworks.com

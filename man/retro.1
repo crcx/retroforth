@@ -1,4 +1,4 @@
-.Dd October 2023
+.Dd August 2026
 .Dt RETRO 1
 .Os
 .Sh RETRO
@@ -8,17 +8,20 @@
 .Nm
 .Op Fl h
 .Op Fl i
-.Op Fl v
 .Op Fl t Ar filename
 .Op Fl f Ar filename
 .Op Fl p Ar filename
 .Op Fl u Ar filename
 .Op Fl r Ar filename
+.Op Fl cs Ar delimiter
+.Op Fl ce Ar delimiter
+.Op Fl ts Ar delimiter
+.Op Fl te Ar delimiter
 .Op Ar filename Ar script-args
 .Sh DESCRIPTION
 RETRO is a modern, pragmatic Forth drawing influences from many sources.
 It's clean, elegant, tiny, and easy to grasp and adapt to various uses.
-
+.Pp
 .Nm
 is the main interface for interacting with Retro. It provides both
 an interactive and a scripting model.
@@ -28,10 +31,6 @@ an interactive and a scripting model.
 Display a help screen.
 .It Fl i
 Start Retro in interactive mode.
-.It Fl s
-Start Retro in interactive mode and suppress the startup message.
-.It Fl v
-Run in verbose mode, showing debugging information. Verbose output is written to /dev/stderr.
 .It Fl t Ar filename
 Run any code and test blocks in the specified file.
 .It Fl f Ar filename
@@ -41,11 +40,20 @@ Run the code in the specified file.
 .It Fl u Ar filename
 Load and use the specified image file rather than the integral one.
 .It Fl r Ar filename
-Load and run the code in the specified image file rather than the integral one.
-.It filename script-args
+Load the specified image file rather than the integral one, then start Retro
+in interactive mode.
+.It Fl cs Ar delimiter
+Use the specified delimiter to start code blocks.
+.It Fl ce Ar delimiter
+Use the specified delimiter to end code blocks.
+.It Fl ts Ar delimiter
+Use the specified delimiter to start test blocks.
+.It Fl te Ar delimiter
+Use the specified delimiter to end test blocks.
+.It Ar filename Ar script-args
 Run code blocks in a single file. Pass script-args to the code being run.
 .El
-
+.Pp
 If invoked with no arguments,
 .Nm
 will run in interactive mode.

@@ -1,4 +1,4 @@
-.Dd June 2020
+.Dd August 2026
 .Dt RETRO-UNU 1
 .Os
 .Sh RETRO-UNU
@@ -7,30 +7,40 @@
 .Sh SYNOPSIS
 .Nm
 .Op Fl t
-filename
+.Op Fl cs Ar delimiter
+.Op Fl ce Ar delimiter
+.Op Fl ts Ar delimiter
+.Op Fl te Ar delimiter
+.Ar filename ...
 .Sh DESCRIPTION
 RETRO is a modern, pragmatic Forth drawing influences from many
 sources. It's clean, elegant, tiny, and easy to grasp and adapt
 to various uses.
-
+.Pp
 .Nm
 is a tool for extracting code from literate sources. It will
 write output to stdout.
-
+.Pp
 A code block starts with ~~~ on a line by itself and ends with
 a second ~~~. Test blocks start and end with ```.
-
+.Pp
 .Nm
 does not support "out of order" structuring of the code,
 commentary, and test blocks.
-
 .Sh OPTIONS
 .Bl -tag -width -indent
 .It Fl t
 Include any test blocks in the file.
-.It filename
-Extract code blocks from the specified file.
+.It Fl cs Ar delimiter
+Use the specified delimiter to start code blocks.
+.It Fl ce Ar delimiter
+Use the specified delimiter to end code blocks.
+.It Fl ts Ar delimiter
+Use the specified delimiter to start test blocks.
+.It Fl te Ar delimiter
+Use the specified delimiter to end test blocks.
+.It Ar filename
+Extract code blocks from each specified file.
 .El
 .Sh AUTHORS
 .An Charles Childers Aq Mt crc@forthworks.com
-

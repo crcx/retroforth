@@ -1,4 +1,4 @@
-.Dd October 2023
+.Dd August 2026
 .Dt RETRO-RUNTIME 1
 .Os
 .Sh RETRO-RUNTIME
@@ -8,13 +8,16 @@
 .Nm
 .Op Fl h
 .Op Fl i
-.Op Fl v
 .Op Fl t Ar filename
 .Op Fl f Ar filename
 .Op Fl p Ar filename
 .Op Fl u Ar image
 .Op Fl r Ar image
-.Op Ar filename
+.Op Fl cs Ar delimiter
+.Op Fl ce Ar delimiter
+.Op Fl ts Ar delimiter
+.Op Fl te Ar delimiter
+.Op Ar filename Ar script-args
 .Sh DESCRIPTION
 .Nm
 is the non-embedded version of the Retro runtime. Unlike
@@ -36,8 +39,6 @@ image. It is not installed as part of the normal Retro distribution.
 Display a help screen.
 .It Fl i
 Start Retro in interactive mode.
-.It Fl v
-Run in verbose mode, showing debugging information. Verbose output is written to /dev/stderr.
 .It Fl t Ar filename
 Run any code and test blocks in the specified file.
 .It Fl f Ar filename
@@ -48,8 +49,16 @@ Run the code in the specified file.
 Load and use the specified image file.
 .It Fl r Ar image
 Load and use the specified image file, then start Retro in interactive mode.
-.It Ar filename
-Run code blocks in a single file.
+.It Fl cs Ar delimiter
+Use the specified delimiter to start code blocks.
+.It Fl ce Ar delimiter
+Use the specified delimiter to end code blocks.
+.It Fl ts Ar delimiter
+Use the specified delimiter to start test blocks.
+.It Fl te Ar delimiter
+Use the specified delimiter to end test blocks.
+.It Ar filename Ar script-args
+Run code blocks in a single file. Pass script-args to the code being run.
 .El
 .Sh EXAMPLES
 Load an image and run the code blocks in a source file:
