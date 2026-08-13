@@ -17,7 +17,7 @@ OF THIS SOFTWARE.
 
 RETRO 12 is:
 
-    Copyright (c) 2008 - 2023, Charles Childers
+    Copyright (c) 2008 - 2026, Charles Childers
 
 Portions of the code derive from RETRO 11, which was:
 
@@ -40,6 +40,7 @@ Portions of the code derive from RETRO 11, which was:
     Copyright (c) 2011,        Remy Moueza
     Copyright (c) 2012,        John M Harrison
     Copyright (c) 2012,        Todd Thomas
+    Copyright (c) 2018,        Kiyoshi Yoneda
     Copyright (c) 2022,        Rick Carlino
 
 The Free Pascal implementation in vm/nga-pascal is:
@@ -49,3 +50,25 @@ The Free Pascal implementation in vm/nga-pascal is:
 The Nim implementation in vm/nga-nim is:
 
     Copyright (c) 2021,        Jorge Acereda
+
+The C# implementation in vm/nga-csharp is:
+
+    Copyright (c) 2009 - 2011, Simon Waite
+
+The Zig implementation in vm/libnga-zig is:
+
+    Copyright (c)               iacore
+
+The Emacs mode in retroforth.el is:
+
+    Copyright (c) 2021,        Philippe Brochard
+
+Some Python tools and interface code are:
+
+    Copyright (c) 2020 - 2021, Arland Childers
+
+The 65816 implementation in vm/nga-816 is:
+
+    Copyright (c) 2021,        Piotr Meyer
+
+It is licensed under the MIT License in vm/nga-816/LICENSE.
