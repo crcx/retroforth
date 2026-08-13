@@ -85,13 +85,18 @@ simple code.
   :select @SourceLine ASCII:HT s:tokenize swap a:fetch ;
 ---reveal---
 
-  #0 { 'name        'dstack     'astack     'fstack
-       'descr       'itime      'ctime      'class
-       'ex1         'ex2        'namespace  'interface }
-
-  [ 'field: s:prepend d:create
-    dup compile:lit &select compile:call compile:ret
-    &class:word reclass n:inc ] a:for-each drop
+  :field:name      (-s) #0  select ;
+  :field:dstack    (-s) #1  select ;
+  :field:astack    (-s) #2  select ;
+  :field:fstack    (-s) #3  select ;
+  :field:descr     (-s) #4  select ;
+  :field:itime     (-s) #5  select ;
+  :field:ctime     (-s) #6  select ;
+  :field:class     (-s) #7  select ;
+  :field:ex1       (-s) #8  select ;
+  :field:ex2       (-s) #9  select ;
+  :field:namespace (-s) #10 select ;
+  :field:interface (-s) #11 select ;
 }}
 ~~~
 
