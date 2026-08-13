@@ -23,6 +23,7 @@
   - added retro-muri.js (node)
   - generate-layout to turn a description of dictionary and
     image format into usable includes for the VM & tools
+  - small cleanups in glossary.retro
 
 - documentation
 
@@ -38,8 +39,18 @@
   - use new D directive to build initial dictionary
   - fill in missing `d:source` data
   - reduce use of magic numbers
+  - konilo vocabulary alignment:
+    - add: `n:add`
+           `n:sub`
+           `n:mul`
+           `n:div`
+           `n:mod`
+           `n:divmod`
+           `shift-left`
+           `shift-right`
 
 - library
+  - remove konilo words that are now part of the core image
 
 - retro-compiler
 

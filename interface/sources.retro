@@ -326,6 +326,9 @@ dup 'n:sqrt d:set-source
 dup 'n:square d:set-source
 dup 'n:negate d:set-source
 dup 'n:pow d:set-source
+dup 'shift-right d:set-source
+dup 'shift-left d:set-source
+dup 'shift d:set-source
 dup 'mod d:set-source
 dup '/ d:set-source
 dup 'rot d:set-source

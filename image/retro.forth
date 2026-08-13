@@ -573,24 +573,16 @@ And low level, for inlining:
 
 ## Numeric Operations
 
-The core RETRO language provides addition, subtraction,
-multiplication, and a combined division/remainder. RETRO
-expands on this.
-
-I implement the division and remainder as low level words
-so they can be inlined. Here's the high level forms:
-
-    :/         (nq-d)  /mod nip ;
-    :mod       (nq-r)  /mod drop ;
+The core RETRO language provides `n:add`, `n:sub`, `n:mul`,
+`n:divmod`, `n:div`, and `n:mod`. The symbolic forms are aliases
+for these names.
 
 ~~~
-:/         (nq-d)  \diswdr.. ; primitive
-:mod       (nq-r)  \didr.... ; primitive
-:n:pow     (bp-n)  #1 swap [ over * ] times nip ;
-:n:negate  (n-n)   #-1 * ;
+:n:pow     (bp-n)  #1 swap [ over n:mul ] times nip ;
+:n:negate  (n-n)   #-1 n:mul ;
 :n:square  (n-n)   \dumu.... ;
 :n:sqrt    (n-n)
-  #1 [ repeat dup-pair / over - #2 / 0; + again ] call nip ;
+  #1 [ repeat dup-pair n:div over n:sub #2 n:div 0; n:add again ] call nip ;
 :n:min     (nn-n)  dup-pair lt? [ drop ] [ nip ] choose ;
 :n:max     (nn-n)  dup-pair gt? [ drop ] [ nip ] choose ;
 :n:abs     (n-n)   dup n:negative? &n:negate if ;
@@ -598,6 +590,8 @@ so they can be inlined. Here's the high level forms:
 :n:inc     (n-n)   \liadre.. `1 ;
 :n:dec     (n-n)   \lisure.. `1 ;
 :n:between? (nul-) rot [ rot rot n:limit ] sip eq? ;
+:shift-left  (mn-n) n:negate shift ;
+:shift-right (mn-n) shift ;
 ~~~
 
 ## Lexical Scope

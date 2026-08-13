@@ -256,6 +256,12 @@ i re......
 i di......
 i re......
 
+: _div
+i diswdrre
+
+: _mod
+i didrre..
+
 : _and
 i an......
 i re......
@@ -1614,10 +1620,18 @@ D lt? _lt class:primitive
 D gt? _gt class:primitive
 D fetch _fetch class:primitive
 D store _store class:primitive
+D n:add _add class:primitive
+D n:sub _sub class:primitive
+D n:mul _mul class:primitive
+D n:divmod _divmod class:primitive
+D n:div _div class:primitive
+D n:mod _mod class:primitive
 D + _add class:primitive
 D - _sub class:primitive
 D * _mul class:primitive
 D /mod _divmod class:primitive
+D / _div class:primitive
+D mod _mod class:primitive
 D and _and class:primitive
 D or _or class:primitive
 D xor _xor class:primitive
@@ -1699,10 +1713,18 @@ D err:notfound err:notfound class:word
 | gt?             | nn-f      | Compare two values for greater than               |
 | fetch           | p-n       | Fetch a value stored at the pointer               |
 | store           | np-       | Store a value into the address at pointer         |
-| +               | nn-n      | Add two numbers                                   |
-| -               | nn-n      | Subtract two numbers                              |
-| *               | nn-n      | Multiply two numbers                              |
-| /mod            | nn-mq     | Divide two numbers, return quotient and remainder |
+| n:add           | nn-n      | Add two numbers                                   |
+| n:sub           | nn-n      | Subtract two numbers                              |
+| n:mul           | nn-n      | Multiply two numbers                              |
+| n:divmod        | nn-mq     | Divide two numbers, return quotient and remainder |
+| n:div           | nn-q      | Divide two numbers, return quotient               |
+| n:mod           | nn-r      | Divide two numbers, return remainder              |
+| +               | nn-n      | Alias for `n:add`                                 |
+| -               | nn-n      | Alias for `n:sub`                                 |
+| *               | nn-n      | Alias for `n:mul`                                 |
+| /mod            | nn-mq     | Alias for `n:divmod`                              |
+| /               | nn-q      | Alias for `n:div`                                 |
+| mod             | nn-r      | Alias for `n:mod`                                 |
 | and             | nn-n      | Perform bitwise AND operation                     |
 | or              | nn-n      | Perform bitwise OR operation                      |
 | xor             | nn-n      | Perform bitwise XOR operation                     |

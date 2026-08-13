@@ -189,6 +189,73 @@ passed
 -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
 
 ~~~
+'a:make Testing
+  [ { #10 #20 #30 }
+    dup a:length #3 eq?
+    over #0 a:fetch #10 eq? and
+    over #1 a:fetch #20 eq? and
+    swap #2 a:fetch #30 eq? and
+  ] [ TRUE eq? ] try
+  [ { #10 #20 #30 } { #10 #20 #30 } a:eq? ] [ TRUE eq? ] try
+  [ { #10 #20 #30 } { #10 #20 #31 } a:-eq? ] [ TRUE eq? ] try
+passed
+~~~
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+~~~
+'Test:ArrayValues var
+'Test:ArrayIndex var
+
+:test:string-array? (as-f)
+  ASCII:SPACE s:tokenize swap dup-pair [ a:length ] bi@ eq?
+  [ !Test:ArrayValues #0 !Test:ArrayIndex ] dip
+  swap [ @Test:ArrayValues @Test:ArrayIndex a:fetch s:eq?
+         &Test:ArrayIndex v:inc and ] a:for-each ;
+
+'a:make/string-pointers Testing
+  [ { 's1 } 's1 test:string-array? ] [ TRUE eq? ] try
+  [ { 's1 's2 } 's1_s2 test:string-array? ] [ TRUE eq? ] try
+  [ { 's1 's2 's3 } 's1_s2_s3 test:string-array? ] [ TRUE eq? ] try
+  [ { 's1 's2 's3 's4 } 's1_s2_s3_s4 test:string-array? ] [ TRUE eq? ] try
+  [ { 's1 's2 's3 's4 's5 } 's1_s2_s3_s4_s5 test:string-array? ] [ TRUE eq? ] try
+  [ { 's1 's2 's3 's4 's5 's6 } 's1_s2_s3_s4_s5_s6 test:string-array? ] [ TRUE eq? ] try
+  [ { 's1 's2 's3 's4 's5 's6 's7 } 's1_s2_s3_s4_s5_s6_s7 test:string-array? ] [ TRUE eq? ] try
+  [ { 's1 's2 's3 's4 's5 's6 's7 's8 } 's1_s2_s3_s4_s5_s6_s7_s8 test:string-array? ] [ TRUE eq? ] try
+  [ { 's1 's2 's3 's4 's5 's6 's7 's8 's9 } 's1_s2_s3_s4_s5_s6_s7_s8_s9 test:string-array? ] [ TRUE eq? ] try
+  [ { 's1 's2 's3 's4 's5 's6 's7 's8 's9 's10 } 's1_s2_s3_s4_s5_s6_s7_s8_s9_s10 test:string-array? ] [ TRUE eq? ] try
+  [ { 's1 's2 's3 's4 's5 's6 's7 's8 's9 's10 's11 } 's1_s2_s3_s4_s5_s6_s7_s8_s9_s10_s11 test:string-array? ] [ TRUE eq? ] try
+  [ { 's1 's2 's3 's4 's5 's6 's7 's8 's9 's10 's11 's12 } 's1_s2_s3_s4_s5_s6_s7_s8_s9_s10_s11_s12 test:string-array? ] [ TRUE eq? ] try
+  [ { 's1 's2 's3 's4 's5 's6 's7 's8 's9 's10 's11 's12 's13 } 's1_s2_s3_s4_s5_s6_s7_s8_s9_s10_s11_s12_s13 test:string-array? ] [ TRUE eq? ] try
+  [ { 's1 's2 's3 's4 's5 's6 's7 's8 's9 's10 's11 's12 's13 's14 } 's1_s2_s3_s4_s5_s6_s7_s8_s9_s10_s11_s12_s13_s14 test:string-array? ] [ TRUE eq? ] try
+  [ { 's1 's2 's3 's4 's5 's6 's7 's8 's9 's10 's11 's12 's13 's14 's15 } 's1_s2_s3_s4_s5_s6_s7_s8_s9_s10_s11_s12_s13_s14_s15 test:string-array? ] [ TRUE eq? ] try
+  [ { 's1 's2 's3 's4 's5 's6 's7 's8 's9 's10 's11 's12 's13 's14 's15 's16 } 's1_s2_s3_s4_s5_s6_s7_s8_s9_s10_s11_s12_s13_s14_s15_s16 test:string-array? ] [ TRUE eq? ] try
+  [ { 's1 's2 's3 's4 's5 's6 's7 's8 's9 's10 's11 's12 's13 's14 's15 's16 's17 } 's1_s2_s3_s4_s5_s6_s7_s8_s9_s10_s11_s12_s13_s14_s15_s16_s17 test:string-array? ] [ TRUE eq? ] try
+  [ { 's1 's2 's3 's4 's5 's6 's7 's8 's9 's10 's11 's12 's13 's14 's15 's16 's17 's18 } 's1_s2_s3_s4_s5_s6_s7_s8_s9_s10_s11_s12_s13_s14_s15_s16_s17_s18 test:string-array? ] [ TRUE eq? ] try
+  [ { 's1 's2 's3 's4 's5 's6 's7 's8 's9 's10 's11 's12 's13 's14 's15 's16 's17 's18 's19 } 's1_s2_s3_s4_s5_s6_s7_s8_s9_s10_s11_s12_s13_s14_s15_s16_s17_s18_s19 test:string-array? ] [ TRUE eq? ] try
+  [ { 's1 's2 's3 's4 's5 's6 's7 's8 's9 's10 's11 's12 's13 's14 's15 's16 's17 's18 's19 's20 } 's1_s2_s3_s4_s5_s6_s7_s8_s9_s10_s11_s12_s13_s14_s15_s16_s17_s18_s19_s20 test:string-array? ] [ TRUE eq? ] try
+passed
+~~~
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+~~~
+'a:from-string Testing
+  [ 'retro a:from-string
+    dup a:length #5 eq?
+    over #0 a:fetch $r eq? and
+    over #2 a:fetch $t eq? and
+    over #4 a:fetch $o eq? and
+    swap a:to-string 'retro s:eq? and
+  ] [ TRUE eq? ] try
+  [ 'retro a:from-string 'retro a:from-string a:eq? ] [ TRUE eq? ] try
+  [ 'retro a:from-string 'retros a:from-string a:-eq? ] [ TRUE eq? ] try
+passed
+~~~
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+~~~
 'as{ Testing
 passed
 ~~~
@@ -1535,6 +1602,25 @@ passed
 passed
 ~~~
 
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+~~~
+'n:arithmetic Testing
+  [ #1 #2 n:add ] [ #3 eq? ] try
+  [ #3 #1 n:sub ] [ #2 eq? ] try
+  [ #2 #3 n:mul ] [ #6 eq? ] try
+  [ #7 #3 n:divmod ] [ #2 match #1 match ] try
+  [ #7 #3 n:div ] [ #2 eq? ] try
+  [ #7 #3 n:mod ] [ #1 eq? ] try
+  [ &n:add &+ eq? ] [ TRUE eq? ] try
+  [ &n:sub &- eq? ] [ TRUE eq? ] try
+  [ &n:mul &* eq? ] [ TRUE eq? ] try
+  [ &n:divmod &/mod eq? ] [ TRUE eq? ] try
+  [ &n:div &/ eq? ] [ TRUE eq? ] try
+  [ &n:mod &mod eq? ] [ TRUE eq? ] try
+passed
+~~~
+
 -+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
 
 ~~~
@@ -1902,6 +1988,22 @@ passed
 'shift Testing
   [ #455 #-3 shift ] [ #3640 eq? ] try
   [ #3640 #3 shift ] [ #455 eq? ] try
+passed
+~~~
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+~~~
+'shift-left Testing
+  [ #455 #3 shift-left ] [ #3640 eq? ] try
+passed
+~~~
+
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-
+
+~~~
+'shift-right Testing
+  [ #3640 #3 shift-right ] [ #455 eq? ] try
 passed
 ~~~
 

@@ -423,6 +423,8 @@ Add the stack comments for existing words:
 's-f 's:unique? d:set-stack-comment
 'aa- 'set-hook d:set-stack-comment
 'mn-o 'shift d:set-stack-comment
+'mn-o 'shift-left d:set-stack-comment
+'mn-o 'shift-right d:set-stack-comment
 'ns- 'sigil:! d:set-stack-comment
 's-n 'sigil:# d:set-stack-comment
 's-c 'sigil:$ d:set-stack-comment

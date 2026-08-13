@@ -561,6 +561,8 @@ drop
 'Return_the_filename_of_the_program_being_run. 'script:name d:set-description
 'Patch_the_hook_point_in_a2_to_point_to_a1. 'set-hook d:set-description
 'Peform_a_bitwise_shift_of_m_by_n_bits._If_n_is_positive,_shift_right._If_negative,_the_shift_will_be_to_the_left. 'shift d:set-description
+'Shift_m_left_by_n_bits. 'shift-left d:set-description
+'Shift_m_right_by_n_bits. 'shift-right d:set-description
 'Store_a_value_into_a_variable. 'sigil:! d:set-description
 'Process_token_as_a_number. 'sigil:# d:set-description
 'Process_token_as_an_ASCII_character. 'sigil:$ d:set-description

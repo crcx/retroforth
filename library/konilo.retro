@@ -9,20 +9,9 @@
 ,d8    `Yb,,d8,   ,d8P8P    8I   Yb,_,88,_,d8b,_ ,d8,   ,d8'
 88P      Y8P"Y8888P"        8I   `Y88P""Y88P'"Y88P"Y8888P"
 
-This adds support for some words from Konilo. It's intended
-to aid in portability between the systems.
-
-The basic math operations are given non-symbolic names and
-placed in the `n:` namespace. (In Konilo, these are the standard
-names for these).
+This retains the `comma` compatibility name from Konilo. The
+Konilo-style numeric words are part of the standard RETRO image.
 
 ~~~
-:n:add    (:nn-n) + ;
-:n:sub    (:nn-n) - ;
-:n:mul    (:nn-n) * ;
-:n:div    (:nn-nn) / ;
-:n:mod    (:nn-n) mod ;
-:n:divmod (:nn-n) /mod ;
-
 :comma    (:n-) , ;
 ~~~

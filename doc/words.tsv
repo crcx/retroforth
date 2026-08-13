@@ -463,13 +463,18 @@ n:-zero?	n-f	-	-	Return `TRUE` if number is not zero, or `FALSE` otherwise.			cl
 n:MAX	-n	-	-	Return the maximum value that will fit in a cell.			class:word	{n/a}	{n/a}	n	all	
 n:MIN	-n	-	-	Return the minimum value that will fit in a cell.			class:word	{n/a}	{n/a}	n	all	
 n:abs	n-n	-	-	Return the absolute value of a number.			class:word	    #10 n:abs\n    #-10 n:abs\n	{n/a}	n	all	
+n:add	nn-n	-	-	Add `n1` to `n2` and return the result.			class:primitive	    #1 #2 n:add	{n/a}	n	all	
 n:between?	nlu-f	-	-	Return TRUE if number is between the lower (l) and upper (u) bounds. If not, return FALSE. This is inclusive of the limits.			class:word	    #3 #1 #100 n:between?\n    $q $a $b   n:between?	{n/a}	n	all	
 n:dec	n-m	-	-	Decrement n by one.			class:word	    #100 n:dec	{n/a}	n	all	
+n:div	nm-v	-	-	Divide `n` by `m` and return the integer part of the quotient.			class:primitive	    #7 #3 n:div	{n/a}	n	all	
+n:divmod	nm-rv	-	-	Divide `n` by `m` and return the integer part of the quotient and remainder.			class:primitive	    #7 #3 n:divmod	{n/a}	n	all	
 n:even?	n-f	-	-	Return `TRUE` if number is even, or `FALSE` if not.			class:word	    #12 n:even?\n    #11 n:even?	{n/a}	n	all	
 n:inc	n-m	-	-	Increment n by one.			class:word	    #100 n:inc	{n/a}	n	all	
 n:limit	nlu-m	-	-	Return n if it is within the lower (l) and upper (u) bounds. If outside the bounds, return the closest boundary value.			class:word	    #-10 #5 #8 n:limit\n    #10  #1 #15 n:limit	{n/a}	n	all	
 n:max	mn-o	-	-	Return the greater of two values.			class:word	    #1 #7 n:max\n    #-8 #-10 n:max	{n/a}	n	all	
 n:min	mn-o	-	-	Return the lesser of two values.			class:word	    #1 #7 n:min\n    #-8 #-10 n:min	{n/a}	n	all	
+n:mod	nm-o	-	-	Divide `n` by `m` and return the remainder.			class:primitive	    #7 #3 n:mod	{n/a}	n	all	
+n:mul	nn-n	-	-	Multiply `n1` by `n2` and return the result.			class:primitive	    #2 #6 n:mul	{n/a}	n	all	
 n:negate	n-n	-	-	Invert the sign of a number.			class:word	    #10 n:negate\n    #-10 n:negate	{n/a}	n	rre	
 n:negative?	n-f	-	-	Return `TRUE` if number is negative, or `FALSE` if not.			class:word	{n/a}	{n/a}	n	all	
 n:odd?	n-f	-	-	Return `TRUE` if number is odd, or `FALSE` if not.			class:word	{n/a}	{n/a}	n	all	
@@ -480,6 +485,7 @@ n:random	-n	-	-	Return a random number.			class:word	    n:random n:put	{n/a}	n	
 n:sqrt	n-m	-	-	Return the square root of a number.			class:word	{n/a}	{n/a}	n	all	
 n:square	n-m	-	-	Return the square of a number.			class:word	{n/a}	{n/a}	n	all	
 n:strictly-positive?	n-f	-	-	Return TRUE if number is greater than zero or FALSE if it is zero or less.			class:word	{n/a}	{n/a}	n	all	
+n:sub	nn-n	-	-	Subtract `n2` from `n1` and return the result.			class:primitive	    #2 #1 n:sub	{n/a}	n	all	
 n:to-float	n-	-	-F	Convert a number into a floating-point value.			class:word	{n/a}	{n/a}	n	rre	
 n:to-string	n-s	-	-	Convert a number into a string.			class:word	{n/a}	{n/a}	n	all	
 n:to-string/reversed	n-s	-	-	Convert a number into a string. The string will have the digits in reversed order.			class:word	{n/a}	{n/a}	n	all	
@@ -572,6 +578,8 @@ script:ignore-to-eol	-	-	-	Discard remaining tokens in the current line. This on
 script:name	-s	-	-	Return the filename of the program being run.			class:word	{n/a}	{n/a}	script	rre	
 set-hook	aa-	-	-	Patch the hook point in a2 to point to a1.			class:word	    :foo hook ;\n    :bar #1 ;\n    &bar &foo set-hook	{n/a}	global	all	
 shift	mn-o	-	-	Perform a bitwise shift of m by n bits. If n is positive, shift right. If negative, the shift will be to the left.			class:primitive	{n/a}	{n/a}	global	all	
+shift-left	mn-o	-	-	Shift `m` left by `n` bits.			class:word	    #455 #3 shift-left	{n/a}	global	all	
+shift-right	mn-o	-	-	Shift `m` right by `n` bits.			class:word	    #3640 #3 shift-right	{n/a}	global	all	
 sigil:!	ns-	-	-	Store a value into a variable.	Store a value into the named variable.	Compile the code to store a value into a named variable.	class:macro	{n/a}	{n/a}	sigil	all	
 sigil:#	s-n	-	-	Process token as a number.	Convert the string into a number and leave on the stack.	Convert the string into a number and compile into the current definition as a literal.	class:macro	{n/a}	{n/a}	sigil	all	
 sigil:$	s-c	-	-	Process token as an ASCII character.	Fetch first character from string. Leave on stack.	Fetch first character from the string. Compile into the current definition as  literal.	class:macro	{n/a}	{n/a}	sigil	all	
