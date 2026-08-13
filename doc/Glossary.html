@@ -1688,12 +1688,19 @@
 </div>
 <p>Inline a numeric value to the current assembly segment.</p>
 <table><tr><td><b>Class:</b> </td><td>class:word</td></tr><tr><td><b>Namespace:</b> </td><td>global</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
-<h2>d:Hash-Function</h2>
-<div style='margin-left: 1em;'><p><b>Data:</b> -<br>
+<h2>d:HashFunction</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> -a<br>
 <b>Addr:</b> -<br>
 <b>Float:</b> -</p>
 </div>
-<p>Variable. Holds a pointer to the function for calculating dictionary hashes.</p>
+<p>Variable. Holds a pointer to the function used to calculate dictionary hashes.</p>
+<table><tr><td><b>Class:</b> </td><td>class:data</td></tr><tr><td><b>Namespace:</b> </td><td>d</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
+<h2>d:RehashFunction</h2>
+<div style='margin-left: 1em;'><p><b>Data:</b> -a<br>
+<b>Addr:</b> -<br>
+<b>Float:</b> -</p>
+</div>
+<p>Variable. Holds a pointer to the function invoked after a dictionary header is added.</p>
 <table><tr><td><b>Class:</b> </td><td>class:data</td></tr><tr><td><b>Namespace:</b> </td><td>d</td></tr><tr><td><b>Interface Layer:</b> </td><td>all</td></tr></table><hr/>
 <h2>d:add-header</h2>
 <div style='margin-left: 1em;'><p><b>Data:</b> saa-<br>

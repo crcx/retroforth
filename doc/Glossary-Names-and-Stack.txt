@@ -227,7 +227,8 @@ core:start                D: an-  A: -  F: -
 core:write/reg            D: vn-  A: -  F: -
 curry                     D: nq-q  A: -  F: -
 d                         D: n-  A: -  F: -
-d:Hash-Function           D: -  A: -  F: -
+d:HashFunction            D: -a  A: -  F: -
+d:RehashFunction          D: -a  A: -  F: -
 d:add-header              D: saa-  A: -  F: -
 d:astack                  D: d-a  A: -  F: -
 d:class                   D: d-a  A: -  F: -

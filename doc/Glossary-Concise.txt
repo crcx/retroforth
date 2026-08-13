@@ -685,8 +685,11 @@ Bind a value to a function and return a new quote that calls the bound action.
 d                         D: n-  A: -  F: -
 Inline a numeric value to the current assembly segment.
 
-d:Hash-Function           D: -  A: -  F: -
-Variable. Holds a pointer to the function for calculating dictionary hashes.
+d:HashFunction            D: -a  A: -  F: -
+Variable. Holds a pointer to the function used to calculate dictionary hashes.
+
+d:RehashFunction          D: -a  A: -  F: -
+Variable. Holds a pointer to the function invoked after a dictionary header is added.
 
 d:add-header              D: saa-  A: -  F: -
 Vectored. Create a header. Provide a string (s) for the name, a pointer to the class handler (a1) and a pointer to the word definition (a2) Generally this won't be used directly.

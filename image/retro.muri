@@ -1,4 +1,4 @@
-# RETRO Core 2025.08
+# RETRO Core 2026.xx
 
 RETRO Core is  a minimal Forth implementation for the Nga
 virtual machine. Like Nga this is intended to be used within
@@ -149,16 +149,16 @@ r 9999
 d 2048
 
 : Version
-d 202508
+d 202608
 
 : references
 r interpret
 r err:notfound
 r TIB
 d 2048
-: HashFunction
+: d:HashFunction
 d 0
-: RehashFunction
+: d:RehashFunction
 d 0
 ~~~
 
@@ -864,7 +864,7 @@ r comma:string
 i polist..
 r Dictionary
 i lifezr..
-r RehashFunction
+r d:RehashFunction
 i ju......
 ~~~
 
@@ -1672,8 +1672,8 @@ D d:stack d:stack class:word
 D d:astack d:astack class:word
 D d:fstack d:fstack class:word
 D d:descr d:descr class:word
-D HashFunction HashFunction class:data
-D RehashFunction RehashFunction class:data
+D d:HashFunction d:HashFunction class:data
+D d:RehashFunction d:RehashFunction class:data
 
 : 9999
 

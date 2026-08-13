@@ -237,12 +237,12 @@ Add the stack comments for existing words:
 'sdl- 'copy d:set-stack-comment
 'nq-q 'curry d:set-stack-comment
 'n- 'd d:set-stack-comment
-'- 'd:Hash-Function d:set-stack-comment
 'saa- 'd:add-header d:set-stack-comment
 'd-a 'd:class d:set-stack-comment
 's- 'd:create d:set-stack-comment
 'q- 'd:for-each d:set-stack-comment
 'd-a 'd:hash d:set-stack-comment
+'-a 'd:HashFunction d:set-stack-comment
 '-d 'd:last d:set-stack-comment
 '-a 'd:last.class d:set-stack-comment
 '-s 'd:last.name d:set-stack-comment
@@ -252,6 +252,7 @@ Add the stack comments for existing words:
 'a-d 'd:lookup-xt d:set-stack-comment
 'd-s 'd:name d:set-stack-comment
 '- 'd:rehash d:set-stack-comment
+'-a 'd:RehashFunction d:set-stack-comment
 'ss- 'd:set-source d:set-stack-comment
 'd-a 'd:source d:set-stack-comment
 '- 'd:use-hashes d:set-stack-comment

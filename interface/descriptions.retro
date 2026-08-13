@@ -243,12 +243,12 @@ drop
 'Write_a_value_to_register_number_`n`_on_the_current_core. 'core:write/reg d:set-description
 'Bind_a_value_to_a_function_and_return_a_new_quote_that_calls_the_bound_action. 'curry d:set-description
 'Inline_a_numeric_value_to_the_current_assembly_segment. 'd d:set-description
-'Variable._Holds_a_pointer_tho_the_function_for_calculating_dictionary_hashes. 'd:Hash-Function d:set-description
 'Vectored._Create_a_header._Provide_a_string_(s)_for_the_name,_a_pointer_to_the_class_handler_(a1)_and_a_pointer_to_the_word_definition_(a2)_Generally_this_won't_be_used_directly. 'd:add-header d:set-description
 'Given_a_dictionary_header,_return_the_class_field. 'd:class d:set-description
 'Hook._Create_a_new_dictionary_header_named_the_specified_string._The_new_header_will_point_to_`here`_and_have_a_class_of_`class:data`. 'd:create d:set-description
 'Execute_the_specified_quote_once_for_each_header_in_the_dictionary._Before_running_the_quote,_this_also_pushes_a_pointer_to_the_header_onto_the_stack. 'd:for-each d:set-description
 'Given_a_dictionary_header,_return_the_hash_field. 'd:hash d:set-description
+'Variable._Holds_a_pointer_to_the_function_used_to_calculate_dictionary_hashes. 'd:HashFunction d:set-description
 'Return_the_most_recent_dictionary_header. 'd:last d:set-description
 'Return_a_pointer_to_the_class_field_of_the_most_recent_dictionary_header. 'd:last.class d:set-description
 'Return_a_pointer_to_the_name_field_of_the_most_recent_dictionary_header. 'd:last.name d:set-description
@@ -258,6 +258,7 @@ drop
 'Lookup_the_specified_address_in_the_dictionary_and_return_a_pointer_to_its_dictionary_header._This_returns_zero_if_the_word_is_not_found. 'd:lookup-xt d:set-description
 'Given_a_dictionary_header,_return_the_name_field. 'd:name d:set-description
 'Update_the_hashes_for_all_visible_words_in_the_dictionary. 'd:rehash d:set-description
+'Variable._Holds_a_pointer_to_the_function_invoked_after_a_dictionary_header_is_added. 'd:RehashFunction d:set-description
 'Set_the_`d:source`_field_of_the_header_for_the_named_word_(s2)_to_string_(s1)._The_string_will_not_be_duplicated. 'd:set-source d:set-description
 'Given_a_dictionary_header,_return_the_source_field. 'd:source d:set-description
 'Change_dictionary_search_to_use_hashed_name_comparions. 'd:use-hashes d:set-description
@@ -684,4 +685,3 @@ Additional
 'Given_a_dictionary_pointer,_return_address_of_the_description_field 'd:descr d:set-description
 'Return_a_string_representation_for_a_number,_with_digits_in_reverse_order 'n:to-string/reversed d:set-description
 ~~~
-

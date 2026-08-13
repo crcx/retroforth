@@ -227,7 +227,8 @@ core:start	an-	-	-	Set the IP of core `n` to address `a` and begin processing on
 core:write/reg	vn-	-	-	Write a value to register number `n` on the current core.			class:word	{n/a}	{n/a}	core	rre	
 curry	nq-q	-	-	Bind a value to a function and return a new quote that calls the bound action.			class:word	{n/a}	{n/a}	global	all	
 d	n-	-	-	Inline a numeric value to the current assembly segment.			class:word	{n/a}	{n/a}	global	all	
-d:Hash-Function	-	-	-	Variable. Holds a pointer to the function for calculating dictionary hashes.			class:data	{n/a}	{n/a}	d	all	
+d:HashFunction	-a	-	-	Variable. Holds a pointer to the function used to calculate dictionary hashes.			class:data	{n/a}	{n/a}	d	all	
+d:RehashFunction	-a	-	-	Variable. Holds a pointer to the function invoked after a dictionary header is added.			class:data	{n/a}	{n/a}	d	all	
 d:add-header	saa-	-	-	Vectored. Create a header. Provide a string (s) for the name, a pointer to the class handler (a1) and a pointer to the word definition (a2) Generally this won't be used directly.			class:word	{n/a}	{n/a}	d	all	
 d:astack	d-a	-	-	Given a dictionary pointer, return address of the address stack field			class:word	{n/a}	{n/a}	d	all	
 d:class	d-a	-	-	Given a dictionary header, return the class field.			class:word	{n/a}	{n/a}	d	all	

@@ -2619,13 +2619,24 @@ Inline a numeric value to the current assembly segment.
 Class: class:word | Namespace: global | Interface Layer: all
 ------------------------------------------------------------------------
 
-d:Hash-Function
+d:HashFunction
 
-  Data:  -
+  Data:  -a
   Addr:  -
   Float: -
 
-Variable. Holds a pointer to the function for calculating dictionary hashes.
+Variable. Holds a pointer to the function used to calculate dictionary hashes.
+
+Class: class:data | Namespace: d | Interface Layer: all
+------------------------------------------------------------------------
+
+d:RehashFunction
+
+  Data:  -a
+  Addr:  -
+  Float: -
+
+Variable. Holds a pointer to the function invoked after a dictionary header is added.
 
 Class: class:data | Namespace: d | Interface Layer: all
 ------------------------------------------------------------------------

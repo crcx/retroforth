@@ -1950,12 +1950,12 @@ the constraints will be met. So we'll be bootstrapping using
 the names, and patching in the hashes later.
 
 ~~~
-&s:hash 'd:Hash-Function var-n
+&s:hash !d:HashFunction
 
 :d:rehash (-)
-  [ [ d:name @d:Hash-Function call ] sip d:hash store ] d:for-each ;
+  [ [ d:name @d:HashFunction call ] sip d:hash store ] d:for-each ;
 
-&d:rehash #10 store
+&d:rehash !d:RehashFunction
 ~~~
 
 ## The End
