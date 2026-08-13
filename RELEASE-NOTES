@@ -37,6 +37,7 @@
 
   - use new D directive to build initial dictionary
   - fill in missing `d:source` data
+  - reduce use of magic numbers
 
 - library
 

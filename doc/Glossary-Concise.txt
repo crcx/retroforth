@@ -1237,9 +1237,6 @@ Run quotation in an endless loop.
 gc                        D: a-  A: -  F: -
 Save value of `Heap`, run the function provided, then restore `Heap`.
 
-gopher:get                D: asns-n  A: -  F: -
-Takes an address, a server, a port, and a selector. Fetch the resource and store it at address. Return the number of bytes received.
-
 gt?                       D: nn-f  A: -  F: -
 Compare n1 and n2. Return `TRUE` if n1 is greater than n2, or `FALSE` otherwise.
 

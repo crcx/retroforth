@@ -2,7 +2,7 @@
 
 ~~~
 {{
-  :mem:invoke #15 io:scan-for io:invoke ;
+  :mem:invoke DEVICE:MALLOC io:scan-for io:invoke ;
 
   #0 'ALLOC  const
   #1 'FREE   const

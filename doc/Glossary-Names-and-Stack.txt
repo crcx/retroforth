@@ -411,7 +411,6 @@ fll:to-index              D: pn-p  A: -  F: -
 float:operation           D: ...n-  A: -  F: -
 forever                   D: q-  A: -  F: -
 gc                        D: a-  A: -  F: -
-gopher:get                D: asns-n  A: -  F: -
 gt?                       D: nn-f  A: -  F: -
 gteq?                     D: nn-f  A: -  F: -
 h:fetch                   D: a-n  A: -  F: -

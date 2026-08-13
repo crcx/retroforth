@@ -411,7 +411,6 @@ fll:to-index	pn-p	-	-	Given a node number, return a pointer to the cons cell in 
 float:operation	...n-	-	-	Trigger a floating-point operation. This is not intended to be used directly.			class:word	{n/a}	{n/a}	float	rre	
 forever	q-	-	-	Run quotation in an endless loop.			class:word	{n/a}	{n/a}	a	all	
 gc	a-	-	-	Save value of `Heap`, run the function provided, then restore `Heap`.			class:word	{n/a}	{n/a}	global	all	
-gopher:get	asns-n	-	-	Takes an address, a server, a port, and a selector. Fetch the resource and store it at address. Return the number of bytes received.			class:word	    here 'forthworks.com #70 '/ gopher:get\n    here s:put	{n/a}	gopher	ios	
 gt?	nn-f	-	-	Compare n1 and n2. Return `TRUE` if n1 is greater than n2, or `FALSE` otherwise.			class:primitive	{n/a}	{n/a}	global	all	
 gteq?	nn-f	-	-	Compare n1 and n2. Return `TRUE` if n1 is greater than or equal to n2, or `FALSE` otherwise.			class:word	{n/a}	{n/a}	global	all	
 h:fetch	a-n	-	-	Fetch the 16-bit value stored at the specified address. Addressing for this is in 8-bit units.			class:word	{n/a)	{n/a}	global	all	

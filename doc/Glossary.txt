@@ -4718,23 +4718,6 @@ Save value of `Heap`, run the function provided, then restore `Heap`.
 Class: class:word | Namespace: global | Interface Layer: all
 ------------------------------------------------------------------------
 
-gopher:get
-
-  Data:  asns-n
-  Addr:  -
-  Float: -
-
-Takes an address, a server, a port, and a selector. Fetch the resource and store it at address. Return the number of bytes received.
-
-Class: class:word | Namespace: gopher | Interface Layer: ios
-
-Example #1:
-
-    here 'forthworks.com #70 '/ gopher:get
-    here s:put
-
-------------------------------------------------------------------------
-
 gt?
 
   Data:  nn-f

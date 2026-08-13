@@ -410,7 +410,6 @@ drop
 'Trigger_a_floating-point_operation._This_is_not_intended_to_be_used_directly. 'float:operation d:set-description
 'Run_quotation_in_an_endless_loop. 'forever d:set-description
 'Save_value_of_`Heap`,_run_the_function_provided,_then_restore_`Heap`. 'gc d:set-description
-'Takes_an_address,_a_server,_a_port,_and_a_selector._Fetch_the_resource_and_store_it_at_address._Return_the_number_of_bytes_received. 'gopher:get d:set-description
 'Compare_n1_and_n2._Return_`TRUE`_if_n1_is_greater_than_n2,_or_`FALSE`_otherwise. 'gt? d:set-description
 'Compare_n1_and_n2._Return_`TRUE`_if_n1_is_greater_than_or_equal_to_n2,_or_`FALSE`_otherwise. 'gteq? d:set-description
 'Fetch_the_16-bit_value_stored_at_the_specified_address._Addressing_for_this_is_in_8-bit_units. 'h:fetch d:set-description
