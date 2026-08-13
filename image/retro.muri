@@ -1672,6 +1672,8 @@ D d:stack d:stack class:word
 D d:astack d:astack class:word
 D d:fstack d:fstack class:word
 D d:descr d:descr class:word
+D HashFunction HashFunction class:data
+D RehashFunction RehashFunction class:data
 
 : 9999
 

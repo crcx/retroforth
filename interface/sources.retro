@@ -22,6 +22,8 @@ drop
 
 ~~~
 'retro.muri s:dedup
+dup 'RehashFunction d:set-source
+dup 'HashFunction d:set-source
 dup 'err:notfound d:set-source
 dup 'd:descr d:set-source
 dup 'd:fstack d:set-source
