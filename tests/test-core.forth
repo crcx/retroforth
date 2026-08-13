@@ -2000,6 +2000,8 @@ passed
 
 ~~~
 's:temp Testing
+  [ STRINGS ] [ EOM @TempStrings @TempStringMax STRING-TERMINATOR-CELLS + * - eq? ] try
+  [ s:empty s:length ] [ #0 eq? ] try
 passed
 ~~~
 

@@ -5,8 +5,9 @@ comment format this introduces to add them inline.
 
 ~~~
 {{
+  #2 'STACK-COMMENT-STRING-OFFSET const
   :save (s-)
-     n:inc s:chop here swap s:keep |drop #2 + d:last.name #4 - store ;
+     n:inc s:chop here swap s:keep |drop STACK-COMMENT-STRING-OFFSET + d:last d:stack store ;
   :stack-comment? (s-sf) dup #0 s:fetch $: eq? ;
 ---reveal---
   :sigil:( stack-comment? &save &drop choose ; immediate

@@ -1,5 +1,7 @@
 ~~~
-[ &d:add-header #2 + call
+#2 'KERNEL:D:ADD-HEADER-BODY-OFFSET const
+
+[ &d:add-header KERNEL:D:ADD-HEADER-BODY-OFFSET + call
   d:last d:name @d:HashFunction call d:last d:hash store
 ] &d:add-header set-hook
 

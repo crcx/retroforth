@@ -34,7 +34,7 @@ null terminated. The `as` strings are length-prefixed instead.)
 :as:temp a:dup ;
 
 :as:trim-right (s-s)
-  as:temp [ dup v:dec [ as:last #32 lteq? ] sip swap ] while
+  as:temp [ dup v:dec [ as:last ASCII:SPACE lteq? ] sip swap ] while
   dup v:inc ;
 
 {{
@@ -46,9 +46,9 @@ null terminated. The `as` strings are length-prefixed instead.)
   :patch    over store ;
 ---reveal---
   :as:trim-left (s-s)
-    as:dup dup #0 as:fetch #32 eq?
+    as:dup dup #0 as:fetch ASCII:SPACE eq?
     [ dup !Start find-end
-      [ fetch-next #32 -eq? over @End -eq? and ] while
+      [ fetch-next ASCII:SPACE -eq? over @End -eq? and ] while
       new-size patch ] if ;
 }}
 

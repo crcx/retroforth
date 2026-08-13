@@ -1,5 +1,9 @@
+`HOME` reserves 4096 cells for a null-terminated path, so the maximum path
+length is 4095 characters.
+
 ~~~
-:HOME (:-s) here #4096 + ;
+#4096 'LIBRARY:HOME-BUFFER-CAPACITY const
+:HOME (:-s) here LIBRARY:HOME-BUFFER-CAPACITY + ;
 
 '%s/.config/retroforth/library/%s.retro 'library:.CONFIG s:const (:-s)
 './library/%s.retro 'library:CWD s:const (:-s)

@@ -117,8 +117,8 @@ memory, so the specific addresses will vary.
     | 1025 - 1535     | token input buffer           |
     | 1536 +          | start of heap space          |
     | ............... | free memory for your use     |
-    | 506879          | buffer for string evaluate   |
-    | 507904          | temporary strings (32 * 512) |
+    | 506847          | buffer for string evaluate   |
+    | 507871          | temporary strings (32 * 513) |
     | 524287          | end of memory                |
 
 I provide a word, `EOM`, which returns the last addressable
@@ -838,12 +838,18 @@ overflow).
 
 Temporary strings are allocated in a circular pool (`STRINGS`).
 This space can be altered as needed by adjusting these
-variables.
+variables. Each string reserves one additional cell for its
+null terminator.
 
 ~~~
-:TempStrings ;   data  #32 !TempStrings
-:TempStringMax ; data #512 !TempStringMax
-:STRINGS   EOM @TempStrings @TempStringMax * - ;
+:TEMP-STRING-DEFAULT-COUNT    (-n) #32 ;
+:TEMP-STRING-DEFAULT-CAPACITY (-n) #512 ;
+:STRING-TERMINATOR-CELLS      (-n) #1 ;
+:CURRENT-LINE-STRING-COUNT    (-n) #2 ;
+
+:TempStrings ;   data TEMP-STRING-DEFAULT-COUNT !TempStrings
+:TempStringMax ; data TEMP-STRING-DEFAULT-CAPACITY !TempStringMax
+:STRINGS   EOM @TempStrings @TempStringMax STRING-TERMINATOR-CELLS + * - ;
 
 :s:oversize? (s-f)
   s:length @TempStringMax n:dec gt? ;
@@ -854,7 +860,7 @@ variables.
 {{
   :Current `0 ; data
 
-  :s:pointer (-p)  @Current @TempStringMax * STRINGS + ;
+  :s:pointer (-p)  @Current @TempStringMax STRING-TERMINATOR-CELLS + * STRINGS + ;
   :s:next    (-)
     &Current v:inc
     @Current @TempStrings eq? [ #0 !Current ] if ;
@@ -996,7 +1002,10 @@ pretty simple and works well for my needs. This was based
 on an implementation at http://www.cse.yorku.ca/~oz/hash.html
 
 ~~~
-:s:hash (s-n) #5381 swap [ \swlimuad `33 ] s:for-each ;
+#5381 'HASH:DJB2-SEED const
+#33   'HASH:DJB2-MULTIPLIER const
+
+:s:hash (s-n) HASH:DJB2-SEED swap [ swap HASH:DJB2-MULTIPLIER * + ] s:for-each ;
 ~~~
 
 `s:contains/string?` returns a flag indicating whether or not
@@ -1273,12 +1282,17 @@ returns an array containing pointers to each of them.
 ~~~
 
 `s:tokenize-on-string` is like `s:tokenize`, but for strings.
+The delimiter/source buffer includes its terminating NUL and accepts up to
+127 characters. The result array reserves one cell for its count, so it can
+hold at most 127 token pointers.
 
 ~~~
 {{
-  'Needle d:create #128 allot
+  #128 'TOKENIZE-STRING-CAPACITY const
+  #128 'TOKENIZE-RESULT-CAPACITY const
+  'Needle d:create TOKENIZE-STRING-CAPACITY allot
   'Len var
-  'Tokens d:create #128 allot
+  'Tokens d:create TOKENIZE-RESULT-CAPACITY allot
   'TP var
   :save s:keep @TP &Tokens + n:inc store &TP v:inc ;
   :next [ @Len + ] sip ;
@@ -1292,9 +1306,13 @@ returns an array containing pointers to each of them.
 }}
 ~~~
 
+The number conversion buffer has 66 cells: 64 binary digits, an optional
+sign, and the terminating NUL.
+
 ~~~
 {{
-  'String d:create   #66 allot
+  #66 'NUMBER-STRING-CAPACITY const
+  'String d:create NUMBER-STRING-CAPACITY allot
   :check-sign (n-)   n:negative? [ $- buffer:add ] if ;
   :n->digit   (n-c)  s:DIGITS + fetch ;
   :convert    (n-)   [ @Base /mod swap n->digit buffer:add dup n:zero? ] until drop ;
@@ -1620,15 +1638,21 @@ and return a new value.
 ~~~
 
 ~~~
-:FREE (-n) STRINGS #1025 - #513 #12 * - here - ;
+#12 'TEMP-ARRAY-COUNT const
+
+:FREE (-n)
+  STRINGS
+  @TempStringMax STRING-TERMINATOR-CELLS + CURRENT-LINE-STRING-COUNT * STRING-TERMINATOR-CELLS -
+  @TempStringMax STRING-TERMINATOR-CELLS + TEMP-ARRAY-COUNT *
+  - - here - ;
 
 {{
   'NextArray var
   :arrays FREE here + ;
 ---reveal---
-  :a:temp (a-a) @NextArray dup #12 eq? [ drop #0 dup !NextArray ] if
-                #513 * arrays + over a:length n:inc copy
-                @NextArray #513 * arrays +
+  :a:temp (a-a) @NextArray dup TEMP-ARRAY-COUNT eq? [ drop #0 dup !NextArray ] if
+                @TempStringMax STRING-TERMINATOR-CELLS + * arrays + over a:length n:inc copy
+                @NextArray @TempStringMax STRING-TERMINATOR-CELLS + * arrays +
                 &NextArray v:inc ;
 }}
 
@@ -1683,7 +1707,7 @@ I'm defining a new `a:make` which wraps these.
 For comparing arrays, use `a:eq?` or `a:-eq?`.
 
 ~~~
-:a:hash (a-n) #5381 swap [ swap #33 * + ] a:for-each ;
+:a:hash (a-n) HASH:DJB2-SEED swap [ swap HASH:DJB2-MULTIPLIER * + ] a:for-each ;
 :a:eq? (aa-f) a:hash swap a:hash eq? ;
 :a:-eq? (aa-f) a:hash swap a:hash -eq? ;
 ~~~
@@ -1735,7 +1759,9 @@ I allocate this immediately prior to the temporary string
 buffers.
 
 ~~~
-  :current-line (-a) STRINGS #1025 - ;
+  :current-line (-a)
+    STRINGS @TempStringMax STRING-TERMINATOR-CELLS +
+    CURRENT-LINE-STRING-COUNT * STRING-TERMINATOR-CELLS - ;
 ~~~
 
 To make use of this, we need to know how many tokens are in the
@@ -1791,8 +1817,9 @@ of `Index` if you need more than this.
 
 ~~~
 {{
+  #32 'INDEXED-LOOP-MAXIMUM-DEPTH const
   'LP var
-  'Index d:create #32 allot
+  'Index d:create INDEXED-LOOP-MAXIMUM-DEPTH allot
   :next (-) @LP &Index + v:inc ;
   :prep (-) &LP v:inc #0 @LP &Index + store ;
   :done (-) &LP v:dec ;
