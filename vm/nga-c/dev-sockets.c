@@ -24,13 +24,16 @@
   BSD Sockets
   ---------------------------------------------------------------------*/
 
-int SocketID[16];
-struct sockaddr_in Sockets[16];
+#define SOCKET_SLOTS 16
+
+int SocketID[SOCKET_SLOTS];
+int SocketUsed[SOCKET_SLOTS];
+struct sockaddr_in Sockets[SOCKET_SLOTS];
 
 struct addrinfo hints, *res;
 
 int socket_get_handle(NgaState *vm, CELL socket, int *handle) {
-  if (socket < 0 || socket >= 16 || SocketID[socket] == 0) {
+  if (socket < 0 || socket >= SOCKET_SLOTS || !SocketUsed[socket]) {
     printf("\nERROR (nga/sockets): Invalid socket handle %lld\n", (long long)socket);
     ACTIVE.ip = IMAGE_SIZE;
     ACTIVE.rp = 0;
@@ -64,13 +67,17 @@ V socket_get_host(NgaState *vm) {
 V socket_create(NgaState *vm) {
   int i;
   int sock = socket(PF_INET, SOCK_STREAM, 0);
-  for (i = 0; i < 16; i++) {
-    if (SocketID[i] == 0 && sock != 0) {
+  for (i = 0; i < SOCKET_SLOTS; i++) {
+    if (!SocketUsed[i] && sock >= 0) {
       SocketID[i] = sock;
+      SocketUsed[i] = 1;
       stack_push(vm, (CELL)i);
-      sock = 0;
+      return;
     }
   }
+  if (sock >= 0)
+    close(sock);
+  stack_push(vm, -1);
 }
 
 V socket_bind(NgaState *vm) {
@@ -108,13 +115,20 @@ V socket_accept(NgaState *vm) {
   if (!socket_get_handle(vm, sock, &handle)) return;
   int new_fd = accept(handle, (struct sockaddr *)&their_addr, &addr_size);
 
-  for (i = 0; i < 16; i++) {
-    if (SocketID[i] == 0 && new_fd != 0) {
+  for (i = 0; i < SOCKET_SLOTS; i++) {
+    if (!SocketUsed[i] && new_fd >= 0) {
       SocketID[i] = new_fd;
+      SocketUsed[i] = 1;
       stack_push(vm, (CELL)i);
-      new_fd = 0;
+      stack_push(vm, errno);
+      return;
     }
   }
+  if (new_fd >= 0) {
+    close(new_fd);
+    errno = EMFILE;
+  }
+  stack_push(vm, -1);
   stack_push(vm, errno);
 }
 
@@ -160,7 +174,7 @@ V socket_close(NgaState *vm) {
   CELL sock = stack_pop(vm);
   if (!socket_get_handle(vm, sock, &handle)) return;
   close(handle);
-  SocketID[sock] = 0;
+  SocketUsed[sock] = 0;
 }
 
 Handler SocketActions[] = {

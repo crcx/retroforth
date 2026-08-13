@@ -1763,7 +1763,7 @@ sip                       D: nq(?n-?)-n  A: -  F: -
 Run quote. After execution completes, put a copy of n back on top of the stack.
 
 socket:accept             D: n-nn  A: -  F: -
-Begin accepting connections. Returns a new socket and an error code.
+Begin accepting connections. Returns a new socket (or -1 on failure) and an error code.
 
 socket:bind               D: sn-nn  A: -  F: -
 Bind a socket to a port. The port should be a string. Returns 0 if successful or -1 otherwise and an error code.
@@ -1778,7 +1778,7 @@ socket:connect            D: n-nn  A: -  F: -
 Connect to a server. Provide a socket, this will return a status flag and an error code.
 
 socket:create             D: -n  A: -  F: -
-Obtain a new socket.
+Obtain a new socket, or -1 on failure.
 
 socket:gethostbyname      D: as-  A: -  F: -
 Get the host IP in dotted notation. The host is specified by the string and the address is the start of the buffer for the dotted IP.

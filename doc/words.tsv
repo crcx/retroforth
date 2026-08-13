@@ -586,12 +586,12 @@ sigil:^	s-	-	-	Process token as a function reference.	Discard the string.	Comma 
 sigil:`	s-	-	-	Process token as a bytecode.	Discard the string.	Convert the string to a number and use `,` to inline it into the current definition.	class:macro	{n/a}	{n/a}	sigil	all	
 sigil:|	s-	-	-	POSTPONE equivalent.	Discard the string.	Convert the string to a number and use `,` to inline it into the current definition.	class:macro	{n/a}	{n/a}	sigil	all	
 sip	nq(?n-?)-n	-	-	Run quote. After execution completes, put a copy of n back on top of the stack.			class:word	{n/a}	{n/a}	global	all	
-socket:accept	n-nn	-	-	Begin accepting connections. Returns a new socket and an error code.			class:word	{n/a}	{n/a}	socket	rre	
+socket:accept	n-nn	-	-	Begin accepting connections. Returns a new socket (or -1 on failure) and an error code.			class:word	{n/a}	{n/a}	socket	rre	
 socket:bind	sn-nn	-	-	Bind a socket to a port. The port should be a string. Returns 0 if successful or -1 otherwise and an error code.			class:word	{n/a}	{n/a}	socket	rre	
 socket:close	n-	-	-	Close a socket.			class:word	{n/a}	{n/a}	socket	rre	
 socket:configure	ss-	-	-	Configure internal settings for a host (s1) and port (s2). Use before `socket:bind`.			class:word	{n/a}	{n/a}	socket	rre	
 socket:connect	n-nn	-	-	Connect to a server. Provide a socket, this will return a status flag and an error code.			class:word	{n/a}	{n/a}	socket	rre	
-socket:create	-n	-	-	Obtain a new socket.			class:word	{n/a}	{n/a}	socket	rre	
+socket:create	-n	-	-	Obtain a new socket, or -1 on failure.			class:word	{n/a}	{n/a}	socket	rre	
 socket:gethostbyname	as-	-	-	Get the host IP in dotted notation. The host is specified by the string and the address is the start of the buffer for the dotted IP.			class:word	{n/a}	{n/a}	socket	rre	
 socket:listen	nn-nn	-	-	Prepare a socket for accepting incoming connections. Takes a backlog count (n1) and a socket (n2). Returns a flag (0 success, -1 failed) and an error code.			class:word	{n/a}	{n/a}	socket	rre	
 socket:operation	...n-	-	-	Trigger a socket operation. This is not intended to be used directly.			class:word	{n/a}	{n/a}	socket	rre	

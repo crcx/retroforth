@@ -83,6 +83,8 @@
       (uint8_t *)&opcode, which depends on host byte order
     - terminal setup ignores tcgetattr, tcsetattr, and ioctl
       failures
+    - sockets creation could return an ambiguos handle
+    - sockets failures were not detected correctly
   - evaluate() truncates by writing into the caller's buffer.
     Use a local TIB-sized buffer instead.
 

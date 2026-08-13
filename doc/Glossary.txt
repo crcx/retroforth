@@ -6852,7 +6852,7 @@ socket:accept
   Addr:  -
   Float: -
 
-Begin accepting connections. Returns a new socket and an error code.
+Begin accepting connections. Returns a new socket (or -1 on failure) and an error code.
 
 Class: class:word | Namespace: socket | Interface Layer: rre
 ------------------------------------------------------------------------
@@ -6907,7 +6907,7 @@ socket:create
   Addr:  -
   Float: -
 
-Obtain a new socket.
+Obtain a new socket, or -1 on failure.
 
 Class: class:word | Namespace: socket | Interface Layer: rre
 ------------------------------------------------------------------------
