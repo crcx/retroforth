@@ -21,48 +21,38 @@ followed by a title. `dialog:read`, `dialog:password`, and
 entered line.
 
 ~~~
-#0 'dialog:Width  var-n
-#0 'dialog:Height var-n
-#0 'dialog:Row    var-n
-#0 'dialog:Col    var-n
+{{
+  #0 'Width  var-n
+  #0 'Height var-n
+  #0 'Row    var-n
+  #0 'Col    var-n
 
-#52 'DIALOG:WIDTH const
+  #52 'DIALOG:WIDTH const
 
-:dialog:configure (:nn-)
-  !dialog:Width !dialog:Height ;
+  :setup (:-)
+    @Height #2 &n:div call #2 n:sub !Row
+    @Width DIALOG:WIDTH n:sub #2 &n:div call !Col ;
 
-:dialog:setup (:-)
-  @dialog:Height #2 &n:div call #2 n:sub !dialog:Row
-  @dialog:Width DIALOG:WIDTH n:sub #2 &n:div call !dialog:Col ;
+  :bar (:-)
+    $+ c:put DIALOG:WIDTH #2 n:sub [ $- c:put ] times $+ c:put ;
 
-:dialog:bar (:-)
-  $+ c:put DIALOG:WIDTH #2 n:sub [ $- c:put ] times $+ c:put ;
+  :line (n-)
+    @Row n:add @Col vt:row,col
+    $| c:put DIALOG:WIDTH #2 n:sub &sp times $| c:put ;
 
-:dialog:line (:n-)
-  @dialog:Row n:add @dialog:Col vt:row,col
-  $| c:put DIALOG:WIDTH #2 n:sub [ sp ] times $| c:put ;
+  :draw (:-)
+    setup
+    fg:cyan @Row @Col vt:row,col bar
+    #1 line #2 line #3 line
+    @Row #4 n:add @Col vt:row,col bar
+    vt:reset ;
 
-:dialog:draw (:-)
-  dialog:setup
-  fg:cyan @dialog:Row @dialog:Col vt:row,col dialog:bar
-  #1 dialog:line #2 dialog:line #3 dialog:line
-  @dialog:Row #4 n:add @dialog:Col vt:row,col dialog:bar
-  vt:reset ;
+  :title (s-)
+    fg:red @Row #1 n:add @Col #2 n:add vt:row,col s:put ;
 
-:dialog:title (:s-)
-  fg:red @dialog:Row #1 n:add @dialog:Col #2 n:add vt:row,col s:put ;
-
-:dialog:text (:s-)
-  fg:yellow @dialog:Row #2 n:add @dialog:Col #2 n:add vt:row,col
-  DIALOG:WIDTH #4 n:sub s:left s:put ;
-
-:dialog:show (:ss-)
-  dialog:draw dialog:title dialog:text
-  fg:cyan @dialog:Row #3 n:add @dialog:Col #2 n:add vt:row,col
-  'Press_any_key s:put vt:reset c:get drop ;
-
-:dialog:error (:ss-) dialog:show ;
-:dialog:help  (:ss-) dialog:show ;
+  :text (s-)
+    fg:yellow @Row #2 n:add @Col #2 n:add vt:row,col
+    DIALOG:WIDTH #4 n:sub s:left s:put ;
 ~~~
 
 # Single-Line Input
@@ -74,64 +64,77 @@ character. Both readers accept CR or LF as the end of input, and
 support backspace and delete.
 
 ~~~
-#0 'dialog:Password var-n
-#0 'dialog:MaskCount var-n
-#0 'dialog:MaskWidth var-n
-#0 'dialog:InputChar var-n
-'dialog:MaskWidths d:create #512 allot
+  #0 'Password var-n
+  #0 'MaskCount var-n
+  #0 'MaskWidth var-n
+  #0 'InputChar var-n
+  'MaskWidths d:create #512 allot
 
-:dialog:done? (c-f)
-  [ ASCII:CR eq? ] [ ASCII:LF eq? ] bi or ;
+  :done? (c-f)
+    [ ASCII:CR eq? ] [ ASCII:LF eq? ] bi or ;
 
-:dialog:backspace? (c-cf)
-  dup [ ASCII:BS eq? ] [ ASCII:DEL eq? ] bi or ;
+  :backspace? (c-cf)
+    dup [ ASCII:BS eq? ] [ ASCII:DEL eq? ] bi or ;
 
-:dialog:erase-width (n-)
-  [ #1 vt:left sp #1 vt:left ] times ;
+  :erase-width (n-)
+    [ #1 vt:left sp #1 vt:left ] times ;
 
-:dialog:erase (:-)
-  buffer:size #2 gteq?
-  [ @dialog:Password
-    [ &dialog:MaskCount v:dec
-      &dialog:MaskWidths @dialog:MaskCount a:fetch dialog:erase-width ]
-    [ #1 dialog:erase-width ] choose ] if ;
+  :erase (:-)
+    buffer:size #2 gteq?
+    [ @Password
+      [ &MaskCount v:dec
+        &MaskWidths @MaskCount a:fetch erase-width ]
+      [ #1 erase-width ] choose ] if ;
 
-:dialog:mask-width (:-n)
-  n:random #2 n:mod ;
+  :mask-width (:-n)
+    n:random #2 n:mod ;
 
-:dialog:mask (:-)
-  dialog:mask-width #1 n:add !dialog:MaskWidth
-  @dialog:MaskWidth &dialog:MaskWidths @dialog:MaskCount a:store
-  &dialog:MaskCount v:inc
-  @dialog:MaskWidth [ $* c:put ] times ;
+  :mask (:-)
+    mask-width #1 n:add !MaskWidth
+    @MaskWidth &MaskWidths @MaskCount a:store
+    &MaskCount v:inc
+    @MaskWidth [ $* c:put ] times ;
 
-:dialog:echo (c-)
-  !dialog:InputChar
-  @dialog:InputChar dialog:backspace? nip
-  [ dialog:erase ]
-  [ @dialog:InputChar dialog:done? [ ]
-    [ @dialog:Password [ dialog:mask ] [ @dialog:InputChar c:put ] choose ] choose ] choose ;
+  :echo (c-)
+    !InputChar
+    @InputChar backspace? nip
+    &erase
+    [ @InputChar done? [ ]
+      [ @Password &mask [ @InputChar c:put ] choose ] choose ] choose ;
 
-:dialog:check-bs (c-)
-  dialog:backspace? nip [ buffer:size #2 gteq?
-    [ buffer:get drop ] if buffer:get drop ] if ;
+  :check-bs (c-)
+    backspace? nip [ buffer:size #2 gteq?
+      [ buffer:get drop ] if buffer:get drop ] if ;
 
-:dialog:input (:ss-s)
-  dialog:draw dialog:title dialog:text
-  [ #0 !dialog:MaskCount s:empty buffer:set
-    [ c:get !dialog:InputChar
-      @dialog:InputChar buffer:add
-      @dialog:InputChar dialog:echo
-      @dialog:InputChar dialog:check-bs
-      @dialog:InputChar dialog:done? ] until
-    buffer:start s:chop ] buffer:preserve
-  vt:reset ;
+  :input (ss-s)
+    draw title text
+    [ #0 !MaskCount s:empty buffer:set
+      [ c:get !InputChar
+        @InputChar buffer:add
+        @InputChar echo
+        @InputChar check-bs
+        @InputChar done? ] until
+      buffer:start s:chop ] buffer:preserve
+    vt:reset ;
 
-:dialog:read (:ss-s)
-  #0 !dialog:Password dialog:input ;
+---reveal---
+  :dialog:configure (:nn-)
+    !Width !Height ;
 
-:dialog:password (:ss-s)
-  #-1 !dialog:Password dialog:input ;
+  :dialog:show (:ss-)
+    draw title text
+    fg:cyan @Row #3 n:add @Col #2 n:add vt:row,col
+    'Press_any_key s:put vt:reset c:get drop ;
 
-:dialog:prompt (:ss-s) dialog:read ;
+  :dialog:error (:ss-) dialog:show ;
+  :dialog:help  (:ss-) dialog:show ;
+
+  :dialog:read (:ss-s)
+    #0 !Password input ;
+
+  :dialog:password (:ss-s)
+    #-1 !Password input ;
+
+  :dialog:prompt (:ss-s) dialog:read ;
+}}
 ~~~
