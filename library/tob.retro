@@ -34,196 +34,206 @@ them for an 80x25 display.
 ~~~
 
 ~~~
-'TOB d:create TOB:W TOB:H n:mul #4 n:mul allot
-'TOB:Dirty d:create TOB:H allot
+{{
+  'TOB d:create TOB:W TOB:H n:mul #4 n:mul allot
+  'TOB:Dirty d:create TOB:H allot
 
-'TX var (col)
-'TY var (row)
-'TOB:Cell  var
-'TOB:Style var
-'TOB:FG    var
-'TOB:BG    var
+  'TX var (col)
+  'TY var (row)
+  'TOB:Cell  var
+  'TOB:Style var
+  'TOB:FG    var
+  'TOB:BG    var
 
-'TOB:DisplayStyle var
-'TOB:DisplayFG    var
-'TOB:DisplayBG    var
+  'TOB:DisplayStyle var
+  'TOB:DisplayFG    var
+  'TOB:DisplayBG    var
 
-'TOB:Parser     var
-'TOB:Parameter  var
-'TOB:HaveParam  var
-'TOB:ParamCount var
-'TOB:Params d:create #8 allot
+  'TOB:Parser     var
+  'TOB:Parameter  var
+  'TOB:HaveParam  var
+  'TOB:ParamCount var
+  'TOB:Params d:create #8 allot
 
-:cell (xy-a) TOB:W n:mul n:add #4 n:mul &TOB n:add ;
-:dirty (n-a) &TOB:Dirty n:add ;
-:dirty:on (n-) #-1 swap dirty store ;
-:dirty:all (:-) TOB:H [ I dirty:on ] indexed-times ;
-:tob:refresh (:-) dirty:all ;
+  :cell (xy-a) TOB:W n:mul n:add #4 n:mul &TOB n:add ;
+  :dirty (n-a) &TOB:Dirty n:add ;
+  :dirty:on (n-) #-1 swap dirty store ;
+  :dirty:all (:-) TOB:H [ I dirty:on ] indexed-times ;
 
-:blank-cell (a-)
-  #32 over store
-  #0  over n:inc store
-  #39 over #2 n:add store
-  #49 swap #3 n:add store ;
+  :blank-cell (a-)
+    #32 over store
+    #0  over n:inc store
+    #39 over #2 n:add store
+    #49 swap #3 n:add store ;
 
-:clear-row (n-)
-  TOB:W n:mul #4 n:mul &TOB n:add
-  TOB:W [ dup blank-cell #4 n:add ] times drop ;
+  :clear-row (n-)
+    TOB:W n:mul #4 n:mul &TOB n:add
+    TOB:W [ dup blank-cell #4 n:add ] times drop ;
 
-:tob:erase (:-) TOB:H [ I clear-row I dirty:on ] indexed-times ;
+  :erase (:-) TOB:H [ I clear-row I dirty:on ] indexed-times ;
 
-:scroll (source) &TOB TOB:W #4 n:mul n:add
-        (dest)   &TOB
-        (length) TOB:W TOB:H n:dec n:mul #4 n:mul copy
-                 &TY v:dec
-        (erase)  TOB:H n:dec clear-row
-                 dirty:all
-;
+  :scroll (source) &TOB TOB:W #4 n:mul n:add
+          (dest)   &TOB
+          (length) TOB:W TOB:H n:dec n:mul #4 n:mul copy
+                   &TY v:dec
+          (erase)  TOB:H n:dec clear-row
+                   dirty:all
+  ;
 
-:advance-cursor @TX TOB:W eq? [ #0 !TX &TY v:inc ] if
-                @TY TOB:H eq? [ &TY v:dec scroll ] if ;
+  :advance-cursor @TX TOB:W eq? [ #0 !TX &TY v:inc ] if
+                  @TY TOB:H eq? [ &TY v:dec scroll ] if ;
 
-:put-character (c-)
-  @TX @TY cell !TOB:Cell
-  @TOB:Cell store
-  @TOB:Style @TOB:Cell n:inc store
-  @TOB:FG @TOB:Cell #2 n:add store
-  @TOB:BG @TOB:Cell #3 n:add store
-  @TY dirty:on ;
+  :put-character (c-)
+    @TX @TY cell !TOB:Cell
+    @TOB:Cell store
+    @TOB:Style @TOB:Cell n:inc store
+    @TOB:FG @TOB:Cell #2 n:add store
+    @TOB:BG @TOB:Cell #3 n:add store
+    @TY dirty:on ;
 
-:handle
-  #8   [ ] case
-  #127 [ ] case
-  #9   [ ] case
-  #10  [ #0 !TX &TY v:inc ] case
-  #13  [ #0 !TX &TY v:inc ] case
-  put-character &TX v:inc ;
+  :handle
+    #8   [ ] case
+    #127 [ ] case
+    #9   [ ] case
+    #10  [ #0 !TX &TY v:inc ] case
+    #13  [ #0 !TX &TY v:inc ] case
+    put-character &TX v:inc ;
 
-:parameter (n-n)
-  dup @TOB:ParamCount lt?
-    [ &TOB:Params swap a:fetch ] [ drop #0 ] choose ;
+  :parameter (n-n)
+    dup @TOB:ParamCount lt?
+      [ &TOB:Params swap a:fetch ] [ drop #0 ] choose ;
 
-:count (n-n) dup n:zero? [ drop #1 ] if ;
+  :count (n-n) dup n:zero? [ drop #1 ] if ;
 
-:csi:add-parameter (:-)
-  @TOB:Parameter &TOB:Params @TOB:ParamCount a:store
-  &TOB:ParamCount v:inc #0 !TOB:Parameter #0 !TOB:HaveParam ;
+  :csi:add-parameter (:-)
+    @TOB:Parameter &TOB:Params @TOB:ParamCount a:store
+    &TOB:ParamCount v:inc #0 !TOB:Parameter #0 !TOB:HaveParam ;
 
-:csi:start (:-)
-  #2 !TOB:Parser #0 !TOB:Parameter #0 !TOB:HaveParam
-  #0 !TOB:ParamCount ;
+  :csi:start (:-)
+    #2 !TOB:Parser #0 !TOB:Parameter #0 !TOB:HaveParam
+    #0 !TOB:ParamCount ;
 
-:csi:digit (c-)
-  $0 n:sub @TOB:Parameter #10 n:mul n:add !TOB:Parameter
-  #-1 !TOB:HaveParam ;
+  :csi:digit (c-)
+    $0 n:sub @TOB:Parameter #10 n:mul n:add !TOB:Parameter
+    #-1 !TOB:HaveParam ;
 
-:csi:separator (:-) csi:add-parameter ;
+  :csi:separator (:-) csi:add-parameter ;
 
-:csi:finish (:-)
-  @TOB:HaveParam @TOB:ParamCount n:positive? or
-    [ csi:add-parameter ] if ;
+  :csi:finish (:-)
+    @TOB:HaveParam @TOB:ParamCount n:positive? or
+      &csi:add-parameter if ;
 
-:cursor:row (n-) n:dec #0 n:max TOB:H n:dec n:min !TY ;
-:cursor:col (n-) n:dec #0 n:max TOB:W n:dec n:min !TX ;
+  :cursor:row (n-) n:dec #0 n:max TOB:H n:dec n:min !TY ;
+  :cursor:col (n-) n:dec #0 n:max TOB:W n:dec n:min !TX ;
 
-:csi:home (:-)
-  #0 parameter count cursor:row
-  #1 parameter count cursor:col ;
+  :csi:home (:-)
+    #0 parameter count cursor:row
+    #1 parameter count cursor:col ;
 
-:csi:up    (:-) @TY #0 parameter count n:sub #0 n:max !TY ;
-:csi:down  (:-) @TY #0 parameter count n:add TOB:H n:dec n:min !TY ;
-:csi:right (:-) @TX #0 parameter count n:add TOB:W n:dec n:min !TX ;
-:csi:left  (:-) @TX #0 parameter count n:sub #0 n:max !TX ;
+  :csi:up    (:-) @TY #0 parameter count n:sub #0 n:max !TY ;
+  :csi:down  (:-) @TY #0 parameter count n:add TOB:H n:dec n:min !TY ;
+  :csi:right (:-) @TX #0 parameter count n:add TOB:W n:dec n:min !TX ;
+  :csi:left  (:-) @TX #0 parameter count n:sub #0 n:max !TX ;
 
-:sgr:attribute (n-)
-  #0  [ #0 !TOB:Style #39 !TOB:FG #49 !TOB:BG ] case
-  #1  [ @TOB:Style #1   or  !TOB:Style ] case
-  #2  [ @TOB:Style #2   or  !TOB:Style ] case
-  #4  [ @TOB:Style #4   or  !TOB:Style ] case
-  #5  [ @TOB:Style #8   or  !TOB:Style ] case
-  #7  [ @TOB:Style #16  or  !TOB:Style ] case
-  #8  [ @TOB:Style #32  or  !TOB:Style ] case
-  #22 [ @TOB:Style #-4  and !TOB:Style ] case
-  #24 [ @TOB:Style #-5  and !TOB:Style ] case
-  #25 [ @TOB:Style #-9  and !TOB:Style ] case
-  #27 [ @TOB:Style #-17 and !TOB:Style ] case
-  #28 [ @TOB:Style #-33 and !TOB:Style ] case
-  #30 [ #30 !TOB:FG ] case  #31 [ #31 !TOB:FG ] case
-  #32 [ #32 !TOB:FG ] case  #33 [ #33 !TOB:FG ] case
-  #34 [ #34 !TOB:FG ] case  #35 [ #35 !TOB:FG ] case
-  #36 [ #36 !TOB:FG ] case  #37 [ #37 !TOB:FG ] case
-  #39 [ #39 !TOB:FG ] case
-  #40 [ #40 !TOB:BG ] case  #41 [ #41 !TOB:BG ] case
-  #42 [ #42 !TOB:BG ] case  #43 [ #43 !TOB:BG ] case
-  #44 [ #44 !TOB:BG ] case  #45 [ #45 !TOB:BG ] case
-  #46 [ #46 !TOB:BG ] case  #47 [ #47 !TOB:BG ] case
-  #49 [ #49 !TOB:BG ] case ;
+  :sgr:attribute (n-)
+    #0  [ #0 !TOB:Style #39 !TOB:FG #49 !TOB:BG ] case
+    #1  [ @TOB:Style #1   or  !TOB:Style ] case
+    #2  [ @TOB:Style #2   or  !TOB:Style ] case
+    #4  [ @TOB:Style #4   or  !TOB:Style ] case
+    #5  [ @TOB:Style #8   or  !TOB:Style ] case
+    #7  [ @TOB:Style #16  or  !TOB:Style ] case
+    #8  [ @TOB:Style #32  or  !TOB:Style ] case
+    #22 [ @TOB:Style #-4  and !TOB:Style ] case
+    #24 [ @TOB:Style #-5  and !TOB:Style ] case
+    #25 [ @TOB:Style #-9  and !TOB:Style ] case
+    #27 [ @TOB:Style #-17 and !TOB:Style ] case
+    #28 [ @TOB:Style #-33 and !TOB:Style ] case
+    #30 [ #30 !TOB:FG ] case  #31 [ #31 !TOB:FG ] case
+    #32 [ #32 !TOB:FG ] case  #33 [ #33 !TOB:FG ] case
+    #34 [ #34 !TOB:FG ] case  #35 [ #35 !TOB:FG ] case
+    #36 [ #36 !TOB:FG ] case  #37 [ #37 !TOB:FG ] case
+    #39 [ #39 !TOB:FG ] case
+    #40 [ #40 !TOB:BG ] case  #41 [ #41 !TOB:BG ] case
+    #42 [ #42 !TOB:BG ] case  #43 [ #43 !TOB:BG ] case
+    #44 [ #44 !TOB:BG ] case  #45 [ #45 !TOB:BG ] case
+    #46 [ #46 !TOB:BG ] case  #47 [ #47 !TOB:BG ] case
+    #49 [ #49 !TOB:BG ] case ;
 
-:csi:sgr (:-)
-  @TOB:ParamCount n:zero? [ #0 sgr:attribute ] if;
-  @TOB:ParamCount [ I parameter sgr:attribute ] indexed-times ;
+  :csi:sgr (:-)
+    @TOB:ParamCount n:zero? [ #0 sgr:attribute ] if;
+    @TOB:ParamCount [ I parameter sgr:attribute ] indexed-times ;
 
-:csi:dispatch (c-)
-  $A [ csi:up ] case     $B [ csi:down ] case
-  $C [ csi:right ] case  $D [ csi:left ] case
-  $H [ csi:home ] case
-  $J [ #0 parameter #2 eq? [ tob:erase ] if ] case
-  $m [ csi:sgr ] case ;
+  :csi:dispatch (c-)
+    $A &csi:up case     $B &csi:down case
+    $C &csi:right case  $D &csi:left case
+    $H &csi:home case
+    $J [ #0 parameter #2 eq? &erase if ] case
+    $m &csi:sgr case ;
 
-:digit? (c-f) dup $0 gteq? swap $9 lteq? and ;
+  :digit? (c-f) dup $0 gteq? swap $9 lteq? and ;
 
-:csi:input (c-)
-  dup digit? &csi:digit
-  [ dup $; eq? [ drop csi:separator ]
-    [ csi:finish csi:dispatch #0 !TOB:Parser ] choose ] choose ;
+  :csi:input (c-)
+    dup digit? &csi:digit
+    [ dup $; eq? [ drop csi:separator ]
+      [ csi:finish csi:dispatch #0 !TOB:Parser ] choose ] choose ;
 
-:escape:input (c-)
-  $[ eq? &csi:start [ #0 !TOB:Parser ] choose ;
+  :escape:input (c-)
+    $[ eq? &csi:start [ #0 !TOB:Parser ] choose ;
 
-:normal:input (c-)
-  dup #27 eq? [ drop #1 !TOB:Parser ]
-  [ handle advance-cursor ] choose ;
+  :normal:input (c-)
+    dup #27 eq? [ drop #1 !TOB:Parser ]
+    [ handle advance-cursor ] choose ;
 
-:tob:put (:c-)
-  @TOB:Parser #0 eq? &normal:input
-  [ @TOB:Parser #1 eq? &escape:input &csi:input choose ] choose ;
+  :put (c-)
+    @TOB:Parser #0 eq? &normal:input
+    [ @TOB:Parser #1 eq? &escape:input &csi:input choose ] choose ;
 
-:display:style (a-)
-  #27 c:put $[ c:put $0 c:put $; c:put
-  dup n:inc fetch dup !TOB:DisplayStyle n:put $; c:put
-  dup #2 n:add fetch dup !TOB:DisplayFG n:put $; c:put
-  #3 n:add fetch dup !TOB:DisplayBG n:put $m c:put ;
+  :display:style (a-)
+    #27 c:put $[ c:put $0 c:put $; c:put
+    dup n:inc fetch dup !TOB:DisplayStyle n:put $; c:put
+    dup #2 n:add fetch dup !TOB:DisplayFG n:put $; c:put
+    #3 n:add fetch dup !TOB:DisplayBG n:put $m c:put ;
 
-:display:style-changed? (a-f)
-  dup n:inc fetch @TOB:DisplayStyle -eq?
-    [ drop TRUE ]
-    [ dup #2 n:add fetch @TOB:DisplayFG -eq?
-        [ drop TRUE ]
-        [ #3 n:add fetch @TOB:DisplayBG -eq? ] choose
-    ] choose ;
+  :display:style-changed? (a-f)
+    dup n:inc fetch @TOB:DisplayStyle -eq?
+      [ drop TRUE ]
+      [ dup #2 n:add fetch @TOB:DisplayFG -eq?
+          [ drop TRUE ]
+          [ #3 n:add fetch @TOB:DisplayBG -eq? ] choose
+      ] choose ;
 
-:display:cell (a-)
-  dup display:style-changed? [ dup display:style ] if fetch c:put ;
+  :display:cell (a-)
+    dup display:style-changed? [ dup display:style ] if fetch c:put ;
 
-:display:row,col (nn-)
-  #27 c:put $[ c:put swap n:put $; c:put n:put $H c:put ;
+  :display:row,col (nn-)
+    #27 c:put $[ c:put swap n:put $; c:put n:put $H c:put ;
 
-:tob:display-row (n-)
-  dup n:inc #1 display:row,col
-  #-1 !TOB:DisplayStyle #-1 !TOB:DisplayFG #-1 !TOB:DisplayBG
-  TOB:W n:mul #4 n:mul &TOB n:add
-  TOB:W [ dup display:cell #4 n:add ] times drop ;
+  :display-row (n-)
+    dup n:inc #1 display:row,col
+    #-1 !TOB:DisplayStyle #-1 !TOB:DisplayFG #-1 !TOB:DisplayBG
+    TOB:W n:mul #4 n:mul &TOB n:add
+    TOB:W [ dup display:cell #4 n:add ] times drop ;
 
-:tob:display
-  TOB:H [ I dirty fetch
-          [ I tob:display-row #0 I dirty store ] if ] indexed-times
-  #27 c:put $[ c:put $0 c:put $m c:put ;
+  :display (:-)
+    TOB:H [ I dirty fetch
+            [ I display-row #0 I dirty store ] if ] indexed-times
+    #27 c:put $[ c:put $0 c:put $m c:put ;
 
-:tob:with (:q-) &tob:put &c:put set-hook call &c:put unhook ;
+  :with (q-) &put &c:put set-hook call &c:put unhook ;
 
-:tob:clear (:-)
-  tob:erase #0 !TX #0 !TY
-  #0 !TOB:Style #39 !TOB:FG #49 !TOB:BG #0 !TOB:Parser ;
+  :clear (:-)
+    erase #0 !TX #0 !TY
+    #0 !TOB:Style #39 !TOB:FG #49 !TOB:BG #0 !TOB:Parser ;
+
+---reveal---
+  :tob:refresh (:-) dirty:all ;
+  :tob:erase (:-) erase ;
+  :tob:put (:c-) put ;
+  :tob:display-row (:n-) display-row ;
+  :tob:display (:-) display ;
+  :tob:with (:q-) with ;
+  :tob:clear (:-) clear ;
+}}
 
 tob:clear
 ~~~
