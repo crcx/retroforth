@@ -52,7 +52,7 @@ input area.
 
 Takawiri requires RetroForth 2024.9 or newer, with the ioctl
 device enabled. It also requires a terminal with 100 or more
-columns and at least 27 rows.
+columns and at least 32 rows.
 
 I do the initial configuration, and check these, reporting any
 errors and exiting if necessary.
@@ -69,7 +69,7 @@ words added in RetroForth 2024.9.
 ioctl:term-size (rows,cols) 'LT:W const 'LT:H const
 
 LT:W #100 lt? [ 'Terminal_too_narrow! s:put nl bye ] if
-LT:H #27 lt?  [ 'Terminal_too_short!  s:put nl bye ] if
+LT:H #32 lt?  [ 'Terminal_too_short!  s:put nl bye ] if
 ~~~
 
 Setup the text output buffer dimensions. The width is currently
@@ -122,7 +122,7 @@ Draw the section separators.
 :---    (:n-) [ $- c:put ] times sp ;
 :sections (:-)
   dss:sep
-  #3 [ I n:inc #6 n:mul TOB:W #4 n:add vt:row,col length --- ]
+  #4 [ I n:inc #6 n:mul n:inc TOB:W #4 n:add vt:row,col length --- ]
   indexed-times
   vt:reset ;
 ~~~
@@ -136,7 +136,7 @@ Draw the section separators.
   &Items fetch-next &store-next times drop
   &Items a:reverse [ ] a:for-each
   #0 &Items [
-  over n:inc #6 n:add #84 vt:row,col
+  over n:inc #7 n:add #84 vt:row,col
   dss:label
   tos? [ 'TOS:___ s:put ] [ '_______ s:put ] choose
   vt:reset
@@ -159,24 +159,21 @@ Note: this won't be useful until after the alternate `s:evaluate`
 is done.
 
 ~~~
-{{
   :string? (v-vf) dup STRINGS gt? ;
 
-  :display
-    over n:inc #12 n:add #84 vt:row,col
+  :string:display
+    over n:inc #19 n:add #84 vt:row,col
     fg:red
     tos? [ 'TOS:___ s:put ] [ '_______ s:put ] choose
     vt:reset
     s:put ;
 
-  :not-string
-    over n:inc #12 n:add #84 vt:row,col
+  :string:not-string
+    over n:inc #19 n:add #84 vt:row,col
     fg:blue '_______n/a s:put drop vt:reset ;
----reveal---
   :strings (:-)
-    #0 &Items [ string? &display &not-string choose n:inc  ]
+    #0 &Items [ string? &string:display &string:not-string choose n:inc  ]
     a:for-each drop ;
-}}
 ~~~
 
 ~~~
@@ -186,16 +183,104 @@ is done.
 :stats (:-)
   'HERE:__ #1 layout:stat here n:put
   'FREE:__ #2 layout:stat FREE n:put
-  'DEPTH:_ #3 layout:stat depth n:put
-  'ROW:___ #4 layout:stat @TY n:put
-  'COL:___ #5 layout:stat @TX n:put
+  'DATA:__ #3 layout:stat depth n:put
+  'FLOAT:_ #4 layout:stat f:depth n:put
+  'ROW:___ #5 layout:stat @TY n:put
+  'COL:___ #6 layout:stat @TX n:put
   vt:reset
 ;
+
+:fss:clear (:-)
+  #5 [ #14 I n:add #84 vt:row,col LT:W #83 n:sub [ sp ] times ] indexed-times ;
+
+:fss:label (n-)
+  n:zero? [ 'FTOS:__ s:put ] [ '_______ s:put ] choose ;
+
+:fss (:-)
+  fss:clear
+  f:depth #5 n:min dup
+  [ #14 I n:add #84 vt:row,col
+    dss:label I fss:label
+    dss:value f:dup f:to-string s:put f:push vt:reset
+  ] indexed-times
+  &f:pop times ;
 
 :prompt (:-)
   dss:prompt
   LT:H #1 vt:row,col LT:W [ sp ] times
   LT:H #1 vt:row,col '>>_ s:put ;
+~~~
+
+# Input
+
+Takawiri reads input in cbreak mode, so it echoes the token itself. This
+keeps the input line under its control and makes backspace and delete
+visibly erase the preceding character.
+
+~~~
+:input:done? (c-f)
+  [ ASCII:CR eq? ] [ ASCII:LF eq? ] [ ASCII:SPACE eq? ] tri or or ;
+
+:input:remove-character (:-)
+  buffer:size #2 gteq? [ buffer:get drop ] if buffer:get drop ;
+
+:input:backspace? (c-f)
+  [ ASCII:BS eq? ] [ ASCII:DEL eq? ] bi or ;
+
+:input:erase (:-)
+  buffer:size n:positive? [ #1 vt:left sp #1 vt:left ] if ;
+
+:input:echo (c-)
+  dup input:backspace? [ drop input:erase ]
+  [ dup input:done? [ drop ] [ c:put ] choose ] choose ;
+
+:input:check-bs (c-c)
+  dup input:backspace? [ input:remove-character ] if ;
+
+:input:get-word (-s)
+  [ #7 fetch buffer:set
+    [ c:get dup buffer:add dup input:echo input:check-bs input:done? ] until
+    buffer:start s:chop ] buffer:preserve ;
+~~~
+
+# Errors
+
+The standard `err:notfound` hook prints into the current output stream.
+Takawiri records the failed token instead, then presents it after output
+capture has ended. This keeps the dialog separate from the text buffer.
+
+~~~
+#0 'NotFound var-n
+'NotFoundToken d:create #128 allot
+
+:err:notfound:record (:-)
+  TIB &NotFoundToken s:copy
+  #-1 !NotFound ;
+
+'PopupRow var
+'PopupCol var
+
+:popup:setup (:-)
+  #12 !PopupRow #27 !PopupCol ;
+
+:popup:bar (:-) $+ c:put #46 [ $- c:put ] times $+ c:put ;
+
+:popup:line (n-)
+  @PopupRow n:add @PopupCol vt:row,col
+  $| c:put #46 [ sp ] times $| c:put ;
+
+:notfound:popup (:-)
+  popup:setup
+  dss:sep @PopupRow @PopupCol vt:row,col popup:bar
+  #1 popup:line #2 popup:line
+  @PopupRow #3 n:add @PopupCol vt:row,col popup:bar
+  dss:label @PopupRow #1 n:add @PopupCol #2 n:add vt:row,col
+  'WORD_NOT_FOUND s:put
+  dss:value @PopupRow #2 n:add @PopupCol #2 n:add vt:row,col
+  'TOKEN:__ s:put &NotFoundToken #36 s:left s:put
+  dss:sep @PopupRow #1 n:add @PopupCol #25 n:add vt:row,col
+  'Press_any_key s:put
+  vt:reset c:get drop #0 !NotFound ;
 ~~~
 
 ~~~
@@ -237,25 +322,26 @@ do something like:
   [ &WatchlistLabels #-1 'abc 'acab reorder a:store ] bi ;
 
 :watchlist (:-)
-  #19 #5 [ dup #84 vt:row,col
-        dss:label &WatchlistLabels over #19 n:sub a:fetch
+  #26 #5 [ dup #84 vt:row,col
+        dss:label &WatchlistLabels over #26 n:sub a:fetch
           dup #-1 -eq? [ s:put sp ] [ drop '_________ s:put ] choose
-        dss:value &Watchlist over #19 n:sub a:fetch
+        dss:value &Watchlist over #26 n:sub a:fetch
         dup n:positive? [ fetch ] [ drop #0 ] choose
         n:put n:inc vt:reset ] times drop ;
 ~~~
 
 ~~~
 :ui (:-)
-  &err:notfound unhook
+  &err:notfound:record &err:notfound set-hook
   ioctl:set-cbreak
   &banner tob:with
   [ vt:reset vt:clear vt:home
     display:tob
     sections
-    stats dss strings watchlist
-    prompt s:get-word vt:reset
+    stats dss strings fss watchlist
+    prompt input:get-word vt:reset
     [ dup s:put sp interpret ] tob:with
+    @NotFound [ notfound:popup ] if
  ] forever ;
 
 ui
@@ -268,6 +354,6 @@ Things needed:
 - termios device & words (or add termios to unix device?)
 - colors for interface elements
 - refactor & document everything
-- line editing
+- history and cursor editing
 
 ================================================================

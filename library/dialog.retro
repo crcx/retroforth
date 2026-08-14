@@ -76,6 +76,8 @@ support backspace and delete.
 ~~~
 #0 'dialog:Password var-n
 #0 'dialog:MaskCount var-n
+#0 'dialog:MaskWidth var-n
+#0 'dialog:InputChar var-n
 'dialog:MaskWidths d:create #512 allot
 
 :dialog:done? (c-f)
@@ -94,25 +96,34 @@ support backspace and delete.
       &dialog:MaskWidths @dialog:MaskCount a:fetch dialog:erase-width ]
     [ #1 dialog:erase-width ] choose ] if ;
 
+:dialog:mask-width (:-n)
+  n:random #2 n:mod ;
+
 :dialog:mask (:-)
-  n:random #2 n:mod #1 n:add dup
-  &dialog:MaskWidths @dialog:MaskCount a:store
+  dialog:mask-width #1 n:add !dialog:MaskWidth
+  @dialog:MaskWidth &dialog:MaskWidths @dialog:MaskCount a:store
   &dialog:MaskCount v:inc
-  [ $* c:put ] times ;
+  @dialog:MaskWidth [ $* c:put ] times ;
 
 :dialog:echo (c-)
-  dup dialog:backspace? [ drop dialog:erase ]
-  [ dup dialog:done? [ drop ]
-    [ @dialog:Password [ drop dialog:mask ] [ c:put ] choose ] choose ] choose ;
+  !dialog:InputChar
+  @dialog:InputChar dialog:backspace? nip
+  [ dialog:erase ]
+  [ @dialog:InputChar dialog:done? [ ]
+    [ @dialog:Password [ dialog:mask ] [ @dialog:InputChar c:put ] choose ] choose ] choose ;
 
-:dialog:check-bs (c-c)
-  dup dialog:backspace? [ buffer:size #2 gteq?
+:dialog:check-bs (c-)
+  dialog:backspace? nip [ buffer:size #2 gteq?
     [ buffer:get drop ] if buffer:get drop ] if ;
 
 :dialog:input (:ss-s)
   dialog:draw dialog:title dialog:text
   [ #0 !dialog:MaskCount s:empty buffer:set
-    [ c:get dup buffer:add dup dialog:echo dialog:check-bs dialog:done? ] until
+    [ c:get !dialog:InputChar
+      @dialog:InputChar buffer:add
+      @dialog:InputChar dialog:echo
+      @dialog:InputChar dialog:check-bs
+      @dialog:InputChar dialog:done? ] until
     buffer:start s:chop ] buffer:preserve
   vt:reset ;
 
