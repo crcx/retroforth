@@ -10,6 +10,8 @@
 
 - general
 
+  - test suite coverage expanded
+
 - building
 
   - add build profile support
@@ -50,7 +52,11 @@
            `shift-right`
 
 - library
+
   - remove konilo words that are now part of the core image
+  - TOB now supports a subset of VT100 escape sequences for
+    positioning and color
+  - TOB now much faster for updating display
 
 - retro-compiler
 

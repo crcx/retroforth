@@ -35,7 +35,7 @@ void ioctl_set_character_breaking_mode(NgaState *vm) {
     perror("ERROR (nga/ioctl): Unable to get terminal settings");
     return;
   }
-  term.c_lflag &=(~ICANON & ECHO);
+  term.c_lflag &= ~(ICANON | ECHO);
   if (tcsetattr(STDIN_FILENO, TCSANOW, &term) == -1) {
     perror("ERROR (nga/ioctl): Unable to set terminal settings");
   }
