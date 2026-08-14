@@ -57,6 +57,8 @@
   - TOB now supports a subset of VT100 escape sequences for
     positioning and color
   - TOB now much faster for updating display
+  - add dialog.retro for creating informative & limited input
+    dialog popups
 
 - retro-compiler
 

@@ -1,0 +1,126 @@
+# Terminal Dialogs
+
+`dialog` provides small, modal terminal dialogs for application
+using the Termina vocabulary. It is intended for information,
+acknowledgement, and single-line input rather than menus or
+full-screen editing.
+
+DEPENDENCIES:
+
+- termina
+- rng
+
+Before displaying a dialog, configure the terminal dimensions
+with `dialog:configure` (rows followed by columns). The caller
+is responsible for selecting an appropriate terminal input mode
+and redrawing any application UI after a dialog is dismissed.
+
+`dialog:show`, `dialog:error`, and `dialog:help` take a message
+followed by a title. `dialog:read`, `dialog:password`, and
+`dialog:prompt` take a prompt followed by a title and return the
+entered line.
+
+~~~
+#0 'dialog:Width  var-n
+#0 'dialog:Height var-n
+#0 'dialog:Row    var-n
+#0 'dialog:Col    var-n
+
+#52 'DIALOG:WIDTH const
+
+:dialog:configure (:nn-)
+  !dialog:Width !dialog:Height ;
+
+:dialog:setup (:-)
+  @dialog:Height #2 &n:div call #2 n:sub !dialog:Row
+  @dialog:Width DIALOG:WIDTH n:sub #2 &n:div call !dialog:Col ;
+
+:dialog:bar (:-)
+  $+ c:put DIALOG:WIDTH #2 n:sub [ $- c:put ] times $+ c:put ;
+
+:dialog:line (:n-)
+  @dialog:Row n:add @dialog:Col vt:row,col
+  $| c:put DIALOG:WIDTH #2 n:sub [ sp ] times $| c:put ;
+
+:dialog:draw (:-)
+  dialog:setup
+  fg:cyan @dialog:Row @dialog:Col vt:row,col dialog:bar
+  #1 dialog:line #2 dialog:line #3 dialog:line
+  @dialog:Row #4 n:add @dialog:Col vt:row,col dialog:bar
+  vt:reset ;
+
+:dialog:title (:s-)
+  fg:red @dialog:Row #1 n:add @dialog:Col #2 n:add vt:row,col s:put ;
+
+:dialog:text (:s-)
+  fg:yellow @dialog:Row #2 n:add @dialog:Col #2 n:add vt:row,col
+  DIALOG:WIDTH #4 n:sub s:left s:put ;
+
+:dialog:show (:ss-)
+  dialog:draw dialog:title dialog:text
+  fg:cyan @dialog:Row #3 n:add @dialog:Col #2 n:add vt:row,col
+  'Press_any_key s:put vt:reset c:get drop ;
+
+:dialog:error (:ss-) dialog:show ;
+:dialog:help  (:ss-) dialog:show ;
+~~~
+
+# Single-Line Input
+
+`dialog:read` displays a normal, visible input line.
+`dialog:password` returns the same input string, but displays
+one or two randomly selected asterisks for each entered
+character. Both readers accept CR or LF as the end of input, and
+support backspace and delete.
+
+~~~
+#0 'dialog:Password var-n
+#0 'dialog:MaskCount var-n
+'dialog:MaskWidths d:create #512 allot
+
+:dialog:done? (c-f)
+  [ ASCII:CR eq? ] [ ASCII:LF eq? ] bi or ;
+
+:dialog:backspace? (c-cf)
+  dup [ ASCII:BS eq? ] [ ASCII:DEL eq? ] bi or ;
+
+:dialog:erase-width (n-)
+  [ #1 vt:left sp #1 vt:left ] times ;
+
+:dialog:erase (:-)
+  buffer:size #2 gteq?
+  [ @dialog:Password
+    [ &dialog:MaskCount v:dec
+      &dialog:MaskWidths @dialog:MaskCount a:fetch dialog:erase-width ]
+    [ #1 dialog:erase-width ] choose ] if ;
+
+:dialog:mask (:-)
+  n:random #2 n:mod #1 n:add dup
+  &dialog:MaskWidths @dialog:MaskCount a:store
+  &dialog:MaskCount v:inc
+  [ $* c:put ] times ;
+
+:dialog:echo (c-)
+  dup dialog:backspace? [ drop dialog:erase ]
+  [ dup dialog:done? [ drop ]
+    [ @dialog:Password [ drop dialog:mask ] [ c:put ] choose ] choose ] choose ;
+
+:dialog:check-bs (c-c)
+  dup dialog:backspace? [ buffer:size #2 gteq?
+    [ buffer:get drop ] if buffer:get drop ] if ;
+
+:dialog:input (:ss-s)
+  dialog:draw dialog:title dialog:text
+  [ #0 !dialog:MaskCount s:empty buffer:set
+    [ c:get dup buffer:add dup dialog:echo dialog:check-bs dialog:done? ] until
+    buffer:start s:chop ] buffer:preserve
+  vt:reset ;
+
+:dialog:read (:ss-s)
+  #0 !dialog:Password dialog:input ;
+
+:dialog:password (:ss-s)
+  #-1 !dialog:Password dialog:input ;
+
+:dialog:prompt (:ss-s) dialog:read ;
+~~~
