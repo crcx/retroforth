@@ -11,6 +11,11 @@
 - general
 
   - test suite coverage expanded
+  - takawiri improvements
+
+    - use updated TOB for color, positioning support in output
+    - use dialog library for display of error messages
+    - float stack depth & top 5 preview
 
 - building
 

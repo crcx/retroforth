@@ -37,6 +37,10 @@ input area.
   |                                         |                |
   |                                         |                |
   |                                         +----------------+
+  |                                         | Float Display  |
+  |                                         |                |
+  |                                         |                |
+  |                                         +----------------+
   |                                         | String Preview |
   |                                         |                |
   |                                         |                |
@@ -58,8 +62,8 @@ I do the initial configuration, and check these, reporting any
 errors and exiting if necessary.
 
 ~~~
-@Version #202409 lt?
-  [ 'Requires_RetroForth_2024.9_or_newer s:put nl bye ] if
+@Version #202601 lt?
+  [ 'Requires_RetroForth_2026.1_or_newer s:put nl bye ] if
 ~~~
 
 Setup the local terminal dimensions. This uses the `ioctl:`
@@ -112,7 +116,7 @@ First are words to display the text output buffer.
 ~~~
 :bar:right   (:-) dss:sep TOB:H n:inc [ I n:inc TOB:W #2 n:add vt:row,col $| c:put ] indexed-times vt:reset ;
 :bar:bottom  (:-) dss:sep TOB:H n:inc #1 vt:row,col TOB:W n:inc [ $= c:put ] times $+ c:put vt:reset ;
-:display:tob (:-) tob:display bar:right bar:bottom ;
+:display:tob (:-) tob:refresh tob:display bar:right bar:bottom ;
 ~~~
 
 Draw the section separators.
@@ -246,8 +250,8 @@ visibly erase the preceding character.
 # Errors
 
 The standard `err:notfound` hook prints into the current output stream.
-Takawiri records the failed token instead, then presents it after output
-capture has ended. This keeps the dialog separate from the text buffer.
+Takawiri records the failed token instead. The popup temporarily bypasses
+the text output buffer, then marks it for redraw after the dialog closes.
 
 ~~~
 #0 'NotFound var-n
@@ -281,6 +285,11 @@ capture has ended. This keeps the dialog separate from the text buffer.
   dss:sep @PopupRow #1 n:add @PopupCol #25 n:add vt:row,col
   'Press_any_key s:put
   vt:reset c:get drop #0 !NotFound ;
+
+:dialog:with (q-)
+  &c:put unhook call
+  &tob:put &c:put set-hook
+  tob:refresh ;
 ~~~
 
 ~~~
@@ -340,8 +349,8 @@ do something like:
     sections
     stats dss strings fss watchlist
     prompt input:get-word vt:reset
-    [ dup s:put sp interpret ] tob:with
-    @NotFound [ notfound:popup ] if
+    [ dup s:put sp interpret
+      @NotFound [ &notfound:popup dialog:with ] if ] tob:with
  ] forever ;
 
 ui
