@@ -55,6 +55,7 @@
            `n:divmod`
            `shift-left`
            `shift-right`
+  - fixed an issue with inlining `n:div` and `n:mod`
 
 - library
 
